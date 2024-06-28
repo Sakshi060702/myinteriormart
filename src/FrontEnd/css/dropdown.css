@@ -1,0 +1,66 @@
+.dropdown1 {
+  position: absolute;
+  top: 100%; 
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.dropdown1 ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown1 li {
+  padding: 10px;
+  color: #333;
+  cursor: pointer;
+}
+
+.dropdown1 li + li {
+  border-top: 1px solid #ccc;
+}
+
+.dropdown1 li:hover {
+  background-color: #f4f4f4;
+}
+
+.notification {
+  position: absolute;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  z-index: 999;
+
+  
+}
+
+.notificationheader{
+    display: flex;
+    justify-content: space-between;
+}
+
+.notificationheading{
+    text-align: left;
+}
+
+.notifyheader{
+    margin-right: 10px;
+    text-align: left;
+}
+.notifyinfo{
+    text-align: left;
+}
+
+.login{
+  display: flex;
+  align-items: center;
+}
+.forgetpassword{
+  margin-left: 10px;
+}

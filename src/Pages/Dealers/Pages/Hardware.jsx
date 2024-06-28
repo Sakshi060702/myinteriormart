@@ -1,0 +1,173 @@
+import React from "react";
+import rightarrow from '../../../FrontEnd/img/rightarrow3.svg';
+import './Dealers.css'
+
+function Hardware(){
+    return(
+        <>
+        <div className="container margin_80_55">
+            <div className="main_title_2">
+                <h2>Popular Categories</h2>
+            </div>
+        </div>
+        <div className="row justify-content-center categories-list border-box" >
+            <div className="col-lg-3 col-6">
+                <div className="item">
+                    <span className="icon" style={{ width: 'fit-content' }}>
+                    <img src={rightarrow} alt="rightarrow" style={{ width: '30px', height: '30px' }} />
+                    </span>
+                    <div className="detail">
+                        <a href="/ListingResults/Advocates-Lawyers-Service/tc">Magnetic Door Catcher </a>
+                        
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div className="col-lg-3 col-6">
+                <div className="item">
+                    <span className="icon" style={{ width: 'fit-content' }}>
+                    <img src={rightarrow} alt="rightarrow" style={{ width: '30px', height: '30px' }} />
+                    </span>
+                    <div className="detail">
+                        <a href="/ListingResults/Advocates-Lawyers-Service/tc">Door Closers</a>
+                        
+
+                    </div>
+                </div>
+
+            </div>
+
+             <div className="col-lg-3 col-6">
+                <div className="item">
+                    <span className="icon" style={{ width: 'fit-content' }}>
+                    <img src={rightarrow} alt="rightarrow" style={{ width: '30px', height: '30px' }} />
+                    </span>
+                    <div className="detail">
+                        <a href="/ListingResults/Advocates-Lawyers-Service/tc">Locks</a>
+                        
+
+                    </div>
+                </div>
+
+            </div>
+
+             <div className="col-lg-3 col-6">
+                <div className="item">
+                    <span className="icon" style={{ width: 'fit-content' }}>
+                    <img src={rightarrow} alt="rightarrow" style={{ width: '30px', height: '30px' }} />
+                    </span>
+                    <div className="detail">
+                        <a href="/ListingResults/Advocates-Lawyers-Service/tc">Brass Fittings</a>
+                        
+
+                    </div>
+                </div>
+
+            </div>
+
+             <div className="col-lg-3 col-6">
+                <div className="item">
+                    <span className="icon" style={{ width: 'fit-content' }}>
+                    <img src={rightarrow} alt="rightarrow" style={{ width: '30px', height: '30px' }} />
+                    </span>
+                    <div className="detail">
+                        <a href="/ListingResults/Advocates-Lawyers-Service/tc">Stainless Steel Fittings</a>
+                        
+
+                    </div>
+                </div>
+
+            </div>
+
+             <div className="col-lg-3 col-6">
+                <div className="item">
+                    <span className="icon" style={{ width: 'fit-content' }}>
+                    <img src={rightarrow} alt="rightarrow" style={{ width: '30px', height: '30px' }} />
+                    </span>
+                    <div className="detail">
+                        <a href="/ListingResults/Advocates-Lawyers-Service/tc">Cast Iron Fittings</a>
+                        
+
+                    </div>
+                </div>
+
+            </div>
+
+             <div className="col-lg-3 col-6">
+                <div className="item">
+                    <span className="icon" style={{ width: 'fit-content' }}>
+                    <img src={rightarrow} alt="rightarrow" style={{ width: '30px', height: '30px' }} />
+                    </span>
+                    <div className="detail">
+                        <a href="/ListingResults/Advocates-Lawyers-Service/tc">Ms Fittings</a>
+                        
+
+                    </div>
+                </div>
+
+            </div>
+
+             <div className="col-lg-3 col-6">
+                <div className="item">
+                    <span className="icon" style={{ width: 'fit-content' }}>
+                    <img src={rightarrow} alt="rightarrow" style={{ width: '30px', height: '30px' }} />
+                    </span>
+                    <div className="detail">
+                        <a href="/ListingResults/Advocates-Lawyers-Service/tc">Aluminum Fittings</a>
+                        
+
+                    </div>
+                </div>
+
+            </div>
+
+             <div className="col-lg-3 col-6">
+                <div className="item">
+                    <span className="icon" style={{ width: 'fit-content' }}>
+                    <img src={rightarrow} alt="rightarrow" style={{ width: '30px', height: '30px' }} />
+                    </span>
+                    <div className="detail">
+                        <a href="/ListingResults/Advocates-Lawyers-Service/tc">Wooden Fittings</a>
+                        
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div className="col-lg-3 col-6">
+                <div className="item">
+                    <span className="icon" style={{ width: 'fit-content' }}>
+                    <img src={rightarrow} alt="rightarrow" style={{ width: '30px', height: '30px' }} />
+                    </span>
+                    <div className="detail">
+                        <a href="/ListingResults/Advocates-Lawyers-Service/tc">Curtain Fittings</a>
+                        
+
+                    </div>
+                </div>
+
+            </div>  
+
+            <div className="col-lg-3 col-6">
+                <div className="item">
+                    <span className="icon" style={{ width: 'fit-content' }}>
+                    <img src={rightarrow} alt="rightarrow" style={{ width: '30px', height: '30px' }} />
+                    </span>
+                    <div className="detail">
+                        <a href="/ListingResults/Advocates-Lawyers-Service/tc">Antique Fittings</a>
+                        
+
+                    </div>
+                </div>
+
+            </div>  
+   
+            
+        </div>
+        </>
+    )
+}
+export default Hardware;

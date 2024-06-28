@@ -1,0 +1,48 @@
+.button {
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.selected {
+  background-color:#fb830d;
+  color: #fff;
+   border-color: transparent;
+}
+
+.profile {
+    display: flex;
+    align-items: center; /* Align items vertically */
+}
+
+.profile-details {
+    margin-left: 20px; /* Adjust as needed */
+}
+
+.circular-image {
+    width: 200px; /* Adjust width and height to create a square container */
+    height: 100px; /* Adjust width and height to create a square container */
+    border-radius: 50%; /* Makes the container circular */
+    overflow: hidden; /* Ensures the image stays within the circular bounds */
+    position: relative; /* Positioning context for the image */
+}
+
+.circular-image img {
+    width: 100%; /* Ensures the image fills the circular container */
+    height: 100%; /* Ensures the image fills the circular container */
+    object-fit: cover; /* Maintains aspect ratio and fills the container */
+}
+
+.custom-dropdown {
+  width: 400px;
+    border: 1px solid #ced4da; 
+    background-color: white;
+}
+
+.custom-dropdown2 {
+  width: 830px;
+    border: 1px solid #ced4da; 
+    background-color: white;
+}

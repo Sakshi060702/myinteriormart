@@ -1,0 +1,39 @@
+.button {
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.selected {
+  background-color:#fb830d;
+  color: #fff;
+   border-color: transparent;
+}
+
+.profile {
+    display: flex;
+    align-items: center; /* Align items vertically */
+}
+
+.profile-details {
+    margin-left: 20px; /* Adjust as needed */
+}
+
+.form-group-border {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    width: 250px;
+    height: 35px;
+}
+.drpdiv{
+    margin-top: 10px;
+
+}
+.column{
+  display: flex;
+  flex-direction: column;
+}
+
+

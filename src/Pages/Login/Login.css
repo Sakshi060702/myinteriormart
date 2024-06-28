@@ -1,0 +1,10 @@
+.Login {
+    display: flex;
+    align-items: center; /* Align items vertically */
+}
+
+.input{
+    height: 50px;
+    width: 120;
+    
+}
