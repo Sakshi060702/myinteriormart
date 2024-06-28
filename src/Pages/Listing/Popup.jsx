@@ -56,7 +56,7 @@ const Popup = ({ isOpen, onClose }) => {
             <Link to="/signup2" style={{ color: "orange" }}>
               Register
             </Link>{" "}
-            yourself before enquiry for you.
+            yourself before enquiry.
           </p>
         </div>
       </div>
