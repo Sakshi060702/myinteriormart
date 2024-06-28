@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Popup=({isOpen,onClose})=>{
-    if(!isOpen)return null;
-    return (
-      <>
-        <style>
-          {`
+const Popup = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+  return (
+    <>
+      <style>
+        {`
           .popup-overlay {
             position: fixed;
             top: 0;
@@ -39,29 +39,29 @@ const Popup=({isOpen,onClose})=>{
           }
              
         `}
-        </style>
-        <div className="popup-overlay" onClick={onClose}>
-          <div className="popup-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={onClose}>
-              X
-            </button>
-            <h6>Login/Register</h6>
-            <br></br>
-            <p>
-              Please{" "}
-              <Link to="/login" style={{ color: "orange" }}>
-                Login
-              </Link>{" "}
-              OR{" "}
-              <Link to="/signup2" style={{ color: "orange" }}>
-                Register
-              </Link>{" "}
-              yourself before enquiry
-            </p>
-          </div>
+      </style>
+      <div className="popup-overlay" onClick={onClose}>
+        <div className="popup-content" onClick={(e) => e.stopPropagation()}>
+          <button className="close-button" onClick={onClose}>
+            X
+          </button>
+          <h6>Login/Register</h6>
+          <br></br>
+          <p>
+            Please{" "}
+            <Link to="/login" style={{ color: "orange" }}>
+              Login
+            </Link>{" "}
+            OR{" "}
+            <Link to="/signup2" style={{ color: "orange" }}>
+              Register
+            </Link>{" "}
+            yourself before enquiry for you.
+          </p>
         </div>
-      </>
-    );
-}
+      </div>
+    </>
+  );
+};
 
 export default Popup;
