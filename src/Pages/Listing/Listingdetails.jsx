@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Services from "../Services/Webdevelopment/Website/Services";
-import BookmarkButton from "./Bookmark";
+import Webreviews from "../Services/Webdevelopment/Website/Webreviews";
 import profile from "../../FrontEnd/img/profile.svg";
 import banner2 from "../../FrontEnd/img/hero_in_restaurants_detail.jpg";
 import banner3 from "../../FrontEnd/img/Thumbnail-MIM-Photo-Coming-Soon.jpg";
@@ -264,6 +264,7 @@ function Listingdetails() {
                       </div>
                     </div>
                   </div>
+                  <Webreviews/>
                 </div>
               </div>
             </>

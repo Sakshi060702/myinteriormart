@@ -4,12 +4,13 @@ import Btgroup from "../../../Tab/Btgroup";
 import Clientreviews from "./Clientreview";
 import Reviewpage from "./Reviewpage";
 import Certificate from "./Certificate";
+import Review1 from "../../../Listing/Review1";
 
 
 const buttons = [
-  { title: "Reviews", component: Reviewpage },
-  { title: "Client", component: Clientreviews }, 
-  { title: "Certificate", component: Certificate } 
+  { title: "Reviews", component: Review1 },
+  { title: "Client", component: Clientreviews },
+  { title: "Certificate", component: Certificate },
 ];
 
 function Webreviews() {
