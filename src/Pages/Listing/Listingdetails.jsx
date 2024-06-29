@@ -7,18 +7,23 @@ import banner2 from "../../FrontEnd/img/hero_in_restaurants_detail.jpg";
 import banner3 from "../../FrontEnd/img/Thumbnail-MIM-Photo-Coming-Soon.jpg";
 import { Link } from "react-router-dom";
 import { faL } from "@fortawesome/free-solid-svg-icons/faL";
+import Popup from "./Popup";
 
 function Listingdetails() {
   const { listingId } = useParams();
   const [listingDetails, setListingDetails] = useState(null);
+
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [initialBookmarkStatus, setInitialBookmarkStatus] = useState(false);
+
   const [isLike, setIsLike] = useState(false);
   const [initialLikeStatus, setInitialLikeStatus] = useState(false);
 
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
+
+  const[isPopupOpen,setIsPopupOpen]=useState(false);
 
   useEffect(() => {
     fetchListingDetails();
@@ -41,7 +46,7 @@ function Listingdetails() {
       setInitialBookmarkStatus(bookmarkStatus);
 
       //for like
-      const likeStatus = company.like && company.like.like;
+      const likeStatus = company.like && company.like.likeandDislike;
       setIsLike(likeStatus);
       setInitialLikeStatus(likeStatus);
     } catch (error) {
@@ -209,9 +214,12 @@ function Listingdetails() {
                         />
                       </div>
                       <div className="social-details">
-                        <button className="btn btn-guotes btn-sm">
-                          Get Quotes
-                        </button>
+                      <button
+                                className="btn btn-guotes btn-sm"
+                                onClick={() => setIsPopupOpen(true)}
+                              >
+                                Get Quotes
+                              </button>
 
                         <button
                           id="SubscribeMe"
@@ -326,7 +334,7 @@ function Listingdetails() {
                           aria-labelledby="reviews"
                         >
                           <div className="review-form mb-3">
-                            <div className="d-flex justify-content-between">
+                            <div className="d-flex justify-content-between align-items-center ">
                               <div className="Count_review">
                                 {listingDetails.ratingAverage} Count Reviews, 100% genuine ratings from My
                                 Interior Mart users
@@ -464,12 +472,14 @@ function Listingdetails() {
           )}
         </div>
       </div>
+      <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
     </>
   );
 }
 
 const BusinessHours = ({ workingtime, businessWorking }) => {
   const [IsOpen, setIsOpen] = useState(false);
+  const[isDropdownOpen,setIsDropdownOpen]=useState(false);
 
   const getWorkingHours = (from, to) => {
     const fromTime = new Date(`1970-01-01T${from}Z`).toLocaleTimeString([], {
@@ -546,8 +556,8 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
     };
   };
 
-  const toggelDropdown = () => {
-    setIsOpen(!IsOpen);
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   const { isOpen, currentDay, nextOpenDay, nextOpenTime } = getCurrentStatus();
@@ -555,20 +565,20 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
   return (
     <div>
       <div className="current-status">
-        <p>
+        <p onClick={toggleDropdown} style={{ cursor: "pointer" }}>
           <span style={{ color: isOpen ? "green" : "red" }}>
-            {isOpen ? "Open" : "Closed"}
+            {isOpen ? <b>Open</b> : <b>Closed Now</b>}
           </span>
 
           {isOpen ? (
             <>
               {" "}
-              (Closes at{" "}
+              {/* (Closes at{" "}
               {new Date(`1970-01-01T${currentDay.to}Z`).toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
               })}
-              )
+              ) */}
             </>
           ) : (
             <>
@@ -579,21 +589,26 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
           )}
         </p>
       </div>
-      <div className="business-hours">
-        <p>Business Hours:</p>
-        <ul>
-          {days.map((day, index) => (
-            <li key={index}>
-              <span>{day.day}:</span>
-              {day.isHoliday ? (
-                <span>Holiday</span>
-              ) : (
-                <span>{getWorkingHours(day.from, day.to)}</span>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
+
+{isDropdownOpen && (
+ <div className="business-hours">
+ 
+ <ul>
+   {days.map((day, index) => (
+     <li key={index}>
+       <span>{day.day} &nbsp;&nbsp; </span>
+       {day.isHoliday ? (
+         <span>Holiday</span>
+       ) : (
+         <span>{getWorkingHours(day.from, day.to)}</span>
+       )}
+     </li>
+   ))}
+ </ul>
+</div>
+)}
+
+      
     </div>
   );
 };
