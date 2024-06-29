@@ -264,7 +264,36 @@ function Listingdetails() {
                       </div>
                     </div>
                   </div>
-                  <Webreviews/>
+                  <div classname="banner-block one-block my-5">
+                    <div classname="row px-3">
+                      <div className="col-lg-12 my-2">
+                        <h6 className="primary-heading">Reviews</h6>
+                      </div>
+                      {listingDetails.reviews &&
+                      listingDetails.reviews.length > 0 ? (
+                        listingDetails.reviews.map((review, index) => (
+                          <div key={index} className="col-lg-12 mb-3">
+                            <div className="review-box">
+                              <h6>{review.reviewerName}</h6>
+                              <p>{review.reviewText}</p>
+                              <div className="review-rating">
+                                {Array(review.rating)
+                                  .fill()
+                                  .map((_, i) => (
+                                    <i key={i} className="icon_star active"></i>
+                                  ))}
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="col-lg-12">
+                          <p>No reviews available.</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <Webreviews />
                 </div>
               </div>
             </>
@@ -273,7 +302,6 @@ function Listingdetails() {
           )}
         </div>
       </div>
-      
     </>
   );
 }
