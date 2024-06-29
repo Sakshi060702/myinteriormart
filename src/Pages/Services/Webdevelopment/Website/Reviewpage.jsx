@@ -76,7 +76,7 @@ function Reviewpage() {
             </div>
           </div>
 <hr></hr>
-          <div className="col-md-12 col-lg-12 review-user">
+      <div className="col-md-12 col-lg-12 review-user">
       <div className="row">
         <div className="col-lg-12">
           <div className="row">

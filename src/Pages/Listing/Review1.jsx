@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import profileImage from '../../FrontEnd/img/icon/profile.png';
 import profileImage from "../../FrontEnd/img/icon/profile.png";
 
 function Review1({ listingId }) {
@@ -14,8 +13,11 @@ function Review1({ listingId }) {
     fetch(`https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing`)
       .then((response) => response.json())
       .then((data) => {
-        setCompanyDetails(data);
-        setReviews(data.reviews || []);
+        const company = data.find(
+          (listing) => listing.listingId.toString() === listingId
+        );
+        setCompanyDetails(company);
+        setReviews(company.reviews || []);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, [listingId]);
@@ -78,7 +80,6 @@ function Review1({ listingId }) {
                 <div className="write-review-form">
                   <h6>Leave a Review</h6>
                   <form onSubmit={handleSubmit}>
-                    {/* Rating stars */}
                     <div className="form-group col-md-6">
                       <div className="stars">
                         {[...Array(5)].map((_, i) => (
