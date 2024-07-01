@@ -6,7 +6,7 @@ import Popup from "./Popup";
 function Listing() {
   const { secondCategoryId } = useParams();
   const [listing, setListing] = useState([]);
-  const[isPopupOpen,setIsPopupOpen]=useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
     fetchListings();
@@ -127,15 +127,19 @@ function Listing() {
                           <li>
                             <ul className="reating-list">
                               <li>
-                                <h4 className="reating-number">5.0</h4>
+                                <h4 className="reating-number">{listing.ratingAverage}.0</h4>
                               </li>
                               <li className="reating-star">
                                 <div className="cat_star">
-                                  <i className="icon_star active"></i>
-                                  <i className="icon_star active"></i>
-                                  <i className="icon_star active"></i>
-                                  <i className="icon_star active"></i>
-                                  <i className="icon_star active"></i>
+                                  {Array(listing.ratingAverage)
+                                    .fill()
+                                    .map((_, i) => (
+                                      <i
+                                        key={i}
+                                        className="icon_star active"
+                                        style={{ color: "orange" }}
+                                      ></i>
+                                    ))}
                                 </div>
                               </li>
                               <li> {listing.ratingCount} Rating</li>
@@ -159,12 +163,11 @@ function Listing() {
 }
 
 const BusinessHours = ({ businessWorking }) => {
-  const { isBusinessOpen, isBusinessOpenText, closeTime, } =
-    businessWorking;
+  const { isBusinessOpen, isBusinessOpenText, closeTime } = businessWorking;
 
   return (
     <p>
-      <i className="fa fa-clock-o"></i> : 
+      <i className="fa fa-clock-o"></i> :
       <span style={{ color: isBusinessOpen ? "green" : "red" }}>
         {isBusinessOpenText} {isBusinessOpen && `until ${closeTime}`}
       </span>

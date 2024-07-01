@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { useParams } from "react-router-dom";
 import Services from "../Services/Webdevelopment/Website/Services";
 import Webreviews from "../Services/Webdevelopment/Website/Webreviews";
@@ -8,8 +8,8 @@ import banner3 from "../../FrontEnd/img/Thumbnail-MIM-Photo-Coming-Soon.jpg";
 import { Link } from "react-router-dom";
 import { faL } from "@fortawesome/free-solid-svg-icons/faL";
 import Popup from "./Popup";
-import '../../FrontEnd/css/Lisiting.css'
-
+import Sociallink from "./Sociallink";
+import "../../FrontEnd/css/Lisiting.css";
 
 function Listingdetails() {
   const { listingId } = useParams();
@@ -29,6 +29,7 @@ function Listingdetails() {
   const [reviewText, setReviewText] = useState("");
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const[isSociallinkOpen,setIsSociallinkOpen]=useState(false);
 
   useEffect(() => {
     fetchListingDetails();
@@ -113,11 +114,12 @@ function Listingdetails() {
                       ) : (
                         <div
                           className="client_first_letter"
-                          style={{ height: "100px",
-                            display:'flex',
-                            alignItems:'center',
-                            justifyContent:'center'
-                           }}
+                          style={{
+                            height: "100px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
                         >
                           {listingDetails.companyFirstLetter}
                         </div>
@@ -128,7 +130,7 @@ function Listingdetails() {
                 <div className="box_detail_cus">
                   <div className="cust-profile">
                     <img src={profile} alt="profile"></img>
-                    <h6 className="cust_name">Shafi Shekh</h6>
+                    <h6 className="cust_name">Shafi Sheikh</h6>
                     <span className="cust-type">Owner</span>
                   </div>
                 </div>
@@ -166,45 +168,64 @@ function Listingdetails() {
                         </div>
                         <span className="company-category-name"></span>
                         <span className="company-rating">
-                          5.0
+                          {listingDetails.ratingAverage}.0
                           <div className="cat_star">
-                            <i className="icon_star active"></i>
-                            <i className="icon_star active"></i>
-                            <i className="icon_star active"></i>
-                            <i className="icon_star active"></i>
-                            <i className="icon_star active"></i>
+                            {Array(listingDetails.ratingAverage)
+                              .fill()
+                              .map((_, i) => (
+                                <i
+                                  key={i}
+                                  className="icon_star active"
+                                  style={{ color: "orange" }}
+                                ></i>
+                              ))}
                           </div>
                           {listingDetails.ratingCount} Rating
                         </span>
                       </div>
                       <div className="col-lg-12 mim-Address">
                         <p>
-                          <i className="fa fa-map-marker " style={{ marginRight: '8px' }}></i>
+                          <i
+                            className="fa fa-map-marker "
+                            style={{ marginRight: "8px" }}
+                          ></i>
                           <span>{listingDetails.fullAddress}</span>
                         </p>
                         <p>
                           <span>
-                            <i className="fa fa-map-o" style={{ marginRight: '8px' }}></i>
+                            <i
+                              className="fa fa-map-o"
+                              style={{ marginRight: "8px" }}
+                            ></i>
                             {listingDetails.area}
                           </span>
                         </p>
                         <p>
                           <span>
-                            <i className="fa fa-map-signs" style={{ marginRight: '8px' }}></i>
+                            <i
+                              className="fa fa-map-signs"
+                              style={{ marginRight: "8px" }}
+                            ></i>
                             {listingDetails.locality}
                           </span>
                         </p>
                       </div>
                       <div className="col-lg-12 mb-1 px-0 year_gst">
                         <p className="m-0">
-                          <i className="fa fa-calendar" style={{ marginRight: '8px' }}></i>
+                          <i
+                            className="fa fa-calendar"
+                            style={{ marginRight: "8px" }}
+                          ></i>
                           Year of Establishment{" "}
                           {listingDetails.yearOfEstablishment}
                         </p>
                       </div>
                       <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
                         <p className="mb-0">
-                          <i className="fa fa-users" style={{ marginRight: '8px' }}></i>
+                          <i
+                            className="fa fa-users"
+                            style={{ marginRight: "8px" }}
+                          ></i>
                           {listingDetails.numberOfEmployees} Employees
                         </p>
                       </div>
@@ -220,15 +241,31 @@ function Listingdetails() {
                         </p>
                       </div>
                       <div classname="col-lg-12 mb-1 p-0">
-                        <i className="fa fa-mobile" style={{ marginRight: '8px' }}></i>
-                        <Link style={{ marginRight: '8px',color:'orange' }}>{listingDetails.mobile}</Link>
+                        <i
+                          className="fa fa-mobile"
+                          style={{ marginRight: "8px" }}
+                        ></i>
+                        <Link style={{ marginRight: "8px", color: "orange" }}>
+                          {listingDetails.mobile}
+                        </Link>
 
-                        <i className="fa fa-whatsapp" style={{ marginRight: '8px' }}></i>
-                        <Link style={{color:'orange'}}>{listingDetails.whatsapp}</Link>
+                        <i
+                          className="fa fa-whatsapp"
+                          style={{ marginRight: "8px" }}
+                        ></i>
+                        <Link style={{ color: "orange" }}>
+                          {listingDetails.whatsapp}
+                        </Link>
                       </div>
-                      <div classname="company-time" style={{display:'flex',justifyItems:'center'}}>
-                      <i className="fa fa-clock-o" style={{paddingTop:'5px',marginRight: '8px'}}></i>
-                        <BusinessHours 
+                      <div
+                        classname="company-time"
+                        style={{ display: "flex", justifyItems: "center" }}
+                      >
+                        <i
+                          className="fa fa-clock-o"
+                          style={{ paddingTop: "5px", marginRight: "8px" }}
+                        ></i>
+                        <BusinessHours
                           businessWorking={listingDetails.businessWorking}
                           workingtime={listingDetails.workingtime}
                         />
@@ -237,7 +274,7 @@ function Listingdetails() {
                         <button
                           className="btn btn-guotes btn-sm"
                           onClick={() => setIsPopupOpen(true)}
-                          style={{marginRight:'10px',font:'bold'}}
+                          style={{ marginRight: "10px", font: "bold" }}
                         >
                           Get Quotes
                         </button>
@@ -249,15 +286,18 @@ function Listingdetails() {
                         >
                           <i
                             className={
-                              isBookmarked ? "fa fa-bookmark" : "fa fa-bookmark-o"
+                              isBookmarked
+                                ? "fa fa-bookmark"
+                                : "fa fa-bookmark-o"
                             }
                             style={{
-                              color: isBookmarked  ? "black" : "inherit",
+                              color: isBookmarked ? "black" : "inherit",
                             }}
                           ></i>{" "}
                           Bookmark
                         </button>
-                        <button className="btn-custom pushRight btn btn-light btn-sm">
+                        <button className="btn-custom pushRight btn btn-light btn-sm"
+                        onClick={() => setIsSociallinkOpen(true)}>
                           <i className="icon-share"></i>Share
                         </button>
 
@@ -282,7 +322,6 @@ function Listingdetails() {
                         <button
                           id="SubscribeMe"
                           className="btn-custom pushRight btn btn-light btn-sm"
-                          
                           onClick={handleSubscribeToggle}
                         >
                           <i
@@ -494,6 +533,7 @@ function Listingdetails() {
         </div>
       </div>
       <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
+      <Sociallink isOpen={isSociallinkOpen} onClose={()=>setIsSociallinkOpen(false)}/>
     </>
   );
 }
@@ -501,6 +541,10 @@ function Listingdetails() {
 const BusinessHours = ({ workingtime, businessWorking }) => {
   const [IsOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef=useRef(null);
+
+
+  
 
   const getWorkingHours = (from, to) => {
     const fromTime = new Date(`1970-01-01T${from}Z`).toLocaleTimeString([], {
@@ -581,6 +625,20 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  const handleClickOutside=(event)=>{
+    if(dropdownRef.current && !dropdownRef.current.contains(event.target))
+      {
+        setIsDropdownOpen(false);
+      }
+  }
+
+  useEffect(()=>{
+    document.addEventListener('mousedown',handleClickOutside);
+    return()=>{
+      document.removeEventListener('mousedown',handleClickOutside);
+    };
+  },[]);
+
   const { isOpen, currentDay, nextOpenDay, nextOpenTime } = getCurrentStatus();
 
   return (
@@ -612,10 +670,10 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
       </div>
 
       {isDropdownOpen && (
-        <div className="business-hours">
+        <div className="business-hours" ref={dropdownRef}>
           <ul>
             {days.map((day, index) => (
-              <li key={index}>
+              <li key={index} style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span>{day.day} &nbsp;&nbsp; </span>
                 {day.isHoliday ? (
                   <span>Holiday</span>

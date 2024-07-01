@@ -14,4 +14,10 @@
     background-color: rgb(197, 193, 193);
     color: black; /* Adjust if you want to change the text color on hover/click */
   }
+
+  .socialimg{
+    height: 50px;
+    width: 50px;
+    margin-right: 40px;
+  }
   
