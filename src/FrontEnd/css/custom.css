@@ -686,9 +686,9 @@ footer ul {
 	font-family: 'PoppinsSemiBold';
 	width: 100%;
 }
-.company-addes .company-rating {
+/* .company-addes .company-rating {  show extra space before top rating
 	margin: 0 30px;	
-}
+} */
 .company-rating .cat_star {
 	display: inline-block;
 }

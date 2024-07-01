@@ -8,6 +8,8 @@ import banner3 from "../../FrontEnd/img/Thumbnail-MIM-Photo-Coming-Soon.jpg";
 import { Link } from "react-router-dom";
 import { faL } from "@fortawesome/free-solid-svg-icons/faL";
 import Popup from "./Popup";
+import '../../FrontEnd/css/Lisiting.css'
+
 
 function Listingdetails() {
   const { listingId } = useParams();
@@ -19,11 +21,14 @@ function Listingdetails() {
   const [isLike, setIsLike] = useState(false);
   const [initialLikeStatus, setInitialLikeStatus] = useState(false);
 
+  const [isSubscribe, setIsSubscribe] = useState(false);
+  const [initialSubscribeStatus, setInitialSubscribeStatus] = useState(false);
+
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
 
-  const[isPopupOpen,setIsPopupOpen]=useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
     fetchListingDetails();
@@ -49,6 +54,11 @@ function Listingdetails() {
       const likeStatus = company.like && company.like.likeandDislike;
       setIsLike(likeStatus);
       setInitialLikeStatus(likeStatus);
+
+      //for subscribe
+      const subscribeStatus = company.subscribe && company.subscribe.subscribe;
+      setIsSubscribe(subscribeStatus);
+      setInitialSubscribeStatus(subscribeStatus);
     } catch (error) {
       console.error("Error in fetching listing Details", error);
     }
@@ -62,6 +72,11 @@ function Listingdetails() {
   //for like
   const handleLikeToggle = () => {
     setIsLike((prev) => !prev);
+  };
+
+  //for subscribe
+  const handleSubscribeToggle = () => {
+    setIsSubscribe((prev) => !prev);
   };
 
   const handleRatingChange = (value) => {
@@ -98,7 +113,11 @@ function Listingdetails() {
                       ) : (
                         <div
                           className="client_first_letter"
-                          style={{ height: "100px" }}
+                          style={{ height: "100px",
+                            display:'flex',
+                            alignItems:'center',
+                            justifyContent:'center'
+                           }}
                         >
                           {listingDetails.companyFirstLetter}
                         </div>
@@ -160,32 +179,32 @@ function Listingdetails() {
                       </div>
                       <div className="col-lg-12 mim-Address">
                         <p>
-                          <i className="fa fa-map-marker"></i>
+                          <i className="fa fa-map-marker " style={{ marginRight: '8px' }}></i>
                           <span>{listingDetails.fullAddress}</span>
                         </p>
                         <p>
                           <span>
-                            <i className="fa fa-map-o"></i>
+                            <i className="fa fa-map-o" style={{ marginRight: '8px' }}></i>
                             {listingDetails.area}
                           </span>
                         </p>
                         <p>
                           <span>
-                            <i className="fa fa-map-signs"></i>
+                            <i className="fa fa-map-signs" style={{ marginRight: '8px' }}></i>
                             {listingDetails.locality}
                           </span>
                         </p>
                       </div>
                       <div className="col-lg-12 mb-1 px-0 year_gst">
                         <p className="m-0">
-                          <i className="fa fa-calendar"></i>
+                          <i className="fa fa-calendar" style={{ marginRight: '8px' }}></i>
                           Year of Establishment{" "}
                           {listingDetails.yearOfEstablishment}
                         </p>
                       </div>
                       <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
                         <p className="mb-0">
-                          <i className="fa fa-users"></i>
+                          <i className="fa fa-users" style={{ marginRight: '8px' }}></i>
                           {listingDetails.numberOfEmployees} Employees
                         </p>
                       </div>
@@ -201,79 +220,81 @@ function Listingdetails() {
                         </p>
                       </div>
                       <div classname="col-lg-12 mb-1 p-0">
-                        <i className="fa fa-mobile"></i>
-                        <Link>{listingDetails.mobile}</Link>
+                        <i className="fa fa-mobile" style={{ marginRight: '8px' }}></i>
+                        <Link style={{ marginRight: '8px',color:'orange' }}>{listingDetails.mobile}</Link>
 
-                        <i className="fa fa-whatsapp"></i>
-                        <Link>{listingDetails.whatsapp}</Link>
+                        <i className="fa fa-whatsapp" style={{ marginRight: '8px' }}></i>
+                        <Link style={{color:'orange'}}>{listingDetails.whatsapp}</Link>
                       </div>
-                      <div classname="company-time">
-                        <BusinessHours
+                      <div classname="company-time" style={{display:'flex',justifyItems:'center'}}>
+                      <i className="fa fa-clock-o" style={{paddingTop:'5px',marginRight: '8px'}}></i>
+                        <BusinessHours 
                           businessWorking={listingDetails.businessWorking}
                           workingtime={listingDetails.workingtime}
                         />
                       </div>
                       <div className="social-details">
-                      <button
-                                className="btn btn-guotes btn-sm"
-                                onClick={() => setIsPopupOpen(true)}
-                              >
-                                Get Quotes
-                              </button>
-
                         <button
-                          id="SubscribeMe"
-                          classname="pushRight btn btn-light btn-sm ml-1"
+                          className="btn btn-guotes btn-sm"
+                          onClick={() => setIsPopupOpen(true)}
+                          style={{marginRight:'10px',font:'bold'}}
                         >
-                          <i className="fa fa-bell-o"></i>Subscribe
+                          Get Quotes
                         </button>
 
                         <button
                           id="BookmarkMe"
-                          className="pushRight btn btn-light btn-sm"
-                          style={{
-                            backgroundColor: "transparent",
-                            color: "Black",
-                            border: "none",
-                            cursor: "pointer",
-                          }}
+                          className="btn-custom pushRight btn btn-light btn-sm"
                           onClick={handleBookmarkToggle}
                         >
                           <i
                             className={
-                              isBookmarked ? "fa fa-bookmark" : "fa fa-bookmark"
+                              isBookmarked ? "fa fa-bookmark" : "fa fa-bookmark-o"
                             }
                             style={{
-                              color: initialBookmarkStatus ? "red" : "green",
+                              color: isBookmarked  ? "black" : "inherit",
                             }}
                           ></i>{" "}
                           Bookmark
                         </button>
-                        <a className="mim-marginLeft-Minus20 btn btn-light btn-sm">
+                        <button className="btn-custom pushRight btn btn-light btn-sm">
                           <i className="icon-share"></i>Share
-                        </a>
+                        </button>
 
-                        {/* <button
-                          id="LikeMe"
-                          className="pushRight btn btn-light btn-sm ml-1"
-                          style={{
-                            backgroundColor: "transparent",
-                            color: "Black",
-                            border: "none",
-                            cursor: "pointer",
-                          }}
-                          onClick={handleLikeToggle}
+                        {
+                          <button
+                            id="LikeMe"
+                            className="btn-custom pushRight btn btn-light btn-sm"
+                            onClick={handleLikeToggle}
+                          >
+                            <i
+                              className={
+                                isLike ? "fa fa-thumbs-up" : "fa fa-thumbs-o-up"
+                              }
+                              style={{
+                                color: isLike ? "green" : "inherit",
+                              }}
+                            ></i>{" "}
+                            Like
+                          </button>
+                        }
+
+                        <button
+                          id="SubscribeMe"
+                          className="btn-custom pushRight btn btn-light btn-sm"
+                          
+                          onClick={handleSubscribeToggle}
                         >
                           <i
                             className={
-                              isLike ? "fa fa-thumbs-up" : "fa fa-thumbs-up"
+                              isSubscribe ? "fa fa-bell" : "fa fa-bell-o"
                             }
                             style={{
-                              color: initialLikeStatus ? "green" : "red",
+                              color: isSubscribe ? "red" : "inherit",
                             }}
-                          ></i>{" "}
-                          Like
-                        </button> */}
+                          ></i>
+                          {""}Subscribe
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -336,8 +357,8 @@ function Listingdetails() {
                           <div className="review-form mb-3">
                             <div className="d-flex justify-content-between align-items-center ">
                               <div className="Count_review">
-                                {listingDetails.ratingAverage} Count Reviews, 100% genuine ratings from My
-                                Interior Mart users
+                                {listingDetails.ratingAverage} Count Reviews,
+                                100% genuine ratings from My Interior Mart users
                               </div>
                               <span className="desk_mrg">
                                 <a
@@ -479,7 +500,7 @@ function Listingdetails() {
 
 const BusinessHours = ({ workingtime, businessWorking }) => {
   const [IsOpen, setIsOpen] = useState(false);
-  const[isDropdownOpen,setIsDropdownOpen]=useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const getWorkingHours = (from, to) => {
     const fromTime = new Date(`1970-01-01T${from}Z`).toLocaleTimeString([], {
@@ -590,25 +611,22 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
         </p>
       </div>
 
-{isDropdownOpen && (
- <div className="business-hours">
- 
- <ul>
-   {days.map((day, index) => (
-     <li key={index}>
-       <span>{day.day} &nbsp;&nbsp; </span>
-       {day.isHoliday ? (
-         <span>Holiday</span>
-       ) : (
-         <span>{getWorkingHours(day.from, day.to)}</span>
-       )}
-     </li>
-   ))}
- </ul>
-</div>
-)}
-
-      
+      {isDropdownOpen && (
+        <div className="business-hours">
+          <ul>
+            {days.map((day, index) => (
+              <li key={index}>
+                <span>{day.day} &nbsp;&nbsp; </span>
+                {day.isHoliday ? (
+                  <span>Holiday</span>
+                ) : (
+                  <span>{getWorkingHours(day.from, day.to)}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

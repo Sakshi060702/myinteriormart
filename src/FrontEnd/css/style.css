@@ -9773,7 +9773,7 @@ article.blog .post_info ul li:last-child i {
 .btn-guotes {
   background-color: #fe900d;
   color: #fff;
-  padding: 10px 15px !important;
+  /* padding: 10px 15px !important; */ /*remove the padding of btn quotes*/
 }
 
 .user_logo_sec {

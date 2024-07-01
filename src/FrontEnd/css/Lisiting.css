@@ -1,0 +1,17 @@
+/* Add this CSS to your stylesheet */
+.btn-custom {
+    /* background-color: transparent; */
+    background-color: rgb(245, 240, 240);
+    color: black;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .btn-custom:hover,
+  .btn-custom:focus,
+  .btn-custom:active {
+    background-color: rgb(197, 193, 193);
+    color: black; /* Adjust if you want to change the text color on hover/click */
+  }
+  
