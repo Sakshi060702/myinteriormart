@@ -11,7 +11,7 @@ import Popup from "./Popup";
 import Sociallink from "./Sociallink";
 import "../../FrontEnd/css/Lisiting.css";
 
-function Listingdetails() {
+function Listingdetailsc() {
   const { listingId } = useParams();
   const [listingDetails, setListingDetails] = useState(null);
 
@@ -545,7 +545,7 @@ function Listingdetails() {
                       </div>
                     </div>
                   </div>
-                 <Webreviews/>
+                 
                 </div>
               </div>
             </>
@@ -717,4 +717,4 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
   );
 };
 
-export default Listingdetails;
+export default Listingdetailsc;

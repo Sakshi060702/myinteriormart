@@ -69,7 +69,7 @@ function ThirdcategoryC() {
                     />
                   </span>
                   <Link
-                    to={`/website`}
+                    to={`/listing/${subCategory.secondCategoryID}`}
                     title={subCategory.name}
                     className="Linkstyle" >
                     {subCategory.name}

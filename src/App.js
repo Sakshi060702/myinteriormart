@@ -203,6 +203,12 @@ import Menu1 from "./Pages/Home/Component/Menu1";
 import Listing from "./Pages/Listing/Listing";
 import Listingdetails from "./Pages/Listing/Listingdetails";
 
+import Listingc from "./Pages/Listing/Listingc";
+import Listingdetailsc from "./Pages/Listing/Listingdetailsc";
+
+import Listingd from "./Pages/Listing/Listingd";
+import Listingdetailsd from "./Pages/Listing/Listingdetailsd";
+
 
 
 
@@ -441,6 +447,12 @@ function App() {
 
 <Route path="/listing/:secondCategoryId" element={<Listing/>}/>
 <Route path="/company/:listingId" element={<Listingdetails/>}/>
+
+<Route path="/listing/:secondCategoryId" element={<Listingc/>}/>
+<Route path="/company/:listingId" element={<Listingdetailsc/>}/>
+
+<Route path="/listing/:secondCategoryId" element={<Listingd/>}/>
+<Route path="/listing/:secondCategoryId" element={<Listingdetailsd/>}/>
 
 
 

@@ -76,7 +76,8 @@ function SixthCategoryD() {
                     />
                   </span>
                   <Link
-                    to={"/website"}
+                    // to={"/website"}
+                    to={`/listing/${sixthCategory.fifthCategoryID}`}
                     title={sixthCategory.name}
                     className="Linkstyle"
                   >

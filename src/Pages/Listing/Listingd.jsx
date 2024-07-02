@@ -4,7 +4,7 @@ import banner from "../../FrontEnd/img/banner/banner2.png";
 import banner1 from "../../FrontEnd/img/listing-img.jpeg"
 import Popup from "./Popup";
 
-function Listing() {
+function Listingd() {
   const { secondCategoryId } = useParams();
   const [listing, setListing] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -49,7 +49,7 @@ function Listing() {
                 <img
                   src={banner1}
                   alt="Banner"
-                  style={{ height: "230px", width: "100%" }}
+                  style={{ height: "350px", width: "100%" }}
                 />
               </div>
             </div>
@@ -175,4 +175,4 @@ const BusinessHours = ({ businessWorking }) => {
     </p>
   );
 };
-export default Listing;
+export default Listingd;

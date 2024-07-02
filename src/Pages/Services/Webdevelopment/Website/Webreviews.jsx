@@ -18,6 +18,7 @@ function Webreviews() {
   const [selectedButton, setSelectedButton] = useState(0);
   const SelectedComponent = buttons[selectedButton].component;
 
+  const listingId='2';
   return (
     <main>
       <div className="container margin_60_35">
@@ -31,9 +32,10 @@ function Webreviews() {
             />
           </div>
           <div className="col-lg-12">
-            <SelectedComponent />
+          <SelectedComponent listingId={listingId} />
           </div>
         </div>
+        {/* <Review1 listingId={listingId} /> */}
       </div>
     </main>
   );

@@ -9,18 +9,32 @@ function Review1({ listingId }) {
   const [companyDetails, setCompanyDetails] = useState(null);
 
   useEffect(() => {
-    // Fetch data from API using listingId
-    fetch(`https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing`)
-      .then((response) => response.json())
-      .then((data) => {
+    fetchListingDetails();
+  }, [listingId]);
+  
+    const fetchListingDetails = async () => {
+      try {
+        const response = await fetch(
+          `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing`
+        );
+        const data = await response.json();
+        console.log("API Data:", data); 
         const company = data.find(
           (listing) => listing.listingId.toString() === listingId
         );
-        setCompanyDetails(company);
-        setReviews(company.reviews || []);
-      })
-      .catch((error) => console.error("Error fetching data:", error));
-  }, [listingId]);
+        console.log("Company Data:", company); 
+        if (company) {
+          setCompanyDetails(company);
+        } else {
+          console.error(`Company with listingId ${listingId} not found.`);
+        }
+       
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    
 
   const handleRatingChange = (value) => {
     setRating(value);
@@ -116,10 +130,10 @@ function Review1({ listingId }) {
                 </div>
               )}
 
-              <div className="reviews-list">
-                {reviews.length > 0 ? (
-                  reviews.map((review) => (
-                    <div key={review.id} className="review">
+<div className="reviews-list">
+                {companyDetails && companyDetails.reviews && companyDetails.reviews.length > 0 ? (
+                  companyDetails.reviews.map((review, index) => (
+                    <div key={index} className="review">
                       <div className="review-header">
                         <img
                           src={review.userImage || profileImage}
