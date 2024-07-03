@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import banner from "../../FrontEnd/img/banner/banner2.png";
 import banner1 from "../../FrontEnd/img/listing-img.jpeg"
 import Popup from "./Popup";
+import '../../FrontEnd/css/Lisiting.css';
 
 function Listing() {
   const { secondCategoryId } = useParams();

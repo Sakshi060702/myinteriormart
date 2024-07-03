@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Services from "../Services/Webdevelopment/Website/Services";
 import Webreviews from "../Services/Webdevelopment/Website/Webreviews";
@@ -29,9 +29,9 @@ function Listingdetails() {
   const [reviewText, setReviewText] = useState("");
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const[isSociallinkOpen,setIsSociallinkOpen]=useState(false);
+  const [isSociallinkOpen, setIsSociallinkOpen] = useState(false);
 
-  const[showFullAddress,setShowFullAddress]=useState(false);
+  const [showFullAddress, setShowFullAddress] = useState(false);
 
   useEffect(() => {
     fetchListingDetails();
@@ -83,18 +83,11 @@ function Listingdetails() {
   };
 
   //for address
-  const toggleAddress=()=>{
+  const toggleAddress = () => {
     setShowFullAddress(!showFullAddress);
   };
 
 
-  const handleRatingChange = (value) => {
-    setRating(value);
-  };
-
-  const handleReviewTextChange = (event) => {
-    setReviewText(event.target.value);
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -106,8 +99,7 @@ function Listingdetails() {
   }
 
   const fullAddress = listingDetails.fullAddress;
-  const shortAddress = fullAddress.split(',').slice(0, 2).join(', ');
-
+  const shortAddress = fullAddress.split(",").slice(0, 2).join(", ");
 
   return (
     <>
@@ -200,18 +192,27 @@ function Listingdetails() {
                         </span>
                       </div>
                       <div className="col-lg-12 mim-Address">
-                      <p>
-                      <i
-                        className="fa fa-map-marker "
-                        style={{ marginRight: "8px" }}
-                      ></i>
-                      <span>
-                        {showFullAddress ? fullAddress : `${shortAddress}...`}
-                        <a onClick={toggleAddress} style={{ cursor: 'pointer',color:'orange',marginLeft:'5px' }}>
-                          {showFullAddress ? 'less' : 'more'}
-                        </a>
-                      </span>
-                    </p>
+                        <p>
+                          <i
+                            className="fa fa-map-marker "
+                            style={{ marginRight: "8px" }}
+                          ></i>
+                          <span>
+                            {showFullAddress
+                              ? fullAddress
+                              : `${shortAddress}...`}
+                            <a
+                              onClick={toggleAddress}
+                              style={{
+                                cursor: "pointer",
+                                color: "orange",
+                                marginLeft: "5px",
+                              }}
+                            >
+                              {showFullAddress ? "less" : "more"}
+                            </a>
+                          </span>
+                        </p>
                         <p>
                           <span>
                             <i
@@ -317,8 +318,10 @@ function Listingdetails() {
                           ></i>{" "}
                           Bookmark
                         </button>
-                        <button className="btn-custom pushRight btn btn-light btn-sm"
-                        onClick={() => setIsSociallinkOpen(true)}>
+                        <button
+                          className="btn-custom pushRight btn btn-light btn-sm"
+                          onClick={() => setIsSociallinkOpen(true)}
+                        >
                           <i className="icon-share"></i>Share
                         </button>
 
@@ -367,185 +370,7 @@ function Listingdetails() {
                     </div>
                   </div>
 
-                  <div className="company-listing-tab">
-                    <div className="step">
-                      <ul class="nav nav-tabs" id="tab_checkout" role="tablist">
-                        <li class="nav-item">
-                          <a
-                            className="nav-link active"
-                            id="reviews-tab"
-                            data-toggle="tab"
-                            role="tab"
-                            aria-controls="reviews"
-                            aria-selected="true"
-                          >
-                            Reviews
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a
-                            className="nav-link"
-                            id="certificates-tab"
-                            data-toggle="tab"
-                            role="tab"
-                            aria-controls="certificates"
-                            aria-selected="false"
-                          >
-                            Certificates
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a
-                            className="nav-link"
-                            id="clients-tab"
-                            data-toggle="tab"
-                            role="tab"
-                            aria-controls="clients"
-                            aria-selected="false"
-                          >
-                            Clients
-                          </a>
-                        </li>
-                      </ul>
-                      <div className="tab-content checkout">
-                        <div
-                          className="tab-pane fade show active"
-                          id="reviews"
-                          role="tabpanel"
-                          aria-labelledby="reviews"
-                        >
-                          <div className="review-form mb-3">
-                            <div className="d-flex justify-content-between align-items-center ">
-                              <div className="Count_review">
-                                {listingDetails.ratingAverage} Count Reviews,
-                                100% genuine ratings from My Interior Mart users
-                              </div>
-                              <span className="desk_mrg">
-                                <a
-                                  className="btn btn-link"
-                                  onClick={() =>
-                                    setIsReviewFormOpen(!isReviewFormOpen)
-                                  }
-                                  aria-expanded={
-                                    isReviewFormOpen ? "true" : "false"
-                                  }
-                                  aria-controls="WriteReview"
-                                  style={{ color: "orange" }}
-                                >
-                                  <i className="icon-pencil"></i> Write Review
-                                </a>
-                              </span>
-                            </div>
-                          </div>
-                          {isReviewFormOpen && (
-                            <div className="write-review-form">
-                              <h6>Leave a Review</h6>
-                              <form onSubmit={handleSubmit}>
-                                {/* Rating stars */}
-                                <div className="form-group col-md-6">
-                                  <div className="stars">
-                                    <i class="icon_star active"></i>
-                                    <i className="icon_star active"></i>
-                                    <i className="icon_star active"></i>
-                                    <i className="icon_star active"></i>
-                                    <i classname="icon_star"></i>
-                                  </div>
-                                </div>
-                                <div className="form-group col-md-12">
-                                  <label htmlFor="review_text">
-                                    Your Review
-                                  </label>
-                                  <textarea
-                                    name="review_text"
-                                    id="review_text"
-                                    className="form-control"
-                                    style={{ height: "130px" }}
-                                    value={reviewText}
-                                    onChange={handleReviewTextChange}
-                                  ></textarea>
-                                </div>
-                                <div className="form-group col-md-12">
-                                  <input
-                                    type="submit"
-                                    value="Submit"
-                                    className="btn_1"
-                                    id="submit-review"
-                                  />
-                                </div>
-                              </form>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="col-md-12 col-lg-12 review-user">
-                        <div className="row">
-                          <div className="col-lg-12">
-                            <hr></hr>
-                            <div className="row">
-                              {listingDetails.reviews &&
-                              listingDetails.reviews.length > 0 ? (
-                                listingDetails.reviews.map((review, index) => (
-                                  <div key={index} className="col-lg-12 mb-3">
-                                    <div className="review-box">
-                                      <div className="d-flex">
-                                        <div className="col-lg-2 col-3 text-center">
-                                          <div className="review_img_sec">
-                                            <img
-                                              src={review.userImage}
-                                              alt={review.userName}
-                                              style={{
-                                                width: "50px",
-                                                height: "50px",
-                                              }}
-                                            />
-                                          </div>
-                                        </div>
-                                        <div className="col-lg-10 col-9 pl-lg-0">
-                                          <div className="cat-star">
-                                            {Array(review.ratings)
-                                              .fill()
-                                              .map((_, i) => (
-                                                <i
-                                                  key={i}
-                                                  className="icon_star active"
-                                                  style={{ color: "orange" }}
-                                                ></i>
-                                              ))}
-                                            <span>
-                                              <b>{review.userName}</b>
-                                              &nbsp;-&nbsp;&nbsp;
-                                              <b>{review.date}</b>
-                                            </span>
-                                          </div>
-                                          <p>{review.comment}</p>
-                                        </div>
-                                      </div>
-                                      {review.ratingReplyMessage && (
-                                        <div className="owner_reply">
-                                          <span>
-                                            <strong>Reply from Owner</strong>{" "}
-                                          </span>
-                                          <p className="m-0">
-                                            {review.ratingReplyMessage}
-                                          </p>
-                                        </div>
-                                      )}
-                                    </div>
-                                    <hr></hr>
-                                  </div>
-                                ))
-                              ) : (
-                                <div className="col-lg-12">
-                                  <p>No reviews available.</p>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                 <Webreviews/>
+                  <Webreviews />
                 </div>
               </div>
             </>
@@ -555,7 +380,10 @@ function Listingdetails() {
         </div>
       </div>
       <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
-      <Sociallink isOpen={isSociallinkOpen} onClose={()=>setIsSociallinkOpen(false)}/>
+      <Sociallink
+        isOpen={isSociallinkOpen}
+        onClose={() => setIsSociallinkOpen(false)}
+      />
     </>
   );
 }
@@ -563,17 +391,14 @@ function Listingdetails() {
 const BusinessHours = ({ workingtime, businessWorking }) => {
   const [IsOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef=useRef(null);
+  const dropdownRef = useRef(null);
 
-
-  
-
-  const getWorkingHours = (from, to,formatStartOnly = false) => {
+  const getWorkingHours = (from, to, formatStartOnly = false) => {
     const fromTime = new Date(`1970-01-01T${from}Z`).toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
     });
-    if(formatStartOnly){
+    if (formatStartOnly) {
       return fromTime;
     }
     const toTime = new Date(`1970-01-01T${to}Z`).toLocaleTimeString([], {
@@ -638,7 +463,9 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
       ? getWorkingHours(nextOpenDay.from, nextOpenDay.to)
       : null;
 
-      const nextTime=nextOpenDay ? getWorkingHours(nextOpenDay.from,null,true) :null;
+    const nextTime = nextOpenDay
+      ? getWorkingHours(nextOpenDay.from, null, true)
+      : null;
     return {
       isOpen,
       currentDay,
@@ -652,27 +479,27 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const handleClickOutside=(event)=>{
-    if(dropdownRef.current && !dropdownRef.current.contains(event.target))
-      {
-        setIsDropdownOpen(false);
-      }
-  }
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsDropdownOpen(false);
+    }
+  };
 
-  useEffect(()=>{
-    document.addEventListener('mousedown',handleClickOutside);
-    return()=>{
-      document.removeEventListener('mousedown',handleClickOutside);
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
     };
-  },[]);
+  }, []);
 
-  const { isOpen, currentDay, nextOpenDay, nextOpenTime,nextTime } = getCurrentStatus();
+  const { isOpen, currentDay, nextOpenDay, nextOpenTime, nextTime } =
+    getCurrentStatus();
 
   return (
     <div>
       <div className="current-status">
         <p onClick={toggleDropdown} style={{ cursor: "pointer" }}>
-          <span style={{ color: isOpen ? "green" : "red"  }}>
+          <span style={{ color: isOpen ? "green" : "red" }}>
             {isOpen ? <b>Open</b> : <b>Closed Now</b>}
           </span>
 
@@ -689,11 +516,15 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
           ) : (
             <>
               {" "}
-              Opens{" "}
-              {nextOpenDay ? `${nextTime} at ${nextOpenDay.day}` : "soon"}
+              Opens {nextOpenDay ? `${nextTime} at ${nextOpenDay.day}` : "soon"}
             </>
           )}
-          <i className={`fa ${isDropdownOpen ? 'fa-chevron-up' :'fa-chevron-down'}`}  style={{ marginLeft: '8px' }}></i>
+          <i
+            className={`fa ${
+              isDropdownOpen ? "fa-chevron-up" : "fa-chevron-down"
+            }`}
+            style={{ marginLeft: "8px" }}
+          ></i>
         </p>
       </div>
 
@@ -701,7 +532,10 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
         <div className="business-hours" ref={dropdownRef}>
           <ul>
             {days.map((day, index) => (
-              <li key={index} style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <li
+                key={index}
+                style={{ display: "flex", justifyContent: "space-between" }}
+              >
                 <span>{day.day} &nbsp;&nbsp; </span>
                 {day.isHoliday ? (
                   <span>Holiday</span>

@@ -10172,7 +10172,7 @@ a.btn_3:hover,
 }
 
 .review-form {
-  margin-left: 126px;
+  /* margin-left: 126px; */
   font-size: 22px;
 }
 
@@ -10439,7 +10439,7 @@ a.btn_3:hover,
 
   .client_first_letter {
     font-size: 80px;
-    margin-top: -18px;
+    /* margin-top: -18px; */
     color: #fff;
   }
 

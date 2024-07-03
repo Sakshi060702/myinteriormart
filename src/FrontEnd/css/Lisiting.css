@@ -20,4 +20,74 @@
     width: 50px;
     margin-right: 40px;
   }
+
+
+  @media (max-width: 768px) {
+    .client_first_letter {
+      height: 150px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px; /* Adjust as needed for better alignment */
+    background-color: #f0f0f0; /* Adjust as needed for better alignment */
+    padding-top: 10px;
+    }
+
+    .listing-bottom-list{
+      position: absolute;
+      top:-3px;
+      border-top: 0px;
+      left: 10px;
+    }
+
+    .listing-bottom-list li{
+      padding: 0px;
+      margin-right: 3px;
+    }
+
+    
+
+    
+
+   
+
+    
+    
+  }
+
+  @media (max-width: 768px) {
+    .listing-bottom-list {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0;
+      margin: 0;
+      list-style-type: none;
+    }
+  
+    .listing-bottom-list > li {
+      flex: 1; /* Allow items to grow and shrink as needed */
+      text-align: center; /* Center-align text for better appearance */
+       padding: 5px;
+    }
+  
+    .listing-bottom-list .reating-list {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+    }
+  
+    .reating-list > li {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+  
+    .btn-guotes {
+      margin-top: 10px;
+    }
+  }
   

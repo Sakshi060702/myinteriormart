@@ -209,7 +209,7 @@ import Listingdetailsc from "./Pages/Listing/Listingdetailsc";
 import Listingd from "./Pages/Listing/Listingd";
 import Listingdetailsd from "./Pages/Listing/Listingdetailsd";
 
-
+import Webreviews from "./Pages/Services/Webdevelopment/Website/Webreviews";
 
 
 function App() {
@@ -453,6 +453,8 @@ function App() {
 
 <Route path="/listing/:secondCategoryId" element={<Listingd/>}/>
 <Route path="/listing/:secondCategoryId" element={<Listingdetailsd/>}/>
+
+<Route path="/reviews/:listingId" element={<Webreviews/>}/>
 
 
 
