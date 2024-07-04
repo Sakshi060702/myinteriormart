@@ -10,6 +10,7 @@ import { faL } from "@fortawesome/free-solid-svg-icons/faL";
 import Popup from "./Popup";
 import Sociallink from "./Sociallink";
 import "../../FrontEnd/css/Lisiting.css";
+import Getquotespopup from "./Getquotespopup";
 
 function Listingdetails() {
   const { listingId } = useParams();
@@ -86,8 +87,6 @@ function Listingdetails() {
   const toggleAddress = () => {
     setShowFullAddress(!showFullAddress);
   };
-
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -300,24 +299,26 @@ function Listingdetails() {
                         >
                           Get Quotes
                         </button>
-
                         <button
                           id="BookmarkMe"
                           className="btn-custom pushRight btn btn-light btn-sm"
                           onClick={handleBookmarkToggle}
+                          style={{
+                            backgroundColor: isBookmarked ? "green" : "inherit",
+                            color: isBookmarked ? "white" : "inherit",
+                            transition: "background-color 0.3s ease",
+                          }}
                         >
                           <i
                             className={
                               isBookmarked
-                                ? "fa fa-bookmark"
+                                ? "fa fa-bookmark-o"
                                 : "fa fa-bookmark-o"
                             }
-                            style={{
-                              color: isBookmarked ? "black" : "inherit",
-                            }}
                           ></i>{" "}
                           Bookmark
                         </button>
+
                         <button
                           className="btn-custom pushRight btn btn-light btn-sm"
                           onClick={() => setIsSociallinkOpen(true)}
@@ -330,14 +331,18 @@ function Listingdetails() {
                             id="LikeMe"
                             className="btn-custom pushRight btn btn-light btn-sm"
                             onClick={handleLikeToggle}
+                            style={{
+                              backgroundColor: isLike ? "green" : "inherit",
+                              color: isLike ? "white" : "inherit",
+                              transition: "background-color 0.3s ease",
+                            }}
                           >
                             <i
                               className={
-                                isLike ? "fa fa-thumbs-up" : "fa fa-thumbs-o-up"
+                                isLike
+                                  ? "fa fa-thumbs-o-up"
+                                  : "fa fa-thumbs-o-up"
                               }
-                              style={{
-                                color: isLike ? "green" : "inherit",
-                              }}
                             ></i>{" "}
                             Like
                           </button>
@@ -347,16 +352,18 @@ function Listingdetails() {
                           id="SubscribeMe"
                           className="btn-custom pushRight btn btn-light btn-sm"
                           onClick={handleSubscribeToggle}
+                          style={{
+                            backgroundColor: isSubscribe ? "green" : "inherit",
+                            color: isSubscribe ? "white" : "inherit",
+                            transition: "background-color 0.3s ease",
+                          }}
                         >
                           <i
                             className={
-                              isSubscribe ? "fa fa-bell" : "fa fa-bell-o"
+                              isSubscribe ? "fa fa-bell-o" : "fa fa-bell-o"
                             }
-                            style={{
-                              color: isSubscribe ? "red" : "inherit",
-                            }}
-                          ></i>
-                          {""}Subscribe
+                          ></i>{" "}
+                          Subscribe
                         </button>
                       </div>
                     </div>
@@ -380,6 +387,7 @@ function Listingdetails() {
         </div>
       </div>
       <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
+      {/* <Getquotespopup isOpen={isPopupOpen} onClose={()=>setIsPopupOpen(false)}/> */}
       <Sociallink
         isOpen={isSociallinkOpen}
         onClose={() => setIsSociallinkOpen(false)}

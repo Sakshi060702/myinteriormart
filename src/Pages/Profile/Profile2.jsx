@@ -11,6 +11,7 @@ import chatimg from "../../FrontEnd/img/icon/chat.png";
 import suggestionimg from "../../FrontEnd/img/icon/suggestion.png";
 import complaintimg from "../../FrontEnd/img/icon/Complaint.png";
 import changepassimg from "../../FrontEnd/img/icon/password.png";
+import listingicon from "../../FrontEnd/img/business-listing.jpeg"
 import { Dropdown } from "react-bootstrap";
 
 
@@ -26,100 +27,93 @@ function Profile2({ children }) {
               role="tablist"
               aria-orientation="vertical"
             >
+              <Link >
+                {" "}
+                <img
+                  src={listingicon}
+                  alt="Edit Profile"
+                  style={{ height: "60px" }}
+                />
+                Dashboard
+              </Link>
+              <Link >
+                {" "}
+                <img
+                  src={listingicon}
+                  alt="Edit Profile"
+                  style={{ height: "60px" }}
+                />
+                My Activity
+              </Link>
               <Link to="/editprofile">
                 {" "}
                 <img
-                  src={editprofile}
+                  src={listingicon}
                   alt="Edit Profile"
                   style={{ height: "60px" }}
                 />
                 Edit Profile
               </Link>
-              <Link to="/address1">
+              <Link to="/labournakapage">
                 {" "}
                 <img
-                  src={addressimg}
+                  src={listingicon}
                   alt="Edit Profile"
                   style={{ height: "60px" }}
-                />{" "}
-                Address
+                />
+                Manage Listing
               </Link>
+              
               <Link to="/enquiry">
                 {" "}
                 <img
-                  src={enquiryimg}
+                  src={listingicon}
                   alt="Edit Profile"
                   style={{ height: "60px" }}
                 />
                 Enquiry
               </Link>
-              <Link to="/bookmark">
-                {" "}
-                <img
-                  src={bookmarkimg}
-                  alt="Edit Profile"
-                  style={{ height: "60px" }}
-                />
-                Bookmark
-              </Link>
-              <Link to="/like">
-                {" "}
-                <img
-                  src={likeimg}
-                  alt="Edit Profile"
-                  style={{ height: "60px" }}
-                />
-                Like
-              </Link>
-              <Link to="/subscribe">
-                {" "}
-                <img
-                  src={subscribeimg}
-                  alt="Edit Profile"
-                  style={{ height: "60px" }}
-                />
-                Subscribe
-              </Link>
-              <Link to="/review">
-                {" "}
-                <img
-                  src={reviewimg}
-                  alt="Edit Profile"
-                  style={{ height: "60px" }}
-                />
-                Review
-              </Link>
-              <Link to="/chat">
-                {" "}
-                <img
-                  src={chatimg}
-                  alt="Edit Profile"
-                  style={{ height: "60px" }}
-                />
-                Chat
-              </Link>
-              <Link to="/suggestion">
-                {" "}
-                <img
-                  src={suggestionimg}
-                  alt="Edit Profile"
-                  style={{ height: "60px" }}
-                />
-                Suggestion
-              </Link>
               <Link to="/complaint">
                 {" "}
                 <img
-                  src={complaintimg}
+                  src={listingicon}
                   alt="Edit Profile"
                   style={{ height: "60px" }}
                 />
                 Complaint
               </Link>
+              <Link to="/suggestion">
+                {" "}
+                <img
+                  src={listingicon}
+                  alt="Edit Profile"
+                  style={{ height: "60px" }}
+                />
+                Suggestion
+              </Link> 
+              <Link to="/chat">
+                {" "}
+                <img
+                  src={listingicon}
+                  alt="Edit Profile"
+                  style={{ height: "60px" }}
+                />
+                Chat
+              </Link>
+              <Link >
+                {" "}
+                <img
+                  src={listingicon}
+                  alt="Edit Profile"
+                  style={{ height: "60px" }}
+                />
+                Register
+              </Link>
+             
               <Link to="/changepassword">
                 {" "}
                 <img
-                  src={changepassimg}
+                  src={listingicon}
                   alt="Edit Profile"
                   style={{ height: "60px" }}
                 />
@@ -145,6 +139,14 @@ function Profile2({ children }) {
                     style={{ height: "60px" }}
                   />
                   Edit Profile
+                </Dropdown.Item>
+                <Dropdown.Item as={Link} to="/labournakapage">
+                  <img
+                    src={listingicon}
+                    alt="Edit Profile"
+                    style={{ height: "60px" }}
+                  />
+                  Manage Listing
                 </Dropdown.Item>
                 <Dropdown.Item as={Link} to="/address1">
                   <img

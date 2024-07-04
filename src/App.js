@@ -211,6 +211,19 @@ import Listingdetailsd from "./Pages/Listing/Listingdetailsd";
 
 import Webreviews from "./Pages/Services/Webdevelopment/Website/Webreviews";
 
+import Addcompanyl from "./Pages/Managelisting/Addcompanyl";
+import Addressl from "./Pages/Managelisting/Addressl";
+import Communicationl from "./Pages/Managelisting/Communicationl";
+import Categoriesl from "./Pages/Managelisting/Categoriesl";
+import Specialisationl from "./Pages/Managelisting/Specialisationl";
+import Paymentmodel from "./Pages/Managelisting/Paymentmodel";
+import Workinghoursl from "./Pages/Managelisting/Workinghoursl";
+import Uploadimagel from "./Pages/Managelisting/Uploadimagel";
+import Sociallinkl from "./Pages/Managelisting/Sociallinkl";
+import Keywordl from "./Pages/Managelisting/Keywordl";
+import Imagesl from "./Pages/Managelisting/Imagesl";
+import Galleryimagel from "./Pages/Managelisting/Galleryimagel";
+
 
 function App() {
   return (
@@ -342,7 +355,7 @@ function App() {
       <Route path='/addcompany' element={<Addcompany/>}/> */}
 
 
-      <Route path='/labournakapage' element={<Labournakapage/>}/>
+      {/* <Route path='/labournakapage' element={<Labournakapage/>}/> */}
       {/* <Route path='/Workingdetails' element={<Workingdetails/>}/>
       <Route path='/Addaddressdetails' element={<Addaddressdetails/>}/>
       <Route path='/Categorydetails' element={<Addcategorydetails/>}/>
@@ -426,6 +439,8 @@ function App() {
 <Route path="/suggestion" element={<Profile2><Suggestion /></Profile2>} />
 <Route path="/complaint" element={<Profile2><Complaint /></Profile2>} />
 <Route path="/changepassword" element={<Profile2><Changepassword /></Profile2>} />
+<Route path="/labournakapage" element={<Profile2><Labournakapage /></Profile2>} />
+
 
   <Route exact path="/services1" element={<Services1/>} />
   <Route path="/subcategories/:secondCategoryId" element={<SubCategoryList/>} />
@@ -455,6 +470,21 @@ function App() {
 <Route path="/listing/:secondCategoryId" element={<Listingdetailsd/>}/>
 
 <Route path="/reviews/:listingId" element={<Webreviews/>}/>
+
+<Route path="/addcompanyl" element={<Addcompanyl></Addcompanyl>}/>
+<Route path="/addressl" element={<Addressl></Addressl>}/>
+<Route path="/communicationl" element={<Communicationl/>}/>
+<Route path="/categoryl" element={<Categoriesl/>}/>
+<Route path="/specialisationl" element={<Specialisationl/>}/>
+<Route path="/paymentmodel" element={<Paymentmodel/>}/>
+<Route path="/workinghoursl" element={<Workinghoursl/>}/>
+<Route path="/uploadimagel" element={<Uploadimagel/>}/>
+<Route path="/Sociallinkl" element={<Sociallinkl/>}/>
+<Route path="/Keywordl" element={<Keywordl/>}/>
+<Route path="/Imagesl" element={<Imagesl/>}/>
+
+<Route path="/Galleryimage" element={<Galleryimagel/>}/>
+
 
 
 

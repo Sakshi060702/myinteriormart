@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import banner from "../../FrontEnd/img/banner/banner2.png";
 import banner1 from "../../FrontEnd/img/listing-img.jpeg"
 import Popup from "./Popup";
+import Getquotespopup from "./Getquotespopup";
 
 function Listingd() {
   const { secondCategoryId } = useParams();
@@ -159,6 +160,7 @@ function Listingd() {
         </div>
       </div>
       <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
+         {/* <Getquotespopup isOpen={isPopupOpen} onClose={()=>setIsPopupOpen(false)}/> */}
     </>
   );
 }
