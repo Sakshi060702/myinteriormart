@@ -5,11 +5,12 @@ import Galleryimagel from "./Galleryimagel";
 import Bannerimagel from "./Bannerimagel";
 import Certificationimagel from "./Certificationimagel";
 import Clientimagel from "./Clientimagel";
+import Teamimagel from "./Teamimagel";
 import Btngroupl from "./Btngroupl";
 
 const buttons=[
   {title:"Logo", component:Uploadimagel},
-  {title:"Team",component:Galleryimagel},
+  {title:"Team",component:Teamimagel},
   {title:"Gallery",component:Galleryimagel},
   {title:"Banner",component:Bannerimagel},
   {title:"Certifications",component:Certificationimagel},

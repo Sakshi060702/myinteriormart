@@ -30,7 +30,7 @@ function Uploadimagel() {
                     <input type="file" onChange={handleFileChange} style={{border:'2px solid grey',height:'50px',width:'500px'}} />
                     {/* <button type="submit">Upload</button> */}
                   </form>
-                  <Link to="/paymentmode" className="btn_1 " style={{backgroundColor:'orange',marginTop:'10px'}}>
+                  <Link  className="btn_1 " style={{backgroundColor:'orange',marginTop:'10px'}}>
                     Submit
                   </Link>
                     </div>

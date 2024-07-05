@@ -223,6 +223,7 @@ import Sociallinkl from "./Pages/Managelisting/Sociallinkl";
 import Keywordl from "./Pages/Managelisting/Keywordl";
 import Imagesl from "./Pages/Managelisting/Imagesl";
 import Galleryimagel from "./Pages/Managelisting/Galleryimagel";
+import Managelistingl from "./Pages/Managelisting/Managelistingl";
 
 
 function App() {
@@ -439,7 +440,7 @@ function App() {
 <Route path="/suggestion" element={<Profile2><Suggestion /></Profile2>} />
 <Route path="/complaint" element={<Profile2><Complaint /></Profile2>} />
 <Route path="/changepassword" element={<Profile2><Changepassword /></Profile2>} />
-<Route path="/labournakapage" element={<Profile2><Labournakapage /></Profile2>} />
+
 
 
   <Route exact path="/services1" element={<Services1/>} />
@@ -471,6 +472,7 @@ function App() {
 
 <Route path="/reviews/:listingId" element={<Webreviews/>}/>
 
+<Route path="/Managelistingl" element={<Managelistingl/>}/>
 <Route path="/addcompanyl" element={<Addcompanyl></Addcompanyl>}/>
 <Route path="/addressl" element={<Addressl></Addressl>}/>
 <Route path="/communicationl" element={<Communicationl/>}/>
@@ -482,8 +484,11 @@ function App() {
 <Route path="/Sociallinkl" element={<Sociallinkl/>}/>
 <Route path="/Keywordl" element={<Keywordl/>}/>
 <Route path="/Imagesl" element={<Imagesl/>}/>
-
 <Route path="/Galleryimage" element={<Galleryimagel/>}/>
+
+<Route path="/labournakapage" element={<Profile2><Labournakapage /></Profile2>} />
+
+
 
 
 

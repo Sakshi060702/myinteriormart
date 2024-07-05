@@ -92,7 +92,7 @@ function Paymentmodel() {
 
                 <div className="text-left col-12 mt-3">
                   
-                  <Link to="/uploadimagel" className="btn_1 ">
+                  <Link to="/Imagesl" className="btn_1 ">
                     Save & Continue
                   </Link>
                 </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link ,useParams} from "react-router-dom";
+import { Link } from "react-router-dom";
 import companyimg from '../../FrontEnd/img/banner/offfice.png';
 import communicationimg from '../../FrontEnd/img/banner/communication.png';
 import addressimg from '../../FrontEnd/img/banner/address.png';
@@ -15,8 +15,8 @@ import seoimg from '../../FrontEnd/img/banner/SEO.png';
 
 
 
-function Labournakapage(){
-  // const {listingId} = useParams();
+function Managelistingl(){
+  const listingId = 10870;
     return(
         <>
          <div className="tab" style={{ display: 'block' }}>
@@ -26,8 +26,8 @@ function Labournakapage(){
                 {/* First row */}
                 <div className="col-12 mt-3">
                     <div className="link-group">
-                      <div className="link-box"><Link to={`/addcompanyl`} className="link-large"><img src={companyimg} className="managelistingimg"/>Company Details</Link></div>
-                      <div className="link-box" ><Link to={`/communicationl`}  className="link-large"><img src={communicationimg} className="managelistingimg"/>Communication</Link></div>
+                      <div className="link-box"><Link to={`/addcompanyl/${listingId}`} className="link-large"><img src={companyimg} className="managelistingimg"/>Company Details</Link></div>
+                      <div className="link-box" ><Link to="/communicationl" className="link-large"><img src={communicationimg} className="managelistingimg"/>Communication</Link></div>
                       <div className="link-box"> <Link to="/addressl" className="link-large"><img src={addressimg} className="managelistingimg"/>Address</Link></div>
                         
                         
@@ -66,4 +66,4 @@ function Labournakapage(){
         </>
     )
 }
-export default Labournakapage;
+export default Managelistingl;
