@@ -1,136 +1,198 @@
-import React,{useState,useEffect} from "react";
-import { Link,useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../Freelisting/Businesslisting/Businesslisting.css";
 
 const Addressl = () => {
-const[countries,setCountries]=useState([]);
-const[states,setStates]=useState([]);
-const[cities,setCities]=useState([]);
-const [localities,setLocalities]=useState([]);
-const[pincodes,setPincodes]=useState([]);
-const[areas,setAreas]=useState([]);
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [assemblies, setAssemblies] = useState([]);
+  const [pincodes, setPincodes] = useState([]);
+  const [localities, setLocalities] = useState([]);
 
-const[selectedCountry,setSelectedCountry]=useState("");
-const[selectedState,setSelectedState]=useState("");
-const[selectedCity,setSelectedCity]=useState("");
-const[selectedLocality,setSelectedLocality]=useState("");
-const[selectedPincode,setSelectedPincode]=useState("");
-const [selectedArea, setSelectedArea] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedAssembly, setSelectedAssembly] = useState("");
+  const [selectedPincode, setSelectedPincode] = useState("");
+  const [selectedLocalities, setSelectedLocalities] = useState("");
 
-const navigate = useNavigate();
+  const [localAddress, setLocalAddress] = useState("");
 
-useEffect(()=>{
-  //fetch countries and related data
-  const fetchAddressData = async () => {
-    try {
-      const response = await fetch("https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster");
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const data = await response.json();
-      setCountries(data.country);
-    } catch (error) {
-      console.error("Error fetching address data:", error);
-    }
-  };
-  fetchAddressData();
-}, []);
+  const navigate = useNavigate();
 
+  const apiUrl =
+    "https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster";
 
-const handleCountryChange=(e)=>{
-  const countryID=e.target.value;
-  setSelectedCountry(countryID);
-  const selectedCountryData=countries.find((country)=>country.countryID===parseInt(countryID));
-  setStates(selectedCountryData ? selectedCountryData.states:[]);
-  setCities([]);
-  setLocalities([]);
-  setPincodes([]);
-  setAreas([]);
-};
+  const fetchData = (type, parentID = null) => {
+    let body = {
+      type,
+      LocalAddress: localAddress || "Default Address",
+    };
+    if (parentID) body.parentID = parentID;
 
-const handleStateChange=(e)=>{
-  const stateID=e.target.value;
-  setSelectedState(stateID);
-  const selectStateData=states.find((state)=>state.stateID ===parseInt(stateID));
-  setCities(selectStateData ?selectStateData.cities:[]);
-  setLocalities([]);
-  setPincodes([]);
-  setAreas([]);
-};
-
-const handleCityChange=(e)=>{
-  const cityID=e.target.value;
-  setSelectedCity(cityID);
-  const selectedCityData=cities.find((city)=>city.cityID===parseInt(cityID));
-  setLocalities(selectedCityData?selectedCityData.localities:[]);
-  setPincodes([]);
-  setAreas([]);
-}
-
-const handlLocalityChange=(e)=>{
-  const localityID=e.target.value;
-  setSelectedLocality(localityID);
-  const selectedLocalityData=localities.find((localities)=>localities.localityID===parseInt(localityID));
-  setPincodes(selectedLocalityData?selectedLocalityData.pincodes:[]);
-  setAreas([]);
-}
-
-const handlePincodeChange=(e)=>{
-  const pincodeID=e.target.value;
-  setSelectedPincode(pincodeID);
-  const selectedPincodeData=pincodes.find((pincodes)=>pincodes.pincodeID===parseInt(pincodeID));
-  setAreas(selectedPincodeData?selectedPincodeData.areas:[]);
-  
-};
-
-const handleAreaChange = (e) => {
-  const areaID = e.target.value;
-  setSelectedArea(areaID);
-};
-
-const handleSubmit=async(event)=>{
-  event.preventDefault();
-  const apiUrl="https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster";
-
-  const submissionData={
-    countryID: selectedCountry,
-    stateID: selectedState,
-    cityID: selectedCity,
-    localityID: selectedLocality,
-    pincodeID: selectedPincode,
-    areaID: selectedArea,
-    
-  };
-  console.log("Submitting data:",submissionData);
-
-  try{
-    const response=await fetch(apiUrl,{
-      method:"POST",
+    return fetch(apiUrl, {
+      method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body:JSON.stringify(submissionData)
+      body: JSON.stringify(body),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(`Data fetched for ${type}:`, data);
+        return data;
+      })
+      .catch((error) => {
+        console.error(`Error fetching ${type}:`, error);
+        return null;
+      });
+  };
+
+  useEffect(() => {
+    fetchData("countries").then((data) => {
+      if (data) setCountries(data.country);
     });
+  }, []);
 
-    if(!response.ok){
-      const errorData = await response.json();
-      console.error("API response error data:", errorData);
-      throw new Error(`HTTP error! Status: ${response.status}`);
+  const handleCountryChange = (e) => {
+    const countryID = e.target.value;
+    setSelectedCountry(countryID);
+    setSelectedState("");
+    setSelectedCity("");
+    setSelectedAssembly("");
+    setSelectedPincode("");
+    setSelectedLocalities("");
+
+    const selectedCountryData = countries.find(
+      (country) => country.countryID === parseInt(countryID)
+    );
+    if (selectedCountryData) {
+      console.log("Selected country states:", selectedCountryData.states);
+      setStates(selectedCountryData.states);
+    } else {
+      setStates([]);
     }
-    const responseData = await response.json();
-      console.log("API response:", responseData);
-      alert("Communication details saved successfully!");
-      navigate("/categoryl");
-  }
-  catch(error)
-  {
-    console.error("API error:", error);
-    alert("Failed to save communication details. Please try again");
-  }
-}
+  };
 
+  const handleStateChange = (e) => {
+    const stateID = e.target.value;
+    setSelectedState(stateID);
+    setSelectedCity("");
+    setSelectedAssembly("");
+    setSelectedPincode("");
+    setSelectedLocalities("");
 
+    const selectedStateData = states.find(
+      (state) => state.stateID === parseInt(stateID)
+    );
+    if (selectedStateData) {
+      console.log("Selected state cities:", selectedStateData.cities);
+      setCities(selectedStateData.cities);
+    } else {
+      setCities([]);
+    }
+  };
 
+  const handleCityChange = (e) => {
+    const cityID = e.target.value;
+    setSelectedCity(cityID);
+    setSelectedAssembly("");
+    setSelectedPincode("");
+    setSelectedLocalities("");
+
+    const selectedCityData = cities.find(
+      (city) => city.cityID === parseInt(cityID)
+    );
+    if (selectedCityData) {
+      console.log("Selected city localities:", selectedCityData.assemblies);
+      setAssemblies(selectedCityData.assemblies);
+    } else {
+      setAssemblies([]);
+    }
+  };
+
+  const handleLocalityChange = (e) => {
+    const assemblyID = e.target.value;
+    setSelectedAssembly(assemblyID);
+    setSelectedPincode("");
+    setSelectedLocalities("");
+    const selectedLocalityData = assemblies.find(
+      (assemblies) => assemblies.assemblyID === parseInt(assemblyID)
+    );
+    if (selectedLocalityData) {
+      console.log("Selected locality pincode", selectedLocalityData.pincodes);
+      setPincodes(selectedLocalityData.pincodes);
+    } else {
+      setPincodes([]);
+    }
+  };
+
+  const handlePincodeChange = (e) => {
+    const pincodeID = e.target.value;
+    setSelectedPincode(pincodeID);
+    setSelectedLocalities("");
+
+    const selectedPincodeData = pincodes.find(
+        (pincode) => pincode.pincodeID === parseInt(pincodeID)
+    );
+    if (selectedPincodeData) {
+        console.log("Selected pincode locality", selectedPincodeData.localities);
+        setLocalities(selectedPincodeData.localities);
+    } else {
+        setLocalities([]);
+    }
+};
+
+  const handleAreaChange = (e) => {
+    const localityID = e.target.value;
+    setSelectedLocalities(localityID);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const submissionData = {
+      countryID: selectedCountry,
+      stateID: selectedState,
+      cityID: selectedCity,
+      assemblyID: selectedAssembly,
+      pincodeID: selectedPincode,
+      localityID: selectedLocalities,
+      LocalAddress: localAddress,
+    };
+    console.log("Submitting data:", submissionData);
+
+    fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(submissionData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((errorData) => {
+            console.error("API response error data:", errorData);
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          });
+        }
+        return response.json();
+      })
+      .then((responseData) => {
+        console.log("API response:", responseData);
+        alert("Address details saved successfully!");
+        navigate("/categoryl");
+      })
+      .catch((error) => {
+        console.error("API error:", error);
+        alert("Failed to save communication details. Please try again.");
+      });
+  };
 
   return (
     <>
@@ -148,99 +210,123 @@ const handleSubmit=async(event)=>{
                 </span>
               </p>
               <form onSubmit={handleSubmit}>
-              <div className="row">
-                <div className="form-group col-md-4">
-                  <label>Country</label>
-                  <select className="wide add_bottom_10 country selectdrp" 
-                  value={selectedCountry}
-                  onChange={handleCountryChange}>
-                    <option value="">Select Country</option>
-                    {countries.map((country)=>(
-                      <option key={country.countryID} value={country.countryID}>{country.name}</option>
-                    ))}
-                    
-                  </select>
-                </div>
-                <div className="form-group col-md-4">
-                  <label htmlFor="state">State</label>
-                  <select
-                    className="wide add_bottom_10 state selectdrp"
-                    id="state"
-                    value={selectedState}
-                    onChange={handleStateChange}
-                  >
-                    <option value="">Select State</option>
-                    {states.map((state)=>(
-                      <option key={state.stateID} value={state.stateID}>{state.name}</option>
-                    ))}
-                    
-                  </select>
-                </div>
-                <div className="form-group col-md-4">
-                  <label>City</label>
-                  <select className="wide add_bottom_10 city selectdrp"
-                  value={selectedCity}
-                  onChange={handleCityChange}
-                  >
-                    <option>Select City</option>
-                    {cities.map((city)=>(
-                      <option key={city.cityID} value={city.cityID}>{city.name}</option>
-                    ))}
-                    
-                  </select>
-                </div>
-                <div className="form-group col-md-4">
-                  <label>Locality</label>
-                  <select className="wide add_bottom_10 assembly selectdrp"
-                  value={selectedLocality}
-                  onChange={handlLocalityChange}>
-                    <option value="">Select Locality</option>
-                    {localities.map((locality)=>(
-                      <option key={locality.localityID} value={locality.localityID}>{locality.name}</option>
-                    ))}
-                    
-                  </select>
-                </div>
-                <div className="form-group col-md-4">
-                  <label>Pincode</label>
-                  <select className="wide add_bottom_10 pincode selectdrp"
-                   value={selectedPincode} 
-                   onChange={handlePincodeChange}>
-                    <option value="">Select Pincode</option>
-                    {pincodes.map((pincode)=>(
-                      <option key={pincode.pincodeID} value={pincode.pincodeID}>{pincode.code}</option>
-                    ))}
-                 
-                  </select>
-                </div>
-                <div className="form-group col-md-4">
-                  <label>Area</label>
-                  <select className="wide add_bottom_10 area selectdrp"
-                      value={selectedArea}
-                      onChange={handleAreaChange}>
-                      <option value="">Select Area</option>
-                      {areas.map((area) => (
-                        <option key={area.areaID} value={area.areaID}>{area.name}</option>
+                <div className="row">
+                  <div className="form-group col-md-4">
+                    <label>Country</label>
+                    <select
+                      className="wide add_bottom_10 country selectdrp"
+                      value={selectedCountry}
+                      onChange={handleCountryChange}
+                    >
+                      <option value="">Select Country</option>
+                      {countries.map((country) => (
+                        <option
+                          key={country.countryID}
+                          value={country.countryID}
+                        >
+                          {country.name}
+                        </option>
                       ))}
                     </select>
-                </div>
-                <div className="form-group col-12">
-                  <label htmlFor="address">
-                    Address <span className="text-danger">*</span>
-                  </label>
-                  <textarea
-                    className="form-control form-control-sm"
-                    id="Address"
-                    name="Address"
-                    style={{ height: "100px" }}
-                  />
+                  </div>
+                  <div className="form-group col-md-4">
+                    <label htmlFor="state">State</label>
+                    <select
+                      className="wide add_bottom_10 state selectdrp"
+                      id="state"
+                      value={selectedState}
+                      onChange={handleStateChange}
+                    >
+                      <option value="">Select State</option>
+                      {states.map((state) => (
+                        <option key={state.stateID} value={state.stateID}>
+                          {state.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-group col-md-4">
+                    <label>City</label>
+                    <select
+                      className="wide add_bottom_10 city selectdrp"
+                      value={selectedCity}
+                      onChange={handleCityChange}
+                    >
+                      <option>Select City</option>
+                      {cities.map((city) => (
+                        <option key={city.cityID} value={city.cityID}>
+                          {city.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-group col-md-4">
+                    <label>Locality</label>
+                    <select
+                      className="wide add_bottom_10 assembly selectdrp"
+                      value={selectedAssembly}
+                      onChange={handleLocalityChange}
+                    >
+                      <option value="">Select Locality</option>
+                      {assemblies.map((assembly) => (
+                        <option
+                          key={assembly.assemblyID}
+                          value={assembly.assemblyID}
+                        >
+                          {assembly.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-group col-md-4">
+                    <label>Pincode</label>
+                    <select
+                      className="wide add_bottom_10 pincode selectdrp"
+                      value={selectedPincode}
+                      onChange={handlePincodeChange}
+                    >
+                      <option value="">Select Pincode</option>
+                      {pincodes.map((pincode) => (
+                        <option
+                          key={pincode.pincodeID}
+                          value={pincode.pincodeID}
+                        >
+                          {pincode.number}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-group col-md-4">
+                    <label>Area</label>
+                    <select
+                      className="wide add_bottom_10 area selectdrp"
+                      value={selectedLocalities}
+                      onChange={handleAreaChange}
+                    >
+                      <option value="">Select Area</option>
+                      {localities.map((localities) => (
+                        <option key={localities.localityID} value={localities.localityID}>
+                          {localities.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-group col-md-4">
+                    <label>Local Address</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={localAddress}
+                      onChange={(e) => setLocalAddress(e.target.value)}
+                      placeholder="Enter local address"
+                    />
+                  </div>
                 </div>
                 <div className="text-left col-12 mt-3">
-                <button type="submit" className="btn_1" >
-                    Save & Continue
-                  </button>
+                    <button type="submit" className="btn_1">
+                      Save & Continue
+                    </button>
                   </div>
-              </div>
               </form>
             </div>
           </div>
