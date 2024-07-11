@@ -225,6 +225,8 @@ import Imagesl from "./Pages/Managelisting/Imagesl";
 import Galleryimagel from "./Pages/Managelisting/Galleryimagel";
 import Managelistingl from "./Pages/Managelisting/Managelistingl";
 
+import Categoryapi from "./Pages/Managelisting/Categoryapi";
+
 
 function App() {
   return (
@@ -485,6 +487,8 @@ function App() {
 <Route path="/Keywordl" element={<Keywordl/>}/>
 <Route path="/Imagesl" element={<Imagesl/>}/>
 <Route path="/Galleryimage" element={<Galleryimagel/>}/>
+
+<Route path="/Categoryapi" element={<Categoryapi/>}/>
 
 <Route path="/labournakapage" element={<Profile2><Labournakapage /></Profile2>} />
 

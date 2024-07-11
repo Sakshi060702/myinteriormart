@@ -15,7 +15,7 @@ const Addressl = () => {
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedAssembly, setSelectedAssembly] = useState("");
   const [selectedPincode, setSelectedPincode] = useState("");
-  const [selectedLocalities, setSelectedLocalities] = useState("");
+  const [selectedLocality, setSelectedLocality] = useState("");
 
   const [localAddress, setLocalAddress] = useState("");
 
@@ -24,11 +24,17 @@ const Addressl = () => {
   const apiUrl =
     "https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster";
 
-  const fetchData = (type, parentID = null) => {
-    let body = {
-      type,
-      LocalAddress: localAddress || "Default Address",
-    };
+    const fetchData = (type, parentID = null) => {
+      let body = {
+        type,
+        CountryID:setSelectedCountry,
+        StateID: setSelectedState,
+        CityID: setSelectedCity,
+        AssemblyID:setSelectedAssembly,
+        PincodeID: setSelectedPincode,
+        LocalityID: setSelectedLocality,
+        LocalAddress: "", // Assuming this is default or required in your API
+      };
     if (parentID) body.parentID = parentID;
 
     return fetch(apiUrl, {
@@ -67,7 +73,7 @@ const Addressl = () => {
     setSelectedCity("");
     setSelectedAssembly("");
     setSelectedPincode("");
-    setSelectedLocalities("");
+    setSelectedLocality("");
 
     const selectedCountryData = countries.find(
       (country) => country.countryID === parseInt(countryID)
@@ -86,7 +92,7 @@ const Addressl = () => {
     setSelectedCity("");
     setSelectedAssembly("");
     setSelectedPincode("");
-    setSelectedLocalities("");
+    setSelectedLocality("");
 
     const selectedStateData = states.find(
       (state) => state.stateID === parseInt(stateID)
@@ -104,13 +110,13 @@ const Addressl = () => {
     setSelectedCity(cityID);
     setSelectedAssembly("");
     setSelectedPincode("");
-    setSelectedLocalities("");
+    setSelectedLocality("");
 
     const selectedCityData = cities.find(
       (city) => city.cityID === parseInt(cityID)
     );
     if (selectedCityData) {
-      console.log("Selected city localities:", selectedCityData.assemblies);
+      console.log("Selected city assemblies:", selectedCityData.assemblies);
       setAssemblies(selectedCityData.assemblies);
     } else {
       setAssemblies([]);
@@ -120,13 +126,14 @@ const Addressl = () => {
   const handleLocalityChange = (e) => {
     const assemblyID = e.target.value;
     setSelectedAssembly(assemblyID);
-    setSelectedPincode("");
-    setSelectedLocalities("");
+    setSelectedPincode(""); // Clear selected pincode when locality changes
+    setSelectedLocality("");
+  
     const selectedLocalityData = assemblies.find(
-      (assemblies) => assemblies.assemblyID === parseInt(assemblyID)
+      (assembly) => assembly.assemblyID === parseInt(assemblyID)
     );
     if (selectedLocalityData) {
-      console.log("Selected locality pincode", selectedLocalityData.pincodes);
+      console.log("Selected locality pincodes:", selectedLocalityData.pincodes);
       setPincodes(selectedLocalityData.pincodes);
     } else {
       setPincodes([]);
@@ -136,35 +143,37 @@ const Addressl = () => {
   const handlePincodeChange = (e) => {
     const pincodeID = e.target.value;
     setSelectedPincode(pincodeID);
-    setSelectedLocalities("");
+    setSelectedLocality("");
 
     const selectedPincodeData = pincodes.find(
-        (pincode) => pincode.pincodeID === parseInt(pincodeID)
+      (pincode) => pincode.pincodeID === parseInt(pincodeID)
     );
     if (selectedPincodeData) {
-        console.log("Selected pincode locality", selectedPincodeData.localities);
-        setLocalities(selectedPincodeData.localities);
+      console.log("Selected pincode localities:", selectedPincodeData.localities);
+      setLocalities(selectedPincodeData.localities);
     } else {
-        setLocalities([]);
+      setLocalities([]);
     }
-};
+  };
 
   const handleAreaChange = (e) => {
     const localityID = e.target.value;
-    setSelectedLocalities(localityID);
+    setSelectedLocality(localityID);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     const submissionData = {
-      countryID: selectedCountry,
-      stateID: selectedState,
-      cityID: selectedCity,
-      assemblyID: selectedAssembly,
-      pincodeID: selectedPincode,
-      localityID: selectedLocalities,
+      CountryID: parseInt(selectedCountry),
+      StateID: parseInt(selectedState),
+      CityID: parseInt(selectedCity),
+      AssemblyID: parseInt(selectedAssembly),
+      PincodeID: parseInt(selectedPincode),
+      LocalityID: parseInt(selectedLocality),
       LocalAddress: localAddress,
     };
+
     console.log("Submitting data:", submissionData);
 
     fetch(apiUrl, {
@@ -174,18 +183,11 @@ const Addressl = () => {
       },
       body: JSON.stringify(submissionData),
     })
-      .then((response) => {
-        if (!response.ok) {
-          return response.json().then((errorData) => {
-            console.error("API response error data:", errorData);
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          });
-        }
-        return response.json();
-      })
+      .then((response) => response.json())
+
       .then((responseData) => {
         console.log("API response:", responseData);
-        alert("Address details saved successfully!");
+        alert(`Submitted successfully! `);
         navigate("/categoryl");
       })
       .catch((error) => {
@@ -246,13 +248,14 @@ const Addressl = () => {
                     </select>
                   </div>
                   <div className="form-group col-md-4">
-                    <label>City</label>
+                    <label htmlFor="city">City</label>
                     <select
                       className="wide add_bottom_10 city selectdrp"
+                      id="city"
                       value={selectedCity}
                       onChange={handleCityChange}
                     >
-                      <option>Select City</option>
+                      <option value="">Select City</option>
                       {cities.map((city) => (
                         <option key={city.cityID} value={city.cityID}>
                           {city.name}
@@ -260,10 +263,12 @@ const Addressl = () => {
                       ))}
                     </select>
                   </div>
+                </div>
+                <div className="row">
                   <div className="form-group col-md-4">
                     <label>Locality</label>
                     <select
-                      className="wide add_bottom_10 assembly selectdrp"
+                      className="wide add_bottom_10 locality selectdrp"
                       value={selectedAssembly}
                       onChange={handleLocalityChange}
                     >
@@ -279,54 +284,53 @@ const Addressl = () => {
                     </select>
                   </div>
                   <div className="form-group col-md-4">
-                    <label>Pincode</label>
-                    <select
-                      className="wide add_bottom_10 pincode selectdrp"
-                      value={selectedPincode}
-                      onChange={handlePincodeChange}
-                    >
-                      <option value="">Select Pincode</option>
-                      {pincodes.map((pincode) => (
-                        <option
-                          key={pincode.pincodeID}
-                          value={pincode.pincodeID}
-                        >
-                          {pincode.number}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+  <label>Pincode</label>
+  <select
+    className="wide add_bottom_10 pincode selectdrp"
+    value={selectedPincode}
+    onChange={handlePincodeChange}
+  >
+    <option value="">Select Pincode</option>
+    {pincodes.map((pincode) => (
+      <option key={pincode.pincodeID} value={pincode.pincodeID}>
+        {pincode.number}
+      </option>
+    ))}
+  </select>
+</div>
                   <div className="form-group col-md-4">
                     <label>Area</label>
                     <select
                       className="wide add_bottom_10 area selectdrp"
-                      value={selectedLocalities}
+                      value={selectedLocality}
                       onChange={handleAreaChange}
                     >
                       <option value="">Select Area</option>
-                      {localities.map((localities) => (
-                        <option key={localities.localityID} value={localities.localityID}>
-                          {localities.name}
+                      {localities.map((locality) => (
+                        <option
+                          key={locality.localityID}
+                          value={locality.localityID}
+                        >
+                          {locality.name}
                         </option>
                       ))}
                     </select>
                   </div>
                   <div className="form-group col-md-4">
-                    <label>Local Address</label>
-                    <input
+                    <label htmlFor="localAddress">Local Address</label>
+                    <textarea
                       type="text"
                       className="form-control"
+                      id="localAddress"
+                      placeholder="Enter local address"
                       value={localAddress}
                       onChange={(e) => setLocalAddress(e.target.value)}
-                      placeholder="Enter local address"
                     />
                   </div>
                 </div>
-                <div className="text-left col-12 mt-3">
-                    <button type="submit" className="btn_1">
-                      Save & Continue
-                    </button>
-                  </div>
+                <button type="submit" className="btn btn-primary">
+                  Save & Continue
+                </button>
               </form>
             </div>
           </div>

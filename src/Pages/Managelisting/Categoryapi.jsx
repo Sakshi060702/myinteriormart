@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React,{useState,useEffect} from "react";
+import { Link,useNavigate } from "react-router-dom";
 
-const apiUrl = "https://apidev.myinteriormart.com/api/CategoryAllFromDropdown/GetAllCategoriesfromFirstandSecond";
+const apiUrl =
+  "https://apidev.myinteriormart.com/api/CategoryAllFromDropdown/GetAllCategoriesfromFirstandSecond";
+  const saveapiUrl="https://apidev.myinteriormart.com/api/CategoryAllFromDropdown/GetAllCategoriesfromFirstandSecond";
+function Categoryapi() {
 
-function Categoriesl() {
   const [categories, setCategories] = useState([]);
   const [firstCategory, setFirstCategory] = useState("");
   const [secondCategories, setSecondCategories] = useState([]);
@@ -13,17 +15,18 @@ function Categoriesl() {
   const [fifthCategories, setFifthCategories] = useState([]);
   const [sixthCategories, setSixthCategories] = useState([]);
 
-  const navigate = useNavigate();
+  const navigate=useNavigate();
 
   const fetchData = (type, parentID = null) => {
-    const body = { type, parentID };
+    const url = new URL(apiUrl);
+    if (type) url.searchParams.append("type", type);
+    if (parentID !== null) url.searchParams.append("parentID", parentID);
 
-    return fetch(apiUrl, {
+    return fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-       body: JSON.stringify(body),
     })
       .then((response) => {
         if (!response.ok) {
@@ -86,7 +89,6 @@ function Categoriesl() {
       selectedSecondCategory ? selectedSecondCategory.sixthCategories : []
     );
   };
-
   const handleCheckboxChange = (
     categoryList,
     setCategoryList,
@@ -137,73 +139,48 @@ function Categoriesl() {
     );
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    const selectedCategories = {
-      firstCategoryID: parseInt(firstCategory),
-      secondCategoryID: parseInt(secondCategory),
-      thirdCategoryID: thirdCategories
-        .filter((cat) => cat.isSelected)
-        .map((cat) => parseInt(cat.thirdCategoryId))
-        .join(','), // Convert array to comma-separated string
-      fourthCategoryID: fourthCategories
-        .filter((cat) => cat.isSelected)
-        .map((cat) => parseInt(cat.fourthCategoryId))
-        .join(','),
-      fifthCategoryID: fifthCategories
-        .filter((cat) => cat.isSelected)
-        .map((cat) => parseInt(cat.fifthCategoryId))
-        .join(','),
-      sixthCategoryID: sixthCategories
-        .filter((cat) => cat.isSelected)
-        .map((cat) => parseInt(cat.sixthCategoryId))
-        .join(','),
+const handleSubmit=()=>{
+    const selectedCategories={
+        firstCategory,
+        secondCategory,
+        thirdCategories:thirdCategories.filter((c)=>c.isSelected).map((c)=>c.thirdCategoryId),
+        fourthCategories:fourthCategories.filter((c)=>c.isSelected).map((c)=>c.fourthCategoryId),
+        fifthCategories:fifthCategories.filter((c)=>c.isSelected).map((c)=>c.fifthCategoryId),
+        sixthCategories:sixthCategories.filter((c)=>c.isSelected).map((c)=>c.sixthCategoryId),
     };
-    console.log('Payload being sent:', JSON.stringify(selectedCategories));
 
-    
-  
-    try {
-      const response = await fetch(apiUrl, {
-        method: 'POST',
+    const url=new URL(saveapiUrl);
+    url.searchParams.append("firstCategory",selectedCategories.firstCategory);
+    url.searchParams.append("secondCategory",selectedCategories.secondCategory);
+    selectedCategories.thirdCategories.forEach(id=>url.searchParams.append("thirdCategories",id));
+    selectedCategories.fourthCategories.forEach(id => url.searchParams.append("fourthCategories", id));
+    selectedCategories.fifthCategories.forEach(id => url.searchParams.append("fifthCategories", id));
+    selectedCategories.sixthCategories.forEach(id => url.searchParams.append("sixthCategories", id));
+    console.log(url);
+
+    fetch(url,{
+        method:"POST",
         headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(selectedCategories),
-      });
-  
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Response Data:', data);
-  
-        // Verify the response data matches the sent data
-        const isEqual =
-        data.category &&
-        data.category.firstCategoryID === selectedCategories.firstCategoryID &&
-        data.category.secondCategoryID === selectedCategories.secondCategoryID &&
-        data.category.thirdCategoryID === selectedCategories.thirdCategoryID &&
-        data.category.fourthCategoryID === selectedCategories.fourthCategoryID &&
-        data.category.fifthCategoryID === selectedCategories.fifthCategoryID &&
-        data.category.sixthCategoryID === selectedCategories.sixthCategoryID;
-  
-        if (isEqual) {
-          console.log('The response data matches the sent data.');
-          navigate('/specialisationl');
-        } else {
-          console.error('Mismatch between sent data and response data.');
-          console.log('Sent Data:', selectedCategories);
-          console.log('Received Data:', data.category);
-          alert('There was an error saving the categories');
+            "Content-Type": "application/json",
+          },
+    })
+    .then((response)=>{
+        if(!response.ok){
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
-      } else {
-        alert('There was an error saving the categories. Status: ' + response.status);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('There was an error handling the categories');
-    }
-  };
+        return response.json();
+    })
+    .then((data)=>{
+        console.log("Data saved:", data);
+        navigate("/specialisationl");
+    })
+    .catch((error)=>{
+        console.error("Error saving data:", error);
+    });
+};
+
+
+
   return (
     <div className="container my-5">
       <div className="row">
@@ -218,7 +195,7 @@ function Categoriesl() {
                 </Link>
               </span>
             </p>
-            <form onSubmit={handleSubmit}>
+            {/* <form onSubmit={handleSubmit}> */}
               <div className="row">
                 <div className="col-md-12 add_bottom_15">
                   <button
@@ -285,7 +262,10 @@ function Categoriesl() {
                               type="checkbox"
                               checked={category.isSelected || false}
                               onChange={(e) =>
-                                handleThirdCategoryChange(e, category.thirdCategoryId)
+                                handleThirdCategoryChange(
+                                  e,
+                                  category.thirdCategoryId
+                                )
                               }
                             />
                             <span className="checkmark"></span>
@@ -307,7 +287,10 @@ function Categoriesl() {
                               type="checkbox"
                               checked={category.isSelected || false}
                               onChange={(e) =>
-                                handleFourthCategoryChange(e, category.fourthCategoryId)
+                                handleFourthCategoryChange(
+                                  e,
+                                  category.fourthCategoryId
+                                )
                               }
                             />
                             <span className="checkmark"></span>
@@ -329,7 +312,10 @@ function Categoriesl() {
                               type="checkbox"
                               checked={category.isSelected || false}
                               onChange={(e) =>
-                                handleFifthCategoryChange(e, category.fifthCategoryId)
+                                handleFifthCategoryChange(
+                                  e,
+                                  category.fifthCategoryId
+                                )
                               }
                             />
                             <span className="checkmark"></span>
@@ -351,7 +337,10 @@ function Categoriesl() {
                               type="checkbox"
                               checked={category.isSelected || false}
                               onChange={(e) =>
-                                handleSixthCategoryChange(e, category.sixthCategoryId)
+                                handleSixthCategoryChange(
+                                  e,
+                                  category.sixthCategoryId
+                                )
                               }
                             />
                             <span className="checkmark"></span>
@@ -364,15 +353,16 @@ function Categoriesl() {
               <div className="row">
                 <div className="form-group col-md-12">
                   <button
-                    type="submit"
-                    className="btn btn-primary"
-                    style={{ backgroundColor: "#fb830d" }}
+                     type="button"
+                     className="btn btn-primary"
+                     style={{ backgroundColor: "#fb830d" }}
+                     onClick={handleSubmit}
                   >
                     Save & Continue
                   </button>
                 </div>
               </div>
-            </form>
+            {/* </form> */}
           </div>
         </div>
       </div>
@@ -380,4 +370,4 @@ function Categoriesl() {
   );
 }
 
-export default Categoriesl;
+export default Categoryapi;
