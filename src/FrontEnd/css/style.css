@@ -8538,8 +8538,9 @@ ul.bullets li:before {
 }
 
 .checkboxes label {
-  color: #444;
+  color: #8b7979;
   margin-top: 5px;
+  font-size: 15px;
 }
 
 a#forgot {

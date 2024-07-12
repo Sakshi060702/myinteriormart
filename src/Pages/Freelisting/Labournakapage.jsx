@@ -38,7 +38,7 @@ function Labournakapage(){
                 {/* Second row */}
                 <div className="col-12 mt-3">
                     <div className="link-group">
-                      <div className="link-box"> <Link to="/categoryl" className="link-large"><img src={categoryimg} className="managelistingimg"/>Categories</Link></div>
+                      <div className="link-box"> <Link to="/Categoryapi" className="link-large"><img src={categoryimg} className="managelistingimg"/>Categories</Link></div>
                       <div className="link-box"><Link to="/specialisationl" className="link-large"><img src={specialisationimg} className="managelistingimg"/>Specialisations</Link></div>
                       <div className="link-box"> <Link to="/workinghoursl" className="link-large"><img src={workinghoursimg} className="managelistingimg"/>Working Hours</Link></div>
                        

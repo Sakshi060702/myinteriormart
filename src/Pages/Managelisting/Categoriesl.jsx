@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-const apiUrl = "https://apidev.myinteriormart.com/api/CategoryAllFromDropdown/GetAllCategoriesfromFirstandSecond";
+
 
 function Categoriesl() {
   const [categories, setCategories] = useState([]);
@@ -14,33 +14,43 @@ function Categoriesl() {
   const [sixthCategories, setSixthCategories] = useState([]);
 
   const navigate = useNavigate();
+  const apiUrl = "https://apidev.myinteriormart.com/api/CategoryAllFromDropdown/GetAllCategoriesfromFirstandSecond";
 
-  const fetchData = (type, parentID = null) => {
-    const body = { type, parentID };
-
-    return fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-       body: JSON.stringify(body),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(`Data fetched for ${type}:`, data);
-        return data;
-      })
-      .catch((error) => {
-        console.error(`Error fetching ${type}:`, error);
-        return null;
+  const fetchData = async (type, parentID = null) => {
+    try {
+      let body = {
+        type,
+        FirstCategoryID: "",
+        SecondCategoryID: "",
+        ThirdCategoryID: "",
+        FourthCategoryID: "",
+        FifthCategoryID: "",
+        SixthCategoryID: ""
+      };
+  
+      if (parentID) body.parentID = parentID;
+  
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
       });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log(`Data fetched for ${type}:`, data);
+      return data;
+    } catch (error) {
+      console.error(`Error fetching ${type}:`, error);
+      return null;
+    }
   };
-
+  
   useEffect(() => {
     fetchData("firstCategory").then((data) => {
       if (data) setCategories(data.allCategories);
@@ -141,28 +151,29 @@ function Categoriesl() {
     e.preventDefault();
   
     const selectedCategories = {
-      firstCategoryID: parseInt(firstCategory),
-      secondCategoryID: parseInt(secondCategory),
-      thirdCategoryID: thirdCategories
-        .filter((cat) => cat.isSelected)
-        .map((cat) => parseInt(cat.thirdCategoryId))
-        .join(','), // Convert array to comma-separated string
-      fourthCategoryID: fourthCategories
-        .filter((cat) => cat.isSelected)
-        .map((cat) => parseInt(cat.fourthCategoryId))
-        .join(','),
-      fifthCategoryID: fifthCategories
-        .filter((cat) => cat.isSelected)
-        .map((cat) => parseInt(cat.fifthCategoryId))
-        .join(','),
-      sixthCategoryID: sixthCategories
-        .filter((cat) => cat.isSelected)
-        .map((cat) => parseInt(cat.sixthCategoryId))
-        .join(','),
+      categoryVM: {
+        FirstCategoryID: parseInt(firstCategory),
+        SecondCategoryID: parseInt(secondCategory),
+        ThirdCategoryID: thirdCategories
+          .filter((cat) => cat.isSelected)
+          .map((cat) => parseInt(cat.thirdCategoryId))
+          .join(','), // Convert array to comma-separated string
+        FourthCategoryID: fourthCategories
+          .filter((cat) => cat.isSelected)
+          .map((cat) => parseInt(cat.fourthCategoryId))
+          .join(','),
+        FifthCategoryID: fifthCategories
+          .filter((cat) => cat.isSelected)
+          .map((cat) => parseInt(cat.fifthCategoryId))
+          .join(','),
+        SixthCategoryID: sixthCategories
+          .filter((cat) => cat.isSelected)
+          .map((cat) => parseInt(cat.sixthCategoryId))
+          .join(',')
+      }
     };
+  
     console.log('Payload being sent:', JSON.stringify(selectedCategories));
-
-    
   
     try {
       const response = await fetch(apiUrl, {
@@ -176,27 +187,11 @@ function Categoriesl() {
       if (response.ok) {
         const data = await response.json();
         console.log('Response Data:', data);
-  
-        // Verify the response data matches the sent data
-        const isEqual =
-        data.category &&
-        data.category.firstCategoryID === selectedCategories.firstCategoryID &&
-        data.category.secondCategoryID === selectedCategories.secondCategoryID &&
-        data.category.thirdCategoryID === selectedCategories.thirdCategoryID &&
-        data.category.fourthCategoryID === selectedCategories.fourthCategoryID &&
-        data.category.fifthCategoryID === selectedCategories.fifthCategoryID &&
-        data.category.sixthCategoryID === selectedCategories.sixthCategoryID;
-  
-        if (isEqual) {
-          console.log('The response data matches the sent data.');
-          navigate('/specialisationl');
-        } else {
-          console.error('Mismatch between sent data and response data.');
-          console.log('Sent Data:', selectedCategories);
-          console.log('Received Data:', data.category);
-          alert('There was an error saving the categories');
-        }
+      
+        // Directly navigate on successful response
+        navigate('/specialisationl');
       } else {
+        console.error('Error saving categories. Status:', response.status);
         alert('There was an error saving the categories. Status: ' + response.status);
       }
     } catch (error) {
@@ -204,6 +199,7 @@ function Categoriesl() {
       alert('There was an error handling the categories');
     }
   };
+  
   return (
     <div className="container my-5">
       <div className="row">

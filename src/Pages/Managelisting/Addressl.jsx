@@ -24,17 +24,17 @@ const Addressl = () => {
   const apiUrl =
     "https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster";
 
-    const fetchData = (type, parentID = null) => {
-      let body = {
-        type,
-        CountryID:setSelectedCountry,
-        StateID: setSelectedState,
-        CityID: setSelectedCity,
-        AssemblyID:setSelectedAssembly,
-        PincodeID: setSelectedPincode,
-        LocalityID: setSelectedLocality,
-        LocalAddress: "", // Assuming this is default or required in your API
-      };
+  const fetchData = (type, parentID = null) => {
+    let body = {
+      type,
+      CountryID: setSelectedCountry,
+      StateID: setSelectedState,
+      CityID: setSelectedCity,
+      AssemblyID: setSelectedAssembly,
+      PincodeID: setSelectedPincode,
+      LocalityID: setSelectedLocality,
+      LocalAddress: "", // Assuming this is default or required in your API
+    };
     if (parentID) body.parentID = parentID;
 
     return fetch(apiUrl, {
@@ -128,7 +128,7 @@ const Addressl = () => {
     setSelectedAssembly(assemblyID);
     setSelectedPincode(""); // Clear selected pincode when locality changes
     setSelectedLocality("");
-  
+
     const selectedLocalityData = assemblies.find(
       (assembly) => assembly.assemblyID === parseInt(assemblyID)
     );
@@ -149,7 +149,10 @@ const Addressl = () => {
       (pincode) => pincode.pincodeID === parseInt(pincodeID)
     );
     if (selectedPincodeData) {
-      console.log("Selected pincode localities:", selectedPincodeData.localities);
+      console.log(
+        "Selected pincode localities:",
+        selectedPincodeData.localities
+      );
       setLocalities(selectedPincodeData.localities);
     } else {
       setLocalities([]);
@@ -188,7 +191,7 @@ const Addressl = () => {
       .then((responseData) => {
         console.log("API response:", responseData);
         alert(`Submitted successfully! `);
-        navigate("/categoryl");
+        navigate("/Categoryapi");
       })
       .catch((error) => {
         console.error("API error:", error);
@@ -284,20 +287,23 @@ const Addressl = () => {
                     </select>
                   </div>
                   <div className="form-group col-md-4">
-  <label>Pincode</label>
-  <select
-    className="wide add_bottom_10 pincode selectdrp"
-    value={selectedPincode}
-    onChange={handlePincodeChange}
-  >
-    <option value="">Select Pincode</option>
-    {pincodes.map((pincode) => (
-      <option key={pincode.pincodeID} value={pincode.pincodeID}>
-        {pincode.number}
-      </option>
-    ))}
-  </select>
-</div>
+                    <label>Pincode</label>
+                    <select
+                      className="wide add_bottom_10 pincode selectdrp"
+                      value={selectedPincode}
+                      onChange={handlePincodeChange}
+                    >
+                      <option value="">Select Pincode</option>
+                      {pincodes.map((pincode) => (
+                        <option
+                          key={pincode.pincodeID}
+                          value={pincode.pincodeID}
+                        >
+                          {pincode.number}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                   <div className="form-group col-md-4">
                     <label>Area</label>
                     <select
@@ -328,9 +334,11 @@ const Addressl = () => {
                     />
                   </div>
                 </div>
-                <button type="submit" className="btn btn-primary">
-                  Save & Continue
-                </button>
+                <div className="text-left col-12 mt-3">
+                  <button type="submit" className="btn_1">
+                    Save & Continue
+                  </button>
+                </div>
               </form>
             </div>
           </div>

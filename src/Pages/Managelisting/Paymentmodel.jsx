@@ -1,7 +1,58 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React,{useState} from "react";
+import { Link,useNavigate } from "react-router-dom";
 
 function Paymentmodel() {
+  const[payment,setPayment]=useState({
+    selectAll:false,
+    cash:false,
+    cheque:false,
+    rtgsNeft:false,
+    debitCard:false,
+    creditCard:false,
+    netBanking:false,
+    
+  })
+
+  const navigate=useNavigate();
+  const handleCheckboxChange=(event)=>{
+    const{name,checked}=event.target;
+    setPayment((prevState)=>({
+      ...prevState,
+      [name]:checked,
+    }));
+  };
+  const handleSelectAll=()=>{
+    const allSelected=!payment.selectAll;
+    const updatedPayment=Object.fromEntries(
+      Object.keys(payment).map((key)=>[key,allSelected])
+    );
+    setPayment(updatedPayment);
+  };
+
+  const handleSubmit=async()=>{
+    try {
+      const response = await fetch("https://apidev.myinteriormart.com/api/PaymentMode/CreatePaymentMode", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payment),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Response:", data);
+      alert("Data saved successfully")
+      navigate("/workinghoursl")
+      // Handle success (e.g., show a success message, redirect, etc.)
+    } catch (error) {
+      console.error("Error:", error);
+      // Handle error (e.g., show an error message)
+    }
+  }
   return (
     <>
       <div className="container my-5">
@@ -19,82 +70,39 @@ function Paymentmodel() {
               </p>
               <div className="row">
                 <div className="col-md-12 add_bottom_15">
-                    <button className="btn btn-primary" style={{backgroundColor:'#fb830d'}}>Select All</button>
+                    <button className="btn btn-primary" style={{backgroundColor:'#fb830d'}}
+                    onClick={handleSelectAll}>Select All</button>
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-4 col-6">
-                  <div className="clearfix add_bottom_15">
-                    <div className="checkboxes float-left">
-                      <label className="container_check">
-                        Cash
-                        <input type="checkbox" id="Cash" name="Cash" />
-                        <span className="checkmark"></span>
-                      </label>
+              {Object.keys(payment).map(
+                (key, index) =>
+                  key !== "selectAll" && (
+                    <div className="col-md-3" key={index}>
+                      <div className="clearfix add_bottom_15">
+                        <div className="checkboxes float-left">
+                          <label className="container_check">
+                            {key
+                              .replace(/([A-Z])/g, " $1")
+                              .replace(/^./, (str) => str.toUpperCase())}
+                            <input
+                              type="checkbox"
+                              id={key}
+                              name={key}
+                              checked={payment[key]}
+                              onChange={handleCheckboxChange}
+                            />
+                            <span className="checkmark"></span>
+                          </label>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div className="col-md-4 col-6">
-                  <div className="clearfix add_bottom_15">
-                    <div className="checkboxes float-left">
-                      <label className="container_check">
-                        Cheque
-                        <input type="checkbox" id="Cash" name="Cheque" />
-                        <span className="checkmark"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4 col-6">
-                  <div className="clearfix add_bottom_15">
-                    <div className="checkboxes float-left">
-                      <label className="container_check">
-                        RTGS & NEFT
-                        <input type="checkbox" id="Cash" name="RTGS&NEFT" />
-                        <span className="checkmark"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4 col-6">
-                  <div className="clearfix add_bottom_15">
-                    <div className="checkboxes float-left">
-                      <label className="container_check">
-                        Debit Card
-                        <input type="checkbox" id="Cash" name="Debit Card" />
-                        <span className="checkmark"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4 col-6">
-                  <div className="clearfix add_bottom_15">
-                    <div className="checkboxes float-left">
-                      <label className="container_check">
-                        Credit Card
-                        <input type="checkbox" id="Cash" name="Credit Card" />
-                        <span className="checkmark"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4 col-6">
-                  <div className="clearfix add_bottom_15">
-                    <div className="checkboxes float-left">
-                      <label className="container_check">
-                        Net Banking
-                        <input type="checkbox" id="Cash" name="Credit Card" />
-                        <span className="checkmark"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
+                  )
+              )}
                 <div className="text-left col-12 mt-3">
-                  
-                  <Link to="/Imagesl" className="btn_1 ">
+                  <button type="submit" className="btn_1" onClick={handleSubmit}>
                     Save & Continue
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
