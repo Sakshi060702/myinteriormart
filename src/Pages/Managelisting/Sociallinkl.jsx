@@ -1,8 +1,57 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React,{useState} from "react";
+import { Link,useNavigate } from "react-router-dom";
 import "../Freelisting/Businesslisting/Businesslisting.css";
 
 function Sociallinkl() {
+
+  const[formData,setFormData]=useState({
+    facebook:"",
+    whatsappGroupLink:"",
+    linkedin:"",
+    twitter:"",
+    instagram:"",
+    youtube:"",
+    pinterest:""
+
+  });
+  const navigate=useNavigate();
+
+  const handleChange=(event)=>{
+    const{name,value}=event.target;
+    setFormData((prevFormData)=>({
+      ...prevFormData,
+      [name]:value
+    }));
+  };
+
+  const handleSubmit=async(event)=>{
+    event.preventDefault();
+    const apiUrl="https://apidev.myinteriormart.com/api/SocialLink/CreateSocialLink";
+    console.log("Submitting data",formData);
+
+    try{
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("API response error data:", errorData);
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const responseData = await response.json();
+      console.log("API response:", responseData);
+      alert("SocialLink details saved successfully!");
+     
+    }
+    catch(error){
+      console.error("API error:", error);
+      alert("Failed to save company details. Please try again later.");
+    }
+  }
   return (
     <>
       <div className="container my-5">
@@ -18,85 +67,101 @@ function Sociallinkl() {
                   </Link>
                 </span>
               </p>
+              <form onSubmit={handleSubmit}>
               <div className="row">
-                <div class="form-group col-md-6">
+                <div className="form-group col-md-6">
                   <label for="name">Facebook </label>
                   <input
-                    className="form-control form-control-sm"
-                    type="name"
-                    name="website"
-                    id="website"
-                    placeholder="Enter Facebook Link"
-                  />
+                      className="form-control form-control-sm"
+                      type="text"
+                      name="facebook"
+                      id="facebook"
+                      placeholder="Enter Facebook Link"
+                      value={formData.facebook}
+                      onChange={handleChange}
+                    />
                 </div>
-                <div class="form-group col-md-6">
+                <div className="form-group col-md-6">
                   <label for="name">Whatsapp </label>
                   <input
-                    className="form-control form-control-sm"
-                    type="name"
-                    name="website"
-                    id="website"
-                    placeholder="Enter Whatsapp Link"
-                  />
+                      className="form-control form-control-sm"
+                      type="text"
+                      name="whatsappGroupLink"
+                      id="whatsappGroupLink"
+                      placeholder="Enter Whatsapp Link"
+                      value={formData.whatsappGroupLink}
+                      onChange={handleChange}
+                    />
                 </div>
-                <div class="form-group col-md-6">
+                <div className="form-group col-md-6">
                   <label for="name">LinkdenIn</label>
                   <input
-                    className="form-control form-control-sm"
-                    type="name"
-                    name="website"
-                    id="website"
-                    placeholder="Enter LinkdenIn Link"
-                  />
+                      className="form-control form-control-sm"
+                      type="text"
+                      name="linkedin"
+                      id="linkedin"
+                      placeholder="Enter LinkedIn Link"
+                      value={formData.linkedin}
+                      onChange={handleChange}
+                    />
                 </div>
-                <div class="form-group col-md-6">
+                <div className="form-group col-md-6">
                   <label for="name">Twitter</label>
                   <input
-                    className="form-control form-control-sm"
-                    type="name"
-                    name="website"
-                    id="website"
-                    placeholder="Enter Twitter Link"
-                  />
+                      className="form-control form-control-sm"
+                      type="text"
+                      name="twitter"
+                      id="twitter"
+                      placeholder="Enter Twitter Link"
+                      value={formData.twitter}
+                      onChange={handleChange}
+                    />
                 </div>
-                <div class="form-group col-md-6">
+                <div className="form-group col-md-6">
                   <label for="name">Youtube</label>
                   <input
-                    className="form-control form-control-sm"
-                    type="name"
-                    name="website"
-                    id="website"
-                    placeholder="Enter Youtube Link"
-                  />
+                      className="form-control form-control-sm"
+                      type="text"
+                      name="youtube"
+                      id="youtube"
+                      placeholder="Enter YouTube Link"
+                      value={formData.youtube}
+                      onChange={handleChange}
+                    />
                 </div>
-                <div class="form-group col-md-6">
+                <div className="form-group col-md-6">
                   <label for="name">Instagram</label>
                   <input
-                    className="form-control form-control-sm"
-                    type="name"
-                    name="website"
-                    id="website"
-                    placeholder="Enter Instagram Link"
-                  />
+                      className="form-control form-control-sm"
+                      type="text"
+                      name="instagram"
+                      id="instagram"
+                      placeholder="Enter Instagram Link"
+                      value={formData.instagram}
+                      onChange={handleChange}
+                    />
                 </div>
-                <div class="form-group col-md-6">
+                <div className="form-group col-md-6">
                   <label for="name">Pinterest</label>
                   <input
-                    className="form-control form-control-sm"
-                    type="name"
-                    name="website"
-                    id="website"
-                    placeholder="Enter Pinterest Link"
-                  />
+                      className="form-control form-control-sm"
+                      type="text"
+                      name="pinterest"
+                      id="pinterest"
+                      placeholder="Enter Pinterest Link"
+                      value={formData.pinterest}
+                      onChange={handleChange}
+                    />
                 </div>
 
                
                 <div className="text-left col-12 mt-3">
-                  <Link to="/addressl" className="btn_1 ">
-                    Save & Continue
-                  </Link>
-                </div>
+                    <button type="submit" className="btn_1">
+                      Save & Continue
+                    </button>
+                  </div>
               </div>
+              </form>
             </div>
           </div>
         </div>

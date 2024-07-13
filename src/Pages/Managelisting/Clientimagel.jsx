@@ -3,18 +3,42 @@ import { Link } from "react-router-dom";
 
 function Clientimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [imageTitle, setImageTitle] = useState("");
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
 
-  const handleSubmitfile = (event) => {
+  const handleTitleChange = (event) => {
+    setImageTitle(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Here you can handle the file submission, e.g., send it to a server
-    if (selectedFile) {
+    if (selectedFile && imageTitle) {
       const formData = new FormData();
       formData.append("file", selectedFile);
-      // Example: send formData using fetch or Axios
+      formData.append("imageTitle", imageTitle);
+
+      try {
+        const response = await fetch("https://apidev.myinteriormart.com/api/ImageUpload/UploadClientImage", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const result = await response.json();
+        console.log(result); // Log the result for debugging purposes
+        alert("Client Image Uploded Successfully")
+        // You can handle the result here if needed, e.g., show a success message
+      } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+      }
+    } else {
+      alert("Please select a file and enter a title");
     }
   };
 
@@ -28,7 +52,7 @@ function Clientimagel() {
                 <label for="name">
                   Select Client Logo Image <span className="text-danger">*</span>
                 </label>
-                <form onSubmit={handleSubmitfile}>
+                <form>
                   <input
                     type="file"
                     onChange={handleFileChange}
@@ -51,14 +75,17 @@ function Clientimagel() {
                     name="website"
                     id="website"
                     placeholder="Client Logo Title"
+                    value={imageTitle}
+                onChange={handleTitleChange}
                   />
               </div>
-              <Link
-                  className="btn_1 "
-                  style={{ backgroundColor: "orange", marginTop: "10px" }}
-                >
-                  Submit
-                </Link>
+              <button
+              className="btn_1"
+              style={{ backgroundColor: "orange", marginTop: "10px" }}
+              onClick={handleSubmit}
+            >
+              Submit
+            </button>
             </div>
           </div>
         </div>

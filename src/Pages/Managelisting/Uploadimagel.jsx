@@ -8,37 +8,71 @@ function Uploadimagel() {
     setSelectedFile(event.target.files[0]);
   };
 
-  const handleSubmitfile = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Here you can handle the file submission, e.g., send it to a server
     if (selectedFile) {
       const formData = new FormData();
       formData.append("file", selectedFile);
-      // Example: send formData using fetch or Axios
+
+      try {
+        const response = await fetch(
+          "https://apidev.myinteriormart.com/api/ImageUpload/UploadLogoImage",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const result = await response.json();
+        console.log(result); // Log the result for debugging purposes
+        alert("Logo Image Uploded Successfully");
+        // You can handle the result here if needed, e.g., show a success message
+      } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+      }
+    } else {
+      alert("Please select a file and enter a title");
     }
   };
 
   return (
     <>
-    <div className="row imageSection" id="logo_section">
+      <div className="row imageSection" id="logo_section">
         <div className="col-12">
-            <div className="row mt-5 justify-content-center">
-                <div className="col-md-6">
-                    <div className="form-group">
-                    <label for="name">Select Logo Image <span className="text-danger">*</span></label>
-                    <form onSubmit={handleSubmitfile}>
-                    <input type="file" onChange={handleFileChange} style={{border:'2px solid grey',height:'50px',width:'500px'}} />
-                    {/* <button type="submit">Upload</button> */}
-                  </form>
-                  <Link  className="btn_1 " style={{backgroundColor:'orange',marginTop:'10px'}}>
-                    Submit
-                  </Link>
-                    </div>
-                </div>
+          <div className="row mt-5 justify-content-center">
+            <div className="col-md-6">
+              <div className="form-group">
+                <label for="name">
+                  Select Logo Image <span className="text-danger">*</span>
+                </label>
+
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  style={{
+                    border: "2px solid grey",
+                    height: "50px",
+                    width: "500px",
+                  }}
+                />
+                {/* <button type="submit">Upload</button> */}
+
+                <button
+                  className="btn_1"
+                  style={{ backgroundColor: "orange", marginTop: "10px" }}
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </button>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-      
+      </div>
     </>
   );
 }
