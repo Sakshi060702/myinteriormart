@@ -3,23 +3,24 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Workinghoursl() {
   const navigate = useNavigate();
+
   const [workingHours, setWorkingHours] = useState({
-    mondayFrom: "10:00:00",
-    mondayTo: "07:00:00",
-    tuesdayFrom: "10:00:00",
-    tuesdayTo: "07:00:00",
-    wednesdayFrom: "10:00:00",
-    wednesdayTo: "07:00:00",
-    thursdayFrom: "10:00:00",
-    thursdayTo: "07:00:00",
-    fridayFrom: "10:00:00",
-    fridayTo: "07:00:00",
-    saturdayFrom: "00:00:00",
-    saturdayTo: "00:00:00",
-    sundayFrom: "00:00:00",
-    sundayTo: "00:00:00",
-    saturdayHoliday: true,
-    sundayHoliday: true,
+    mondayFrom: "",
+    mondayTo: "",
+    tuesdayFrom: "",
+    tuesdayTo: "",
+    wednesdayFrom: "",
+    wednesdayTo: "",
+    thursdayFrom: "",
+    thursdayTo: "",
+    fridayFrom: "",
+    fridayTo: "",
+    saturdayFrom: "",
+    saturdayTo: "",
+    sundayFrom: "",
+    sundayTo: "",
+    saturdayHoliday: false,
+    sundayHoliday: false,
   });
 
   const handleInputChange = (e) => {
@@ -30,47 +31,53 @@ function Workinghoursl() {
     });
   };
 
-  const handleCopyToAll = () => {
-    const { mondayFrom, mondayTo } = workingHours;
-    setWorkingHours({
-      ...workingHours,
-      tuesdayFrom: mondayFrom,
-      tuesdayTo: mondayTo,
-      wednesdayFrom: mondayFrom,
-      wednesdayTo: mondayTo,
-      thursdayFrom: mondayFrom,
-      thursdayTo: mondayTo,
-      fridayFrom: mondayFrom,
-      fridayTo: mondayTo,
-      saturdayFrom: mondayFrom,
-      saturdayTo: mondayTo,
-      sundayFrom: mondayFrom,
-      sundayTo: mondayTo,
-    });
+  const formatTime = (time) => {
+    if (!time) return "";
+    const today = new Date();
+    const [hours, minutes] = time.split(":");
+    today.setHours(hours, minutes);
+    return today.toISOString();
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    const response = await fetch(
-      "https://apidev.myinteriormart.com/api/WorkingHours/WorkingHours",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ workinghoursVM: workingHours }),
+  const handleSubmit = async () => {
+    const formattedWorkingHours = {
+      ...workingHours,
+      mondayFrom: formatTime(workingHours.mondayFrom),
+      mondayTo: formatTime(workingHours.mondayTo),
+      tuesdayFrom: formatTime(workingHours.tuesdayFrom),
+      tuesdayTo: formatTime(workingHours.tuesdayTo),
+      wednesdayFrom: formatTime(workingHours.wednesdayFrom),
+      wednesdayTo: formatTime(workingHours.wednesdayTo),
+      thursdayFrom: formatTime(workingHours.thursdayFrom),
+      thursdayTo: formatTime(workingHours.thursdayTo),
+      fridayFrom: formatTime(workingHours.fridayFrom),
+      fridayTo: formatTime(workingHours.fridayTo),
+      saturdayFrom: formatTime(workingHours.saturdayFrom),
+      saturdayTo: formatTime(workingHours.saturdayTo),
+      sundayFrom: formatTime(workingHours.sundayFrom),
+      sundayTo: formatTime(workingHours.sundayTo),
+    };
+
+    try {
+      const response = await fetch(
+        "https://apidev.myinteriormart.com/api/WorkingHours/WorkingHours",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ workinghoursVM: formattedWorkingHours }),
+        }
+      );
+      const data = await response.json();
+      if (data.message === "WorkingHours Details Updated successfully") {
+        navigate("/paymentmodel");
+      } else {
+        alert("Failed to update working hours");
       }
-    );
-    const data = await response.json();
-    if (data.message === "WorkingHours Details Updated successfully") {
-      console.log("Response:",data);
-      alert(data)
-      // Redirect to another page on successful submission
-      navigate("/paymentmodel");
-    } else {
-      // Handle error
-      console.error("Error updating working hours:", data);
+    } catch (error) {
+      console.error("Error updating working hours:", error);
+      alert("An error occurred while updating working hours");
     }
   };
 
@@ -91,236 +98,97 @@ function Workinghoursl() {
               </p>
               <div className="row">
                 <div className="col-md-12 add_bottom_15">
-                  <button
-                    className="btn btn-primary"
-                    style={{ backgroundColor: "#fb830d" }}
-                    onClick={handleCopyToAll}
-                  >
-                    Copy to All
-                  </button>
+                  <button className="btn btn-primary" style={{ backgroundColor: '#fb830d' }}>Copy to All</button>
                 </div>
               </div>
-              <form onSubmit={handleSubmit}>
-                <div className="row">
-                  <div className="form-group col-md-6">
-                    <label htmlFor="mondayFrom">Monday From</label>
-                    <input
-                      className="form-control form-control-sm"
-                      type="time"
-                      name="mondayFrom"
-                      id="mondayFrom"
-                      value={workingHours.mondayFrom}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label htmlFor="mondayTo">Monday To</label>
-                    <input
-                      className="form-control form-control-sm"
-                      type="time"
-                      name="mondayTo"
-                      id="mondayTo"
-                      value={workingHours.mondayTo}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label htmlFor="tuesdayFrom">Tuesday From</label>
-                    <input
-                      className="form-control form-control-sm"
-                      type="time"
-                      name="tuesdayFrom"
-                      id="tuesdayFrom"
-                      value={workingHours.tuesdayFrom}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label htmlFor="tuesdayTo">Tuesday To</label>
-                    <input
-                      className="form-control form-control-sm"
-                      type="time"
-                      name="tuesdayTo"
-                      id="tuesdayTo"
-                      value={workingHours.tuesdayTo}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label htmlFor="wednesdayFrom">Wednesday From</label>
-                    <input
-                      className="form-control form-control-sm"
-                      type="time"
-                      name="wednesdayFrom"
-                      id="wednesdayFrom"
-                      value={workingHours.wednesdayFrom}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label htmlFor="wednesdayTo">Wednesday To</label>
-                    <input
-                      className="form-control form-control-sm"
-                      type="time"
-                      name="wednesdayTo"
-                      id="wednesdayTo"
-                      value={workingHours.wednesdayTo}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label htmlFor="thursdayFrom">Thursday From</label>
-                    <input
-                      className="form-control form-control-sm"
-                      type="time"
-                      name="thursdayFrom"
-                      id="thursdayFrom"
-                      value={workingHours.thursdayFrom}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label htmlFor="thursdayTo">Thursday To</label>
-                    <input
-                      className="form-control form-control-sm"
-                      type="time"
-                      name="thursdayTo"
-                      id="thursdayTo"
-                      value={workingHours.thursdayTo}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label htmlFor="fridayFrom">Friday From</label>
-                    <input
-                      className="form-control form-control-sm"
-                      type="time"
-                      name="fridayFrom"
-                      id="fridayFrom"
-                      value={workingHours.fridayFrom}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label htmlFor="fridayTo">Friday To</label>
-                    <input
-                      className="form-control form-control-sm"
-                      type="time"
-                      name="fridayTo"
-                      id="fridayTo"
-                      value={workingHours.fridayTo}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="col-md-12">
-                    <div className="clearfix add_bottom_15">
-                      <div className="checkboxes float-left">
-                        <label className="container_check">
-                          Saturday Holiday
-                          <input
-                            type="checkbox"
-                            id="saturdayHoliday"
-                            name="saturdayHoliday"
-                            checked={workingHours.saturdayHoliday}
-                            onChange={handleInputChange}
-                          />
-                          <span className="checkmark"></span>
-                        </label>
+              <div className="row">
+                {["monday", "tuesday", "wednesday", "thursday", "friday"].map((day) => (
+                  <React.Fragment key={day}>
+                    <div className="form-group col-md-6">
+                      <label htmlFor={`${day}From`}>{`${day.charAt(0).toUpperCase() + day.slice(1)} From`}</label>
+                      <input
+                        className="form-control form-control-sm"
+                        type="time"
+                        name={`${day}From`}
+                        id={`${day}From`}
+                        value={workingHours[`${day}From`]}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <div className="form-group col-md-6">
+                      <label htmlFor={`${day}To`}>{`${day.charAt(0).toUpperCase() + day.slice(1)} To`}</label>
+                      <input
+                        className="form-control form-control-sm"
+                        type="time"
+                        name={`${day}To`}
+                        id={`${day}To`}
+                        value={workingHours[`${day}To`]}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </React.Fragment>
+                ))}
+                <hr />
+                {["saturday", "sunday"].map((day) => (
+                  <React.Fragment key={day}>
+                    <div className="col-md-12">
+                      <div className="clearfix add_bottom_15">
+                        <div className="checkboxes float-left">
+                          <label className="container_check">
+                            {`${day.charAt(0).toUpperCase() + day.slice(1)} Holiday`}
+                            <input
+                              type="checkbox"
+                              id={`${day}Holiday`}
+                              name={`${day}Holiday`}
+                              checked={workingHours[`${day}Holiday`]}
+                              onChange={handleInputChange}
+                            />
+                            <span className="checkmark"></span>
+                          </label>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label className="control-label" htmlFor="saturdayFrom">
-                        Saturday From
-                      </label>
-                      <input
-                        className="form-control form-control-sm"
-                        id="saturdayFrom"
-                        type="time"
-                        name="saturdayFrom"
-                        value={workingHours.saturdayFrom}
-                        onChange={handleInputChange}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label className="control-label" htmlFor="saturdayTo">
-                        Saturday To
-                      </label>
-                      <input
-                        className="form-control form-control-sm"
-                        id="saturdayTo"
-                        type="time"
-                        name="saturdayTo"
-                        value={workingHours.saturdayTo}
-                        onChange={handleInputChange}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-md-12">
-                    <div className="clearfix add_bottom_15">
-                      <div className="checkboxes float-left">
-                        <label className="container_check">
-                          Sunday Holiday
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <label className="control-label" htmlFor={`${day}From`}>{`${day.charAt(0).toUpperCase() + day.slice(1)} From`}</label>
+                        <input
+                          className="form-control form-control-sm"
+                          id={`${day}From`}
+                          type="time"
+                          name={`${day}From`}
+                          value={workingHours[`${day}From`]}
+                          onChange={handleInputChange}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="form-group">
+                          <label className="control-label" htmlFor={`${day}To`}>{`${day.charAt(0).toUpperCase() + day.slice(1)} To`}</label>
                           <input
-                            type="checkbox"
-                            id="sundayHoliday"
-                            name="sundayHoliday"
-                            checked={workingHours.sundayHoliday}
+                            className="form-control form-control-sm"
+                            id={`${day}To`}
+                            type="time"
+                            name={`${day}To`}
+                            value={workingHours[`${day}To`]}
                             onChange={handleInputChange}
                           />
-                          <span className="checkmark"></span>
-                        </label>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label className="control-label" htmlFor="sundayFrom">
-                        Sunday From
-                      </label>
-                      <input
-                        className="form-control form-control-sm"
-                        id="sundayFrom"
-                        type="time"
-                        name="sundayFrom"
-                        value={workingHours.sundayFrom}
-                        onChange={handleInputChange}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label className="control-label" htmlFor="sundayTo">
-                        Sunday To
-                      </label>
-                      <input
-                        className="form-control form-control-sm"
-                        id="sundayTo"
-                        type="time"
-                        name="sundayTo"
-                        value={workingHours.sundayTo}
-                        onChange={handleInputChange}
-                      />
-                    </div>
-                  </div>
+                    </React.Fragment>
+                  ))}
                   <div className="text-left col-12 mt-3">
-                    <button type="submit" className="btn_1">
+                    <button className="btn_1" onClick={handleSubmit}>
                       Save & Continue
                     </button>
                   </div>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </>
-  );
-}
-
-export default Workinghoursl;
-
-
+      </>
+    );
+  }
+  
+  export default Workinghoursl;
+  
