@@ -1,40 +1,45 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../Freelisting/Businesslisting/Businesslisting.css";
+import "../../FrontEnd/css/Mangelisting.css";
 
 function Keywordl() {
   const [keyword, setKeyword] = useState(""); // State to hold current keyword input
   const [addedKeywords, setAddedKeywords] = useState([]); // State to hold added keywords
   const [selectedKeywords, setSelectedKeywords] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+
 
   useEffect(() => {
     fetch("https://apidev.myinteriormart.com/api/Keywords/ManageKeywords", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         Action: "fetch", // Specify the action needed (fetch, add, remove, etc.)
-        Keyword: "" // Adjust as needed based on API requirements
+        Keyword: "", // Adjust as needed based on API requirements
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
       })
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      // Assuming your API returns an array of keywords directly in the response data
-      const fetchedKeywords = data.keywords.map(keyword => keyword.seoKeyword);
-      setSelectedKeywords(fetchedKeywords); // Set previously selected keywords
-    })
-    .catch(error => {
-      console.error("Error fetching keywords:", error);
-      // Handle error appropriately
-    });
+      .then((data) => {
+        // Assuming your API returns an array of keywords directly in the response data
+        const fetchedKeywords = data.keywords.map(
+          (keyword) => keyword.seoKeyword
+        );
+        setSelectedKeywords(fetchedKeywords); // Set previously selected keywords
+      })
+      .catch((error) => {
+        console.error("Error fetching keywords:", error);
+        // Handle error appropriately
+      });
   }, []); // Empty dependency array ensures this runs once on component mount
-  
 
   // Function to handle adding a keyword
   const addKeyword = () => {
@@ -42,87 +47,125 @@ function Keywordl() {
       fetch("https://apidev.myinteriormart.com/api/Keywords/ManageKeywords", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           action: "add",
-          keyword: keyword
+          keyword: keyword,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const contentType = response.headers.get("content-type");
+          if (contentType && contentType.includes("application/json")) {
+            return response.json();
+          } else {
+            return response.text();
+          }
         })
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        console.log("Response status:", response.status); // Debugging: log response status
-        
-        // Assuming the response is not JSON but a simple success message
-        console.log("Keyword added successfully");
-        setAddedKeywords([...addedKeywords, keyword]);
-        setKeyword(""); // Clear the input field after adding
-      })
-      .catch(error => {
-        console.error("Error adding keyword:", error);
-        // Handle error appropriately
-      });
+        .then((data) => {
+          if (typeof data === "string") {
+            if (data.includes("Keyword already exists")) {
+              setErrorMessage("Keyword already exists");
+              setShowPopup(true);
+              setTimeout(() => setShowPopup(false), 4000);
+            } else {
+              console.log("Keyword added successfully");
+              setAddedKeywords([...addedKeywords, keyword]);
+              setKeyword("");
+              setErrorMessage("");
+             
+            }
+          } else if (data.success) {
+            console.log("Keyword added successfully");
+            setAddedKeywords([...addedKeywords, keyword]);
+            setKeyword("");
+            setErrorMessage("");
+          } else {
+            setErrorMessage(data.message || "Keyword already exists");
+            setShowPopup(true);
+            setTimeout(() => setShowPopup(false), 4000);
+          }
+        })
+        .catch((error) => {
+          console.error("Error adding keyword:", error);
+          setErrorMessage("Keyword already exists");
+          setShowPopup(true);
+          setTimeout(() => setShowPopup(false), 4000);
+        });
     }
   };
-  
-  
+
   // Function to handle removing a keyword
   const removeKeyword = (keywordToRemove) => {
     fetch("https://apidev.myinteriormart.com/api/Keywords/ManageKeywords", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         action: "remove",
-        keyword: keywordToRemove
+        keyword: keywordToRemove,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+          return response.json();
+        } else {
+          return response.text();
+        }
       })
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log(data);
-      console.log("Keyword removed:", keywordToRemove);
+      .then((data) => {
+        console.log(data);
+        console.log("Keyword removed:", keywordToRemove);
 
-  
-      // Update addedKeywords state by filtering out the removed keyword
-      const updatedKeywords = addedKeywords.filter(kw => kw !== keywordToRemove);
-      setAddedKeywords(updatedKeywords);
-    })
-    .catch(error => {
-      console.error("Error removing keyword:", error);
-      // Handle error if needed
-    });
+        // Update addedKeywords state by filtering out the removed keyword
+        const updatedKeywords = addedKeywords.filter(
+          (kw) => kw !== keywordToRemove
+        );
+        setAddedKeywords(updatedKeywords);
+
+        const updatedSelectedKeywords=selectedKeywords.filter(
+          (kw)=>kw!==keywordToRemove
+        );
+        setSelectedKeywords(updatedSelectedKeywords);
+      })
+      .catch((error) => {
+        console.error("Error removing keyword:", error);
+        // Handle error if needed
+      });
   };
-  
+
   // Function to handle saving added keywords
   const saveKeywords = () => {
     fetch("https://apidev.myinteriormart.com/api/Keywords/ManageKeywords", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         action: "save",
-        keyword: "" // Assuming this saves all added keywords in one go
+        keyword: "", // Assuming this saves all added keywords in one go
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Keywords saved successfully:", data);
+        alert("Keywords saved successfully!");
+        setSelectedKeywords([...selectedKeywords, ...addedKeywords]);
+        // Reset added keywords state after saving if needed
+        setAddedKeywords([]);
       })
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log("Keywords saved successfully:", data);
-      // Reset added keywords state after saving if needed
-      setAddedKeywords([]);
-    })
-    .catch(error => {
-      console.error("Error saving keywords:", error);
-      // Handle error if needed
-    });
+      .catch((error) => {
+        console.error("Error saving keywords:", error);
+        // Handle error if needed
+      });
   };
 
   return (
@@ -153,17 +196,25 @@ function Keywordl() {
                     />
                     <div className="input-group-append">
                       <button
-                        className="btn btn-primary"
+                        className=" plus-button"
                         type="button"
                         onClick={addKeyword}
+                        style={{marginLeft:"10px",
+                          
+                        }}
                       >
-                        Add
+                        +
                       </button>
                     </div>
                   </div>
+                  {showPopup && (
+                    <div className="popup" style={{textAlign:'center',fontSize:'18px'}}>
+                      {errorMessage}
+                    </div>
+                  )}
                 </div>
                 {/* Display added keywords */}
-                <div className="col-md-6">
+                {/* <div className="col-md-6">
                   <label>Added Keywords:</label>
                   <ul>
                     {addedKeywords.map((kw, index) => (
@@ -178,33 +229,48 @@ function Keywordl() {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </div> */}
                 <br></br>
-                <div className="form-group col-md-12" style={{ marginBottom: '15px' }}>
-      <label>Selected Keywords:</label>
-      <div>
-        {selectedKeywords.map((kw, index) => (
-          <span key={index} style={{ display: 'inline-block', backgroundColor: '#f0f0f0', border: '1px solid #ccc', padding: '5px 10px', marginRight: '5px' }}>
-            {kw}
-            <button style={{ background: 'none', border: 'none', color: 'red', cursor: 'pointer', marginLeft: '5px' }} onClick={() => removeKeyword(kw)}>
-              <i className="fa fa-times" aria-hidden="true"></i>
-            </button>
-          </span>
-        ))}
-        {addedKeywords.map((kw, index) => (
-          <span key={index} style={{ display: 'inline-block', backgroundColor: '#f0f0f0', border: '1px solid #ccc', padding: '5px 10px', marginRight: '5px' }}>
-            {kw}
-            <button style={{ background: 'none', border: 'none', color: 'red', cursor: 'pointer', marginLeft: '5px' }} onClick={() => removeKeyword(kw)}>
-              <i className="fa fa-times" aria-hidden="true"></i>
-            </button>
-          </span>
-        ))}
-      </div>
-    </div>
+                <div
+                  className="form-group col-md-12"
+                  style={{ marginBottom: "15px" }}
+                >
+                  <label>Selected Keywords:</label>
+                  <div>
+                    {selectedKeywords.map((kw, index) => (
+                      <span
+                        key={index}
+                        className="keyword-badge"
+                      >
+                        {kw}
+                        <button
+                          className="keyword-remove-btn"
+                          onClick={() => removeKeyword(kw)}
+                        >
+                          <i className="fa fa-times" aria-hidden="true"></i>
+                        </button>
+                      </span>
+                    ))}
+                    {addedKeywords.map((kw, index) => (
+                      <span
+                        key={index}
+                        className="keyword-badge"
+                      >
+                        {kw}
+                        <button
+                          className="keyword-remove-btn"
+                          onClick={() => removeKeyword(kw)}
+                        >
+                          <i className="fa fa-times" aria-hidden="true"></i>
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+</div>
                 <div className="text-left col-12 mt-3">
-                  <Link to="/addressl" className="btn_1" onClick={saveKeywords}>
+                  <button className="btn_1" onClick={saveKeywords}>
                     Save & Continue
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
