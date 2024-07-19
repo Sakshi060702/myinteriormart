@@ -46,7 +46,7 @@ function Paymentmodel() {
       const data = await response.json();
       console.log("Response:", data);
       alert("Data saved successfully")
-      navigate("/workinghoursl")
+      navigate("/Imagesl")
       // Handle success (e.g., show a success message, redirect, etc.)
     } catch (error) {
       console.error("Error:", error);

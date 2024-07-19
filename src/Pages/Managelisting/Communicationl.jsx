@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Select from 'react-select';
 import "../Freelisting/Businesslisting/Businesslisting.css";
+import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
+import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
 
 function Communicationl() {
   const [formData, setFormData] = useState({
@@ -70,7 +72,12 @@ function Communicationl() {
   const languageOptions = [
     { value: 'English', label: 'English' },
     { value: 'Hindi', label: 'Hindi' },
-    { value: 'Marathi', label: 'Marathi' }
+    { value: 'Marathi', label: 'Marathi' },
+    { value: 'French', label: 'French' },
+    { value: 'Spanish', label: 'Spanish' },
+    { value: 'Japanese', label: 'Japanese' },
+    { value: 'Portuguese', label: 'Portuguese' }
+
   ];
 
   return (
@@ -189,6 +196,8 @@ function Communicationl() {
                     <button type="submit" className="btn_1">
                       Save & Continue
                     </button>
+                    <Link to="/addcompanyl" className="pull-right mr-2"><img src={previousarrowimg} style={{height:'30px'}}/></Link>
+                    <Link to="/addressl" className="pull-right mr-2"><img src={nextarrowimg} style={{height:'30px'}}/></Link>
                   </div>
                 </div>
               </form>

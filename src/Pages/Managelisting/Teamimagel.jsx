@@ -119,91 +119,167 @@ function Teamimagel() {
 
   return (
     <>
-      <div className="row imageSection" id="owner_section">
-        <div className="col-12">
-          <div className="row mt-5">
-            <div className="col-md-4">
-              <div className="form-group">
-                <label htmlFor="name">
-                  Select Team Member <span className="text-danger">*</span>
-                </label>
-                <form onSubmit={handleSubmit}>
-                  <input
-                    type="file"
-                    onChange={handleFileChange}
-                    style={{
-                      border: "2px solid grey",
-                      height: "50px",
-                      width: "500px",
-                    }}
-                  />
-                  {/* Designation dropdown */}
-                  <select
-                    className="wide add_bottom_10 selectdrp"
-                    name="businessCategory"
-                    onChange={handleBusinessCategoryChange}
-                    value={selectedBusinessCategory}
-                  >
-                    <option value="" disabled>Select Business Category</option>
-                    <option value="Owner">Owner</option>
-                    <option value="Proprietor">Proprietor</option>
-                    <option value="Director">Director</option>
-                    <option value="Manager">Manager</option>
-                  </select>
-                  {/* First Name input */}
-                  <div className="form-group">
-                    <label>First Name</label>
-                    <input type="text" name="firstName" placeholder="First Name" />
-                  </div>
-                  {/* Last Name input */}
-                  <div className="form-group">
-                    <label>Last Name</label>
-                    <input type="text" name="lastName" placeholder="Last Name" />
-                  </div>
-                  {/* Country dropdown */}
-                  <div className="form-group col-md-4">
-                    <label>Country</label>
-                    <select
-                      className="wide add_bottom_10 country selectdrp"
-                      value={selectedCountry}
-                      onChange={handleCountryChange}
-                    >
-                      <option value="">Select Country</option>
-                      {countries.map((country) => (
-                        <option
-                          key={country.countryID}
-                          value={country.countryID}
-                        >
-                          {country.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="form-group col-md-4">
-                    <label htmlFor="state">State</label>
-                    <select
-                      className="wide add_bottom_10 state selectdrp"
-                      id="state"
-                      value={selectedState}
-                      onChange={handleStateChange}
-                     
-                    >
-                      <option value="">Select State</option>
-                      {states.map((state) => (
-                        <option key={state.stateID} value={state.stateID}>
-                          {state.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  
-                  <button type="submit" className="btn btn-primary">Save and Continue</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div className="row">
+  <form
+    onSubmit={handleSubmit}
+    style={{
+      display: "flex",
+      flexWrap: "wrap",
+      gap: "16px", // Adjust the gap between the form groups as needed
+    }}
+  >
+    <div
+      className="form-group"
+      style={{
+        flex: "1 1 calc(33.3333% - 16px)", // 33.3333% width with the gap considered
+        boxSizing: "border-box",
+      }}
+    >
+      <label htmlFor="name"  >
+        Select Team Member <span className="text-danger">*</span>
+      </label>
+      <input
+        type="file"
+        onChange={handleFileChange}
+        style={{
+          border: "1px solid grey",
+          height: "50px",
+          width: "100%", // Make the input file take the full width of the form group
+        }}
+      />
+    </div>
+
+    <div
+      className="form-group"
+      style={{
+        flex: "1 1 calc(33.3333% - 16px)", // 33.3333% width with the gap considered
+        boxSizing: "border-box",
+      }}
+    >
+      <label htmlFor="designation">Select Designation <span className="text-danger">*</span></label>
+      <select
+        className="wide add_bottom_10 selectdrp"
+        name="businessCategory"
+        onChange={handleBusinessCategoryChange}
+        value={selectedBusinessCategory}
+        style={{
+          width: "100%",
+          height: "50px", // Adjust height as needed
+        }}
+      >
+        <option value="" disabled>
+          Select Business Category
+        </option>
+        <option value="Owner">Owner</option>
+        <option value="Proprietor">Proprietor</option>
+        <option value="Director">Director</option>
+        <option value="Manager">Manager</option>
+      </select>
+    </div>
+
+    <div
+      className="form-group"
+      style={{
+        flex: "1 1 calc(33.3333% - 16px)", // 33.3333% width with the gap considered
+        boxSizing: "border-box",
+      }}
+    >
+      <label htmlFor="firstName">
+        First Name <span className="text-danger">*</span>
+      </label>
+      <input
+        type="text"
+        name="firstName"
+        placeholder="First Name"
+        className="form-control form-control-sm"
+        style={{
+          width: "100%",
+          height: "50px", // Adjust height as needed
+        }}
+      />
+    </div>
+
+    <div
+      className="form-group"
+      style={{
+        flex: "1 1 calc(33.3333% - 16px)", // 33.3333% width with the gap considered
+        boxSizing: "border-box",
+      }}
+    >
+      <label htmlFor="lastName">Last Name <span className="text-danger">*</span></label>
+      <input
+        className="form-control form-control-sm"
+        type="text"
+        name="lastName"
+        placeholder="Last Name"
+        style={{
+          width: "100%",
+          height: "50px", // Adjust height as needed
+        }}
+      />
+    </div>
+
+    <div
+      className="form-group"
+      style={{
+        flex: "1 1 calc(33.3333% - 16px)", // 33.3333% width with the gap considered
+        boxSizing: "border-box",
+      }}
+    >
+      <label>Country  <span className="text-danger">*</span></label>
+      <select
+        className="wide add_bottom_10 country selectdrp"
+        value={selectedCountry}
+        onChange={handleCountryChange}
+        style={{
+          width: "100%",
+          height: "50px", // Adjust height as needed
+        }}
+      >
+        <option value="">Select Country</option>
+        {countries.map((country) => (
+          <option key={country.countryID} value={country.countryID}>
+            {country.name}
+          </option>
+        ))}
+      </select>
+    </div>
+
+    <div
+      className="form-group"
+      style={{
+        flex: "1 1 calc(33.3333% - 16px)", // 33.3333% width with the gap considered
+        boxSizing: "border-box",
+      }}
+    >
+      <label htmlFor="state">State  <span className="text-danger">*</span></label>
+      <select
+        className="wide add_bottom_10 state selectdrp"
+        id="state"
+        value={selectedState}
+        onChange={handleStateChange}
+        style={{
+          width: "100%",
+          height: "50px", // Adjust height as needed
+        }}
+      >
+        <option value="">Select State</option>
+        {states.map((state) => (
+          <option key={state.stateID} value={state.stateID}>
+            {state.name}
+          </option>
+        ))}
+      </select>
+    </div>
+
+    <div className="text-left col-12 mt-3">
+      <button type="submit" className="btn_1">
+        Save and Continue
+      </button>
+    </div>
+  </form>
+</div>
+
     </>
   );
 }

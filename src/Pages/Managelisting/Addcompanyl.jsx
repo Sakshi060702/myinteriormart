@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
 import "../Freelisting/Businesslisting/Businesslisting.css";
@@ -16,6 +16,47 @@ function Addcompanyl() {
   });
 
   const navigate = useNavigate();
+  const [businessTypes, setBusinessTypes] = useState([]);
+
+  useEffect(() => {
+    const fetchBusinessTypes = async () => {
+      const apiUrl = "https://apidev.myinteriormart.com/api/CompanyDetails/AddOrUpdateCompanyDetails";
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            companyName: "Alis Infotech Pvt Ltd.",
+            businessCategory: "Consumer",
+            natureOfBusiness: "Private Limited Company",
+            yearOfEstablishment: "2024-06-27T10:10:51.695Z",
+            numberOfEmployees: 3450,
+            turnover: "Upto 1 Lac",
+            gstNumber: "890353423434",
+            description: "this is the best IT Company"
+          })
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("API response error data:", errorData);
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+        setBusinessTypes(responseData.bussinessType);
+      } catch (error) {
+        console.error("API error:", error);
+        alert("Failed to fetch business types. Please try again later.");
+      }
+    };
+
+    fetchBusinessTypes();
+  }, []);
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -80,24 +121,26 @@ function Addcompanyl() {
                     />
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="businessCategory">
-                      Business Category <span className="text-danger">*</span>
-                    </label>
-                    <select
-                      className="wide add_bottom_10 selectdrp"
-                      name="businessCategory"
-                      value={formData.businessCategory}
-                      onChange={handleChange}
-                      required
-                    >
-                      <option value="" disabled>Select Business Category</option>
-                      <option value="Consumer">Consumer</option>
-                      <option value="Type 2">Type 2</option>
-                      <option value="Type 3">Type 3</option>
-                      <option value="Type 4">Type 4</option>
-                    </select>
-                  </div>
-                  <div className="form-group col-md-4">
+                  <label htmlFor="businessCategory">
+                    Business Category <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    className="wide add_bottom_10 selectdrp"
+                    name="businessCategory"
+                    value={formData.businessCategory}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="" disabled>
+                      Select Business Category
+                    </option>
+                    {businessTypes.map((type, index) => (
+                      <option key={index} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+                </div>                  <div className="form-group col-md-4">
                     <label>
                       Nature of Business <span className="text-danger">*</span>
                     </label>
@@ -186,6 +229,7 @@ function Addcompanyl() {
                     <button type="submit" className="btn_1">
                       Save & Continue
                     </button>
+                    <Link to="/communicationl" className="pull-right mr-2"><img src={nextarrowimg} style={{height:'30px'}}/></Link>
                   </div>
                 </div>
               </form>
