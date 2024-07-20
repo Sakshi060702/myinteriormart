@@ -19,7 +19,7 @@ const Dropdown = () => {
           <i style={{ marginRight: "10px" }}></i>Profile
         </li> */}
         <li>
-          <Link to="/profile2" style={{color:'black'}}>
+          <Link to="/labournakapage" style={{color:'black'}}>
             <i style={{ marginRight: "10px"}}></i>Profile
           </Link>
         </li>

@@ -1,5 +1,7 @@
 import React,{useState} from "react";
 import { Link,useNavigate } from "react-router-dom";
+import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
+import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
 
 function Paymentmodel() {
   const[payment,setPayment]=useState({
@@ -63,7 +65,7 @@ function Paymentmodel() {
               <p className="add-lidting-title-from">
                 Add Listing / Add Payment Mode
                 <span>
-                  <Link className="back_btn mx-3" to="/workinghoursl">
+                  <Link className="back_btn mx-3" to="/labournakapage">
                     Back
                   </Link>
                 </span>
@@ -103,6 +105,10 @@ function Paymentmodel() {
                   <button type="submit" className="btn_1" onClick={handleSubmit}>
                     Save & Continue
                   </button>
+                  <div style={{display:"flex",justifyContent:"flex-end",gap:'10px'}}>                    
+                      <Link to="/workinghoursl" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
+                    <Link to="/Imagesl" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
+                    </div>
                 </div>
               </div>
             </div>

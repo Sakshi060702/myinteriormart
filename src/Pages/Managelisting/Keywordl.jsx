@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../Freelisting/Businesslisting/Businesslisting.css";
 import "../../FrontEnd/css/Mangelisting.css";
+import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
+import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
 
 function Keywordl() {
   const [keyword, setKeyword] = useState(""); // State to hold current keyword input
@@ -178,7 +180,7 @@ function Keywordl() {
               <p className="add-lidting-title-from">
                 Add Listing / Keywords
                 <span>
-                  <Link className="back_btn mx-3" to="/addcompanyl">
+                  <Link className="back_btn mx-3" to="/labournakapage">
                     Back
                   </Link>
                 </span>
@@ -271,6 +273,7 @@ function Keywordl() {
                   <button className="btn_1" onClick={saveKeywords}>
                     Save & Continue
                   </button>
+                  <Link to="/Sociallinkl" className="pull-right mr-2"><img src={previousarrowimg} style={{height:'30px'}}/></Link>
                 </div>
               </div>
             </div>

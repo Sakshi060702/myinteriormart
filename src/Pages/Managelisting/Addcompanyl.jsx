@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
 import "../Freelisting/Businesslisting/Businesslisting.css";
@@ -12,7 +12,7 @@ function Addcompanyl() {
     numberOfEmployees: "",
     turnover: "",
     gstNumber: "",
-    description: ""
+    description: "",
   });
 
   const navigate = useNavigate();
@@ -20,13 +20,14 @@ function Addcompanyl() {
 
   useEffect(() => {
     const fetchBusinessTypes = async () => {
-      const apiUrl = "https://apidev.myinteriormart.com/api/CompanyDetails/AddOrUpdateCompanyDetails";
+      const apiUrl =
+        "https://apidev.myinteriormart.com/api/CompanyDetails/AddOrUpdateCompanyDetails";
 
       try {
         const response = await fetch(apiUrl, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             companyName: "Alis Infotech Pvt Ltd.",
@@ -36,8 +37,8 @@ function Addcompanyl() {
             numberOfEmployees: 3450,
             turnover: "Upto 1 Lac",
             gstNumber: "890353423434",
-            description: "this is the best IT Company"
-          })
+            description: "this is the best IT Company",
+          }),
         });
 
         if (!response.ok) {
@@ -57,18 +58,18 @@ function Addcompanyl() {
     fetchBusinessTypes();
   }, []);
 
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const apiUrl = "https://apidev.myinteriormart.com/api/CompanyDetails/AddOrUpdateCompanyDetails";
+    const apiUrl =
+      "https://apidev.myinteriormart.com/api/CompanyDetails/AddOrUpdateCompanyDetails";
 
     console.log("Submitting data:", formData);
 
@@ -76,9 +77,9 @@ function Addcompanyl() {
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
@@ -105,13 +106,21 @@ function Addcompanyl() {
             <div className="profile-sidebar-content">
               <h4>Add Company Details</h4>
               <form onSubmit={handleSubmit}>
+                <p className="add-lidting-title-from">
+                  Add Listing / Add Company Details
+                  <span>
+                    <Link className="back_btn mx-3" to="/labournakapage">
+                      Back
+                    </Link>
+                  </span>
+                </p>
                 <div className="row">
                   <div className="form-group col-md-4">
                     <label>
                       Company Name <span className="text-danger">*</span>
                     </label>
                     <input
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm box"
                       type="text"
                       name="companyName"
                       placeholder="Enter your company name"
@@ -121,26 +130,27 @@ function Addcompanyl() {
                     />
                   </div>
                   <div className="form-group col-md-4">
-                  <label htmlFor="businessCategory">
-                    Business Category <span className="text-danger">*</span>
-                  </label>
-                  <select
-                    className="wide add_bottom_10 selectdrp"
-                    name="businessCategory"
-                    value={formData.businessCategory}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="" disabled>
-                      Select Business Category
-                    </option>
-                    {businessTypes.map((type, index) => (
-                      <option key={index} value={type}>
-                        {type}
+                    <label htmlFor="businessCategory">
+                      Business Type <span className="text-danger">*</span>
+                    </label>
+                    <select
+                      className="wide add_bottom_10 selectdrp"
+                      name="businessCategory"
+                      value={formData.businessCategory}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="" disabled>
+                        Select Business Type
                       </option>
-                    ))}
-                  </select>
-                </div>                  <div className="form-group col-md-4">
+                      {businessTypes.map((type, index) => (
+                        <option key={index} value={type}>
+                          {type}
+                        </option>
+                      ))}
+                    </select>
+                  </div>{" "}
+                  <div className="form-group col-md-4">
                     <label>
                       Nature of Business <span className="text-danger">*</span>
                     </label>
@@ -151,19 +161,26 @@ function Addcompanyl() {
                       onChange={handleChange}
                       required
                     >
-                      <option value="" disabled>Select Nature of Business</option>
+                      <option value="" disabled>
+                        Select Nature of Business
+                      </option>
                       <option value="Proprietorship">Proprietorship</option>
-                      <option value="Private Limited Company">Private Limited Company</option>
-                      <option value="Public Limited Company">Public Limited Company</option>
+                      <option value="Private Limited Company">
+                        Private Limited Company
+                      </option>
+                      <option value="Public Limited Company">
+                        Public Limited Company
+                      </option>
                     </select>
                   </div>
                   <div className="form-group col-md-4">
                     <label className="control-label">
-                      Year Of Establishment <span className="text-danger">*</span>
+                      Year Of Establishment{" "}
+                      <span className="text-danger">*</span>
                     </label>
                     <input
                       type="date"
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm box"
                       name="yearOfEstablishment"
                       value={formData.yearOfEstablishment}
                       onChange={handleChange}
@@ -175,7 +192,7 @@ function Addcompanyl() {
                       Number of Employees <span className="text-danger">*</span>
                     </label>
                     <input
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm box"
                       type="number"
                       name="numberOfEmployees"
                       placeholder="Enter number of employees"
@@ -196,7 +213,9 @@ function Addcompanyl() {
                       onChange={handleChange}
                       required
                     >
-                      <option value="" disabled>Select Turnover</option>
+                      <option value="" disabled>
+                        Select Turnover
+                      </option>
                       <option value="Upto 1 Lac">Upto 1 Lac</option>
                       <option value="Upto 5 Lacs">Upto 5 Lacs</option>
                       <option value="Upto 10 Lacs">Upto 10 Lacs</option>
@@ -205,7 +224,7 @@ function Addcompanyl() {
                   <div className="form-group col-md-4">
                     <label>GST Number</label>
                     <input
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm box"
                       type="text"
                       name="gstNumber"
                       placeholder="Enter GST number"
@@ -229,11 +248,12 @@ function Addcompanyl() {
                     <button type="submit" className="btn_1">
                       Save & Continue
                     </button>
-                    <Link to="/communicationl" className="pull-right mr-2"><img src={nextarrowimg} style={{height:'30px'}}/></Link>
+                    <Link to="/communicationl" className="pull-right mr-2">
+                      <img src={nextarrowimg} style={{ height: "30px" }} />
+                    </Link>
                   </div>
                 </div>
               </form>
-              
             </div>
           </div>
         </div>

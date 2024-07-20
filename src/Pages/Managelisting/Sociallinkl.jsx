@@ -1,6 +1,8 @@
 import React,{useState} from "react";
 import { Link,useNavigate } from "react-router-dom";
 import "../Freelisting/Businesslisting/Businesslisting.css";
+import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
+import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
 
 function Sociallinkl() {
 
@@ -62,7 +64,7 @@ function Sociallinkl() {
               <p className="add-lidting-title-from">
                 Add Listing / Social Links
                 <span>
-                  <Link className="back_btn mx-3" to="/addcompanyl">
+                  <Link className="back_btn mx-3" to="/labournakapage">
                     Back
                   </Link>
                 </span>
@@ -159,6 +161,10 @@ function Sociallinkl() {
                     <button type="submit" className="btn_1">
                       Save & Continue
                     </button>
+                    <div style={{display:"flex",justifyContent:"flex-end",gap:'10px'}}>                    
+                      <Link to="/Imagesl" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
+                    <Link to="/Keywordl" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
+                    </div>
                   </div>
               </div>
               </form>

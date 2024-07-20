@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
+import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
+import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
 
 function Specialisationl() {
   const [specialisations, setSpecialisations] = useState({
@@ -88,7 +90,7 @@ function Specialisationl() {
             <p className="add-lidting-title-from">
               Add Listing / Add Specialisation Details
               <span>
-                <Link className="back_btn mx-3" to="/categoryl">
+                <Link className="back_btn mx-3" to="/labournakapage">
                   Back
                 </Link>
               </span>
@@ -134,6 +136,10 @@ function Specialisationl() {
                   <button type="submit" className="btn_1" onClick={handleSubmit}>
                     Save & Continue
                   </button>
+                  <div style={{display:"flex",justifyContent:"flex-end",gap:'10px'}}>                    
+                      <Link to="/categoryl" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
+                    <Link to="/workinghoursl" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
+                    </div>
                 </div>
           </div>
         </div>

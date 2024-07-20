@@ -91,7 +91,7 @@ function Communicationl() {
                 <p className="add-lidting-title-from">
                   Add Listing / Add Communication Details
                   <span>
-                    <Link className="back_btn mx-3" to="/addcompanyl">
+                    <Link className="back_btn mx-3" to="/labournakapage">
                       Back
                     </Link>
                   </span>
@@ -105,16 +105,17 @@ function Communicationl() {
                       isMulti
                       name="languages"
                       options={languageOptions}
-                      className="basic-multi-select"
+                      className="basic-multi-select box"
                       classNamePrefix="select"
                       onChange={handleSelectChange}
                       required
+                     
                     />
                   </div>
                   <div className="form-group col-md-4">
                     <label htmlFor="email">Email</label>
                     <input
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm box"
                       type="email"
                       name="email"
                       id="email"
@@ -129,7 +130,7 @@ function Communicationl() {
                       Registered Mobile <span className="text-danger">*</span>
                     </label>
                     <input
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm box"
                       type="number"
                       name="registerMobile"
                       id="Mobile"
@@ -142,7 +143,7 @@ function Communicationl() {
                   <div className="form-group col-md-4">
                     <label htmlFor="Mobile2">Mobile </label>
                     <input
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm box"
                       type="number"
                       name="mobile"
                       id="Mobile2"
@@ -155,7 +156,7 @@ function Communicationl() {
                   <div className="form-group col-md-4">
                     <label htmlFor="telephone">Telephone</label>
                     <input
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm box"
                       type="number"
                       name="telephone"
                       id="telephone"
@@ -168,7 +169,7 @@ function Communicationl() {
                   <div className="form-group col-md-4">
                     <label htmlFor="website">Website</label>
                     <input
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm box"
                       type="name"
                       name="website"
                       id="website"
@@ -181,7 +182,7 @@ function Communicationl() {
                   <div className="form-group col-md-4">
                     <label htmlFor="tollfree">Toll Free</label>
                     <input
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm box"
                       type="number"
                       name="tollfree"
                       id="tollfree"
@@ -196,8 +197,11 @@ function Communicationl() {
                     <button type="submit" className="btn_1">
                       Save & Continue
                     </button>
-                    <Link to="/addcompanyl" className="pull-right mr-2"><img src={previousarrowimg} style={{height:'30px'}}/></Link>
-                    <Link to="/addressl" className="pull-right mr-2"><img src={nextarrowimg} style={{height:'30px'}}/></Link>
+                    <div style={{display:"flex",justifyContent:"flex-end",gap:'10px'}}>                    
+                      <Link to="/addcompanyl" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
+                    <Link to="/addressl" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
+                    </div>
+
                   </div>
                 </div>
               </form>

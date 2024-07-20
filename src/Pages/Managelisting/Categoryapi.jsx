@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
+import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
+import "../../FrontEnd/css/Mangelisting.css";
 
 function Categoryapi() {
   const [firstCategories, setFirstCategories] = useState([]);
@@ -158,7 +161,7 @@ function Categoryapi() {
               <p className="add-lidting-title-from">
                 Add Listing / Add Category Details
                 <span>
-                  <Link className="back_btn mx-3" to="/communicationl">
+                  <Link className="back_btn mx-3" to="/labournakapage">
                     Back
                   </Link>
                 </span>
@@ -217,6 +220,8 @@ function Categoryapi() {
                 </div>
 
                 <div className="row">
+                  <div className="col-sm-12">
+                    <div className="row">
                   {thirdCategories.length > 0 &&
                     thirdCategories.map((category) => (
                       <div className="col-md-3" key={category.thirdCategoryId}>
@@ -224,6 +229,7 @@ function Categoryapi() {
                           <div className="checkboxes float-left">
                             <label
                               htmlFor={`thirdCategory-${category.thirdCategoryId}`}
+                              className="label-spacing"
                             >
                               <input
                                 type="checkbox"
@@ -236,15 +242,21 @@ function Categoryapi() {
                                     selectedThirdCategory
                                   )
                                 }
+                               className="custom-checkbox"
+                               
                               />
-                              {category.thirdCategoryName}
+                               
+                               <span className="label-text-spacing">
+                    {category.thirdCategoryName}
+                  </span>
+                            
                             </label>
                           </div>
                         </div>
                       </div>
                     ))}
-                </div>
-                <div className="row">
+                    
+                
                   {fourthCategories.length > 0 &&
                     fourthCategories.map((category) => (
                       <div className="col-md-3" key={category.fourthCategoryId}>
@@ -252,6 +264,7 @@ function Categoryapi() {
                           <div className="checkboxes float-left">
                             <label
                               htmlFor={`fourthCategory-${category.fourthCategoryId}`}
+                               className="label-spacing"
                             >
                               <input
                                 type="checkbox"
@@ -264,15 +277,19 @@ function Categoryapi() {
                                     selectedFourthCategory
                                   )
                                 }
+                                className="custom-checkbox"
                               />
+                              <span className="label-text-spacing">
                               {category.fourthCategoryName}
+                              </span>
+                             
                             </label>
                           </div>
                         </div>
                       </div>
                     ))}
-                </div>
-                <div className="row">
+                    
+                
                   {fifthCategories.length > 0 &&
                     fifthCategories.map((category) => (
                       <div className="col-md-3" key={category.fifthCategoryId}>
@@ -280,6 +297,7 @@ function Categoryapi() {
                           <div className="checkboxes float-left">
                             <label
                               htmlFor={`fifthCategory-${category.fifthCategoryId}`}
+                              className="label-spacing"
                             >
                               <input
                                 type="checkbox"
@@ -292,16 +310,19 @@ function Categoryapi() {
                                     selectedFifthCategory
                                   )
                                 }
+                                 className="custom-checkbox"
                               />
+                              <span className="label-text-spacing">
                               {category.fifthCategoryName}
+                              </span>
                             </label>
                           </div>
                         </div>
                       </div>
                     ))}
-                </div>
+                   
 
-                <div className="row">
+                
                   {sixthCategories.length > 0 &&
                     sixthCategories.map((category) => (
                       <div className="col-md-3" key={category.sixthCategoryId}>
@@ -309,6 +330,7 @@ function Categoryapi() {
                           <div className="checkboxes float-left">
                             <label
                               htmlFor={`sixthCategory-${category.sixthCategoryId}`}
+                              className="label-spacing"
                             >
                               <input
                                 type="checkbox"
@@ -321,13 +343,19 @@ function Categoryapi() {
                                     selectedSixthCategory
                                   )
                                 }
+                              className="custom-checkbox"
                               />
+                              <span className="label-text-spacing">
                               {category.sixthCategoryName}
+                              </span>
+                             
                             </label>
                           </div>
                         </div>
                       </div>
                     ))}
+                    </div>
+                    </div>
                 </div>
 
                 <div className="text-left col-12 mt-3">
@@ -335,6 +363,10 @@ function Categoryapi() {
                     Save & Continue
                   </button>
                 </div>
+                <div style={{display:"flex",justifyContent:"flex-end",gap:'10px'}}>                    
+                      <Link to="/addressl" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
+                    <Link to="/specialisationl" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
+                    </div>
               </form>
             </div>
           </div>

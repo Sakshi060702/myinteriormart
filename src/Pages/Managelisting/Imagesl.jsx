@@ -7,6 +7,9 @@ import Certificationimagel from "./Certificationimagel";
 import Clientimagel from "./Clientimagel";
 import Teamimagel from "./Teamimagel";
 import Btngroupl from "./Btngroupl";
+import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
+import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
+
 
 const buttons=[
   {title:"Logo", component:Uploadimagel},
@@ -32,7 +35,7 @@ function Imagesl() {
               <p className="add-lidting-title-from">
                 Add Listing / Upload Images
                 <span>
-                  <Link className="back_btn mx-3" to="/paymentmodel">
+                  <Link className="back_btn mx-3" to="/labournakapage">
                     Back
                   </Link>
                 </span>
@@ -49,9 +52,16 @@ function Imagesl() {
           <div className="col-lg-12">
             <SelectedComponent />
           </div>
+
+          
                 
               </div>
+              <div style={{display:"flex",justifyContent:"flex-end",gap:'10px'}}>                    
+                      <Link to="/paymentmodel" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
+                    <Link to="/Sociallinkl" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
+                    </div>
             </div>
+            
           </div>
         </div>
       </div>

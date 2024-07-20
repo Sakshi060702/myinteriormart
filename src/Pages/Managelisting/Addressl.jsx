@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../Freelisting/Businesslisting/Businesslisting.css";
+import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
+import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
 
 const Addressl = () => {
   const [countries, setCountries] = useState([]);
@@ -209,7 +211,7 @@ const Addressl = () => {
               <p className="add-lidting-title-from">
                 Add Listing / Add Address Details
                 <span>
-                  <Link className="back_btn mx-3" to="/communicationl">
+                  <Link className="back_btn mx-3" to="/labournakapage">
                     Back
                   </Link>
                 </span>
@@ -331,6 +333,7 @@ const Addressl = () => {
                       placeholder="Enter local address"
                       value={localAddress}
                       onChange={(e) => setLocalAddress(e.target.value)}
+                      style={{width:'100%'}}
                     />
                   </div>
                 </div>
@@ -338,6 +341,10 @@ const Addressl = () => {
                   <button type="submit" className="btn_1">
                     Save & Continue
                   </button>
+                  <div style={{display:"flex",justifyContent:"flex-end",gap:'10px'}}>                    
+                      <Link to="/communicationl" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
+                    <Link to="/Categoryapi" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
+                    </div>
                 </div>
               </form>
             </div>

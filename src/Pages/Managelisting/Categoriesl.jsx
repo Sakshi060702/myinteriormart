@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
+import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
 
 
 
@@ -209,7 +211,7 @@ function Categoriesl() {
             <p className="add-lidting-title-from">
               Add Listing / Add Category Details
               <span>
-                <Link className="back_btn mx-3" to="/communicationl">
+                <Link className="back_btn mx-3" to="/labournakapage">
                   Back
                 </Link>
               </span>
@@ -366,6 +368,10 @@ function Categoriesl() {
                   >
                     Save & Continue
                   </button>
+                  <div style={{display:"flex",justifyContent:"flex-end",gap:'10px'}}>                    
+                      <Link to="/addressl" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
+                    <Link to="/specialisationl" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
+                    </div>
                 </div>
               </div>
             </form>
