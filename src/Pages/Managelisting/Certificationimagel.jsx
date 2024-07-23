@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import withAuthh from "../../Hoc/withAuthh"
 
 function Certificationimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageTitle, setImageTitle] = useState("");
+
+  const token=useSelector((state)=>state.auth.token);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -22,6 +26,10 @@ function Certificationimagel() {
       try {
         const response = await fetch("https://apidev.myinteriormart.com/api/ImageUpload/UploadCertificateImage", {
           method: "POST",
+          headers: {
+            
+            "Authorization": `Bearer ${token}`,
+          },
           body: formData,
         });
 
@@ -31,6 +39,7 @@ function Certificationimagel() {
 
         const result = await response.json();
         console.log(result); // Log the result for debugging purposes
+        console.log("Certification Image token",token);
         alert("Certificate Image Uploded Successfully")
         // You can handle the result here if needed, e.g., show a success message
       } catch (error) {
@@ -89,4 +98,4 @@ function Certificationimagel() {
   );
 }
 
-export default Certificationimagel;
+export default withAuthh(Certificationimagel);

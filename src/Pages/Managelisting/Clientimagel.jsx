@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import withAuthh from "../../Hoc/withAuthh"
+
 
 function Clientimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageTitle, setImageTitle] = useState("");
 
   const navigate=useNavigate();
+  const token=useSelector((state)=>state.auth.token);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -25,6 +29,10 @@ function Clientimagel() {
       try {
         const response = await fetch("https://apidev.myinteriormart.com/api/ImageUpload/UploadClientImage", {
           method: "POST",
+          headers: {
+            
+            "Authorization": `Bearer ${token}`,
+          },
           body: formData,
         });
 
@@ -34,6 +42,7 @@ function Clientimagel() {
 
         const result = await response.json();
         console.log(result); // Log the result for debugging purposes
+        console.log("Client Image Token",token)
         alert("Client Image Uploded Successfully")
         navigate("/Sociallinkl");
         // You can handle the result here if needed, e.g., show a success message
@@ -94,4 +103,4 @@ function Clientimagel() {
   );
 }
 
-export default Clientimagel;
+export default withAuthh(Clientimagel);

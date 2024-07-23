@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import '../../FrontEnd/css/Mangelisting.css'
+import { useSelector } from "react-redux";
+import withAuthh from "../../Hoc/withAuthh"
 
 function Uploadimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
+
+  const token=useSelector((state)=>state.auth.token);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -20,6 +24,10 @@ function Uploadimagel() {
           "https://apidev.myinteriormart.com/api/ImageUpload/UploadLogoImage",
           {
             method: "POST",
+            headers: {
+              
+              "Authorization": `Bearer ${token}`,
+            },
             body: formData,
           }
         );
@@ -30,6 +38,7 @@ function Uploadimagel() {
 
         const result = await response.json();
         console.log(result); // Log the result for debugging purposes
+        console.log("Logo image token",token);
         alert("Logo Image Uploded Successfully");
         // You can handle the result here if needed, e.g., show a success message
       } catch (error) {
@@ -74,4 +83,4 @@ function Uploadimagel() {
   );
 }
 
-export default Uploadimagel;
+export default withAuthh(Uploadimagel);

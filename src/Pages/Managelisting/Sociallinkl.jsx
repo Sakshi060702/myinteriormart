@@ -3,6 +3,8 @@ import { Link,useNavigate } from "react-router-dom";
 import "../Freelisting/Businesslisting/Businesslisting.css";
 import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
 import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
+import { useSelector } from "react-redux";
+import withAuthh from "../../Hoc/withAuthh"
 
 function Sociallinkl() {
 
@@ -17,6 +19,7 @@ function Sociallinkl() {
 
   });
   const navigate=useNavigate();
+  const token=useSelector((state)=>state.auth.token);
 
   const handleChange=(event)=>{
     const{name,value}=event.target;
@@ -35,7 +38,8 @@ function Sociallinkl() {
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify(formData)
       });
@@ -46,6 +50,7 @@ function Sociallinkl() {
       }
       const responseData = await response.json();
       console.log("API response:", responseData);
+      console.log("Social Link token",token);
       alert("SocialLink details saved successfully!");
       navigate("/Keywordl")
      
@@ -176,4 +181,4 @@ function Sociallinkl() {
     </>
   );
 }
-export default Sociallinkl;
+export default withAuthh(Sociallinkl);

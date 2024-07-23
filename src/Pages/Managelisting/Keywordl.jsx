@@ -4,6 +4,8 @@ import "../Freelisting/Businesslisting/Businesslisting.css";
 import "../../FrontEnd/css/Mangelisting.css";
 import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
 import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
+import { useSelector } from "react-redux";
+import withAuthh from "../../Hoc/withAuthh"
 
 function Keywordl() {
   const [keyword, setKeyword] = useState(""); // State to hold current keyword input
@@ -12,12 +14,14 @@ function Keywordl() {
   const [errorMessage, setErrorMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false);
 
+  const token=useSelector((state)=>state.auth.token);
 
   useEffect(() => {
     fetch("https://apidev.myinteriormart.com/api/Keywords/ManageKeywords", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify({
         Action: "fetch", // Specify the action needed (fetch, add, remove, etc.)
@@ -50,6 +54,7 @@ function Keywordl() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({
           action: "add",
@@ -106,6 +111,7 @@ function Keywordl() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify({
         action: "remove",
@@ -150,6 +156,7 @@ function Keywordl() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify({
         action: "save",
@@ -159,6 +166,7 @@ function Keywordl() {
       .then((response) => response.json())
       .then((data) => {
         console.log("Keywords saved successfully:", data);
+        console.log("Keyword token",token);
         alert("Keywords saved successfully!");
         setSelectedKeywords([...selectedKeywords, ...addedKeywords]);
         // Reset added keywords state after saving if needed
@@ -284,4 +292,4 @@ function Keywordl() {
   );
 }
 
-export default Keywordl;
+export default withAuthh(Keywordl);

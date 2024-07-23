@@ -6,11 +6,16 @@ import usericon from "../../../FrontEnd/img/icon/user1.png";
 import Dropdown from "../../Dropdown";
 import Notification from "../../Notification";
 import "../../../FrontEnd/css/Header.css";
+import { useSelector,useDispatch } from "react-redux";
 
 function Menu1() {
   const [showNotificationMenu, setShowNotificationMenu] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const[userProfile,setUserProfile]=useState(null);
+
+  const { token } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
 
   const toogleMenu = () => {
     setShowMenu(!showMenu);
@@ -58,6 +63,31 @@ function Menu1() {
       document.removeEventListener("mousedown", handleclickoutside);
     };
   }, []);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await fetch('https://apidev.myinteriormart.com/api/UserProfile/GetUserProfile', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch user profile');
+        }
+        const data = await response.json();
+        dispatch(setUserProfile(data)); // Dispatch the user profile data to Redux
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (token) {
+      fetchUserProfile();
+    }
+  }, [token, dispatch]);
+
+
 
   return (
     <>
@@ -139,7 +169,8 @@ function Menu1() {
                     {showNotificationMenu && <Notification />}
                   </button>
                 </div>
-                <div
+                <div 
+                id="profileid"
                   className="dropdown usericon"
                   ref={dropRef}
                   style={{ marginLeft: "20px", alignItems: "center" }}
@@ -150,7 +181,7 @@ function Menu1() {
                     onClick={toggleDropdown}
                     style={{ background: "none", border: "none" }}
                   >
-                    <img src={usericon} alt="user icon" />
+                    <img className="usericon-img" src={userProfile?.imgUrl ? userProfile.imgUrl : usericon} alt="user icon" />
                     {dropdownOpen && <Dropdown />}
                   </button>
                 </div>

@@ -4,6 +4,8 @@ import Select from 'react-select';
 import "../Freelisting/Businesslisting/Businesslisting.css";
 import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
 import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
+import { useSelector } from "react-redux";
+import withAuthh from "../../Hoc/withAuthh"
 
 function Communicationl() {
   const [formData, setFormData] = useState({
@@ -17,6 +19,7 @@ function Communicationl() {
   });
 
   const navigate = useNavigate();
+  const token=useSelector((state)=>state.auth.token);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -48,7 +51,8 @@ function Communicationl() {
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify(submissionData)
       });
@@ -61,6 +65,7 @@ function Communicationl() {
 
       const responseData = await response.json();
       console.log("API response:", responseData);
+      console.log("Communication Token",token);
       alert("Communication details saved successfully!");
       navigate("/addressl");
     } catch (error) {
@@ -213,4 +218,4 @@ function Communicationl() {
   );
 }
 
-export default Communicationl;
+export default withAuthh(Communicationl);

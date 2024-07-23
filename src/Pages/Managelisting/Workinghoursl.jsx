@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "../../FrontEnd/css/Mangelisting.css";
 import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
 import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
+import { useSelector } from "react-redux";
+import withAuthh from "../../Hoc/withAuthh"
 
 const Workinghoursl = () => {
   const [workingHours, setWorkingHours] = useState({
@@ -25,6 +27,7 @@ const Workinghoursl = () => {
   });
 
   const navigate = useNavigate();
+  const token=useSelector((state)=>state.auth.token);
 
   const handleCopyToAll = () => {
     const { MondayFrom, MondayTo } = workingHours;
@@ -59,6 +62,7 @@ const Workinghoursl = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
           },
           body: JSON.stringify(workingHours),
         }
@@ -66,6 +70,7 @@ const Workinghoursl = () => {
 
       const result = await response.json();
       console.log(result);
+      console.log("Working hours token",token);
       alert("Data Saved Successfully");
       navigate("/paymentmodel");
     } catch (error) {
@@ -225,4 +230,4 @@ const Workinghoursl = () => {
   );
 };
 
-export default Workinghoursl;
+export default withAuthh(Workinghoursl);

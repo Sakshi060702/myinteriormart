@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import withAuthh from "../../Hoc/withAuthh"
 
 function Bannerimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageTitle, setImageTitle] = useState("");
+
+  const token=useSelector((state)=>state.auth.token);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -23,6 +27,10 @@ function Bannerimagel() {
       try {
         const response = await fetch("https://apidev.myinteriormart.com/api/ImageUpload/UploadBannerImage", {
           method: "POST",
+          headers: {
+            
+            "Authorization": `Bearer ${token}`,
+          },
           body: formData,
         });
 
@@ -32,6 +40,7 @@ function Bannerimagel() {
 
         const result = await response.json();
         console.log(result); // Log the result for debugging purposes
+        console.log("Banner image token",token);
         alert("Banner Image Uploded Successfully")
         // You can handle the result here if needed, e.g., show a success message
       } catch (error) {
@@ -92,4 +101,4 @@ function Bannerimagel() {
   );
 }
 
-export default Bannerimagel;
+export default withAuthh(Bannerimagel);

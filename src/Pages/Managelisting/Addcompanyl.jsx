@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
 import "../Freelisting/Businesslisting/Businesslisting.css";
+import { useSelector } from "react-redux";
+import withAuthh from "../../Hoc/withAuthh";
 
 function Addcompanyl() {
   const [formData, setFormData] = useState({
@@ -17,6 +19,7 @@ function Addcompanyl() {
 
   const navigate = useNavigate();
   const [businessTypes, setBusinessTypes] = useState([]);
+  const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
     const fetchBusinessTypes = async () => {
@@ -28,6 +31,7 @@ function Addcompanyl() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
           },
           body: JSON.stringify({
             companyName: "Alis Infotech Pvt Ltd.",
@@ -56,7 +60,7 @@ function Addcompanyl() {
     };
 
     fetchBusinessTypes();
-  }, []);
+  }, [token]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -78,6 +82,7 @@ function Addcompanyl() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify(formData),
       });
@@ -90,6 +95,7 @@ function Addcompanyl() {
 
       const responseData = await response.json();
       console.log("API response:", responseData);
+      console.log("Token",token);
       alert("Company details saved successfully!");
       navigate("/communicationl");
     } catch (error) {
@@ -266,4 +272,4 @@ function Addcompanyl() {
   );
 }
 
-export default Addcompanyl;
+export default withAuthh(Addcompanyl) ;

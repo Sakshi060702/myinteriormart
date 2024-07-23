@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import withAuthh from "../../Hoc/withAuthh"
 
 function Teamimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -7,6 +9,8 @@ function Teamimagel() {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [selectedBusinessCategory, setSelectedBusinessCategory] = useState("");
+
+  const token=useSelector((state)=>state.auth.token);
 
   const apiUrl =
     "https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster";
@@ -29,6 +33,7 @@ function Teamimagel() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify(body),
     })
@@ -104,6 +109,10 @@ function Teamimagel() {
     try {
       const response = await fetch("https://apidev.myinteriormart.com/api/ImageUpload/UploadOwnerImage", {
         method: "POST",
+        headers: {
+          
+          "Authorization": `Bearer ${token}`,
+        },
         body: formData,
       });
       if (!response.ok) {
@@ -111,6 +120,8 @@ function Teamimagel() {
       }
       // Handle success (e.g., show success message)
       console.log("Image uploaded successfully");
+      
+      console.log("Team token",token);
       alert('Team Image Uploded Successfully')
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -285,4 +296,4 @@ function Teamimagel() {
   );
 }
 
-export default Teamimagel;
+export default withAuthh(Teamimagel);

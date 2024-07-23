@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "../Freelisting/Businesslisting/Businesslisting.css";
 import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
 import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
+import { useSelector } from "react-redux";
+import withAuthh from "../../Hoc/withAuthh"
 
 const Addressl = () => {
   const [countries, setCountries] = useState([]);
@@ -22,6 +24,7 @@ const Addressl = () => {
   const [localAddress, setLocalAddress] = useState("");
 
   const navigate = useNavigate();
+  const token=useSelector((state)=>state.auth.token);
 
   const apiUrl =
     "https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster";
@@ -43,6 +46,7 @@ const Addressl = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify(body),
     })
@@ -185,6 +189,7 @@ const Addressl = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify(submissionData),
     })
@@ -192,6 +197,7 @@ const Addressl = () => {
 
       .then((responseData) => {
         console.log("API response:", responseData);
+        console.log("Address token:",token);
         alert(`Submitted successfully! `);
         navigate("/Categoryapi");
       })
@@ -356,4 +362,4 @@ const Addressl = () => {
   );
 };
 
-export default Addressl;
+export default withAuthh(Addressl);

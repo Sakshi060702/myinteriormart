@@ -4,12 +4,15 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import "../../FrontEnd/css/Register.css";
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../Redux/authSlice';
 
 
 function Login() {
 
     const location=useLocation();
     const navigate=useNavigate();
+    const dispatch=useDispatch();
     
     const {mobile,password}=location.state ||{mobile :'',password:''};
     const[userId,setuserId]=useState('');
@@ -18,6 +21,9 @@ function Login() {
     const[error,setError]=useState('');
     const [success, setSuccess] = useState('');
     const [passwordVisible, setPasswordVisible] = useState(false);
+
+    const [rememberMe, setRememberMe] = useState(false);
+
 
 
     
@@ -38,21 +44,22 @@ function Login() {
           setSuccess(''); 
 
         try{
-            const response=await fetch('https://apidev.myinteriormart.com/api/Login/Login',{
+            const response=await fetch('https://apidev.myinteriormart.com/api/Auth/Login',{
                 method:'POST',
                 headers:{
                     'Content-Type': 'application/json',
-                    "Authorization":"c4NjweNTMyMTMiLCfthWQiOiIxOjhtOT3r"
+                    
                     
                 
                 },
-                body:JSON.stringify({id:userId,mobile:userMobile,password:userPassword})
+                body:JSON.stringify({emailOrMobile:userMobile,password:userPassword,rememberMe:rememberMe})
             });
             const data=await response.json();
             console.log(data);
 
             if(response.ok){
-                
+              const tokenExpiry = new Date().getTime() + 30 * 60 * 1000;
+                dispatch(loginSuccess({token:data.token,user:data.user,tokenExpiry:tokenExpiry}));
                 console.log("Login Successful");
                  setSuccess('Login Successful');
                  navigate('/');
@@ -131,7 +138,9 @@ function Login() {
                         <div className="checkboxes float-left">
                           <label className="container_check">
                             Remember Me
-                            <input type="checkbox" />
+                            <input type="checkbox"
+                            checked={rememberMe} 
+                            onChange={(e)=>setRememberMe(e.target.checked)}/>
                             <span className="checkmark"></span>
                           </label>
                         </div>

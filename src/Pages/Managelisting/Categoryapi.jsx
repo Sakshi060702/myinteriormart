@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
 import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
 import "../../FrontEnd/css/Mangelisting.css";
+import { useSelector } from "react-redux";
+import withAuthh from "../../Hoc/withAuthh"
 
 function Categoryapi() {
   const [firstCategories, setFirstCategories] = useState([]);
@@ -21,6 +23,9 @@ function Categoryapi() {
   const [selectAll, setSelectAll] = useState(false);
 
   const navigate = useNavigate();
+  const token=useSelector((state)=>state.auth.token);
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,6 +35,7 @@ function Categoryapi() {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`,
             },
             body: JSON.stringify({
               FirstCategoryID: setSelectedFirstCategory, // Replace with your desired ID
@@ -154,6 +160,7 @@ function Categoryapi() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
           },
           body: JSON.stringify(selectedData),
         }
@@ -163,6 +170,7 @@ function Categoryapi() {
       }
       const data = await response.json();
       console.log("Data saved successfully:", data);
+      console.log("Category Token",token);
       alert("Data saved successfully");
       navigate("/specialisationl"); // Redirect to the next page
     } catch (error) {
@@ -401,4 +409,4 @@ function Categoryapi() {
   );
 }
 
-export default Categoryapi;
+export default withAuthh(Categoryapi);

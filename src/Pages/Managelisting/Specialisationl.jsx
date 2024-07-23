@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
 import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
 import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
+import { useSelector } from "react-redux";
+import withAuthh from "../../Hoc/withAuthh"
+
 
 function Specialisationl() {
   const [specialisations, setSpecialisations] = useState({
@@ -40,6 +43,9 @@ function Specialisationl() {
   });
 
   const navigate=useNavigate();
+  const token=useSelector((state)=>state.auth.token);
+
+
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;
     setSpecialisations((prevState) => ({
@@ -62,6 +68,7 @@ function Specialisationl() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify(specialisations),
       });
@@ -72,6 +79,7 @@ function Specialisationl() {
 
       const data = await response.json();
       console.log("Response:", data);
+      console.log("Specialisation token",token);
       alert("Data saved successfully")
       navigate("/workinghoursl")
       // Handle success (e.g., show a success message, redirect, etc.)
@@ -148,4 +156,4 @@ function Specialisationl() {
   );
 }
 
-export default Specialisationl;
+export default withAuthh(Specialisationl);
