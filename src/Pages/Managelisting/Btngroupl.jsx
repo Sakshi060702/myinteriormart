@@ -1,14 +1,15 @@
 import React from "react";
+import '../../FrontEnd/css/Mangelisting.css'
 
 function Btngroupl({ buttons, selectedButton, setSelectedButton }) {
   return (
-    <div style={{ display: "flex" }}>
+    <div className="button-container">
       {buttons.map((button, index) => (
         <button
           key={index}
           className={`button ${selectedButton === index ? "selected" : ""} review`}
           onClick={() => setSelectedButton(index)}
-          style={{backgroundColor:'#fb830d',color:'white',marginLeft:'10px'}}
+          
         >
           {button.title}
         </button>

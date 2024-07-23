@@ -57,11 +57,7 @@ function Bannerimagel() {
                   <input
                     type="file"
                     onChange={handleFileChange}
-                    style={{
-                      border: "2px solid grey",
-                      height: "50px",
-                      width: "500px",
-                    }}
+                     className="file-input"
                   />
 
                   {/* <button type="submit">Upload</button> */}
@@ -71,18 +67,19 @@ function Bannerimagel() {
               <div className="form-group">
               <label for="name">Banner Title Title<span className="text-danger">*</span></label>
               <input
-                    className="form-control form-control-sm"
+                    className="form-control form-control-sm file-input2"
                     type="name"
                     name="website"
                     id="website"
                     placeholder="Image Title"
                     value={imageTitle}
                 onChange={handleTitleChange}
+                
                   />
               </div>
               <button
               className="btn_1"
-              style={{ backgroundColor: "orange", marginTop: "10px" }}
+              style={{ backgroundColor: "#E55923", marginTop: "10px" }}
               onClick={handleSubmit}
             >
               Submit

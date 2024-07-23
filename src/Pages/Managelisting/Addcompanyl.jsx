@@ -217,8 +217,12 @@ function Addcompanyl() {
                         Select Turnover
                       </option>
                       <option value="Upto 1 Lac">Upto 1 Lac</option>
-                      <option value="Upto 5 Lacs">Upto 5 Lacs</option>
-                      <option value="Upto 10 Lacs">Upto 10 Lacs</option>
+                      <option value="Upto 5 Lacs">Upto 2 Lacs</option>
+                      <option value="Upto 10 Lacs">Upto 3 Lacs</option>
+                      <option value="Upto 10 Lacs">Upto 5 Lacs</option>
+                      <option value="Upto 10 Lacs">Upto 50 Lacs</option>
+                      <option value="Upto 10 Lacs">Upto 1 Crore</option>
+                      <option value="Upto 10 Lacs">Upto 10 Crore & Above</option>
                     </select>
                   </div>
                   <div className="form-group col-md-4">

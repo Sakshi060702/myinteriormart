@@ -111,6 +111,7 @@ function Teamimagel() {
       }
       // Handle success (e.g., show success message)
       console.log("Image uploaded successfully");
+      alert('Team Image Uploded Successfully')
     } catch (error) {
       console.error("Error uploading image:", error);
       // Handle error uploading image
@@ -119,7 +120,7 @@ function Teamimagel() {
 
   return (
     <>
-      <div className="row">
+      <div className="row" style={{paddingTop:'40px'}}>
   <form
     onSubmit={handleSubmit}
     style={{
@@ -273,8 +274,8 @@ function Teamimagel() {
     </div>
 
     <div className="text-left col-12 mt-3">
-      <button type="submit" className="btn_1">
-        Save and Continue
+      <button type="submit" className="btn_1" style={{ backgroundColor: "#E55923", marginTop: "10px" }}>
+        Submit
       </button>
     </div>
   </form>

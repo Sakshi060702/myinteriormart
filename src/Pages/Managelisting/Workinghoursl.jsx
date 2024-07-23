@@ -102,14 +102,14 @@ const Workinghoursl = () => {
               <form onSubmit={handleSubmit}>
                 <div className="row">
                   {Object.keys(workingHours).map((key) => (
-                    <div key={key} className="col-md-6">
+                    <div key={key} className=" col-md-6">
                       {key === "SaturdayHoliday" ||
                       key === "SundayHoliday" ? null : (
                         <div className="form-group">
                           <label>
                             {key}
                             <input
-                              className="form-control form-control-sm"
+                              className="form-control form-control-sm input-width"
                               type={
                                 key.includes("Holiday") ? "checkbox" : "time"
                               }
@@ -125,12 +125,15 @@ const Workinghoursl = () => {
                                   : undefined
                               }
                               onChange={handleChange}
-                              style={{ width: "350%" }}
+                           
                             />
                           </label>
                         </div>
                       )}
-                      {key === "FridayTo" && (
+                     
+                      {key === "FridayFrom" && (
+                        <>
+                        
                         <div className="col-md-12">
                           <div className="clearfix add_bottom_15">
                             <div className="checkboxes float-left">
@@ -142,13 +145,14 @@ const Workinghoursl = () => {
                                   name="SaturdayHoliday"
                                   checked={workingHours["SaturdayHoliday"]}
                                   onChange={handleChange}
-                                  style={{ width: "350%" }}
+                                  style={{ width: "auto" }}
                                 />
                                 <span className="checkmark"></span>
                               </label>
                             </div>
                           </div>
                         </div>
+                        </>
                       )}
                       {key === "SaturdayFrom" && (
                         <div className="col-md-12">
@@ -162,7 +166,7 @@ const Workinghoursl = () => {
                                   name="SundayHoliday"
                                   checked={workingHours["SundayHoliday"]}
                                   onChange={handleChange}
-                                  style={{ width: "350%" }}
+                                  style={{ width: "auto" }}
                                 />
                                 <span className="checkmark"></span>
                               </label>

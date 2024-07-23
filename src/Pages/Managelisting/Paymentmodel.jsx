@@ -80,7 +80,7 @@ function Paymentmodel() {
               {Object.keys(payment).map(
                 (key, index) =>
                   key !== "selectAll" && (
-                    <div className="col-md-3" key={index}>
+                    <div className="col-md-4" key={index}>
                       <div className="clearfix add_bottom_15">
                         <div className="checkboxes float-left">
                           <label className="container_check">

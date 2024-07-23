@@ -47,6 +47,7 @@ function Sociallinkl() {
       const responseData = await response.json();
       console.log("API response:", responseData);
       alert("SocialLink details saved successfully!");
+      navigate("/Keywordl")
      
     }
     catch(error){
@@ -74,7 +75,7 @@ function Sociallinkl() {
                 <div className="form-group col-md-6">
                   <label for="name">Facebook </label>
                   <input
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm box"
                       type="text"
                       name="facebook"
                       id="facebook"
@@ -86,7 +87,7 @@ function Sociallinkl() {
                 <div className="form-group col-md-6">
                   <label for="name">Whatsapp </label>
                   <input
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm box"
                       type="text"
                       name="whatsappGroupLink"
                       id="whatsappGroupLink"
@@ -98,7 +99,7 @@ function Sociallinkl() {
                 <div className="form-group col-md-6">
                   <label for="name">LinkdenIn</label>
                   <input
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm box"
                       type="text"
                       name="linkedin"
                       id="linkedin"
@@ -110,7 +111,7 @@ function Sociallinkl() {
                 <div className="form-group col-md-6">
                   <label for="name">Twitter</label>
                   <input
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm box"
                       type="text"
                       name="twitter"
                       id="twitter"
@@ -122,7 +123,7 @@ function Sociallinkl() {
                 <div className="form-group col-md-6">
                   <label for="name">Youtube</label>
                   <input
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm box"
                       type="text"
                       name="youtube"
                       id="youtube"
@@ -134,7 +135,7 @@ function Sociallinkl() {
                 <div className="form-group col-md-6">
                   <label for="name">Instagram</label>
                   <input
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm box"
                       type="text"
                       name="instagram"
                       id="instagram"
@@ -146,7 +147,7 @@ function Sociallinkl() {
                 <div className="form-group col-md-6">
                   <label for="name">Pinterest</label>
                   <input
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm box"
                       type="text"
                       name="pinterest"
                       id="pinterest"

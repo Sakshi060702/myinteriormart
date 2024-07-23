@@ -137,7 +137,7 @@ function Specialisationl() {
                     Save & Continue
                   </button>
                   <div style={{display:"flex",justifyContent:"flex-end",gap:'10px'}}>                    
-                      <Link to="/categoryl" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
+                      <Link to="/Categoryapi" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
                     <Link to="/workinghoursl" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import '../../FrontEnd/css/Mangelisting.css'
 
 function Uploadimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -53,17 +54,13 @@ function Uploadimagel() {
                 <input
                   type="file"
                   onChange={handleFileChange}
-                  style={{
-                    border: "2px solid grey",
-                    height: "50px",
-                    width: "500px",
-                  }}
+                 className="file-input"
                 />
                 {/* <button type="submit">Upload</button> */}
 
                 <button
                   className="btn_1"
-                  style={{ backgroundColor: "orange", marginTop: "10px" }}
+                  style={{ backgroundColor: "#E55923", marginTop: "10px" }}
                   onClick={handleSubmit}
                 >
                   Submit

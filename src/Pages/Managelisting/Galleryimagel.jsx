@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import '../../FrontEnd/css/Mangelisting.css'
 
 function Galleryimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -56,30 +57,27 @@ function Galleryimagel() {
               <input
                 type="file"
                 onChange={handleFileChange}
-                style={{
-                  border: "2px solid grey",
-                  height: "50px",
-                  width: "500px",
-                }}
+                 className="file-input"
               />
             </div>
             <div className="form-group">
               <label htmlFor="name">
-                Image Title <span className="text-danger">*</span>
+                Gallery Image Title <span className="text-danger">*</span>
               </label>
               <input
-                className="form-control form-control-sm"
+                className="form-control form-control-sm file-input2"
                 type="text"
                 name="title"
                 id="title"
                 placeholder="Image Title"
                 value={imageTitle}
                 onChange={handleTitleChange}
+                 
               />
             </div>
             <button
               className="btn_1"
-              style={{ backgroundColor: "orange", marginTop: "10px" }}
+              style={{ backgroundColor: "#E55923", marginTop: "10px" }}
               onClick={handleSubmit}
             >
               Submit

@@ -324,16 +324,17 @@ const Addressl = () => {
                       ))}
                     </select>
                   </div>
-                  <div className="form-group col-md-4">
+                  <div className="form-group col-md-12">
                     <label htmlFor="localAddress">Local Address</label>
                     <textarea
                       type="text"
-                      className="form-control"
+                      className="form-control localAddress-textarea"
                       id="localAddress"
                       placeholder="Enter local address"
                       value={localAddress}
                       onChange={(e) => setLocalAddress(e.target.value)}
-                      style={{width:'100%'}}
+                     
+                      
                     />
                   </div>
                 </div>

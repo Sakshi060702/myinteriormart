@@ -11,6 +11,8 @@ import uploadimg from '../../FrontEnd/img/share.png';
 import sociallinkimg from '../../FrontEnd/img/banner/links.png';
 import seoimg from '../../FrontEnd/img/banner/SEO.png';
 
+import '../../FrontEnd/css/Mangelisting.css'
+
 
 
 

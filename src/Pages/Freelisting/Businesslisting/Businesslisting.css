@@ -48,10 +48,84 @@
     height: 35px;
     margin-right: 10px;
 }
+.link-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+.link-box {
+    flex: 0 1 30%; /* Approximately 30% width to fit three items per row */
+    margin-bottom: 20px; /* Add margin for spacing */
+  }
+  
+  @media (max-width: 768px) {
+    .link-box {
+      flex: 0 1 48%; /* Approximately 45% width to fit two items per row on mobile */
+    }
+  }
 
 .box{
     height: 50px;
 }
+
+/*css for company dropdown*/
+@media (max-width: 768px) {
+    .selectdrp {
+      width: 100%; /* Set to 100% to make it responsive */
+      max-width: 330px; /* Ensure it does not exceed 330px */
+    }
+  }
+/*css for address dropdown*/
+  @media (max-width: 768px) {
+    .form-group {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .form-group label {
+      margin-bottom: 5px;
+    }
+  
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+    }
+  
+    .text-left.col-12.mt-3 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .btn_1 {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    .text-left.col-12.mt-3 > div {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+  
+    .text-left.col-12.mt-3 img {
+      height: 24px;
+    }
+  }
+
+  @media (max-width: 768px) {
+  .form-group .localAddress-textarea {
+    width: 100%;
+  }
+}
+
+
+  
+  
+
+
 
 
 

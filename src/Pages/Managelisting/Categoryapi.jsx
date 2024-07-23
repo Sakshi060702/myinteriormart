@@ -18,6 +18,8 @@ function Categoryapi() {
   const [selectedFifthCategory, setSelectedFifthCategory] = useState("");
   const [selectedSixthCategory, setSelectedSixthCategory] = useState("");
 
+  const [selectAll, setSelectAll] = useState(false);
+
   const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
@@ -100,6 +102,23 @@ function Categoryapi() {
     } else {
       setSelectedCategories(selectedCategories.filter((id) => id !== value));
     }
+  };
+
+  const handleSelectAll = () => {
+    if (selectAll) {
+      // Unselect all if currently selected
+      setSelectedThirdCategory([]);
+      setSelectedFourthCategory([]);
+      setSelectedFifthCategory([]);
+      setSelectedSixthCategory([]);
+    } else {
+      // Select all if currently not selected
+      setSelectedThirdCategory(thirdCategories.map((category) => category.thirdCategoryId));
+      setSelectedFourthCategory(fourthCategories.map((category) => category.fourthCategoryId));
+      setSelectedFifthCategory(fifthCategories.map((category) => category.fifthCategoryId));
+      setSelectedSixthCategory(sixthCategories.map((category) => category.sixthCategoryId));
+    }
+    setSelectAll(!selectAll); // Toggle select all state
   };
 
   const handleSubmit = async (e) => {
@@ -211,10 +230,12 @@ function Categoryapi() {
                 <div className="row">
                   <div className="col-md-12 add_bottom_15">
                     <button
+                      type="button"
                       className="btn btn-primary"
                       style={{ backgroundColor: "#fb830d" }}
+                      onClick={handleSelectAll}
                     >
-                      Select All
+                      {selectAll ? "Select All" : "Select All"}
                     </button>
                   </div>
                 </div>
@@ -235,6 +256,7 @@ function Categoryapi() {
                                 type="checkbox"
                                 id={`thirdCategory-${category.thirdCategoryId}`}
                                 value={category.thirdCategoryId}
+                                checked={selectedThirdCategory.includes(category.thirdCategoryId)}
                                 onChange={(e) =>
                                   handleCheckboxChange(
                                     e,
@@ -270,6 +292,7 @@ function Categoryapi() {
                                 type="checkbox"
                                 id={`fourthCategory-${category.fourthCategoryId}`}
                                 value={category.fourthCategoryId}
+                                checked={selectedFourthCategory.includes(category.fourthCategoryId)}
                                 onChange={(e) =>
                                   handleCheckboxChange(
                                     e,
@@ -303,6 +326,7 @@ function Categoryapi() {
                                 type="checkbox"
                                 id={`fifthCategory-${category.fifthCategoryId}`}
                                 value={category.fifthCategoryId}
+                                 checked={selectedFifthCategory.includes(category.fifthCategoryId)}  
                                 onChange={(e) =>
                                   handleCheckboxChange(
                                     e,
@@ -336,6 +360,7 @@ function Categoryapi() {
                                 type="checkbox"
                                 id={`sixthCategory-${category.sixthCategoryId}`}
                                 value={category.sixthCategoryId}
+                                checked={selectedSixthCategory.includes(category.sixthCategoryId)}
                                 onChange={(e) =>
                                   handleCheckboxChange(
                                     e,

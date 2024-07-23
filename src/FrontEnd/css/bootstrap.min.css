@@ -2207,7 +2207,7 @@ select.form-control[size] {
 
 textarea.form-control {
     height: 100px;
-    width: 315%;
+    /* width: 315%; */
     
 }
 
