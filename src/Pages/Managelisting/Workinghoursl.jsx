@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../FrontEnd/css/Mangelisting.css";
 import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
@@ -28,6 +28,54 @@ const Workinghoursl = () => {
 
   const navigate = useNavigate();
   const token=useSelector((state)=>state.auth.token);
+
+useEffect(()=>{
+  const fetchData=async()=>{
+    try{
+      const response =await fetch(
+        `https://apidev.myinteriormart.com/api/BinddetailsListing/GetWorkingDetailslisting`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+      }
+      );
+
+      const result=await response.json();
+
+      const formatTime = (timeString) => {
+        const date = new Date(timeString);
+        return date.toTimeString().split(" ")[0];
+      };
+
+      setWorkingHours({
+        MondayFrom: formatTime(result.mondayFrom),
+          MondayTo: formatTime(result.mondayTo),
+          TuesdayFrom: formatTime(result.tuesdayFrom),
+          TuesdayTo: formatTime(result.tuesdayTo),
+          WednesdayFrom: formatTime(result.wednesdayFrom),
+          WednesdayTo: formatTime(result.wednesdayTo),
+          ThursdayFrom: formatTime(result.thursdayFrom),
+          ThursdayTo: formatTime(result.thursdayTo),
+          FridayFrom: formatTime(result.fridayFrom),
+          FridayTo: formatTime(result.fridayTo),
+          SaturdayFrom: formatTime(result.saturdayFrom),
+          SaturdayTo: formatTime(result.saturdayTo),
+          SundayFrom: formatTime(result.sundayFrom),
+          SundayTo: formatTime(result.sundayTo),
+          SaturdayHoliday: result.saturdayHoliday,
+          SundayHoliday: result.sundayHoliday,
+      })
+    }
+    catch(error)
+    {
+      console.error("Error fetching data:", error);
+    }
+  };
+  fetchData();
+},[token]);
 
   const handleCopyToAll = () => {
     const { MondayFrom, MondayTo } = workingHours;

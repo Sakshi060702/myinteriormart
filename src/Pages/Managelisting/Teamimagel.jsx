@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import usericon from "../../FrontEnd/img/icon/user1.png";
 import withAuthh from "../../Hoc/withAuthh"
 
 function Teamimagel() {
@@ -10,7 +11,41 @@ function Teamimagel() {
   const [selectedState, setSelectedState] = useState("");
   const [selectedBusinessCategory, setSelectedBusinessCategory] = useState("");
 
+  const [imageURL, setImageURL] = useState(null);
+  const [imageTitleFromAPI, setImageTitleFromAPI] = useState("");
+ 
+
   const token=useSelector((state)=>state.auth.token);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchTeamImage = async () => {
+      try {
+        const response = await fetch(
+          "https://apidev.myinteriormart.com/api/BinddetailsListing/GetOwnerImageDetailslisting",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch user profile");
+        }
+        const data = await response.json();
+        setImageURL(data); // Assuming data contains image URL and title
+        setImageTitleFromAPI(data.imagetitle); // Set the image title from API
+        
+       
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    if (token) {
+      fetchTeamImage();
+    }
+  }, [token, dispatch]);
+
 
   const apiUrl =
     "https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster";
@@ -291,9 +326,30 @@ function Teamimagel() {
     </div>
   </form>
 </div>
+<hr style={{ marginTop: "32px" }}></hr>
+          <div className="row">
+            <div className="col-md-12">
+              <h2 style={{textAlign:'center'}}>Team</h2>
+            </div>
+          </div>
+          <div className="row justify-content-center mt-4">
+            <div className="col-md-3 col-lg-2 col-6 mb-5">
+              <div className="upload_img_sec">
+                <img
+                  className="upload_images"
+                  src={imageURL?.imagepath ? imageURL.imagepath : usericon}
+                  alt="Gallery Image"
+                 
+                />
+              </div>
+              <div className="img_title text-center">
+              {imageTitleFromAPI}
+              </div>
+            </div>
+          </div>
 
     </>
   );
 }
 
-export default withAuthh(Teamimagel);
+export default Teamimagel;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Select from 'react-select';
 import "../Freelisting/Businesslisting/Businesslisting.css";
@@ -18,8 +18,56 @@ function Communicationl() {
     tollfree: ""
   });
 
+  const [languageOptions, setLanguageOptions] = useState([]);
   const navigate = useNavigate();
-  const token=useSelector((state)=>state.auth.token);
+  const token = useSelector((state) => state.auth.token);
+
+  useEffect(() => {
+    // Function to fetch communication details
+    const fetchCommunicationDetails = async () => {
+      const apiUrl = "https://apidev.myinteriormart.com/api/BinddetailsListing/GetCommunicationDetailslisting";
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("API response error data:", errorData);
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+        console.log("API response:", responseData);
+
+        // Convert language string to array of objects if necessary
+        const languages = responseData.language
+          ? responseData.language.split(',').map(lang => ({ value: lang, label: lang }))
+          : [];
+
+        setFormData({
+          email: responseData.email || "",
+          registerMobile: responseData.whatsapp || "",
+          mobile: responseData.mobile || "",
+          telephone: responseData.telephone || "",
+          website: responseData.website || "",
+          tollfree: responseData.tollFree || "",
+          languages,
+        });
+
+      } catch (error) {
+        console.error("API error:", error);
+        alert("Failed to fetch communication details. Please try again");
+      }
+    };
+
+    fetchCommunicationDetails();
+  }, [token]);
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -74,7 +122,7 @@ function Communicationl() {
     }
   };
 
-  const languageOptions = [
+  const languageOptionsList  = [
     { value: 'English', label: 'English' },
     { value: 'Hindi', label: 'Hindi' },
     { value: 'Marathi', label: 'Marathi' },
@@ -109,10 +157,11 @@ function Communicationl() {
                     <Select
                       isMulti
                       name="languages"
-                      options={languageOptions}
+                      options={languageOptionsList}
                       className="basic-multi-select box"
                       classNamePrefix="select"
                       onChange={handleSelectChange}
+                      value={formData.languages}
                       required
                      
                     />

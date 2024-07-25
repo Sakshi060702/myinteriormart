@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import usericon from "../../FrontEnd/img/icon/user1.png";
+import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
 
 function Bannerimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageTitle, setImageTitle] = useState("");
+  const [imageURL, setImageURL] = useState(null);
+  const [imageTitleFromAPI, setImageTitleFromAPI] = useState("");
+ 
 
   const token=useSelector((state)=>state.auth.token);
+  const dispatch = useDispatch();
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -16,6 +21,36 @@ function Bannerimagel() {
   const handleTitleChange = (event) => {
     setImageTitle(event.target.value);
   };
+
+  useEffect(() => {
+    const fetchBannerImage = async () => {
+      try {
+        const response = await fetch(
+          "https://apidev.myinteriormart.com/api/BinddetailsListing/GetBannerImageDetailslisting",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch user profile");
+        }
+        const data = await response.json();
+        setImageURL(data); // Assuming data contains image URL and title
+        setImageTitleFromAPI(data.imagetitle); // Set the image title from API
+        
+       
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    if (token) {
+      fetchBannerImage();
+    }
+  }, [token, dispatch]);
+
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -93,6 +128,27 @@ function Bannerimagel() {
             >
               Submit
             </button>
+            </div>
+          </div>
+          <hr style={{ marginTop: "32px" }}></hr>
+          <div className="row">
+            <div className="col-md-12">
+              <h2 style={{textAlign:'center'}}>Banner Images</h2>
+            </div>
+          </div>
+          <div className="row justify-content-center mt-4">
+            <div className="col-md-12 col-lg-12 col-6 mb-5">
+              <div className="upload_banner_img_sec">
+                <img
+                  className="upload_images"
+                  src={imageURL?.imagepath ? imageURL.imagepath : usericon}
+                  alt="Banner Image"
+                 
+                />
+              </div>
+              <div className="img_title text-center">
+              {imageTitleFromAPI}
+              </div>
             </div>
           </div>
         </div>

@@ -66,10 +66,12 @@ const Addressl = () => {
       });
   };
 
+  
   useEffect(() => {
     fetchData("countries").then((data) => {
       if (data) setCountries(data.country);
     });
+  
   }, []);
 
   const handleCountryChange = (e) => {
@@ -363,3 +365,5 @@ const Addressl = () => {
 };
 
 export default withAuthh(Addressl);
+
+

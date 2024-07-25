@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import { Link,useNavigate } from "react-router-dom";
 import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
 import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
@@ -19,6 +19,34 @@ function Paymentmodel() {
 
   const navigate=useNavigate();
   const token=useSelector((state)=>state.auth.token);
+
+  useEffect(()=>{
+    const fetchPaymentmode=async()=>{
+      try{
+        const response=await fetch("https://apidev.myinteriormart.com/api/BinddetailsListing/GetPaymentmodeDetailslisting",{
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+
+        if(!response.ok){
+          throw new Error(`HTTP error! status: ${response.status}`);
+
+        }
+        const data=await response.json();
+        setPayment((prevState)=>({
+          ...prevState,
+          ...data,
+        }))
+      }
+      catch(error){
+        console.error("Error:", error);
+      }
+    };
+    fetchPaymentmode();
+  },[token]);
 
 
   const handleCheckboxChange=(event)=>{
@@ -84,30 +112,27 @@ function Paymentmodel() {
                 </div>
               </div>
               <div className="row">
-              {Object.keys(payment).map(
-                (key, index) =>
-                  key !== "selectAll" && (
-                    <div className="col-md-4" key={index}>
-                      <div className="clearfix add_bottom_15">
-                        <div className="checkboxes float-left">
-                          <label className="container_check">
-                            {key
-                              .replace(/([A-Z])/g, " $1")
-                              .replace(/^./, (str) => str.toUpperCase())}
-                            <input
-                              type="checkbox"
-                              id={key}
-                              name={key}
-                              checked={payment[key]}
-                              onChange={handleCheckboxChange}
-                            />
-                            <span className="checkmark"></span>
-                          </label>
-                        </div>
+              {Object.keys(payment)
+                .filter(key => !['selectAll', 'listingID', 'ownerGuid', 'ipAddress','payTM','phonePay','paypal'].includes(key))
+                .map((key, index) => (
+                  <div className="col-md-3" key={index}>
+                    <div className="clearfix add_bottom_15">
+                      <div className="checkboxes float-left">
+                        <label className="container_check">
+                          {key.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase())}
+                          <input
+                            type="checkbox"
+                            id={key}
+                            name={key}
+                            checked={payment[key]}
+                            onChange={handleCheckboxChange}
+                          />
+                          <span className="checkmark"></span>
+                        </label>
                       </div>
                     </div>
-                  )
-              )}
+                  </div>
+                ))}
                 <div className="text-left col-12 mt-3">
                   <button type="submit" className="btn_1" onClick={handleSubmit}>
                     Save & Continue

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { Link,useNavigate } from "react-router-dom";
 import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
 import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
@@ -45,6 +45,34 @@ function Specialisationl() {
   const navigate=useNavigate();
   const token=useSelector((state)=>state.auth.token);
 
+  useEffect(()=>{
+    const fetchSpecialisations=async()=>{
+      try{
+        const response=await fetch("https://apidev.myinteriormart.com/api/BinddetailsListing/GetSpecializationDetailslisting",{
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+
+        if(!response.ok){
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data=await response.json();
+        setSpecialisations((prevState)=>({
+          ...prevState,
+          ...data,
+        }));
+      }
+      catch(error)
+      {
+        console.error("Error:", error);
+      }
+    };
+    fetchSpecialisations();
+  },[token]);
 
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;
@@ -117,7 +145,7 @@ function Specialisationl() {
             <div className="row">
               {Object.keys(specialisations).map(
                 (key, index) =>
-                  key !== "selectAll" && (
+                  !["selectAll", "listingID", "ownerGuid", "ipAddress"].includes(key)  && (
                     <div className="col-md-3" key={index}>
                       <div className="clearfix add_bottom_15">
                         <div className="checkboxes float-left">

@@ -17,57 +17,60 @@ function Addcompanyl() {
     description: "",
   });
 
-  const navigate = useNavigate();
   const [businessTypes, setBusinessTypes] = useState([]);
   const token = useSelector((state) => state.auth.token);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchBusinessTypes = async () => {
-      const apiUrl =
-        "https://apidev.myinteriormart.com/api/CompanyDetails/AddOrUpdateCompanyDetails";
+  const fetchBusinessTypes = async () => {
+    const apiUrl = "https://apidev.myinteriormart.com/api/CompanyDetails/AddOrUpdateCompanyDetails";
 
-      try {
-        const response = await fetch(apiUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            companyName: "Alis Infotech Pvt Ltd.",
-            businessCategory: "Consumer",
-            natureOfBusiness: "Private Limited Company",
-            yearOfEstablishment: "2024-06-27T10:10:51.695Z",
-            numberOfEmployees: 3450,
-            turnover: "Upto 1 Lac",
-            gstNumber: "890353423434",
-            description: "this is the best IT Company",
-          }),
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          console.error("API response error data:", errorData);
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const responseData = await response.json();
-        setBusinessTypes(responseData.bussinessType);
-      } catch (error) {
-        console.error("API error:", error);
-        alert("Failed to fetch business types. Please try again later.");
-      }
+    const requestBody = {
+      companyVM: {
+        CompanyName: formData.companyName,
+        BusinessCategory: formData.businessCategory,
+        NatureOfBusiness: formData.natureOfBusiness,
+        YearOfEstablishment: formData.yearOfEstablishment,
+        NumberOfEmployees: formData.numberOfEmployees,
+        Turnover: formData.turnover,
+        GSTNumber: formData.gstNumber,
+        Description: formData.description,
+      },
     };
 
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("API response error data:", errorData);
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      setBusinessTypes(responseData.businessTypes); // Adjusted to match the response data structure
+    } catch (error) {
+      console.error("API error:", error);
+      alert("Failed to fetch business types. Please try again later.");
+    }
+  };
+
+  useEffect(() => {
     fetchBusinessTypes();
   }, [token]);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
       [name]: value,
-    }));
+    });
   };
 
   const handleSubmit = async (event) => {

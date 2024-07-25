@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import { Link,useNavigate } from "react-router-dom";
 import "../Freelisting/Businesslisting/Businesslisting.css";
 import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
@@ -20,6 +20,47 @@ function Sociallinkl() {
   });
   const navigate=useNavigate();
   const token=useSelector((state)=>state.auth.token);
+
+  useEffect(()=>{
+    const fetchSociallinkDetails=async()=>{
+      const apiUrl="https://apidev.myinteriormart.com/api/BinddetailsListing/GetAddSocialLinkDetailslisting";
+
+      try{
+        const response=await fetch(apiUrl,{
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+        if(!response.ok){
+          const errorData=await response.json();
+          console.error("API response error data:",errorData);
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const responseData = await response.json();
+        console.log("API response:", responseData);
+
+        setFormData({
+          facebook:responseData.facebook || "",
+          whatsappGroupLink :responseData.whatsappGroupLink || "",
+          linkedin : responseData.linkedin || "",
+          twitter : responseData.twitter || "",
+          youtube:responseData.youtube || "",
+          instagram:responseData.instagram || "",
+          pinterest :responseData.pinterest || "",
+        })
+      }
+
+      
+      catch(error)
+      {
+        console.error("API error:", error);
+        alert("Failed to fetch communication details. Please try again");
+      }
+    };
+    fetchSociallinkDetails();
+  },[token]);
+
 
   const handleChange=(event)=>{
     const{name,value}=event.target;

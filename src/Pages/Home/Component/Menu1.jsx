@@ -90,120 +90,129 @@ function Menu1() {
 
 
   return (
-    <>
-      <header className="header_in">
-        <div className="container" style={{ background: "#fff" }}>
-          <div className="row">
-            <div className="col-lg-3 col-12">
-              <div id="logo" className="logo">
-                <NavLink to={"/"} title="index">
-                  <img
-                    src={logoSticky}
-                    width="220"
-                    alt="logo"
-                    className="logo_sticky"
-                  />
-                </NavLink>
-              </div>
+<>
+    <header className="header_in">
+      <div className="container" style={{ background: "#fff" }}>
+        <div className="row">
+          <div className="col-lg-3 col-12">
+            <div id="logo" className="logo">
+              <NavLink to={"/"} title="index">
+                <img
+                  src={logoSticky}
+                  width="220"
+                  alt="logo"
+                  className="logo_sticky"
+                />
+              </NavLink>
             </div>
-            <div className="col-lg-9 col-12 navitems">
-              <ul className={`nav-links ${showMenu ? "active" : ""}`}>
-                <li>
-                  <span>
-                    <NavLink
-                      to="/categorylist"
-                      onClick={closeMenu}
-                      style={{ fontSize: "14px", color: "black" }}
-                    >
-                      Suggestion
-                    </NavLink>
-                  </span>
-                </li>
-                <li>
+          </div>
+          <div className="col-lg-9 col-12 navitems">
+            <ul className={`nav-links ${showMenu ? "active" : ""}`}>
+              <li>
+                <span>
                   <NavLink
-                    to="/layout"
-                    className="btn_add listing-btn"
-                    style={{ backgroundColor: "#fe900d", fontSize: "14px" }}
+                    to="/categorylist"
                     onClick={closeMenu}
+                    style={{ fontSize: "14px", color: "black" }}
                   >
-                    Free Listing
+                    Suggestion
                   </NavLink>
-                </li>
+                </span>
+              </li>
+              <li>
+                <NavLink
+                  to="/layout"
+                  className="btn_add listing-btn"
+                  style={{ backgroundColor: "#fe900d", fontSize: "14px" }}
+                  onClick={closeMenu}
+                >
+                  Free Listing
+                </NavLink>
+              </li>
 
-                <li>
-                  <NavLink
-                    to="/signup2"
-                    className="btn_add listing-btn"
-                    style={{ backgroundColor: "#fe900d", fontSize: "14px" }}
-                    onClick={closeMenu}
+              {!token ? (
+                <>
+                  <li>
+                    <NavLink
+                      to="/signup2"
+                      className="btn_add listing-btn"
+                      style={{ backgroundColor: "#fe900d", fontSize: "14px" }}
+                      onClick={closeMenu}
+                    >
+                      Signup
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/login"
+                      className="btn_add listing-btn"
+                      style={{ backgroundColor: "#fe900d", fontSize: "14px" }}
+                      onClick={closeMenu}
+                    >
+                      Login
+                    </NavLink>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <div
+                    className="notification-user"
+                    style={{ display: "flex", alignItems: "center" }}
                   >
-                    Signup
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/login"
-                    className="btn_add listing-btn"
-                    style={{ backgroundColor: "#fe900d", fontSize: "14px" }}
-                    onClick={closeMenu}
-                  >
-                    Login
-                  </NavLink>
-                </li>
-              </ul>
-              <div
-                className="notification-user"
-                style={{ display: "flex", alignItems: "center" }}
-              >
-                <div
-                  className="dropdown notification"
-                  ref={notificationRef}
-                  style={{ marginLeft: "20px" }}
-                >
-                  <button
-                    type="button"
-                    onClick={toggleNotificationMenu}
-                    style={{ background: "none", border: "none" }}
-                  >
-                    <img src={notificationIcon} alt="notification" />
-                    {showNotificationMenu && <Notification />}
-                  </button>
-                </div>
-                <div 
-                id="profileid"
-                  className="dropdown usericon"
-                  ref={dropRef}
-                  style={{ marginLeft: "20px", alignItems: "center" }}
-                >
-                  <button
-                    className="usericon-btn dropdown-toggle"
-                    type="button"
-                    onClick={toggleDropdown}
-                    style={{ background: "none", border: "none" }}
-                  >
-                    <img className="usericon-img" src={userProfile?.imgUrl ? userProfile.imgUrl : usericon} alt="user icon" />
-                    {dropdownOpen && <Dropdown />}
-                  </button>
-                </div>
-              </div>
-              <div
-                className="burger"
-                onClick={toogleMenu}
-                style={{ marginLeft: "30px" }}
-              >
-                <div className={`menu-icon ${showMenu ? "open" : ""}`}>
-                  <div className="line line1"></div>
-                  <div className="line line2"></div>
-                  <div className="line line3"></div>
-                </div>
+                    <div
+                      className="dropdown notification"
+                      ref={notificationRef}
+                      style={{ marginLeft: "20px" }}
+                    >
+                      <button
+                        type="button"
+                        onClick={toggleNotificationMenu}
+                        style={{ background: "none", border: "none" }}
+                      >
+                        <img src={notificationIcon} alt="notification" />
+                        {showNotificationMenu && <Notification />}
+                      </button>
+                    </div>
+                    <div
+                      id="profileid"
+                      className="dropdown usericon"
+                      ref={dropRef}
+                      style={{ marginLeft: "20px", alignItems: "center" }}
+                    >
+                      <button
+                        className="usericon-btn dropdown-toggle"
+                        type="button"
+                        onClick={toggleDropdown}
+                        style={{ background: "none", border: "none" }}
+                      >
+                        <img className="usericon-img" src={userProfile?.imgUrl ? userProfile.imgUrl : usericon} alt="user icon" />
+                        {dropdownOpen && <Dropdown />}
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </ul>
+            <div
+              className="burger"
+              onClick={toogleMenu}
+              style={{ marginLeft: "30px" }}
+            >
+              <div className={`menu-icon ${showMenu ? "open" : ""}`}>
+                <div className="line line1"></div>
+                <div className="line line2"></div>
+                <div className="line line3"></div>
               </div>
             </div>
           </div>
         </div>
-        <div className="layer"></div>
-      </header>
-    </>
+      </div>
+      <div className="layer"></div>
+    </header>
+  </>
+
   );
 }
 
 export default Menu1;
+

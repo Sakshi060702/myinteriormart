@@ -62,8 +62,66 @@ function Categoryapi() {
       }
     };
 
+    const fetchUserCategories=async()=>{
+      try{
+        const response=await fetch("https://apidev.myinteriormart.com/api/BinddetailsListing/GetCategoriesDetailslisting",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if(!response.ok){
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data=await response.json();
+
+        setSelectedFirstCategory(data.firstCategoryID);
+        setSelectedSecondCategory(data.secondCategoryID);
+        setSelectedThirdCategory(data.thirdCategoryID.split(",").map(Number));
+        setSelectedFourthCategory(data.fourthCategoryID.split(",").map(Number));
+        setSelectedFifthCategory(data.fifthCategoryID.split(",").map(Number));
+        setSelectedSixthCategory(data.sixthCategoryID.split(",").map(Number));
+
+        console.log('User categories fetched',data);
+      }
+      catch(error)
+      {
+        console.error("Error fetching user categories:", error);
+      }
+    }
+
     fetchData();
-  }, []); // Empty dependency array to run effect only once
+    fetchUserCategories();
+  }, [token]); // Empty dependency array to run effect only once
+
+
+  useEffect(() => {
+    if (selectedFirstCategory) {
+      const selectedFirstCat = firstCategories.find(
+        (category) => category.firstCategoryID === selectedFirstCategory
+      );
+      if (selectedFirstCat) {
+        setSecondCategories(selectedFirstCat.secondCategories || []);
+      }
+    }
+  }, [selectedFirstCategory, firstCategories]);
+
+
+  useEffect(() => {
+    if (selectedSecondCategory) {
+      const selectedSecondCat = secondCategories.find(
+        (category) => category.secondCategoryId === selectedSecondCategory
+      );
+      if (selectedSecondCat) {
+        setThirdCategories(selectedSecondCat.thirdCategories || []);
+        setFourthCategories(selectedSecondCat.fourthCategories || []);
+        setFifthCategories(selectedSecondCat.fifthCategories || []);
+        setSixthCategories(selectedSecondCat.sixthCategories || []);
+      }
+    }
+  }, [selectedSecondCategory, secondCategories]);
 
   const handleFirstCategoryChange = (e) => {
     const selectedFirstCategoryID = e.target.value;
