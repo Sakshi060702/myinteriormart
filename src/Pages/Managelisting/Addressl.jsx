@@ -29,7 +29,7 @@ const Addressl = () => {
   const apiUrl =
     "https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster";
 
-  const fetchData = (type, parentID = null) => {
+  const fetchData = async(type, parentID = null) => {
     let body = {
       type,
       CountryID: setSelectedCountry,
@@ -42,29 +42,28 @@ const Addressl = () => {
     };
     if (parentID) body.parentID = parentID;
 
-    return fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
-      },
-      body: JSON.stringify(body),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(`Data fetched for ${type}:`, data);
-        return data;
-      })
-      .catch((error) => {
-        console.error(`Error fetching ${type}:`, error);
-        return null;
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log(`Data fetched for ${type}:`, data);
+      return data;
+    } catch (error) {
+      console.error(`Error fetching ${type}:`, error);
+      return null;
+    }
   };
+
 
   
   useEffect(() => {
@@ -72,7 +71,95 @@ const Addressl = () => {
       if (data) setCountries(data.country);
     });
   
-  }, []);
+  }, [token]);
+
+  useEffect(() => {
+    const fetchUserAddress = async () => {
+      try {
+        const response = await fetch(
+          "https://apidev.myinteriormart.com/api/BinddetailsListing/GetAddressDetailslisting",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+
+        setSelectedCountry(data.countryID);
+        setSelectedState(data.stateID);
+        setSelectedCity(data.cityID);
+        setSelectedAssembly(data.assemblyID);
+        setSelectedPincode(data.pincodeID);
+        setSelectedLocality(data.localityID);
+        setLocalAddress(data.localAddress);
+
+        console.log("User Address Fetched", data);
+      } catch (error) {
+        console.error("Error fetching user categories:", error);
+      }
+    };
+    fetchUserAddress();
+  }, [token]);
+
+  useEffect(() => {
+    if (selectedCountry) {
+      const selectcountry = countries.find(
+        (address) => address.countryID === selectedCountry
+      );
+      if (selectcountry) {
+        setStates(selectcountry.states || []);
+      }
+    }
+  }, [selectedCountry, countries]);
+
+  useEffect(() => {
+    if (selectedState) {
+      const selectstate = states.find(
+        (address) => address.stateID === selectedState
+      );
+      if (selectstate) {
+        setCities(selectstate.cities || []);
+      }
+    }
+  }, [selectedState, states]);
+
+  useEffect(() => {
+    if (selectedCity) {
+      const selectcity = cities.find(
+        (address) => address.cityID === selectedCity
+      );
+      if (selectcity) {
+        setAssemblies(selectcity.assemblies || []);
+      }
+    }
+  }, [selectedCity, cities]);
+
+  useEffect(() => {
+    if (selectedAssembly) {
+      const selectAssembly = assemblies.find(
+        (address) => address.assemblyID === selectedAssembly
+      );
+      if (selectAssembly) {
+        setPincodes(selectAssembly.pincodes || []);
+      }
+    }
+  }, [selectedAssembly, assemblies]);
+
+  useEffect(() => {
+    if (selectedPincode) {
+      const selectpincode = pincodes.find(
+        (address) => address.pincodeID === selectedPincode
+      );
+      if (selectpincode) {
+        setLocalities(selectpincode.localities || []);
+      }
+    }
+  }, [selectedPincode, pincodes]);
 
   const handleCountryChange = (e) => {
     const countryID = e.target.value;
@@ -232,6 +319,7 @@ const Addressl = () => {
                       className="wide add_bottom_10 country selectdrp"
                       value={selectedCountry}
                       onChange={handleCountryChange}
+                      required
                     >
                       <option value="">Select Country</option>
                       {countries.map((country) => (
@@ -251,6 +339,7 @@ const Addressl = () => {
                       id="state"
                       value={selectedState}
                       onChange={handleStateChange}
+                      required
                     >
                       <option value="">Select State</option>
                       {states.map((state) => (
@@ -267,6 +356,7 @@ const Addressl = () => {
                       id="city"
                       value={selectedCity}
                       onChange={handleCityChange}
+                      required
                     >
                       <option value="">Select City</option>
                       {cities.map((city) => (
@@ -284,6 +374,7 @@ const Addressl = () => {
                       className="wide add_bottom_10 locality selectdrp"
                       value={selectedAssembly}
                       onChange={handleLocalityChange}
+                      required
                     >
                       <option value="">Select Locality</option>
                       {assemblies.map((assembly) => (
@@ -302,6 +393,7 @@ const Addressl = () => {
                       className="wide add_bottom_10 pincode selectdrp"
                       value={selectedPincode}
                       onChange={handlePincodeChange}
+                      required
                     >
                       <option value="">Select Pincode</option>
                       {pincodes.map((pincode) => (
@@ -320,6 +412,7 @@ const Addressl = () => {
                       className="wide add_bottom_10 area selectdrp"
                       value={selectedLocality}
                       onChange={handleAreaChange}
+                      required
                     >
                       <option value="">Select Area</option>
                       {localities.map((locality) => (
@@ -341,6 +434,7 @@ const Addressl = () => {
                       placeholder="Enter local address"
                       value={localAddress}
                       onChange={(e) => setLocalAddress(e.target.value)}
+                      required
                      
                       
                     />

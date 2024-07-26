@@ -1,16 +1,23 @@
 import React from "react";
 import "../FrontEnd/css/dropdown.css";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../Redux/authSlice";
 
 const Dropdown = () => {
+
+  const navigate=useNavigate();
+  const dispatch=useDispatch();
+
   const handleProfileClick = () => {
     window.location.href = "/profile2";
     // Handle profile click action
   };
 
   const handleLogoutClick = () => {
-    // Handle logout click action
-  };
+    dispatch(logout());
+    navigate("/");
+   };
 
   return (
     <div className="dropdown1">
