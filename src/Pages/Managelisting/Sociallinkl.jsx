@@ -55,7 +55,7 @@ function Sociallinkl() {
       catch(error)
       {
         console.error("API error:", error);
-        alert("Failed to fetch communication details. Please try again");
+        
       }
     };
     fetchSociallinkDetails();

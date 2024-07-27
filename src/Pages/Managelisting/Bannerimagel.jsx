@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
-import usericon from "../../FrontEnd/img/icon/user1.png";
+import usericon from "../../FrontEnd/img/home_section_1.jpg";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
 

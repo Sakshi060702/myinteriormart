@@ -51,7 +51,7 @@ function Communicationl() {
 
         setFormData({
           email: responseData.email || "",
-          registerMobile: responseData.whatsapp || "",
+          registerMobile: responseData.telephoneSecond || "",
           mobile: responseData.mobile || "",
           telephone: responseData.telephone || "",
           website: responseData.website || "",
@@ -61,7 +61,7 @@ function Communicationl() {
 
       } catch (error) {
         console.error("API error:", error);
-        alert("Failed to fetch communication details. Please try again");
+        
       }
     };
 

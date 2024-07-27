@@ -27,7 +27,7 @@ function Profile2({ children }) {
               role="tablist"
               aria-orientation="vertical"
             >
-              <Link >
+              <Link to="/dashboard" >
                 {" "}
                 <img
                   src={listingicon}
@@ -36,7 +36,7 @@ function Profile2({ children }) {
                 />
                 Dashboard
               </Link>
-              <Link >
+              <Link to="/Myactivity">
                 {" "}
                 <img
                   src={listingicon}

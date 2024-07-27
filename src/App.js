@@ -227,6 +227,14 @@ import Managelistingl from "./Pages/Managelisting/Managelistingl";
 
 import Categoryapi from "./Pages/Managelisting/Categoryapi";
 
+import Dashboard from "./Pages/Profile/Dashboard";
+import Myactivity from "./Pages/Profile/Myactivity";
+
+import AllBookmark from "./Pages/Profile/Dashboard/AllBookmark";
+import AllLike from "./Pages/Profile/Dashboard/AllLike";
+import AllReviews from "./Pages/Profile/Dashboard/AllReviews";
+import AllSubscribe from "./Pages/Profile/Dashboard/AllSubscribe";
+
 
 function App() {
   return (
@@ -431,6 +439,8 @@ function App() {
 
 
 <Route path="/profile2" element={<Profile2/>}/>
+<Route path="/dashboard" element={<Profile2><Dashboard /></Profile2>} />
+<Route path="/Myactivity" element={<Profile2><Myactivity /></Profile2>} />
 <Route path="/editprofile" element={<Profile2><Editprofile /></Profile2>} />
 <Route path="/address1" element={<Profile2><Address1 /></Profile2>} />
 <Route path="/enquiry" element={<Profile2><Enquiry /></Profile2>} />
@@ -442,6 +452,11 @@ function App() {
 <Route path="/suggestion" element={<Profile2><Suggestion /></Profile2>} />
 <Route path="/complaint" element={<Profile2><Complaint /></Profile2>} />
 <Route path="/changepassword" element={<Profile2><Changepassword /></Profile2>} />
+
+<Route path="/AllBookmark" element={<AllBookmark/>}/>
+<Route path="/AllLike" element={<AllLike/>}/>
+<Route path="/AllSubscribe" element={<AllSubscribe/>}/>
+<Route path="/AllReviews" element={<AllReviews/>}/>
 
 
 

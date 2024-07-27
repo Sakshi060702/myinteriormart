@@ -23,26 +23,19 @@ function Addcompanyl() {
 
   useEffect(() => {
     const fetchBusinessTypes = async () => {
-      const apiUrl =
-        "https://apidev.myinteriormart.com/api/CompanyDetails/AddOrUpdateCompanyDetails";
+      const apiUrl = "https://apidev.myinteriormart.com/api/CompanyDetails/GetBussinessCategorys";
 
+     
+
+   
       try {
         const response = await fetch(apiUrl, {
-          method: "POST",
+          method: "GET",
           headers: {
-            "Content-Type": "application/json",
+          
             "Authorization": `Bearer ${token}`,
           },
-          body: JSON.stringify({
-            companyName: "Alis Infotech Pvt Ltd.",
-            businessCategory: "Consumer",
-            natureOfBusiness: "Private Limited Company",
-            yearOfEstablishment: "2024-06-27T10:10:51.695Z",
-            numberOfEmployees: 3450,
-            turnover: "Upto 1 Lac",
-            gstNumber: "890353423434",
-            description: "this is the best IT Company",
-          }),
+        
         });
 
         if (!response.ok) {
@@ -52,7 +45,7 @@ function Addcompanyl() {
         }
 
         const responseData = await response.json();
-        setBusinessTypes(responseData.bussinessType);
+        setBusinessTypes(responseData.bussinessCategory);
       } catch (error) {
         console.error("API error:", error);
         alert("Failed to fetch business types. Please try again later.");
@@ -61,6 +54,50 @@ function Addcompanyl() {
 
     fetchBusinessTypes();
   }, [token]);
+
+
+  useEffect(()=>{
+        const fetchCompanyDetails = async () => {
+          const apiUrl = "https://apidev.myinteriormart.com/api/BinddetailsListing/GetCompanyDetailslisting";
+          try {
+            const response = await fetch(apiUrl, {
+              method: "GET",
+              headers: {
+               
+                "Authorization": `Bearer ${token}`,
+              },
+            });
+      
+            if (!response.ok) {
+              const errorData = await response.json();
+              console.error("API response error data:", errorData);
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+      
+            const companyDetails = await response.json();
+
+            const formattedDate = companyDetails.yearOfEstablishment 
+            ? new Date(companyDetails.yearOfEstablishment).toLocaleDateString('en-CA') // Formats date as YYYY-MM-DD
+            : "";
+
+            setFormData({
+              companyName: companyDetails.companyName || "",
+              businessCategory: companyDetails.businessCategory || "",
+              natureOfBusiness: companyDetails.natureOfBusiness || "",
+              yearOfEstablishment: formattedDate,
+              numberOfEmployees: companyDetails.numberOfEmployees || "",
+              turnover: companyDetails.turnover || "",
+              gstNumber: companyDetails.gstNumber || "",
+              description: companyDetails.description || "",
+            });
+          } catch (error) {
+            console.error("API error:", error);
+            
+          }
+        };
+    fetchCompanyDetails();  
+      },[token]);
+    
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -137,14 +174,14 @@ function Addcompanyl() {
                   </div>
                   <div className="form-group col-md-4">
                     <label htmlFor="businessCategory">
-                      Business Type <span className="text-danger">*</span>
+                      Business Type 
                     </label>
                     <select
                       className="wide add_bottom_10 selectdrp"
                       name="businessCategory"
                       value={formData.businessCategory}
                       onChange={handleChange}
-                      required
+                    
                     >
                       <option value="" disabled>
                         Select Business Type
@@ -223,12 +260,12 @@ function Addcompanyl() {
                         Select Turnover
                       </option>
                       <option value="Upto 1 Lac">Upto 1 Lac</option>
-                      <option value="Upto 5 Lacs">Upto 2 Lacs</option>
-                      <option value="Upto 10 Lacs">Upto 3 Lacs</option>
-                      <option value="Upto 10 Lacs">Upto 5 Lacs</option>
-                      <option value="Upto 10 Lacs">Upto 50 Lacs</option>
-                      <option value="Upto 10 Lacs">Upto 1 Crore</option>
-                      <option value="Upto 10 Lacs">Upto 10 Crore & Above</option>
+                      <option value="Upto 2 Lacs">Upto 2 Lacs</option>
+                      <option value="Upto 3 Lacs">Upto 3 Lacs</option>
+                      <option value="Upto 5 Lacs">Upto 5 Lacs</option>
+                      <option value="Upto 50 Lacs">Upto 50 Lacs</option>
+                      <option value="Upto 1 Crore">Upto 1 Crore</option>
+                      <option value="Upto 10 Crore & Above">Upto 10 Crore & Above</option>
                     </select>
                   </div>
                   <div className="form-group col-md-4">

@@ -27,8 +27,17 @@ const Dropdown = () => {
         </li> */}
         <li>
           <Link to="/labournakapage" style={{color:'black'}}>
-            <i style={{ marginRight: "10px"}}></i>Profile
+            <i style={{ marginRight: "10px"}}></i> My Profile
           </Link>
+        </li>
+        <li>
+        <i style={{ marginRight: "10px" }}></i>Personal Info
+        </li>
+        <li>
+        <i style={{ marginRight: "10px" }}></i>Settings
+        </li>
+        <li>
+        <i style={{ marginRight: "10px" }}></i>Change Password
         </li>
         <li onClick={handleLogoutClick}>
           <i style={{ marginRight: "10px" }}></i>Logout
