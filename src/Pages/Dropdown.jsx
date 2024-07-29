@@ -31,7 +31,10 @@ const Dropdown = () => {
           </Link>
         </li>
         <li>
-        <i style={{ marginRight: "10px" }}></i>Personal Info
+          <Link to="/userpersonalinformation" style={{color:'black'}}>
+          <i style={{ marginRight: "10px" }}></i>Personal Info
+          </Link>
+        
         </li>
         <li>
         <i style={{ marginRight: "10px" }}></i>Settings

@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh";
 
-function AllSubscribe() {
+function MySubscribe() {
   const token = useSelector((state) => state.auth.token);
   const [subscribes, setSubscribes] = useState([]);
 
   useEffect(() => {
     const fetchSubscribe = async () => {
       try {
-        const response = await fetch("https://apidev.myinteriormart.com/api/AllBookMark/GetUserAllMySubscribe", {
+        const response = await fetch("https://apidev.myinteriormart.com/api/MyActivity/MyActivityAllMySubscribe", {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -84,4 +84,4 @@ function AllSubscribe() {
   );
 }
 
-export default AllSubscribe;
+export default MySubscribe;

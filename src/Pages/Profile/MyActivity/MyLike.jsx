@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh";
 
-function AllLike() {
+function MyLike() {
 
   
   const token = useSelector((state) => state.auth.token);
@@ -12,7 +12,7 @@ function AllLike() {
     // Fetch bookmarks from the API
     const fetchLikes = async () => {
       try {
-        const response = await fetch("https://apidev.myinteriormart.com/api/AllBookMark/GetUserAllMyLikes", {
+        const response = await fetch("https://apidev.myinteriormart.com/api/MyActivity/MyActivityAllMyLikes", {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -91,4 +91,4 @@ function AllLike() {
  );
 }
 
-export default AllLike;
+export default MyLike;

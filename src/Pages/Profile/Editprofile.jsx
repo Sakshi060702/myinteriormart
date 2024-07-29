@@ -1,18 +1,93 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Profileimg from "../../FrontEnd/img/Asset.png";
+import { useSelector } from "react-redux";
+import withAuthh from "../../Hoc/withAuthh";
+
 
 function Editprofile() {
   const [fullName, setFullName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
   const [email, setEmail] = useState('');
   const [selectGender, setSelectGender] = useState('Select Gender');
+  const [profileImage, setProfileImage] = useState(Profileimg); // Default image
+  const[imgText,setImgText]=useState('');
+  const [loading, setLoading] = useState(true);
+  const [file, setFile] = useState(null);
+  
+  const [isVendor, setIsVendor] = useState(true);
+
+  const token = useSelector((state) => state.auth.token);
+
+  useEffect(() => {
+    // Fetch user profile data when component mounts
+    fetch('https://apidev.myinteriormart.com/api/UserProfile/GetUserProfile', {
+      method: 'GET', 
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`, 
+        },
+    })
+      .then(response => response.json())
+      .then(data => {
+        setFullName(data.name);
+        setLastName(data.lastName);
+        setMobileNumber(data.phone);
+        setEmail(data.email);
+        setSelectGender(data.gender);
+        setImgText(data.imgText)
+        setProfileImage(data.imgUrl ? data.imgUrl : Profileimg); // Update profile image
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching profile data:', error);
+        setLoading(false);
+      });
+  }, [token]);
+  
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setFile(file);
+  
+    // Use FileReader to preview the image
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setProfileImage(reader.result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Perform form submission logic here
-    console.log('Form submitted!');
+   const formData=new FormData();
+   formData.append('FirstName', fullName);
+    formData.append('LastName', lastName);
+    formData.append('Gender', selectGender);
+    formData.append('File', file);
+   
+    formData.append('IsVendor', isVendor);
+
+    fetch('https://apidev.myinteriormart.com/api/UserNewProfile/CreateOrUpdateProfile', {
+      method: 'POST',
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
+      body: formData,
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Profile updated successfully:', data);
+        // Handle successful profile update
+      })
+      .catch(error => {
+        console.error('Error updating profile:', error);
+        // Handle errors
+      });
+  
   };
 
   const handleSelect = (eventKey) => {
@@ -32,30 +107,27 @@ function Editprofile() {
                     <span><i className="fas fa-camera"></i></span>
                     <span>Change Image</span>
                   </label>
-                  <input id="file" type="file" onChange={(event) => console.log(event.target.files[0])} />
-                  <img className="profile_img" src={Profileimg} id="output" alt="Profile" />
+                  <input id="file" type="file" onChange={handleFileChange} />
+                  <img className="profile_img" src={profileImage} id="output" alt="Profile" />
                 </div>
-                <h6 className="profile_customer_name text-center">Name Goes Here</h6>
+                <h6 className="profile_customer_name text-center"  onChange={(e) => setImgText(e.target.value)}>{imgText}</h6>
               </div>
             </div>
             <div className="col-md-6">
               <div className="form-group">
-                <label>Full Name</label>
+                <label>First Name</label>
                 <input className="form-control" type="text" name="name" value={fullName} onChange={(e) => setFullName(e.target.value)} />
                 <i className="ti-user" style={{ left: '10px' }}></i>
               </div>
               <div className="form-group">
-                <label>Mobile Number</label>
-                <input className="form-control" type="text" name="number" value={mobileNumber} onChange={(e) => setMobileNumber(e.target.value)} />
-                <i className="icon_phone" style={{ left: '10px' }}></i>
+                <label>Last Name</label>
+                <input className="form-control" type="text" name="name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                <i className="ti-user" style={{ left: '10px' }}></i>
               </div>
-            </div>
-            <div className="form-group col-md-6">
-              <label>Email</label>
-              <input type="email" className="form-control" name="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-              <i className="icon_mail_alt" style={{ top: '30px' }}></i>
-            </div>
-            <div className="form-group col-md-6">
+
+              
+
+              <div className="form-group">
               <div className="custom-select-form">
                 <label htmlFor="gender"> Gender:</label>
                 <DropdownButton id="dropdown-basic-button" className="custom-dropdown" title={selectGender} onSelect={handleSelect} variant="light">
@@ -64,6 +136,17 @@ function Editprofile() {
                   <Dropdown.Item eventKey="Other">Other</Dropdown.Item>
                 </DropdownButton>
               </div>
+            </div>
+            </div>
+            <div className="form-group col-md-6">
+                <label>Mobile Number</label>
+                <input className="form-control" type="text" name="number" value={mobileNumber} readOnly />
+                <i className="icon_phone" style={{ top: '30px' }}></i>
+              </div>
+            <div className="form-group col-md-6">
+              <label>Email</label>
+              <input type="email" className="form-control" name="email" value={email} readOnly />
+              <i className="icon_mail_alt" style={{ top: '30px' }}></i>
             </div>
             <div className="text-center col-12 mt-3">
               <input type="submit" value="Submit" className="btn_1 full-width" />

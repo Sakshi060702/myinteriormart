@@ -2,7 +2,7 @@ import React,{useState,useEffect} from "react";
 import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh";
 
-function AllBookmark() {
+function MyBookmark() {
 
   const token = useSelector((state) => state.auth.token);
   const [bookmarks, setBookmarks] = useState([]);
@@ -11,7 +11,7 @@ function AllBookmark() {
     // Fetch bookmarks from the API
     const fetchBookmarks = async () => {
       try {
-        const response = await fetch("https://apidev.myinteriormart.com/api/AllBookMark/GetUserAllMyBookmarks", {
+        const response = await fetch("https://apidev.myinteriormart.com/api/MyActivity/MyActivityAllMyBookmarks", {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -90,4 +90,4 @@ function AllBookmark() {
   );
 }
 
-export default AllBookmark;
+export default MyBookmark;

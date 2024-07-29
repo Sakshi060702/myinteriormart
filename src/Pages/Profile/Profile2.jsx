@@ -100,7 +100,7 @@ function Profile2({ children }) {
                 />
                 Chat
               </Link>
-              <Link >
+              <Link to="/ProfileRegister" >
                 {" "}
                 <img
                   src={listingicon}
