@@ -1,30 +1,81 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import '../../FrontEnd/css/Register.css';
+import '../../FrontEnd/css/Receiveotp2.css';
 
 function Register() {
     const [vendorType, setVendorType] = useState('');
     const [email, setEmail] = useState('');
     const [mobile, setMobile] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const [pin, setPin] = useState(['', '', '', '']); // Initialize pin state as an array
+    const [confirmPin, setConfirmPin] = useState(['', '', '', '']); // Initialize confirmPin state as an array
     const [error, setError] = useState('');
-    const [successMessage,setSuccessMessage]=useState('');
-    const[businesscategory,setbusinesscategory]=useState('');
-    const[passwordVisible,setPasswordVisible]=useState(false);
-    const[confirmpasswordVisible,setConfirmPasswordVisible]=useState(false);
-    
+    const [successMessage, setSuccessMessage] = useState('');
+    const [businesscategory, setBusinessCategory] = useState('');
+    const [pinVisible, setPinVisible] = useState(false);
+    const [confirmPinVisible, setConfirmPinVisible] = useState(false);
+
+    const location = useLocation();
+
+    useEffect(() => {
+      const queryParams = new URLSearchParams(location.search);
+      const mobileFromQuery = queryParams.get('mobile');
+      if (mobileFromQuery) {
+          setMobile(mobileFromQuery);
+      }
+  }, [location.search]);
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const emailFromQuery = queryParams.get('email');
+    if (emailFromQuery) {
+        setEmail(emailFromQuery);
+    }
+}, [location.search]);
 
     const handleUserTypeChange = (e) => {
         setVendorType(e.target.value);
     };
 
-    const togglePasswordVisibility = () => {
-      setPasswordVisible(!passwordVisible);
+    const togglePinVisibility = () => {
+        setPinVisible(!pinVisible);
     };
 
-    const toggleConfirmPasswordVisibility=()=>{
-        setConfirmPasswordVisible(!confirmpasswordVisible);
-    }
+    const toggleConfirmPinVisibility = () => {
+        setConfirmPinVisible(!confirmPinVisible);
+    };
+
+    const handlePinChange = (e, index) => {
+        const { value } = e.target;
+
+        // Check if the input value is a digit
+        if (/^\d?$/.test(value)) {
+            const newPin = [...pin];
+            newPin[index] = value;
+            setPin(newPin);
+
+            // Automatically focus on the next input box if there is a value and index < 3
+            if (value && index < 3) {
+                document.getElementById(`pin-${index + 1}`).focus();
+            }
+        }
+    };
+
+    const handleConfirmPinChange = (e, index) => {
+        const { value } = e.target;
+
+        // Check if the input value is a digit
+        if (/^\d?$/.test(value)) {
+            const newPin = [...confirmPin];
+            newPin[index] = value;
+            setConfirmPin(newPin);
+
+            // Automatically focus on the next input box if there is a value and index < 3
+            if (value && index < 3) {
+                document.getElementById(`confirm-pin-${index + 1}`).focus();
+            }
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent the default form submission
@@ -33,16 +84,17 @@ function Register() {
             vendortype: vendorType,
             email: email,
             mobile: mobile,
-            password: password,
-            confirmPassword: confirmPassword
+            pin: pin.join(''), // Convert array to string
+            confirmPin: confirmPin.join(''), // Convert array to string
         };
+
         const payload1 = {
             vendortype: vendorType,
             email: email,
             mobile: mobile,
-            password: password,
-            confirmPassword: confirmPassword,
-            businesscategory:businesscategory,
+            pin: pin.join(''), // Convert array to string
+            confirmPin: confirmPin.join(''), // Convert array to string
+            businesscategory: businesscategory,
         };
 
         try {
@@ -72,7 +124,6 @@ function Register() {
             if (response.ok) {
                 console.log('User Registered successfully', data);
                 setSuccessMessage('User Registered successfully');
-
             } else {
                 console.error('Server Error:', data);
                 setError(data.message || 'User Registration Failed');
@@ -85,11 +136,11 @@ function Register() {
 
     const businessFields = (
         <div className="form-group">
-            <select name="business-type" className="form-control">
+            <select name="business-type" className="form-control" onChange={(e) => setBusinessCategory(e.target.value)}>
                 <option value="">Select Business Type</option>
                 <option value="dealer">Dealer</option>
                 <option value="service-provider">Service Provider</option>
-                <option value="manufatures">Manufactures</option>
+                <option value="manufacturers">Manufacturers</option>
                 <option value="rental">Rental</option>
                 <option value="labour">Labour</option>
                 <option value="contractor">Contractor</option>
@@ -99,156 +150,162 @@ function Register() {
     );
 
     return (
-      <div className="container sign_up_container">
-        <div className="row justify-content-center">
-          <div className="col-md-6">
-            <div id="sign-in-dialog" className="dialog-mfp zoom-anim-dialog">
-              <div className="step first">
-                <h2 className="text-center pt-3">Register</h2>
-                <div className="tab-content checkout">
-                  <div>
-                    <form onSubmit={handleSubmit}>
-                      <div className="d-flex justify-content-around mt-3">
-                        <div className="form-check user_type">
-                          <input
-                            className="form-check-input"
-                            type="radio"
-                            name="user-type"
-                            value="Business"
-                            onChange={handleUserTypeChange}
-                          />
-                          <label className="form-check-label">Business</label>
+        <div className="container sign_up_container">
+            <div className="row justify-content-center">
+                <div className="col-md-6">
+                    <div id="sign-in-dialog" className="dialog-mfp zoom-anim-dialog">
+                        <div className="step first">
+                            <h2 className="text-center pt-3">Register</h2>
+                            <div className="tab-content checkout">
+                                <div>
+                                    <form onSubmit={handleSubmit}>
+                                        <div className="d-flex justify-content-around mt-3">
+                                            <div className="form-check user_type">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="radio"
+                                                    name="user-type"
+                                                    value="Business"
+                                                    onChange={handleUserTypeChange}
+                                                />
+                                                <label className="form-check-label">Business</label>
+                                            </div>
+                                            <div className="form-check user_type">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="radio"
+                                                    name="user-type"
+                                                    value="Consumer"
+                                                    onChange={handleUserTypeChange}
+                                                />
+                                                <label className="form-check-label">Consumer</label>
+                                            </div>
+                                        </div>
+                                        {vendorType.toLowerCase() === "business" && businessFields}
+                                        <div className="form-group mb-4">
+                                            <div className="icon-wrapper">
+                                                <i className="icon_mail_alt"></i>
+                                            </div>
+                                            <input
+                                                className="form-control"
+                                                type="text"
+                                                name="email"
+                                                placeholder="Email"
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <div className="icon-wrapper">
+                                                <i className="icon_phone"></i>
+                                            </div>
+                                            <input
+                                                className="form-control"
+                                                type="number"
+                                                name="mobile"
+                                                placeholder="Mobile no."
+                                                value={mobile}
+                                                onChange={(e) => setMobile(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="pin-group">
+                                            <label htmlFor="pin">PIN Code</label>
+                                            <div className="pin-input-group">
+                                                {[...Array(4)].map((_, index) => (
+                                                    <input
+                                                        key={index}
+                                                        id={`pin-${index}`}
+                                                        type={pinVisible ? "text" : "password"}
+                                                        maxLength="1"
+                                                        className="pin-input"
+                                                        value={pin[index] || ''}
+                                                        onChange={(e) => handlePinChange(e, index)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === 'Backspace' && index > 0 && !pin[index]) {
+                                                                const newPin = [...pin];
+                                                                newPin[index - 1] = '';
+                                                                setPin(newPin);
+                                                                document.getElementById(`pin-${index - 1}`).focus();
+                                                            }
+                                                        }}
+                                                        onFocus={(e) => e.target.select()}
+                                                    />
+                                                ))}
+                                            </div>
+                                            <i
+                                                onClick={togglePinVisibility}
+                                                className={`fa ${pinVisible ? "fa-eye" : "fa-eye-slash"}`}
+                                                style={{
+                                                    position: "absolute",
+                                                    top: "50%",
+                                                    right: "10px",
+                                                    transform: "translateY(-50%)",
+                                                    cursor: "pointer",
+                                                    color: "orange",
+                                                    fontSize: "20px",
+                                                    marginRight: '125px',
+                                                    marginTop: '20px'
+                                                }}
+                                                aria-hidden="true"
+                                            ></i>
+                                        </div>
+                                        <div className="pin-group">
+                                            <label htmlFor="confirm-pin">Confirm PIN Code</label>
+                                            <div className="pin-input-group">
+                                                {[...Array(4)].map((_, index) => (
+                                                    <input
+                                                        key={index}
+                                                        id={`confirm-pin-${index}`}
+                                                        type={confirmPinVisible ? "text" : "password"}
+                                                        maxLength="1"
+                                                        className="pin-input"
+                                                        value={confirmPin[index] || ''}
+                                                        onChange={(e) => handleConfirmPinChange(e, index)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === 'Backspace' && index > 0 && !confirmPin[index]) {
+                                                                const newPin = [...confirmPin];
+                                                                newPin[index - 1] = '';
+                                                                setConfirmPin(newPin);
+                                                                document.getElementById(`confirm-pin-${index - 1}`).focus();
+                                                            }
+                                                        }}
+                                                        onFocus={(e) => e.target.select()}
+                                                    />
+                                                ))}
+                                            </div>
+                                            <i
+                                                onClick={toggleConfirmPinVisibility}
+                                                className={`fa ${confirmPinVisible ? "fa-eye" : "fa-eye-slash"}`}
+                                                style={{
+                                                    position: "absolute",
+                                                    top: "50%",
+                                                    right: "10px",
+                                                    transform: "translateY(-50%)",
+                                                    cursor: "pointer",
+                                                    color: "orange",
+                                                    fontSize: "20px",
+                                                    marginRight: '125px',
+                                                    marginTop: '20px'
+                                                }}
+                                                aria-hidden="true"
+                                            ></i>
+                                        </div>
+                                        <button type="submit" className="btn_1 full-width mb-4">
+                                            Register
+                                        </button>
+                                        <p>
+                                            Already have an account! <a href="/login">Sign In</a>
+                                        </p>
+                                        {error && <div className="alert alert-danger">{error}</div>}
+                                        {successMessage && <div className="alert alert-success">{successMessage}</div>}
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                        <div className="form-check user_type">
-                          <input
-                            className="form-check-input"
-                            type="radio"
-                            name="user-type"
-                            value="Consumer"
-                            onChange={handleUserTypeChange}
-                          />
-                          <label className="form-check-label">Consumer</label>
-                        </div>
-                      </div>
-                      {vendorType.toLowerCase() === "business" &&
-                        businessFields}
-                      <div className="form-group mb-4">
-                        <div className="icon-wrapper">
-                          <i className="icon_mail_alt"></i>
-                        </div>
-                        <input
-                          className="form-control"
-                          type="text"
-                          name="email"
-                          placeholder="Email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <div className="icon-wrapper">
-                          <i className="icon_phone"></i>
-                        </div>
-                        <input
-                          className="form-control"
-                          type="number"
-                          name="mobile"
-                          placeholder="Mobile no."
-                          value={mobile}
-                          onChange={(e) => setMobile(e.target.value)}
-                        />
-                      </div>
-                      <div
-                        className="form-group"
-                        style={{ position: "relative", marginBottom: "1rem" }}
-                      >
-                        <div className="icon-wrapper">
-                          <i className="icon_lock_alt"></i>
-                        </div>
-                        <input
-                          type={passwordVisible ? "text" : "password"}
-                          className="form-control"
-                          style={{ paddingRight: "2.5rem" }}
-                          name="password"
-                          id="password"
-                          placeholder="Password"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <i
-                          onClick={togglePasswordVisibility}
-                          className={`fa ${
-                            passwordVisible ? "fa-eye" : "fa-eye-slash"
-                          }`}
-                          style={{
-                            position: "absolute",
-                            top: "50%",
-                            right: "10px",
-                            transform: "translateY(-50%)",
-                            cursor: "pointer",
-                            color: "orange",
-                            fontSize: "20px",
-                          }}
-                          aria-hidden="true"
-                        ></i>
-                      </div>
-                      <div
-                        className="form-group"
-                        style={{ position: "relative", marginBottom: "1rem" }}
-                      >
-                        <div className="icon-wrapper">
-                          <i className="icon_lock_alt"></i>
-                        </div>
-
-                        <input
-                          type={confirmpasswordVisible ? "text" : "password"}
-                          className="form-control"
-                          style={{ paddingRight: "2.5rem" }}
-                          name="confirmPassword"
-                          id="confirm-password"
-                          placeholder="Confirm Password"
-                          value={confirmPassword}
-                          onChange={(e) => setConfirmPassword(e.target.value)}
-                        />
-                        <i
-                          onClick={toggleConfirmPasswordVisibility}
-                          className={`fa ${
-                            confirmpasswordVisible ? "fa-eye" : "fa-eye-slash"
-                          }`}
-                          style={{
-                            position: "absolute",
-                            top: "50%",
-                            right: "10px",
-                            transform: "translateY(-50%)",
-                            cursor: "pointer",
-                            color: "orange",
-                            fontSize: "20px",
-                          }}
-                          aria-hidden="true"
-                        ></i>
-                      </div>
-                      <button type="submit" className="btn_1 full-width mb-4">
-                        Register
-                      </button>
-                      <p>
-                        Already have an account! <a href="/login">Sign In</a>
-                      </p>
-                      {error && (
-                        <div className="alert alert-danger">{error}</div>
-                      )}
-                      {successMessage && (
-                        <div className="alert alert-success">
-                          {successMessage}
-                        </div>
-                      )}
-                    </form>
-                  </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     );
 }
 

@@ -8497,6 +8497,7 @@ ul.bullets li:before {
   height: 25px;
   display: block;
   font-weight: 400 !important;
+  top:-6px;
 }
 
 .dialog-mfp .form-group i.icon_lock_alt {

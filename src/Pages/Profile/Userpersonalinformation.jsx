@@ -4,7 +4,7 @@ import "../Freelisting/Businesslisting/Businesslisting.css";
 import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
 import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
 import { useSelector } from "react-redux";
-import withAuthh from "../../Hoc/withAuthh"
+import withAuthh from "../../Hoc/withAuthh";
 
 const Userpersonalinformation = () => {
   const [countries, setCountries] = useState([]);
@@ -24,25 +24,23 @@ const Userpersonalinformation = () => {
   const [address, setLocalAddress] = useState("");
 
   const [qualificationId, setQualifications] = useState([]);
-  const [selectedQualification, setSelectedQualification] = useState('');
+  const [selectedQualification, setSelectedQualification] = useState("");
 
-  const[dateOfBirth,setDateofBirth]=useState([]);
-  const[selectedDateofBirth,setSelectedDateofBirth]=useState('');
+  const [dateOfBirth, setDateofBirth] = useState([]);
+  const [selectedDateofBirth, setSelectedDateofBirth] = useState("");
 
-  const[maritalStatus,setMaritalStatus]=useState([]);
-  const[selectedMaritalStatus,setSelectedMaritalStatus]=useState('');
+  const [maritalStatus, setMaritalStatus] = useState([]);
+  const [selectedMaritalStatus, setSelectedMaritalStatus] = useState("");
 
   const [isProfileCompleted, setIsProfileCompleted] = useState(true);
 
-
-
   const navigate = useNavigate();
-  const token=useSelector((state)=>state.auth.token);
+  const token = useSelector((state) => state.auth.token);
 
   const apiUrl =
     "https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster";
 
-  const fetchData = async(type, parentID = null) => {
+  const fetchData = async (type, parentID = null) => {
     let body = {
       type,
       CountryID: setSelectedCountry,
@@ -77,20 +75,17 @@ const Userpersonalinformation = () => {
     }
   };
 
-
-  
   useEffect(() => {
     fetchData("countries").then((data) => {
       if (data) setCountries(data.country);
     });
-  
   }, [token]);
 
   useEffect(() => {
     const fetchUserAddress = async () => {
       try {
         const response = await fetch(
-          "https://apidev.myinteriormart.com/api/BinddetailsListing/GetAddressDetailslisting",
+          "https://apidev.myinteriormart.com/api/UserBindndUpdateProfile/GetProfileInfo",
           {
             method: "GET",
             headers: {
@@ -103,13 +98,16 @@ const Userpersonalinformation = () => {
         }
         const data = await response.json();
 
-        setSelectedCountry(data.countryID);
-        setSelectedState(data.stateID);
-        setSelectedCity(data.cityID);
-        setSelectedAssembly(data.assemblyID);
-        setSelectedPincode(data.pincodeID);
-        setSelectedLocality(data.localityID);
-        setLocalAddress(data.localAddress);
+        setSelectedCountry(data.userProfile.countryID);
+        setSelectedState(data.userProfile.stateID);
+        setSelectedCity(data.userProfile.cityID);
+        setSelectedAssembly(data.userProfile.assemblyID);
+        setSelectedPincode(data.userProfile.pincodeID);
+        setSelectedLocality(data.userProfile.localityID);
+        setLocalAddress(data.userProfile.address);
+        setDateofBirth(data.userProfile.dateOfBirth.split("T")[0]); // Format date for input
+        setSelectedMaritalStatus(data.userProfile.maritalStatus);
+        setSelectedQualification(data.userProfile.qualificationId);
 
         console.log("User Address Fetched", data);
       } catch (error) {
@@ -278,62 +276,72 @@ const Userpersonalinformation = () => {
 
   const fetchQualifications = async () => {
     try {
-      const response = await fetch('https://apidev.myinteriormart.com/api/UserBindndUpdateProfile/GetProfileInfo', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          "Authorization": `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        "https://apidev.myinteriormart.com/api/UserBindndUpdateProfile/GetProfileInfo",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
         setQualifications(data.qualifications);
       } else {
-        console.error('Failed to fetch qualifications');
+        console.error("Failed to fetch qualifications");
       }
     } catch (error) {
-      console.error('Error fetching qualifications:', error);
+      console.error("Error fetching qualifications:", error);
     }
   };
 
+  const handleMaritalStatusChange = (event) => {
+    setSelectedMaritalStatus(event.target.value);
+  };
+
+  const handleQualificationChange = (event) => {
+    setSelectedQualification(event.target.value);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const submissionData = {
-      CountryID: parseInt(selectedCountry),
-      StateID: parseInt(selectedState),
-      CityID: parseInt(selectedCity),
-      AssemblyID: parseInt(selectedAssembly),
-      PincodeID: parseInt(selectedPincode),
-      LocalityID: parseInt(selectedLocality),
-      Address: address,
-      isProfileCompleted:true,
-      DateofBirth:dateOfBirth,
-      maritalStatus:selectedMaritalStatus,
-      qualificationId:selectedQualification,
-      
-
+      dateofbirth: dateOfBirth,
+      maritalStatus: selectedMaritalStatus,
+      qualificationId: selectedQualification,
+      countryID: selectedCountry,
+      stateID: selectedState,
+      cityID: selectedCity,
+      assemblyID: selectedAssembly,
+      pincodeID: selectedPincode,
+      localityID: selectedLocality,
+      address: address,
     };
 
     console.log("Submitting data:", submissionData);
 
-    fetch("https://apidev.myinteriormart.com/api/UserBindndUpdateProfile/GetProfileInfoUpdate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
-      },
-      body: JSON.stringify(submissionData),
-    })
+    fetch(
+      "https://apidev.myinteriormart.com/api/UserBindndUpdateProfile/GetProfileInfoUpdate",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(submissionData),
+      }
+    )
       .then((response) => response.json())
 
       .then((responseData) => {
         console.log("API response:", responseData);
-        console.log("Address token:",token);
-        alert(`Submitted successfully! `);
-        navigate("/Categoryapi");
+        console.log("Address token:", token);
+        alert(`Data Submitted successfully! `);
+       
       })
       .catch((error) => {
         console.error("API error:", error);
@@ -343,222 +351,215 @@ const Userpersonalinformation = () => {
 
   return (
     <>
-      
-         
-            <div className="">
-              <h4>Add Address Details</h4>
-              <p className="add-lidting-title-from">
-                Add Listing / Add Address Details
-                <span>
-                  <Link className="back_btn mx-3" to="/labournakapage">
-                    Back
-                  </Link>
-                </span>
-              </p>
-              <form onSubmit={handleSubmit}>
-                <div className="row">
-                <div className="form-group col-md-4">
-                    <label className="control-label">
-                      D.O.B{" "}
-                      <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="date"
-                      className="form-control form-control-sm box"
-                      name="yearOfEstablishment"
-                      value={dateOfBirth}
-        onChange={(e) => setDateofBirth(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="form-group col-md-4">
-                    <label>
-                      Marital Status <span className="text-danger">*</span>
-                    </label>
-                    <select
-                      className="wide add_bottom_10 selectdrp"
-                      name="natureOfBusiness"
-                      value={maritalStatus}
-        onChange={(e) => setMaritalStatus(e.target.value)}
-                     
-                      required
-                    >
-                      <option value="" disabled>
-                        Select Marital Status
-                      </option>
-                      <option value="Single">Single</option>
-                      <option value="Married">
-                        Married
-                      </option>
-                     
-                    </select>
-                  </div>
-
-                  <div className="form-group col-md-4">
-      <label>
-        Qualification <span className="text-danger">*</span>
-      </label>
-      <select
-        className="wide add_bottom_10 selectdrp"
-        name="qualification"
-        value={selectedQualification}
-        onChange={(e) => setSelectedQualification(e.target.value)}
-        required
-      >
-        <option value="" disabled>
-          Qualification
-        </option>
-        {qualificationId.map((qualificationId) => (
-          <option key={qualificationId.id} value={qualificationId.id}>
-            {qualificationId.name}
-          </option>
-        ))}
-      </select>
-    </div>
-                  <div className="form-group col-md-4">
-                    <label>Country</label>
-                    <select
-                      className="wide add_bottom_10 country selectdrp"
-                      value={selectedCountry}
-                      onChange={handleCountryChange}
-                      required
-                    >
-                      <option value="">Select Country</option>
-                      {countries.map((country) => (
-                        <option
-                          key={country.countryID}
-                          value={country.countryID}
-                        >
-                          {country.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="form-group col-md-4">
-                    <label htmlFor="state">State</label>
-                    <select
-                      className="wide add_bottom_10 state selectdrp"
-                      id="state"
-                      value={selectedState}
-                      onChange={handleStateChange}
-                      required
-                    >
-                      <option value="">Select State</option>
-                      {states.map((state) => (
-                        <option key={state.stateID} value={state.stateID}>
-                          {state.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="form-group col-md-4">
-                    <label htmlFor="city">City</label>
-                    <select
-                      className="wide add_bottom_10 city selectdrp"
-                      id="city"
-                      value={selectedCity}
-                      onChange={handleCityChange}
-                      required
-                    >
-                      <option value="">Select City</option>
-                      {cities.map((city) => (
-                        <option key={city.cityID} value={city.cityID}>
-                          {city.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="form-group col-md-4">
-                    <label>Locality</label>
-                    <select
-                      className="wide add_bottom_10 locality selectdrp"
-                      value={selectedAssembly}
-                      onChange={handleLocalityChange}
-                      required
-                    >
-                      <option value="">Select Locality</option>
-                      {assemblies.map((assembly) => (
-                        <option
-                          key={assembly.assemblyID}
-                          value={assembly.assemblyID}
-                        >
-                          {assembly.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="form-group col-md-4">
-                    <label>Pincode</label>
-                    <select
-                      className="wide add_bottom_10 pincode selectdrp"
-                      value={selectedPincode}
-                      onChange={handlePincodeChange}
-                      required
-                    >
-                      <option value="">Select Pincode</option>
-                      {pincodes.map((pincode) => (
-                        <option
-                          key={pincode.pincodeID}
-                          value={pincode.pincodeID}
-                        >
-                          {pincode.number}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="form-group col-md-4">
-                    <label>Area</label>
-                    <select
-                      className="wide add_bottom_10 area selectdrp"
-                      value={selectedLocality}
-                      onChange={handleAreaChange}
-                      required
-                    >
-                      <option value="">Select Area</option>
-                      {localities.map((locality) => (
-                        <option
-                          key={locality.localityID}
-                          value={locality.localityID}
-                        >
-                          {locality.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="form-group col-md-12">
-                    <label htmlFor="localAddress">Local Address</label>
-                    <textarea
-                      type="text"
-                      className="form-control localAddress-textarea"
-                      id="localAddress"
-                      placeholder="Enter local address"
-                      value={address}
-                      onChange={(e) => setLocalAddress(e.target.value)}
-                      required
-                     
-                      
-                    />
-                  </div>
-                </div>
-                <div className="text-left col-12 mt-3">
-                  <button type="submit" className="btn_1">
-                    Save & Continue
-                  </button>
-                  <div style={{display:"flex",justifyContent:"flex-end",gap:'10px'}}>                    
-                      <Link to="/communicationl" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
-                    <Link to="/Categoryapi" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
-                    </div>
-                </div>
-              </form>
+      <div className="">
+        <h4>Add Address Details</h4>
+        <p className="add-lidting-title-from">
+          Add Listing / Add Address Details
+          <span>
+            <Link className="back_btn mx-3" to="/labournakapage">
+              Back
+            </Link>
+          </span>
+        </p>
+        <form onSubmit={handleSubmit}>
+          <div className="row">
+            <div className="form-group col-md-4">
+              <label className="control-label">
+                D.O.B <span className="text-danger">*</span>
+              </label>
+              <input
+                type="date"
+                className="form-control form-control-sm box"
+                name="yearOfEstablishment"
+                value={dateOfBirth}
+                onChange={(e) => setDateofBirth(e.target.value)}
+                required
+              />
             </div>
-          
-       
+            <div className="form-group col-md-4">
+              <label>
+                Marital Status <span className="text-danger">*</span>
+              </label>
+              <select
+                className="wide add_bottom_10 "
+                name="maritalStatus"
+                value={selectedMaritalStatus}
+                onChange={handleMaritalStatusChange}
+                required
+                style={{border:'1px, solid #ccc',borderRadius:'4px', width:'250px', height:'50px'}}
+              >
+                <option value="" disabled>
+                  Select Marital Status
+                </option>
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+              </select>
+            </div>
+
+            <div className="form-group col-md-4">
+              <label>
+                Qualification <span className="text-danger">*</span>
+              </label>
+              <select
+                className="wide add_bottom_10 "
+                name="qualification"
+                value={selectedQualification}
+                onChange={handleQualificationChange}
+                required
+                style={{border:'1px, solid #ccc',borderRadius:'4px', width:'250px', height:'50px'}}
+              >
+                <option value="" disabled>
+                  Qualification
+                </option>
+                {qualificationId.map((qualificationId) => (
+                  <option key={qualificationId.id} value={qualificationId.id}>
+                    {qualificationId.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group col-md-4">
+              <label>Country</label>
+              <select
+                className="wide add_bottom_10 country "
+                value={selectedCountry}
+                onChange={handleCountryChange}
+                required
+                style={{border:'1px, solid #ccc',borderRadius:'4px', width:'250px', height:'50px'}}
+              >
+                <option value="">Select Country</option>
+                {countries.map((country) => (
+                  <option key={country.countryID} value={country.countryID}>
+                    {country.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group col-md-4">
+              <label htmlFor="state">State</label>
+              <select
+                className="wide add_bottom_10 state"
+                id="state"
+                value={selectedState}
+                onChange={handleStateChange}
+                required
+                style={{border:'1px, solid #ccc',borderRadius:'4px', width:'250px', height:'50px'}}
+              >
+                <option value="">Select State</option>
+                {states.map((state) => (
+                  <option key={state.stateID} value={state.stateID}>
+                    {state.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group col-md-4">
+              <label htmlFor="city">City</label>
+              <select
+                className="wide add_bottom_10 city "
+                id="city"
+                value={selectedCity}
+                onChange={handleCityChange}
+                required
+                style={{border:'1px, solid #ccc',borderRadius:'4px', width:'250px', height:'50px'}}
+              >
+                <option value="">Select City</option>
+                {cities.map((city) => (
+                  <option key={city.cityID} value={city.cityID}>
+                    {city.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="row">
+            <div className="form-group col-md-4">
+              <label>Locality</label>
+              <select
+                className="wide add_bottom_10 locality"
+                value={selectedAssembly}
+                onChange={handleLocalityChange}
+                required
+                style={{border:'1px, solid #ccc',borderRadius:'4px', width:'250px', height:'50px'}}
+              >
+                <option value="">Select Locality</option>
+                {assemblies.map((assembly) => (
+                  <option key={assembly.assemblyID} value={assembly.assemblyID}>
+                    {assembly.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group col-md-4">
+              <label>Pincode</label>
+              <select
+                className="wide add_bottom_10 pincode "
+                value={selectedPincode}
+                onChange={handlePincodeChange}
+                required
+                style={{border:'1px, solid #ccc',borderRadius:'4px', width:'250px', height:'50px'}}
+              >
+                <option value="">Select Pincode</option>
+                {pincodes.map((pincode) => (
+                  <option key={pincode.pincodeID} value={pincode.pincodeID}>
+                    {pincode.number}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group col-md-4">
+              <label>Area</label>
+              <select
+                className="wide add_bottom_10 area "
+                value={selectedLocality}
+                onChange={handleAreaChange}
+                required
+                style={{border:'1px, solid #ccc',borderRadius:'4px', width:'250px', height:'50px'}}
+              >
+                <option value="">Select Area</option>
+                {localities.map((locality) => (
+                  <option key={locality.localityID} value={locality.localityID}>
+                    {locality.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group col-md-12">
+              <label htmlFor="localAddress">Local Address</label>
+              <textarea
+                type="text"
+                className="form-control localAddress-textarea"
+                id="localAddress"
+                placeholder="Enter local address"
+                value={address}
+                onChange={(e) => setLocalAddress(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+          <div className="text-left col-12 mt-3">
+            <button type="submit" className="btn btn-primary w-100" style={{backgroundColor:'#fb830d'}}>
+              Save & Continue
+            </button>
+            {/* <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                gap: "10px",
+              }}
+            >
+              <Link to="/communicationl">
+                <img src={previousarrowimg} style={{ height: "30px" }} />
+              </Link>
+              <Link to="/Categoryapi">
+                <img src={nextarrowimg} style={{ height: "30px" }} />
+              </Link>
+            </div> */}
+          </div>
+        </form>
+      </div>
     </>
   );
 };
 
 export default withAuthh(Userpersonalinformation);
-
-

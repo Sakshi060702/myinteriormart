@@ -1,39 +1,52 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import mobileImage from '../../FrontEnd/img/icon/mobile.png'; 
 import { useLocation } from "react-router-dom";
+import '../../FrontEnd/css/Receiveotp2.css';
 
 function Receiveotp2() {
     const location = useLocation();
-    const { otp, mobile } = location.state || { otp: '', mobile: '' }; 
-    const [userOtp, setUserOtp] = useState('');
+    const { otp, mobile } = location.state || { otp: '', mobile: '' };
+    const [userOtp, setUserOtp] = useState(['', '', '', '']);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleOtpChange = (e) => {
-        setUserOtp(e.target.value);
+    const handleOtpChange = (e, index) => {
+        const { value } = e.target;
+
+        // Check if the input value is a digit
+        if (/^\d?$/.test(value)) {
+            const newOtp = [...userOtp];
+            newOtp[index] = value;
+            setUserOtp(newOtp);
+
+            // Automatically focus on the next input box if there is a value and index < 3
+            if (value && index < 3) {
+                document.getElementById(`otp-${index + 1}`).focus();
+            }
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(''); // Clear previous errors
+        setError('');
+        const otpString = userOtp.join('');
+
         try {
             const response = await fetch('https://apidev.myinteriormart.com/api/SignIn/VerifyOtp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization":"kpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ",
-
+                    "Authorization": "kpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ",
                 },
-                body: JSON.stringify({ otp: userOtp, mobile }),
+                body: JSON.stringify({ otp: otpString, mobile }),
             });
 
             const data = await response.json();
-            
+
             if (response.ok) {
-                console.log('Hello');
                 if (data) {
-                    navigate('/register'); // Redirect to the register page on success
+                    navigate(`/register?mobile=${encodeURIComponent(mobile)}`);
                 } else {
                     setError('Invalid OTP. Please try again.');
                 }
@@ -52,9 +65,7 @@ function Receiveotp2() {
                     <div id="sign-in-dialog" className="dialog-mfp zoom-anim-dialog" style={{ maxWidth: '500px' }}>
                         <div className="step first">
                             <div>
-                                <div>
-                                    <h2 className="text-center pt-3" style={{ whiteSpace: 'nowrap' }}>Verify Your Mobile Number</h2>
-                                </div>
+                                <h2 className="text-center pt-3" style={{ whiteSpace: 'nowrap' }}>Verify Your Mobile Number</h2>
                                 <div className="row justify-content-center">
                                     <h5>Get Connected to Verified Sellers</h5>
                                 </div>
@@ -63,7 +74,7 @@ function Receiveotp2() {
                                 <div>
                                     <form onSubmit={handleSubmit}>
                                         <div className="form-group mr-2">
-                                            <p>Enter 4 digit One Time Password(OTP) sent to your Mobile Number +91 {mobile} via SMS</p>
+                                            <p>Enter 4 digit One Time Password (OTP) sent to your Mobile Number +91 {mobile} via SMS</p>
                                         </div>
                                         <div className="form-group mb-4 d-flex align-items-center">
                                             <div style={{ marginTop: '-20px' }}>
@@ -81,16 +92,19 @@ function Receiveotp2() {
                                                 />
                                             </div>
                                         </div>
-                                        <div className="form-group mb-4 d-flex align-items-center">
-                                            <input
-                                                type="text"
-                                                name="userOTP"
-                                                placeholder="Enter OTP"
-                                                value={userOtp}
-                                                onChange={handleOtpChange}
-                                                style={{ width: '120px', height: '50px' }}
-                                                className="form-control input"
-                                            />
+                                        <div className=" mb-4  align-items-center otp-inputs">
+                                            {userOtp.map((digit, index) => (
+                                                <input
+                                                    key={index}
+                                                    id={`otp-${index}`}
+                                                    type="text"
+                                                    maxLength="1"
+                                                    value={digit}
+                                                    onChange={(e) => handleOtpChange(e, index)}
+                                                    className="otp-input "
+                                                    style={{ color: 'black' }}
+                                                />
+                                            ))}
                                         </div>
                                         {error && <div className="form-group"><p style={{ color: 'red' }}>{error}</p></div>}
                                         <div className="form-group mr-2 align-self-stretch">

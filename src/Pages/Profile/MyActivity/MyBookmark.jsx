@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import withAuthh from "../../../Hoc/withAuthh";
 
 function MyBookmark() {
@@ -45,7 +46,7 @@ function MyBookmark() {
               <p className="add-lidting-title-from">
                 Dashboard / Bookmarks
                 <span>
-                  <a className="back_btn mx-3">Back</a>
+                  <Link  to="/Myactivity" className="back_btn mx-3">Back</Link>
                 </span>
               </p>
               <div className="list_general like-listing">

@@ -1,30 +1,34 @@
 import React, { useState } from 'react';
 import '../../FrontEnd/css/dropdown.css';
 import "../../FrontEnd/css/Register.css";
-
+import Flag from 'react-world-flags';
+import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
 
 function Signup2() {
-    const [selectedCountry, setSelectedCountry] = useState('');
-    const [inputValue, setInputValue] = useState({});
-    const [error, setError] = useState('');
-    
-    const navigate = useNavigate();
-
     const countries = [
-        { code: '+91', name: '+91 India', phoneCode: '91' },
-        { code: '+98', name: '+98 United States', phoneCode: '98' },
-        { code: '+65', name: '+65 Canada', phoneCode: '65' },
-        { code: '+97', name: '+97 United Kingdom', phoneCode: '97' },
-        // Add more countries as needed
+        { value: '+91', label: 'India', phoneCode: '91', flag: 'IN' },
+        { value: '+98', label: 'United States', phoneCode: '98', flag: 'US' },
+        { value: '+65', label: 'Canada', phoneCode: '65', flag: 'CA' },
+        { value: '+97', label: 'United Kingdom', phoneCode: '97', flag: 'GB' },
+        { value: '+971', label: 'United Arab Emirates', phoneCode: '971', flag: 'AE' },
+        { value: '+61', label: 'Australia', phoneCode: '61', flag: 'AU' },
+        { value: '+93', label: 'Afghanistan', phoneCode: '93', flag: 'AF' },
+        // Add more countries with their flag codes
     ];
 
-    const handleCountryChange = (e) => {
-        const countryCode = e.target.value;
-        setSelectedCountry(countryCode);
+    const defaultCountry = countries[0]; // Set the default country (India)
 
-        // Clear input values when country changes
-        setInputValue({ countryCode: countryCode });
+    const [selectedCountry, setSelectedCountry] = useState(defaultCountry);
+    const [inputValue, setInputValue] = useState({ countryCode: defaultCountry.value });
+    const [error, setError] = useState('');
+
+    const navigate = useNavigate();
+
+    const handleCountryChange = (selectedOption) => {
+        setSelectedCountry(selectedOption);
+        setInputValue({ ...inputValue, countryCode: selectedOption.value });
+        console.log(selectedOption); // Debugging line
     };
 
     const handleInputChange = (e) => {
@@ -44,7 +48,7 @@ function Signup2() {
 
         try {
             let response;
-            if (selectedCountry === '+91' && mobile) {
+            if (selectedCountry.value === '+91' && mobile) {
                 response = await fetch('https://apidev.myinteriormart.com/api/SignIn/SendOtp', {
                     method: 'POST',
                     headers: {
@@ -83,6 +87,26 @@ function Signup2() {
         }
     };
 
+    const customStyles = {
+        option: (provided) => ({
+            ...provided,
+            display: 'flex',
+            alignItems: 'center',
+        }),
+        singleValue: (provided) => ({
+            ...provided,
+            display: 'flex',
+            alignItems: 'center',
+        }),
+    };
+
+    const formatOptionLabel = ({ label, value ,flag  }) => (
+      <div className="country-option">
+          <Flag code={flag} style={{ width: '24px', height: '16px', marginRight: '8px' }} />
+          <span>{value} {label}</span>
+      </div>
+  );
+
     return (
       <div className="container sign_up_container">
         <div className="row justify-content-center">
@@ -93,21 +117,16 @@ function Signup2() {
                 <div className="tab-content checkout">
                   <div>
                     <form onSubmit={handleSubmit}>
-                      <div className="form-group mr-2">
-                        <select
-                          name="countryCode"
-                          className="form-control"
+                      <div className="form-group select-container mr-2">
+                        <Select
+                          options={countries}
                           onChange={handleCountryChange}
-                        >
-                          <option value="">Select Country</option>
-                          {countries.map((country, index) => (
-                            <option key={index} value={country.code}>
-                              {country.name}
-                            </option>
-                          ))}
-                        </select>
+                          styles={customStyles}
+                          formatOptionLabel={formatOptionLabel}
+                          value={selectedCountry}
+                        />
                       </div>
-                      {selectedCountry === "+91" && (
+                      {selectedCountry && selectedCountry.value === "+91" && (
                         <div className="form-group mb-4">
                           <div className="icon-wrapper">
                             <i className="icon_phone"></i>
@@ -121,7 +140,7 @@ function Signup2() {
                           />
                         </div>
                       )}
-                      {selectedCountry !== "+91" && selectedCountry && (
+                      {selectedCountry && selectedCountry.value !== "+91" && (
                         <div className="form-group mb-4">
                           <div className="icon-wrapper">
                             <i className="icon_mail_alt"></i>
