@@ -4,6 +4,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Profileimg from "../../FrontEnd/img/Asset.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
+import { Navigate, useNavigate } from "react-router-dom";
 
 
 function Editprofile() {
@@ -18,6 +19,8 @@ function Editprofile() {
   const [file, setFile] = useState(null);
   
   const [isVendor, setIsVendor] = useState(true);
+
+  const navigate=useNavigate();
 
   const token = useSelector((state) => state.auth.token);
 
@@ -81,6 +84,7 @@ function Editprofile() {
       .then(response => response.json())
       .then(data => {
         console.log('Profile updated successfully:', data);
+        navigate('/editprofile');
         // Handle successful profile update
       })
       .catch(error => {

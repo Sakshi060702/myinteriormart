@@ -41,7 +41,7 @@ function Receiveotpemail() {
             if (response.ok) {
                 console.log('Hello');
                 if (data) {
-                    navigate(`/register?email=${encodeURIComponent(email)}`); // Redirect to the register page on success
+                    navigate('/register',{ state: { email } }); // Redirect to the register page on success
                 } else {
                     setError('Invalid OTP. Please try again.');
                 }

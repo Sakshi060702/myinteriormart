@@ -243,6 +243,10 @@ import MyReviews from "./Pages/Profile/MyActivity/MyReview";
 
 import Userpersonalinformation from "./Pages/Profile/Userpersonalinformation";
 
+// import Dashboardprofile from "./Pages/Profile/Dashboardprofile";
+// import Editprofileregister from "./Pages/Dashboardregisterprofile/Editprofileregister";
+// import Personalinforegister from "./Pages/Dashboardregisterprofile/Personalinforegister";
+
 
 function App() {
   return (
@@ -462,6 +466,19 @@ function App() {
 <Route path="/changepassword" element={<Profile2><Changepassword /></Profile2>} />
 <Route path="/ProfileRegister" element={<Profile2><ProfileRegister /></Profile2>} />
 <Route path="/userpersonalinformation"  element={<Profile2><Userpersonalinformation/></Profile2>}/>
+
+
+{/* <Route path="/Dashboardprofile" element={<Dashboardprofile/>}/>
+<Route path="/editprofile1" element={<Dashboardprofile><Editprofileregister /></Dashboardprofile>} />
+<Route path="/dashboard1" element={<Dashboardprofile><Dashboard /></Dashboardprofile>} />
+<Route path="/Myactivity1" element={<Dashboardprofile><Myactivity /></Dashboardprofile>} />
+<Route path="/Personalinforegister" element={<Dashboardprofile><Personalinforegister /></Dashboardprofile>} />
+<Route path="/complaint1" element={<Dashboardprofile><Complaint /></Dashboardprofile>} />
+<Route path="/suggestion1" element={<Dashboardprofile><Suggestion /></Dashboardprofile>} />
+<Route path="/chat1" element={<Dashboardprofile><Chat /></Dashboardprofile>} />
+<Route path="/ProfileRegister1" element={<Dashboardprofile><ProfileRegister /></Dashboardprofile>} />
+<Route path="/changepassword1" element={<Dashboardprofile><Changepassword /></Dashboardprofile>} /> */}
+
 
 
 <Route path="/AllBookmark" element={<AllBookmark/>}/>

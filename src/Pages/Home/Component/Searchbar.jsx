@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { debounce } from "lodash";
-import { Link,NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "../../../FrontEnd/css/Serchbar.css";
 
 function Searchbar() {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -42,7 +43,11 @@ function Searchbar() {
     };
   }, [searchTerm]);
 
-
+  const handleBlur = (e) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.relatedTarget)) {
+      setTimeout(() => setShowDropdown(false), 100);
+    }
+  };
 
   return (
     <div id="results">
@@ -58,26 +63,21 @@ function Searchbar() {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   onFocus={() => setShowDropdown(true)} // Show dropdown on focus
-                  onBlur={() => setTimeout(() => setShowDropdown(false), 100)} // Hide dropdown after a slight delay
+                  onBlur={handleBlur} // Use custom handleBlur function
                 />
                 <button type="submit" className="searchButton">
                   <i className="fa fa-search"></i>
                 </button>
               </div>
               {showDropdown && results.length > 0 && (
-  <div className="dropdownsearchbar">
-    {results.map((result, index) => (
-      <div key={index} className="dropdownItemsearchbar">
-        <NavLink to={`/company/${result.listingId}`}>
-          <h6 style={{ color: 'black' }}>
-            {result.companyName} - {result.localityName}, {result.cityName}
-          </h6>
-        </NavLink>
-        <p>{result.listingId}</p>
-      </div>
-    ))}
-  </div>
-)}
+                <div className="dropdownsearchbar" ref={dropdownRef}>
+                  {results.map((result, index) => (
+                    <div key={index} className="dropdownItemsearchbar">
+                      <NavLink to={`/company/${result.listingId}`}><h6>{result.companyName}</h6></NavLink>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

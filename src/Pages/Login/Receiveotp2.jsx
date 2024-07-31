@@ -46,7 +46,7 @@ function Receiveotp2() {
 
             if (response.ok) {
                 if (data) {
-                    navigate(`/register?mobile=${encodeURIComponent(mobile)}`);
+                    navigate('/register',{ state: { mobile } });
                 } else {
                     setError('Invalid OTP. Please try again.');
                 }

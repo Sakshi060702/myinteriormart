@@ -54,12 +54,24 @@ function Profile2({ children }) {
                 />
                 Edit Profile
               </Link>
+
+              <Link to="/userpersonalinformation">
+                {" "}
+                <img
+                  src={listingicon}
+                  alt="Edit Profile"
+                  style={{ height: "60px" }}
+                 
+                />
+                Personal Info
+              </Link>
               <Link to="/labournakapage">
                 {" "}
                 <img
                   src={listingicon}
                   alt="Edit Profile"
                   style={{ height: "60px" }}
+                  
                 />
                 Manage Listing
               </Link>

@@ -294,7 +294,7 @@ const Userpersonalinformation = () => {
         console.error("Failed to fetch qualifications");
       }
     } catch (error) {
-      console.error("Error fetching qualifications:", error);
+      console.error("Error fetching qualifications of user :", error);
     }
   };
 
@@ -341,6 +341,7 @@ const Userpersonalinformation = () => {
         console.log("API response:", responseData);
         console.log("Address token:", token);
         alert(`Data Submitted successfully! `);
+        navigate('/');
        
       })
       .catch((error) => {
@@ -563,3 +564,5 @@ const Userpersonalinformation = () => {
 };
 
 export default withAuthh(Userpersonalinformation);
+
+

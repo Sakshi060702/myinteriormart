@@ -61,7 +61,8 @@ function Receiveotp(){
                                         <br></br>
                                         
                                         <div className="form-group mr-2 align-self-stretch">
-                                            <Link to="/register" className="btn_1 full-width mb-4 input"  style={{ height: '50px' }} >Submit</Link>  
+                                            <Link to="/register" className="btn_1 full-width mb-4 input"  style={{ height: '50px' }}
+                                            state={{ mobile: mobile }} >Submit</Link>  
                                         </div>
 
                                         </div>

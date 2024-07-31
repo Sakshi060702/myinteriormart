@@ -2,6 +2,10 @@ import React, { useState,useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../../FrontEnd/css/Register.css';
 import '../../FrontEnd/css/Receiveotp2.css';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../Redux/authSlice';
 
 function Register() {
     const [vendorType, setVendorType] = useState('');
@@ -16,22 +20,22 @@ function Register() {
     const [confirmPinVisible, setConfirmPinVisible] = useState(false);
 
     const location = useLocation();
+    const navigate=useNavigate();
+    const dispatch=useDispatch();
 
     useEffect(() => {
-      const queryParams = new URLSearchParams(location.search);
-      const mobileFromQuery = queryParams.get('mobile');
-      if (mobileFromQuery) {
-          setMobile(mobileFromQuery);
-      }
-  }, [location.search]);
+        if (location.state) {
+            const { mobile, email } = location.state;
+            if (mobile) {
+                setMobile(mobile);
+            }
+            if (email) {
+                setEmail(email);
+            }
+        }
+    }, [location.state]);
 
-  useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const emailFromQuery = queryParams.get('email');
-    if (emailFromQuery) {
-        setEmail(emailFromQuery);
-    }
-}, [location.search]);
+  
 
     const handleUserTypeChange = (e) => {
         setVendorType(e.target.value);
@@ -84,16 +88,16 @@ function Register() {
             vendortype: vendorType,
             email: email,
             mobile: mobile,
-            pin: pin.join(''), // Convert array to string
-            confirmPin: confirmPin.join(''), // Convert array to string
+            password: pin.join(''), // Convert array to string
+            confirmpassword: confirmPin.join(''), // Convert array to string
         };
 
         const payload1 = {
             vendortype: vendorType,
             email: email,
             mobile: mobile,
-            pin: pin.join(''), // Convert array to string
-            confirmPin: confirmPin.join(''), // Convert array to string
+            password: pin.join(''), // Convert array to string
+            confirmpassword: confirmPin.join(''), // Convert array to string
             businesscategory: businesscategory,
         };
 
@@ -105,6 +109,7 @@ function Register() {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': 'c4NjY4NTMyMTMiLCJhdWQiOiIxOTg0OTgH',
+                        
                     },
                     body: JSON.stringify(payload1),
                 });
@@ -114,6 +119,7 @@ function Register() {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': 'c4NjY4NTMyMTMiLCJhdWQiOiIxOTg0OTkz',
+                        
                     },
                     body: JSON.stringify(payload),
                 });
@@ -123,7 +129,9 @@ function Register() {
 
             if (response.ok) {
                 console.log('User Registered successfully', data);
+                dispatch(loginSuccess({token:data.token, user:data.user}))
                 setSuccessMessage('User Registered successfully');
+                 navigate('/');
             } else {
                 console.error('Server Error:', data);
                 setError(data.message || 'User Registration Failed');

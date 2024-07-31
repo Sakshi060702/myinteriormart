@@ -1,58 +1,270 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "./Businesslisting.css"
+import React, { useState,useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Select from 'react-select';
+import "./Businesslisting.css";
+import nextarrowimg from "../../../FrontEnd/img/arrow-next.png";
+import previousarrowimg from "../../../FrontEnd/img/arrow-previous.png";
+import { useSelector } from "react-redux";
+import withAuthh from "../../../Hoc/withAuthh"
 
 function Addcommunication(){
-    
-    return(
-          
-        <div className="tab" style={{ display: 'block' }}>         
-     <h4>Add Communication Details</h4>
-      <p className="add-lidting-title-from">
-        {/* Business Listing / Add Communication Details */}
-      </p>
-      <div className="row">
-        <div className="form-group col-md-4">
-          <label htmlFor="lang">Languages <span className="text-danger">*</span></label>
-          <select className="wide add_bottom_10 state selectdrp" id="lang">
-            <option value="">Select Language</option>
-            <option value="English">English</option>
-            <option value="Hindi">Hindi</option>
-            <option value="Marathi">Marathi</option>
-          </select>
-          
-        </div>
-        <div className="form-group col-md-4">
-          <label htmlFor="Mobile">Mobile 1 <span className="text-danger">*</span></label>
-          <input className="form-control form-control-sm" type="number" name="Mobile" id="Mobile" />
-        </div>
-        <div className="form-group col-md-4">
-          <label htmlFor="Mobile2">Mobile 2 </label>
-          <input className="form-control form-control-sm" type="number" name="Mobile2" id="Mobile2" />
-        </div>
-        <div className="form-group col-md-4">
-          <label htmlFor="telephone">Telephone</label>
-          <input className="form-control form-control-sm" type="number" name="telephone" id="telephone" />
-        </div>
-        <div className="form-group col-md-4">
-          <label htmlFor="tollfree">Toll Free</label>
-          <input className="form-control form-control-sm" type="number" name="tollfree" id="tollfree" />
-        </div>
-        <div className="form-group col-md-4">
-          <label htmlFor="website">Website</label>
-          <input className="form-control form-control-sm" type="name" name="website" id="website" />
-        </div>
+  const [formData, setFormData] = useState({
+    languages: [],
+    email: "",
+    registerMobile: "",
+    mobile: "",
+    telephone: "",
+    website: "",
+    tollfree: ""
+  });
 
-        <div className="text-left col-12 mt-3">
-        <Link to="/addcompany" className="btn_1 mx-2">Back</Link>
-        <Link to="/address" className="btn_1 ">Save & Continue</Link>
-         
-       
+  const [languageOptions, setLanguageOptions] = useState([]);
+  const navigate = useNavigate();
+  const token = useSelector((state) => state.auth.token);
+
+  useEffect(() => {
+    // Function to fetch communication details
+    const fetchCommunicationDetails = async () => {
+      const apiUrl = "https://apidev.myinteriormart.com/api/BinddetailsListing/GetCommunicationDetailslisting";
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("API response error data:", errorData);
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+        console.log("API response:", responseData);
+
+        // Convert language string to array of objects if necessary
+        const languages = responseData.language
+          ? responseData.language.split(',').map(lang => ({ value: lang, label: lang }))
+          : [];
+
+        setFormData({
+          email: responseData.email || "",
+          registerMobile: responseData.telephoneSecond || "",
+          mobile: responseData.mobile || "",
+          telephone: responseData.telephone || "",
+          website: responseData.website || "",
+          tollfree: responseData.tollFree || "",
+          languages,
+        });
+
+      } catch (error) {
+        console.error("API error:", error);
+        
+      }
+    };
+
+    fetchCommunicationDetails();
+  }, [token]);
+
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value
+    }));
+  };
+
+  const handleSelectChange = (selectedOptions) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      languages: selectedOptions
+    }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const apiUrl = "https://apidev.myinteriormart.com/api/Communication/AddOrUpdateCommunication";
+
+    const submissionData = {
+      ...formData,
+      language: formData.languages.map(option => option.value).join(',') // Convert array to comma-separated string
+    };
+
+    console.log("Submitting data:", submissionData);
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify(submissionData)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("API response error data:", errorData);
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      console.log("API response:", responseData);
+      console.log("Communication Token",token);
+      alert("Communication details saved successfully!");
+      navigate("/address");
+    } catch (error) {
+      console.error("API error:", error);
+      alert("Failed to save communication details. Please try again");
+    }
+  };
+
+  const languageOptionsList  = [
+    { value: 'English', label: 'English' },
+    { value: 'Hindi', label: 'Hindi' },
+    { value: 'Marathi', label: 'Marathi' },
+    { value: 'French', label: 'French' },
+    { value: 'Spanish', label: 'Spanish' },
+    { value: 'Japanese', label: 'Japanese' },
+    { value: 'Portuguese', label: 'Portuguese' }
+
+  ];
+
+  return (
+    <>
+      <div className="">
+        <div className="">
+          <div className="">
+            <div className="">
+              <h4>Add Communication Details</h4>
+              <form onSubmit={handleSubmit}>
+                <p className="add-lidting-title-from">
+                  Add Listing / Add Communication Details
+                  <span>
+                    <Link className="back_btn mx-3" to="/labournakapage">
+                      Back
+                    </Link>
+                  </span>
+                </p>
+                <div className="row">
+                  <div className="form-group col-md-4">
+                    <label htmlFor="lang">
+                      Languages <span className="text-danger">*</span>
+                    </label>
+                    <Select
+                      isMulti
+                      name="languages"
+                      options={languageOptionsList}
+                      className="basic-multi-select box"
+                      classNamePrefix="select"
+                      onChange={handleSelectChange}
+                      value={formData.languages}
+                      required
+                     
+                    />
+                  </div>
+                  <div className="form-group col-md-4">
+                    <label htmlFor="email">Email</label>
+                    <input
+                      className="form-control form-control-sm box"
+                      type="email"
+                      name="email"
+                      id="email"
+                      placeholder="Enter Your Email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group col-md-4">
+                    <label htmlFor="Mobile">
+                      Registered Mobile <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      className="form-control form-control-sm box"
+                      type="number"
+                      name="registerMobile"
+                      id="Mobile"
+                      placeholder="Enter Registered Mobile Number"
+                      value={formData.registerMobile}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group col-md-4">
+                    <label htmlFor="Mobile2">Mobile </label>
+                    <input
+                      className="form-control form-control-sm box"
+                      type="number"
+                      name="mobile"
+                      id="Mobile2"
+                      placeholder="Enter your Mobile Number"
+                      value={formData.mobile}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group col-md-4">
+                    <label htmlFor="telephone">Telephone</label>
+                    <input
+                      className="form-control form-control-sm box"
+                      type="number"
+                      name="telephone"
+                      id="telephone"
+                      placeholder="Enter telephone number"
+                      value={formData.telephone}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group col-md-4">
+                    <label htmlFor="website">Website</label>
+                    <input
+                      className="form-control form-control-sm box"
+                      type="name"
+                      name="website"
+                      id="website"
+                      placeholder="Enter your Website"
+                      value={formData.website}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group col-md-4">
+                    <label htmlFor="tollfree">Toll Free</label>
+                    <input
+                      className="form-control form-control-sm box"
+                      type="number"
+                      name="tollfree"
+                      id="tollfree"
+                      placeholder="Enter Tollfree No"
+                      value={formData.tollfree}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+
+                  <div className="text-left col-12 mt-3">
+                    <button type="submit" className="btn_1">
+                      Save & Continue
+                    </button>
+                    <div style={{display:"flex",justifyContent:"flex-end",gap:'10px'}}>                    
+                      <Link to="/addcompany" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
+                    <Link to="/address" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
+                    </div>
+
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
-            
-        </div>
-      
-    )
+    </>
+  );
 }
+
 export default Addcommunication;
