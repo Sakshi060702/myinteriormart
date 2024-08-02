@@ -1,79 +1,273 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState,useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "../../../FrontEnd/css/Mangelisting.css";
+import nextarrowimg from "../../../FrontEnd/img/arrow-next.png";
+import previousarrowimg from "../../../FrontEnd/img/arrow-previous.png";
+import { useSelector } from "react-redux";
+import withAuthh from "../../../Hoc/withAuthh"
 
 function Addworkinghours()
 {
+    const [workingHours, setWorkingHours] = useState({
+        MondayFrom: "10:00:00",
+        MondayTo: "07:00:00",
+        TuesdayFrom: "10:00:00",
+        TuesdayTo: "07:00:00",
+        WednesdayFrom: "10:00:00",
+        WednesdayTo: "07:00:00",
+        ThursdayFrom: "10:00:00",
+        ThursdayTo: "07:00:00",
+        FridayFrom: "10:00:00",
+        FridayTo: "07:00:00",
+        SaturdayFrom: "00:00:00",
+        SaturdayTo: "00:00:00",
+        SundayFrom: "00:00:00",
+        SundayTo: "00:00:00",
+        SaturdayHoliday: false,
+        SundayHoliday: false,
+      });
+    
+      const navigate = useNavigate();
+      const token=useSelector((state)=>state.auth.token);
+    
+    useEffect(()=>{
+      const fetchData=async()=>{
+        try{
+          const response =await fetch(
+            `https://apidev.myinteriormart.com/api/BinddetailsListing/GetWorkingDetailslisting`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+          }
+          );
+    
+          const result=await response.json();
+    
+          const formatTime = (timeString) => {
+            const date = new Date(timeString);
+            return date.toTimeString().split(" ")[0];
+          };
+    
+          setWorkingHours({
+            MondayFrom: formatTime(result.mondayFrom),
+              MondayTo: formatTime(result.mondayTo),
+              TuesdayFrom: formatTime(result.tuesdayFrom),
+              TuesdayTo: formatTime(result.tuesdayTo),
+              WednesdayFrom: formatTime(result.wednesdayFrom),
+              WednesdayTo: formatTime(result.wednesdayTo),
+              ThursdayFrom: formatTime(result.thursdayFrom),
+              ThursdayTo: formatTime(result.thursdayTo),
+              FridayFrom: formatTime(result.fridayFrom),
+              FridayTo: formatTime(result.fridayTo),
+              SaturdayFrom: formatTime(result.saturdayFrom),
+              SaturdayTo: formatTime(result.saturdayTo),
+              SundayFrom: formatTime(result.sundayFrom),
+              SundayTo: formatTime(result.sundayTo),
+              SaturdayHoliday: result.saturdayHoliday,
+              SundayHoliday: result.sundayHoliday,
+          })
+        }
+        catch(error)
+        {
+          console.error("Error fetching data:", error);
+        }
+      };
+      fetchData();
+    },[token]);
+    
+      const handleCopyToAll = () => {
+        const { MondayFrom, MondayTo } = workingHours;
+        setWorkingHours({
+          ...workingHours,
+          TuesdayFrom: MondayFrom,
+          TuesdayTo: MondayTo,
+          WednesdayFrom: MondayFrom,
+          WednesdayTo: MondayTo,
+          ThursdayFrom: MondayFrom,
+          ThursdayTo: MondayTo,
+          FridayFrom: MondayFrom,
+          FridayTo: MondayTo,
+        });
+      };
+    
+      const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setWorkingHours({
+          ...workingHours,
+          [name]: type === "checkbox" ? checked : value,
+        });
+      };
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        try {
+          const response = await fetch(
+            "https://apidev.myinteriormart.com/api/WorkingHours/WorkingHours",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+              },
+              body: JSON.stringify(workingHours),
+            }
+          );
+    
+          const result = await response.json();
+          console.log(result);
+          console.log("Working hours token",token);
+          alert("Data Saved Successfully");
+          navigate("/addpayment");
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      };
+    
     return(
-
-     <div className="tab" style={{ display: 'block' }}> 
-<h4>Add Working Hours</h4>
-    <p className="add-lidting-title-from">
-        {/* Business Listing / Add Working Hours */}
-    </p>
-    <div className="row">
-        <div className="form-group col-md-6">
-            <label htmlFor="mondayfrom">Monday From</label>
-            <input className="form-control form-control-sm" type="time" name="mondayfrom" id="mondayfrom" />
+<>
+        <div >
+        <div >
+          <div >
+            <div >
+              <h4>Add Working Hours</h4>
+              <p className="add-lidting-title-from">
+                Add Listing / Add Working Hours
+                
+              </p>
+              <div className="row">
+                <div className="col-md-12 add_bottom_15">
+                  <button
+                    className="btn btn-primary"
+                    style={{ backgroundColor: "#fb830d" }}
+                    onClick={handleCopyToAll}
+                  >
+                    Copy to All
+                  </button>
+                </div>
+              </div>
+              <form onSubmit={handleSubmit}>
+                <div className="row">
+                  {Object.keys(workingHours).map((key) => (
+                    <div key={key} className=" col-md-6">
+                      {key === "SaturdayHoliday" ||
+                      key === "SundayHoliday" ? null : (
+                        <div className="form-group">
+                          <label>
+                            {key}
+                            <input
+                              className="form-control form-control-sm "
+                              style={{width:'340px'}}
+                              type={
+                                key.includes("Holiday") ? "checkbox" : "time"
+                              }
+                              name={key}
+                              checked={
+                                key.includes("Holiday")
+                                  ? workingHours[key]
+                                  : undefined
+                              }
+                              value={
+                                !key.includes("Holiday")
+                                  ? workingHours[key]
+                                  : undefined
+                              }
+                              onChange={handleChange}
+                           
+                            />
+                          </label>
+                        </div>
+                      )}
+                     
+                      {key === "FridayFrom" && (
+                        <>
+                        
+                        <div className="col-md-12">
+                          <div className="clearfix add_bottom_15">
+                            <div className="checkboxes float-left">
+                              <label className="container_check">
+                                Saturday Holiday
+                                <input
+                                  className="form-control form-control-sm"
+                                  type="checkbox"
+                                  name="SaturdayHoliday"
+                                  checked={workingHours["SaturdayHoliday"]}
+                                  onChange={handleChange}
+                                  style={{ width: "auto" }}
+                                />
+                                <span className="checkmark"></span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        </>
+                      )}
+                      {key === "SaturdayFrom" && (
+                        <div className="col-md-12">
+                          <div className="clearfix add_bottom_15">
+                            <div className="checkboxes float-left">
+                              <label className="container_check">
+                                Sunday Holiday
+                                <input
+                                  className="form-control form-control-sm"
+                                  type="checkbox"
+                                  name="SundayHoliday"
+                                  checked={workingHours["SundayHoliday"]}
+                                  onChange={handleChange}
+                                  style={{ width: "auto" }}
+                                />
+                                <span className="checkmark"></span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                   <div className="text-left col-12 mt-3" style={{display:'flex'}}>
+                    <button type="submit" className="btn_1" style={{marginRight:'50px'}}>
+                      Save & Continue
+                    </button>
+                    <div style={{display:"flex",justifyContent:"center",gap:'10px',paddingTop:'10px'}}>                    
+                      <Link to="/addspecialisation">
+                        <img
+                          src={previousarrowimg}
+                          style={{ height: "30px" }}
+                        />
+                      </Link>
+                      <Link to="/addpayment">
+                        <img src={nextarrowimg} style={{ height: "30px" }} />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-        <div className="form-group col-md-6">
-            <label htmlFor="mondayto">Monday To</label>
-            <input className="form-control form-control-sm" type="time" name="mondayto" id="mondayto" />
-        </div>
-        {/* Similar input fields for other days */}
-        <hr />
-        <div className="col-md-12">
-            <div className="clearfix add_bottom_15">
-                <div className="checkboxes float-left">
-                    <label className="container_check">Saturday Holiday
-                        <input type="checkbox" id="SaturdayHoliday" name="SaturdayHoliday" />
-                        <span className="checkmark"></span>
+      </div>
+      {/* <form onSubmit={handleSubmit}>
+            {Object.keys(workingHours).map((key) => (
+                <div key={key}>
+                    <label>
+                        {key}
+                        <input
+                            type={key.includes('Holiday') ? 'checkbox' : 'text'}
+                            name={key}
+                            value={workingHours[key]}
+                            onChange={handleChange}
+                            checked={workingHours[key] === true}
+                        />
                     </label>
                 </div>
-            </div>
-        </div>
-        <div className="col-md-6">
-            <div className="form-group">
-                <label className="control-label" htmlFor="SaturdayFrom">Saturday From</label>
-                <input className="form-control form-control-sm" id="SaturdayFrom" type="time" name="SaturdayFrom" />
-            </div>
-        </div>
-        <div className="col-md-6">
-            <div className="form-group">
-                <label className="control-label" htmlFor="SaturdayTo">Saturday To</label>
-                <input className="form-control form-control-sm" id="SaturdayTo" type="time" name="SaturdayTo" />
-            </div>
-        </div>
-        <hr />
-        <div className="col-md-12">
-            <div className="clearfix add_bottom_15">
-                <div className="checkboxes float-left">
-                    <label className="container_check">Sunday Holiday
-                        <input type="checkbox" id="SundayHoliday" name="SundayHoliday" />
-                        <span className="checkmark"></span>
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div className="col-md-6">
-            <div className="form-group">
-                <label className="control-label" htmlFor="SundayFrom">Sunday From</label>
-                <input className="form-control form-control-sm" id="SundayFrom" type="time" name="SundayFrom" />
-            </div>
-        </div>
-        <div className="col-md-6">
-            <div className="form-group">
-                <label className="control-label" htmlFor="Sundayto">Sunday To</label>
-                <input className="form-control form-control-sm" id="Sundayto" type="time" name="Sundayto" />
-            </div>
-        </div>
-        <div className="text-left col-12 mt-3">
-             <Link to="/addspecialisation" className="btn_1 mx-2">Back</Link>
-            <Link to="/addpayment" className="btn_1 ">Save & Continue</Link>
-        </div>
-    </div>
-        </div>
-        
-    )
-}
+            ))}
+            <button type="submit">Submit</button>
+        </form> */}
+    </>
+  );
+};
 
 export default Addworkinghours;

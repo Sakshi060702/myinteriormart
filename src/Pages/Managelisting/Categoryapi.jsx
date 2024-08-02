@@ -311,7 +311,7 @@ function Categoryapi() {
                     <div className="row">
                   {thirdCategories.length > 0 &&
                     thirdCategories.map((category) => (
-                      <div className="col-md-3" key={category.thirdCategoryId}>
+                      <div className="col-md-4" key={category.thirdCategoryId}>
                         <div className="clearfix add_bottom_15">
                           <div className="checkboxes float-left">
                             <label
@@ -347,7 +347,7 @@ function Categoryapi() {
                 
                   {fourthCategories.length > 0 &&
                     fourthCategories.map((category) => (
-                      <div className="col-md-3" key={category.fourthCategoryId}>
+                      <div className="col-md-4" key={category.fourthCategoryId}>
                         <div className="clearfix add_bottom_15">
                           <div className="checkboxes float-left">
                             <label
@@ -381,7 +381,7 @@ function Categoryapi() {
                 
                   {fifthCategories.length > 0 &&
                     fifthCategories.map((category) => (
-                      <div className="col-md-3" key={category.fifthCategoryId}>
+                      <div className="col-md-4" key={category.fifthCategoryId}>
                         <div className="clearfix add_bottom_15">
                           <div className="checkboxes float-left">
                             <label

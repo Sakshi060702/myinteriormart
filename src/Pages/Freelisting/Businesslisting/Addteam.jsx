@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector,useDispatch } from "react-redux";
-import usericon from "../../FrontEnd/img/user1 (4).jpg";
-import withAuthh from "../../Hoc/withAuthh"
+import usericon from "../../../FrontEnd/img/user1 (4).jpg";
+import withAuthh from "../../../Hoc/withAuthh"
 
-function Teamimagel() {
+function Addteam() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
@@ -352,4 +352,4 @@ function Teamimagel() {
   );
 }
 
-export default Teamimagel;
+export default Addteam;

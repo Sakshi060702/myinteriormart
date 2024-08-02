@@ -142,7 +142,7 @@ function Clientimagel() {
               <div className="upload_img_sec">
                 <img
                   className="upload_images"
-                  src={imageURL?.imagepath ? imageURL.imagepath : usericon}
+                  src={imageURL?.imagepath ? `https://apidev.myinteriormart.com${imageURL.imagepath}` : ""}
                   alt="Client Image"
                  
                 />

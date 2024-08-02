@@ -1,10 +1,10 @@
 import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
-import usericon from "../../FrontEnd/img/user1 (2).jpg";
+import usericon from "../../../FrontEnd/img/user1 (2).jpg";
 import { useSelector,useDispatch } from "react-redux";
-import withAuthh from "../../Hoc/withAuthh"
+import withAuthh from "../../../Hoc/withAuthh"
 
-function Certificationimagel() {
+function Addcertification() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageTitle, setImageTitle] = useState("");
   const [imageURL, setImageURL] = useState(null);
@@ -154,4 +154,4 @@ function Certificationimagel() {
   );
 }
 
-export default withAuthh(Certificationimagel);
+export default Addcertification;

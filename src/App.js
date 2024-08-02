@@ -131,6 +131,17 @@ import Addworkinghours from "./Pages/Freelisting/Businesslisting/Addworkinghours
 import Addpayment from "./Pages/Freelisting/Businesslisting/Addpayment";
 import Addcompany from "./Pages/Freelisting/Businesslisting/Addcompany";
 
+import Addsociallink from "./Pages/Freelisting/Businesslisting/Addsociallink";
+import Addseokeyword from "./Pages/Freelisting/Businesslisting/Addseokeyword";
+import Uploadimage from "./Pages/Freelisting/Businesslisting/Uploadimage";
+import Uploadbtngroup from "./Pages/Freelisting/Businesslisting/Uploadbtngroup";
+import Addlogo from "./Pages/Freelisting/Businesslisting/Addlogo";
+import Addgallery from "./Pages/Freelisting/Businesslisting/Addgallery";
+import Addteam from "./Pages/Freelisting/Businesslisting/Addteam";
+import Addbanner from "./Pages/Freelisting/Businesslisting/Addbanner";
+import Addcertification from "./Pages/Freelisting/Businesslisting/Addcertification";
+import Addclient from "./Pages/Freelisting/Businesslisting/Addclient";
+
 import Profile2 from "./Pages/Profile/Profile2";
 import Editprofile from "./Pages/Profile/Editprofile";
 import Address1 from "./Pages/Profile/Address1";
@@ -428,6 +439,14 @@ function App() {
 <Route path="/addpayment" element={<Layout><Addpayment /></Layout>} />
 <Route path="/addcompany" element={<Layout><Addcompany /></Layout>} />
 <Route path="/Workingdetails" element={<Layout><Workingdetails/></Layout>} />
+<Route path="/Addseokeyword" element={<Layout><Addseokeyword/></Layout>} />
+<Route path="/Addsociallink" element={<Layout><Addsociallink/></Layout>} />
+
+<Route path="/Uploadimage" element={<Layout><Uploadimage/></Layout>} />
+
+
+
+
 
   <Route path="/Addaddressdetails" element={<Layout><Addaddressdetails/></Layout>} />
   <Route path="/Categorydetails" element={<Layout><Addcategorydetails/></Layout>} />

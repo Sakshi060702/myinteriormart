@@ -1,5 +1,6 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 import editprofile from "../../FrontEnd/img/icon/edit.png";
 import addressimg from "../../FrontEnd/img/icon/map.png";
 import enquiryimg from "../../FrontEnd/img/icon/enquiry.png";
@@ -16,6 +17,31 @@ import { Dropdown } from "react-bootstrap";
 
 
 function Profile2({ children }) {
+ const  [status,setStatus]=useState("");
+ const token = useSelector((state) => state.auth.token);
+ const dispatch = useDispatch();
+
+ useEffect(()=>{
+  const fetchData=async()=>{
+    try{
+      const response = await fetch('https://apidev.myinteriormart.com/api/ManageListingFromStatus/GetManageListingFromStatus', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      setStatus(data.status);
+    }
+    catch(error)
+    {
+      console.error('Error fetching status:', error);
+    }
+  };
+  fetchData();
+
+ },[token]);
   return (
     <main>
       <div className="container margin_60_35">
@@ -45,7 +71,7 @@ function Profile2({ children }) {
                 />
                 My Activity
               </Link>
-              <Link to="/editprofile">
+              {/* <Link to="/editprofile">
                 {" "}
                 <img
                   src={listingicon}
@@ -64,27 +90,19 @@ function Profile2({ children }) {
                  
                 />
                 Personal Info
-              </Link>
-              <Link to="/labournakapage">
-                {" "}
-                <img
-                  src={listingicon}
-                  alt="Edit Profile"
-                  style={{ height: "60px" }}
-                  
-                />
-                Manage Listing
-              </Link>
-              
-              <Link to="/enquiry">
-                {" "}
-                <img
-                  src={listingicon}
-                  alt="Edit Profile"
-                  style={{ height: "60px" }}
-                />
-                Enquiry
-              </Link>
+              </Link> */}
+              {status === 1 && (
+                <>
+                  <Link to="/labournakapage">
+                    <img src={listingicon} alt="Manage Listing" style={{ height: '60px' }} />
+                    Manage Listing
+                  </Link>
+                  <Link to="/enquiry">
+                    <img src={listingicon} alt="Enquiry" style={{ height: '60px' }} />
+                    Enquiry
+                  </Link>
+                </>
+              )}
               <Link to="/complaint">
                 {" "}
                 <img
@@ -152,21 +170,15 @@ function Profile2({ children }) {
                   />
                   Edit Profile
                 </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/labournakapage">
+                {status ==1 && (
+                  <>
+                  <Dropdown.Item as={Link} to="/labournakapage">
                   <img
                     src={listingicon}
                     alt="Edit Profile"
                     style={{ height: "60px" }}
                   />
                   Manage Listing
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/address1">
-                  <img
-                    src={addressimg}
-                    alt="Address"
-                    style={{ height: "60px" }}
-                  />
-                  Address
                 </Dropdown.Item>
                 <Dropdown.Item as={Link} to="/enquiry">
                   <img
@@ -176,6 +188,18 @@ function Profile2({ children }) {
                   />
                   Enquiry
                 </Dropdown.Item>
+                  </>
+                )}
+               
+                <Dropdown.Item as={Link} to="/address1">
+                  <img
+                    src={addressimg}
+                    alt="Address"
+                    style={{ height: "60px" }}
+                  />
+                  Address
+                </Dropdown.Item>
+                
                 <Dropdown.Item as={Link} to="/bookmark">
                   <img
                     src={bookmarkimg}

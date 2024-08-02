@@ -143,11 +143,7 @@ function Addcommunication(){
               <form onSubmit={handleSubmit}>
                 <p className="add-lidting-title-from">
                   Add Listing / Add Communication Details
-                  <span>
-                    <Link className="back_btn mx-3" to="/labournakapage">
-                      Back
-                    </Link>
-                  </span>
+                  
                 </p>
                 <div className="row">
                   <div className="form-group col-md-4">
@@ -247,11 +243,11 @@ function Addcommunication(){
                     />
                   </div>
 
-                  <div className="text-left col-12 mt-3">
-                    <button type="submit" className="btn_1">
+                  <div className="text-left col-12 mt-3" style={{display:'flex'}}>
+                    <button type="submit" className="btn_1" style={{marginRight:'50px'}}>
                       Save & Continue
                     </button>
-                    <div style={{display:"flex",justifyContent:"flex-end",gap:'10px'}}>                    
+                    <div style={{display:"flex",justifyContent:"center",gap:'10px',paddingTop:'10px'}}>                    
                       <Link to="/addcompany" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
                     <Link to="/address" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
                     </div>

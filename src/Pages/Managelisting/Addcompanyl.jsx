@@ -4,6 +4,7 @@ import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
 import "../Freelisting/Businesslisting/Businesslisting.css";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
+import Select from "react-select";
 
 function Addcompanyl() {
   const [formData, setFormData] = useState({
@@ -19,23 +20,24 @@ function Addcompanyl() {
 
   const navigate = useNavigate();
   const [businessTypes, setBusinessTypes] = useState([]);
+  const [filterText, setFilterText] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [allOptions, setAllOptions] = useState([]);
+
   const token = useSelector((state) => state.auth.token);
+  
 
   useEffect(() => {
     const fetchBusinessTypes = async () => {
-      const apiUrl = "https://apidev.myinteriormart.com/api/CompanyDetails/GetBussinessCategorys";
+      const apiUrl =
+        "https://apidev.myinteriormart.com/api/CompanyDetails/GetBussinessCategorys";
 
-     
-
-   
       try {
         const response = await fetch(apiUrl, {
           method: "GET",
           headers: {
-          
-            "Authorization": `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
-        
         });
 
         if (!response.ok) {
@@ -45,7 +47,13 @@ function Addcompanyl() {
         }
 
         const responseData = await response.json();
-        setBusinessTypes(responseData.bussinessCategory);
+        const fetchedBusinessTypes = responseData.bussinessCategory;
+        const fetchedOptions = fetchedBusinessTypes.map((type) => ({
+          value: type,
+          label: type,
+        }));
+        setBusinessTypes(fetchedBusinessTypes);
+        setAllOptions(fetchedOptions); // Set the options for the Select component
       } catch (error) {
         console.error("API error:", error);
         alert("Failed to fetch business types. Please try again later.");
@@ -55,6 +63,29 @@ function Addcompanyl() {
     fetchBusinessTypes();
   }, [token]);
 
+  const filteredOptions = allOptions.filter((option) =>
+    option.label.toLowerCase().includes(inputValue.toLowerCase())
+  );
+
+  const handleAddNewOption = () => {
+    if (
+      inputValue &&
+      !allOptions.some(
+        (option) => option.label.toLowerCase() === inputValue.toLowerCase()
+      )
+    ) {
+      const newOption = { label: inputValue, value: inputValue };
+      setAllOptions((prevOptions) => [...prevOptions, newOption]);
+      setInputValue(""); // Clear the input after adding
+    }
+  };
+
+  const handleSelectChange = (selectedOption) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      businessCategory: selectedOption ? selectedOption.value : "",
+    }));
+  };
 
   useEffect(()=>{
         const fetchCompanyDetails = async () => {
@@ -176,22 +207,32 @@ function Addcompanyl() {
                     <label htmlFor="businessCategory">
                       Business Type 
                     </label>
-                    <select
-                      className="wide add_bottom_10 selectdrp"
-                      name="businessCategory"
-                      value={formData.businessCategory}
-                      onChange={handleChange}
-                    
-                    >
-                      <option value="" disabled>
-                        Select Business Type
-                      </option>
-                      {businessTypes.map((type, index) => (
-                        <option key={index} value={type}>
-                          {type}
-                        </option>
-                      ))}
-                    </select>
+                    <Select
+                options={filteredOptions}
+                onInputChange={(newValue) => setInputValue(newValue)}
+                onChange={handleSelectChange} // Handle the select change
+                placeholder="Enter keyword to filter"
+                noOptionsMessage={() => (
+                  <div
+                    onClick={handleAddNewOption}
+                    style={{ cursor: "pointer", color: "blue" }}
+                  >
+                    {inputValue ? ` ${inputValue}` : "Type to search"}
+                  </div>
+                )}
+                styles={{
+                  control: (provided) => ({
+                    ...provided,
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    width: "330px",
+                    height: "50px",
+                  }),
+                }}
+                value={allOptions.find(
+                  (option) => option.value === formData.businessCategory
+                )} // Set the selected value
+              />
                   </div>{" "}
                   <div className="form-group col-md-4">
                     <label>

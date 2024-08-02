@@ -1,22 +1,25 @@
 import React, { useState,useEffect } from "react";
-import { Link } from "react-router-dom";
-import usericon from "../../FrontEnd/img/user1 (2).jpg";
+import { Link,useNavigate } from "react-router-dom";
+import usericon from "../../../FrontEnd/img/user1 (3).jpg";
 import { useSelector,useDispatch } from "react-redux";
-import withAuthh from "../../Hoc/withAuthh"
+import withAuthh from "../../../Hoc/withAuthh"
 
-function Certificationimagel() {
+
+function Addclient() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageTitle, setImageTitle] = useState("");
   const [imageURL, setImageURL] = useState(null);
   const [imageTitleFromAPI, setImageTitleFromAPI] = useState("");
  
 
+  const navigate=useNavigate();
   const token=useSelector((state)=>state.auth.token);
   const dispatch = useDispatch();
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
+
   const handleTitleChange = (event) => {
     setImageTitle(event.target.value);
   };
@@ -25,7 +28,7 @@ function Certificationimagel() {
     const fetchGalleryImage = async () => {
       try {
         const response = await fetch(
-          "https://apidev.myinteriormart.com/api/BinddetailsListing/GetCertificationImageDetailslisting",
+          "https://apidev.myinteriormart.com/api/BinddetailsListing/GetClientImageDetailslisting",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -58,7 +61,7 @@ function Certificationimagel() {
       formData.append("imageTitle", imageTitle);
 
       try {
-        const response = await fetch("https://apidev.myinteriormart.com/api/ImageUpload/UploadCertificateImage", {
+        const response = await fetch("https://apidev.myinteriormart.com/api/ImageUpload/UploadClientImage", {
           method: "POST",
           headers: {
             
@@ -73,8 +76,9 @@ function Certificationimagel() {
 
         const result = await response.json();
         console.log(result); // Log the result for debugging purposes
-        console.log("Certification Image token",token);
-        alert("Certificate Image Uploded Successfully")
+        console.log("Client Image Token",token)
+        alert("Client Image Uploded Successfully")
+        navigate("/Addsociallink");
         // You can handle the result here if needed, e.g., show a success message
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
@@ -83,6 +87,7 @@ function Certificationimagel() {
       alert("Please select a file and enter a title");
     }
   };
+
   return (
     <>
       <div className="row imageSection" id="logo_section">
@@ -91,9 +96,9 @@ function Certificationimagel() {
             <div className="col-md-6">
               <div className="form-group">
                 <label for="name">
-                  Select Certification Image <span className="text-danger">*</span>
+                  Select Client Logo Image <span className="text-danger">*</span>
                 </label>
-               
+                <form>
                   <input
                     type="file"
                     onChange={handleFileChange}
@@ -101,20 +106,20 @@ function Certificationimagel() {
                   />
 
                   {/* <button type="submit">Upload</button> */}
-                
+                </form>
                 
               </div>
               <div className="form-group">
-              <label for="name">Certification Title<span className="text-danger">*</span></label>
+              <label for="name">Client Logo Title<span className="text-danger">*</span></label>
               <input
                      className="form-control form-control-sm file-input2"
                     type="name"
                     name="website"
                     id="website"
-                    placeholder="Image Title"
+                    placeholder="Client Logo Title"
                     value={imageTitle}
-                    onChange={handleTitleChange}
-                    
+                onChange={handleTitleChange}
+               
                   />
               </div>
               <button
@@ -129,7 +134,7 @@ function Certificationimagel() {
           <hr style={{ marginTop: "32px" }}></hr>
           <div className="row">
             <div className="col-md-12">
-              <h2 style={{textAlign:'center'}}>Certificate Images</h2>
+              <h2 style={{textAlign:'center'}}>Client Logo Images</h2>
             </div>
           </div>
           <div className="row justify-content-center mt-4">
@@ -138,7 +143,7 @@ function Certificationimagel() {
                 <img
                   className="upload_images"
                   src={imageURL?.imagepath ? `https://apidev.myinteriormart.com${imageURL.imagepath}` : ""}
-                  alt="Certification Image"
+                  alt="Client Image"
                  
                 />
               </div>
@@ -154,4 +159,4 @@ function Certificationimagel() {
   );
 }
 
-export default withAuthh(Certificationimagel);
+export default Addclient;

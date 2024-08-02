@@ -78,6 +78,7 @@ function Galleryimagel() {
         console.log(result);
         console.log("Gallery Image Token", token); // Log the result for debugging purposes
         alert("Gallery Image Uploded Successfully");
+        setImageURL(result);
 
         // You can handle the result here if needed, e.g., show a success message
       } catch (error) {
@@ -136,9 +137,11 @@ function Galleryimagel() {
           <div className="row justify-content-center mt-4">
             <div className="col-md-3 col-lg-2 col-6 mb-5">
               <div className="upload_img_sec">
+              {console.log(imageURL)}
+              {console.log(imageURL?.imageUrl)}
                 <img
                   className="upload_images"
-                  src={imageURL?.imagepath ? imageURL.imagepath : usericon}
+                  src={imageURL?.imagepath ? `https://apidev.myinteriormart.com${imageURL.imagepath}` : ""}
                   alt="Gallery Image"
                  
                 />

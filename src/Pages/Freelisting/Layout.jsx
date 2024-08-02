@@ -20,7 +20,7 @@ function Layout({ children }) {
               role="tablist"
               aria-orientation="vertical"
             >
-              <Link to="/selectcategory">Select Category</Link>
+              {/* <Link to="/selectcategory">Select Category</Link> */}
               <Link to="/addcompany">
                 {" "}
                 <img
@@ -30,7 +30,7 @@ function Layout({ children }) {
                 />{" "}
                 Business Listing
               </Link>
-              <Link to="/Personalinformation">
+              {/* <Link to="/Personalinformation">
                 {" "}
                 <img
                   src={labourimg}
@@ -54,7 +54,7 @@ function Layout({ children }) {
               <Link to="/jobpage">
                 {" "}
                 <img src={jobimg} alt="Job" style={{ height: "60px" }} /> Job
-              </Link>
+              </Link> */}
             </div>
           </div>
           <div className="col-lg-3 mb-5" id="mob_view">

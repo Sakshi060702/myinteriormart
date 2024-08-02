@@ -1,43 +1,469 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import nextarrowimg from "../../../FrontEnd/img/arrow-next.png";
+import previousarrowimg from "../../../FrontEnd/img/arrow-previous.png";
+import "../../../FrontEnd/css/Mangelisting.css";
+import { useSelector } from "react-redux";
+import withAuthh from "../../../Hoc/withAuthh"
 
 function Addcategory()
 {
+    const [firstCategories, setFirstCategories] = useState([]);
+  const [secondCategories, setSecondCategories] = useState([]);
+  const [thirdCategories, setThirdCategories] = useState([]);
+  const [fourthCategories, setFourthCategories] = useState([]);
+  const [fifthCategories, setFifthCategories] = useState([]);
+  const [sixthCategories, setSixthCategories] = useState([]);
+  const [selectedFirstCategory, setSelectedFirstCategory] = useState("");
+  const [selectedSecondCategory, setSelectedSecondCategory] = useState("");
+  const [selectedThirdCategory, setSelectedThirdCategory] = useState("");
+  const [selectedFourthCategory, setSelectedFourthCategory] = useState("");
+  const [selectedFifthCategory, setSelectedFifthCategory] = useState("");
+  const [selectedSixthCategory, setSelectedSixthCategory] = useState("");
+
+  const [selectAll, setSelectAll] = useState(false);
+
+  const navigate = useNavigate();
+  const token=useSelector((state)=>state.auth.token);
+
+
+  useEffect(() => {
+    // const fetchData = async () => {
+    //   try {
+    //     const response = await fetch(
+    //       "https://apidev.myinteriormart.com/api/CategoryAllFromDropdown/GetAllCategoriesfromFirstandSecond",
+    //       {
+    //         method: "POST",
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //           "Authorization": `Bearer ${token}`,
+    //         },
+    //         body: JSON.stringify({
+    //           FirstCategoryID: setSelectedFirstCategory, // Replace with your desired ID
+    //           SecondCategoryID: setSelectedSecondCategory, // Replace with your desired ID
+    //           ThirdCategoryID: "",
+    //           FourthCategoryID: "",
+    //           FifthCategoryID: "",
+    //           SixthCategoryID: "",
+    //         }),
+    //       }
+    //     );
+    //     if (!response.ok) {
+    //       throw new Error(`HTTP error! Status: ${response.status}`);
+    //     }
+    //     const data = await response.json();
+    //     const { allCategories } = data;
+
+    //     if (allCategories && allCategories.length > 0) {
+    //       setFirstCategories(allCategories);
+    //     }
+    //     console.log(data);
+    //   } catch (error) {
+    //     console.error("Error fetching categories:", error);
+    //   }
+    // };
+
+    const fetchUserCategories=async()=>{
+      try{
+        const response=await fetch("https://apidev.myinteriormart.com/api/BinddetailsListing/GetCategoriesDetailslisting",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if(!response.ok){
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data=await response.json();
+
+        setSelectedFirstCategory(data.firstCategoryID);
+        setSelectedSecondCategory(data.secondCategoryID);
+        setSelectedThirdCategory(data.thirdCategoryID.split(",").map(Number));
+        setSelectedFourthCategory(data.fourthCategoryID.split(",").map(Number));
+        setSelectedFifthCategory(data.fifthCategoryID.split(",").map(Number));
+        setSelectedSixthCategory(data.sixthCategoryID.split(",").map(Number));
+
+        console.log('User categories fetched',data);
+      }
+      catch(error)
+      {
+        console.error("Error fetching user categories:", error);
+      }
+    }
+
+    // fetchData();
+    fetchUserCategories();
+  }, [token]); // Empty dependency array to run effect only once
+
+
+  useEffect(() => {
+    if (selectedFirstCategory) {
+      const selectedFirstCat = firstCategories.find(
+        (category) => category.firstCategoryID === selectedFirstCategory
+      );
+      if (selectedFirstCat) {
+        setSecondCategories(selectedFirstCat.secondCategories || []);
+      }
+    }
+  }, [selectedFirstCategory, firstCategories]);
+
+
+  useEffect(() => {
+    if (selectedSecondCategory) {
+      const selectedSecondCat = secondCategories.find(
+        (category) => category.secondCategoryId === selectedSecondCategory
+      );
+      if (selectedSecondCat) {
+        setThirdCategories(selectedSecondCat.thirdCategories || []);
+        setFourthCategories(selectedSecondCat.fourthCategories || []);
+        setFifthCategories(selectedSecondCat.fifthCategories || []);
+        setSixthCategories(selectedSecondCat.sixthCategories || []);
+      }
+    }
+  }, [selectedSecondCategory, secondCategories]);
+
+  const handleFirstCategoryChange = (e) => {
+    const selectedFirstCategoryID = e.target.value;
+    setSelectedFirstCategory(selectedFirstCategoryID); // Update state
+    const selectedFirstCategory = firstCategories.find(
+      (category) =>
+        category.firstCategoryID === parseInt(selectedFirstCategoryID)
+    );
+    if (selectedFirstCategory) {
+      setSecondCategories(selectedFirstCategory.secondCategories); // Update second categories
+      setSelectedSecondCategory(""); // Clear second category selection
+      setThirdCategories([]);
+      setFourthCategories([]);
+      setFifthCategories([]);
+      setSixthCategories([]);
+    }
+  };
+
+  const handleSecondCategoryChange = (e) => {
+    const selectedSecondCategoryID = e.target.value;
+    setSelectedSecondCategory(selectedSecondCategoryID); // Update state
+    const selectedSecondCategory = secondCategories.find(
+      (category) =>
+        category.secondCategoryId === parseInt(selectedSecondCategoryID)
+    );
+    if (selectedSecondCategory) {
+      setThirdCategories(selectedSecondCategory.thirdCategories || []); // Update third categories
+      setFourthCategories(selectedSecondCategory.fourthCategories || []);
+      setFifthCategories(selectedSecondCategory.fifthCategories || []);
+      setSixthCategories(selectedSecondCategory.sixthCategories || []);
+    }
+  };
+
+  const handleCheckboxChange = (
+    e,
+    setSelectedCategories,
+    selectedCategories
+  ) => {
+    const value = parseInt(e.target.value);
+    if (e.target.checked) {
+      setSelectedCategories([...selectedCategories, value]);
+    } else {
+      setSelectedCategories(selectedCategories.filter((id) => id !== value));
+    }
+  };
+
+  const handleSelectAll = () => {
+    if (selectAll) {
+      // Unselect all if currently selected
+      setSelectedThirdCategory([]);
+      setSelectedFourthCategory([]);
+      setSelectedFifthCategory([]);
+      setSelectedSixthCategory([]);
+    } else {
+      // Select all if currently not selected
+      setSelectedThirdCategory(thirdCategories.map((category) => category.thirdCategoryId));
+      setSelectedFourthCategory(fourthCategories.map((category) => category.fourthCategoryId));
+      setSelectedFifthCategory(fifthCategories.map((category) => category.fifthCategoryId));
+      setSelectedSixthCategory(sixthCategories.map((category) => category.sixthCategoryId));
+    }
+    setSelectAll(!selectAll); // Toggle select all state
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const thirdCategoryIDs =
+      selectedThirdCategory.length > 0 ? selectedThirdCategory.join(",") : "";
+    const fourthCategoryIDs =
+      selectedFourthCategory.length > 0 ? selectedFourthCategory.join(",") : "";
+    const fifthCategoryIDs =
+      selectedFifthCategory.length > 0 ? selectedFifthCategory.join(",") : "";
+    const sixthCategoryIDs =
+      selectedSixthCategory.length > 0 ? selectedSixthCategory.join(",") : "";
+
+    console.log("Third Category IDs:", thirdCategoryIDs);
+    console.log("Fourth Category IDs:", fourthCategoryIDs);
+    console.log("Fifth Category IDs:", fifthCategoryIDs);
+    console.log("Sixth Category IDs:", sixthCategoryIDs);
+
+    const selectedData = {
+      FirstCategoryID: selectedFirstCategory,
+      SecondCategoryID: selectedSecondCategory,
+      ThirdCategoryID: thirdCategoryIDs,
+      FourthCategoryID: fourthCategoryIDs,
+      FifthCategoryID: fifthCategoryIDs,
+      SixthCategoryID: sixthCategoryIDs,
+    };
+
+    try {
+      const response = await fetch(
+        "https://apidev.myinteriormart.com/api/CategoryAllFromDropdown/GetAllCategoriesfromFirstandSecond",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+          body: JSON.stringify(selectedData),
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log("Data saved successfully:", data);
+      console.log("Category Token",token);
+      alert("Data saved successfully");
+      navigate("/addspecialisation"); // Redirect to the next page
+    } catch (error) {
+      console.error("Error saving categories:", error);
+    }
+  };
+
     return(
 
-     <div className="tab" style={{ display: 'block' }}>
-    <h4>Add Category Details</h4>
-    <p className="add-lidting-title-from">
-        {/* Business Listing / Add Category Details */}
-    </p>
-    <div className="row">
-        <div className="form-group col-md-6">
-            <label htmlFor="fcategory">First Category </label>
-            <select className="wide add_bottom_10 fcategory selectdrp">
-                <option></option>
-                <option value="scategory">scategory</option>
-            </select>
+        <>
+        <div >
+          <div >
+            <div >
+              <div >
+                <h4>Add Category Details</h4>
+                <p className="add-lidting-title-from">
+                  Add Listing / Add Category Details
+                  
+                </p>
+  
+                <form onSubmit={handleSubmit}>
+                  <div className="row">
+                    <div className="form-group col-md-6">
+                      <label htmlFor="fcategory">First Category </label>
+                      <br></br>
+                      <select
+                        className="wide add_bottom_10 fcategory selectdrp"
+                        value={selectedFirstCategory}
+                        onChange={handleFirstCategoryChange}
+                      >
+                        <option value="">Select First Category</option>
+                        {firstCategories.map((category) => (
+                          <option
+                            key={category.firstCategoryID}
+                            value={category.firstCategoryID}
+                          >
+                            {category.firstCategoryName}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="form-group col-md-6">
+                      <label htmlFor="scategory">Second Category </label>
+                      <br></br>
+                      <select
+                        className="wide add_bottom_10 scategory selectdrp"
+                        value={selectedSecondCategory}
+                        onChange={handleSecondCategoryChange}
+                      >
+                        <option value="">Select Second Category</option>
+                        {secondCategories.map((category) => (
+                          <option
+                            key={category.secondCategoryId}
+                            value={category.secondCategoryId}
+                          >
+                            {category.secondCategoryName}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12 add_bottom_15">
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        style={{ backgroundColor: "#fb830d" }}
+                        onClick={handleSelectAll}
+                      >
+                        {selectAll ? "Select All" : "Select All"}
+                      </button>
+                    </div>
+                  </div>
+  
+                  <div className="row">
+                    <div className="col-sm-12">
+                      <div className="row">
+                    {thirdCategories.length > 0 &&
+                      thirdCategories.map((category) => (
+                        <div className="col-md-4" key={category.thirdCategoryId}>
+                          <div className="clearfix add_bottom_15">
+                            <div className="checkboxes float-left">
+                              <label
+                                htmlFor={`thirdCategory-${category.thirdCategoryId}`}
+                                className="label-spacing"
+                              >
+                                <input
+                                  type="checkbox"
+                                  id={`thirdCategory-${category.thirdCategoryId}`}
+                                  value={category.thirdCategoryId}
+                                  checked={selectedThirdCategory.includes(category.thirdCategoryId)}
+                                  onChange={(e) =>
+                                    handleCheckboxChange(
+                                      e,
+                                      setSelectedThirdCategory,
+                                      selectedThirdCategory
+                                    )
+                                  }
+                                 className="custom-checkbox"
+                                 
+                                />
+                                 
+                                 <span className="label-text-spacing">
+                      {category.thirdCategoryName}
+                    </span>
+                              
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                      
+                  
+                    {fourthCategories.length > 0 &&
+                      fourthCategories.map((category) => (
+                        <div className="col-md-4" key={category.fourthCategoryId}>
+                          <div className="clearfix add_bottom_15">
+                            <div className="checkboxes float-left">
+                              <label
+                                htmlFor={`fourthCategory-${category.fourthCategoryId}`}
+                                 className="label-spacing"
+                              >
+                                <input
+                                  type="checkbox"
+                                  id={`fourthCategory-${category.fourthCategoryId}`}
+                                  value={category.fourthCategoryId}
+                                  checked={selectedFourthCategory.includes(category.fourthCategoryId)}
+                                  onChange={(e) =>
+                                    handleCheckboxChange(
+                                      e,
+                                      setSelectedFourthCategory,
+                                      selectedFourthCategory
+                                    )
+                                  }
+                                  className="custom-checkbox"
+                                />
+                                <span className="label-text-spacing">
+                                {category.fourthCategoryName}
+                                </span>
+                               
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                      
+                  
+                    {fifthCategories.length > 0 &&
+                      fifthCategories.map((category) => (
+                        <div className="col-md-4" key={category.fifthCategoryId}>
+                          <div className="clearfix add_bottom_15">
+                            <div className="checkboxes float-left">
+                              <label
+                                htmlFor={`fifthCategory-${category.fifthCategoryId}`}
+                                className="label-spacing"
+                              >
+                                <input
+                                  type="checkbox"
+                                  id={`fifthCategory-${category.fifthCategoryId}`}
+                                  value={category.fifthCategoryId}
+                                   checked={selectedFifthCategory.includes(category.fifthCategoryId)}  
+                                  onChange={(e) =>
+                                    handleCheckboxChange(
+                                      e,
+                                      setSelectedFifthCategory,
+                                      selectedFifthCategory
+                                    )
+                                  }
+                                   className="custom-checkbox"
+                                />
+                                <span className="label-text-spacing">
+                                {category.fifthCategoryName}
+                                </span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                     
+  
+                  
+                    {sixthCategories.length > 0 &&
+                      sixthCategories.map((category) => (
+                        <div className="col-md-4" key={category.sixthCategoryId}>
+                          <div className="clearfix add_bottom_15">
+                            <div className="checkboxes float-left">
+                              <label
+                                htmlFor={`sixthCategory-${category.sixthCategoryId}`}
+                                className="label-spacing"
+                              >
+                                <input
+                                  type="checkbox"
+                                  id={`sixthCategory-${category.sixthCategoryId}`}
+                                  value={category.sixthCategoryId}
+                                  checked={selectedSixthCategory.includes(category.sixthCategoryId)}
+                                  onChange={(e) =>
+                                    handleCheckboxChange(
+                                      e,
+                                      setSelectedSixthCategory,
+                                      selectedSixthCategory
+                                    )
+                                  }
+                                className="custom-checkbox"
+                                />
+                                <span className="label-text-spacing">
+                                {category.sixthCategoryName}
+                                </span>
+                               
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                      </div>
+                      </div>
+                  </div>
+  
+                  <div className="text-left col-12 mt-3" style={{display:'flex'}}>
+                    <button type="submit" className="btn_1" style={{marginRight:'50px'}}>
+                      Save & Continue
+                    </button>
+                  
+                  <div style={{display:"flex",justifyContent:"center",gap:'10px',paddingTop:'10px'}}>                    
+                        <Link to="/address" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
+                      <Link to="/addspecialisation" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
+                      </div>
+                      </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="form-group col-md-6">
-            <label htmlFor="scategory">Second Category </label>
-            <select className="wide add_bottom_10 scategory selectdrp" id="scategory">
-                <option></option>
-                <option value="scategory">dasdasd</option>
-                <option value="scategory">Second Category</option>
-                <option value="scategory">asdasd dasdasd</option>
-                <option value="scategory">asdasd dasdasdds</option>
-            </select>
-        </div>
-        <div className="text-left col-12 mt-3">
-            <Link to="/address" className="btn_1 mx-2">Back</Link>
-                    <Link to="/addspecialisation" className="btn_1 ">Save & Continue</Link>
-
-        </div>
-    </div>
-
-        </div>
-    
-    )
-}
+      </>
+    );
+  }
 
 export default Addcategory;

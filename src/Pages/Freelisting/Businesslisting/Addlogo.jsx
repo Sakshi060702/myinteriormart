@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import usericon from "../../FrontEnd/img/user1 (1).jpg";
-import "../../FrontEnd/css/Mangelisting.css";
-import { useSelector,useDispatch } from "react-redux";
-import withAuthh from "../../Hoc/withAuthh";
+import { useSelector, useDispatch } from "react-redux";
+import "../../../FrontEnd/css/Mangelisting.css";
+import withAuthh from "../../../Hoc/withAuthh";
 
-function Uploadimagel() {
+function Addlogo() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageURL, setImageURL] = useState(null);
 
   const token = useSelector((state) => state.auth.token);
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -41,10 +39,10 @@ function Uploadimagel() {
         const result = await response.json();
         console.log(result); // Log the result for debugging purposes
         console.log("Logo image token", token);
-        alert("Logo Image Uploded Successfully");
-        setImageURL(result);
-       
-        // You can handle the result here if needed, e.g., show a success message
+        alert("Logo Image Uploaded Successfully");
+
+        // Assuming result contains the image URL, update the state to show the new image
+        setImageURL(result); // Update this based on your actual response structure
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
       }
@@ -69,10 +67,6 @@ function Uploadimagel() {
         }
         const data = await response.json();
         setImageURL(data); // Assuming data contains image URL and title
-        console.log(data);
-        
-        
-       
       } catch (error) {
         console.error(error);
       }
@@ -89,7 +83,7 @@ function Uploadimagel() {
           <div className="row mt-5 justify-content-center">
             <div className="col-md-6">
               <div className="form-group">
-                <label for="name">
+                <label htmlFor="name">
                   Select Logo Image <span className="text-danger">*</span>
                 </label>
 
@@ -98,7 +92,6 @@ function Uploadimagel() {
                   onChange={handleFileChange}
                   className="file-input"
                 />
-                {/* <button type="submit">Upload</button> */}
 
                 <button
                   className="btn_1"
@@ -108,39 +101,33 @@ function Uploadimagel() {
                   Submit
                 </button>
               </div>
-              </div>
-              </div>
+            </div>
+          </div>
 
-              <hr style={{ marginTop: "32px" }}></hr>
+          <hr style={{ marginTop: "32px" }}></hr>
           <div className="row">
             <div className="col-md-12">
-              <h2 style={{textAlign:'center'}}>Logo</h2>
+              <h2 style={{ textAlign: 'center' }}>Logo</h2>
             </div>
           </div>
           <div className="row justify-content-center mt-4">
             <div className="col-md-3 col-lg-2 col-6 mb-5">
               <div className="upload_img_sec">
-              {/* {console.log(imageURL)}
-              {console.log(imageURL?.imageUrl)} */}
                 <img
                   className="upload_images"
                   src={imageURL?.imagepath ? `https://apidev.myinteriormart.com${imageURL.imagepath}` : ""}
                   alt="Gallery Image"
-
                 />
               </div>
               <div className="img_title text-center">
-              
+                {/* Add any additional title or information if needed */}
               </div>
             </div>
           </div>
-
-           
-          
         </div>
       </div>
     </>
   );
 }
 
-export default withAuthh(Uploadimagel);
+export default Addlogo;

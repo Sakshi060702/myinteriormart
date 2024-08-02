@@ -26,24 +26,24 @@ const Dropdown = () => {
           <i style={{ marginRight: "10px" }}></i>Profile
         </li> */}
         <li>
-          <Link to="/labournakapage" style={{color:'black'}}>
-            <i style={{ marginRight: "10px"}}></i> My Profile
+          <Link to="/dashboard" style={{color:'black'}}>
+            <i className="fa fa-user" style={{ marginRight: "10px"}}></i> My Profile
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/userpersonalinformation" style={{color:'black'}}>
           <i style={{ marginRight: "10px" }}></i>Personal Info
           </Link>
         
+        </li> */}
+        <li>
+        <i className="fa fa-gear" style={{ marginRight: "10px" }}></i>Settings
         </li>
         <li>
-        <i style={{ marginRight: "10px" }}></i>Settings
-        </li>
-        <li>
-        <i style={{ marginRight: "10px" }}></i>Change Password
+        <i className="fa fa-key" style={{ marginRight: "10px" }}></i>Change Password
         </li>
         <li onClick={handleLogoutClick}>
-          <i style={{ marginRight: "10px" }}></i>Logout
+          <i className="fa fa-sign-out" style={{ marginRight: "10px" }}></i>Logout
         </li>
       </ul>
     </div>

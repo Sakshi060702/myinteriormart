@@ -110,25 +110,16 @@ function Menu1() {
             <ul className={`nav-links ${showMenu ? "active" : ""}`}>
               <li>
                 <span>
-                  <NavLink
+                  {/* <NavLink
                     to="/categorylist"
                     onClick={closeMenu}
                     style={{ fontSize: "14px", color: "black" }}
                   >
                     Suggestion
-                  </NavLink>
+                  </NavLink> */}
                 </span>
               </li>
-              <li>
-                <NavLink
-                  to="/layout"
-                  className="btn_add listing-btn"
-                  style={{ backgroundColor: "#fe900d", fontSize: "14px" }}
-                  onClick={closeMenu}
-                >
-                  Free Listing
-                </NavLink>
-              </li>
+              
 
               {!token ? (
                 <>
@@ -155,6 +146,20 @@ function Menu1() {
                 </>
               ) : (
                 <>
+                <div>
+                  <ul>
+                  <li>
+                <NavLink
+                  to="/addcompany"
+                  className="btn_add listing-btn"
+                  style={{ backgroundColor: "#fe900d", fontSize: "14px" }}
+                  onClick={closeMenu}
+                >
+                  Free Listing
+                </NavLink>
+              </li>
+                  </ul>
+                </div>
                   <div
                     className="notification-user"
                     style={{ display: "flex", alignItems: "center" }}
@@ -185,7 +190,7 @@ function Menu1() {
                         onClick={toggleDropdown}
                         style={{ background: "none", border: "none" }}
                       >
-                        <img className="usericon-img" src={userProfile?.imgUrl ? userProfile.imgUrl : usericon} alt="user icon" />
+                        <img className="usericon-img" src={userProfile?.imgUrl ? `https://apidev.myinteriormart.com${userProfile.imgUrl}` : ""} alt="user icon" />
                         {dropdownOpen && <Dropdown />}
                       </button>
                     </div>
