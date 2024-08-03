@@ -42,7 +42,7 @@ function Uploadimagel() {
         console.log(result); // Log the result for debugging purposes
         console.log("Logo image token", token);
         alert("Logo Image Uploded Successfully");
-        setImageURL(result);
+        setImageURL(result.imageUrl);
        
         // You can handle the result here if needed, e.g., show a success message
       } catch (error) {
@@ -68,7 +68,7 @@ function Uploadimagel() {
           throw new Error("Failed to fetch user profile");
         }
         const data = await response.json();
-        setImageURL(data); // Assuming data contains image URL and title
+        setImageURL(data.imagepath); // Assuming data contains image URL and title
         console.log(data);
         
         
@@ -77,10 +77,9 @@ function Uploadimagel() {
         console.error(error);
       }
     };
-    if (token) {
-      fetchLogoImage();
-    }
-  }, [token, dispatch]);
+   
+    fetchLogoImage();
+  }, []);
 
   return (
     <>
@@ -124,8 +123,8 @@ function Uploadimagel() {
               {console.log(imageURL?.imageUrl)} */}
                 <img
                   className="upload_images"
-                  src={imageURL?.imagepath ? `https://apidev.myinteriormart.com${imageURL.imagepath}` : ""}
-                  alt="Gallery Image"
+                  src={imageURL? `https://apidev.myinteriormart.com${imageURL}` : ""}
+                  alt="Logo Image"
 
                 />
               </div>

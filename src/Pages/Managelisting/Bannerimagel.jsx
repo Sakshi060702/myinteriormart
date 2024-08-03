@@ -37,7 +37,7 @@ function Bannerimagel() {
           throw new Error("Failed to fetch user profile");
         }
         const data = await response.json();
-        setImageURL(data); // Assuming data contains image URL and title
+        setImageURL(data.imagepath); // Assuming data contains image URL and title
         setImageTitleFromAPI(data.imagetitle); // Set the image title from API
         
        
@@ -46,9 +46,10 @@ function Bannerimagel() {
       }
     };
     if (token) {
-      fetchBannerImage();
+      
     }
-  }, [token, dispatch]);
+    fetchBannerImage();
+  }, []);
 
 
 
@@ -77,6 +78,7 @@ function Bannerimagel() {
         console.log(result); // Log the result for debugging purposes
         console.log("Banner image token",token);
         alert("Banner Image Uploded Successfully")
+        setImageURL(result.imageUrl);
         // You can handle the result here if needed, e.g., show a success message
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
@@ -141,7 +143,7 @@ function Bannerimagel() {
               <div className="upload_banner_img_sec">
                 <img
                   className="upload_images"
-                  src={imageURL?.imagepath ? `https://apidev.myinteriormart.com${imageURL.imagepath}` : ""}
+                  src={imageURL? `https://apidev.myinteriormart.com${imageURL}` : ""}
                   alt="Banner Image"
                  
                 />

@@ -39,10 +39,10 @@ function Addlogo() {
         const result = await response.json();
         console.log(result); // Log the result for debugging purposes
         console.log("Logo image token", token);
-        alert("Logo Image Uploaded Successfully");
-
-        // Assuming result contains the image URL, update the state to show the new image
-        setImageURL(result); // Update this based on your actual response structure
+        alert("Logo Image Uploded Successfully");
+        setImageURL(result.imageUrl);
+       
+        // You can handle the result here if needed, e.g., show a success message
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
       }
@@ -66,15 +66,18 @@ function Addlogo() {
           throw new Error("Failed to fetch user profile");
         }
         const data = await response.json();
-        setImageURL(data); // Assuming data contains image URL and title
+        setImageURL(data.imagepath); // Assuming data contains image URL and title
+        console.log(data);
+        
+        
+       
       } catch (error) {
         console.error(error);
       }
     };
-    if (token) {
-      fetchLogoImage();
-    }
-  }, [token, dispatch]);
+   
+    fetchLogoImage();
+  }, []);
 
   return (
     <>
@@ -83,7 +86,7 @@ function Addlogo() {
           <div className="row mt-5 justify-content-center">
             <div className="col-md-6">
               <div className="form-group">
-                <label htmlFor="name">
+                <label for="name">
                   Select Logo Image <span className="text-danger">*</span>
                 </label>
 
@@ -92,6 +95,7 @@ function Addlogo() {
                   onChange={handleFileChange}
                   className="file-input"
                 />
+                {/* <button type="submit">Upload</button> */}
 
                 <button
                   className="btn_1"
@@ -101,29 +105,35 @@ function Addlogo() {
                   Submit
                 </button>
               </div>
-            </div>
-          </div>
+              </div>
+              </div>
 
-          <hr style={{ marginTop: "32px" }}></hr>
+              <hr style={{ marginTop: "32px" }}></hr>
           <div className="row">
             <div className="col-md-12">
-              <h2 style={{ textAlign: 'center' }}>Logo</h2>
+              <h2 style={{textAlign:'center'}}>Logo</h2>
             </div>
           </div>
           <div className="row justify-content-center mt-4">
             <div className="col-md-3 col-lg-2 col-6 mb-5">
               <div className="upload_img_sec">
+              {/* {console.log(imageURL)}
+              {console.log(imageURL?.imageUrl)} */}
                 <img
                   className="upload_images"
-                  src={imageURL?.imagepath ? `https://apidev.myinteriormart.com${imageURL.imagepath}` : ""}
-                  alt="Gallery Image"
+                  src={imageURL? `https://apidev.myinteriormart.com${imageURL}` : ""}
+                  alt="Logo Image"
+
                 />
               </div>
               <div className="img_title text-center">
-                {/* Add any additional title or information if needed */}
+              
               </div>
             </div>
           </div>
+
+           
+          
         </div>
       </div>
     </>

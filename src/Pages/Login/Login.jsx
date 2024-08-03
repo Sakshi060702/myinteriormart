@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../../FrontEnd/css/Register.css";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "../../Redux/authSlice";
+import { loginSuccess,setUserType } from "../../Redux/authSlice";
 
 function Login() {
   const location = useLocation();
@@ -83,10 +83,12 @@ function Login() {
           })
         );
         console.log("Login Successful");
+        dispatch(setUserType(data.userType));
+        // dispatch(setUserType(data.user.userType));
         setSuccess("Login Successful");
         navigate("/");
       } else {
-        setError("Login unsuccessful");
+        setError("Login user unsuccessful");
       }
     } catch (error) {
       setError("Login unsuccessful");

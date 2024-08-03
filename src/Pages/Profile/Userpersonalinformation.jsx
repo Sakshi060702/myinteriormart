@@ -38,7 +38,7 @@ const Userpersonalinformation = () => {
   const token = useSelector((state) => state.auth.token);
 
   const apiUrl =
-    "https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster";
+    "https://apidev.myinteriormart.com/api/FetchAddressMaster/FetchAddressDropdownMaster";
 
   const fetchData = async (type, parentID = null) => {
     let body = {
@@ -77,7 +77,8 @@ const Userpersonalinformation = () => {
 
   useEffect(() => {
     fetchData("countries").then((data) => {
-      if (data) setCountries(data.country);
+      // console.log(data)
+      if (data) setCountries(data.countries);
     });
   }, [token]);
 
@@ -180,7 +181,6 @@ const Userpersonalinformation = () => {
     setSelectedAssembly("");
     setSelectedPincode("");
     setSelectedLocality("");
-
     const selectedCountryData = countries.find(
       (country) => country.countryID === parseInt(countryID)
     );

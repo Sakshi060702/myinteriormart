@@ -28,40 +28,33 @@ function Addcategory()
 
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   try {
-    //     const response = await fetch(
-    //       "https://apidev.myinteriormart.com/api/CategoryAllFromDropdown/GetAllCategoriesfromFirstandSecond",
-    //       {
-    //         method: "POST",
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //           "Authorization": `Bearer ${token}`,
-    //         },
-    //         body: JSON.stringify({
-    //           FirstCategoryID: setSelectedFirstCategory, // Replace with your desired ID
-    //           SecondCategoryID: setSelectedSecondCategory, // Replace with your desired ID
-    //           ThirdCategoryID: "",
-    //           FourthCategoryID: "",
-    //           FifthCategoryID: "",
-    //           SixthCategoryID: "",
-    //         }),
-    //       }
-    //     );
-    //     if (!response.ok) {
-    //       throw new Error(`HTTP error! Status: ${response.status}`);
-    //     }
-    //     const data = await response.json();
-    //     const { allCategories } = data;
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://apidev.myinteriormart.com/api/BinddetailsListing/GetCategoriesDetailslisting",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`,
+            },
+           
+          }
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        const { allCategories } = data;
 
-    //     if (allCategories && allCategories.length > 0) {
-    //       setFirstCategories(allCategories);
-    //     }
-    //     console.log(data);
-    //   } catch (error) {
-    //     console.error("Error fetching categories:", error);
-    //   }
-    // };
+        if (allCategories && allCategories.length > 0) {
+          setFirstCategories(allCategories);
+        }
+        console.log(data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
 
     const fetchUserCategories=async()=>{
       try{
@@ -78,22 +71,26 @@ function Addcategory()
         }
         const data=await response.json();
 
-        setSelectedFirstCategory(data.firstCategoryID);
-        setSelectedSecondCategory(data.secondCategoryID);
-        setSelectedThirdCategory(data.thirdCategoryID.split(",").map(Number));
-        setSelectedFourthCategory(data.fourthCategoryID.split(",").map(Number));
-        setSelectedFifthCategory(data.fifthCategoryID.split(",").map(Number));
-        setSelectedSixthCategory(data.sixthCategoryID.split(",").map(Number));
-
-        console.log('User categories fetched',data);
-      }
+        if (data && data.category) {
+          setSelectedFirstCategory(data.category.firstCategoryID);
+          setSelectedSecondCategory(data.category.secondCategoryID);
+          setSelectedThirdCategory(data.category.thirdCategoryID.split(",").map(Number));
+          setSelectedFourthCategory(data.category.fourthCategoryID.split(",").map(Number));
+          setSelectedFifthCategory(data.category.fifthCategoryID.split(",").map(Number));
+          setSelectedSixthCategory(data.category.sixthCategoryID.split(",").map(Number));
+          
+          console.log('User categories fetched', data);
+        } else {
+          console.error("Unexpected data structure:", data);
+        }
+      } 
       catch(error)
       {
         console.error("Error fetching user categories:", error);
       }
     }
 
-    // fetchData();
+    fetchData();
     fetchUserCategories();
   }, [token]); // Empty dependency array to run effect only once
 

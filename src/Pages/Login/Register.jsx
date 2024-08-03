@@ -5,7 +5,7 @@ import '../../FrontEnd/css/Receiveotp2.css';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { loginSuccess } from '../../Redux/authSlice';
+import { loginSuccess,setUserType } from '../../Redux/authSlice';
 
 function Register() {
     const [vendorType, setVendorType] = useState('');
@@ -130,8 +130,16 @@ function Register() {
             if (response.ok) {
                 console.log('User Registered successfully', data);
                 dispatch(loginSuccess({token:data.token, user:data.user}))
+                dispatch(setUserType(vendorType));
                 setSuccessMessage('User Registered successfully');
-                 navigate('/');
+                //  navigate('/');
+
+                if(vendorType.toLocaleLowerCase()==='business'){
+                    navigate('/');
+                }
+                else{
+                    navigate('/editprofile');
+                }
             } else {
                 console.error('Server Error:', data);
                 setError(data.message || 'User Registration Failed');

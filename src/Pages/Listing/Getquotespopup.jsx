@@ -1,8 +1,87 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Getquotespopup = ({ isOpen, onClose }) => {
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    mobileNumber: "",
+    enquiryTitle: "",
+    message: ""
+  });
+  const token = useSelector((state) => state.auth.token);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await fetch("https://apidev.myinteriormart.com/api/UserProfile/GetUserProfile", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          }
+        });
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setFormData((prevData) => ({
+          ...prevData,
+          fullName: `${data.name} ${data.lastName}`,
+          email: data.email,
+          mobileNumber: data.phone
+        }));
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+
+    if (isOpen) {
+      fetchUserProfile();
+    }
+  }, [isOpen, token]);
+
+
   if (!isOpen) return null;
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        "https://apidev.myinteriormart.com/api/CreateEnquiry/CreateEnquiry",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+             'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(formData)
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log(data);
+      // Handle success (e.g., show a success message or close the popup)
+      onClose();
+    } catch (error) {
+      console.error("Error submitting the form:", error);
+      // Handle error (e.g., show an error message)
+    }
+  };
+
+
   return (
     <>
       <style>
@@ -48,39 +127,50 @@ const Getquotespopup = ({ isOpen, onClose }) => {
           <h6>Enquiry Now</h6>
          
           <hr></hr>
+          <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-md-6">
                 <div className="form-group">
                     <label>Full Name</label>
-                    <input className="form-control" type="text" placeholder="Full Name"/>
+                    <input className="form-control" type="text"
+                    name="fullName" placeholder="Full Name"  value={formData.fullName}
+                    onChange={handleChange}/>
                 </div>
             </div>
             <div className="col-md-6">
                 <div className="form-group">
                     <label>Mobile Number</label>
-                    <input className="form-control" type="number" maxLength={10} placeholder="Mobile Number"/>
+                    <input className="form-control"  type="number"
+                    name="mobileNumber" maxLength={10} placeholder="Mobile Number" value={formData.mobileNumber}
+                    onChange={handleChange}/>
                 </div>
             </div>
             <div className="col-md-6">
                 <div className="form-group">
                     <label>Enquiry Title</label>
-                    <input className="form-control" type="text" placeholder="Enquiry Title"/>
+                    <input className="form-control" type="text"
+                    name="enquiryTitle" placeholder="Enquiry Title" value={formData.enquiryTitle}
+                    onChange={handleChange}/>
                 </div>
             </div>
             <div className="col-md-6">
                 <div className="form-group">
                     <label>Email</label>
-                    <input className="form-control" type="text" placeholder="Email"/>
+                    <input className="form-control" type="email"
+                    name="email" placeholder="Email"  value={formData.email}
+                    onChange={handleChange}/>
                 </div>
             </div>
             <div className="col-md-6">
                 <div className="form-group">
                     <label>Message</label>
-                    <textarea className="form-control" type="text" placeholder="Message" style={{width:'460px',height:'100px'}}/>
+                    <textarea className="form-control" type="text" name="message" placeholder="Message" style={{width:'460px',height:'100px'}}  value={formData.message}
+                    onChange={handleChange}/>
                 </div>
             </div>
             <button className="btn btn-primary w-100" style={{backgroundColor:'orange'}}>Submit</button>
           </div>
+          </form>
           
         </div>
       </div>

@@ -38,7 +38,8 @@ function Galleryimagel() {
           throw new Error("Failed to fetch user profile");
         }
         const data = await response.json();
-        setImageURL(data); // Assuming data contains image URL and title
+        console.log(data);
+        setImageURL(data.imagepath); // Assuming data contains image URL and title
         setImageTitleFromAPI(data.imagetitle); // Set the image title from API
         
        
@@ -46,10 +47,12 @@ function Galleryimagel() {
         console.error(error);
       }
     };
-    if (token) {
-      fetchGalleryImage();
-    }
-  }, [token, dispatch]);
+    // if (token) {
+      
+    // }
+    fetchGalleryImage();
+  // }, [token, dispatch]);
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -78,7 +81,9 @@ function Galleryimagel() {
         console.log(result);
         console.log("Gallery Image Token", token); // Log the result for debugging purposes
         alert("Gallery Image Uploded Successfully");
-        setImageURL(result);
+        setImageURL(result.imageUrl);
+
+        
 
         // You can handle the result here if needed, e.g., show a success message
       } catch (error) {
@@ -138,10 +143,9 @@ function Galleryimagel() {
             <div className="col-md-3 col-lg-2 col-6 mb-5">
               <div className="upload_img_sec">
               {console.log(imageURL)}
-              {console.log(imageURL?.imageUrl)}
                 <img
                   className="upload_images"
-                  src={imageURL?.imagepath ? `https://apidev.myinteriormart.com${imageURL.imagepath}` : ""}
+                  src={imageURL ? `https://apidev.myinteriormart.com${imageURL}` : ""}
                   alt="Gallery Image"
                  
                 />

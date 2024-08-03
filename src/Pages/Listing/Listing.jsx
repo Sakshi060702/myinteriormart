@@ -5,6 +5,8 @@ import banner1 from "../../FrontEnd/img/listing-img.jpeg"
 import Popup from "./Popup";
 import Getquotespopup from "./Getquotespopup";
 import '../../FrontEnd/css/Lisiting.css';
+import { useSelector } from "react-redux";
+
 
 function Listing() {
   const { secondCategoryId } = useParams();
@@ -15,10 +17,20 @@ function Listing() {
     fetchListings();
   }, [secondCategoryId]);
 
+  const token = useSelector((state) => state.auth.token);
+  
+
   const fetchListings = async () => {
     try {
       const response = await fetch(
-        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing`
+        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing`,
+        {
+          method: 'GET', // You can adjust the method if needed
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        }
       );
 
       if (!response.ok) {
@@ -160,8 +172,12 @@ function Listing() {
           )}
         </div>
       </div>
-       <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
-        {/* <Getquotespopup isOpen={isPopupOpen} onClose={()=>setIsPopupOpen(false)}/> */}
+      
+      {token ? (
+        <Getquotespopup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
+      ) : (
+        <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
+      )}
     </>
   );
 }

@@ -11,6 +11,7 @@ import Popup from "./Popup";
 import Getquotespopup from "./Getquotespopup";
 import Sociallink from "./Sociallink";
 import "../../FrontEnd/css/Lisiting.css";
+import { useSelector } from "react-redux";
 
 function Listingdetailsc() {
   const { listingId } = useParams();
@@ -38,10 +39,19 @@ function Listingdetailsc() {
     fetchListingDetails();
   }, [listingId]);
 
+  const token = useSelector((state) => state.auth.token);
+
   const fetchListingDetails = async () => {
     try {
       const response = await fetch(
-        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing`
+        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing`,
+        {
+          method: 'GET', // You can adjust the method if needed
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        }
       );
       const data = await response.json();
       const company = data.find(
@@ -378,8 +388,11 @@ function Listingdetailsc() {
           )}
         </div>
       </div>
-      <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
-         {/* <Getquotespopup isOpen={isPopupOpen} onClose={()=>setIsPopupOpen(false)}/> */}
+      {token ? (
+        <Getquotespopup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
+      ) : (
+        <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
+      )}
       <Sociallink isOpen={isSociallinkOpen} onClose={()=>setIsSociallinkOpen(false)}/>
     </>
   );

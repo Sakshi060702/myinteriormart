@@ -39,7 +39,7 @@ function Addclient() {
           throw new Error("Failed to fetch user profile");
         }
         const data = await response.json();
-        setImageURL(data); // Assuming data contains image URL and title
+        setImageURL(data.imagepath); // Assuming data contains image URL and title
         setImageTitleFromAPI(data.imagetitle); // Set the image title from API
         
        
@@ -48,9 +48,10 @@ function Addclient() {
       }
     };
     if (token) {
-      fetchGalleryImage();
+     
     }
-  }, [token, dispatch]);
+    fetchGalleryImage();
+  }, []);
 
 
   const handleSubmit = async (event) => {
@@ -78,7 +79,8 @@ function Addclient() {
         console.log(result); // Log the result for debugging purposes
         console.log("Client Image Token",token)
         alert("Client Image Uploded Successfully")
-        navigate("/Addsociallink");
+        setImageURL(result.imageUrl);
+        navigate("/Sociallinkl");
         // You can handle the result here if needed, e.g., show a success message
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
@@ -142,7 +144,7 @@ function Addclient() {
               <div className="upload_img_sec">
                 <img
                   className="upload_images"
-                  src={imageURL?.imagepath ? `https://apidev.myinteriormart.com${imageURL.imagepath}` : ""}
+                  src={imageURL? `https://apidev.myinteriormart.com${imageURL}` : ""}
                   alt="Client Image"
                  
                 />

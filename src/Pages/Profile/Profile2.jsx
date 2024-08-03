@@ -1,6 +1,6 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import editprofile from "../../FrontEnd/img/icon/edit.png";
 import addressimg from "../../FrontEnd/img/icon/map.png";
 import enquiryimg from "../../FrontEnd/img/icon/enquiry.png";
@@ -12,36 +12,36 @@ import chatimg from "../../FrontEnd/img/icon/chat.png";
 import suggestionimg from "../../FrontEnd/img/icon/suggestion.png";
 import complaintimg from "../../FrontEnd/img/icon/Complaint.png";
 import changepassimg from "../../FrontEnd/img/icon/password.png";
-import listingicon from "../../FrontEnd/img/business-listing.jpeg"
+import listingicon from "../../FrontEnd/img/business-listing.jpeg";
 import { Dropdown } from "react-bootstrap";
 
-
 function Profile2({ children }) {
- const  [status,setStatus]=useState("");
- const token = useSelector((state) => state.auth.token);
- const dispatch = useDispatch();
+  const [status, setStatus] = useState("");
+  const token = useSelector((state) => state.auth.token);
+  const dispatch = useDispatch();
+  const userType = useSelector((state) => state.auth.userType);
 
- useEffect(()=>{
-  const fetchData=async()=>{
-    try{
-      const response = await fetch('https://apidev.myinteriormart.com/api/ManageListingFromStatus/GetManageListingFromStatus', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      console.log(data);
-      setStatus(data.status);
-    }
-    catch(error)
-    {
-      console.error('Error fetching status:', error);
-    }
-  };
-  fetchData();
-
- },[token]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://apidev.myinteriormart.com/api/ManageListingFromStatus/GetManageListingFromStatus",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = await response.json();
+        console.log(data);
+        setStatus(data.status);
+      } catch (error) {
+        console.error("Error fetching status:", error);
+      }
+    };
+    fetchData();
+  }, [token]);
   return (
     <main>
       <div className="container margin_60_35">
@@ -53,102 +53,167 @@ function Profile2({ children }) {
               role="tablist"
               aria-orientation="vertical"
             >
-              <Link to="/dashboard" >
-                {" "}
-                <img
-                  src={listingicon}
-                  alt="Edit Profile"
-                  style={{ height: "60px" }}
-                />
-                Dashboard
-              </Link>
-              <Link to="/Myactivity">
-                {" "}
-                <img
-                  src={listingicon}
-                  alt="Edit Profile"
-                  style={{ height: "60px" }}
-                />
-                My Activity
-              </Link>
-              {/* <Link to="/editprofile">
-                {" "}
-                <img
-                  src={listingicon}
-                  alt="Edit Profile"
-                  style={{ height: "60px" }}
-                />
-                Edit Profile
-              </Link>
-
-              <Link to="/userpersonalinformation">
-                {" "}
-                <img
-                  src={listingicon}
-                  alt="Edit Profile"
-                  style={{ height: "60px" }}
-                 
-                />
-                Personal Info
-              </Link> */}
-              {status === 1 && (
+              
+              
+              {userType === "Consumer" && (
                 <>
-                  <Link to="/labournakapage">
-                    <img src={listingicon} alt="Manage Listing" style={{ height: '60px' }} />
-                    Manage Listing
+                  
+                  <Link to="/Myactivity">
+                    {" "}
+                    <img
+                      src={listingicon}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    My Activity
                   </Link>
-                  <Link to="/enquiry">
-                    <img src={listingicon} alt="Enquiry" style={{ height: '60px' }} />
-                    Enquiry
+                  <Link to="/editprofile">
+                    {" "}
+                    <img
+                      src={listingicon}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    Edit Profile
+                  </Link>
+
+                  <Link to="/userpersonalinformation">
+                    {" "}
+                    <img
+                      src={listingicon}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    Personal Info
+                  </Link>
+
+                  <Link to="/complaint">
+                    {" "}
+                    <img
+                      src={listingicon}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    Complaint
+                  </Link>
+                  <Link to="/suggestion">
+                    {" "}
+                    <img
+                      src={listingicon}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    Suggestion
+                  </Link>
+                  <Link to="/chat">
+                    {" "}
+                    <img
+                      src={listingicon}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    Chat
+                  </Link>
+                  
+                  <Link to="/changepassword">
+                    {" "}
+                    <img
+                      src={listingicon}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    Change Pin
                   </Link>
                 </>
               )}
-              <Link to="/complaint">
-                {" "}
-                <img
-                  src={listingicon}
-                  alt="Edit Profile"
-                  style={{ height: "60px" }}
-                />
-                Complaint
-              </Link>
-              <Link to="/suggestion">
-                {" "}
-                <img
-                  src={listingicon}
-                  alt="Edit Profile"
-                  style={{ height: "60px" }}
-                />
-                Suggestion
-              </Link> 
-              <Link to="/chat">
-                {" "}
-                <img
-                  src={listingicon}
-                  alt="Edit Profile"
-                  style={{ height: "60px" }}
-                />
-                Chat
-              </Link>
-              <Link to="/ProfileRegister" >
-                {" "}
-                <img
-                  src={listingicon}
-                  alt="Edit Profile"
-                  style={{ height: "60px" }}
-                />
-                Register
-              </Link>
-             
-              <Link to="/changepassword">
-                {" "}
-                <img
-                  src={listingicon}
-                  alt="Edit Profile"
-                  style={{ height: "60px" }}
-                />
-                Change Password
-              </Link>
+
+              {userType === "Business" && (
+                <>
+                  <Link to="/dashboard">
+                    {" "}
+                    <img
+                      src={listingicon}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    Dashboard
+                  </Link>
+                  <Link to="/Myactivity">
+                    {" "}
+                    <img
+                      src={listingicon}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    My Activity
+                  </Link>
+                  {status=== 1 && (
+                    <><Link to="/labournakapage">
+                    <img
+                      src={listingicon}
+                      alt="Manage Listing"
+                      style={{ height: "60px" }}
+                    />
+                    Manage Listing
+                  </Link>
+                  <Link to="/enquiry">
+                    <img
+                      src={listingicon}
+                      alt="Enquiry"
+                      style={{ height: "60px" }}
+                    />
+                    Enquiry
+                  </Link></>
+                  )}
+                  
+                  <Link to="/complaint">
+                    {" "}
+                    <img
+                      src={listingicon}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    Complaint
+                  </Link>
+                  <Link to="/suggestion">
+                    {" "}
+                    <img
+                      src={listingicon}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    Suggestion
+                  </Link>
+                  <Link to="/chat">
+                    {" "}
+                    <img
+                      src={listingicon}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    Chat
+                  </Link>
+                  <Link to="/ProfileRegister">
+                    {" "}
+                    <img
+                      src={listingicon}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    Register
+                  </Link>
+
+                  <Link to="/changepassword">
+                    {" "}
+                    <img
+                      src={listingicon}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    Change Pin
+                  </Link>
+                </>
+              )}
             </div>
           </div>
 
@@ -170,27 +235,27 @@ function Profile2({ children }) {
                   />
                   Edit Profile
                 </Dropdown.Item>
-                {status ==1 && (
+                {status == 1 && (
                   <>
-                  <Dropdown.Item as={Link} to="/labournakapage">
-                  <img
-                    src={listingicon}
-                    alt="Edit Profile"
-                    style={{ height: "60px" }}
-                  />
-                  Manage Listing
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/enquiry">
-                  <img
-                    src={enquiryimg}
-                    alt="Enquiry"
-                    style={{ height: "60px" }}
-                  />
-                  Enquiry
-                </Dropdown.Item>
+                    <Dropdown.Item as={Link} to="/labournakapage">
+                      <img
+                        src={listingicon}
+                        alt="Edit Profile"
+                        style={{ height: "60px" }}
+                      />
+                      Manage Listing
+                    </Dropdown.Item>
+                    <Dropdown.Item as={Link} to="/enquiry">
+                      <img
+                        src={enquiryimg}
+                        alt="Enquiry"
+                        style={{ height: "60px" }}
+                      />
+                      Enquiry
+                    </Dropdown.Item>
                   </>
                 )}
-               
+
                 <Dropdown.Item as={Link} to="/address1">
                   <img
                     src={addressimg}
@@ -199,7 +264,7 @@ function Profile2({ children }) {
                   />
                   Address
                 </Dropdown.Item>
-                
+
                 <Dropdown.Item as={Link} to="/bookmark">
                   <img
                     src={bookmarkimg}
