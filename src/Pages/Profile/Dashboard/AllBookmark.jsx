@@ -58,7 +58,7 @@ function AllBookmark() {
                     <li key={index} style={{display:"flex"}}>
                       <div className="image" style={{height:'70px',width:'70px', marginLeft:'10px',marginBottom:'20px'}}>
                         {bookmark.profileImage ? (
-                          <img src={bookmark.profileImage} alt={`${bookmark.companyName} profile`} style={{
+                          <img src={`https://apidev.myinteriormart.com${bookmark.profileImage}`} alt={`${bookmark.companyName} profile`} style={{
                             height: '100%',
                             width: '100%',
                             borderRadius: '50%',

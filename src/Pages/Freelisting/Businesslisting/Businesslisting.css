@@ -122,6 +122,49 @@
 }
 
 
+
+
+.popup1 {
+  position: fixed;
+  bottom: -100px; /* Start position outside the viewport */
+  right: 20px;
+  padding: 20px;
+  background-color: white;
+
+  border-radius: 5px;
+  animation: slideUp 0.5s forwards; /* Slide up animation */
+  z-index: 1000;
+  height: 100px;
+  width: 400px;
+  text-align: center;
+  font-size: 18px;
+ 
+}
+
+.popup1-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  position: relative;
+}
+
+.popup1.success {
+ background-color: green;  /* Green */
+ color: white;
+}
+
+.popup1.error {
+  background-color: #f44336; /* Red */
+  color: white;
+}
+
+@keyframes slideUp {
+  to {
+    bottom: 20px; /* Final position inside the viewport */
+  }
+}
+
   
   
 

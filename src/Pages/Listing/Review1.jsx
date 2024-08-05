@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import profileImage from "../../FrontEnd/img/icon/profile.png";
+import { useSelector } from "react-redux";
 
 function Review1({ listingId }) {
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
@@ -7,15 +8,54 @@ function Review1({ listingId }) {
   const [reviewText, setReviewText] = useState("");
   const [reviews, setReviews] = useState([]);
   const [companyDetails, setCompanyDetails] = useState(null);
+  const [addedReviews, setAddedReviews] = useState([]); // For keeping track of newly added reviews
+
+  const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    fetchReviews();
+  }, [token]);
 
   useEffect(() => {
     fetchListingDetails();
   }, [listingId]);
 
+  const fetchReviews = async () => {
+    const response = await fetch(
+      "https://apidev.myinteriormart.com/api/AllBookMark/GetUserAllMyReviews",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          operation: "GetReviews",
+          ratingReply: { reply: "" },
+        }),
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      setReviews(data);
+    } else {
+      console.error("Failed to fetch reviews");
+    }
+  };
+
   const fetchListingDetails = async () => {
     try {
       const response = await fetch(
-        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing`
+        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        }
       );
       const data = await response.json();
       console.log("API Data:", data);
@@ -25,6 +65,7 @@ function Review1({ listingId }) {
       console.log("Company Data:", company);
       if (company) {
         setCompanyDetails(company);
+        setReviews(company.reviews || []);
       } else {
         console.error(`Company with listingId ${listingId} not found.`);
       }
@@ -41,9 +82,50 @@ function Review1({ listingId }) {
     setReviewText(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Perform submission logic here
+    try {
+      const response = await fetch(
+        `https://apidev.myinteriormart.com/api/Ratings/CreateOrUpdateRating`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            ratings: rating,
+            comment: reviewText,
+           
+          })
+        }
+      );
+      if (response.ok) {
+        const newReview = {
+          ratings: rating,
+          comment: reviewText,
+          userName: user ? user.name : "",
+          userImage: profileImage,
+          date: new Date().toLocaleDateString(),
+        };
+        // Update the reviews state
+        setReviews((prevReviews) => [...prevReviews, newReview]);
+        // Update the addedReviews state
+        setAddedReviews((prevAddedReviews) => [...prevAddedReviews, newReview]);
+        // Update the companyDetails state to include the new review
+        setCompanyDetails((prevDetails) => ({
+          ...prevDetails,
+          reviews: [...(prevDetails.reviews || []), newReview]
+        }));
+        setIsReviewFormOpen(false);
+        setRating(0);
+        setReviewText("");
+      } else {
+        console.error("Failed to submit review.");
+      }
+    } catch (error) {
+      console.error("Error submitting review:", error);
+    }
   };
 
   return (
@@ -64,7 +146,7 @@ function Review1({ listingId }) {
                       <div className="review-form mb-3">
                         <div className="d-flex justify-content-between  ">
                           <div className="Count_review">
-                            {companyDetails.ratingAverage} Count Reviews, 100%
+                            {companyDetails.ratingCount} Count Reviews, 100%
                             genuine ratings from My Interior Mart users
                           </div>
                           <span className="desk_mrg">
@@ -91,13 +173,14 @@ function Review1({ listingId }) {
                         <form onSubmit={handleSubmit}>
                           <div className="form-group col-md-6">
                             <div className="stars">
-                              {Array(companyDetails.ratingAverage)
+                              {Array(5)
                                 .fill()
                                 .map((_, i) => (
                                   <i
                                     key={i}
-                                    className="icon_star active"
-                                    style={{ color: "orange" }}
+                                    className={`icon_star ${i < rating ? "active" : ""}`}
+                                    style={{ color: i < rating ? "orange" : "gray" }}
+                                    onClick={() => handleRatingChange(i + 1)}
                                   ></i>
                                 ))}
                             </div>
@@ -126,75 +209,67 @@ function Review1({ listingId }) {
                     )}
                   </div>
                 </div>
+
                 <div>
-                  <div>
-                    <div className="col-md-12 col-lg-12 review-user">
-                      <div className="row">
-                        <div className="col-lg-12">
-                          <hr></hr>
-                          <div className="row" style={{ fontSize: "16px" }}>
-                            {companyDetails &&
-                            companyDetails.reviews &&
-                            companyDetails.reviews.length > 0 ? (
-                              companyDetails.reviews.map((review, index) => (
-                                <div key={index} className="col-lg-12 mb-3">
-                                  <div className="review-box">
-                                    <div className="d-flex">
-                                      <div className="col-lg-2 col-3 text-center">
-                                        <div className="review_img_sec">
-                                          <img
-                                            src={review.userImage}
-                                            alt={review.userName}
-                                            style={{
-                                              width: "50px",
-                                              height: "50px",
-                                            }}
-                                          />
-                                        </div>
-                                      </div>
-                                      <div className="col-lg-10 col-9 pl-lg-0">
-                                        <div className="cat-star">
-                                          {Array(review.ratings)
-                                            .fill()
-                                            .map((_, i) => (
-                                              <i
-                                                key={i}
-                                                className="icon_star active"
-                                                style={{ color: "orange" }}
-                                              ></i>
-                                            ))}
-                                          <span>
-                                            <b>{review.userName}</b>
-                                            &nbsp;-&nbsp;&nbsp;
-                                            <b>{review.date}</b>
-                                          </span>
-                                        </div>
-                                        <p>{review.comment}</p>
+                  <div className="col-md-12 col-lg-12 review-user">
+                    <div className="row">
+                      <div className="col-lg-12">
+                        <hr />
+                        <div className="row" style={{ fontSize: "16px" }}>
+                          {reviews.length > 0 || addedReviews.length > 0 ? (
+                            [...reviews, ...addedReviews].map((review, index) => (
+                              <div key={index} className="col-lg-12 mb-3">
+                                <div className="review-box">
+                                  <div className="d-flex">
+                                    <div className="col-lg-2 col-3 text-center">
+                                      <div className="review_img_sec">
+                                        <img
+                                          src={`https://apidev.myinteriormart.com${review.userImage}`}
+                                          alt={review.userName}
+                                          style={{ width: "50px", height: "50px" }}
+                                        />
                                       </div>
                                     </div>
-                                    {review.ratingReplyMessage && (
-                                      <div className="owner_reply">
+                                    <div className="col-lg-10 col-9 pl-lg-0">
+                                      <div className="cat-star">
+                                        {Array(review.ratings)
+                                          .fill()
+                                          .map((_, i) => (
+                                            <i
+                                              key={i}
+                                              className="icon_star active"
+                                              style={{ color: "orange" }}
+                                            />
+                                          ))}
                                         <span>
-                                          <strong>Reply from Owner</strong>{" "}
+                                          <b>{review.userName}</b>&nbsp;-&nbsp;&nbsp;
+                                          <b>{review.date}</b>
                                         </span>
-                                        <p className="m-0">
-                                          {review.ratingReplyMessage}
-                                        </p>
                                       </div>
-                                    )}
+                                      <p>{review.comment}</p>
+                                    </div>
                                   </div>
-                                  <hr></hr>
+                                  {review.ratingReplyMessage && (
+                                    <div className="owner_reply">
+                                      <span>
+                                        <strong>Reply from Owner</strong>
+                                      </span>
+                                      <p className="m-0">{review.ratingReplyMessage}</p>
+                                    </div>
+                                  )}
                                 </div>
-                              ))
-                            ) : (
-                              <p>No reviews available.</p>
-                            )}
-                          </div>
+                                <hr />
+                              </div>
+                            ))
+                          ) : (
+                            <p>No reviews available.</p>
+                          )}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>

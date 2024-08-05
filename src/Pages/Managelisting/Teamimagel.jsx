@@ -32,6 +32,7 @@ function Teamimagel() {
           throw new Error("Failed to fetch user profile");
         }
         const data = await response.json();
+        console.log(data.imagepath);
         setImageURL(data.imagepath); // Assuming data contains image URL and title
         setImageTitleFromAPI(data.imagetitle); // Set the image title from API
       } catch (error) {
@@ -154,6 +155,7 @@ function Teamimagel() {
 
       const result = await response.json();
       console.log("Upload result:", result);
+      console.log("Result",result.imageUrl);
       setImageURL(result.imageUrl);// Ensure this is the correct property
       alert("Team Image Uploaded Successfully");
     } catch (error) {
@@ -347,7 +349,7 @@ function Teamimagel() {
             <img
               className="upload_images"
               src={imageURL? `https://apidev.myinteriormart.com${imageURL}` : ""}
-              alt="Gallery Image"
+              alt="Team Image"
             />
           </div>
           <div className="img_title text-center">{imageTitleFromAPI}</div>

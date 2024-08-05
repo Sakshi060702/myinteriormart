@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector,useDispatch } from "react-redux";
 import usericon from "../../../FrontEnd/img/user1 (4).jpg";
 import withAuthh from "../../../Hoc/withAuthh"
+import Popupalert from "../../Popupalert";
 
 function Addteam() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -14,6 +15,9 @@ function Addteam() {
   const [imageURL, setImageURL] = useState(null);
   const [imageTitleFromAPI, setImageTitleFromAPI] = useState("");
  
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
 
   const token=useSelector((state)=>state.auth.token);
   const dispatch = useDispatch();
@@ -157,9 +161,19 @@ function Addteam() {
       console.log("Image uploaded successfully");
       
       console.log("Team token",token);
-      alert('Team Image Uploded Successfully')
+      
+      setSuccessMessage("Image Uploded Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+      setTimeout(() => {
+        setShowPopup(false);
+       
+      }, 2000);
     } catch (error) {
       console.error("Error uploading image:", error);
+      setErrorMessage("Failed to Upload Image. Please try again later.");
+    setSuccessMessage(""); // Clear any existing success message
+    setShowPopup(true);
       // Handle error uploading image
     }
   };
@@ -347,6 +361,13 @@ function Addteam() {
               </div>
             </div>
           </div>
+
+          {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
 
     </>
   );

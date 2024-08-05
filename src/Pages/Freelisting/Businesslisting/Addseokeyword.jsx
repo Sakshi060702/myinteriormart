@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import "../Businesslisting/Businesslisting.css";
 import "../../../FrontEnd/css/Mangelisting.css";
 import nextarrowimg from "../../../FrontEnd/img/arrow-next.png";
-import previousarrowimg from "../../../FrontEnd/img/arrow-previous.png";
+import previousarrowimg from "../../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh"
+import Popupalert from "../../Popupalert";
 
 function Addseokeyword() {
   const [keyword, setKeyword] = useState(""); // State to hold current keyword input
@@ -13,8 +14,11 @@ function Addseokeyword() {
   const [selectedKeywords, setSelectedKeywords] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false);
+  const[successMessage,setSuccessMessage]=useState("");
 
   const token=useSelector((state)=>state.auth.token);
+
+  const navigate=useNavigate();
 
   useEffect(() => {
     fetch("https://apidev.myinteriormart.com/api/Keywords/ManageKeywords", {
@@ -167,13 +171,25 @@ function Addseokeyword() {
       .then((data) => {
         console.log("Keywords saved successfully:", data);
         console.log("Keyword token",token);
-        alert("Keywords saved successfully!");
+       
         setSelectedKeywords([...selectedKeywords, ...addedKeywords]);
         // Reset added keywords state after saving if needed
         setAddedKeywords([]);
+
+        setSuccessMessage("Keyword Uploded  Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+      setShowPopup(false);
+     navigate("/")
+    }, 2000);
       })
       .catch((error) => {
         console.error("Error saving keywords:", error);
+        setErrorMessage("Failed Add Keyword Details. Please try again later.");
+    setSuccessMessage(""); // Clear any existing success message
+    setShowPopup(true);
         // Handle error if needed
       });
   };
@@ -281,6 +297,12 @@ function Addseokeyword() {
                 </div>
               </div>
             </div>
+            {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
           </div>
         </div>
       </div>

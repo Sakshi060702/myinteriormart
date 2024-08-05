@@ -133,7 +133,9 @@ function Listingdetailsd() {
                       {listingDetails.logoImage &&
                       listingDetails.logoImage.imagePath ? (
                         <img
-                          src={listingDetails.logoImage.imagePath}
+                          // src={listingDetails.logoImage.imagePath}
+                          src={`https://apidev.myinteriormart.com${listingDetails.logoImage.imagePath}`}
+
                           alt={`${listingDetails.companyName} Logo`}
                           className="card-img-top"
                           style={{ height: "100px" }}
@@ -157,7 +159,7 @@ function Listingdetailsd() {
                 <div className="box_detail_cus">
                   <div className="cust-profile">
                     <img src={profile} alt="profile"></img>
-                    <h6 className="cust_name">Shafi Sheikh</h6>
+                    <h6 className="cust_name">Habiba Humaza</h6>
                     <span className="cust-type">Owner</span>
                   </div>
                 </div>

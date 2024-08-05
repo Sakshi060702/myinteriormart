@@ -135,7 +135,7 @@ function Register() {
                 //  navigate('/');
 
                 if(vendorType.toLocaleLowerCase()==='business'){
-                    navigate('/');
+                    navigate('/',{ state: { email:email } });
                 }
                 else{
                     navigate('/editprofile');
@@ -176,6 +176,16 @@ function Register() {
                                 <div>
                                     <form onSubmit={handleSubmit}>
                                         <div className="d-flex justify-content-around mt-3">
+                                        <div className="form-check user_type">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="radio"
+                                                    name="user-type"
+                                                    value="Consumer"
+                                                    onChange={handleUserTypeChange}
+                                                />
+                                                <label className="form-check-label">Consumer</label>
+                                            </div>
                                             <div className="form-check user_type">
                                                 <input
                                                     className="form-check-input"
@@ -186,16 +196,7 @@ function Register() {
                                                 />
                                                 <label className="form-check-label">Business</label>
                                             </div>
-                                            <div className="form-check user_type">
-                                                <input
-                                                    className="form-check-input"
-                                                    type="radio"
-                                                    name="user-type"
-                                                    value="Consumer"
-                                                    onChange={handleUserTypeChange}
-                                                />
-                                                <label className="form-check-label">Consumer</label>
-                                            </div>
+                                            
                                         </div>
                                         {vendorType.toLowerCase() === "business" && businessFields}
                                         <div className="form-group mb-4">

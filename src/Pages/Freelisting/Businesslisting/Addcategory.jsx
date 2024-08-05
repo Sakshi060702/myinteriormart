@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import nextarrowimg from "../../../FrontEnd/img/arrow-next.png";
-import previousarrowimg from "../../../FrontEnd/img/arrow-previous.png";
+import nextarrowimg from "../../../FrontEnd/img/Frontarrow.png";
+import previousarrowimg from "../../../FrontEnd/img/Backarrow.png";
 import "../../../FrontEnd/css/Mangelisting.css";
 import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh"
+import Popupalert from "../../Popupalert";
 
 function Addcategory()
 {
@@ -26,6 +27,9 @@ function Addcategory()
   const navigate = useNavigate();
   const token=useSelector((state)=>state.auth.token);
 
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -227,10 +231,22 @@ function Addcategory()
       const data = await response.json();
       console.log("Data saved successfully:", data);
       console.log("Category Token",token);
-      alert("Data saved successfully");
-      navigate("/addspecialisation"); // Redirect to the next page
+
+      setSuccessMessage("Category Details Saved Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+        setShowPopup(false);
+        navigate("/addspecialisation");
+      }, 2000); // Show popup for 3 seconds before redirect
+  
+      
+       
     } catch (error) {
-      console.error("Error saving categories:", error);
+      setErrorMessage("Failed to save category details. Please try again later.");
+    setSuccessMessage(""); // Clear any existing success message
+    setShowPopup(true);
     }
   };
 
@@ -454,6 +470,12 @@ function Addcategory()
                       <Link to="/addspecialisation" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
                       </div>
                       </div>
+                      {showPopup && (
+           <Popupalert 
+           message={successMessage || errorMessage} 
+           type={successMessage ? 'success' : 'error'} 
+         />
+          )}
                 </form>
               </div>
             </div>

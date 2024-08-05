@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Businesslisting.css";
-import nextarrowimg from "../../../FrontEnd/img/arrow-next.png";
-import previousarrowimg from "../../../FrontEnd/img/arrow-previous.png";
+import nextarrowimg from "../../../FrontEnd/img/Frontarrow.png";
+import previousarrowimg from "../../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh";
 import Select from "react-select";
+import Popupalert from "../../Popupalert";
 
 const Address = () => {
   const [countries, setCountries] = useState([]);
@@ -28,6 +29,10 @@ const Address = () => {
 
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
 
   const apiUrl =
     "https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster";
@@ -315,12 +320,22 @@ const Address = () => {
       .then((responseData) => {
         console.log("API response:", responseData);
         console.log("Address token:", token);
-        alert(`Submitted successfully! `);
-        navigate("/addcategory");
+        setSuccessMessage("Address Details Saved Successfully");
+        setErrorMessage("");
+        setShowPopup(true);
+
+        setTimeout(() => {
+          setShowPopup(false);
+          navigate("/addcategory");
+        }, 2000);
+
+       
       })
       .catch((error) => {
         console.error("API error:", error);
-        alert("Failed to save communication details. Please try again.");
+        setErrorMessage("Failed to save Address details. Please try again later.");
+    setSuccessMessage(""); // Clear any existing success message
+    setShowPopup(true);
       });
   };
 
@@ -534,6 +549,11 @@ const Address = () => {
                     </Link>
                   </div>
                 </div>
+                {showPopup && ( 
+                  <Popupalert 
+                  message={successMessage || errorMessage} 
+                  type={successMessage ? 'success' : 'error'} 
+                />)}
               </form>
             </div>
           </div>

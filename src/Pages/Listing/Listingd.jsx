@@ -78,7 +78,9 @@ function Listingd() {
                       <div className="col-3">
                         {listing.logoImage && listing.logoImage.imagePath ? (
                           <img
-                            src={listing.logoImage.imagePath}
+                            // src={listing.logoImage.imagePath}
+                            src={`https://apidev.myinteriormart.com${listing.logoImage.imagePath}`}
+
                             alt={`${listing.companyName} Logo`}
                             className="card-img-top"
                             style={{ height: "150px" }}

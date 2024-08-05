@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from "react";
 import { Link,useNavigate } from "react-router-dom";
-import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
-import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
+import nextarrowimg from "../../FrontEnd/img/Frontarrow.png";
+import previousarrowimg from "../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
 
@@ -133,12 +133,12 @@ function Paymentmodel() {
                     </div>
                   </div>
                 ))}
-                <div className="text-left col-12 mt-3">
-                  <button type="submit" className="btn_1" onClick={handleSubmit}>
-                    Save & Continue
+                  <div className="text-left col-12 mt-3" style={{display:'flex'}}>
+                  <button type="submit" className="btn_1" style={{marginRight:'50px'}}>
+                  Save & Continue
                   </button>
-                  <div style={{display:"flex",justifyContent:"flex-end",gap:'10px'}}>                    
-                      <Link to="/workinghoursl" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
+                  <div style={{display:"flex",justifyContent:"center",gap:'10px',paddingTop:'10px'}}>                    
+                  <Link to="/workinghoursl" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
                     <Link to="/Imagesl" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
                     </div>
                 </div>

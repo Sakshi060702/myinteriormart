@@ -26,8 +26,8 @@ const Dropdown = () => {
           <i style={{ marginRight: "10px" }}></i>Profile
         </li> */}
         <li>
-          <Link to="/dashboard" style={{color:'black'}}>
-            <i className="fa fa-user" style={{ marginRight: "10px"}}></i> My Profile
+          <Link to="/Myactivity" style={{color:'black'}}>
+            <i className="fa fa-user" ></i> Dashboard
           </Link>
         </li>
         {/* <li>

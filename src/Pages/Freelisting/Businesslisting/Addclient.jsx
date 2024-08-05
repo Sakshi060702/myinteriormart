@@ -3,6 +3,7 @@ import { Link,useNavigate } from "react-router-dom";
 import usericon from "../../../FrontEnd/img/user1 (3).jpg";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh"
+import Popupalert from "../../Popupalert";
 
 
 function Addclient() {
@@ -15,6 +16,10 @@ function Addclient() {
   const navigate=useNavigate();
   const token=useSelector((state)=>state.auth.token);
   const dispatch = useDispatch();
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -78,15 +83,29 @@ function Addclient() {
         const result = await response.json();
         console.log(result); // Log the result for debugging purposes
         console.log("Client Image Token",token)
-        alert("Client Image Uploded Successfully")
+        
         setImageURL(result.imageUrl);
-        navigate("/Sociallinkl");
+        
+
+        setSuccessMessage("Image Uploded Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+      setShowPopup(false);
+      navigate("/Sociallinkl");
+    }, 2000);
         // You can handle the result here if needed, e.g., show a success message
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
+        setErrorMessage("Failed to Upload Image. Please try again later.");
+    setSuccessMessage(""); // Clear any existing success message
+    setShowPopup(true);
       }
     } else {
-      alert("Please select a file and enter a title");
+      setErrorMessage("Please select File and Title.");
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   };
 
@@ -112,13 +131,13 @@ function Addclient() {
                 
               </div>
               <div className="form-group">
-              <label for="name">Client Logo Title<span className="text-danger">*</span></label>
+              <label for="name">Company Name<span className="text-danger">*</span></label>
               <input
                      className="form-control form-control-sm file-input2"
                     type="name"
                     name="website"
                     id="website"
-                    placeholder="Client Logo Title"
+                    placeholder="Company Name"
                     value={imageTitle}
                 onChange={handleTitleChange}
                
@@ -154,6 +173,13 @@ function Addclient() {
               </div>
             </div>
           </div>
+
+          {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
 
         </div>
       </div>

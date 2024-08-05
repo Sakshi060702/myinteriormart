@@ -7,13 +7,13 @@ import Certificationimagel from "./Certificationimagel";
 import Clientimagel from "./Clientimagel";
 import Teamimagel from "./Teamimagel";
 import Btngroupl from "./Btngroupl";
-import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
-import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
+import nextarrowimg from "../../FrontEnd/img/Frontarrow.png";
+import previousarrowimg from "../../FrontEnd/img/Backarrow.png";
 
 
 const buttons=[
   {title:"Logo", component:Uploadimagel},
-  {title:"Team",component:Teamimagel},
+  {title:"Owner",component:Teamimagel},
   {title:"Gallery",component:Galleryimagel},
   {title:"Banner",component:Bannerimagel},
   {title:"Certifications",component:Certificationimagel},

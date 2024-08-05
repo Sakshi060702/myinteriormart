@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../Freelisting/Businesslisting/Businesslisting.css";
 import "../../FrontEnd/css/Mangelisting.css";
 import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
-import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
+import previousarrowimg from "../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
 
@@ -281,7 +281,7 @@ function Keywordl() {
                   <button className="btn_1" onClick={saveKeywords}>
                     Save & Continue
                   </button>
-                  <Link to="/Sociallinkl" className="pull-right mr-2"><img src={previousarrowimg} style={{height:'30px'}}/></Link>
+                  <Link to="/Sociallinkl" className="pull-center mr-2"><img src={previousarrowimg} style={{height:'30px'}}/></Link>
                 </div>
               </div>
             </div>

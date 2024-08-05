@@ -1,9 +1,9 @@
 import React, { useState,useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useLocation} from "react-router-dom";
 import Select from 'react-select';
 import "../Freelisting/Businesslisting/Businesslisting.css";
-import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
-import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
+import nextarrowimg from "../../FrontEnd/img/Frontarrow.png";
+import previousarrowimg from "../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
 
@@ -17,6 +17,21 @@ function Communicationl() {
     website: "",
     tollfree: ""
   });
+
+  const [email,setEmail]=useState('');
+  const location=useLocation();
+
+  useEffect(()=>{
+    if(location.state){
+      const{email}=location.state;
+      if(email)
+      {
+        setEmail(email)
+      }
+    }
+  },[location.state]);
+
+
 
   const [languageOptions, setLanguageOptions] = useState([]);
   const navigate = useNavigate();
@@ -175,7 +190,7 @@ function Communicationl() {
                       id="email"
                       placeholder="Enter Your Email"
                       value={formData.email}
-                      onChange={handleChange}
+                      onChange={(e) => setEmail(e.target.value)}
                       required
                     />
                   </div>
@@ -247,11 +262,11 @@ function Communicationl() {
                     />
                   </div>
 
-                  <div className="text-left col-12 mt-3">
-                    <button type="submit" className="btn_1">
+                  <div className="text-left col-12 mt-3" style={{display:'flex'}}>
+                    <button type="submit" className="btn_1" style={{marginRight:'50px'}}>
                       Save & Continue
                     </button>
-                    <div style={{display:"flex",justifyContent:"flex-end",gap:'10px'}}>                    
+                    <div style={{display:"flex",justifyContent:"center",paddingTop:'10px'}}>                    
                       <Link to="/addcompanyl" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
                     <Link to="/addressl" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
                     </div>

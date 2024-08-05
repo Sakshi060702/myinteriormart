@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
+import nextarrowimg from "../../FrontEnd/img/Frontarrow.png";
+// import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
 import "../Freelisting/Businesslisting/Businesslisting.css";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
 import Select from "react-select";
+import Popupalert from "../Popupalert";
 
 function Addcompanyl() {
   const [formData, setFormData] = useState({
@@ -26,6 +28,10 @@ function Addcompanyl() {
 
   const token = useSelector((state) => state.auth.token);
   
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
+
 
   useEffect(() => {
     const fetchBusinessTypes = async () => {
@@ -164,11 +170,21 @@ function Addcompanyl() {
       const responseData = await response.json();
       console.log("API response:", responseData);
       console.log("Token",token);
-      alert("Company details saved successfully!");
+     
+      setSuccessMessage("Company Details Saved Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+      setShowPopup(false);
       navigate("/communicationl");
+    }, 2000);
+     
     } catch (error) {
       console.error("API error:", error);
-      alert("Failed to save company details. Please try again later.");
+      setErrorMessage("Failed to save company details. Please try again later.");
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   };
 
@@ -336,11 +352,17 @@ function Addcompanyl() {
                     <button type="submit" className="btn_1">
                       Save & Continue
                     </button>
-                    <Link to="/communicationl" className="pull-right mr-2">
+                    <Link to="/communicationl" className="pull-center mr-2">
                       <img src={nextarrowimg} style={{ height: "30px" }} />
                     </Link>
                   </div>
                 </div>
+                {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
               </form>
             </div>
           </div>

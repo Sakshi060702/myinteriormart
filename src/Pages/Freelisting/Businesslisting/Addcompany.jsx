@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import nextarrowimg from "../../../FrontEnd/img/arrow-next.png";
+import nextarrowimg from "../../../FrontEnd/img/Frontarrow.png";
 import "./Businesslisting.css";
 import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh";
 import Select from "react-select";
+import Popupalert from "../../Popupalert";
 
 function Addcompany() {
   const [formData, setFormData] = useState({
@@ -23,6 +24,10 @@ function Addcompany() {
   const [filterText, setFilterText] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [allOptions, setAllOptions] = useState([]);
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
 
   const token = useSelector((state) => state.auth.token);
 
@@ -170,11 +175,21 @@ function Addcompany() {
       console.log("API response:", responseData);
       console.log("Token", token);
 
-      alert("Company details saved successfully!");
+      // alert("Company details saved successfully!");
+      setSuccessMessage("Company Details Saved Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+      setShowPopup(false);
       navigate("/addCommunication");
+    }, 2000); // Show popup for 3 seconds before redirect
+
     } catch (error) {
       console.error("API error:", error);
-      alert("Failed to save company details. Please try again later.");
+      setErrorMessage("Failed to save company details. Please try again later.");
+    setSuccessMessage(""); // Clear any existing success message
+    setShowPopup(true);
     }
   };
 
@@ -355,6 +370,12 @@ function Addcompany() {
               </Link>
             </div>
           </div>
+          {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
         </form>
       </div>
     </>

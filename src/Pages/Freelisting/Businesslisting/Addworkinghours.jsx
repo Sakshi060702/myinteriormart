@@ -1,10 +1,11 @@
 import React, { useState,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../../FrontEnd/css/Mangelisting.css";
-import nextarrowimg from "../../../FrontEnd/img/arrow-next.png";
-import previousarrowimg from "../../../FrontEnd/img/arrow-previous.png";
+import nextarrowimg from "../../../FrontEnd/img/Frontarrow.png";
+import previousarrowimg from "../../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh"
+import Popupalert from "../../Popupalert";
 
 function Addworkinghours()
 {
@@ -30,6 +31,11 @@ function Addworkinghours()
       const navigate = useNavigate();
       const token=useSelector((state)=>state.auth.token);
     
+
+      const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
+
     useEffect(()=>{
       const fetchData=async()=>{
         try{
@@ -120,10 +126,23 @@ function Addworkinghours()
           const result = await response.json();
           console.log(result);
           console.log("Working hours token",token);
-          alert("Data Saved Successfully");
-          navigate("/addpayment");
+         
+
+          setSuccessMessage("Working Hours Details Saved Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+        setShowPopup(false);
+        navigate("/addpayment");
+      }, 2000);
+
+          
         } catch (error) {
           console.error("Error:", error);
+          setErrorMessage("Failed to save Working Hours details. Please try again later.");
+    setSuccessMessage(""); // Clear any existing success message
+    setShowPopup(true);
         }
       };
     
@@ -243,6 +262,12 @@ function Addworkinghours()
                       </Link>
                     </div>
                   </div>
+                  {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
                 </div>
               </form>
             </div>

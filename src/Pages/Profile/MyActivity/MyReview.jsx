@@ -120,7 +120,8 @@ function MyReviews() {
                     <li key={review.ratingId}>
                       <div className="li">
                         <figure>
-                          <img src={review.userImage} alt={review.userName} />
+                        <img src={`https://apidev.myinteriormart.com${review.userImage}`} alt={review.userName} />
+
                         </figure>
                         <span>{review.date}</span>
                         <div className="company-rating pl-2 d-inline-flex">

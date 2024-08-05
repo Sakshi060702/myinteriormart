@@ -73,6 +73,7 @@ const Getquotespopup = ({ isOpen, onClose }) => {
       }
       const data = await response.json();
       console.log(data);
+      alert('Enquiry Sent Successfully');
       // Handle success (e.g., show a success message or close the popup)
       onClose();
     } catch (error) {
@@ -129,7 +130,7 @@ const Getquotespopup = ({ isOpen, onClose }) => {
           <hr></hr>
           <form onSubmit={handleSubmit}>
           <div className="row">
-            <div className="col-md-6">
+            {/* <div className="col-md-6">
                 <div className="form-group">
                     <label>Full Name</label>
                     <input className="form-control" type="text"
@@ -144,8 +145,8 @@ const Getquotespopup = ({ isOpen, onClose }) => {
                     name="mobileNumber" maxLength={10} placeholder="Mobile Number" value={formData.mobileNumber}
                     onChange={handleChange}/>
                 </div>
-            </div>
-            <div className="col-md-6">
+            </div> */}
+            <div className="col-md-12">
                 <div className="form-group">
                     <label>Enquiry Title</label>
                     <input className="form-control" type="text"
@@ -153,15 +154,15 @@ const Getquotespopup = ({ isOpen, onClose }) => {
                     onChange={handleChange}/>
                 </div>
             </div>
-            <div className="col-md-6">
+            {/* <div className="col-md-6">
                 <div className="form-group">
                     <label>Email</label>
                     <input className="form-control" type="email"
                     name="email" placeholder="Email"  value={formData.email}
                     onChange={handleChange}/>
                 </div>
-            </div>
-            <div className="col-md-6">
+            </div> */}
+            <div className="col-md-12">
                 <div className="form-group">
                     <label>Message</label>
                     <textarea className="form-control" type="text" name="message" placeholder="Message" style={{width:'460px',height:'100px'}}  value={formData.message}

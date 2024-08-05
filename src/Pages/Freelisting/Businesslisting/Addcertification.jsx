@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh";
+import Popupalert from "../../Popupalert";
 
 function Addcertification() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -10,6 +11,10 @@ function Addcertification() {
 
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -36,6 +41,8 @@ function Addcertification() {
         const data = await response.json();
         setImageURL(data.imagepath); // Assuming data contains image URL and title
         setImageTitleFromAPI(data.imagetitle); // Set the image title from API
+
+
       } catch (error) {
         console.error(error);
       }
@@ -69,17 +76,29 @@ function Addcertification() {
         const result = await response.json();
         console.log(result.imageUrl); // Log the result for debugging purposes
         console.log("Certification Image token", token);
-        alert("Certificate Image Uploaded Successfully");
+       
 
         // Update state with new image URL
         setImageURL(result.imageUrl);
         setImageTitle("");
         setSelectedFile(null);
+
+
+        setSuccessMessage("Image Uploded Successfully");
+        setErrorMessage("");
+        setShowPopup(true);
+  
+        setTimeout(() => {
+        setShowPopup(false);
+       
+      }, 2000);
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
       }
     } else {
-      alert("Please select a file and enter a title");
+      setErrorMessage("Please select File and Title.");
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   };
 
@@ -138,6 +157,12 @@ function Addcertification() {
               </div>
             </div>
           </div>
+          {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
         </div>
       </div>
     </>

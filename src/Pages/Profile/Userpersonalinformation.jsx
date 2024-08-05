@@ -357,8 +357,8 @@ const Userpersonalinformation = () => {
         <p className="add-lidting-title-from">
           Add Listing / Add Address Details
           <span>
-            <Link className="back_btn mx-3" to="/labournakapage">
-              Back
+            <Link className="back_btn mx-3" to="/">
+              Go To Home 
             </Link>
           </span>
         </p>

@@ -112,13 +112,13 @@ function Clientimagel() {
                 
               </div>
               <div className="form-group">
-              <label for="name">Client Logo Title<span className="text-danger">*</span></label>
+              <label for="name">Company Name<span className="text-danger">*</span></label>
               <input
                      className="form-control form-control-sm file-input2"
                     type="name"
                     name="website"
                     id="website"
-                    placeholder="Client Logo Title"
+                    placeholder="Company Name"
                     value={imageTitle}
                 onChange={handleTitleChange}
                

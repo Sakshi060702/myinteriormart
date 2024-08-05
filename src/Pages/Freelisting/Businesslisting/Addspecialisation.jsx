@@ -1,9 +1,10 @@
 import React, { useState ,useEffect} from "react";
 import { Link,useNavigate } from "react-router-dom";
-import nextarrowimg from "../../../FrontEnd/img/arrow-next.png";
-import previousarrowimg from "../../../FrontEnd/img/arrow-previous.png";
+import nextarrowimg from "../../../FrontEnd/img/Frontarrow.png";
+import previousarrowimg from "../../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh"
+import Popupalert from "../../Popupalert";
 
 
 function Addspecialisation()
@@ -46,6 +47,12 @@ function Addspecialisation()
       const navigate=useNavigate();
       const token=useSelector((state)=>state.auth.token);
     
+
+      const [showPopup, setShowPopup] = useState(false);
+      const [errorMessage, setErrorMessage] = useState("");
+      const[successMessage,setSuccessMessage]=useState("");
+
+
       useEffect(()=>{
         const fetchSpecialisations=async()=>{
           try{
@@ -109,11 +116,23 @@ function Addspecialisation()
           const data = await response.json();
           console.log("Response:", data);
           console.log("Specialisation token",token);
-          alert("Data saved successfully")
-          navigate("/addworkinghours")
+
+          setSuccessMessage("Specialisation Details Saved Successfully");
+          setErrorMessage("");
+          setShowPopup(true);
+    
+          setTimeout(() => {
+            setShowPopup(false);
+            navigate("/addworkinghours");
+          }, 2000);
+
+         
           // Handle success (e.g., show a success message, redirect, etc.)
         } catch (error) {
           console.error("Error:", error);
+          setErrorMessage("Failed to save Specialisation details. Please try again later.");
+    setSuccessMessage(""); // Clear any existing success message
+    setShowPopup(true);
           // Handle error (e.g., show an error message)
         }
       };
@@ -175,6 +194,12 @@ function Addspecialisation()
                       <Link to="/addworkinghours" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
                       </div>
                   </div>
+                  {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
             </div>
           </div>
         </div>

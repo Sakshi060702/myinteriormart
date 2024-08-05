@@ -6,11 +6,16 @@ import { Link } from "react-router-dom";
 import "../../FrontEnd/css/Register.css";
 import { useDispatch } from "react-redux";
 import { loginSuccess,setUserType } from "../../Redux/authSlice";
+import Popupalert from "../Popupalert";
 
 function Login() {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
 
   const { mobile, password } = location.state || { mobile: "", password: "" };
   const [userId, setuserId] = useState("");
@@ -85,13 +90,25 @@ function Login() {
         console.log("Login Successful");
         dispatch(setUserType(data.userType));
         // dispatch(setUserType(data.user.userType));
-        setSuccess("Login Successful");
-        navigate("/");
+        // setSuccess("Login Successful");
+        setSuccessMessage("Login Successful");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+      setShowPopup(false);
+      navigate("/");
+    }, 2000);
+       
       } else {
-        setError("Login user unsuccessful");
+        setErrorMessage("Login Unsuccessful.");
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
       }
     } catch (error) {
-      setError("Login unsuccessful");
+      setErrorMessage("User Login Unsuccessful.");
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   };
 
@@ -226,6 +243,12 @@ function Login() {
                   </form>
                 </div>
               </div>
+              {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
             </div>
           </div>
         </div>

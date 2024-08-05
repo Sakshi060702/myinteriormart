@@ -8,14 +8,14 @@ import Addteam from "./Addteam";
 import Addcertification from "./Addcertification";
 import Addbanner from "./Addbanner";
 import Addclient from "./Addclient";
-import nextarrowimg from "../../../FrontEnd/img/arrow-next.png";
-import previousarrowimg from "../../../FrontEnd/img/arrow-previous.png";
+import nextarrowimg from "../../../FrontEnd/img/Frontarrow.png";
+import previousarrowimg from "../../../FrontEnd/img/Backarrow.png";
 import Uploadimagel from "../../Managelisting/Uploadimagel";
 
 
 const buttons=[
   {title:"Logo", component:Addlogo},
-  {title:"Team",component:Addteam},
+  {title:"Owner",component:Addteam},
   {title:"Gallery",component:Addgallery},
   {title:"Banner",component:Addbanner},
   {title:"Certifications",component:Addcertification},

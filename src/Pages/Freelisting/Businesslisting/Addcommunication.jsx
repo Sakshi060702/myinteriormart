@@ -1,11 +1,12 @@
 import React, { useState,useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useLocation } from "react-router-dom";
 import Select from 'react-select';
 import "./Businesslisting.css";
-import nextarrowimg from "../../../FrontEnd/img/arrow-next.png";
-import previousarrowimg from "../../../FrontEnd/img/arrow-previous.png";
+import nextarrowimg from "../../../FrontEnd/img/Frontarrow.png";
+import previousarrowimg from "../../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh"
+import Popupalert from "../../Popupalert";
 
 function Addcommunication(){
   const [formData, setFormData] = useState({
@@ -21,6 +22,29 @@ function Addcommunication(){
   const [languageOptions, setLanguageOptions] = useState([]);
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
+
+  const [email, setEmail] = useState('');
+  const location = useLocation();
+
+
+
+  useEffect(() => {
+    if (location.state && location.state.email) {
+      console.log("Setting email from location.state:", location.state.email);
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        email: location.state.email
+      }));
+    } else {
+      console.log("No email found in location.state");
+    }
+  }, [location.state]);
+
+
 
   useEffect(() => {
     // Function to fetch communication details
@@ -77,6 +101,25 @@ function Addcommunication(){
     }));
   };
 
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+  
+    // Ensure only numeric values are set
+    if (name === 'tollfree') {
+      const numericValue = value.replace(/[^0-9]/g, '');
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: numericValue,
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  };
+  
+
   const handleSelectChange = (selectedOptions) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -114,11 +157,22 @@ function Addcommunication(){
       const responseData = await response.json();
       console.log("API response:", responseData);
       console.log("Communication Token",token);
-      alert("Communication details saved successfully!");
-      navigate("/address");
+
+      setSuccessMessage("Communication Details Saved  Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+        setShowPopup(false);
+        navigate("/address");
+      }, 2000);
+
+      
     } catch (error) {
       console.error("API error:", error);
-      alert("Failed to save communication details. Please try again");
+      setErrorMessage("Failed to save communication details. Please try again later.");
+    setSuccessMessage(""); // Clear any existing success message
+    setShowPopup(true);
     }
   };
 
@@ -233,12 +287,13 @@ function Addcommunication(){
                     <label htmlFor="tollfree">Toll Free</label>
                     <input
                       className="form-control form-control-sm box"
-                      type="number"
+                      type="text"
                       name="tollfree"
                       id="tollfree"
                       placeholder="Enter Tollfree No"
                       value={formData.tollfree}
-                      onChange={handleChange}
+                      onChange={handleInputChange}
+                      pattern="[0-9]*"
                       required
                     />
                   </div>
@@ -253,6 +308,13 @@ function Addcommunication(){
                     </div>
 
                   </div>
+                  {showPopup && (
+  <Popupalert 
+    message={successMessage || errorMessage} 
+    type={successMessage ? 'success' : 'error'} 
+  />
+)}
+                 
                 </div>
               </form>
             </div>

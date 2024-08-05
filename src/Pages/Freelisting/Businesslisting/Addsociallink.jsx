@@ -1,10 +1,11 @@
 import React,{useState,useEffect} from "react";
 import { Link,useNavigate } from "react-router-dom";
 import "../Businesslisting/Businesslisting.css";
-import nextarrowimg from "../../../FrontEnd/img/arrow-next.png";
-import previousarrowimg from "../../../FrontEnd/img/arrow-previous.png";
+import nextarrowimg from "../../../FrontEnd/img/Frontarrow.png";
+import previousarrowimg from "../../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh"
+import Popupalert from "../../Popupalert";
 
 function Addsociallink() {
 
@@ -20,6 +21,10 @@ function Addsociallink() {
   });
   const navigate=useNavigate();
   const token=useSelector((state)=>state.auth.token);
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
 
   useEffect(()=>{
     const fetchSociallinkDetails=async()=>{
@@ -92,13 +97,24 @@ function Addsociallink() {
       const responseData = await response.json();
       console.log("API response:", responseData);
       console.log("Social Link token",token);
-      alert("SocialLink details saved successfully!");
-      navigate("/Addseokeyword")
+
+      setSuccessMessage("Social Link Details Saved Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+      setShowPopup(false);
+      navigate("/Addseokeyword");
+    }, 2000);
+    
+    
      
     }
     catch(error){
       console.error("API error:", error);
-      alert("Failed to save company details. Please try again later.");
+      setErrorMessage("Failed to save Social Link Details. Please try again later.");
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   }
   return (
@@ -210,6 +226,12 @@ function Addsociallink() {
                     </div>
                   </div>
               </div>
+              {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
               </form>
             </div>
           </div>

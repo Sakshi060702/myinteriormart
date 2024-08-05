@@ -59,7 +59,7 @@ function MyLike() {
                   <li key={index} style={{display:"flex"}}>
                     <div className="image" style={{height:'70px',width:'70px', marginLeft:'10px',marginBottom:'20px'}}>
                       {likeDislike.profileImage ? (
-                        <img src={likeDislike.profileImage} alt={`${likeDislike.companyName} profile`} style={{
+                        <img src={`https://apidev.myinteriormart.com${likeDislike.profileImage}`} alt={`${likeDislike.companyName} profile`} style={{
                           height: '100%',
                           width: '100%',
                           borderRadius: '50%',
