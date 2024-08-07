@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import usericon from "../../FrontEnd/img/home_section_1.jpg";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
+import Popupalert from "../Popupalert";
 
 function Bannerimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -13,6 +14,10 @@ function Bannerimagel() {
 
   const token=useSelector((state)=>state.auth.token);
   const dispatch = useDispatch();
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -77,14 +82,28 @@ function Bannerimagel() {
         const result = await response.json();
         console.log(result); // Log the result for debugging purposes
         console.log("Banner image token",token);
-        alert("Banner Image Uploded Successfully")
+       
         setImageURL(result.imageUrl);
+
+        setSuccessMessage("Banner Image Uploded Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+      setShowPopup(false);
+     
+    }, 2000);
         // You can handle the result here if needed, e.g., show a success message
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
+        setErrorMessage("Failed to Upload Image. Please try again later.");
+    setSuccessMessage(""); // Clear any existing success message
+    setShowPopup(true);
       }
     } else {
-      alert("Please select a file and enter a title");
+      setErrorMessage("Please select File and Title.");
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   };
 
@@ -153,6 +172,12 @@ function Bannerimagel() {
               </div>
             </div>
           </div>
+          {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
         </div>
       </div>
     </>

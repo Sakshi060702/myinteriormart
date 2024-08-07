@@ -5,6 +5,7 @@ import nextarrowimg from "../../FrontEnd/img/Frontarrow.png";
 import previousarrowimg from "../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
+import Popupalert from "../Popupalert";
 
 const Workinghoursl = () => {
   const [workingHours, setWorkingHours] = useState({
@@ -28,6 +29,11 @@ const Workinghoursl = () => {
 
   const navigate = useNavigate();
   const token=useSelector((state)=>state.auth.token);
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
+
 
 useEffect(()=>{
   const fetchData=async()=>{
@@ -119,10 +125,20 @@ useEffect(()=>{
       const result = await response.json();
       console.log(result);
       console.log("Working hours token",token);
-      alert("Data Saved Successfully");
+      setSuccessMessage("Working Hours Details Saved Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+      setShowPopup(false);
       navigate("/paymentmodel");
+    }, 2000);
+      
     } catch (error) {
       console.error("Error:", error);
+      setErrorMessage("Failed to save Working Hours details. Please try again later.");
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   };
 
@@ -246,6 +262,13 @@ useEffect(()=>{
                       </Link>
                     </div>
                   </div>
+
+                  {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
                 </div>
               </form>
             </div>

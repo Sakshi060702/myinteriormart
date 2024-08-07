@@ -6,6 +6,7 @@ import nextarrowimg from "../../FrontEnd/img/Frontarrow.png";
 import previousarrowimg from "../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
+import Popupalert from "../Popupalert";
 
 function Communicationl() {
   const [formData, setFormData] = useState({
@@ -36,6 +37,11 @@ function Communicationl() {
   const [languageOptions, setLanguageOptions] = useState([]);
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
+
 
   useEffect(() => {
     // Function to fetch communication details
@@ -129,11 +135,20 @@ function Communicationl() {
       const responseData = await response.json();
       console.log("API response:", responseData);
       console.log("Communication Token",token);
-      alert("Communication details saved successfully!");
-      navigate("/addressl");
+      setSuccessMessage("Communication Details Saved Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+      setShowPopup(false);
+      navigate("/addressl");;
+    }, 2000);
+      
     } catch (error) {
       console.error("API error:", error);
-      alert("Failed to save communication details. Please try again");
+      setErrorMessage("Failed to save Communication details. Please try again later.");
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   };
 
@@ -272,6 +287,12 @@ function Communicationl() {
                     </div>
 
                   </div>
+                  {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
                 </div>
               </form>
             </div>

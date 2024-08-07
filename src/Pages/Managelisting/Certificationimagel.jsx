@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import usericon from "../../FrontEnd/img/user1 (2).jpg";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
+import Popupalert from "../Popupalert";
 
 function Certificationimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -10,6 +11,9 @@ function Certificationimagel() {
   const [imageURL, setImageURL] = useState(null);
   const [imageTitleFromAPI, setImageTitleFromAPI] = useState("");
  
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
 
   const token=useSelector((state)=>state.auth.token);
   const dispatch = useDispatch();
@@ -71,17 +75,31 @@ function Certificationimagel() {
         const result = await response.json();
         console.log(result.imageUrl); // Log the result for debugging purposes
         console.log("Certification Image token", token);
-        alert("Certificate Image Uploaded Successfully");
+       
 
         // Update state with new image URL
         setImageURL(result.imageUrl);
         setImageTitle("");
         setSelectedFile(null);
+
+        setSuccessMessage("Certification Image Uploded Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+      setShowPopup(false);
+     
+    }, 2000);
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
+        setErrorMessage("Failed to Upload Image. Please try again later.");
+    setSuccessMessage(""); // Clear any existing success message
+    setShowPopup(true);
       }
     } else {
-      alert("Please select a file and enter a title");
+      setErrorMessage("Please select File and Title.");
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   };
 
@@ -140,6 +158,12 @@ function Certificationimagel() {
               </div>
             </div>
           </div>
+          {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
         </div>
       </div>
     </>

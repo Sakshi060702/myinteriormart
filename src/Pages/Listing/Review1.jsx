@@ -8,42 +8,13 @@ function Review1({ listingId }) {
   const [reviewText, setReviewText] = useState("");
   const [reviews, setReviews] = useState([]);
   const [companyDetails, setCompanyDetails] = useState(null);
-  const [addedReviews, setAddedReviews] = useState([]); // For keeping track of newly added reviews
 
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
-    fetchReviews();
-  }, [token]);
-
-  useEffect(() => {
     fetchListingDetails();
   }, [listingId]);
-
-  const fetchReviews = async () => {
-    const response = await fetch(
-      "https://apidev.myinteriormart.com/api/AllBookMark/GetUserAllMyReviews",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          operation: "GetReviews",
-          ratingReply: { reply: "" },
-        }),
-      }
-    );
-
-    if (response.ok) {
-      const data = await response.json();
-      setReviews(data);
-    } else {
-      console.error("Failed to fetch reviews");
-    }
-  };
 
   const fetchListingDetails = async () => {
     try {
@@ -96,27 +67,13 @@ function Review1({ listingId }) {
           body: JSON.stringify({
             ratings: rating,
             comment: reviewText,
-           
+            companyID: companyDetails.listingId
           })
         }
       );
       if (response.ok) {
-        const newReview = {
-          ratings: rating,
-          comment: reviewText,
-          userName: user ? user.name : "",
-          userImage: profileImage,
-          date: new Date().toLocaleDateString(),
-        };
-        // Update the reviews state
-        setReviews((prevReviews) => [...prevReviews, newReview]);
-        // Update the addedReviews state
-        setAddedReviews((prevAddedReviews) => [...prevAddedReviews, newReview]);
-        // Update the companyDetails state to include the new review
-        setCompanyDetails((prevDetails) => ({
-          ...prevDetails,
-          reviews: [...(prevDetails.reviews || []), newReview]
-        }));
+        // Re-fetch the listing details to get the updated reviews
+        await fetchListingDetails();
         setIsReviewFormOpen(false);
         setRating(0);
         setReviewText("");
@@ -216,8 +173,8 @@ function Review1({ listingId }) {
                       <div className="col-lg-12">
                         <hr />
                         <div className="row" style={{ fontSize: "16px" }}>
-                          {reviews.length > 0 || addedReviews.length > 0 ? (
-                            [...reviews, ...addedReviews].map((review, index) => (
+                          {reviews.length > 0 ? (
+                            reviews.map((review, index) => (
                               <div key={index} className="col-lg-12 mb-3">
                                 <div className="review-box">
                                   <div className="d-flex">
@@ -229,6 +186,7 @@ function Review1({ listingId }) {
                                           style={{ width: "50px", height: "50px" }}
                                         />
                                       </div>
+                                      {console.log(review.userImage)}
                                     </div>
                                     <div className="col-lg-10 col-9 pl-lg-0">
                                       <div className="cat-star">

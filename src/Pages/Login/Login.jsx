@@ -80,6 +80,9 @@ function Login() {
 
       if (response.ok) {
         const tokenExpiry = new Date().getTime() + 30 * 60 * 1000;
+        localStorage.setItem("token_startTime", new Date().getTime());
+        localStorage.setItem("token_endTime", new Date().getTime() + 30 * 60 * 1000);
+
         dispatch(
           loginSuccess({
             token: data.token,

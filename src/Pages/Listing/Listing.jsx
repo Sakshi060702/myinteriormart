@@ -7,11 +7,11 @@ import Getquotespopup from "./Getquotespopup";
 import '../../FrontEnd/css/Lisiting.css';
 import { useSelector } from "react-redux";
 
-
+    
 function Listing() {
   const { secondCategoryId } = useParams();
   const [listing, setListing] = useState([]);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState([false,null]);
 
   useEffect(() => {
     fetchListings();
@@ -133,9 +133,10 @@ function Listing() {
                             <p>
                               <button
                                 className="btn btn-guotes btn-sm"
-                                onClick={() => setIsPopupOpen(true)}
+                                onClick={() => setIsPopupOpen([true, listing.listingId])}
                               >
-                                Get Quotes
+                                Get Quotes 
+                                {/* Get Quotes ${listing.listingId} */}
                               </button>
                             </p>
                           </li>
@@ -174,9 +175,9 @@ function Listing() {
       </div>
       
       {token ? (
-        <Getquotespopup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
+        <Getquotespopup isOpen={isPopupOpen[0]} companyID={isPopupOpen[1]} onClose={() => setIsPopupOpen([false,null])} />
       ) : (
-        <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
+        <Popup isOpen={isPopupOpen[0]} companyID={null} onClose={() => setIsPopupOpen([false,null])} />
       )}
     </>
   );

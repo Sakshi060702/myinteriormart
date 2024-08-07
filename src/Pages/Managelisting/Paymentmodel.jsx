@@ -4,6 +4,7 @@ import nextarrowimg from "../../FrontEnd/img/Frontarrow.png";
 import previousarrowimg from "../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
+import Popupalert from "../Popupalert";
 
 function Paymentmodel() {
   const[payment,setPayment]=useState({
@@ -19,6 +20,10 @@ function Paymentmodel() {
 
   const navigate=useNavigate();
   const token=useSelector((state)=>state.auth.token);
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
 
   useEffect(()=>{
     const fetchPaymentmode=async()=>{
@@ -82,11 +87,22 @@ function Paymentmodel() {
       const data = await response.json();
       console.log("Response:", data);
       console.log("Payment token",token);
-      alert("Data saved successfully")
-      navigate("/Imagesl")
+      setSuccessMessage("Payment Details Saved Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+      setShowPopup(false);
+      navigate("/Imagesl");
+    }, 2000);
+     
+      
       // Handle success (e.g., show a success message, redirect, etc.)
     } catch (error) {
       console.error("Error:", error);
+      setErrorMessage("Failed to save payment details. Please try again later.");
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
       // Handle error (e.g., show an error message)
     }
   }
@@ -134,7 +150,7 @@ function Paymentmodel() {
                   </div>
                 ))}
                   <div className="text-left col-12 mt-3" style={{display:'flex'}}>
-                  <button type="submit" className="btn_1" style={{marginRight:'50px'}}>
+                  <button type="submit" className="btn_1" style={{marginRight:'50px'}} onClick={handleSubmit}>
                   Save & Continue
                   </button>
                   <div style={{display:"flex",justifyContent:"center",gap:'10px',paddingTop:'10px'}}>                    
@@ -143,6 +159,12 @@ function Paymentmodel() {
                     </div>
                 </div>
               </div>
+              {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
             </div>
           </div>
         </div>

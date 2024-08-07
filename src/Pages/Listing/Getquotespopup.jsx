@@ -1,28 +1,32 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Popupalert from "../Popupalert";
 
-const Getquotespopup = ({ isOpen, onClose }) => {
-
+const Getquotespopup = ({ isOpen, companyID, onClose }) => {
   const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    mobileNumber: "",
     enquiryTitle: "",
-    message: ""
+    message: "",
   });
   const token = useSelector((state) => state.auth.token);
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await fetch("https://apidev.myinteriormart.com/api/UserProfile/GetUserProfile", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
+        const response = await fetch(
+          "https://apidev.myinteriormart.com/api/UserProfile/GetUserProfile",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
           }
-        });
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -31,7 +35,7 @@ const Getquotespopup = ({ isOpen, onClose }) => {
           ...prevData,
           fullName: `${data.name} ${data.lastName}`,
           email: data.email,
-          mobileNumber: data.phone
+          mobileNumber: data.phone,
         }));
       } catch (error) {
         console.error("Error fetching user profile:", error);
@@ -43,29 +47,30 @@ const Getquotespopup = ({ isOpen, onClose }) => {
     }
   }, [isOpen, token]);
 
-
   if (!isOpen) return null;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(formData);
+      formData['companyID']= companyID;
       const response = await fetch(
         "https://apidev.myinteriormart.com/api/CreateEnquiry/CreateEnquiry",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-             'Authorization': `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(formData)
+          body: JSON.stringify(formData),
         }
       );
       if (!response.ok) {
@@ -73,15 +78,28 @@ const Getquotespopup = ({ isOpen, onClose }) => {
       }
       const data = await response.json();
       console.log(data);
-      alert('Enquiry Sent Successfully');
+      setSuccessMessage("Enquiry Sent Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+        setShowPopup(false);
+        onClose();
+      }, 2000);
       // Handle success (e.g., show a success message or close the popup)
       onClose();
     } catch (error) {
       console.error("Error submitting the form:", error);
+      setErrorMessage("Failed to Send Enquiry. Please try again later.");
+      setSuccessMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 2000);
       // Handle error (e.g., show an error message)
     }
   };
-
 
   return (
     <>
@@ -126,11 +144,11 @@ const Getquotespopup = ({ isOpen, onClose }) => {
             X
           </button>
           <h6>Enquiry Now</h6>
-         
+          
           <hr></hr>
           <form onSubmit={handleSubmit}>
-          <div className="row">
-            {/* <div className="col-md-6">
+            <div className="row">
+              {/* <div className="col-md-6">
                 <div className="form-group">
                     <label>Full Name</label>
                     <input className="form-control" type="text"
@@ -146,15 +164,20 @@ const Getquotespopup = ({ isOpen, onClose }) => {
                     onChange={handleChange}/>
                 </div>
             </div> */}
-            <div className="col-md-12">
+              <div className="col-md-12">
                 <div className="form-group">
-                    <label>Enquiry Title</label>
-                    <input className="form-control" type="text"
-                    name="enquiryTitle" placeholder="Enquiry Title" value={formData.enquiryTitle}
-                    onChange={handleChange}/>
+                  <label>Enquiry Title</label>
+                  <input
+                    className="form-control"
+                    type="text"
+                    name="enquiryTitle"
+                    placeholder="Enquiry Title"
+                    value={formData.enquiryTitle}
+                    onChange={handleChange}
+                  />
                 </div>
-            </div>
-            {/* <div className="col-md-6">
+              </div>
+              {/* <div className="col-md-6">
                 <div className="form-group">
                     <label>Email</label>
                     <input className="form-control" type="email"
@@ -162,17 +185,34 @@ const Getquotespopup = ({ isOpen, onClose }) => {
                     onChange={handleChange}/>
                 </div>
             </div> */}
-            <div className="col-md-12">
+              <div className="col-md-12">
                 <div className="form-group">
-                    <label>Message</label>
-                    <textarea className="form-control" type="text" name="message" placeholder="Message" style={{width:'460px',height:'100px'}}  value={formData.message}
-                    onChange={handleChange}/>
+                  <label>Message</label>
+                  <textarea
+                    className="form-control"
+                    type="text"
+                    name="message"
+                    placeholder="Message"
+                    style={{ width: "460px", height: "100px" }}
+                    value={formData.message}
+                    onChange={handleChange}
+                  />
                 </div>
+              </div>
+              <button
+                className="btn btn-primary w-100"
+                style={{ backgroundColor: "orange" }}
+              >
+                Submit
+              </button>
             </div>
-            <button className="btn btn-primary w-100" style={{backgroundColor:'orange'}}>Submit</button>
-          </div>
           </form>
-          
+          {showPopup && (
+            <Popupalert
+              message={successMessage || errorMessage}
+              type={successMessage ? "success" : "error"}
+            />
+          )}
         </div>
       </div>
     </>

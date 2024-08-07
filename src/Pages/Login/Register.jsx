@@ -154,12 +154,17 @@ function Register() {
         <div className="form-group">
             <select name="business-type" className="form-control" onChange={(e) => setBusinessCategory(e.target.value)}>
                 <option value="">Select Business Type</option>
-                <option value="dealer">Dealer</option>
-                <option value="service-provider">Service Provider</option>
-                <option value="manufacturers">Manufacturers</option>
-                <option value="rental">Rental</option>
-                <option value="labour">Labour</option>
-                <option value="contractor">Contractor</option>
+                <option value="44">Dealers</option>
+                <option value="41">Services</option>
+                <option value="45">Manufacturers</option>
+                <option value="47">Rental Services</option>
+                <option value="46">Labours</option>
+                <option value="43">Contractors</option>
+                <option value="40">Repairs</option>
+                <option value="39">premium Categories</option>
+                <option value="53">wholesalers</option>
+                <option value="54 ">distributors</option>
+                <option value="48">Labor Contractors</option>
                 {/* Add more options as needed */}
             </select>
         </div>

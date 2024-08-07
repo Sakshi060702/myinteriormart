@@ -4,6 +4,7 @@ import nextarrowimg from "../../FrontEnd/img/Frontarrow.png";
 import previousarrowimg from "../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
+import Popupalert from "../Popupalert";
 
 
 function Specialisationl() {
@@ -44,6 +45,12 @@ function Specialisationl() {
 
   const navigate=useNavigate();
   const token=useSelector((state)=>state.auth.token);
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
+
+
 
   useEffect(()=>{
     const fetchSpecialisations=async()=>{
@@ -108,11 +115,21 @@ function Specialisationl() {
       const data = await response.json();
       console.log("Response:", data);
       console.log("Specialisation token",token);
-      alert("Data saved successfully")
-      navigate("/workinghoursl")
+      setSuccessMessage("Specialisation Details Saved Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+      setShowPopup(false);
+      navigate("/workinghoursl");
+    }, 2000);
+      
       // Handle success (e.g., show a success message, redirect, etc.)
     } catch (error) {
       console.error("Error:", error);
+      setErrorMessage("Failed to save Specialisation details. Please try again later.");
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
       // Handle error (e.g., show an error message)
     }
   };
@@ -169,7 +186,7 @@ function Specialisationl() {
               )}
             </div>
             <div className="text-left col-12 mt-3" style={{display:'flex'}}>
-            <button type="submit" className="btn_1" style={{marginRight:'50px'}}>
+            <button type="submit" onClick={handleSubmit} className="btn_1" style={{marginRight:'50px'}}>
             Save & Continue
                   </button>
                   <div style={{display:"flex",justifyContent:"center",gap:'10px',paddingTop:'10px'}}>                    
@@ -177,6 +194,12 @@ function Specialisationl() {
                     <Link to="/workinghoursl" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
                     </div>
                 </div>
+                {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
           </div>
         </div>
       </div>

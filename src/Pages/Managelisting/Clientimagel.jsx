@@ -3,6 +3,7 @@ import { Link,useNavigate } from "react-router-dom";
 import usericon from "../../FrontEnd/img/user1 (3).jpg";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
+import Popupalert from "../Popupalert";
 
 
 function Clientimagel() {
@@ -11,6 +12,10 @@ function Clientimagel() {
   const [imageURL, setImageURL] = useState(null);
   const [imageTitleFromAPI, setImageTitleFromAPI] = useState("");
  
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
+
 
   const navigate=useNavigate();
   const token=useSelector((state)=>state.auth.token);
@@ -80,13 +85,27 @@ function Clientimagel() {
         console.log("Client Image Token",token)
         alert("Client Image Uploded Successfully")
         setImageURL(result.imageUrl);
+        
+
+        setSuccessMessage("Image Uploded Successfully");
+        setErrorMessage("");
+        setShowPopup(true);
+  
+        setTimeout(() => {
+        setShowPopup(false);
         navigate("/Sociallinkl");
+      }, 2000);
         // You can handle the result here if needed, e.g., show a success message
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
+        setErrorMessage("Failed to Upload Image. Please try again later.");
+    setSuccessMessage(""); // Clear any existing success message
+    setShowPopup(true);
       }
     } else {
-      alert("Please select a file and enter a title");
+      setErrorMessage("Please select File and Title.");
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   };
 
@@ -154,6 +173,13 @@ function Clientimagel() {
               </div>
             </div>
           </div>
+          {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
+
 
         </div>
       </div>

@@ -1,5 +1,6 @@
 import Home from "./Pages/Home/Home";
 import { Route,Routes } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Labournaka from "./Pages/Tab/Labournaka";
 
 
@@ -260,6 +261,42 @@ import Userpersonalinformation from "./Pages/Profile/Userpersonalinformation";
 
 
 function App() {
+
+  
+  // setInterval(function () {
+  //   let checking_currentTime = new Date().getTime();
+  //   let token_endTime = localStorage.getItem("token_endTime");
+  //   // console.log("checking_currentTime => ",checking_currentTime);
+  //   // console.log("token_endTime => ",token_endTime);
+  //   if(checking_currentTime > token_endTime){
+  //     navigate('/login');
+
+  //   }
+  // }, 1000);
+
+  const navigate = useNavigate();
+  const myInterval = setInterval(myTimer, 1000);
+
+  function myTimer() {
+    let checking_currentTime = new Date().getTime();
+    let token_endTime = localStorage.getItem("token_endTime");
+    // console.log("checking_currentTime => ",checking_currentTime);
+    // console.log("token_endTime => ",token_endTime);
+    if(checking_currentTime > token_endTime){
+      StopFunction();
+
+    }
+  }
+
+  function StopFunction() {
+    
+    navigate('/');
+    clearInterval(myInterval);
+  }
+
+
+  
+
   return (
    
     <>
@@ -580,6 +617,7 @@ function App() {
      <Foot/>
     </> 
   );
+
 }
 
 export default App;

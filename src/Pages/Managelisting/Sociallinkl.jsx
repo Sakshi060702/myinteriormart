@@ -5,6 +5,7 @@ import nextarrowimg from "../../FrontEnd/img/Frontarrow.png";
 import previousarrowimg from "../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
+import Popupalert from "../Popupalert";
 
 function Sociallinkl() {
 
@@ -20,6 +21,11 @@ function Sociallinkl() {
   });
   const navigate=useNavigate();
   const token=useSelector((state)=>state.auth.token);
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
+
 
   useEffect(()=>{
     const fetchSociallinkDetails=async()=>{
@@ -92,13 +98,22 @@ function Sociallinkl() {
       const responseData = await response.json();
       console.log("API response:", responseData);
       console.log("Social Link token",token);
-      alert("SocialLink details saved successfully!");
-      navigate("/Keywordl")
+      setSuccessMessage("Social Link Details Saved Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+      setShowPopup(false);
+      navigate("/Keywordl");
+    }, 2000);
+      
      
     }
     catch(error){
       console.error("API error:", error);
-      alert("Failed to save company details. Please try again later.");
+      setErrorMessage("Failed to save Social Link details. Please try again later.");
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   }
   return (
@@ -213,6 +228,12 @@ function Sociallinkl() {
                     <Link to="/Keywordl" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
                     </div>
                   </div>
+                  {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
               </div>
               </form>
             </div>

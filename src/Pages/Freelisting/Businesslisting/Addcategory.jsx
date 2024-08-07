@@ -100,13 +100,30 @@ function Addcategory()
 
 
   useEffect(() => {
+    console.log("BRAVOOOO")
     if (selectedFirstCategory) {
+      console.log(firstCategories);
       const selectedFirstCat = firstCategories.find(
         (category) => category.firstCategoryID === selectedFirstCategory
       );
-      if (selectedFirstCat) {
-        setSecondCategories(selectedFirstCat.secondCategories || []);
-      }
+      const selectedFirstCat_ak = firstCategories.find(
+        (category) => {
+          console.log(category.firstCategoryID, parseInt(selectedFirstCategory), category.firstCategoryID === parseInt(selectedFirstCategory));
+          if(category.firstCategoryID === parseInt(selectedFirstCategory)){
+            console.log(selectedFirstCategory);
+            console.log(selectedFirstCat);
+            console.log(category);
+            setSecondCategories(category.secondCategories || []);
+          }
+        }
+      );
+
+      console.log(selectedFirstCat);
+      console.log(selectedFirstCategory);
+      // setSecondCategories(selectedFirstCat.secondCategories);
+      // if (selectedFirstCat) {
+      //   setSecondCategories(selectedFirstCat.secondCategories || []);
+      // }
     }
   }, [selectedFirstCategory, firstCategories]);
 

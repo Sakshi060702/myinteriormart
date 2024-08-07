@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import usericon from "../../FrontEnd/img/user1 (4).jpg";
 import withAuthh from "../../Hoc/withAuthh";
+import Popupalert from "../Popupalert";
 
 function Teamimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -13,6 +14,13 @@ function Teamimagel() {
 
   const [imageURL, setImageURL] = useState(null);
   const [imageTitleFromAPI, setImageTitleFromAPI] = useState("");
+
+  const [imageDetails, setImageDetails] = useState([]);
+  const [imageTitle, setImageTitle] = useState("");
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
@@ -33,8 +41,13 @@ function Teamimagel() {
         }
         const data = await response.json();
         console.log(data.imagepath);
-        setImageURL(data.imagepath); // Assuming data contains image URL and title
-        setImageTitleFromAPI(data.imagetitle); // Set the image title from API
+        if (data instanceof Object) {
+          console.log(data);
+          console.log();
+          setImageDetails(data.imagepath.map((img) => ({ url: img })));
+        }
+        // setImageURL(data.imagepath); // Assuming data contains image URL and title
+        // setImageTitleFromAPI(data.imagetitle); // Set the image title from API
       } catch (error) {
         console.error(error);
       }
@@ -115,7 +128,7 @@ function Teamimagel() {
   };
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    setSelectedFile(Array.from(event.target.files));
   };
 
   const handleBusinessCategoryChange = (event) => {
@@ -125,41 +138,58 @@ function Teamimagel() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!selectedFile) {
-      alert("Please select a file");
-      return;
-    }
+    if (selectedFile.length > 0) {
+      const formData = new FormData();
+      selectedFile.forEach((file) => {
+        formData.append("file", file);
+      });
 
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-    formData.append("designation", selectedBusinessCategory);
-    formData.append("firstName", event.target.firstName.value);
-    formData.append("lastName", event.target.lastName.value);
-    formData.append("countryId", selectedCountry);
-    formData.append("stateId", selectedState);
+      formData.append("designation", selectedBusinessCategory);
+      formData.append("firstName", event.target.firstName.value);
+      formData.append("lastName", event.target.lastName.value);
+      formData.append("countryId", selectedCountry);
+      formData.append("stateId", selectedState);
 
-    try {
-      const response = await fetch(
-        "https://apidev.myinteriormart.com/api/ImageUpload/UploadOwnerImage",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
+      try {
+        const response = await fetch(
+          "https://apidev.myinteriormart.com/api/ImageUpload/UploadOwnerImage",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to upload image");
         }
-      );
-      if (!response.ok) {
-        throw new Error("Failed to upload image");
-      }
 
-      const result = await response.json();
-      console.log("Upload result:", result);
-      console.log("Result",result.imageUrl);
-      setImageURL(result.imageUrl);// Ensure this is the correct property
-      alert("Team Image Uploaded Successfully");
-    } catch (error) {
-      console.error("Error uploading image:", error);
+        const result = await response.json();
+        console.log("Upload result:", result);
+        
+
+        if (result instanceof Object) {
+          setImageDetails(result.imageUrls.map((img)=> ({ url: img })));
+        }
+        // setImageURL(result.imageUrl);// Ensure this is the correct property
+        setSuccessMessage("Team Image Uploded Successfully");
+        setErrorMessage("");
+        setShowPopup(true);
+
+        setTimeout(() => {
+          setShowPopup(false);
+        }, 2000);
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        setErrorMessage("Failed to Upload Image. Please try again later.");
+        setSuccessMessage(""); // Clear any existing success message
+        setShowPopup(true);
+      }
+    } else {
+      setErrorMessage("Please select File and Title.");
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   };
 
@@ -187,6 +217,8 @@ function Teamimagel() {
             <input
               type="file"
               onChange={handleFileChange}
+              multiple
+              accept="image/*"
               style={{
                 border: "1px solid grey",
                 height: "50px",
@@ -344,17 +376,28 @@ function Teamimagel() {
         </div>
       </div>
       <div className="row justify-content-center mt-4">
-        <div className="col-md-3 col-lg-2 col-6 mb-5">
-          <div className="upload_img_sec">
-            <img
-              className="upload_images"
-              src={imageURL? `https://apidev.myinteriormart.com${imageURL}` : ""}
-              alt="Team Image"
-            />
+        {imageDetails.map((image, index) => (
+          <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
+            <div className="upload_img_sec">
+              <img
+                className="upload_images"
+                src={
+                  image.url
+                    ? `https://apidev.myinteriormart.com${image.url}`
+                    : ""
+                }
+                alt="Gallery Image"
+              />
+            </div>
           </div>
-          <div className="img_title text-center">{imageTitleFromAPI}</div>
-        </div>
+        ))}
       </div>
+      {showPopup && (
+        <Popupalert
+          message={successMessage || errorMessage}
+          type={successMessage ? "success" : "error"}
+        />
+      )}
     </>
   );
 }

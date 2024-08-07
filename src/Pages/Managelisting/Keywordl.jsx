@@ -6,6 +6,8 @@ import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
 import previousarrowimg from "../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
+import Select from "react-select"; 
+import Popupalert from "../Popupalert";
 
 function Keywordl() {
   const [keyword, setKeyword] = useState(""); // State to hold current keyword input
@@ -14,7 +16,104 @@ function Keywordl() {
   const [errorMessage, setErrorMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false);
 
+  const [businessTypes, setBusinessTypes] = useState([]);
+  const [filterText, setFilterText] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [allOptions, setAllOptions] = useState([]);
+
+  
+  const[successMessage,setSuccessMessage]=useState("");
+
+  const [formData, setFormData] = useState({
+    businessCategory: "",
+  });
+
   const token=useSelector((state)=>state.auth.token);
+
+  useEffect(() => {
+    const fetchBusinessTypes = async () => {
+      const apiUrl =
+        "https://apidev.myinteriormart.com/api/CompanyDetails/GetBussinessCategorys";
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("API response error data:", errorData);
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+        const fetchedBusinessTypes = responseData.bussinessCategory;
+        const fetchedOptions = fetchedBusinessTypes.map((type) => ({
+          value: type,
+          label: type,
+        }));
+        setBusinessTypes(fetchedBusinessTypes);
+        setAllOptions(fetchedOptions); // Set the options for the Select component
+      } catch (error) {
+        console.error("API error:", error);
+        alert("Failed to fetch business types. Please try again later.");
+      }
+    };
+
+    fetchBusinessTypes();
+  }, [token]);
+
+  const filteredOptions = allOptions.filter((option) =>
+    option.label.toLowerCase().includes(inputValue.toLowerCase())
+  );
+
+  const handleAddNewOption = () => {
+    if (
+      inputValue &&
+      !allOptions.some(
+        (option) => option.label.toLowerCase() === inputValue.toLowerCase()
+      )
+    ) {
+      const newOption = { label: inputValue, value: inputValue };
+      setAllOptions((prevOptions) => [...prevOptions, newOption]);
+      setInputValue(""); // Clear the input after adding
+    }
+  };
+
+  const handleSelectChange = (selectedOption) => {
+    console.log(selectedOption);
+    console.log(keyword);
+    console.log(formData);
+    console.log(businessTypes,allOptions)
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      businessCategory: selectedOption ? selectedOption.value : "",
+    }));
+
+    console.log(businessTypes.indexOf(selectedOption.value) > -1); //true
+    console.log(selectedOption.value in businessTypes);
+    if(businessTypes.indexOf(selectedOption.value) > -1){
+      
+      console.log("IF BRAVIII");
+
+      setErrorMessage("Keyword Alredy Exist.");
+      setShowPopup(true);
+      setTimeout(() => setShowPopup(false), 2000);
+    }else{
+      console.log("HERE ELSE BRAVIII");
+      setKeyword(selectedOption.value);
+
+      // setErrorMessage("Keyword Added Successfully.");
+      // setShowPopup(true);
+      // setTimeout(() => setShowPopup(false), 2000);
+    }
+    // setKeyword(selectedOption.value);
+  };
+
+
 
   useEffect(() => {
     fetch("https://apidev.myinteriormart.com/api/Keywords/ManageKeywords", {
@@ -167,13 +266,23 @@ function Keywordl() {
       .then((data) => {
         console.log("Keywords saved successfully:", data);
         console.log("Keyword token",token);
-        alert("Keywords saved successfully!");
+        setSuccessMessage("Seo Keyword Details Saved Successfully");
+        setErrorMessage("");
+        setShowPopup(true);
+  
+        setTimeout(() => {
+        setShowPopup(false);
+        // navigate("/");
+      }, 2000);
         setSelectedKeywords([...selectedKeywords, ...addedKeywords]);
         // Reset added keywords state after saving if needed
         setAddedKeywords([]);
       })
       .catch((error) => {
         console.error("Error saving keywords:", error);
+        setErrorMessage("Failed to save Seo Keyword details. Please try again later.");
+        setSuccessMessage(""); // Clear any existing success message
+        setShowPopup(true);
         // Handle error if needed
       });
   };
@@ -197,12 +306,31 @@ function Keywordl() {
                 <div className="form-group col-md-6">
                   <label htmlFor="name">Keywords </label>
                   <div className="input-group">
-                    <input
-                      className="form-control form-control-sm"
-                      type="text"
-                      value={keyword}
-                      onChange={(e) => setKeyword(e.target.value)}
-                      placeholder="Enter Keyword"
+                  <Select
+                      options={filteredOptions}
+                      onInputChange={(keyword) => setInputValue(keyword)}
+                      onChange={handleSelectChange} // Handle the select change
+                      placeholder="Enter keyword "
+                      noOptionsMessage={() => (
+                        <div
+                          onClick={handleAddNewOption}
+                          style={{ cursor: "pointer", color: "blue" }}
+                        >
+                          {inputValue ? ` ${inputValue}` : "Type to search"}
+                        </div>
+                      )}
+                      styles={{
+                        control: (provided) => ({
+                          ...provided,
+                          border: "1px solid #ccc",
+                          borderRadius: "4px",
+                          width: "250px",
+                          height: "50px",
+                        }),
+                      }}
+                      value={allOptions.find(
+                        (option) => option.value === formData.businessCategory
+                      )} // Set the selected value
                     />
                     <div className="input-group-append">
                       <button
@@ -284,6 +412,13 @@ function Keywordl() {
                   <Link to="/Sociallinkl" className="pull-center mr-2"><img src={previousarrowimg} style={{height:'30px'}}/></Link>
                 </div>
               </div>
+
+              {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
             </div>
           </div>
         </div>

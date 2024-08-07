@@ -4,6 +4,7 @@ import usericon from "../../FrontEnd/img/user1 (1).jpg";
 import "../../FrontEnd/css/Mangelisting.css";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
+import Popupalert from "../Popupalert";
 
 function Uploadimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -11,6 +12,11 @@ function Uploadimagel() {
 
   const token = useSelector((state) => state.auth.token);
   const dispatch=useDispatch();
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
+
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -41,15 +47,29 @@ function Uploadimagel() {
         const result = await response.json();
         console.log(result); // Log the result for debugging purposes
         console.log("Logo image token", token);
-        alert("Logo Image Uploded Successfully");
+       
         setImageURL(result.imageUrl);
+
+      setSuccessMessage("Logo Image Uploded Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+      setShowPopup(false);
+     
+    }, 2000);
        
         // You can handle the result here if needed, e.g., show a success message
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
+        setErrorMessage("Failed to Upload Image. Please try again later.");
+        setSuccessMessage(""); // Clear any existing success message
+        setShowPopup(true);
       }
     } else {
-      alert("Please select a file and enter a title");
+      setErrorMessage("Please select File and Title.");
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   };
 
@@ -133,7 +153,12 @@ function Uploadimagel() {
               </div>
             </div>
           </div>
-
+          {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
            
           
         </div>

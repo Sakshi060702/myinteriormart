@@ -5,6 +5,7 @@ import previousarrowimg from "../../FrontEnd/img/Backarrow.png";
 import "../../FrontEnd/css/Mangelisting.css";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
+import Popupalert from "../Popupalert";
 
 function Categoryapi() {
   const [firstCategories, setFirstCategories] = useState([]);
@@ -24,6 +25,11 @@ function Categoryapi() {
 
   const navigate = useNavigate();
   const token=useSelector((state)=>state.auth.token);
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
+
 
 
   useEffect(() => {
@@ -48,6 +54,7 @@ function Categoryapi() {
 
         if (allCategories && allCategories.length > 0) {
           setFirstCategories(allCategories);
+          
         }
         console.log(data);
       } catch (error) {
@@ -79,6 +86,7 @@ function Categoryapi() {
           setSelectedSixthCategory(data.category.sixthCategoryID.split(",").map(Number));
           
           console.log('User categories fetched', data);
+          console.log("firstcategory",data.category.firstCategoryID)
         } else {
           console.error("Unexpected data structure:", data);
         }
@@ -226,8 +234,15 @@ function Categoryapi() {
       const data = await response.json();
       console.log("Data saved successfully:", data);
       console.log("Category Token",token);
-      alert("Data saved successfully");
-      navigate("/specialisationl"); // Redirect to the next page
+      setSuccessMessage("Category Details Saved Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+      setShowPopup(false);
+      navigate("/specialisationl");
+    }, 2000);
+     // Redirect to the next page
     } catch (error) {
       console.error("Error saving categories:", error);
     }
@@ -253,6 +268,7 @@ function Categoryapi() {
                 <div className="row">
                   <div className="form-group col-md-6">
                     <label htmlFor="fcategory">First Category </label>
+                    {/* <input value={selectedFirstCategory} type="text"/> */}
                     <br></br>
                     <select
                       className="wide add_bottom_10 fcategory selectdrp"
@@ -267,6 +283,7 @@ function Categoryapi() {
                         >
                           {category.firstCategoryName}
                         </option>
+                       
                       ))}
                     </select>
                   </div>
@@ -455,6 +472,12 @@ function Categoryapi() {
                     <Link to="/specialisationl" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
                     </div>
                     </div>
+                    {showPopup && (
+            <Popupalert 
+            message={successMessage || errorMessage} 
+            type={successMessage ? 'success' : 'error'} 
+          />
+          )}
               </form>
             </div>
           </div>
