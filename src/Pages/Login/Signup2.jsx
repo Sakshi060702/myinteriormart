@@ -4,6 +4,8 @@ import "../../FrontEnd/css/Register.css";
 import Flag from 'react-world-flags';
 import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
+ 
+import { validateEmail,validateMobile } from '../Validation';
 
 function Signup2() {
     const countries = [
@@ -22,6 +24,7 @@ function Signup2() {
     const [selectedCountry, setSelectedCountry] = useState(defaultCountry);
     const [inputValue, setInputValue] = useState({ countryCode: defaultCountry.value });
     const [error, setError] = useState('');
+    const [errors, setErrors] = useState({});
 
     const navigate = useNavigate();
 
@@ -38,8 +41,24 @@ function Signup2() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        setErrors({});
 
         const { countryCode, mobile, email } = inputValue;
+
+        let mobileError = null;
+        let emailError = null;
+
+        if (selectedCountry.value === '+91') {
+          mobileError = validateMobile(mobile);
+      } else {
+          emailError = validateEmail(email);
+      }
+      if (mobileError || emailError) {
+        setError(mobileError || emailError);
+        return; // Stop form submission if there are validation errors
+    }
+     
+        
         const payload = {
             countryCode: countryCode,
             mobile: mobile,
@@ -137,7 +156,11 @@ function Signup2() {
                             name="mobile"
                             placeholder="Mobile"
                             onChange={handleInputChange}
+                            maxLength={10}
                           />
+                             {errors.mobile && (
+                                                    <div className="text-danger">{errors.mobile}</div>
+                                                )}
                         </div>
                       )}
                       {selectedCountry && selectedCountry.value !== "+91" && (
@@ -151,7 +174,11 @@ function Signup2() {
                             name="email"
                             placeholder="Email"
                             onChange={handleInputChange}
+                            required
                           />
+                          {errors.email && (
+                                                    <div className="text-danger">{errors.email}</div>
+                                                )}
                         </div>
                       )}
                       {error && (

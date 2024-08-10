@@ -304,13 +304,14 @@ function Keywordl() {
               </p>
               <div className="row">
                 <div className="form-group col-md-6">
-                  <label htmlFor="name">Keywords </label>
+                  <label htmlFor="name">Keywords <span className="text-danger">*</span></label>
                   <div className="input-group">
                   <Select
                       options={filteredOptions}
                       onInputChange={(keyword) => setInputValue(keyword)}
                       onChange={handleSelectChange} // Handle the select change
                       placeholder="Enter keyword "
+                      required
                       noOptionsMessage={() => (
                         <div
                           onClick={handleAddNewOption}

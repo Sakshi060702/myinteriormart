@@ -176,7 +176,7 @@ useEffect(()=>{
                       key === "SundayHoliday" ? null : (
                         <div className="form-group">
                           <label>
-                            {key}
+                            {key}<span className="text-danger">*</span>
                             <input
                               className="form-control form-control-sm input-width"
                               type={
@@ -194,6 +194,7 @@ useEffect(()=>{
                                   : undefined
                               }
                               onChange={handleChange}
+                              required
                            
                             />
                           </label>

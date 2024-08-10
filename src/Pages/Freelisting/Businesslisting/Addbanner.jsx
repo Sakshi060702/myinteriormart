@@ -4,6 +4,7 @@ import usericon from "../../../FrontEnd/img/home_section_1.jpg";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh"
 import Popupalert from "../../Popupalert";
+import { validateImageFile } from "../../Validation";
 
 function Addbanner() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -18,6 +19,8 @@ function Addbanner() {
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
+
+  const[error,setError]=useState("");
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -59,6 +62,16 @@ function Addbanner() {
 
 
   const handleSubmit = async (event) => {
+
+    setError({});
+    const validationError = validateImageFile(selectedFile);
+
+    if (validationError) {
+      setError({ imageFile: validationError });
+      return;
+    }
+
+
     event.preventDefault();
     if (selectedFile && imageTitle) {
       const formData = new FormData();
@@ -126,6 +139,9 @@ function Addbanner() {
                     onChange={handleFileChange}
                      className="file-input"
                   />
+                   {error.imageFile && (
+                      <div className="text-danger">{error.imageFile}</div>
+                    )}
 
                   {/* <button type="submit">Upload</button> */}
                 </form>

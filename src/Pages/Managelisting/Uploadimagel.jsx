@@ -5,6 +5,7 @@ import "../../FrontEnd/css/Mangelisting.css";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
 import Popupalert from "../Popupalert";
+import { validateImageFile } from "../Validation";
 
 function Uploadimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -17,6 +18,8 @@ function Uploadimagel() {
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
 
+  const[error,setError]=useState("");
+
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -24,6 +27,19 @@ function Uploadimagel() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    setError({});
+    const validationError = validateImageFile(selectedFile);
+
+    if (validationError) {
+      setError({
+        imageFile: validationError,
+       
+      });
+      return;
+    }
+
+
     if (selectedFile) {
       const formData = new FormData();
       formData.append("file", selectedFile);
@@ -117,6 +133,9 @@ function Uploadimagel() {
                   onChange={handleFileChange}
                   className="file-input"
                 />
+                {error.imageFile && (
+                      <div className="text-danger">{error.imageFiles}</div>
+                    )}
                 {/* <button type="submit">Upload</button> */}
 
                 <button
@@ -147,6 +166,7 @@ function Uploadimagel() {
                   alt="Logo Image"
 
                 />
+                 
               </div>
               <div className="img_title text-center">
               

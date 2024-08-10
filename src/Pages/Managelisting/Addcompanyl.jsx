@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
 import Select from "react-select";
 import Popupalert from "../Popupalert";
+import { validateName, validateGstNumber } from "../Validation";
 
 function Addcompanyl() {
   const [formData, setFormData] = useState({
@@ -27,11 +28,12 @@ function Addcompanyl() {
   const [allOptions, setAllOptions] = useState([]);
 
   const token = useSelector((state) => state.auth.token);
-  
+
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const[successMessage,setSuccessMessage]=useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchBusinessTypes = async () => {
@@ -93,48 +95,48 @@ function Addcompanyl() {
     }));
   };
 
-  useEffect(()=>{
-        const fetchCompanyDetails = async () => {
-          const apiUrl = "https://apidev.myinteriormart.com/api/BinddetailsListing/GetCompanyDetailslisting";
-          try {
-            const response = await fetch(apiUrl, {
-              method: "GET",
-              headers: {
-               
-                "Authorization": `Bearer ${token}`,
-              },
-            });
-      
-            if (!response.ok) {
-              const errorData = await response.json();
-              console.error("API response error data:", errorData);
-              throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-      
-            const companyDetails = await response.json();
+  useEffect(() => {
+    const fetchCompanyDetails = async () => {
+      const apiUrl =
+        "https://apidev.myinteriormart.com/api/BinddetailsListing/GetCompanyDetailslisting";
+      try {
+        const response = await fetch(apiUrl, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-            const formattedDate = companyDetails.yearOfEstablishment 
-            ? new Date(companyDetails.yearOfEstablishment).toLocaleDateString('en-CA') // Formats date as YYYY-MM-DD
-            : "";
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("API response error data:", errorData);
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-            setFormData({
-              companyName: companyDetails.companyName || "",
-              businessCategory: companyDetails.businessCategory || "",
-              natureOfBusiness: companyDetails.natureOfBusiness || "",
-              yearOfEstablishment: formattedDate,
-              numberOfEmployees: companyDetails.numberOfEmployees || "",
-              turnover: companyDetails.turnover || "",
-              gstNumber: companyDetails.gstNumber || "",
-              description: companyDetails.description || "",
-            });
-          } catch (error) {
-            console.error("API error:", error);
-            
-          }
-        };
-    fetchCompanyDetails();  
-      },[token]);
-    
+        const companyDetails = await response.json();
+
+        const formattedDate = companyDetails.yearOfEstablishment
+          ? new Date(companyDetails.yearOfEstablishment).toLocaleDateString(
+              "en-CA"
+            ) // Formats date as YYYY-MM-DD
+          : "";
+
+        setFormData({
+          companyName: companyDetails.companyName || "",
+          businessCategory: companyDetails.businessCategory || "",
+          natureOfBusiness: companyDetails.natureOfBusiness || "",
+          yearOfEstablishment: formattedDate,
+          numberOfEmployees: companyDetails.numberOfEmployees || "",
+          turnover: companyDetails.turnover || "",
+          gstNumber: companyDetails.gstNumber || "",
+          description: companyDetails.description || "",
+        });
+      } catch (error) {
+        console.error("API error:", error);
+      }
+    };
+    fetchCompanyDetails();
+  }, [token]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -146,6 +148,20 @@ function Addcompanyl() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    setError("");
+
+    const companynameError = validateName(formData.companyName);
+    // const gstnumberError = validateGstNumber(formData.gstNumber);
+
+    if (companynameError) {
+      setError({
+        companyName: companynameError,
+        // gstNumber: gstnumberError,
+      });
+      return;
+    }
+
     const apiUrl =
       "https://apidev.myinteriormart.com/api/CompanyDetails/AddOrUpdateCompanyDetails";
 
@@ -156,7 +172,7 @@ function Addcompanyl() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formData),
       });
@@ -169,20 +185,21 @@ function Addcompanyl() {
 
       const responseData = await response.json();
       console.log("API response:", responseData);
-      console.log("Token",token);
-     
+      console.log("Token", token);
+
       setSuccessMessage("Company Details Saved Successfully");
       setErrorMessage("");
       setShowPopup(true);
 
       setTimeout(() => {
-      setShowPopup(false);
-      navigate("/communicationl");
-    }, 2000);
-     
+        setShowPopup(false);
+        navigate("/communicationl");
+      }, 2000);
     } catch (error) {
       console.error("API error:", error);
-      setErrorMessage("Failed to save company details. Please try again later.");
+      setErrorMessage(
+        "Failed to save company details. Please try again later."
+      );
       setSuccessMessage(""); // Clear any existing success message
       setShowPopup(true);
     }
@@ -218,37 +235,38 @@ function Addcompanyl() {
                       onChange={handleChange}
                       required
                     />
+                    {error.companyName && (
+                      <div className="text-danger">{error.companyName}</div>
+                    )}
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="businessCategory">
-                      Business Type 
-                    </label>
+                    <label htmlFor="businessCategory">Business Type</label>
                     <Select
-                options={filteredOptions}
-                onInputChange={(newValue) => setInputValue(newValue)}
-                onChange={handleSelectChange} // Handle the select change
-                placeholder="Enter keyword to filter"
-                noOptionsMessage={() => (
-                  <div
-                    onClick={handleAddNewOption}
-                    style={{ cursor: "pointer", color: "blue" }}
-                  >
-                    {inputValue ? ` ${inputValue}` : "Type to search"}
-                  </div>
-                )}
-                styles={{
-                  control: (provided) => ({
-                    ...provided,
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                    width: "330px",
-                    height: "50px",
-                  }),
-                }}
-                value={allOptions.find(
-                  (option) => option.value === formData.businessCategory
-                )} // Set the selected value
-              />
+                      options={filteredOptions}
+                      onInputChange={(newValue) => setInputValue(newValue)}
+                      onChange={handleSelectChange} // Handle the select change
+                      placeholder="Enter keyword to filter"
+                      noOptionsMessage={() => (
+                        <div
+                          onClick={handleAddNewOption}
+                          style={{ cursor: "pointer", color: "blue" }}
+                        >
+                          {inputValue ? ` ${inputValue}` : "Type to search"}
+                        </div>
+                      )}
+                      styles={{
+                        control: (provided) => ({
+                          ...provided,
+                          border: "1px solid #ccc",
+                          borderRadius: "4px",
+                          width: "330px",
+                          height: "50px",
+                        }),
+                      }}
+                      value={allOptions.find(
+                        (option) => option.value === formData.businessCategory
+                      )} // Set the selected value
+                    />
                   </div>{" "}
                   <div className="form-group col-md-4">
                     <label>
@@ -322,7 +340,9 @@ function Addcompanyl() {
                       <option value="Upto 5 Lacs">Upto 5 Lacs</option>
                       <option value="Upto 50 Lacs">Upto 50 Lacs</option>
                       <option value="Upto 1 Crore">Upto 1 Crore</option>
-                      <option value="Upto 10 Crore & Above">Upto 10 Crore & Above</option>
+                      <option value="Upto 10 Crore & Above">
+                        Upto 10 Crore & Above
+                      </option>
                     </select>
                   </div>
                   <div className="form-group col-md-4">
@@ -334,7 +354,11 @@ function Addcompanyl() {
                       placeholder="Enter GST number"
                       value={formData.gstNumber}
                       onChange={handleChange}
+                      maxLength={15}
                     />
+                    {/* {error.gstNumber && (
+                      <div className="text-danger">{error.gstNumber}</div>
+                    )} */}
                   </div>
                   <div className="form-group col-12">
                     <label htmlFor="description">About Us</label>
@@ -358,11 +382,11 @@ function Addcompanyl() {
                   </div>
                 </div>
                 {showPopup && (
-            <Popupalert 
-            message={successMessage || errorMessage} 
-            type={successMessage ? 'success' : 'error'} 
-          />
-          )}
+                  <Popupalert
+                    message={successMessage || errorMessage}
+                    type={successMessage ? "success" : "error"}
+                  />
+                )}
               </form>
             </div>
           </div>
@@ -372,5 +396,4 @@ function Addcompanyl() {
   );
 }
 
-export default withAuthh(Addcompanyl) ;
-
+export default withAuthh(Addcompanyl);

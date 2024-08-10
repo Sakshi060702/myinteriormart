@@ -70,6 +70,19 @@ function Paymentmodel() {
   };
 
   const handleSubmit=async()=>{
+
+
+    const isAnyCheckboxSelected = Object.keys(payment).some(
+      (key) => payment[key] === true
+    );
+  
+    if (!isAnyCheckboxSelected) {
+      setErrorMessage("Please select at least one payment mode.");
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
+      return; // Prevent form submission
+    }
+    
     try {
       const response = await fetch("https://apidev.myinteriormart.com/api/PaymentMode/CreatePaymentMode", {
         method: "POST",

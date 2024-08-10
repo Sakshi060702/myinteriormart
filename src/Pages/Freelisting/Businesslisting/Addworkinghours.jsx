@@ -176,7 +176,7 @@ function Addworkinghours()
                       key === "SundayHoliday" ? null : (
                         <div className="form-group">
                           <label>
-                            {key}
+                            {key}<span className="text-danger">*</span>
                             <input
                               className="form-control form-control-sm "
                               style={{width:'340px'}}
@@ -195,6 +195,7 @@ function Addworkinghours()
                                   : undefined
                               }
                               onChange={handleChange}
+                              required
                            
                             />
                           </label>

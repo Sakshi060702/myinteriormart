@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import "../../../FrontEnd/css/Mangelisting.css";
 import withAuthh from "../../../Hoc/withAuthh";
 import Popupalert from "../../Popupalert";
+import { validateImageFile } from "../../Validation";
+
 
 function Addlogo() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -15,12 +17,29 @@ function Addlogo() {
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
 
+  const[error,setError]=useState("");
+
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+
+    setError({});
+    const validationError = validateImageFile(selectedFile);
+
+    if (validationError) {
+      setError({
+        imageFile: validationError,
+       
+      });
+      return;
+    }
+
+
+
     if (selectedFile) {
       const formData = new FormData();
       formData.append("file", selectedFile);
@@ -114,6 +133,9 @@ function Addlogo() {
                   onChange={handleFileChange}
                   className="file-input"
                 />
+                 {error.imageFile && (
+                      <div className="text-danger">{error.imageFile}</div>
+                    )}
                 {/* <button type="submit">Upload</button> */}
 
                 <button

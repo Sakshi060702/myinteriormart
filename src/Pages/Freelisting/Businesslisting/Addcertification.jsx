@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh";
 import Popupalert from "../../Popupalert";
+import { validateImageFile } from "../../Validation";
 
 function Addcertification() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -15,6 +16,9 @@ function Addcertification() {
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
+
+  const[error,setError]=useState("");
+
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -52,6 +56,16 @@ function Addcertification() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    setError({});
+    const validationError = validateImageFile(selectedFile);
+
+    if (validationError) {
+      setError({ imageFile: validationError });
+      return;
+    }
+
+
     if (selectedFile && imageTitle) {
       const formData = new FormData();
       formData.append("file", selectedFile);
@@ -113,6 +127,9 @@ function Addcertification() {
                   Select Certification Image <span className="text-danger">*</span>
                 </label>
                 <input type="file" onChange={handleFileChange} className="file-input" />
+                {error.imageFile && (
+                      <div className="text-danger">{error.imageFile}</div>
+                    )}
               </div>
               <div className="form-group">
                 <label htmlFor="name">

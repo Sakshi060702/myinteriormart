@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginSuccess,setUserType } from '../../Redux/authSlice';
+import { validateEmail,validateMobile,validateEmailOptional } from '../Validation';
 
 function Register() {
     const [vendorType, setVendorType] = useState('');
@@ -18,6 +19,8 @@ function Register() {
     const [businesscategory, setBusinessCategory] = useState('');
     const [pinVisible, setPinVisible] = useState(false);
     const [confirmPinVisible, setConfirmPinVisible] = useState(false);
+
+    const [emailError, setEmailError] = useState("");
 
     const location = useLocation();
     const navigate=useNavigate();
@@ -35,7 +38,18 @@ function Register() {
         }
     }, [location.state]);
 
-  
+    const handleEmailChange = (e) => {
+        const value = e.target.value;
+        setEmail(value);
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (value && !emailRegex.test(value)) {
+            setEmailError("Please enter a valid email address.");
+        } else {
+            setEmailError("");
+        }
+    };
 
     const handleUserTypeChange = (e) => {
         setVendorType(e.target.value);
@@ -83,6 +97,26 @@ function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent the default form submission
+
+        setError('');
+
+
+        // const emailError = validateEmailOptional(email);
+        const mobileError = validateMobile(mobile);
+
+        if ( mobileError ) {
+            setError( mobileError);
+            return;
+        }
+
+        // Validate vendor type
+    if (!vendorType) {
+        setError('Please select a user type.');
+        return;
+    }
+
+
+
 
         const payload = {
             vendortype: vendorType,
@@ -203,6 +237,7 @@ function Register() {
                                             </div>
                                             
                                         </div>
+                                        {error && !vendorType && <div className="text-danger">Please select a user type.</div>}
                                         {vendorType.toLowerCase() === "business" && businessFields}
                                         <div className="form-group mb-4">
                                             <div className="icon-wrapper">
@@ -214,8 +249,11 @@ function Register() {
                                                 name="email"
                                                 placeholder="Email"
                                                 value={email}
-                                                onChange={(e) => setEmail(e.target.value)}
+                                                onChange={handleEmailChange}
+                                                
                                             />
+                                             {emailError && <p style={{ color: "red" }}>{emailError}</p>}
+                                           
                                         </div>
                                         <div className="form-group">
                                             <div className="icon-wrapper">
@@ -228,7 +266,11 @@ function Register() {
                                                 placeholder="Mobile no."
                                                 value={mobile}
                                                 onChange={(e) => setMobile(e.target.value)}
+                                                maxLength={10}
                                             />
+                                             {error.mobile && (
+                                                    <div className="text-danger">{error.mobile}</div>
+                                                )}
                                         </div>
                                         <div className="pin-group">
                                             <label htmlFor="pin">PIN Code</label>
@@ -251,6 +293,7 @@ function Register() {
                                                             }
                                                         }}
                                                         onFocus={(e) => e.target.select()}
+                                                        required
                                                     />
                                                 ))}
                                             </div>
@@ -292,6 +335,7 @@ function Register() {
                                                             }
                                                         }}
                                                         onFocus={(e) => e.target.select()}
+                                                        required
                                                     />
                                                 ))}
                                             </div>
@@ -318,7 +362,7 @@ function Register() {
                                         <p>
                                             Already have an account! <a href="/login">Sign In</a>
                                         </p>
-                                        {error && <div className="alert alert-danger">{error}</div>}
+                                        {/* {error && <div className="alert alert-danger">{error}</div>} */}
                                         {successMessage && <div className="alert alert-success">{successMessage}</div>}
                                     </form>
                                 </div>

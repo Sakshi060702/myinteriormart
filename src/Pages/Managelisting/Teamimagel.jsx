@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import usericon from "../../FrontEnd/img/user1 (4).jpg";
 import withAuthh from "../../Hoc/withAuthh";
 import Popupalert from "../Popupalert";
+import { validateImageFile,validateGalleryFile } from "../Validation";
 
 function Teamimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -21,6 +22,8 @@ function Teamimagel() {
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+
+  const[error,setError]=useState("");
 
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
@@ -136,6 +139,20 @@ function Teamimagel() {
   };
 
   const handleSubmit = async (event) => {
+
+
+
+    setError({});
+    const validationError = validateGalleryFile(selectedFile);
+
+    if (validationError) {
+      setError({ imageFile: validationError });
+      return;
+    }
+
+
+
+
     event.preventDefault();
 
     if (selectedFile.length > 0) {
@@ -224,7 +241,11 @@ function Teamimagel() {
                 height: "50px",
                 width: "100%", // Make the input file take the full width of the form group
               }}
+              
             />
+            {error.imageFile && (
+                      <div className="text-danger">{error.imageFile}</div>
+                    )}
           </div>
 
           <div
@@ -241,6 +262,7 @@ function Teamimagel() {
               className="wide add_bottom_10 selectdrp"
               name="businessCategory"
               onChange={handleBusinessCategoryChange}
+              required
               value={selectedBusinessCategory}
               style={{
                 width: "100%",
@@ -272,6 +294,7 @@ function Teamimagel() {
               name="firstName"
               placeholder="First Name"
               className="form-control form-control-sm"
+              required
               style={{
                 width: "100%",
                 height: "50px", // Adjust height as needed
@@ -293,6 +316,7 @@ function Teamimagel() {
               className="form-control form-control-sm"
               type="text"
               name="lastName"
+              required
               placeholder="Last Name"
               style={{
                 width: "100%",
@@ -315,6 +339,7 @@ function Teamimagel() {
               className="wide add_bottom_10 country selectdrp"
               value={selectedCountry}
               onChange={handleCountryChange}
+              required
               style={{
                 width: "100%",
                 height: "50px", // Adjust height as needed
@@ -344,6 +369,7 @@ function Teamimagel() {
               id="state"
               value={selectedState}
               onChange={handleStateChange}
+              required
               style={{
                 width: "100%",
                 height: "50px", // Adjust height as needed
@@ -391,7 +417,9 @@ function Teamimagel() {
             </div>
           </div>
         ))}
+     
       </div>
+      <div className="text-danger">Upload Maximum 3 Images</div>
       {showPopup && (
         <Popupalert
           message={successMessage || errorMessage}

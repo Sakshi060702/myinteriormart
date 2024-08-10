@@ -96,7 +96,7 @@ function Changepassword() {
                   className="form-control"
                   type={oldpasswordVisible ? "text" : "password"}
                   name="old_password"
-                  placeholder="Old Password"
+                  placeholder="Old Pin"
                   value={oldPassword}
                   onChange={handleOldPasswordChange}
                 />
@@ -128,7 +128,7 @@ function Changepassword() {
                   type={newpasswordVisible ? "text" : "password"}
                   className="form-control"
                   name="newpassword"
-                  placeholder="New Password"
+                  placeholder="New Pin"
                   value={newPassword}
                   onChange={handleNewPasswordChange}
                 />
@@ -159,7 +159,7 @@ function Changepassword() {
                   className="form-control"
                   type={confirmpasswordVisible ? "text" : "password"}
                   name="confirm_new_password"
-                  placeholder="Confirm New Password"
+                  placeholder="Confirm New Pin"
                   value={confirmPassword}
                   onChange={handleConfirmPasswordChange}
                 />

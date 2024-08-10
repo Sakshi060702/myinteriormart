@@ -5,6 +5,8 @@ import Profileimg from "../../FrontEnd/img/Asset.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
 import { useNavigate } from "react-router-dom";
+import Popupalert from "../Popupalert";
+import { validateImageFile,validateName } from "../Validation";
 
 function Editprofile() {
   const [fullName, setFullName] = useState('');
@@ -19,6 +21,11 @@ function Editprofile() {
   const [isVendor, setIsVendor] = useState(true);
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
+
+  const[error,setError]=useState("");
+  
+  
+
 
   useEffect(() => {
     // Fetch user profile data when component mounts
@@ -62,6 +69,22 @@ function Editprofile() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    setError({});
+    const validationError = validateImageFile(file);
+    const firstnameError=validateName(fullName);
+    const lastnameError=validateName(lastName);
+
+
+    if (validationError||firstnameError||lastnameError) {
+      setError({ imageFile: validationError ,
+        firstname:firstnameError,
+        lastname:lastnameError
+      });
+      return;
+    }
+
+
     const formData = new FormData();
     formData.append('FirstName', fullName);
     formData.append('LastName', lastName);
@@ -105,6 +128,9 @@ function Editprofile() {
                     <span>Change Image</span>
                   </label>
                   <input id="file" type="file" onChange={handleFileChange} />
+                  {error.imageFile && (
+                      <div className="text-danger">{error.imageFile}</div>
+                    )}
                   <img className="profile_img" src={profileImage} id="output" alt="Profile" />
                 </div>
                 <h6 className="profile_customer_name text-center">{imgText}</h6>
@@ -115,11 +141,17 @@ function Editprofile() {
                 <label>First Name</label>
                 <input className="form-control" type="text" name="name" value={fullName} onChange={(e) => setFullName(e.target.value)} />
                 <i className="ti-user" style={{ left: '10px' }}></i>
+                {error.firstname && (
+                      <div className="text-danger">{error.firstname}</div>
+                    )}
               </div>
               <div className="form-group">
                 <label>Last Name</label>
                 <input className="form-control" type="text" name="name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
                 <i className="ti-user" style={{ left: '10px' }}></i>
+                {error.lastname && (
+                      <div className="text-danger">{error.lastname}</div>
+                    )}
               </div>
 
               <div className="form-group">

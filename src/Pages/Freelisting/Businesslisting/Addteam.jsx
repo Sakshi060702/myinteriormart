@@ -3,6 +3,7 @@ import { useSelector,useDispatch } from "react-redux";
 import usericon from "../../../FrontEnd/img/user1 (4).jpg";
 import withAuthh from "../../../Hoc/withAuthh"
 import Popupalert from "../../Popupalert";
+import { validateGalleryFile } from "../../Validation";
 
 function Addteam() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -14,6 +15,9 @@ function Addteam() {
 
   const [imageURL, setImageURL] = useState(null);
   const [imageTitleFromAPI, setImageTitleFromAPI] = useState("");
+
+  const [imageDetails, setImageDetails] = useState([]);
+  const[error,setError]=useState("");
  
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -37,18 +41,21 @@ function Addteam() {
           throw new Error("Failed to fetch user profile");
         }
         const data = await response.json();
-        setImageURL(data); // Assuming data contains image URL and title
-        setImageTitleFromAPI(data.imagetitle); // Set the image title from API
-        
-       
+        console.log(data.imagepath);
+        if (data instanceof Object) {
+          console.log(data);
+          console.log();
+          setImageDetails(data.imagepath.map((img) => ({ url: img })));
+        }
+        // setImageURL(data.imagepath); // Assuming data contains image URL and title
+        // setImageTitleFromAPI(data.imagetitle); // Set the image title from API
       } catch (error) {
         console.error(error);
       }
     };
-    if (token) {
-      fetchTeamImage();
-    }
-  }, [token, dispatch]);
+
+    fetchTeamImage();
+  }, [token]);
 
 
   const apiUrl =
@@ -135,46 +142,74 @@ function Addteam() {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    // Prepare data to submit to the API
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-    formData.append("designation", selectedBusinessCategory);
-    formData.append("firstName", event.target.firstName.value);
-    formData.append("lastName", event.target.lastName.value);
-    formData.append("countryId", selectedCountry);
-    formData.append("stateId", selectedState);
 
-    try {
-      const response = await fetch("https://apidev.myinteriormart.com/api/ImageUpload/UploadOwnerImage", {
-        method: "POST",
-        headers: {
-          
-          "Authorization": `Bearer ${token}`,
-        },
-        body: formData,
+
+
+    setError({});
+    const validationError = validateGalleryFile(selectedFile);
+
+    if (validationError) {
+      setError({ imageFile: validationError });
+      return;
+    }
+
+
+
+
+    event.preventDefault();
+
+    if (selectedFile.length > 0) {
+      const formData = new FormData();
+      selectedFile.forEach((file) => {
+        formData.append("file", file);
       });
-      if (!response.ok) {
-        throw new Error("Failed to upload image");
+
+      formData.append("designation", selectedBusinessCategory);
+      formData.append("firstName", event.target.firstName.value);
+      formData.append("lastName", event.target.lastName.value);
+      formData.append("countryId", selectedCountry);
+      formData.append("stateId", selectedState);
+
+      try {
+        const response = await fetch(
+          "https://apidev.myinteriormart.com/api/ImageUpload/UploadOwnerImage",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to upload image");
+        }
+
+        const result = await response.json();
+        console.log("Upload result:", result);
+        
+
+        if (result instanceof Object) {
+          setImageDetails(result.imageUrls.map((img)=> ({ url: img })));
+        }
+        // setImageURL(result.imageUrl);// Ensure this is the correct property
+        setSuccessMessage("Team Image Uploded Successfully");
+        setErrorMessage("");
+        setShowPopup(true);
+
+        setTimeout(() => {
+          setShowPopup(false);
+        }, 2000);
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        setErrorMessage("Failed to Upload Image. Please try again later.");
+        setSuccessMessage(""); // Clear any existing success message
+        setShowPopup(true);
       }
-      // Handle success (e.g., show success message)
-      console.log("Image uploaded successfully");
-      
-      console.log("Team token",token);
-      
-      setSuccessMessage("Image Uploded Successfully");
-      setErrorMessage("");
+    } else {
+      setErrorMessage("Please select File and Title.");
+      setSuccessMessage(""); // Clear any existing success message
       setShowPopup(true);
-      setTimeout(() => {
-        setShowPopup(false);
-       
-      }, 2000);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-      setErrorMessage("Failed to Upload Image. Please try again later.");
-    setSuccessMessage(""); // Clear any existing success message
-    setShowPopup(true);
-      // Handle error uploading image
     }
   };
 
@@ -208,6 +243,9 @@ function Addteam() {
           width: "100%", // Make the input file take the full width of the form group
         }}
       />
+       {error.imageFile && (
+                      <div className="text-danger">{error.imageFile}</div>
+                    )}
     </div>
 
     <div
@@ -347,20 +385,23 @@ function Addteam() {
             </div>
           </div>
           <div className="row justify-content-center mt-4">
-            <div className="col-md-3 col-lg-2 col-6 mb-5">
-              <div className="upload_img_sec">
-                <img
-                  className="upload_images"
-                  src={imageURL?.imagepath ? `https://apidev.myinteriormart.com${imageURL.imagepath}` : ""}
-                  alt="Gallery Image"
-                 
-                />
-              </div>
-              <div className="img_title text-center">
-              {imageTitleFromAPI}
-              </div>
+        {imageDetails.map((image, index) => (
+          <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
+            <div className="upload_img_sec">
+              <img
+                className="upload_images"
+                src={
+                  image.url
+                    ? `https://apidev.myinteriormart.com${image.url}`
+                    : ""
+                }
+                alt="Gallery Image"
+              />
             </div>
           </div>
+        ))}
+     
+      </div>
 
           {showPopup && (
             <Popupalert 

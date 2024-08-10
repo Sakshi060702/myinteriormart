@@ -4,6 +4,7 @@ import usericon from "../../../FrontEnd/img/user1 (3).jpg";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh"
 import Popupalert from "../../Popupalert";
+import { validateImageFile } from "../../Validation";
 
 
 function Addclient() {
@@ -20,6 +21,8 @@ function Addclient() {
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
+
+  const[error,setError]=useState("");
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -61,6 +64,16 @@ function Addclient() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+
+    setError({});
+    const validationError = validateImageFile(selectedFile);
+
+    if (validationError) {
+      setError({ imageFile: validationError });
+      return;
+    }
+
     if (selectedFile && imageTitle) {
       const formData = new FormData();
       formData.append("file", selectedFile);
@@ -125,6 +138,9 @@ function Addclient() {
                     onChange={handleFileChange}
                      className="file-input"
                   />
+                  {error.imageFile && (
+                      <div className="text-danger">{error.imageFile}</div>
+                    )}
 
                   {/* <button type="submit">Upload</button> */}
                 </form>

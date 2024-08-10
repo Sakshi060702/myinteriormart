@@ -352,7 +352,7 @@ const Address = () => {
               <form onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="form-group col-md-4">
-                    <label>Country</label>
+                    <label>Country<span className="text-danger">*</span></label>
                     {/* <input
         type="text"
         placeholder="Search Country"
@@ -384,7 +384,7 @@ const Address = () => {
                     </select>
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="state">State</label>
+                    <label htmlFor="state">State<span className="text-danger">*</span></label>
                     <select
                       className="wide add_bottom_10 state "
                       id="state"
@@ -410,7 +410,7 @@ const Address = () => {
                     </select>
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="city">City</label>
+                    <label htmlFor="city">City<span className="text-danger">*</span></label>
                     <select
                       className="wide add_bottom_10 city "
                       id="city"
@@ -435,7 +435,7 @@ const Address = () => {
                 </div>
                 <div className="row">
                   <div className="form-group col-md-4">
-                    <label>Locality</label>
+                    <label>Locality<span className="text-danger">*</span></label>
                     <select
                       className="wide add_bottom_10 locality "
                       value={selectedAssembly}
@@ -460,7 +460,7 @@ const Address = () => {
                     </select>
                   </div>
                   <div className="form-group col-md-4">
-                    <label>Pincode</label>
+                    <label>Pincode<span className="text-danger">*</span></label>
                     <select
                       className="wide add_bottom_10 pincode "
                       value={selectedPincode}
@@ -485,7 +485,7 @@ const Address = () => {
                     </select>
                   </div>
                   <div className="form-group col-md-4">
-                    <label>Area</label>
+                    <label>Area<span className="text-danger">*</span></label>
                     <select
                       className="wide add_bottom_10 area "
                       value={selectedLocality}

@@ -134,7 +134,7 @@ function Sociallinkl() {
               <form onSubmit={handleSubmit}>
               <div className="row">
                 <div className="form-group col-md-6">
-                  <label for="name">Facebook </label>
+                  <label for="name">Facebook <span className="text-danger">*</span></label>
                   <input
                       className="form-control form-control-sm box"
                       type="text"
@@ -143,10 +143,11 @@ function Sociallinkl() {
                       placeholder="Enter Facebook Link"
                       value={formData.facebook}
                       onChange={handleChange}
+                      required
                     />
                 </div>
                 <div className="form-group col-md-6">
-                  <label for="name">Whatsapp </label>
+                  <label for="name">Whatsapp <span className="text-danger">*</span></label>
                   <input
                       className="form-control form-control-sm box"
                       type="text"
@@ -155,10 +156,11 @@ function Sociallinkl() {
                       placeholder="Enter Whatsapp Link"
                       value={formData.whatsappGroupLink}
                       onChange={handleChange}
+                      required
                     />
                 </div>
                 <div className="form-group col-md-6">
-                  <label for="name">LinkdenIn</label>
+                  <label for="name">LinkdenIn<span className="text-danger">*</span></label>
                   <input
                       className="form-control form-control-sm box"
                       type="text"
@@ -167,10 +169,11 @@ function Sociallinkl() {
                       placeholder="Enter LinkedIn Link"
                       value={formData.linkedin}
                       onChange={handleChange}
+                      required
                     />
                 </div>
                 <div className="form-group col-md-6">
-                  <label for="name">Twitter</label>
+                  <label for="name">Twitter<span className="text-danger">*</span></label>
                   <input
                       className="form-control form-control-sm box"
                       type="text"
@@ -179,10 +182,11 @@ function Sociallinkl() {
                       placeholder="Enter Twitter Link"
                       value={formData.twitter}
                       onChange={handleChange}
+                      required
                     />
                 </div>
                 <div className="form-group col-md-6">
-                  <label for="name">Youtube</label>
+                  <label for="name">Youtube<span className="text-danger">*</span></label>
                   <input
                       className="form-control form-control-sm box"
                       type="text"
@@ -191,10 +195,11 @@ function Sociallinkl() {
                       placeholder="Enter YouTube Link"
                       value={formData.youtube}
                       onChange={handleChange}
+                      required
                     />
                 </div>
                 <div className="form-group col-md-6">
-                  <label for="name">Instagram</label>
+                  <label for="name">Instagram<span className="text-danger">*</span></label>
                   <input
                       className="form-control form-control-sm box"
                       type="text"
@@ -203,10 +208,11 @@ function Sociallinkl() {
                       placeholder="Enter Instagram Link"
                       value={formData.instagram}
                       onChange={handleChange}
+                      required
                     />
                 </div>
                 <div className="form-group col-md-6">
-                  <label for="name">Pinterest</label>
+                  <label for="name">Pinterest<span className="text-danger">*</span></label>
                   <input
                       className="form-control form-control-sm box"
                       type="text"
@@ -215,6 +221,7 @@ function Sociallinkl() {
                       placeholder="Enter Pinterest Link"
                       value={formData.pinterest}
                       onChange={handleChange}
+                      required
                     />
                 </div>
 

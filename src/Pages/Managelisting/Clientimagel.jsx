@@ -4,6 +4,7 @@ import usericon from "../../FrontEnd/img/user1 (3).jpg";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
 import Popupalert from "../Popupalert";
+import { validateImageFile } from "../Validation";
 
 
 function Clientimagel() {
@@ -15,6 +16,8 @@ function Clientimagel() {
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
+
+  const[error,setError]=useState("");
 
 
   const navigate=useNavigate();
@@ -61,6 +64,17 @@ function Clientimagel() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+
+
+    setError({});
+    const validationError = validateImageFile(selectedFile);
+
+    if (validationError) {
+      setError({ imageFile: validationError });
+      return;
+    }
+
     if (selectedFile && imageTitle) {
       const formData = new FormData();
       formData.append("file", selectedFile);
@@ -83,7 +97,7 @@ function Clientimagel() {
         const result = await response.json();
         console.log(result); // Log the result for debugging purposes
         console.log("Client Image Token",token)
-        alert("Client Image Uploded Successfully")
+        // alert("Client Image Uploded Successfully")
         setImageURL(result.imageUrl);
         
 
@@ -125,6 +139,9 @@ function Clientimagel() {
                     onChange={handleFileChange}
                      className="file-input"
                   />
+                   {error.imageFile && (
+                      <div className="text-danger">{error.imageFile}</div>
+                    )}
 
                   {/* <button type="submit">Upload</button> */}
                 </form>
@@ -140,6 +157,7 @@ function Clientimagel() {
                     placeholder="Company Name"
                     value={imageTitle}
                 onChange={handleTitleChange}
+                requireds
                
                   />
               </div>

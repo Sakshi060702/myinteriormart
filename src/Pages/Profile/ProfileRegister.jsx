@@ -1,14 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
+import { validateEmail,validateMobile } from "../Validation";
 
 function ProfileRegister() {
   const [mobileNumber, setMobile] = useState("");
   const [email, setEmail] = useState("");
   const token = useSelector((state) => state.auth.token);
+  const [error, setError] = useState("");
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const mobileError = validateMobile(mobileNumber);
+    const emailError = validateEmail(email);
+
+    if (mobileError||emailError) {
+      setError({
+        mobile: mobileError,
+        email:emailError,
+       
+      });
+      return;
+    }
+
     const data = {
       mobileNumber,
       email,
@@ -55,7 +71,7 @@ function ProfileRegister() {
           <form className="icon-form-group" onSubmit={handleSubmit}>
             <div className="row">
               <div className="form-group col-6">
-                <label>Mobile Number</label>
+                <label>Mobile Number<span className="text-danger">*</span></label>
                 <input
                   className="form-control"
                   type="text"
@@ -64,10 +80,14 @@ function ProfileRegister() {
                   onChange={(e) => setMobile(e.target.value)}
                 />
                 <i className="icon_phone" style={{ left: "20px" }}></i>
+
+                {error.mobile && (
+                      <div className="text-danger">{error.mobile}</div>
+                    )}
               </div>
               <div className="form-group col-6">
                 <label>
-                  Email &nbsp;{" "}
+                  Email<span className="text-danger">*</span> &nbsp;{" "}
                   <a
                     href="#verify_email"
                     title="Verify Email"
@@ -85,6 +105,9 @@ function ProfileRegister() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
                 <i className="icon_mail_alt" style={{ top: "30px" }}></i>
+                {error.email && (
+                      <div className="text-danger">{error.email}</div>
+                    )}
               </div>
 
               <div className="text-center col-12 mt-3">

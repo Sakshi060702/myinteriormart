@@ -283,12 +283,13 @@ function Addcategory()
                 <form onSubmit={handleSubmit}>
                   <div className="row">
                     <div className="form-group col-md-6">
-                      <label htmlFor="fcategory">First Category </label>
+                      <label htmlFor="fcategory">First Category <span className="text-danger">*</span></label>
                       <br></br>
                       <select
                         className="wide add_bottom_10 fcategory selectdrp"
                         value={selectedFirstCategory}
                         onChange={handleFirstCategoryChange}
+                        required
                       >
                         <option value="">Select First Category</option>
                         {firstCategories.map((category) => (
@@ -302,12 +303,13 @@ function Addcategory()
                       </select>
                     </div>
                     <div className="form-group col-md-6">
-                      <label htmlFor="scategory">Second Category </label>
+                      <label htmlFor="scategory">Second Category <span className="text-danger">*</span></label>
                       <br></br>
                       <select
                         className="wide add_bottom_10 scategory selectdrp"
                         value={selectedSecondCategory}
                         onChange={handleSecondCategoryChange}
+                        required
                       >
                         <option value="">Select Second Category</option>
                         {secondCategories.map((category) => (

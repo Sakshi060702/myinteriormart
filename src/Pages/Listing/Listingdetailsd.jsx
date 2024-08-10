@@ -39,6 +39,19 @@ function Listingdetailsd() {
     fetchListingDetails();
   }, [listingId]);
 
+  useEffect(() => {
+    if (listingDetails) {
+      const bookmarkStatus = listingDetails.bookmark && listingDetails.bookmark.bookmark;
+      setIsBookmarked(bookmarkStatus);
+
+      const likeStatus = listingDetails.like && listingDetails.like.likeandDislike;
+      setIsLike(likeStatus);
+
+      const subscribeStatus = listingDetails.subscribe && listingDetails.subscribe.subscribe;
+      setIsSubscribe(subscribeStatus);
+    }
+  }, [listingDetails]);
+
   const token = useSelector((state) => state.auth.token);
 
   const fetchListingDetails = async () => {
@@ -60,38 +73,224 @@ function Listingdetailsd() {
       setListingDetails(company);
 
       //for bookmark
-      const bookmarkStatus = company.bookmark && company.bookmark.bookmark;
-      setIsBookmarked(bookmarkStatus);
-      setInitialBookmarkStatus(bookmarkStatus);
+      // const bookmarkStatus = company.bookmark && company.bookmark.bookmark;
+      // setIsBookmarked(bookmarkStatus);
+      // setInitialBookmarkStatus(bookmarkStatus);
 
-      //for like
-      const likeStatus = company.like && company.like.likeandDislike;
-      setIsLike(likeStatus);
-      setInitialLikeStatus(likeStatus);
+      // //for like
+      // const likeStatus = company.like && company.like.likeandDislike;
+      // setIsLike(likeStatus);
+      // setInitialLikeStatus(likeStatus);
 
-      //for subscribe
-      const subscribeStatus = company.subscribe && company.subscribe.subscribe;
-      setIsSubscribe(subscribeStatus);
-      setInitialSubscribeStatus(subscribeStatus);
+      // //for subscribe
+      // const subscribeStatus = company.subscribe && company.subscribe.subscribe;
+      // setIsSubscribe(subscribeStatus);
+      // setInitialSubscribeStatus(subscribeStatus);
     } catch (error) {
       console.error("Error in fetching listing Details", error);
     }
   };
 
   //for bookmark
-  const handleBookmarkToggle = () => {
-    setIsBookmarked((prev) => !prev);
+  const handleBookmarkToggle = async () => {
+    console.log(isBookmarked);
+    try {
+      const response = await fetch(
+        `https://apidev.myinteriormart.com/api/Bookmark/BookMarks`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            //  listingId: listingId,
+            companyID: listingDetails.listingId // dynamically add companyID
+          })
+        }
+      );
+      if (response.ok) {
+        setIsBookmarked((prev) => !prev);
+      
+      } else {
+        console.error('Failed to update bookmark status');
+      }
+    console.log(setIsBookmarked);
+    } catch (error) {
+      console.error('Error in updating bookmark status', error);
+    }
   };
+
+  useEffect(() => {
+    const fetchBookmarkStatus = async () => {
+        if (listingDetails && listingDetails.listingId) { // Ensure listingDetails and listingId are available
+            try {
+                const response = await fetch(
+                    `https://apidev.myinteriormart.com/api/BindBookmarkLikeSubscribe/Bookmark`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            companyID: listingDetails.listingId // dynamically add companyID
+                        })
+                    }
+                );
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("bookmark", data);
+                    setIsBookmarked(data.bookmark); // Assuming response has a field 'bookmark'
+                } else {
+                    console.error('Failed to fetch bookmark status');
+                }
+            } catch (error) {
+                console.error('Error in fetching bookmark status', error);
+            }
+        } else {
+            console.warn('listingDetails or listingId is not available');
+        }
+    };
+
+    fetchBookmarkStatus();
+}, [listingDetails]); 
+
 
   //for like
-  const handleLikeToggle = () => {
-    setIsLike((prev) => !prev);
+  const handleLikeToggle = async() => {
+    try {
+      const response = await fetch(
+        `https://apidev.myinteriormart.com/api/Like/Likes`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            //  listingId: listingId,
+            companyID: listingDetails.listingId 
+          })
+        }
+      );
+      if (response.ok) {
+        setIsLike((prev) => !prev);
+      } else {
+        console.error('Failed to update Like status');
+      }
+    } catch (error) {
+      console.error('Error in updating Like status', error);
+    }
   };
 
+  useEffect(() => {
+    const fetchLikeStatus = async () => {
+      if(listingDetails && listingDetails.listingId){
+        try {
+          const response = await fetch(
+            `https://apidev.myinteriormart.com/api/BindBookmarkLikeSubscribe/LikeDislike`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+              },
+              body: JSON.stringify({
+                //  listingId: listingId,
+                companyID: listingDetails.listingId // dynamically add companyID
+              })
+            }
+          );
+  
+          if (response.ok) {
+            const data = await response.json();
+            console.log("Like",data);
+            setIsLike(data.likeandDislike); // Assuming response has a field bookmarkStatus
+          } else {
+            console.error('Failed to fetch like status');
+          }
+        } catch (error) {
+          console.error('Error in fetching like status', error);
+        }
+  
+      }
+      else{
+        console.warn('listingDetails or listingId is not available');
+      }
+          };
+
+    fetchLikeStatus();
+  }, [listingDetails]);
+
+
+
   //for subscribe
-  const handleSubscribeToggle = () => {
-    setIsSubscribe((prev) => !prev);
+  const handleSubscribeToggle = async() => {
+    try {
+      const response = await fetch(
+        `https://apidev.myinteriormart.com/api/Subscribe/Subscribes`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            //  listingId: listingId,
+            companyID: listingDetails.listingId // dynamically add companyID
+          })
+        }
+      );
+      if (response.ok) {
+        setIsSubscribe((prev) => !prev);
+      } else {
+        console.error('Failed to update Subscribe status');
+      }
+    } catch (error) {
+      console.error('Error in updating Subscribe status', error);
+    }
   };
+  useEffect(() => {
+    const fetchSubscribeStatus = async () => {
+      if(listingDetails && listingDetails.listingId){
+        try {
+          const response = await fetch(
+            `https://apidev.myinteriormart.com/api/BindBookmarkLikeSubscribe/Subscribes`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+              },
+              body: JSON.stringify({
+                companyID: listingDetails.listingId // dynamically add companyID
+            })
+            }
+          );
+  
+          if (response.ok) {
+            const data = await response.json();
+            console.log("Subscribe",data);
+            setIsSubscribe(data.subscribe); // Assuming response has a field bookmarkStatus
+          } else {
+            console.error('Failed to fetch subscribe status');
+          }
+        } catch (error) {
+          console.error('Error in fetching subscribe status', error);
+        }
+  
+      }
+      else{
+        console.warn('listingDetails or listingId is not available');
+      }
+          };
+
+    fetchSubscribeStatus();
+  }, [listingDetails]);
+
+
 
   //for address
   const toggleAddress=()=>{
@@ -314,60 +513,29 @@ function Listingdetailsd() {
                         </button>
 
                         <button
-                          id="BookmarkMe"
-                          className="btn-custom pushRight btn btn-light btn-sm"
-                          onClick={handleBookmarkToggle}
-                        >
-                          <i
-                            className={
-                              isBookmarked
-                                ? "fa fa-bookmark"
-                                : "fa fa-bookmark-o"
-                            }
-                            style={{
-                              color: isBookmarked ? "black" : "inherit",
-                            }}
-                          ></i>{" "}
-                          Bookmark
-                        </button>
+                        className={`btn btn-bookmark ${isBookmarked ? "active" : ""}`}
+                        onClick={handleBookmarkToggle}
+                      >
+                        {isBookmarked ? "Unbookmark" : "Bookmark"}
+                      </button>
                         <button className="btn-custom pushRight btn btn-light btn-sm"
                         onClick={() => setIsSociallinkOpen(true)}>
                           <i className="icon-share"></i>Share
                         </button>
 
-                        {
-                          <button
-                            id="LikeMe"
-                            className="btn-custom pushRight btn btn-light btn-sm"
-                            onClick={handleLikeToggle}
-                          >
-                            <i
-                              className={
-                                isLike ? "fa fa-thumbs-up" : "fa fa-thumbs-o-up"
-                              }
-                              style={{
-                                color: isLike ? "green" : "inherit",
-                              }}
-                            ></i>{" "}
-                            Like
-                          </button>
-                        }
-
                         <button
-                          id="SubscribeMe"
-                          className="btn-custom pushRight btn btn-light btn-sm"
-                          onClick={handleSubscribeToggle}
-                        >
-                          <i
-                            className={
-                              isSubscribe ? "fa fa-bell" : "fa fa-bell-o"
-                            }
-                            style={{
-                              color: isSubscribe ? "red" : "inherit",
-                            }}
-                          ></i>
-                          {""}Subscribe
-                        </button>
+                        className={`btn btn-bookmark ${isLike ? "active" : ""}`}
+                        onClick={handleLikeToggle}
+                      >
+                        {isLike ? "Dislike" : "Like"}
+                      </button>
+
+                      <button
+                        className={`btn btn-bookmark ${isSubscribe ? "active" : ""}`}
+                        onClick={handleSubscribeToggle}
+                      >
+                        {isSubscribe ? "Unsubscribe" : "Subscribe"}
+                      </button>
                       </div>
                     </div>
                   </div>

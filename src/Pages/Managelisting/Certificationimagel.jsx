@@ -4,6 +4,7 @@ import usericon from "../../FrontEnd/img/user1 (2).jpg";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
 import Popupalert from "../Popupalert";
+import { validateImageFile,validateName } from "../Validation";
 
 function Certificationimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -14,6 +15,7 @@ function Certificationimagel() {
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
+  const[error,setError]=useState("");
 
   const token=useSelector((state)=>state.auth.token);
   const dispatch = useDispatch();
@@ -51,6 +53,21 @@ function Certificationimagel() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+
+    setError({});
+    const validationError = validateImageFile(selectedFile);
+    const validationName=validateName(imageTitle);
+
+
+    if (validationError||validationName) {
+      setError({ imageFile: validationError,
+        imagetitle:validationName
+       });
+      return;
+    }
+
+
     if (selectedFile && imageTitle) {
       const formData = new FormData();
       formData.append("file", selectedFile);
@@ -114,6 +131,9 @@ function Certificationimagel() {
                   Select Certification Image <span className="text-danger">*</span>
                 </label>
                 <input type="file" onChange={handleFileChange} className="file-input" />
+                {error.imageFile && (
+                      <div className="text-danger">{error.imageFile}</div>
+                    )}
               </div>
               <div className="form-group">
                 <label htmlFor="name">
@@ -128,6 +148,11 @@ function Certificationimagel() {
                   value={imageTitle}
                   onChange={handleTitleChange}
                 />
+                {error.imagetitle && (
+                      <div className="text-danger">{error.imagetitle}</div>
+                    )}
+                
+
               </div>
               <button
                 className="btn_1"

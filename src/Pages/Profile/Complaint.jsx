@@ -1,13 +1,14 @@
 import React, { useState,useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
+import { validateName } from "../Validation";
 
 function Complaint() {
   const [File, setSelectedFile] = useState(null);
   const [Title, setImageTitle] = useState("");
   const [Description, setImageDescription] = useState("");
 
-  
+  const [error, setError] = useState("");
 
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
@@ -26,6 +27,20 @@ function Complaint() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+
+    const TitleError = validateName(Title);
+    const DescriptionError = validateName(Description);
+
+    if (TitleError||DescriptionError) {
+      setError({
+        Title: TitleError,
+        Description:DescriptionError,
+       
+      });
+      return;
+    }
+
     if (File && Title && Description) {
       const formData = new FormData();
       formData.append("File", File);
@@ -75,7 +90,7 @@ function Complaint() {
           <form className="icon-form-group" onSubmit={handleSubmit}>
             <div className="row">
               <div className="form-group col-12">
-                <label>Title</label>
+                <label>Title<span className="text-danger">*</span></label>
                 <input
                   className="form-control"
                   type="text"
@@ -83,9 +98,12 @@ function Complaint() {
                   value={Title}
                   onChange={handleTitleChange}
                 />
+                {error.Title && (
+                      <div className="text-danger">{error.Title}</div>
+                    )}
               </div>
               <div className="form-group col-12">
-                <label>Complaint Description</label>
+                <label>Complaint Description<span className="text-danger">*</span></label>
                 <textarea
                   className="form-control"
                   id="address"
@@ -94,14 +112,18 @@ function Complaint() {
                   onChange={handleDescriptionChange}
                   style={{ height: "100px" }}
                 ></textarea>
+                {error.Description && (
+                      <div className="text-danger">{error.Description}</div>
+                    )}
               </div>
               <div className="form-group">
-                <label > File</label>
+                <label > File<span className="text-danger">*</span></label>
                 <br></br>
                 <input
                   type="file"
                   onChange={handleFileChange}
                    className="form-control"
+                   required
                   
                 />
               </div>
@@ -123,4 +145,3 @@ function Complaint() {
   );
 }
 export default Complaint;
-

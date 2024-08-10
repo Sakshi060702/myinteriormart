@@ -5,12 +5,15 @@ import "../../../FrontEnd/css/Mangelisting.css";
 import { useSelector, useDispatch } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh";
 import Popupalert from "../../Popupalert";
+import { validateGalleryFile } from "../../Validation";
+
 
 function Addgallery() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageTitle, setImageTitle] = useState("");
   const [imageURL, setImageURL] = useState(null);
   const [imageTitleFromAPI, setImageTitleFromAPI] = useState("");
+  const [imageDetails, setImageDetails] = useState([]);
  
 
   const token = useSelector((state) => state.auth.token);
@@ -20,8 +23,10 @@ function Addgallery() {
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
 
+  const[error,setError]=useState("");
+
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    setSelectedFile(Array.from(event.target.files));
   };
 
   const handleTitleChange = (event) => {
@@ -43,27 +48,41 @@ function Addgallery() {
           throw new Error("Failed to fetch user profile");
         }
         const data = await response.json();
-        console.log(data);
-        setImageURL(data.imagepath); // Assuming data contains image URL and title
-        setImageTitleFromAPI(data.imagetitle); // Set the image title from API
+        console.log("Get response", data);
+        console.log(data instanceof Object);
+        if (data instanceof Object) {
+          console.log(data);
+          console.log();
+          setImageDetails(data.imagepath.map((img)=> ({ url: img, title: data.imagetitle })));
         
-       
+        }
       } catch (error) {
         console.error(error);
       }
     };
-    // if (token) {
-      
-    // }
+
     fetchGalleryImage();
-  // }, [token, dispatch]);
-  }, []);
+  }, [token]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (selectedFile && imageTitle) {
+
+
+    setError({});
+    const validationError = validateGalleryFile(selectedFile);
+
+    if (validationError) {
+      setError({ imageFile: validationError });
+      return;
+    }
+
+
+    if (selectedFile.length > 0 && imageTitle) {
       const formData = new FormData();
-      formData.append("file", selectedFile);
+      selectedFile.forEach((file) => {
+        formData.append("file", file);
+      });
+
       formData.append("imageTitle", imageTitle);
 
       try {
@@ -83,28 +102,30 @@ function Addgallery() {
         }
 
         const result = await response.json();
-        console.log(result);
-        console.log("Gallery Image Token", token); // Log the result for debugging purposes
-      
-        setImageURL(result.imageUrl);
+        console.log("Post response", result);
 
-        setSuccessMessage("Image Uploded Successfully");
-      setErrorMessage("");
-      setShowPopup(true);
+        if (result instanceof Object) {
+          setImageDetails(result.imageUrls.map((img)=> ({ url: img, title: result.imageTitle })));
+          // setImageDetails((prevDetails) =>
+          //   prevDetails.concat(result.map((image) => ({ url: image.imageUrls, title: image.imageTitle })))
+          // );
+          // console.log("Updated imageDetails", result.map((image) => ({ url: image.imageUrls, title: image.imageTitle })));
+        }
+        // console.log(setImageDetails);
 
-      setTimeout(() => {
-      setShowPopup(false);
-     
-    }, 2000);
+        setSuccessMessage("Gallery Image Uploaded Successfully");
+        setErrorMessage("");
+        setShowPopup(true);
 
-        
+        setTimeout(() => {
+          setShowPopup(false);
+        }, 2000);
 
-        // You can handle the result here if needed, e.g., show a success message
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
         setErrorMessage("Failed to Upload Image. Please try again later.");
-    setSuccessMessage(""); // Clear any existing success message
-    setShowPopup(true);
+        setSuccessMessage(""); // Clear any existing success message
+        setShowPopup(true);
       }
     } else {
       setErrorMessage("Please select File and Title.");
@@ -127,7 +148,12 @@ function Addgallery() {
                   type="file"
                   onChange={handleFileChange}
                   className="file-input"
+                   multiple
+                  accept="image/*"
                 />
+                {error.imageFile && (
+                      <div className="text-danger">{error.imageFile}</div>
+                    )}
               </div>
               <div className="form-group">
                 <label htmlFor="name">
@@ -159,20 +185,23 @@ function Addgallery() {
             </div>
           </div>
           <div className="row justify-content-center mt-4">
-            <div className="col-md-3 col-lg-2 col-6 mb-5">
-              <div className="upload_img_sec">
-              {console.log(imageURL)}
-                <img
-                  className="upload_images"
-                  src={imageURL ? `https://apidev.myinteriormart.com${imageURL}` : ""}
-                  alt="Gallery Image"
-                 
-                />
+            {console.log(imageDetails)}
+            {imageDetails.map((image, index) => (
+              <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
+                <div className="upload_img_sec">
+                  
+                  <img
+                    className="upload_images"
+                    src={image.url ? `https://apidev.myinteriormart.com${image.url}` : ""}
+                    alt="Gallery Image"
+                  />
+                </div>
+                
+                
+                <div className="img_title text-center">{image.title}</div>
               </div>
-              <div className="img_title text-center">
-              {imageTitleFromAPI}
-              </div>
-            </div>
+            ))}
+         
           </div>
 
           {showPopup && (

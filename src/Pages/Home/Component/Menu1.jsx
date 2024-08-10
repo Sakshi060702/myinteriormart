@@ -6,16 +6,17 @@ import usericon from "../../../FrontEnd/img/icon/user1.png";
 import Dropdown from "../../Dropdown";
 import Notification from "../../Notification";
 import "../../../FrontEnd/css/Header.css";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 function Menu1() {
   const [showNotificationMenu, setShowNotificationMenu] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-  const[userProfile,setUserProfile]=useState(null);
+  const [userProfile, setUserProfile] = useState(null);
 
-  const { token } = useSelector(state => state.auth);
+  const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const userType = useSelector((state) => state.auth.userType);
 
   const toogleMenu = () => {
     setShowMenu(!showMenu);
@@ -67,13 +68,16 @@ function Menu1() {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await fetch('https://apidev.myinteriormart.com/api/UserProfile/GetUserProfile', {
-          headers: {
-            Authorization: `Bearer ${token}`
+        const response = await fetch(
+          "https://apidev.myinteriormart.com/api/UserProfile/GetUserProfile",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
-        });
+        );
         if (!response.ok) {
-          throw new Error('Failed to fetch user profile');
+          throw new Error("Failed to fetch user profile");
         }
         const data = await response.json();
         dispatch(setUserProfile(data)); // Dispatch the user profile data to Redux
@@ -87,137 +91,211 @@ function Menu1() {
     }
   }, [token, dispatch]);
 
-
-
   return (
-<>
-    <header className="header_in">
-      <div className="container" style={{ background: "#fff" }}>
-        <div className="row">
-          <div className="col-lg-3 col-12">
-            <div id="logo" className="logo">
-              <NavLink to={"/"} title="index">
-                <img
-                  src={logoSticky}
-                  width="220"
-                  alt="logo"
-                  className="logo_sticky"
-                />
-              </NavLink>
+    <>
+      <header className="header_in">
+        <div className="container" style={{ background: "#fff" }}>
+          <div className="row">
+            <div className="col-lg-3 col-12">
+              <div id="logo" className="logo">
+                <NavLink to={"/"} title="index">
+                  <img
+                    src={logoSticky}
+                    width="220"
+                    alt="logo"
+                    className="logo_sticky"
+                  />
+                </NavLink>
+              </div>
             </div>
-          </div>
-          <div className="col-lg-9 col-12 navitems">
-            <ul className={`nav-links ${showMenu ? "active" : ""}`}>
-              <li>
-                <span>
-                  {/* <NavLink
+            <div className="col-lg-9 col-12 navitems">
+              <ul className={`nav-links ${showMenu ? "active" : ""}`}>
+                <li>
+                  <span>
+                    {/* <NavLink
                     to="/categorylist"
                     onClick={closeMenu}
                     style={{ fontSize: "14px", color: "black" }}
                   >
                     Suggestion
                   </NavLink> */}
-                </span>
-              </li>
-              
+                  </span>
+                </li>
 
-              {!token ? (
-                <>
-                  <li>
-                    <NavLink
-                      to="/signup2"
-                      className="btn_add listing-btn"
-                      style={{ backgroundColor: "#fe900d", fontSize: "14px" }}
-                      onClick={closeMenu}
-                    >
-                      Signup
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to="/login"
-                      className="btn_add listing-btn"
-                      style={{ backgroundColor: "#fe900d", fontSize: "14px" }}
-                      onClick={closeMenu}
-                    >
-                      Login
-                    </NavLink>
-                  </li>
-                </>
-              ) : (
-                <>
-                <div>
-                  <ul>
-                  <li>
-                <NavLink
-                  to="/addcompany"
-                  className="btn_add listing-btn"
-                  style={{ backgroundColor: "#fe900d", fontSize: "14px" }}
-                  onClick={closeMenu}
-                >
-                  Free Listing
-                </NavLink>
-              </li>
-                  </ul>
+                {!token ? (
+                  <>
+                    <li>
+                      <NavLink
+                        to="/signup2"
+                        className="btn_add listing-btn"
+                        style={{ backgroundColor: "#fe900d", fontSize: "14px" }}
+                        onClick={closeMenu}
+                      >
+                        Signup
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/login"
+                        className="btn_add listing-btn"
+                        style={{ backgroundColor: "#fe900d", fontSize: "14px" }}
+                        onClick={closeMenu}
+                      >
+                        Login
+                      </NavLink>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    {userType === "Consumer" && (
+                      <>
+                        <div>
+                          <ul>
+                            <li>
+                              <NavLink
+                                to="/addcompany"
+                                className="btn_add listing-btn"
+                                style={{
+                                  backgroundColor: "#fe900d",
+                                  fontSize: "14px",
+                                }}
+                                onClick={closeMenu}
+                              >
+                                Free Listing
+                              </NavLink>
+                            </li>
+                          </ul>
+                        </div>
+                        <div
+                          className="notification-user"
+                          style={{ display: "flex", alignItems: "center" }}
+                        >
+                          {/* <div
+                            className="dropdown notification"
+                            ref={notificationRef}
+                            style={{ marginLeft: "20px" }}
+                          >
+                            <button
+                              type="button"
+                              onClick={toggleNotificationMenu}
+                              style={{ background: "none", border: "none" }}
+                            >
+                              <img src={notificationIcon} alt="notification" />
+                              {showNotificationMenu && <Notification />}
+                            </button>
+                          </div> */}
+                          <div
+                            id="profileid"
+                            className="dropdown usericon"
+                            ref={dropRef}
+                            style={{ marginLeft: "20px", alignItems: "center" }}
+                          >
+                            <button
+                              className="usericon-btn dropdown-toggle"
+                              type="button"
+                              onClick={toggleDropdown}
+                              style={{ background: "none", border: "none" }}
+                            >
+                              <img
+                                className="usericon-img"
+                                src={
+                                  userProfile?.imgUrl
+                                    ? `https://apidev.myinteriormart.com${userProfile.imgUrl}`
+                                    : ""
+                                }
+                                alt="user icon"
+                              />
+                              {dropdownOpen && <Dropdown />}
+                            </button>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                    {userType === "Business" && (
+                      <>
+                        <div>
+                          <ul>
+                            <li>
+                              <NavLink
+                                to="/addcompany"
+                                className="btn_add listing-btn"
+                                style={{
+                                  backgroundColor: "#fe900d",
+                                  fontSize: "14px",
+                                }}
+                                onClick={closeMenu}
+                              >
+                                Free Listing
+                              </NavLink>
+                            </li>
+                          </ul>
+                        </div>
+                        <div
+                          className="notification-user"
+                          style={{ display: "flex", alignItems: "center" }}
+                        >
+                          <div
+                            className="dropdown notification"
+                            ref={notificationRef}
+                            style={{ marginLeft: "20px" }}
+                          >
+                            <button
+                              type="button"
+                              onClick={toggleNotificationMenu}
+                              style={{ background: "none", border: "none" }}
+                            >
+                              <img src={notificationIcon} alt="notification" />
+                              {showNotificationMenu && <Notification />}
+                            </button>
+                          </div>
+                          <div
+                            id="profileid"
+                            className="dropdown usericon"
+                            ref={dropRef}
+                            style={{ marginLeft: "20px", alignItems: "center" }}
+                          >
+                            <button
+                              className="usericon-btn dropdown-toggle"
+                              type="button"
+                              onClick={toggleDropdown}
+                              style={{ background: "none", border: "none" }}
+                            >
+                              <img
+                                className="usericon-img"
+                                src={
+                                  userProfile?.imgUrl
+                                    ? `https://apidev.myinteriormart.com${userProfile.imgUrl}`
+                                    : ""
+                                }
+                                alt="user icon"
+                              />
+                              {dropdownOpen && <Dropdown />}
+                            </button>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </>
+                )}
+              </ul>
+              <div
+                className="burger"
+                onClick={toogleMenu}
+                style={{ marginLeft: "30px" }}
+              >
+                <div className={`menu-icon ${showMenu ? "open" : ""}`}>
+                  <div className="line line1"></div>
+                  <div className="line line2"></div>
+                  <div className="line line3"></div>
                 </div>
-                  <div
-                    className="notification-user"
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
-                    <div
-                      className="dropdown notification"
-                      ref={notificationRef}
-                      style={{ marginLeft: "20px" }}
-                    >
-                      <button
-                        type="button"
-                        onClick={toggleNotificationMenu}
-                        style={{ background: "none", border: "none" }}
-                      >
-                        <img src={notificationIcon} alt="notification" />
-                        {showNotificationMenu && <Notification />}
-                      </button>
-                    </div>
-                    <div
-                      id="profileid"
-                      className="dropdown usericon"
-                      ref={dropRef}
-                      style={{ marginLeft: "20px", alignItems: "center" }}
-                    >
-                      <button
-                        className="usericon-btn dropdown-toggle"
-                        type="button"
-                        onClick={toggleDropdown}
-                        style={{ background: "none", border: "none" }}
-                      >
-                        <img className="usericon-img" src={userProfile?.imgUrl ? `https://apidev.myinteriormart.com${userProfile.imgUrl}` : ""} alt="user icon" />
-                        {dropdownOpen && <Dropdown />}
-                      </button>
-                    </div>
-                  </div>
-                </>
-              )}
-            </ul>
-            <div
-              className="burger"
-              onClick={toogleMenu}
-              style={{ marginLeft: "30px" }}
-            >
-              <div className={`menu-icon ${showMenu ? "open" : ""}`}>
-                <div className="line line1"></div>
-                <div className="line line2"></div>
-                <div className="line line3"></div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="layer"></div>
-    </header>
-  </>
-
+        <div className="layer"></div>
+      </header>
+    </>
   );
 }
 
 export default Menu1;
-

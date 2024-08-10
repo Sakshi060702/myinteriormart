@@ -7,6 +7,7 @@ import "../../FrontEnd/css/Register.css";
 import { useDispatch } from "react-redux";
 import { loginSuccess,setUserType } from "../../Redux/authSlice";
 import Popupalert from "../Popupalert";
+import { validateMobile } from "../Validation";
 
 function Login() {
   const location = useLocation();
@@ -60,6 +61,13 @@ function Login() {
     setError("");
     setSuccess("");
 
+    const mobileError = validateMobile(userMobile);
+
+        if (mobileError ) {
+            setError(mobileError);
+            return;
+        }
+
     try {
       const response = await fetch(
         "https://apidev.myinteriormart.com/api/Auth/Login",
@@ -80,6 +88,8 @@ function Login() {
 
       if (response.ok) {
         const tokenExpiry = new Date().getTime() + 30 * 60 * 1000;
+
+        
         localStorage.setItem("token_startTime", new Date().getTime());
         localStorage.setItem("token_endTime", new Date().getTime() + 30 * 60 * 1000);
 
@@ -138,6 +148,9 @@ function Login() {
                         onChange={handleMobileChange}
                         style={{ textAlign: "center", paddingRight: "53px" ,height:'50px',width:'190px',marginLeft:'90px',fontSize:'16px' }}
                       />
+                      {error.userMobile && (
+                         <div className="text-danger">{error.userMobile}</div>
+                      )}
                     </div>
 
                     <div className="pin-group">
@@ -172,6 +185,7 @@ function Login() {
                               }
                             }}
                             onFocus={(e) => e.target.select()}
+                            required
                           />
                         ))}
                       </div>

@@ -3,6 +3,7 @@ import '../../FrontEnd/css/dropdown.css'
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { validateMobile } from '../Validation';
 
 
 function Forgetpassword() {
@@ -10,7 +11,7 @@ function Forgetpassword() {
     const location=useLocation();
     const {mobile}=location.state ||{mobile :''};
     const[userMobile,setuserMobile]=useState('');
-    const[error,setError]=useState('');
+    const[error,setError]=useState({});
     const navigate=useNavigate();
     
     
@@ -23,7 +24,15 @@ function Forgetpassword() {
 
     const handleSubmit=async(e)=>{
         e.preventDefault();
-        setError('');
+         setError('');
+
+  const mobileError = validateMobile(userMobile);
+
+  if (mobileError) {
+    setError({ userMobile: mobileError });
+    return;
+  }
+
 
         try{
             const response=await fetch('https://apidev.myinteriormart.com/api/SignIn/ForgotPassword',{
@@ -70,10 +79,15 @@ function Forgetpassword() {
                           className="form-control"
                           type="text"
                           name="mobile"
-                          placeholder="Email/Mobile Number"
+                          placeholder="Mobile Number"
                           value={userMobile}
                           onChange={handleMobileChange}
+                          required
+                          maxLength={10}
                         />
+                        {error.userMobile && (
+                         <div className="text-danger">{error.userMobile}</div>
+                      )}
                       </div>
                       <button type="submit" className="btn_1 full-width mb-4">
                         Send OTP

@@ -42,7 +42,8 @@ function Webreviews() {
               </li>
             ))}
           </ul>
-          <SelectedComponent listingId={listingId} />
+          {console.log(listingId)}
+          <SelectedComponent listingID={listingId} />
         </div>
       </div>
     </main>

@@ -91,3 +91,19 @@
     }
   }
   
+
+
+  /*Bookmark css*/
+  /* Add these styles to your CSS file */
+
+.btn-bookmark {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+}
+
+.btn-bookmark.active {
+  background-color: green;
+  color: white;
+  border: 1px solid green;
+}

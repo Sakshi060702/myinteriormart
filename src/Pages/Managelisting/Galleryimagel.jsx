@@ -5,6 +5,7 @@ import "../../FrontEnd/css/Mangelisting.css";
 import { useSelector, useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
 import Popupalert from "../Popupalert";
+import { validateImageFile,validateGalleryFile } from "../Validation";
 
 function Galleryimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -17,6 +18,9 @@ function Galleryimagel() {
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+
+  const[error,setError]=useState("");
+
 
   const handleFileChange = (event) => {
     setSelectedFile(Array.from(event.target.files));
@@ -59,6 +63,17 @@ function Galleryimagel() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+
+    setError({});
+    const validationError = validateGalleryFile(selectedFile);
+
+    if (validationError) {
+      setError({ imageFile: validationError });
+      return;
+    }
+
+
     if (selectedFile.length > 0 && imageTitle) {
       const formData = new FormData();
       selectedFile.forEach((file) => {
@@ -133,6 +148,9 @@ function Galleryimagel() {
                   multiple
                   accept="image/*"
                 />
+                {error.imageFile && (
+                      <div className="text-danger">{error.imageFile}</div>
+                    )}
               </div>
               <div className="form-group">
                 <label htmlFor="name">
@@ -146,6 +164,7 @@ function Galleryimagel() {
                   placeholder="Image Title"
                   value={imageTitle}
                   onChange={handleTitleChange}
+                  required
                 />
               </div>
               <button
@@ -180,8 +199,9 @@ function Galleryimagel() {
                 <div className="img_title text-center">{image.title}</div>
               </div>
             ))}
+         
           </div>
-
+          <div className="text-danger">Upload Maximum 20 Images</div>
           {showPopup && (
             <Popupalert
               message={successMessage || errorMessage}

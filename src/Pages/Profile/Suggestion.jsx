@@ -1,15 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
+import { validateName } from "../Validation";
 
 
 function Suggestion() {
   const [title, setTitle] = useState("");
   const [suggestion, setSuggestion] = useState("");
   const token = useSelector((state) => state.auth.token);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+
+    const TitleError = validateName(title);
+    const DescriptionError = validateName(suggestion);
+
+    if (TitleError||DescriptionError) {
+      setError({
+        Title: TitleError,
+        Description:DescriptionError,
+       
+      });
+      return;
+    }
+
+
+
     const data = {
       title,
       suggestion,
@@ -55,7 +73,7 @@ function Suggestion() {
           <form className="icon-form-group" onSubmit={handleSubmit}>
             <div className="row">
               <div className="form-group col-12">
-                <label>Title</label>
+                <label>Title<span className="text-danger">*</span></label>
                 <input
                   className="form-control"
                   type="text"
@@ -63,9 +81,12 @@ function Suggestion() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 />
+                {error.Title && (
+                      <div className="text-danger">{error.Title}</div>
+                    )}
               </div>
               <div className="form-group col-12">
-                <label>Description</label>
+                <label>Description<span className="text-danger">*</span></label>
                 <textarea
                   className="form-control"
                   id="address"
@@ -74,6 +95,9 @@ function Suggestion() {
                   value={suggestion}
                   onChange={(e) => setSuggestion(e.target.value)}
                 ></textarea>
+                {error.Description && (
+                      <div className="text-danger">{error.Description}</div>
+                    )}
               </div>
 
               <div className="text-center col-12 mt-3">

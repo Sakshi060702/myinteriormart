@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import profileImage from "../../FrontEnd/img/icon/profile.png";
 import { useSelector } from "react-redux";
 
-function Review1({ listingId }) {
+function Review1({ listingID }) {
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
@@ -14,36 +14,40 @@ function Review1({ listingId }) {
 
   useEffect(() => {
     fetchListingDetails();
-  }, [listingId]);
+  }, [listingID]);
 
   const fetchListingDetails = async () => {
     try {
+      console.log(listingID);
+
       const response = await fetch(
-        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing`,
+        `https://apidev.myinteriormart.com/api/BindAllReviews/UserReviews`,
         {
-          method: 'GET',
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
-          }
+          },
+          body: JSON.stringify({
+            companyID: parseInt(listingID)
+          })
         }
       );
       const data = await response.json();
       console.log("API Data:", data);
-      const company = data.find(
-        (listing) => listing.listingId.toString() === listingId
-      );
-      console.log("Company Data:", company);
-      if (company) {
-        setCompanyDetails(company);
-        setReviews(company.reviews || []);
+
+      if ( data.length > 0) {
+        setCompanyDetails({ listingID }); 
+        setReviews(data);
+        console.log(listingID);
       } else {
-        console.error(`Company with listingId ${listingId} not found.`);
+        console.error(`No reviews found for company with listingID ${listingID}.`);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
+
 
   const handleRatingChange = (value) => {
     setRating(value);
@@ -67,7 +71,7 @@ function Review1({ listingId }) {
           body: JSON.stringify({
             ratings: rating,
             comment: reviewText,
-            companyID: companyDetails.listingId
+            companyID: companyDetails.listingID
           })
         }
       );
@@ -77,6 +81,7 @@ function Review1({ listingId }) {
         setIsReviewFormOpen(false);
         setRating(0);
         setReviewText("");
+        console.log(response);
       } else {
         console.error("Failed to submit review.");
       }
@@ -181,12 +186,12 @@ function Review1({ listingId }) {
                                     <div className="col-lg-2 col-3 text-center">
                                       <div className="review_img_sec">
                                         <img
-                                          src={`https://apidev.myinteriormart.com${review.userImage}`}
+                                          src={`https://apidev.myinteriormart.com${review.imageUrl}`}
                                           alt={review.userName}
                                           style={{ width: "50px", height: "50px" }}
                                         />
                                       </div>
-                                      {console.log(review.userImage)}
+                                     
                                     </div>
                                     <div className="col-lg-10 col-9 pl-lg-0">
                                       <div className="cat-star">

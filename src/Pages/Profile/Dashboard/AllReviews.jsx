@@ -30,6 +30,7 @@ function AllReviews() {
 
       if (response.ok) {
         const data = await response.json();
+        console.log(data);
         setReviews(data);
       } else {
         console.error("Failed to fetch reviews");
@@ -37,16 +38,25 @@ function AllReviews() {
     };
 
     fetchReviews();
-  }, [token]);
+  }, []);
 
   const handleEditClick = (ratingId, reply) => {
     if (currentRatingId === ratingId) {
-      // If the current review is already in edit mode, close the form
+      console.log("ratingid",ratingId);
+      console.log("currentid",currentRatingId);
+      
       setIsEditMode(false);
       setCurrentRatingId(null);
       setCurrentReply("");
+
+     
+      
+
+      
     } else {
       // Otherwise, open the form for the clicked review
+      console.log("rating",ratingId);
+      console.log("reply",reply);
       setCurrentRatingId(ratingId);
       setCurrentReply(reply);
       setIsEditMode(true);
@@ -59,6 +69,11 @@ function AllReviews() {
 
   const handleReplySubmit = async (event) => {
     event.preventDefault();
+
+
+    const currentReview = reviews.find(review => review.ratingId === currentRatingId);
+
+    const replyId = currentReview && currentReview.ratingReply ? currentReview.ratingReply.id : 0;
     // Submit the edited reply to the API
     const response = await fetch(
       "https://apidev.myinteriormart.com/api/AllBookMark/GetUserAllMyReviews",
@@ -71,7 +86,7 @@ function AllReviews() {
         body: JSON.stringify({
           operation: "UpdateReviewReply",
           ratingReply: {
-            id: currentRatingId,
+            id: replyId,
             ratingId: currentRatingId,
             reply: currentReply,
           },
@@ -91,7 +106,10 @@ function AllReviews() {
             : review
         )
       );
-      setIsEditMode(false);
+      console.log(currentRatingId);
+      console.log(currentReply);
+    
+      setIsEditMode(true);
       setCurrentRatingId(null);
       setCurrentReply("");
     } else {
@@ -123,7 +141,7 @@ function AllReviews() {
                         <span>{review.date}</span>
                         <div className="company-rating pl-2 d-inline-flex">
                           <div className="cat_star" >
-                            {Array.from({ length: review.rating }, (_, i) => (
+                            {/* {Array.from({ length: review.rating }, (_, i) => (
                               <i key={i} className="icon_star" style={{color:'orange'}}></i>
                             ))}
                             {Array.from(
@@ -131,7 +149,16 @@ function AllReviews() {
                               (_, i) => (
                                 <i key={i} className="icon_star" style={{color:'orange'}}></i>
                               )
-                            )}
+                            )} */}
+                             {Array(review.ratings)
+                                          .fill()
+                                          .map((_, i) => (
+                                            <i
+                                              key={i}
+                                              className="icon_star active"
+                                              style={{ color: "orange" }}
+                                            />
+                                          ))}
                           </div>
                         </div>
 

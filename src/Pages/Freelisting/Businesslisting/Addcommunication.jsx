@@ -7,6 +7,7 @@ import previousarrowimg from "../../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh"
 import Popupalert from "../../Popupalert";
+import { validateEmail,validateMobile } from "../../Validation";
 
 function Addcommunication(){
   const [formData, setFormData] = useState({
@@ -29,6 +30,8 @@ function Addcommunication(){
 
   const [email, setEmail] = useState('');
   const location = useLocation();
+
+  const [error, setError] = useState("");
 
 
 
@@ -129,6 +132,25 @@ function Addcommunication(){
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+
+    setError("");
+
+    const emailError=validateEmail(formData.email);
+    const registermobileError=validateMobile(formData.registerMobile)
+    const mobileError=validateMobile(formData.mobile);
+    const telephoneError=validateMobile(formData.telephone);
+
+    if(emailError||registermobileError||mobileError||telephoneError){
+      setError({
+        communicationEmail:emailError,
+        communicationRegisterMobile:registermobileError,
+        commuincationMobile:registermobileError,
+        communicationTelephone:telephoneError,
+      });
+      return;
+    }
+
     const apiUrl = "https://apidev.myinteriormart.com/api/Communication/AddOrUpdateCommunication";
 
     const submissionData = {
@@ -217,7 +239,7 @@ function Addcommunication(){
                     />
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="email">Email<span className="text-danger">*</span></label>
                     <input
                       className="form-control form-control-sm box"
                       type="email"
@@ -228,6 +250,9 @@ function Addcommunication(){
                       onChange={handleChange}
                       required
                     />
+                    {error.communicationEmail && (
+                      <div className="text-danger">{error.communicationEmail}</div>
+                    )}
                   </div>
                   <div className="form-group col-md-4">
                     <label htmlFor="Mobile">
@@ -235,43 +260,55 @@ function Addcommunication(){
                     </label>
                     <input
                       className="form-control form-control-sm box"
-                      type="number"
+                      type="text"
                       name="registerMobile"
                       id="Mobile"
                       placeholder="Enter Registered Mobile Number"
                       value={formData.registerMobile}
                       onChange={handleChange}
+                     maxLength={10}
                       required
                     />
+                    {error.communicationRegisterMobile && (
+                      <div className="text-danger">{error.communicationRegisterMobile}</div>
+                    )}
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="Mobile2">Mobile </label>
+                    <label htmlFor="Mobile2">Mobile<span className="text-danger">*</span> </label>
                     <input
                       className="form-control form-control-sm box"
-                      type="number"
+                      type="text"
                       name="mobile"
                       id="Mobile2"
                       placeholder="Enter your Mobile Number"
                       value={formData.mobile}
                       onChange={handleChange}
                       required
+                      maxLength={10}
                     />
+                    {error.commuincationMobile && (
+                      <div className="text-danger">{error.commuincationMobile}</div>
+                    )}
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="telephone">Telephone</label>
+                    <label htmlFor="telephone">Telephone<span className="text-danger">*</span></label>
                     <input
                       className="form-control form-control-sm box"
-                      type="number"
+                      type="text"
                       name="telephone"
                       id="telephone"
                       placeholder="Enter telephone number"
                       value={formData.telephone}
                       onChange={handleChange}
                       required
+                      maxLength={10}
                     />
+                     {error.communicationTelephone && (
+                      <div className="text-danger">{error.communicationTelephone}</div>
+                    )}
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="website">Website</label>
+                    <label htmlFor="website">Website<span className="text-danger">*</span></label>
                     <input
                       className="form-control form-control-sm box"
                       type="name"
@@ -284,7 +321,7 @@ function Addcommunication(){
                     />
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="tollfree">Toll Free</label>
+                    <label htmlFor="tollfree">Toll Free<span className="text-danger">*</span></label>
                     <input
                       className="form-control form-control-sm box"
                       type="text"
@@ -295,6 +332,7 @@ function Addcommunication(){
                       onChange={handleInputChange}
                       pattern="[0-9]*"
                       required
+                      maxLength={18}
                     />
                   </div>
 

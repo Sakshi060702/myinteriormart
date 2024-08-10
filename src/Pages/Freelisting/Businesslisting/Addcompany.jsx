@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh";
 import Select from "react-select";
 import Popupalert from "../../Popupalert";
+import { validateName } from "../../Validation";
 
 function Addcompany() {
   const [formData, setFormData] = useState({
@@ -28,6 +29,8 @@ function Addcompany() {
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
+
+  const [error, setError] = useState("");
 
   const token = useSelector((state) => state.auth.token);
 
@@ -144,6 +147,21 @@ function Addcompany() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    setError("");
+
+    const companynameError = validateName(formData.companyName);
+    // const gstnumberError = validateGstNumber(formData.gstNumber);
+
+    if (companynameError) {
+      setError({
+        companyName: companynameError,
+        // gstNumber: gstnumberError,
+      });
+      return;
+    }
+
+
     const apiUrl =
       "https://apidev.myinteriormart.com/api/CompanyDetails/AddOrUpdateCompanyDetails";
 
@@ -215,6 +233,9 @@ function Addcompany() {
                 onChange={handleChange}
                 required
               />
+              {error.companyName && (
+                      <div className="text-danger">{error.companyName}</div>
+                    )}
             </div>
             <div className="form-group col-md-4">
               <label htmlFor="businessCategory">Business Type</label>
