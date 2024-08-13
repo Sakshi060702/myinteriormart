@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh"
 import Popupalert from "../../Popupalert";
 import { validateEmail,validateMobile } from "../../Validation";
+import useAuthCheck from "../../../Hooks/useAuthCheck";
 
 function Addcommunication(){
   const [formData, setFormData] = useState({
@@ -33,6 +34,7 @@ function Addcommunication(){
 
   const [error, setError] = useState("");
 
+  const isAuthenticated = useAuthCheck();
 
 
   useEffect(() => {
@@ -92,7 +94,10 @@ function Addcommunication(){
       }
     };
 
-    fetchCommunicationDetails();
+    if(isAuthenticated){
+      fetchCommunicationDetails();
+    }
+    
   }, [token]);
 
 

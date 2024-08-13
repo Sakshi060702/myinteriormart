@@ -6,6 +6,7 @@ import previousarrowimg from "../../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh"
 import Popupalert from "../../Popupalert";
+import useAuthCheck from "../../../Hooks/useAuthCheck";
 
 function Addsociallink() {
 
@@ -25,6 +26,8 @@ function Addsociallink() {
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
+
+  const isAuthenticated=useAuthCheck();
 
   
 
@@ -65,7 +68,10 @@ function Addsociallink() {
         
       }
     };
-    fetchSociallinkDetails();
+    if(isAuthenticated){
+      fetchSociallinkDetails();
+    }
+  
   },[token]);
 
 

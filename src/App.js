@@ -1,4 +1,5 @@
 import Home from "./Pages/Home/Home";
+import { useEffect } from "react";
 import { Route,Routes } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Labournaka from "./Pages/Tab/Labournaka";
@@ -277,7 +278,7 @@ function App() {
   const navigate = useNavigate();
   const myInterval = setInterval(myTimer, 1000);
 
-  function myTimer() {
+  function myTimer(){
     let checking_currentTime = new Date().getTime();
     let token_endTime = localStorage.getItem("token_endTime");
     // console.log("checking_currentTime => ",checking_currentTime);
@@ -289,8 +290,11 @@ function App() {
   }
 
   function StopFunction() {
-    
+    console.log("Test bravo stop interval func")
     navigate('/');
+    localStorage.setItem("token_startTime", null);
+    localStorage.setItem("token_endTime", null);
+
     clearInterval(myInterval);
   }
 

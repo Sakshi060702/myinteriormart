@@ -110,10 +110,10 @@ function Register() {
         }
 
         // Validate vendor type
-    if (!vendorType) {
-        setError('Please select a user type.');
-        return;
-    }
+    // if (!vendorType) {
+    //     setError('Please select a user type.');
+    //     return;
+    // }
 
 
 
@@ -237,7 +237,7 @@ function Register() {
                                             </div>
                                             
                                         </div>
-                                        {error && !vendorType && <div className="text-danger">Please select a user type.</div>}
+                                        {/* {error && !vendorType && <div className="text-danger">Please select a user type.</div>} */}
                                         {vendorType.toLowerCase() === "business" && businessFields}
                                         <div className="form-group mb-4">
                                             <div className="icon-wrapper">

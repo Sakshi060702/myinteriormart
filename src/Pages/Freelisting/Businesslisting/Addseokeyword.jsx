@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh";
 import Popupalert from "../../Popupalert";
 import Select from "react-select";
+import useAuthCheck from "../../../Hooks/useAuthCheck";
 
 function Addseokeyword() {
   const [keyword, setKeyword] = useState(""); // State to hold current keyword input
@@ -21,6 +22,8 @@ function Addseokeyword() {
   const [filterText, setFilterText] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [allOptions, setAllOptions] = useState([]);
+
+  const isAuthenticated=useAuthCheck();
 
   const [formData, setFormData] = useState({
     businessCategory: "",
@@ -63,7 +66,8 @@ function Addseokeyword() {
       }
     };
 
-    fetchBusinessTypes();
+    if(isAuthenticated){ fetchBusinessTypes();}
+   
   }, [token]);
 
   const filteredOptions = allOptions.filter((option) =>

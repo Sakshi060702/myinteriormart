@@ -18,8 +18,6 @@ function Review1({ listingID }) {
 
   const fetchListingDetails = async () => {
     try {
-      console.log(listingID);
-
       const response = await fetch(
         `https://apidev.myinteriormart.com/api/BindAllReviews/UserReviews`,
         {
@@ -36,18 +34,17 @@ function Review1({ listingID }) {
       const data = await response.json();
       console.log("API Data:", data);
 
-      if ( data.length > 0) {
-        setCompanyDetails({ listingID }); 
+      if (data.length > 0) {
+        setCompanyDetails({ listingID, ratingCount: data.length }); // Set ratingCount
         setReviews(data);
-        console.log(listingID);
       } else {
+        setCompanyDetails({ listingID, ratingCount: 0 }); // Set ratingCount to 0 if no reviews
         console.error(`No reviews found for company with listingID ${listingID}.`);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-
 
   const handleRatingChange = (value) => {
     setRating(value);
@@ -71,7 +68,7 @@ function Review1({ listingID }) {
           body: JSON.stringify({
             ratings: rating,
             comment: reviewText,
-            companyID: companyDetails.listingID
+            companyID: listingID // Use listingID directly
           })
         }
       );
@@ -81,7 +78,6 @@ function Review1({ listingID }) {
         setIsReviewFormOpen(false);
         setRating(0);
         setReviewText("");
-        console.log(response);
       } else {
         console.error("Failed to submit review.");
       }
@@ -104,31 +100,29 @@ function Review1({ listingID }) {
               <div className="review-form mb-3">
                 <div className="d-flex justify-content-between align-items-center ">
                   <div className="Count_review">
-                    {companyDetails && (
-                      <div className="review-form mb-3">
-                        <div className="d-flex justify-content-between  ">
-                          <div className="Count_review">
-                            {companyDetails.ratingCount} Count Reviews, 100%
-                            genuine ratings from My Interior Mart users
-                          </div>
-                          <span className="desk_mrg">
-                            <a
-                              className="btn btn-link"
-                              onClick={() =>
-                                setIsReviewFormOpen(!isReviewFormOpen)
-                              }
-                              aria-expanded={
-                                isReviewFormOpen ? "true" : "false"
-                              }
-                              aria-controls="WriteReview"
-                              style={{ color: "orange" }}
-                            >
-                              <i className="icon-pencil"></i> Write Review
-                            </a>
-                          </span>
+                    <div className="review-form mb-3">
+                      <div className="d-flex justify-content-between  ">
+                        <div className="Count_review">
+                          {companyDetails && (
+                            <span>
+                              {companyDetails.ratingCount} Reviews, 100% genuine ratings from My Interior Mart users
+                            </span>
+                          )}
                         </div>
+                        <span className="desk_mrg">
+                          <a
+                            className="btn btn-link"
+                            onClick={() => setIsReviewFormOpen(!isReviewFormOpen)}
+                            aria-expanded={isReviewFormOpen ? "true" : "false"}
+                            aria-controls="WriteReview"
+                            style={{ color: "orange" }}
+                          >
+                            <i className="icon-pencil"></i> Write Review
+                          </a>
+                        </span>
                       </div>
-                    )}
+                    </div>
+
                     {isReviewFormOpen && (
                       <div className="write-review-form">
                         <h6>Leave a Review</h6>
@@ -191,7 +185,6 @@ function Review1({ listingID }) {
                                           style={{ width: "50px", height: "50px" }}
                                         />
                                       </div>
-                                     
                                     </div>
                                     <div className="col-lg-10 col-9 pl-lg-0">
                                       <div className="cat-star">

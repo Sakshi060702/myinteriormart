@@ -2,12 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
 import { validateEmail,validateMobile } from "../Validation";
+import Popupalert from "../Popupalert";
 
 function ProfileRegister() {
   const [mobileNumber, setMobile] = useState("");
   const [email, setEmail] = useState("");
   const token = useSelector((state) => state.auth.token);
   const [error, setError] = useState("");
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
 
 
   const handleSubmit = async (event) => {
@@ -49,12 +55,24 @@ function ProfileRegister() {
 
       const result = await response.json();
       console.log("Form submitted successfully:", result);
-      alert("Data saved Successfully")
+      setSuccessMessage("Data Save Succeessfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+        setShowPopup(false);
+       
+      },  2000);
       // Reset form fields after successful submission
       setMobile("");
       setEmail("");
     } catch (error) {
       console.error("Error submitting form:", error);
+      setErrorMessage(
+        "Failed to Save  details. Please try again later."
+      );
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   };
 
@@ -118,6 +136,12 @@ function ProfileRegister() {
                 />
               </div>
             </div>
+            {showPopup && (
+                  <Popupalert
+                    message={successMessage || errorMessage}
+                    type={successMessage ? "success" : "error"}
+                  />
+                )}
           </form>
         </div>
       </div>

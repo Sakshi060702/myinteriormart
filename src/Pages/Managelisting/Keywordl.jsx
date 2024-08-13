@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import "../Freelisting/Businesslisting/Businesslisting.css";
 import "../../FrontEnd/css/Mangelisting.css";
 import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
@@ -23,6 +23,8 @@ function Keywordl() {
 
   
   const[successMessage,setSuccessMessage]=useState("");
+
+  const navigate=useNavigate();
 
   const [formData, setFormData] = useState({
     businessCategory: "",
@@ -272,7 +274,7 @@ function Keywordl() {
   
         setTimeout(() => {
         setShowPopup(false);
-        // navigate("/");
+         navigate("/");
       }, 2000);
         setSelectedKeywords([...selectedKeywords, ...addedKeywords]);
         // Reset added keywords state after saving if needed

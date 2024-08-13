@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import '../../FrontEnd/css/Changepassword.css'
 
 
 
@@ -21,20 +22,72 @@ function ForgetpasswordVerifyotp() {
     const [successMessage,setSuccessMessage]=useState('');
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [confirmpasswordVisible, setConfirmPasswordVisible] = useState(false);
-    
-    
-    const handleOtpChange=(e)=>{
-        setuserotp(e.target.value);
-    }
 
-    const handlePasswordChange=(e)=>{
-         setuserPassword(e.target.value);
-    }
+    const [oldPinVisible, setOldPinVisible] = useState(false);
+    const [pinVisible, setPinVisible] = useState(false);
+    const [confirmPinVisible, setConfirmPinVisible] = useState(false);
+  
+    const [pin, setPin] = useState(["", "", "", ""]);
+    const [confirmPin, setConfirmPin] = useState(["", "", "", ""]);
+  
+    const [userOtp, setUserOtp] = useState(["", "", "", ""]);
     
-    const handleConfirmPasswordChange=(e)=>{
-        setuserConfirmPassword(e.target.value);
-    }
+    
+    const handleOtpChange = (e, index) => {
+      const { value } = e.target;
+  
+      // Check if the input value is a digit
+      if (/^\d?$/.test(value)) {
+        const newOtp = [...userOtp];
+        newOtp[index] = value;
+        setUserOtp(newOtp);
+  
+        // Automatically focus on the next input box if there is a value and index < 3
+        if (value && index < 3) {
+          document.getElementById(`otp-${index + 1}`).focus();
+        }
+      }
+    };
 
+    const handlePinChange = (e, index) => {
+      const { value } = e.target;
+  
+      // Check if the input value is a digit
+      if (/^\d?$/.test(value)) {
+        const newPin = [...pin];
+        newPin[index] = value;
+        setPin(newPin);
+  
+        // Automatically focus on the next input box if there is a value and index < 3
+        if (value && index < 3) {
+          document.getElementById(`pin-${index + 1}`).focus();
+        }
+      }
+    };
+    const handleConfirmPinChange = (e, index) => {
+      const { value } = e.target;
+  
+      // Check if the input value is a digit
+      if (/^\d?$/.test(value)) {
+        const newPin = [...confirmPin];
+        newPin[index] = value;
+        setConfirmPin(newPin);
+  
+        // Automatically focus on the next input box if there is a value and index < 3
+        if (value && index < 3) {
+          document.getElementById(`confirm-pin-${index + 1}`).focus();
+        }
+      }
+    };
+
+    const togglePinVisibility = () => {
+      setPinVisible(!pinVisible);
+    };
+  
+    const toggleConfirmPinVisibility = () => {
+      setConfirmPinVisible(!confirmPinVisible);
+    };
+  
     const togglePasswordVisibility = () => {
     setshowPassword(!showPassword);
   };
@@ -87,92 +140,134 @@ function ForgetpasswordVerifyotp() {
                 <div className="tab-content checkout">
                   <div>
                     <form onSubmit={handleSubmit}>
-                      <div className="form-group mb-4">
-                        <div className="icon-wrapper">
-                          <i className="icon_key_alt"></i>
-                        </div>
+                    <div className=" mb-4  align-items-center otp-inputs">
+                      {userOtp.map((digit, index) => (
                         <input
-                          className="form-control"
+                          key={index}
+                          id={`otp-${index}`}
                           type="text"
-                          name="otp"
-                          placeholder="OTP"
-                          value={userotp}
-                          onChange={handleOtpChange}
+                          maxLength="1"
+                          value={digit}
+                          onChange={(e) => handleOtpChange(e, index)}
+                          className="otp-input "
+                          style={{ color: "black" }}
                         />
-                      </div>
+                      ))}
+                    </div>
                       <p>
                         <strong>{otp}</strong>
                       </p>
 
-                      <div
-                        className="form-group"
-                        style={{ position: "relative", marginBottom: "1rem" }}
-                      >
-                        <div className="icon-wrapper">
-                          <i className="icon_lock_alt"></i>
+                      <div className="">
+                      <div style={{ paddingLeft: "80px" }}>
+                        <div className="pin-group">
+                          <label htmlFor="pin">New PIN</label>
+                          <div className="pin-input-group">
+                            {[...Array(4)].map((_, index) => (
+                              <input
+                                key={index}
+                                id={`pin-${index}`}
+                                type={pinVisible ? "text" : "password"}
+                                maxLength="1"
+                                className="pin-input"
+                                value={pin[index] || ""}
+                                onChange={(e) => handlePinChange(e, index)}
+                                onKeyDown={(e) => {
+                                  if (
+                                    e.key === "Backspace" &&
+                                    index > 0 &&
+                                    !pin[index]
+                                  ) {
+                                    const newPin = [...pin];
+                                    newPin[index - 1] = "";
+                                    setPin(newPin);
+                                    document
+                                      .getElementById(`pin-${index - 1}`)
+                                      .focus();
+                                  }
+                                }}
+                                onFocus={(e) => e.target.select()}
+                                required
+                              />
+                            ))}
+                          </div>
+                          <i
+                            onClick={togglePinVisibility}
+                            className={`fa ${
+                              pinVisible ? "fa-eye" : "fa-eye-slash"
+                            }`}
+                            style={{
+                              position: "absolute",
+                              top: "50%",
+                              right: "10px",
+                              transform: "translateY(-50%)",
+                              cursor: "pointer",
+                              color: "orange",
+                              fontSize: "20px",
+                              marginRight: "60px",
+                              marginTop: "20px",
+                            }}
+                            aria-hidden="true"
+                          ></i>
                         </div>
-                        <input
-                          type={passwordVisible ? "text" : "password"}
-                          className="form-control"
-                          style={{ paddingRight: "2.5rem" }}
-                          name="password"
-                          id="password"
-                          placeholder="Password"
-                          value={password}
-                          onChange={handlePasswordChange}
-                        />
-                        <i
-                          onClick={togglePasswordVisibility1}
-                          className={`fa ${
-                            passwordVisible ? "fa-eye" : "fa-eye-slash"
-                          }`}
-                          style={{
-                            position: "absolute",
-                            top: "50%",
-                            right: "10px",
-                            transform: "translateY(-50%)",
-                            cursor: "pointer",
-                            color: "orange",
-                            fontSize: "20px",
-                          }}
-                          aria-hidden="true"
-                        ></i>
-                      </div>
 
-                      <div
-                        className="form-group"
-                        style={{ position: "relative", marginBottom: "1rem" }}
-                      >
-                        <div className="icon-wrapper">
-                          <i className="icon_lock_alt"></i>
+                        <div className="pin-group">
+                          <label htmlFor="confirm-pin">Confirm PIN</label>
+                          <div className="pin-input-group">
+                            {[...Array(4)].map((_, index) => (
+                              <input
+                                key={index}
+                                id={`confirm-pin-${index}`}
+                                type={confirmPinVisible ? "text" : "password"}
+                                maxLength="1"
+                                className="pin-input"
+                                value={confirmPin[index] || ""}
+                                onChange={(e) =>
+                                  handleConfirmPinChange(e, index)
+                                }
+                                onKeyDown={(e) => {
+                                  if (
+                                    e.key === "Backspace" &&
+                                    index > 0 &&
+                                    !confirmPin[index]
+                                  ) {
+                                    const newPin = [...confirmPin];
+                                    newPin[index - 1] = "";
+                                    setConfirmPin(newPin);
+                                    document
+                                      .getElementById(
+                                        `confirm-pin-${index - 1}`
+                                      )
+                                      .focus();
+                                  }
+                                }}
+                                onFocus={(e) => e.target.select()}
+                                required
+                              />
+                            ))}
+                          </div>
+                          <i
+                            onClick={toggleConfirmPinVisibility}
+                            className={`fa ${
+                              confirmPinVisible ? "fa-eye" : "fa-eye-slash"
+                            }`}
+                            style={{
+                              position: "absolute",
+                              top: "50%",
+                              right: "10px",
+                              transform: "translateY(-50%)",
+                              cursor: "pointer",
+                              color: "orange",
+                              fontSize: "20px",
+                              marginRight: "60px",
+                              marginTop: "20px",
+                            }}
+                            aria-hidden="true"
+                          ></i>
                         </div>
-                        <input
-                          type={confirmpasswordVisible ? "text" : "password"}
-                          className="form-control"
-                          style={{ paddingRight: "2.5rem" }}
-                          name="confirmPassword"
-                          id="confirm-password"
-                          placeholder="Confirm Password"
-                          value={userConfirmPassword}
-                          onChange={handleConfirmPasswordChange}
-                        />
-                        <i
-                          onClick={toggleConfirmPasswordVisibility}
-                          className={`fa ${
-                            confirmpasswordVisible ? "fa-eye" : "fa-eye-slash"
-                          }`}
-                          style={{
-                            position: "absolute",
-                            top: "50%",
-                            right: "10px",
-                            transform: "translateY(-50%)",
-                            cursor: "pointer",
-                            color: "orange",
-                            fontSize: "20px",
-                          }}
-                          aria-hidden="true"
-                        ></i>
                       </div>
+                    </div>
+
 
                       <button type="submit" className="btn_1 full-width mb-4">
                         Submit

@@ -96,7 +96,7 @@ function Login() {
         dispatch(
           loginSuccess({
             token: data.token,
-            user: data.user,
+            // user: data.user,
             tokenExpiry: tokenExpiry,
           })
         );

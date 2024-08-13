@@ -9,6 +9,12 @@ import Popupalert from "../../Popupalert";
 import { validateName } from "../../Validation";
 
 function Addcompany() {
+
+  const isAuthenticated= useSelector((state)=>state.auth.isAuthenticated);
+  console.log("0000000000000------------------000000000000000000000", isAuthenticated);
+  
+
+
   const [formData, setFormData] = useState({
     companyName: "",
     businessCategory: "",
@@ -403,4 +409,4 @@ function Addcompany() {
   );
 }
 
-export default Addcompany;
+export default withAuthh(Addcompany);

@@ -96,11 +96,12 @@ function Addcategory()
 
     fetchData();
     fetchUserCategories();
-  }, [token]); // Empty dependency array to run effect only once
+  }, []); // Empty dependency array to run effect only once
 
 
   useEffect(() => {
     console.log("BRAVOOOO")
+    console.log('category')
     if (selectedFirstCategory) {
       console.log(firstCategories);
       const selectedFirstCat = firstCategories.find(
@@ -108,6 +109,7 @@ function Addcategory()
       );
       const selectedFirstCat_ak = firstCategories.find(
         (category) => {
+          console.log("first category",category.firstCategoryID)
           console.log(category.firstCategoryID, parseInt(selectedFirstCategory), category.firstCategoryID === parseInt(selectedFirstCategory));
           if(category.firstCategoryID === parseInt(selectedFirstCategory)){
             console.log(selectedFirstCategory);
@@ -289,7 +291,7 @@ function Addcategory()
                         className="wide add_bottom_10 fcategory selectdrp"
                         value={selectedFirstCategory}
                         onChange={handleFirstCategoryChange}
-                        required
+                       
                       >
                         <option value="">Select First Category</option>
                         {firstCategories.map((category) => (
@@ -309,7 +311,7 @@ function Addcategory()
                         className="wide add_bottom_10 scategory selectdrp"
                         value={selectedSecondCategory}
                         onChange={handleSecondCategoryChange}
-                        required
+                        
                       >
                         <option value="">Select Second Category</option>
                         {secondCategories.map((category) => (

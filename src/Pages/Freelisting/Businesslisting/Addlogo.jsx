@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../../../FrontEnd/css/Mangelisting.css";
+import usericon from "../../../FrontEnd/img/user1 (1).jpg";
 import withAuthh from "../../../Hoc/withAuthh";
 import Popupalert from "../../Popupalert";
 import { validateImageFile } from "../../Validation";
+import useAuthCheck from "../../../Hooks/useAuthCheck";
+import { toBeEmptyDOMElement } from "@testing-library/jest-dom/matchers";
 
 
 function Addlogo() {
@@ -16,6 +19,8 @@ function Addlogo() {
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
+
+  const isAuthenticated = useAuthCheck();
 
   const[error,setError]=useState("");
 
@@ -113,9 +118,12 @@ function Addlogo() {
         console.error(error);
       }
     };
+    if(isAuthenticated){
+      fetchLogoImage();
+    }
    
-    fetchLogoImage();
-  }, []);
+    
+  }, [token]);
 
   return (
     <>
@@ -162,7 +170,7 @@ function Addlogo() {
               {console.log(imageURL?.imageUrl)} */}
                 <img
                   className="upload_images"
-                  src={imageURL? `https://apidev.myinteriormart.com${imageURL}` : ""}
+                  src={imageURL? `https://apidev.myinteriormart.com${imageURL}` :usericon }
                   alt="Logo Image"
 
                 />

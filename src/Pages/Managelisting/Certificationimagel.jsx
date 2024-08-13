@@ -1,10 +1,11 @@
 import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
-import usericon from "../../FrontEnd/img/user1 (2).jpg";
+import usericon from "../../FrontEnd/img/certificate.jpg";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
 import Popupalert from "../Popupalert";
 import { validateImageFile,validateName } from "../Validation";
+import useAuthCheck from "../../Hooks/useAuthCheck";
 
 function Certificationimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -16,6 +17,8 @@ function Certificationimagel() {
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
   const[error,setError]=useState("");
+
+  const isAuthenticated = useAuthCheck();
 
   const token=useSelector((state)=>state.auth.token);
   const dispatch = useDispatch();
@@ -48,7 +51,10 @@ function Certificationimagel() {
         console.error(error);
       }
     };
-    fetchGalleryImage();
+    if(isAuthenticated){
+      fetchGalleryImage();
+    }
+   
   }, [token]);
 
   const handleSubmit = async (event) => {
@@ -171,11 +177,12 @@ function Certificationimagel() {
           </div>
           <div className="row justify-content-center mt-4">
             <div className="col-md-3 col-lg-2 col-6 mb-5">
-              <div className="upload_img_sec">
+              <div className="upload_img_sec" style={{width:'300px', right:'29px'}}>
                 <img
                   className="upload_images"
-                  src={imageURL ? `https://apidev.myinteriormart.com${imageURL}` : ""}
+                  src={imageURL ? `https://apidev.myinteriormart.com${imageURL}` :usericon}
                   alt="Certification Image"
+                  
                 />
               </div>
               <div className="img_title text-center">

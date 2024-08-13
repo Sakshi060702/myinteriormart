@@ -12,6 +12,7 @@ import Sociallink from "./Sociallink";
 import "../../FrontEnd/css/Lisiting.css";
 import Getquotespopup from "./Getquotespopup";
 import { useSelector } from "react-redux";
+import useAuthCheck from "../../Hooks/useAuthCheck";
 
 function Listingdetails() {
   const { listingId } = useParams();
@@ -35,7 +36,11 @@ function Listingdetails() {
 
   const [showFullAddress, setShowFullAddress] = useState(false);
 
-  
+  const isAuthenticated = useAuthCheck();
+
+  const [imageURL, setImageURL] = useState(null);
+
+  const [imageDetails, setImageDetails] = useState([]);
 
   useEffect(() => {
     fetchListingDetails();
@@ -54,21 +59,18 @@ function Listingdetails() {
   //   }
   // }, [listingDetails]);
 
-
   const token = useSelector((state) => state.auth.token);
-
-
 
   const fetchListingDetails = async () => {
     try {
       const response = await fetch(
         `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing`,
         {
-          method: 'GET', // You can adjust the method if needed
+          method: "GET", // You can adjust the method if needed
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       const data = await response.json();
@@ -95,218 +97,257 @@ function Listingdetails() {
       console.error("Error in fetching listing Details", error);
     }
   };
-  
-
- 
 
   //for bookmark
- 
+
   const handleBookmarkToggle = async () => {
     console.log(isBookmarked);
     try {
       const response = await fetch(
         `https://apidev.myinteriormart.com/api/Bookmark/BookMarks`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             //  listingId: listingId,
-            companyID: listingDetails.listingId // dynamically add companyID
-          })
+            companyID: listingDetails.listingId, // dynamically add companyID
+          }),
         }
       );
       if (response.ok) {
         setIsBookmarked((prev) => !prev);
-      
       } else {
-        console.error('Failed to update bookmark status');
+        console.error("Failed to update bookmark status");
       }
-    console.log(setIsBookmarked);
+      console.log(setIsBookmarked);
     } catch (error) {
-      console.error('Error in updating bookmark status', error);
+      console.error("Error in updating bookmark status", error);
     }
   };
 
   useEffect(() => {
     const fetchBookmarkStatus = async () => {
-        if (listingDetails && listingDetails.listingId) { // Ensure listingDetails and listingId are available
-            try {
-                const response = await fetch(
-                    `https://apidev.myinteriormart.com/api/BindBookmarkLikeSubscribe/Bookmark`,
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`
-                        },
-                        body: JSON.stringify({
-                            companyID: listingDetails.listingId // dynamically add companyID
-                        })
-                    }
-                );
-
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log("bookmark", data);
-                    setIsBookmarked(data.bookmark); // Assuming response has a field 'bookmark'
-                } else {
-                    console.error('Failed to fetch bookmark status');
-                }
-            } catch (error) {
-                console.error('Error in fetching bookmark status', error);
+      if (listingDetails && listingDetails.listingId) {
+        // Ensure listingDetails and listingId are available
+        try {
+          const response = await fetch(
+            `https://apidev.myinteriormart.com/api/BindBookmarkLikeSubscribe/Bookmark`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({
+                companyID: listingDetails.listingId, // dynamically add companyID
+              }),
             }
-        } else {
-            console.warn('listingDetails or listingId is not available');
+          );
+
+          if (response.ok) {
+            const data = await response.json();
+            console.log("bookmark", data);
+            setIsBookmarked(data.bookmark); // Assuming response has a field 'bookmark'
+          } else {
+            console.error("Failed to fetch bookmark status");
+          }
+        } catch (error) {
+          console.error("Error in fetching bookmark status", error);
         }
+      } else {
+        console.warn("listingDetails or listingId is not available");
+      }
     };
 
     fetchBookmarkStatus();
-}, [listingDetails]); 
-
-
-
-  
+  }, [listingDetails]);
 
   //for like
-  const handleLikeToggle = async() => {
+  const handleLikeToggle = async () => {
     try {
       const response = await fetch(
         `https://apidev.myinteriormart.com/api/Like/Likes`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             //  listingId: listingId,
-            companyID: listingDetails.listingId 
-          })
+            companyID: listingDetails.listingId,
+          }),
         }
       );
       if (response.ok) {
         setIsLike((prev) => !prev);
       } else {
-        console.error('Failed to update Like status');
+        console.error("Failed to update Like status");
       }
     } catch (error) {
-      console.error('Error in updating Like status', error);
+      console.error("Error in updating Like status", error);
     }
   };
 
-
   useEffect(() => {
     const fetchLikeStatus = async () => {
-      if(listingDetails && listingDetails.listingId){
+      if (listingDetails && listingDetails.listingId) {
         try {
           const response = await fetch(
             `https://apidev.myinteriormart.com/api/BindBookmarkLikeSubscribe/LikeDislike`,
             {
-              method: 'POST',
+              method: "POST",
               headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
               },
               body: JSON.stringify({
                 //  listingId: listingId,
-                companyID: listingDetails.listingId // dynamically add companyID
-              })
+                companyID: listingDetails.listingId, // dynamically add companyID
+              }),
             }
           );
-  
+
           if (response.ok) {
             const data = await response.json();
-            console.log("Like",data);
+            console.log("Like", data);
             setIsLike(data.likeandDislike); // Assuming response has a field bookmarkStatus
           } else {
-            console.error('Failed to fetch like status');
+            console.error("Failed to fetch like status");
           }
         } catch (error) {
-          console.error('Error in fetching like status', error);
+          console.error("Error in fetching like status", error);
         }
-  
+      } else {
+        console.warn("listingDetails or listingId is not available");
       }
-      else{
-        console.warn('listingDetails or listingId is not available');
-      }
-          };
+    };
 
     fetchLikeStatus();
   }, [listingDetails]);
 
-
   //for subscribe
-  const handleSubscribeToggle = async() => {
+  const handleSubscribeToggle = async () => {
     try {
       const response = await fetch(
         `https://apidev.myinteriormart.com/api/Subscribe/Subscribes`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             //  listingId: listingId,
-            companyID: listingDetails.listingId // dynamically add companyID
-          })
+            companyID: listingDetails.listingId, // dynamically add companyID
+          }),
         }
       );
       if (response.ok) {
         setIsSubscribe((prev) => !prev);
       } else {
-        console.error('Failed to update Subscribe status');
+        console.error("Failed to update Subscribe status");
       }
     } catch (error) {
-      console.error('Error in updating Subscribe status', error);
+      console.error("Error in updating Subscribe status", error);
     }
   };
 
-
   useEffect(() => {
     const fetchSubscribeStatus = async () => {
-      if(listingDetails && listingDetails.listingId){
+      if (listingDetails && listingDetails.listingId) {
         try {
           const response = await fetch(
             `https://apidev.myinteriormart.com/api/BindBookmarkLikeSubscribe/Subscribes`,
             {
-              method: 'POST',
+              method: "POST",
               headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
               },
               body: JSON.stringify({
-                companyID: listingDetails.listingId // dynamically add companyID
-            })
+                companyID: listingDetails.listingId, // dynamically add companyID
+              }),
             }
           );
-  
+
           if (response.ok) {
             const data = await response.json();
-            console.log("Subscribe",data);
+            console.log("Subscribe", data);
             setIsSubscribe(data.subscribe); // Assuming response has a field bookmarkStatus
           } else {
-            console.error('Failed to fetch subscribe status');
+            console.error("Failed to fetch subscribe status");
           }
         } catch (error) {
-          console.error('Error in fetching subscribe status', error);
+          console.error("Error in fetching subscribe status", error);
         }
-  
+      } else {
+        console.warn("listingDetails or listingId is not available");
       }
-      else{
-        console.warn('listingDetails or listingId is not available');
-      }
-          };
+    };
 
     fetchSubscribeStatus();
   }, [listingDetails]);
 
+  useEffect(() => {
+    const fetchBannerImage = async () => {
+      try {
+        const response = await fetch(
+          "https://apidev.myinteriormart.com/api/BinddetailsListing/GetBannerImageDetailslisting",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch user profile");
+        }
+        const data = await response.json();
+        setImageURL(data.imagepath); // Assuming data contains image URL and title
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    if (isAuthenticated) {
+      fetchBannerImage();
+    }
+  }, [token]);
 
-
-  
+  useEffect(() => {
+    const fetchTeamImage = async () => {
+      try {
+        const response = await fetch(
+          "https://apidev.myinteriormart.com/api/BinddetailsListing/GetOwnerImageDetailslisting",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch user profile");
+        }
+        const data = await response.json();
+        console.log(data.imagepath);
+        if (data instanceof Object) {
+          console.log(data);
+          // console.log("sakshi");
+          setImageDetails(data.imagepath.map((img) => ({ url: img })));
+        }
+        // setImageURL(data.imagepath); // Assuming data contains image URL and title
+        // setImageTitleFromAPI(data.imagetitle); // Set the image title from API
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    if (isAuthenticated) {
+      fetchTeamImage();
+    }
+  }, [token]);
 
   //for address
   const toggleAddress = () => {
@@ -338,8 +379,7 @@ function Listingdetails() {
                       {listingDetails.logoImage &&
                       listingDetails.logoImage.imagePath ? (
                         <img
-                        src={`https://apidev.myinteriormart.com${listingDetails.logoImage.imagePath}`}
-
+                          src={`https://apidev.myinteriormart.com${listingDetails.logoImage.imagePath}`}
                           // src={listingDetails.logoImage.imagePath}
                           alt={`${listingDetails.companyName} Logo`}
                           className="card-img-top"
@@ -363,7 +403,18 @@ function Listingdetails() {
                 </div>
                 <div className="box_detail_cus">
                   <div className="cust-profile">
-                    <img src={profile} alt="profile"></img>
+                  <img src={profile} alt="profile"></img>
+                    {/* {imageDetails.length > 0 && (
+                      <div>
+                        <div>
+                          <img
+                            className="upload_images"
+                            src={`https://apidev.myinteriormart.com${imageDetails[0].url}`}
+                            alt="Gallery Image"
+                          />
+                        </div>
+                      </div>
+                    )} */}
                     <h6 className="cust_name">Habiba Humaza</h6>
                     <span className="cust-type">Owner</span>
                   </div>
@@ -373,18 +424,29 @@ function Listingdetails() {
               <div className="col-lg-9 individual-listing-main padding-5">
                 <div className="listing-gallery">
                   <div className="gallery">
-                    <img
+                  <img
                       src={banner2}
                       alt="Image2"
                       title="Image2"
                       style={{ width: "100%", height: "200px" }}
                     />
+                    {/* <img
+                      className="upload_images"
+                      src={
+                        imageURL
+                          ? `https://apidev.myinteriormart.com${imageURL}`
+                          : ""
+                      }
+                      alt="Banner Image"
+                    /> */}
+
                   </div>
                 </div>
                 <div className="company-listing-main">
                   <div className="listing-details">
                     <div className="col-lg-4 col-md-12 company-map padding-all-5">
                       <div className="pro-large-img img-zoom gallery1">
+                        
                         <img
                           src={banner3}
                           alt="ImageComingSoon"
@@ -527,12 +589,14 @@ function Listingdetails() {
                           Get Quotes
                         </button>
                         <button
-                        className={`btn btn-bookmark ${isBookmarked ? "active" : ""}`}
-                        onClick={handleBookmarkToggle}
-                        style={{marginRight:'5px'}}
-                      >
-                        {isBookmarked ? "Bookmark" : "Bookmark"}
-                      </button>
+                          className={`btn btn-bookmark ${
+                            isBookmarked ? "active" : ""
+                          }`}
+                          onClick={handleBookmarkToggle}
+                          style={{ marginRight: "5px" }}
+                        >
+                          {isBookmarked ? "Bookmark" : "Bookmark"}
+                        </button>
 
                         <button
                           className="btn-custom pushRight btn btn-light btn-sm"
@@ -542,21 +606,23 @@ function Listingdetails() {
                         </button>
 
                         <button
-                        className={`btn btn-bookmark ${isLike ? "active" : ""}`}
-                        onClick={handleLikeToggle}
-                        style={{marginRight:'10px'}}
-                      >
-                        {isLike ? "Like" : "Like"}
-                      </button>
+                          className={`btn btn-bookmark ${
+                            isLike ? "active" : ""
+                          }`}
+                          onClick={handleLikeToggle}
+                          style={{ marginRight: "10px" }}
+                        >
+                          {isLike ? "Like" : "Like"}
+                        </button>
 
-                      <button
-                        className={`btn btn-bookmark ${isSubscribe ? "active" : ""}`}
-                        onClick={handleSubscribeToggle}
-                      >
-                        {isSubscribe ? "Subscribe" : "Subscribe"}
-                      </button>
-
-                        
+                        <button
+                          className={`btn btn-bookmark ${
+                            isSubscribe ? "active" : ""
+                          }`}
+                          onClick={handleSubscribeToggle}
+                        >
+                          {isSubscribe ? "Subscribe" : "Subscribe"}
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -579,7 +645,10 @@ function Listingdetails() {
         </div>
       </div>
       {token ? (
-        <Getquotespopup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
+        <Getquotespopup
+          isOpen={isPopupOpen}
+          onClose={() => setIsPopupOpen(false)}
+        />
       ) : (
         <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
       )}

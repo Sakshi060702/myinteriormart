@@ -4,7 +4,7 @@ import usericon from "../../FrontEnd/img/user1 (3).jpg";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
 import Popupalert from "../Popupalert";
-import { validateImageFile } from "../Validation";
+import { validateImageFile,validateName } from "../Validation";
 
 
 function Clientimagel() {
@@ -69,9 +69,12 @@ function Clientimagel() {
 
     setError({});
     const validationError = validateImageFile(selectedFile);
+    const validationName=validateName(imageTitle);
 
-    if (validationError) {
-      setError({ imageFile: validationError });
+    if (validationError||validationName) {
+      setError({ imageFile: validationError ,
+        imagetitle:validationName
+      });
       return;
     }
 
@@ -160,6 +163,9 @@ function Clientimagel() {
                 requireds
                
                   />
+                  {error.imagetitle && (
+                      <div className="text-danger">{error.imagetitle}</div>
+                    )}
               </div>
               <button
               className="btn_1"
@@ -181,7 +187,7 @@ function Clientimagel() {
               <div className="upload_img_sec">
                 <img
                   className="upload_images"
-                  src={imageURL? `https://apidev.myinteriormart.com${imageURL}` : ""}
+                  src={imageURL? `https://apidev.myinteriormart.com${imageURL}` : usericon}
                   alt="Client Image"
                  
                 />

@@ -4,7 +4,8 @@ import usericon from "../../../FrontEnd/img/user1 (3).jpg";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh"
 import Popupalert from "../../Popupalert";
-import { validateImageFile } from "../../Validation";
+import { validateImageFile,validateName } from "../../Validation";
+import useAuthCheck from "../../../Hooks/useAuthCheck";
 
 
 function Addclient() {
@@ -23,6 +24,9 @@ function Addclient() {
   const[successMessage,setSuccessMessage]=useState("");
 
   const[error,setError]=useState("");
+
+  const isAuthenticated = useAuthCheck();
+
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -58,8 +62,12 @@ function Addclient() {
     if (token) {
      
     }
-    fetchGalleryImage();
-  }, []);
+    if(isAuthenticated)
+    {
+      fetchGalleryImage();
+    }
+   
+  }, [token]);
 
 
   const handleSubmit = async (event) => {
@@ -68,9 +76,12 @@ function Addclient() {
 
     setError({});
     const validationError = validateImageFile(selectedFile);
+    const validationName=validateName(imageTitle);
 
-    if (validationError) {
-      setError({ imageFile: validationError });
+    if (validationError||validationName) {
+      setError({ imageFile: validationError,
+        imagetitle:validationName
+       });
       return;
     }
 
@@ -158,6 +169,9 @@ function Addclient() {
                 onChange={handleTitleChange}
                
                   />
+                  {error.imagetitle && (
+                      <div className="text-danger">{error.imagetitle}</div>
+                    )}
               </div>
               <button
               className="btn_1"
@@ -179,7 +193,7 @@ function Addclient() {
               <div className="upload_img_sec">
                 <img
                   className="upload_images"
-                  src={imageURL? `https://apidev.myinteriormart.com${imageURL}` : ""}
+                  src={imageURL? `https://apidev.myinteriormart.com${imageURL}` : usericon}
                   alt="Client Image"
                  
                 />

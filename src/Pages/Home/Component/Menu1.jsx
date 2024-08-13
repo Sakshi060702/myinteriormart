@@ -7,6 +7,7 @@ import Dropdown from "../../Dropdown";
 import Notification from "../../Notification";
 import "../../../FrontEnd/css/Header.css";
 import { useSelector, useDispatch } from "react-redux";
+import useAuthCheck from "../../../Hooks/useAuthCheck"; // Correct import
 
 function Menu1() {
   const [showNotificationMenu, setShowNotificationMenu] = useState(false);
@@ -14,10 +15,14 @@ function Menu1() {
   const [showMenu, setShowMenu] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
 
+  const [imageURL, setImageURL] = useState(null);
+
+  const isAuthenticated = useAuthCheck();
   const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const userType = useSelector((state) => state.auth.userType);
 
+  console.log(token)
   const toogleMenu = () => {
     setShowMenu(!showMenu);
   };
@@ -86,10 +91,38 @@ function Menu1() {
       }
     };
 
-    if (token) {
+    if (isAuthenticated) {
       fetchUserProfile();
     }
   }, [token, dispatch]);
+
+
+  useEffect(() => {
+    if (isAuthenticated && userType === "Business") {
+      const fetchLogoImage = async () => {
+        try {
+          const response = await fetch(
+            "https://apidev.myinteriormart.com/api/BinddetailsListing/GetLogoimageDetailslisting",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          if (!response.ok) {
+            throw new Error("Failed to fetch logo image");
+          }
+          const data = await response.json();
+          setImageURL(data.imagepath); // Assuming data contains image URL
+        } catch (error) {
+          console.error(error);
+        }
+      };
+  
+      fetchLogoImage();
+    }
+  }, [token, userType]);
+  
 
   return (
     <>
@@ -122,7 +155,7 @@ function Menu1() {
                   </span>
                 </li>
 
-                {!token ? (
+                {!isAuthenticated ? (
                   <>
                     <li>
                       <NavLink
@@ -259,14 +292,12 @@ function Menu1() {
                               type="button"
                               onClick={toggleDropdown}
                               style={{ background: "none", border: "none" }}
+                              
                             >
+                              {console.log(imageURL)}
                               <img
                                 className="usericon-img"
-                                src={
-                                  userProfile?.imgUrl
-                                    ? `https://apidev.myinteriormart.com${userProfile.imgUrl}`
-                                    : ""
-                                }
+                                src={imageURL? `https://apidev.myinteriormart.com${imageURL}` : ""}
                                 alt="user icon"
                               />
                               {dropdownOpen && <Dropdown />}

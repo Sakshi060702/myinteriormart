@@ -4,7 +4,8 @@ import usericon from "../../FrontEnd/img/home_section_1.jpg";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
 import Popupalert from "../Popupalert";
-import { validateImageFile } from "../Validation";
+import { validateImageFile ,validateName} from "../Validation";
+import useAuthCheck from "../../Hooks/useAuthCheck";
 
 function Bannerimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -20,6 +21,7 @@ function Bannerimagel() {
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
   const[error,setError]=useState("");
+  const isAuthenticated = useAuthCheck();
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -52,11 +54,11 @@ function Bannerimagel() {
         console.error(error);
       }
     };
-    if (token) {
-      
+    if (isAuthenticated) {
+      fetchBannerImage();
     }
-    fetchBannerImage();
-  }, []);
+    
+  }, [token]);
 
 
 
@@ -67,9 +69,12 @@ function Bannerimagel() {
 
     setError({});
     const validationError = validateImageFile(selectedFile);
+    const validationName=validateName(imageTitle);
 
-    if (validationError) {
-      setError({ imageFile: validationError });
+    if (validationError||validationName) {
+      setError({ imageFile: validationError,
+        imagetitle:validationName
+       });
       return;
     }
 
@@ -158,6 +163,9 @@ function Bannerimagel() {
                 onChange={handleTitleChange}
                 
                   />
+                  {error.imagetitle && (
+                      <div className="text-danger">{error.imagetitle}</div>
+                    )}
               </div>
               <button
               className="btn_1"
@@ -179,7 +187,7 @@ function Bannerimagel() {
               <div className="upload_banner_img_sec">
                 <img
                   className="upload_images"
-                  src={imageURL? `https://apidev.myinteriormart.com${imageURL}` : ""}
+                  src={imageURL? `https://apidev.myinteriormart.com${imageURL}` : usericon}
                   alt="Banner Image"
                  
                 />

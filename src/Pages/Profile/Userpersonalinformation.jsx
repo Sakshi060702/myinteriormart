@@ -5,6 +5,7 @@ import nextarrowimg from "../../FrontEnd/img/arrow-next.png";
 import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
+import Popupalert from "../Popupalert";
 
 const Userpersonalinformation = () => {
   const [countries, setCountries] = useState([]);
@@ -33,6 +34,11 @@ const Userpersonalinformation = () => {
   const [selectedMaritalStatus, setSelectedMaritalStatus] = useState("");
 
   const [isProfileCompleted, setIsProfileCompleted] = useState(true);
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
+
 
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
@@ -340,13 +346,23 @@ const Userpersonalinformation = () => {
       .then((responseData) => {
         console.log("API response:", responseData);
         console.log("Address token:", token);
-        alert(`Data Submitted successfully! `);
-        navigate('/');
+      
+       
+        setSuccessMessage("Data Submitted Successfully");
+        setErrorMessage("");
+        setShowPopup(true);
+  
+        setTimeout(() => {
+          setShowPopup(false);
+          navigate('/');
+        }, 2000);
        
       })
       .catch((error) => {
         console.error("API error:", error);
-        alert("Failed to save communication details. Please try again.");
+        setErrorMessage("Error in updating profile. Please try again later.");
+        setSuccessMessage(""); // Clear any existing success message
+        setShowPopup(true);
       });
   };
 
@@ -557,6 +573,12 @@ const Userpersonalinformation = () => {
               </Link>
             </div> */}
           </div>
+          {showPopup && (
+  <Popupalert 
+    message={successMessage || errorMessage} 
+    type={successMessage ? 'success' : 'error'} 
+  />
+)}
         </form>
       </div>
     </>

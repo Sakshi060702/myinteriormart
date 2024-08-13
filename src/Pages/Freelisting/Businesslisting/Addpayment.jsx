@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh";
 import Popupalert from "../../Popupalert";
 import Paymentpopup from "./Paymentpopup";
+import useAuthCheck from "../../../Hooks/useAuthCheck";
 
 function Addpayment() {
   const [payment, setPayment] = useState({
@@ -27,6 +28,7 @@ function Addpayment() {
 
   const [showPaymentPopup, setShowPaymentPopup] = useState(false);
   const [paymentPopupMessage, setPaymentPopupMessage] = useState("");
+  const isAuthenticated=useAuthCheck();
 
   useEffect(() => {
     const fetchPaymentmode = async () => {
@@ -54,7 +56,10 @@ function Addpayment() {
         console.error("Error:", error);
       }
     };
-    fetchPaymentmode();
+    if(isAuthenticated){
+      fetchPaymentmode();
+    }
+  
   }, [token]);
 
   const handleCheckboxChange = (event) => {
@@ -197,7 +202,7 @@ function Addpayment() {
                       ].includes(key)
                   )
                   .map((key, index) => (
-                    <div className="col-md-3" key={index}>
+                    <div className="col-md-4" key={index}>
                       <div className="clearfix add_bottom_15">
                         <div className="checkboxes float-left">
                           <label className="container_check">

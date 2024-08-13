@@ -7,6 +7,7 @@ import withAuthh from "../../Hoc/withAuthh";
 import { useNavigate } from "react-router-dom";
 import Popupalert from "../Popupalert";
 import { validateImageFile,validateName } from "../Validation";
+import useAuthCheck from "../../Hooks/useAuthCheck";
 
 function Editprofile() {
   const [fullName, setFullName] = useState('');
@@ -23,34 +24,43 @@ function Editprofile() {
   const token = useSelector((state) => state.auth.token);
 
   const[error,setError]=useState("");
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const[successMessage,setSuccessMessage]=useState("");
+
+  const isAuthenticated=useAuthCheck();
   
   
 
 
   useEffect(() => {
-    // Fetch user profile data when component mounts
-    fetch('https://apidev.myinteriormart.com/api/UserProfile/GetUserProfile', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        "Authorization": `Bearer ${token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        setFullName(data.name);
-        setLastName(data.lastName);
-        setMobileNumber(data.phone);
-        setEmail(data.email);
-        setSelectGender(data.gender);
-        setImgText(data.imgText)
-        setProfileImage(data.imgUrl ? `https://apidev.myinteriormart.com${data.imgUrl}` : Profileimg); // Update profile image
-        setLoading(false);
+    if(isAuthenticated){
+      fetch('https://apidev.myinteriormart.com/api/UserProfile/GetUserProfile', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": `Bearer ${token}`,
+        },
       })
-      .catch(error => {
-        console.error('Error fetching profile data:', error);
-        setLoading(false);
-      });
+        .then(response => response.json())
+        .then(data => {
+          setFullName(data.name);
+          setLastName(data.lastName);
+          setMobileNumber(data.phone);
+          setEmail(data.email);
+          setSelectGender(data.gender);
+          setImgText(data.imgText)
+          setProfileImage(data.imgUrl ? `https://apidev.myinteriormart.com${data.imgUrl}` : Profileimg); // Update profile image
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error('Error fetching profile data:', error);
+          setLoading(false);
+        });
+    }
+    // Fetch user profile data when component mounts
+   
   }, [token]);
 
   const handleFileChange = (event) => {
@@ -102,11 +112,23 @@ function Editprofile() {
       });
       const data = await response.json();
       console.log('Profile updated successfully:', data);
-      alert('Profile saved successfully');
+   
       setProfileImage(data.userprofile.imageUrl ? `https://apidev.myinteriormart.com${data.userprofile.imageUrl}` : Profileimg);
-      navigate('/userpersonalinformation');
+     
+
+      setSuccessMessage("Edit Profile Details Saved  Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+        setShowPopup(false);
+        navigate('/userpersonalinformation');
+      }, 2000);
     } catch (error) {
       console.error('Error updating profile:', error);
+      setErrorMessage("Error in updating profile. Please try again later.");
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   };
 
@@ -179,6 +201,12 @@ function Editprofile() {
               <input type="submit" value="Submit" className="btn_1 full-width" />
             </div>
           </div>
+          {showPopup && (
+  <Popupalert 
+    message={successMessage || errorMessage} 
+    type={successMessage ? 'success' : 'error'} 
+  />
+)}
         </form>
       </div>
     </div>

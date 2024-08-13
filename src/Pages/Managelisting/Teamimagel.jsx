@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import usericon from "../../FrontEnd/img/user1 (4).jpg";
 import withAuthh from "../../Hoc/withAuthh";
 import Popupalert from "../Popupalert";
-import { validateImageFile,validateGalleryFile } from "../Validation";
+import useAuthCheck from "../../Hooks/useAuthCheck";
+import { validateImageFile,validateGalleryFile ,validateName} from "../Validation";
 
 function Teamimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -28,6 +29,9 @@ function Teamimagel() {
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
 
+  const isAuthenticated = useAuthCheck();
+
+
   useEffect(() => {
     const fetchTeamImage = async () => {
       try {
@@ -46,7 +50,7 @@ function Teamimagel() {
         console.log(data.imagepath);
         if (data instanceof Object) {
           console.log(data);
-          console.log();
+          // console.log("sakshi");
           setImageDetails(data.imagepath.map((img) => ({ url: img })));
         }
         // setImageURL(data.imagepath); // Assuming data contains image URL and title
@@ -55,8 +59,11 @@ function Teamimagel() {
         console.error(error);
       }
     };
+    if(isAuthenticated){
+      fetchTeamImage();
+    }
 
-    fetchTeamImage();
+   
   }, [token]);
 
   const apiUrl =
@@ -144,9 +151,15 @@ function Teamimagel() {
 
     setError({});
     const validationError = validateGalleryFile(selectedFile);
+    const validationFirstName = validateName(event.target.firstName.value);
+    const validationLastName = validateName(event.target.lastName.value);
+    
 
-    if (validationError) {
-      setError({ imageFile: validationError });
+    if (validationError||validationFirstName||validationLastName) {
+      setError({ imageFile: validationError,
+        firstname:validationFirstName,
+        lastname:validationLastName,
+       });
       return;
     }
 
@@ -187,7 +200,7 @@ function Teamimagel() {
         
 
         if (result instanceof Object) {
-          setImageDetails(result.imageUrls.map((img)=> ({ url: img })));
+          setImageDetails(result.ownerImageDetails.imageUrls.map((img)=> ({ url: img })));
         }
         // setImageURL(result.imageUrl);// Ensure this is the correct property
         setSuccessMessage("Team Image Uploded Successfully");
@@ -300,6 +313,9 @@ function Teamimagel() {
                 height: "50px", // Adjust height as needed
               }}
             />
+            {error.firstname && (
+                      <div className="text-danger">{error.firstname}</div>
+                    )}
           </div>
 
           <div
@@ -323,6 +339,9 @@ function Teamimagel() {
                 height: "50px", // Adjust height as needed
               }}
             />
+            {error.lastname && (
+                      <div className="text-danger">{error.lastname}</div>
+                    )}
           </div>
 
           <div
@@ -410,7 +429,7 @@ function Teamimagel() {
                 src={
                   image.url
                     ? `https://apidev.myinteriormart.com${image.url}`
-                    : ""
+                    : usericon
                 }
                 alt="Gallery Image"
               />

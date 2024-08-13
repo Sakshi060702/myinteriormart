@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
 import { validateName } from "../Validation";
+import Popupalert from "../Popupalert";
 
 function Complaint() {
   const [File, setSelectedFile] = useState(null);
@@ -9,6 +10,11 @@ function Complaint() {
   const [Description, setImageDescription] = useState("");
 
   const [error, setError] = useState("");
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
 
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
@@ -66,14 +72,25 @@ function Complaint() {
         const result = await response.json();
         console.log(result);
         console.log("Complaint Token", token); // Log the result for debugging purposes
-        alert("Complaint Uploded Successfully");
+        setSuccessMessage("Complaint uploded Succeessfully");
+        setErrorMessage("");
+        setShowPopup(true);
+  
+        setTimeout(() => {
+          setShowPopup(false);
+         
+        }, 2000);
 
         // You can handle the result here if needed, e.g., show a success message
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
       }
     } else {
-      alert("Please select a file and enter a title");
+      setErrorMessage(
+        "Failed to Save Complaint details. Please try again later."
+      );
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   };
 
@@ -116,13 +133,14 @@ function Complaint() {
                       <div className="text-danger">{error.Description}</div>
                     )}
               </div>
-              <div className="form-group">
+              <div className="form-group col-12">
                 <label > File<span className="text-danger">*</span></label>
                 <br></br>
                 <input
                   type="file"
                   onChange={handleFileChange}
-                   className="form-control"
+                  className="form-control file-upload"
+                  style={{marginLeft:'5px'}}
                    required
                   
                 />
@@ -130,14 +148,20 @@ function Complaint() {
 
               <div className="text-center col-12 mt-3">
               <button
-                className="btn_1"
-                style={{ backgroundColor: "#E55923", marginTop: "10px" }}
+                 className="btn btn-primary w-100"
+                 style={{ backgroundColor: "#fb830d", marginTop: "10px" }}
                 onClick={handleSubmit}
               >
                 Submit
               </button>
               </div>
             </div>
+            {showPopup && (
+                  <Popupalert
+                    message={successMessage || errorMessage}
+                    type={successMessage ? "success" : "error"}
+                  />
+                )}
           </form>
         </div>
       </div>

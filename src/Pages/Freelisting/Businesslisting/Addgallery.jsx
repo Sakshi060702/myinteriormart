@@ -5,7 +5,8 @@ import "../../../FrontEnd/css/Mangelisting.css";
 import { useSelector, useDispatch } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh";
 import Popupalert from "../../Popupalert";
-import { validateGalleryFile } from "../../Validation";
+import useAuthCheck from "../../../Hooks/useAuthCheck";
+import { validateGalleryFile,validateName } from "../../Validation";
 
 
 function Addgallery() {
@@ -18,6 +19,9 @@ function Addgallery() {
 
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
+
+  const isAuthenticated = useAuthCheck();
+
 
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -60,8 +64,11 @@ function Addgallery() {
         console.error(error);
       }
     };
-
-    fetchGalleryImage();
+if(isAuthenticated)
+{
+  fetchGalleryImage();
+}
+    
   }, [token]);
 
   const handleSubmit = async (event) => {
@@ -70,9 +77,12 @@ function Addgallery() {
 
     setError({});
     const validationError = validateGalleryFile(selectedFile);
+    const validationName=validateName(imageTitle);
 
-    if (validationError) {
-      setError({ imageFile: validationError });
+    if (validationError||validationName) {
+      setError({ imageFile: validationError ,
+        imagetitle:validationName
+      });
       return;
     }
 
@@ -168,6 +178,9 @@ function Addgallery() {
                   value={imageTitle}
                   onChange={handleTitleChange}
                 />
+                {error.imagetitle && (
+                      <div className="text-danger">{error.imagetitle}</div>
+                    )}
               </div>
               <button
                 className="btn_1"

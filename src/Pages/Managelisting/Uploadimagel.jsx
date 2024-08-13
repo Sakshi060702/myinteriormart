@@ -6,6 +6,7 @@ import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
 import Popupalert from "../Popupalert";
 import { validateImageFile } from "../Validation";
+import useAuthCheck from "../../Hooks/useAuthCheck";
 
 function Uploadimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -18,6 +19,7 @@ function Uploadimagel() {
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
 
+  const isAuthenticated = useAuthCheck();
   const[error,setError]=useState("");
 
 
@@ -113,9 +115,12 @@ function Uploadimagel() {
         console.error(error);
       }
     };
+    if(isAuthenticated){
+      fetchLogoImage();
+    }
    
-    fetchLogoImage();
-  }, []);
+   
+  }, [token]);
 
   return (
     <>
@@ -162,7 +167,7 @@ function Uploadimagel() {
               {console.log(imageURL?.imageUrl)} */}
                 <img
                   className="upload_images"
-                  src={imageURL? `https://apidev.myinteriormart.com${imageURL}` : ""}
+                  src={imageURL? `https://apidev.myinteriormart.com${imageURL}` : usericon  }
                   alt="Logo Image"
 
                 />

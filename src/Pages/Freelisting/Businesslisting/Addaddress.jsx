@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh";
 import Select from "react-select";
 import Popupalert from "../../Popupalert";
+import useAuthCheck from "../../../Hooks/useAuthCheck";
 
 const Address = () => {
   const [countries, setCountries] = useState([]);
@@ -33,6 +34,8 @@ const Address = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
+
+  const isAuthenticated = useAuthCheck();
 
   const apiUrl =
     "https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster";
@@ -73,9 +76,12 @@ const Address = () => {
   };
 
   useEffect(() => {
-    fetchData("countries").then((data) => {
-      if (data) setCountries(data.country);
-    });
+    if(isAuthenticated){
+      fetchData("countries").then((data) => {
+        if (data) setCountries(data.country);
+      });
+    }
+    
   }, [token]);
 
   useEffect(() => {

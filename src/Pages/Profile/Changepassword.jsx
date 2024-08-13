@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
+import { height } from "@fortawesome/free-solid-svg-icons/faL";
+import Popupalert from "../Popupalert";
 
 function Changepassword() {
   const [oldPassword, setoldPassword] = useState("");
@@ -15,30 +17,80 @@ function Changepassword() {
   const [newpasswordVisible, setNewPasswordVisible] = useState(false);
   const [confirmpasswordVisible, setConfirmPasswordVisible] = useState(false);
 
-  const handleOldPasswordChange = (e) => {
-    setoldPassword(e.target.value);
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+ 
+
+
+  const [oldPinVisible, setOldPinVisible] = useState(false);
+  const [pinVisible, setPinVisible] = useState(false);
+  const [confirmPinVisible, setConfirmPinVisible] = useState(false);
+
+  const [oldPin, setOldPin] = useState(["", "", "", ""]);
+  const [pin, setPin] = useState(["", "", "", ""]);
+  const [confirmPin, setConfirmPin] = useState(["", "", "", ""]);
+
+  const handlePinChange = (e, index) => {
+    const { value } = e.target;
+
+    // Check if the input value is a digit
+    if (/^\d?$/.test(value)) {
+      const newPin = [...pin];
+      newPin[index] = value;
+      setPin(newPin);
+
+      // Automatically focus on the next input box if there is a value and index < 3
+      if (value && index < 3) {
+        document.getElementById(`pin-${index + 1}`).focus();
+      }
+    }
   };
 
-  const handleNewPasswordChange = (e) => {
-    setNewPassword(e.target.value);
+  const handleOldPinChange = (e, index) => {
+    const { value } = e.target;
+
+    // Check if the input value is a digit
+    if (/^\d?$/.test(value)) {
+      const newPin = [...oldPin];
+      newPin[index] = value;
+      setOldPin(newPin);
+
+      // Automatically focus on the next input box if there is a value and index < 3
+      if (value && index < 3) {
+        document.getElementById(`oldpin-${index + 1}`).focus();
+      }
+    }
   };
 
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
+  const handleConfirmPinChange = (e, index) => {
+    const { value } = e.target;
+
+    // Check if the input value is a digit
+    if (/^\d?$/.test(value)) {
+      const newPin = [...confirmPin];
+      newPin[index] = value;
+      setConfirmPin(newPin);
+
+      // Automatically focus on the next input box if there is a value and index < 3
+      if (value && index < 3) {
+        document.getElementById(`confirm-pin-${index + 1}`).focus();
+      }
+    }
   };
 
-  const toggleOldPasswordVisibility1 = () => {
-    setOldPasswordVisible(!oldpasswordVisible);
+  const togglelOldPinVisibility = () => {
+    setOldPinVisible(!oldPinVisible);
   };
 
-  const toggleNewPasswordVisibility1 = () => {
-    setNewPasswordVisible(!newpasswordVisible);
+  const togglePinVisibility = () => {
+    setPinVisible(!pinVisible);
   };
 
-  const toggleConfirmPasswordVisibility1 = () => {
-    setConfirmPasswordVisible(!confirmpasswordVisible);
+  const toggleConfirmPinVisibility = () => {
+    setConfirmPinVisible(!confirmPinVisible);
   };
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
@@ -65,13 +117,26 @@ function Changepassword() {
 
       const result = await response.json();
       console.log("Form submitted successfully:", result);
-      alert("Data saved Successfully");
+      setSuccessMessage("Pin updated Succeessfully");
+      setErrorMessage("");
+      setShowPopup(true);
+
+      setTimeout(() => {
+        setShowPopup(false);
+       
+      }, 2000);
+
       // Reset form fields after successful submission
       setoldPassword("");
       setNewPassword("");
       setConfirmPassword("");
     } catch (error) {
       console.error("Error submitting form:", error);
+      setErrorMessage(
+        "Failed to Submit details. Please try again later."
+      );
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   };
   return (
@@ -85,111 +150,173 @@ function Changepassword() {
         <div className="add-review">
           <h5>Change Password</h5>
           <form className="icon-form-group" onSubmit={handleSubmit}>
-            <div className="row">
-              <div
-                className="form-group col-12"
-                style={{ position: "relative", marginBottom: "1rem" }}
-              >
-                <label>Old Password</label>
-
-                <input
-                  className="form-control"
-                  type={oldpasswordVisible ? "text" : "password"}
-                  name="old_password"
-                  placeholder="Old Pin"
-                  value={oldPassword}
-                  onChange={handleOldPasswordChange}
-                />
-                <i class="icon_lock_alt"></i>
+          <div className="" >
+              <div >  
+              {/* style={{paddingLeft:'300px'}} */}
+              <div className="pin-group">
+                <label htmlFor="pin">Old PIN</label>
+                <div className="pin-input-group">
+                  {[...Array(4)].map((_, index) => (
+                    <input
+                      key={index}
+                      id={`oldpin-${index}`}
+                      type={oldPinVisible ? "text" : "password"}
+                      maxLength="1"
+                      className="pin-input"
+                      value={oldPin[index] || ""}
+                      onChange={(e) => handleOldPinChange(e, index)}
+                      onKeyDown={(e) => {
+                        if (
+                          e.key === "Backspace" &&
+                          index > 0 &&
+                          !oldPin[index]
+                        ) {
+                          const newPin = [...oldPin];
+                          newPin[index - 1] = "";
+                          setOldPin(newPin);
+                          document.getElementById(`oldpin-${index - 1}`).focus();
+                        }
+                      }}
+                      onFocus={(e) => e.target.select()}
+                      required
+                    />
+                  ))}
+                </div>
                 <i
-                  onClick={toggleOldPasswordVisibility1}
-                  className={`fa ${
-                    oldpasswordVisible ? "fa-eye" : "fa-eye-slash"
-                  }`}
+                  onClick={togglelOldPinVisibility}
+                  className={`fa ${oldPinVisible ? "fa-eye" : "fa-eye-slash"}`}
                   style={{
                     position: "absolute",
-                    top: "69%",
-                    left: "780px",
+                    top: "50%",
+                    right: "10px",
                     transform: "translateY(-50%)",
                     cursor: "pointer",
                     color: "orange",
                     fontSize: "20px",
+                    marginRight: "562px",
+                    marginTop: "20px",
                   }}
                   aria-hidden="true"
                 ></i>
               </div>
-              <div
-                className="form-group col-12"
-                style={{ position: "relative", marginBottom: "1rem" }}
-              >
-                <label>New Password</label>
+              
 
-                <input
-                  type={newpasswordVisible ? "text" : "password"}
-                  className="form-control"
-                  name="newpassword"
-                  placeholder="New Pin"
-                  value={newPassword}
-                  onChange={handleNewPasswordChange}
-                />
-                <i class="icon_lock_alt"></i>
+
+              <div className="pin-group">
+                <label htmlFor="pin">New PIN</label>
+                <div className="pin-input-group">
+                  {[...Array(4)].map((_, index) => (
+                    <input
+                      key={index}
+                      id={`pin-${index}`}
+                      type={pinVisible ? "text" : "password"}
+                      maxLength="1"
+                      className="pin-input"
+                      value={pin[index] || ""}
+                      onChange={(e) => handlePinChange(e, index)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Backspace" && index > 0 && !pin[index]) {
+                          const newPin = [...pin];
+                          newPin[index - 1] = "";
+                          setPin(newPin);
+                          document.getElementById(`pin-${index - 1}`).focus();
+                        }
+                      }}
+                      onFocus={(e) => e.target.select()}
+                      required
+                    />
+                  ))}
+                </div>
                 <i
-                  onClick={toggleNewPasswordVisibility1}
-                  className={`fa ${
-                    newpasswordVisible ? "fa-eye" : "fa-eye-slash"
-                  }`}
+                  onClick={togglePinVisibility}
+                  className={`fa ${pinVisible ? "fa-eye" : "fa-eye-slash"}`}
                   style={{
                     position: "absolute",
-                    top: "69%",
-                    left: "780px",
+                    top: "50%",
+                    right: "10px",
                     transform: "translateY(-50%)",
                     cursor: "pointer",
                     color: "orange",
                     fontSize: "20px",
+                    marginRight: "562px",
+                    marginTop: "20px",
                   }}
                   aria-hidden="true"
                 ></i>
               </div>
-              <div
-                className="form-group col-12"
-                style={{ position: "relative", marginBottom: "1rem" }}
-              >
-                <label>Confirm New Password</label>
-                <input
-                  className="form-control"
-                  type={confirmpasswordVisible ? "text" : "password"}
-                  name="confirm_new_password"
-                  placeholder="Confirm New Pin"
-                  value={confirmPassword}
-                  onChange={handleConfirmPasswordChange}
-                />
-                <i class="icon_lock_alt"></i>
+              
+
+              
+
+              <div className="pin-group">
+                <label htmlFor="confirm-pin">Confirm PIN</label>
+                <div className="pin-input-group">
+                  {[...Array(4)].map((_, index) => (
+                    <input
+                      key={index}
+                      id={`confirm-pin-${index}`}
+                      type={confirmPinVisible ? "text" : "password"}
+                      maxLength="1"
+                      className="pin-input"
+                      value={confirmPin[index] || ""}
+                      onChange={(e) => handleConfirmPinChange(e, index)}
+                      onKeyDown={(e) => {
+                        if (
+                          e.key === "Backspace" &&
+                          index > 0 &&
+                          !confirmPin[index]
+                        ) {
+                          const newPin = [...confirmPin];
+                          newPin[index - 1] = "";
+                          setConfirmPin(newPin);
+                          document
+                            .getElementById(`confirm-pin-${index - 1}`)
+                            .focus();
+                        }
+                      }}
+                      onFocus={(e) => e.target.select()}
+                      required
+                    />
+                  ))}
+                </div>
                 <i
-                  onClick={toggleConfirmPasswordVisibility1}
+                  onClick={toggleConfirmPinVisibility}
                   className={`fa ${
-                    confirmpasswordVisible ? "fa-eye" : "fa-eye-slash"
+                    confirmPinVisible ? "fa-eye" : "fa-eye-slash"
                   }`}
                   style={{
                     position: "absolute",
-                    top: "69%",
-                    left: "780px",
+                    top: "50%",
+                    right: "10px",
                     transform: "translateY(-50%)",
                     cursor: "pointer",
                     color: "orange",
                     fontSize: "20px",
+                    marginRight: "562px",
+                    marginTop: "20px",
                   }}
                   aria-hidden="true"
                 ></i>
               </div>
-
-              <div className="text-center col-12 mt-3">
+              </div>
+              <div className="btn_1">
                 <input
                   type="submit"
                   value="Submit"
                   className="btn_1 full-width"
+                  style={{height:'25px',
+                    padding:'10px'
+                  }}
                 />
               </div>
             </div>
+            {showPopup && (
+                  <Popupalert
+                    message={successMessage || errorMessage}
+                    type={successMessage ? "success" : "error"}
+                  />
+                )}
+
           </form>
         </div>
       </div>

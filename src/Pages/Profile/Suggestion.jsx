@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
 import { validateName } from "../Validation";
+import Popupalert from "../Popupalert";
 
 
 function Suggestion() {
@@ -9,6 +10,11 @@ function Suggestion() {
   const [suggestion, setSuggestion] = useState("");
   const token = useSelector((state) => state.auth.token);
   const [error, setError] = useState("");
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -52,11 +58,24 @@ function Suggestion() {
 
       const result = await response.json();
       console.log("Form submitted successfully:", result);
+      setSuccessMessage("Suggestion Sent Succeessfully");
+        setErrorMessage("");
+        setShowPopup(true);
+  
+        setTimeout(() => {
+          setShowPopup(false);
+         
+        }, 2000);
       // Reset form fields after successful submission
       setTitle("");
       setSuggestion("");
     } catch (error) {
       console.error("Error submitting form:", error);
+      setErrorMessage(
+        "Failed to Save Suggestion details. Please try again later."
+      );
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   };
 
@@ -108,6 +127,12 @@ function Suggestion() {
                 />
               </div>
             </div>
+            {showPopup && (
+                  <Popupalert
+                    message={successMessage || errorMessage}
+                    type={successMessage ? "success" : "error"}
+                  />
+                )}
           </form>
         </div>
       </div>

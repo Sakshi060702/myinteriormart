@@ -12,6 +12,10 @@ import chatimg from "../../FrontEnd/img/icon/chat.png";
 import suggestionimg from "../../FrontEnd/img/icon/suggestion.png";
 import complaintimg from "../../FrontEnd/img/icon/Complaint.png";
 import changepassimg from "../../FrontEnd/img/icon/password.png";
+import registerimg from "../../FrontEnd/img/icon/register.png";
+import dashbordimg from "../../FrontEnd/img/icon/dashboard.png";
+import managlistingimg from "../../FrontEnd/img/icon/manage.png";
+import myactivityimg from "../../FrontEnd/img/icon/activity.png";
 import listingicon from "../../FrontEnd/img/business-listing.jpeg";
 import { Dropdown } from "react-bootstrap";
 
@@ -61,7 +65,7 @@ function Profile2({ children }) {
                   <Link to="/Myactivity">
                     {" "}
                     <img
-                      src={listingicon}
+                      src={myactivityimg}
                       alt="Edit Profile"
                       style={{ height: "60px" }}
                     />
@@ -70,7 +74,7 @@ function Profile2({ children }) {
                   <Link to="/editprofile">
                     {" "}
                     <img
-                      src={listingicon}
+                      src={editprofile}
                       alt="Edit Profile"
                       style={{ height: "60px" }}
                     />
@@ -80,7 +84,7 @@ function Profile2({ children }) {
                   <Link to="/userpersonalinformation">
                     {" "}
                     <img
-                      src={listingicon}
+                      src={addressimg}
                       alt="Edit Profile"
                       style={{ height: "60px" }}
                     />
@@ -90,7 +94,7 @@ function Profile2({ children }) {
                   <Link to="/complaint">
                     {" "}
                     <img
-                      src={listingicon}
+                      src={complaintimg}
                       alt="Edit Profile"
                       style={{ height: "60px" }}
                     />
@@ -99,7 +103,7 @@ function Profile2({ children }) {
                   <Link to="/suggestion">
                     {" "}
                     <img
-                      src={listingicon}
+                      src={suggestionimg}
                       alt="Edit Profile"
                       style={{ height: "60px" }}
                     />
@@ -108,7 +112,7 @@ function Profile2({ children }) {
                   <Link to="/chat">
                     {" "}
                     <img
-                      src={listingicon}
+                      src={chatimg}
                       alt="Edit Profile"
                       style={{ height: "60px" }}
                     />
@@ -118,7 +122,7 @@ function Profile2({ children }) {
                   <Link to="/changepassword">
                     {" "}
                     <img
-                      src={listingicon}
+                      src={changepassimg}
                       alt="Edit Profile"
                       style={{ height: "60px" }}
                     />
@@ -132,7 +136,7 @@ function Profile2({ children }) {
                   <Link to="/dashboard">
                     {" "}
                     <img
-                      src={listingicon}
+                      src={dashbordimg}
                       alt="Edit Profile"
                       style={{ height: "60px" }}
                     />
@@ -141,7 +145,7 @@ function Profile2({ children }) {
                   <Link to="/Myactivity">
                     {" "}
                     <img
-                      src={listingicon}
+                      src={myactivityimg}
                       alt="Edit Profile"
                       style={{ height: "60px" }}
                     />
@@ -150,7 +154,7 @@ function Profile2({ children }) {
                   {status=== 1 && (
                     <><Link to="/labournakapage">
                     <img
-                      src={listingicon}
+                      src={managlistingimg}
                       alt="Manage Listing"
                       style={{ height: "60px" }}
                     />
@@ -158,7 +162,7 @@ function Profile2({ children }) {
                   </Link>
                   <Link to="/enquiry">
                     <img
-                      src={listingicon}
+                      src={enquiryimg}
                       alt="Enquiry"
                       style={{ height: "60px" }}
                     />
@@ -169,7 +173,7 @@ function Profile2({ children }) {
                   <Link to="/complaint">
                     {" "}
                     <img
-                      src={listingicon}
+                      src={complaintimg}
                       alt="Edit Profile"
                       style={{ height: "60px" }}
                     />
@@ -178,7 +182,7 @@ function Profile2({ children }) {
                   <Link to="/suggestion">
                     {" "}
                     <img
-                      src={listingicon}
+                      src={suggestionimg}
                       alt="Edit Profile"
                       style={{ height: "60px" }}
                     />
@@ -187,7 +191,7 @@ function Profile2({ children }) {
                   <Link to="/chat">
                     {" "}
                     <img
-                      src={listingicon}
+                      src={chatimg}
                       alt="Edit Profile"
                       style={{ height: "60px" }}
                     />
@@ -196,7 +200,7 @@ function Profile2({ children }) {
                   <Link to="/ProfileRegister">
                     {" "}
                     <img
-                      src={listingicon}
+                      src={registerimg}
                       alt="Edit Profile"
                       style={{ height: "60px" }}
                     />
@@ -206,7 +210,7 @@ function Profile2({ children }) {
                   <Link to="/changepassword">
                     {" "}
                     <img
-                      src={listingicon}
+                      src={changepassimg}
                       alt="Edit Profile"
                       style={{ height: "60px" }}
                     />

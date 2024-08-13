@@ -7,7 +7,7 @@ const withAuthh = (Component) => {
         const isAuthenticated = useAuthCheck();
 
         if (!isAuthenticated) {
-            return <Navigate to="/login" />;
+            return <Navigate to="/" />;
         }
         return <Component {...props} />;
     };

@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh";
 import Popupalert from "../../Popupalert";
-import { validateImageFile } from "../../Validation";
+import { validateImageFile ,validateName} from "../../Validation";
+import usericon from "../../../FrontEnd/img/certificate.jpg";
+
 
 function Addcertification() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -13,11 +15,14 @@ function Addcertification() {
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
 
+
+
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
 
   const[error,setError]=useState("");
+  
 
 
   const handleFileChange = (event) => {
@@ -59,9 +64,12 @@ function Addcertification() {
 
     setError({});
     const validationError = validateImageFile(selectedFile);
+    const validationName=validateName(imageTitle);
 
-    if (validationError) {
-      setError({ imageFile: validationError });
+    if (validationError||validationName) {
+      setError({ imageFile: validationError,
+        imagetitle:validationName
+       });
       return;
     }
 
@@ -144,6 +152,9 @@ function Addcertification() {
                   value={imageTitle}
                   onChange={handleTitleChange}
                 />
+                {error.imagetitle && (
+                      <div className="text-danger">{error.imagetitle}</div>
+                    )}
               </div>
               <button
                 className="btn_1"
@@ -165,7 +176,7 @@ function Addcertification() {
               <div className="upload_img_sec">
                 <img
                   className="upload_images"
-                  src={imageURL ? `https://apidev.myinteriormart.com${imageURL}` : ""}
+                  src={imageURL ? `https://apidev.myinteriormart.com${imageURL}` : usericon}
                   alt="Certification Image"
                 />
               </div>

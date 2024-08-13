@@ -5,7 +5,8 @@ import "../../FrontEnd/css/Mangelisting.css";
 import { useSelector, useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
 import Popupalert from "../Popupalert";
-import { validateImageFile,validateGalleryFile } from "../Validation";
+import { validateImageFile,validateGalleryFile,validateName } from "../Validation";
+import useAuthCheck from "../../Hooks/useAuthCheck";
 
 function Galleryimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -14,6 +15,8 @@ function Galleryimagel() {
 
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
+
+  const isAuthenticated = useAuthCheck();
 
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -57,8 +60,11 @@ function Galleryimagel() {
         console.error(error);
       }
     };
+    if(isAuthenticated){
+      fetchGalleryImage();
+    }
 
-    fetchGalleryImage();
+ 
   }, [token]);
 
   const handleSubmit = async (event) => {
@@ -67,9 +73,12 @@ function Galleryimagel() {
 
     setError({});
     const validationError = validateGalleryFile(selectedFile);
+    const validationName=validateName(imageTitle);
 
-    if (validationError) {
-      setError({ imageFile: validationError });
+    if (validationError||validationName) {
+      setError({ imageFile: validationError,
+        imagetitle:validationName
+       });
       return;
     }
 
@@ -166,6 +175,9 @@ function Galleryimagel() {
                   onChange={handleTitleChange}
                   required
                 />
+                {error.imagetitle && (
+                      <div className="text-danger">{error.imagetitle}</div>
+                    )}
               </div>
               <button
                 className="btn_1"
@@ -190,7 +202,7 @@ function Galleryimagel() {
                   
                   <img
                     className="upload_images"
-                    src={image.url ? `https://apidev.myinteriormart.com${image.url}` : ""}
+                    src={image.url ? `https://apidev.myinteriormart.com${image.url}` :usericon}
                     alt="Gallery Image"
                   />
                 </div>
