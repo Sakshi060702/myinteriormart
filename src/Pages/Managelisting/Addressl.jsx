@@ -6,6 +6,7 @@ import previousarrowimg from "../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
 import Popupalert from "../Popupalert";
+import LocalityPopup from "../Freelisting/Businesslisting/Localitypopup";
 
 const Addressl = () => {
   const [countries, setCountries] = useState([]);
@@ -30,6 +31,8 @@ const Addressl = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
+
+  const [showAddressPopup, setShowAddressPopup] = useState([false, null]);
 
   const apiUrl =
     "https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster";

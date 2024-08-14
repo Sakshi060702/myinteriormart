@@ -8,6 +8,11 @@ import withAuthh from "../../../Hoc/withAuthh";
 import Select from "react-select";
 import Popupalert from "../../Popupalert";
 import useAuthCheck from "../../../Hooks/useAuthCheck";
+import LocalityPopup from "./Localitypopup";
+import PincodePopup from "./Pincodepopup";
+import Areapopup from "./Areapopup";
+
+
 
 const Address = () => {
   const [countries, setCountries] = useState([]);
@@ -32,10 +37,17 @@ const Address = () => {
   const token = useSelector((state) => state.auth.token);
 
   const [showPopup, setShowPopup] = useState(false);
+
+  const [showAddressPopup, setShowAddressPopup] = useState([false, null]);
+  const[showPincodePopup,setShowPincodePopup]=useState([false,null]);
+  const[showAreaPopup,setShowAreaPopup]=useState([false,null]);
+
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
 
   const isAuthenticated = useAuthCheck();
+
+  
 
   const apiUrl =
     "https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster";
@@ -464,6 +476,7 @@ const Address = () => {
                         </option>
                       ))}
                     </select>
+                    <button onClick={(e)=>{ e.preventDefault(); console.log(cities, cities.cityId); return setShowAddressPopup([true,selectedCity])}}>Add Locality +</button>
                   </div>
                   <div className="form-group col-md-4">
                     <label>Pincode<span className="text-danger">*</span></label>
@@ -489,6 +502,7 @@ const Address = () => {
                         </option>
                       ))}
                     </select>
+                    <button onClick={(e)=>{ e.preventDefault();  return setShowPincodePopup([true,selectedAssembly])}}>Add Pincode +</button>
                   </div>
                   <div className="form-group col-md-4">
                     <label>Area<span className="text-danger">*</span></label>
@@ -514,6 +528,7 @@ const Address = () => {
                         </option>
                       ))}
                     </select>
+                    <button onClick={(e)=>{ e.preventDefault();console.log("assembly", selectedAssembly);console.log("pincode",selectedPincode);  return setShowAreaPopup([true,selectedAssembly,selectedPincode])}}>Add Area +</button>
                   </div>
                   <div className="form-group col-md-12">
                     <label htmlFor="localAddress">Local Address</label>
@@ -555,6 +570,31 @@ const Address = () => {
                     </Link>
                   </div>
                 </div>
+                {console.log(showAddressPopup)}
+                {showAddressPopup && (
+                  <LocalityPopup
+                  isOpen={showAddressPopup[0]} cityId={showAddressPopup[1]}
+                  onClose={()=>setShowAddressPopup([false,null])}/>
+                )}
+
+                {
+                  showPincodePopup && (
+                    <PincodePopup 
+                    isOpen={showPincodePopup[0]} localityId={showPincodePopup[1]}
+                    onClose={()=>setShowPincodePopup([false,null])}/>
+                  )
+                }
+                 {console.log(showAreaPopup)}
+                {
+                  showAreaPopup && (
+                    <Areapopup 
+                    isOpen={showAreaPopup[0]} pincodeId={showAreaPopup[1]} localityId={showAreaPopup[1]}
+                    onClose={()=>setShowAreaPopup([false,null,null])}/>
+                  )
+                }
+
+
+
                 {showPopup && ( 
                   <Popupalert 
                   message={successMessage || errorMessage} 

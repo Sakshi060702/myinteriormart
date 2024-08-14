@@ -27,7 +27,7 @@ function Home(){
         <Searchbar></Searchbar>
         <main id='home_main'>
             <div className="container">
-                <Banner></Banner>
+                {/* <Banner></Banner> */}
                <Services1></Services1>
                <Contractor1/>
                  <Dealer1/>
