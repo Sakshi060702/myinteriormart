@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
-import usericon from "../../FrontEnd/img/home_section_1.jpg";
+import usericon from "../../FrontEnd/img/placeholder-banner-690-x-120.jpg";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
 import Popupalert from "../Popupalert";
@@ -167,13 +167,7 @@ function Bannerimagel() {
                       <div className="text-danger">{error.imagetitle}</div>
                     )}
               </div>
-              <button
-              className="btn_1"
-              style={{ backgroundColor: "#E55923", marginTop: "10px" }}
-              onClick={handleSubmit}
-            >
-              Submit
-            </button>
+             
             </div>
           </div>
           <hr style={{ marginTop: "32px" }}></hr>
@@ -196,6 +190,15 @@ function Bannerimagel() {
               {imageTitleFromAPI}
               </div>
             </div>
+          </div>
+          <div style={{paddingLeft:'471px'}}>
+          <button
+              className="btn_1"
+              style={{ backgroundColor: "#E55923", marginTop: "10px" }}
+              onClick={handleSubmit}
+            >
+              Submit
+            </button>
           </div>
           {showPopup && (
             <Popupalert 

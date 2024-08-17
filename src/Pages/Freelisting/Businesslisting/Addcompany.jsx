@@ -76,9 +76,18 @@ function Addcompany() {
     fetchBusinessTypes();
   }, [token]);
 
-  const filteredOptions = allOptions.filter((option) =>
+  const prepend = (value, array) => {
+    var newArray = array.slice();
+    newArray.unshift(value);
+    return newArray;
+  }
+  let filteredOptions = allOptions.filter((option) =>
     option.label.toLowerCase().includes(inputValue.toLowerCase())
   );
+
+  // filteredOptions = prepend({value:"Select Business Type", label:"Select Business Type"},filteredOptions)
+  // console.log(prepend("Select Business Type",filteredOptions));
+  // console.log(filteredOptions);
 
   const handleAddNewOption = () => {
     if (
@@ -249,7 +258,7 @@ function Addcompany() {
                 options={filteredOptions}
                 onInputChange={(newValue) => setInputValue(newValue)}
                 onChange={handleSelectChange} // Handle the select change
-                placeholder="Enter keyword to filter"
+                placeholder= "Type to search"
                 noOptionsMessage={() => (
                   <div
                     onClick={handleAddNewOption}
@@ -267,9 +276,12 @@ function Addcompany() {
                     height: "50px",
                   }),
                 }}
-                value={allOptions.find(
-                  (option) => option.value === formData.businessCategory
-                )} // Set the selected value
+                value={
+                  
+                    allOptions.find((option) => option.value === formData.businessCategory) !== undefined ? (allOptions.find((option) => option.value === formData.businessCategory).value =='' ?
+                    {value:'Select Business Type', label:'Select Business Type'}: allOptions.find((option) => option.value === formData.businessCategory)) : {value:'Select Business Type', label:'Select Business Type'}
+                  
+                  } // Set the selected value
               />
             </div>{" "}
             <div className="form-group col-md-4">

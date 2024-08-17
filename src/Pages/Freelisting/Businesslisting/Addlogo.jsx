@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../../../FrontEnd/css/Mangelisting.css";
-import usericon from "../../../FrontEnd/img/user1 (1).jpg";
+import usericon from "../../../FrontEnd/img/dummyowner.jpg";
 import withAuthh from "../../../Hoc/withAuthh";
 import Popupalert from "../../Popupalert";
 import { validateImageFile } from "../../Validation";
@@ -146,13 +146,7 @@ function Addlogo() {
                     )}
                 {/* <button type="submit">Upload</button> */}
 
-                <button
-                  className="btn_1"
-                  style={{ backgroundColor: "#E55923", marginTop: "10px" }}
-                  onClick={handleSubmit}
-                >
-                  Submit
-                </button>
+                
               </div>
               </div>
               </div>
@@ -179,6 +173,15 @@ function Addlogo() {
               
               </div>
             </div>
+          </div>
+          <div style={{paddingLeft:'349px'}}>
+          <button
+                  className="btn_1"
+                  style={{ backgroundColor: "#E55923", marginTop: "10px" }}
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </button>
           </div>
 
           {showPopup && (

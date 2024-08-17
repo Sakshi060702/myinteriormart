@@ -15,7 +15,7 @@ import Uploadimagel from "../../Managelisting/Uploadimagel";
 
 const buttons=[
   {title:"Logo", component:Addlogo},
-  {title:"Owner",component:Addteam},
+  {title:"Owners",component:Addteam},
   {title:"Gallery",component:Addgallery},
   {title:"Banner",component:Addbanner},
   {title:"Certifications",component:Addcertification},

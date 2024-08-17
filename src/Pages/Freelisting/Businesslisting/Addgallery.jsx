@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import usericon from "../../../FrontEnd/img/user1 (3).jpg";
+import usericon from "../../../FrontEnd/img/dummyowner.jpg";
 import "../../../FrontEnd/css/Mangelisting.css";
 import { useSelector, useDispatch } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh";
 import Popupalert from "../../Popupalert";
 import useAuthCheck from "../../../Hooks/useAuthCheck";
-import { validateGalleryFile,validateName } from "../../Validation";
-
+import { validateGalleryFile, validateName } from "../../Validation";
 
 function Addgallery() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -15,19 +14,17 @@ function Addgallery() {
   const [imageURL, setImageURL] = useState(null);
   const [imageTitleFromAPI, setImageTitleFromAPI] = useState("");
   const [imageDetails, setImageDetails] = useState([]);
- 
 
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
 
   const isAuthenticated = useAuthCheck();
 
-
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const[successMessage,setSuccessMessage]=useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const[error,setError]=useState("");
+  const [error, setError] = useState("");
 
   const handleFileChange = (event) => {
     setSelectedFile(Array.from(event.target.files));
@@ -57,35 +54,30 @@ function Addgallery() {
         if (data instanceof Object) {
           console.log(data);
           console.log();
-          setImageDetails(data.imagepath.map((img)=> ({ url: img, title: data.imagetitle })));
-        
+          setImageDetails(
+            data.imagepath.map((img) => ({ url: img, title: data.imagetitle }))
+          );
         }
       } catch (error) {
         console.error(error);
       }
     };
-if(isAuthenticated)
-{
-  fetchGalleryImage();
-}
-    
+    if (isAuthenticated) {
+      fetchGalleryImage();
+    }
   }, [token]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-
     setError({});
     const validationError = validateGalleryFile(selectedFile);
-    const validationName=validateName(imageTitle);
+    const validationName = validateName(imageTitle);
 
-    if (validationError||validationName) {
-      setError({ imageFile: validationError ,
-        imagetitle:validationName
-      });
+    if (validationError || validationName) {
+      setError({ imageFile: validationError, imagetitle: validationName });
       return;
     }
-
 
     if (selectedFile.length > 0 && imageTitle) {
       const formData = new FormData();
@@ -115,7 +107,12 @@ if(isAuthenticated)
         console.log("Post response", result);
 
         if (result instanceof Object) {
-          setImageDetails(result.imageUrls.map((img)=> ({ url: img, title: result.imageTitle })));
+          setImageDetails(
+            result.imageUrls.map((img) => ({
+              url: img,
+              title: result.imageTitle,
+            }))
+          );
           // setImageDetails((prevDetails) =>
           //   prevDetails.concat(result.map((image) => ({ url: image.imageUrls, title: image.imageTitle })))
           // );
@@ -130,7 +127,6 @@ if(isAuthenticated)
         setTimeout(() => {
           setShowPopup(false);
         }, 2000);
-
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
         setErrorMessage("Failed to Upload Image. Please try again later.");
@@ -158,12 +154,12 @@ if(isAuthenticated)
                   type="file"
                   onChange={handleFileChange}
                   className="file-input"
-                   multiple
+                  multiple
                   accept="image/*"
                 />
                 {error.imageFile && (
-                      <div className="text-danger">{error.imageFile}</div>
-                    )}
+                  <div className="text-danger">{error.imageFile}</div>
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="name">
@@ -179,22 +175,15 @@ if(isAuthenticated)
                   onChange={handleTitleChange}
                 />
                 {error.imagetitle && (
-                      <div className="text-danger">{error.imagetitle}</div>
-                    )}
+                  <div className="text-danger">{error.imagetitle}</div>
+                )}
               </div>
-              <button
-                className="btn_1"
-                style={{ backgroundColor: "#E55923", marginTop: "10px" }}
-                onClick={handleSubmit}
-              >
-                Submit
-              </button>
             </div>
           </div>
           <hr style={{ marginTop: "32px" }}></hr>
           <div className="row">
             <div className="col-md-12">
-              <h2 style={{textAlign:'center'}}>Gallery Images</h2>
+              <h2 style={{ textAlign: "center" }}>Gallery Images</h2>
             </div>
           </div>
           <div className="row justify-content-center mt-4">
@@ -202,26 +191,36 @@ if(isAuthenticated)
             {imageDetails.map((image, index) => (
               <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
                 <div className="upload_img_sec">
-                  
                   <img
                     className="upload_images"
-                    src={image.url ? `https://apidev.myinteriormart.com${image.url}` : ""}
+                    src={
+                      image.url
+                        ? `https://apidev.myinteriormart.com${image.url}`
+                        : usericon
+                    }
                     alt="Gallery Image"
                   />
                 </div>
-                
-                
+
                 <div className="img_title text-center">{image.title}</div>
               </div>
             ))}
-         
           </div>
 
+          <div style={{ paddingLeft: "349px" }}>
+            <button
+              className="btn_1"
+              style={{ backgroundColor: "#E55923", marginTop: "10px" }}
+              onClick={handleSubmit}
+            >
+              Submit
+            </button>
+          </div>
           {showPopup && (
-            <Popupalert 
-            message={successMessage || errorMessage} 
-            type={successMessage ? 'success' : 'error'} 
-          />
+            <Popupalert
+              message={successMessage || errorMessage}
+              type={successMessage ? "success" : "error"}
+            />
           )}
 
           {/* <div className="mt-3">

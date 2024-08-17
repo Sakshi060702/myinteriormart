@@ -23,9 +23,11 @@
     "react-router-dom": "^6.23.1",
     "react-scripts": "5.0.1",
     "react-select": "^5.8.0",
+    "react-slick": "^0.30.2",
     "react-timezone-select": "^3.2.5",
     "react-world-flags": "^1.6.0",
     "redux": "^5.0.1",
+    "slick-carousel": "^1.8.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

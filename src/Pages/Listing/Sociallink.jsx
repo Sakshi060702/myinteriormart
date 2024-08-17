@@ -69,17 +69,16 @@ const Sociallink = ({ isOpen, onClose }) => {
           </button>
           <h6>Share Now</h6>
           <br></br>
-          <div >
-            <div style={{marginBottom:'15px'}}>
-            <a href="https://web.whatsapp.com/send?text"  target="_blank" rel="noopener noreferrer">  <img src={whatsappimg} className="socialimg" alt="socialmedia" style={{marginLeft:'40px'}}/></a>
+          <div style={{ overflowX: 'auto' }} >
+            <div style={{marginBottom:'15px',display:'flex', alignItems:'center'}}>
+            <a href="https://web.whatsapp.com/send?text"  target="_blank" rel="noopener noreferrer">  <img src={whatsappimg} className="socialimg" alt="socialmedia" style={{marginLeft:'14px'}}/></a>
             <a href="https://www.facebook.com/sharer/sharer.php?description" target="_blank" rel="noopener noreferrer"> <img src={facebookimg} className="socialimg" alt="socialmedia"/></a>
             <a href="https://www.pinterest.com/pin/create/button/?description" target="_blank" rel="noopener noreferrer"> <img src={pintarestimg} className="socialimg" alt="socialmedia"/></a>
             <a href="https://www.linkedin.com/sharing/share-offsite" target="_blank" rel="noopener noreferrer"><img src={linkdenimg} className="socialimg" alt="socialmedia"/></a>
-            </div>
-            <div style={{marginLeft:'40px'}}>
             <a href="http://twitter.com/share?text" target="_blank" rel="noopener noreferrer" > <img src={ximg} className="socialimg" alt="socialmedia"/></a>
             <a target="_blank" rel="noopener noreferrer" > <img src={copylink} className="socialimg" alt="socialmedia"/></a>
             </div>
+            
             
             
           

@@ -13,9 +13,14 @@ function Listing() {
   const [listing, setListing] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState([false,null]);
 
+const [currentPage, setCurrentPage] = useState(1);
+const [itemsPerPage, setItemsPerPage] = useState(10);
+const [totalItems, setTotalItems] = useState(0);
+
+
   useEffect(() => {
     fetchListings();
-  }, [secondCategoryId]);
+  }, [secondCategoryId,currentPage]);
 
   const token = useSelector((state) => state.auth.token);
   
@@ -23,32 +28,56 @@ function Listing() {
   const fetchListings = async () => {
     try {
       const response = await fetch(
-        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing`,
+        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing?pageNumber=${currentPage}&pageSize=${itemsPerPage}&subCategoryid=${secondCategoryId}`,
         {
-          method: 'GET', // You can adjust the method if needed
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           }
         }
       );
-
+  
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
+  
       const data = await response.json();
       console.log("Fetched Data", data);
-      const filterdListing = data.filter((listing) => {
+  
+      // Filter listings if needed based on subCategoryId
+      const filteredListing = data.filter((listing) => {
         return listing.subCategory.some(
           (subcat) => subcat.id.toString() === secondCategoryId
         );
       });
-      setListing(filterdListing);
+  
+      setListing(filteredListing);
+      console.log(filteredListing)
+      console.log(itemsPerPage);
+  
+      
+      if (filteredListing.length < itemsPerPage) {
+       
+        setTotalItems((currentPage - 1) * itemsPerPage + filteredListing.length);
+       
+      } else {
+    
+        setTotalItems(currentPage * itemsPerPage + 1); 
+      
+      }
     } catch (error) {
       console.error("Error fetching listings", error);
     }
   };
+
+  
+  
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+  
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (
     <>
@@ -99,11 +128,13 @@ function Listing() {
                               {listing.companyName}
                             </Link>
                           </h3>
+                          <small>{listing.listingKeyword}</small>
+                          {/* <br></br>
                           <small>
                             {listing.subCategory
                               .map((subCat) => subCat.name)
                               .join(", ")}
-                          </small>
+                          </small> */}
                           <p>
                             <i className="fa fa-map-marker"></i>
                             {listing.locality}, {listing.area}
@@ -172,6 +203,29 @@ function Listing() {
             <p>No listings found for the selected category.</p>
           )}
         </div>
+         <div className="pagination">
+    <button
+      onClick={() => handlePageChange(currentPage - 1)}
+      disabled={currentPage === 1}
+    >
+      Previous
+    </button>
+    {Array.from({ length: totalPages }, (_, i) => (
+      <button
+        key={i + 1}
+        onClick={() => handlePageChange(i + 1)}
+        className={currentPage === i + 1 ? 'active' : ''}
+      >
+        {i + 1}
+      </button>
+    ))}
+    <button
+      onClick={() => handlePageChange(currentPage + 1)}
+      disabled={listing.length < itemsPerPage}  // Disable "Next" if fewer than 10 listings
+    >
+      Next
+    </button>
+  </div>
       </div>
       
       {token ? (
@@ -196,3 +250,14 @@ const BusinessHours = ({ businessWorking }) => {
   );
 };
 export default Listing;
+
+
+
+
+
+
+
+
+
+
+

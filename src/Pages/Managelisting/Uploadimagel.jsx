@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import usericon from "../../FrontEnd/img/user1 (1).jpg";
+import usericon from "../../FrontEnd/img/dummyowner.jpg";
 import "../../FrontEnd/css/Mangelisting.css";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
@@ -143,13 +143,7 @@ function Uploadimagel() {
                     )}
                 {/* <button type="submit">Upload</button> */}
 
-                <button
-                  className="btn_1"
-                  style={{ backgroundColor: "#E55923", marginTop: "10px" }}
-                  onClick={handleSubmit}
-                >
-                  Submit
-                </button>
+                
               </div>
               </div>
               </div>
@@ -178,6 +172,16 @@ function Uploadimagel() {
               </div>
             </div>
           </div>
+          <div style={{paddingLeft:'471px'}}>
+          <button
+                  className="btn_1"
+                  style={{ backgroundColor: "#E55923", marginTop: "10px" }}
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </button>
+          </div>
+         
           {showPopup && (
             <Popupalert 
             message={successMessage || errorMessage} 

@@ -194,7 +194,7 @@ function Addcompanyl() {
       setTimeout(() => {
         setShowPopup(false);
         navigate("/communicationl");
-      }, 2000);
+      }, 4000);
     } catch (error) {
       console.error("API error:", error);
       setErrorMessage(
@@ -245,7 +245,7 @@ function Addcompanyl() {
                       options={filteredOptions}
                       onInputChange={(newValue) => setInputValue(newValue)}
                       onChange={handleSelectChange} // Handle the select change
-                      placeholder="Enter keyword to filter"
+                      placeholder="Select or Type Keyword"
                       noOptionsMessage={() => (
                         <div
                           onClick={handleAddNewOption}

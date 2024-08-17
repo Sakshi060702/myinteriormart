@@ -13,9 +13,9 @@ import suggestionimg from "../../FrontEnd/img/icon/suggestion.png";
 import complaintimg from "../../FrontEnd/img/icon/Complaint.png";
 import changepassimg from "../../FrontEnd/img/icon/password.png";
 import registerimg from "../../FrontEnd/img/icon/register.png";
-import dashbordimg from "../../FrontEnd/img/icon/dashboard.png";
+import dashbordimg from "../../FrontEnd/img/Dashboard.png";
 import managlistingimg from "../../FrontEnd/img/icon/manage.png";
-import myactivityimg from "../../FrontEnd/img/icon/activity.png";
+import myactivityimg from "../../FrontEnd/img/myActivity.png";
 import listingicon from "../../FrontEnd/img/business-listing.jpeg";
 import { Dropdown } from "react-bootstrap";
 

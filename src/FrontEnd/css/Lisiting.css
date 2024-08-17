@@ -97,13 +97,49 @@
   /* Add these styles to your CSS file */
 
 .btn-bookmark {
-  background-color: white;
+  background-color: #f3ebeb;
   color: black;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
-.btn-bookmark.active {
+/* .btn-bookmark.active {
   background-color: green;
   color: white;
   border: 1px solid green;
+} */
+
+.btn-bookmark i {
+  color: gray; 
+}
+
+
+.btn-bookmark i.icon-active {
+  background-color: green  
+}
+
+
+/*Pagination*/
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.pagination button:disabled {
+  cursor: not-allowed;
+  background-color: #e9ecef;
 }

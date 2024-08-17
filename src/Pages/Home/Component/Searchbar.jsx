@@ -71,11 +71,24 @@ function Searchbar() {
               </div>
               {showDropdown && results.length > 0 && (
                 <div className="dropdownsearchbar" ref={dropdownRef}>
-                  {results.map((result, index) => (
-                    <div key={index} className="dropdownItemsearchbar">
-                      <NavLink to={`/company/${result.listingId}`}><h6>{result.companyName}</h6></NavLink>
-                    </div>
-                  ))}
+                  {results.map((result, index) => {
+                    console.log(result);
+                    if(result.listingId == null && result.companyName == null){
+                      return (
+                        <div key={index} className="dropdownItemsearchbar">
+                          <NavLink to={`/listing/${result.categoryId}`}><h6>{result.category}</h6></NavLink>
+                        </div>
+                      )
+                    }else{
+                      return (
+                        <div key={index} className="dropdownItemsearchbar">
+                          <NavLink to={`/company/${result.listingId}`}><h6>{result.companyName}</h6></NavLink>
+                        </div>
+                      )
+                    }
+                    
+                    }
+                  )}
                 </div>
               )}
             </div>

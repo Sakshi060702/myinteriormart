@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import usericon from "../../../FrontEnd/img/user1 (4).jpg";
+import usericon from "../../../FrontEnd/img/dummyowner.jpg";
 import withAuthh from "../../../Hoc/withAuthh";
 import Popupalert from "../../Popupalert";
 import { validateGalleryFile, validateName } from "../../Validation";
@@ -384,15 +384,7 @@ if(isAuthenticated){
             </select>
           </div>
 
-          <div className="text-left col-12 mt-3">
-            <button
-              type="submit"
-              className="btn_1"
-              style={{ backgroundColor: "#E55923", marginTop: "10px" }}
-            >
-              Submit
-            </button>
-          </div>
+          
         </form>
       </div>
       <hr style={{ marginTop: "32px" }}></hr>
@@ -410,7 +402,7 @@ if(isAuthenticated){
                 src={
                   image.url
                     ? `https://apidev.myinteriormart.com${image.url}`
-                    : ""
+                    : usericon
                 }
                 alt="Gallery Image"
               />
@@ -419,6 +411,15 @@ if(isAuthenticated){
         ))}
       </div>
 
+      <div className="text-left col-12 mt-3" style={{paddingLeft:'349px'}}>
+            <button
+              type="submit"
+              className="btn_1"
+              style={{ backgroundColor: "#E55923", marginTop: "10px" }}
+            >
+              Submit
+            </button>
+          </div>
       {showPopup && (
         <Popupalert
           message={successMessage || errorMessage}

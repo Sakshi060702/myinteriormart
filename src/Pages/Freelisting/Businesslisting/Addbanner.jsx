@@ -171,13 +171,7 @@ function Addbanner() {
                       <div className="text-danger">{error.imagetitle}</div>
                     )}
               </div>
-              <button
-              className="btn_1"
-              style={{ backgroundColor: "#E55923", marginTop: "10px" }}
-              onClick={handleSubmit}
-            >
-              Submit
-            </button>
+              
             </div>
           </div>
           <hr style={{ marginTop: "32px" }}></hr>
@@ -200,6 +194,15 @@ function Addbanner() {
               {imageTitleFromAPI}
               </div>
             </div>
+          </div>
+          <div style={{paddingLeft:'349px'}}>
+          <button
+              className="btn_1"
+              style={{ backgroundColor: "#E55923", marginTop: "10px" }}
+              onClick={handleSubmit}
+            >
+              Submit
+            </button>
           </div>
           {showPopup && (
             <Popupalert 

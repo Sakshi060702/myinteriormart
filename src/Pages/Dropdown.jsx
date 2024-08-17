@@ -20,12 +20,12 @@ const Dropdown = () => {
    };
 
   return (
-    <div className="dropdown1">
-      <ul>
+    <div className="dropdown1" style={{width:'195px'}}>
+      <ul style={{justifyContent:'left'}}>
         {/* <li onClick={handleProfileClick}>
           <i style={{ marginRight: "10px" }}></i>Profile
         </li> */}
-        <li>
+        <li style={{marginRight:'60px',marginTop:'10px'}}>
           <Link to="/Myactivity" style={{color:'black'}}>
             <i className="fa fa-user" ></i> Dashboard
           </Link>
@@ -36,13 +36,13 @@ const Dropdown = () => {
           </Link>
         
         </li> */}
-        <li>
+        <li style={{marginRight:'84px',marginTop:'-8px'}}>
         <i className="fa fa-gear" style={{ marginRight: "10px" }}></i>Settings
         </li>
-        <li>
+        <li style={{marginTop:'-8px'}}>
         <i className="fa fa-key" style={{ marginRight: "10px" }}></i>Change Password
         </li>
-        <li onClick={handleLogoutClick}>
+        <li onClick={handleLogoutClick} style={{marginRight:'84px' ,marginTop:'-8px'}}>
           <i className="fa fa-sign-out" style={{ marginRight: "10px" }}></i>Logout
         </li>
       </ul>

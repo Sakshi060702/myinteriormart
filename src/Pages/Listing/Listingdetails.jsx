@@ -13,6 +13,12 @@ import "../../FrontEnd/css/Lisiting.css";
 import Getquotespopup from "./Getquotespopup";
 import { useSelector } from "react-redux";
 import useAuthCheck from "../../Hooks/useAuthCheck";
+import Listingspecialisation from "./Listingspecialisation";
+import Listingpayment from "./Listingpayment";
+import ListinServices from "./ListingServices";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function Listingdetails() {
   const { listingId } = useParams();
@@ -41,6 +47,38 @@ function Listingdetails() {
   const [imageURL, setImageURL] = useState(null);
 
   const [imageDetails, setImageDetails] = useState([]);
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+  };
+
+  function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block", right: "10px" }}
+        onClick={onClick}
+      />
+    );
+  }
+
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block", left: "10px" }}
+        onClick={onClick}
+      ></div>
+    );
+  }
 
   useEffect(() => {
     fetchListingDetails();
@@ -122,7 +160,7 @@ function Listingdetails() {
       } else {
         console.error("Failed to update bookmark status");
       }
-      console.log(setIsBookmarked);
+      // console.log(setIsBookmarked);
     } catch (error) {
       console.error("Error in updating bookmark status", error);
     }
@@ -149,7 +187,7 @@ function Listingdetails() {
 
           if (response.ok) {
             const data = await response.json();
-            console.log("bookmark", data);
+            // console.log("bookmark", data);
             setIsBookmarked(data.bookmark); // Assuming response has a field 'bookmark'
           } else {
             console.error("Failed to fetch bookmark status");
@@ -213,7 +251,7 @@ function Listingdetails() {
 
           if (response.ok) {
             const data = await response.json();
-            console.log("Like", data);
+            // console.log("Like", data);
             setIsLike(data.likeandDislike); // Assuming response has a field bookmarkStatus
           } else {
             console.error("Failed to fetch like status");
@@ -276,7 +314,7 @@ function Listingdetails() {
 
           if (response.ok) {
             const data = await response.json();
-            console.log("Subscribe", data);
+            // console.log("Subscribe", data);
             setIsSubscribe(data.subscribe); // Assuming response has a field bookmarkStatus
           } else {
             console.error("Failed to fetch subscribe status");
@@ -296,11 +334,16 @@ function Listingdetails() {
     const fetchBannerImage = async () => {
       try {
         const response = await fetch(
-          "https://apidev.myinteriormart.com/api/BinddetailsListing/GetBannerImageDetailslisting",
+          "https://apidev.myinteriormart.com/api/AlldetailsparticularListingbind/GetBannerImage",
           {
+            method: "POST",
             headers: {
+              "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
+            body: JSON.stringify({
+              companyID: parseInt(listingId),
+            }),
           }
         );
         if (!response.ok) {
@@ -315,28 +358,35 @@ function Listingdetails() {
     if (isAuthenticated) {
       fetchBannerImage();
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     const fetchTeamImage = async () => {
       try {
         const response = await fetch(
-          "https://apidev.myinteriormart.com/api/BinddetailsListing/GetOwnerImageDetailslisting",
+          "https://apidev.myinteriormart.com/api/AlldetailsparticularListingbind/GetOwnerImage",
           {
+            method: "POST",
             headers: {
+              "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
+            body: JSON.stringify({
+              companyID: parseInt(listingId),
+            }),
           }
         );
         if (!response.ok) {
           throw new Error("Failed to fetch user profile");
         }
         const data = await response.json();
-        console.log(data.imagepath);
+        console.log(data);
         if (data instanceof Object) {
           console.log(data);
           // console.log("sakshi");
-          setImageDetails(data.imagepath.map((img) => ({ url: img })));
+          setImageDetails(
+            data.imagepath.map((img) => ({ url: img, title: data.ownerName }))
+          );
         }
         // setImageURL(data.imagepath); // Assuming data contains image URL and title
         // setImageTitleFromAPI(data.imagetitle); // Set the image title from API
@@ -346,6 +396,40 @@ function Listingdetails() {
     };
     if (isAuthenticated) {
       fetchTeamImage();
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchGalleryImage = async () => {
+      try {
+        const response = await fetch(
+          "https://apidev.myinteriormart.com/api/AlldetailsparticularListingbind/GetGalleryImage",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              companyID: parseInt(listingId),
+            }),
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch user profile");
+        }
+        const data = await response.json();
+
+        if (data instanceof Object) {
+          setImageDetails(
+            data.imagepath.map((img) => ({ url: img, title: data.imagetitle }))
+          );
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    if (isAuthenticated) {
+      fetchGalleryImage();
     }
   }, [token]);
 
@@ -403,55 +487,84 @@ function Listingdetails() {
                 </div>
                 <div className="box_detail_cus">
                   <div className="cust-profile">
-                  <img src={profile} alt="profile"></img>
-                    {/* {imageDetails.length > 0 && (
+                    {/* <img src={profile} alt="profile"></img> */}
+                    {imageDetails.length > 0 ? (
                       <div>
                         <div>
                           <img
                             className="upload_images"
                             src={`https://apidev.myinteriormart.com${imageDetails[0].url}`}
-                            alt="Gallery Image"
+                            alt="Owner Image"
                           />
+                          <h6>{imageDetails.title}</h6>
+                          {/* {console.log(imageDetails.title)} */}
                         </div>
                       </div>
-                    )} */}
-                    <h6 className="cust_name">Habiba Humaza</h6>
-                    <span className="cust-type">Owner</span>
+                    ) : (
+                      <div>
+                        <img
+                          className="upload_images"
+                          src={profile} // Default image URL
+                          alt="Default Image"
+                        />
+                      </div>
+                    )}
+                    {/* <h6 className="cust_name">Habiba Humaza</h6>
+                    <span className="cust-type">Owner</span> */}
                   </div>
                 </div>
-                <Services></Services>
+                <ListinServices companyID={listingDetails.listingId} />
+                <Listingspecialisation companyID={listingDetails.listingId} />
+                <Listingpayment companyID={listingDetails.listingId} />
               </div>
               <div className="col-lg-9 individual-listing-main padding-5">
                 <div className="listing-gallery">
                   <div className="gallery">
-                  <img
+                    {/* <img
                       src={banner2}
                       alt="Image2"
                       title="Image2"
                       style={{ width: "100%", height: "200px" }}
-                    />
-                    {/* <img
+                    /> */}
+                    <img
                       className="upload_images"
                       src={
                         imageURL
                           ? `https://apidev.myinteriormart.com${imageURL}`
-                          : ""
+                          : banner2
                       }
                       alt="Banner Image"
-                    /> */}
-
+                    />
+                    {console.log("Banner", imageURL)}
                   </div>
                 </div>
                 <div className="company-listing-main">
                   <div className="listing-details">
                     <div className="col-lg-4 col-md-12 company-map padding-all-5">
                       <div className="pro-large-img img-zoom gallery1">
-                        
-                        <img
-                          src={banner3}
-                          alt="ImageComingSoon"
-                          style={{ width: "100%" }}
-                        />
+                        <Slider {...settings}>
+                          {imageDetails.map((image, index) => (
+                            <div
+                              className="col-md-3 col-lg-2 col-6 mb-5"
+                              key={index}
+                            >
+                              <div
+                                className=""
+                                style={{ width: "100px", marginLeft: "65px" }}
+                              >
+                                <img
+                                  className="upload_images"
+                                  src={
+                                    image.url
+                                      ? `https://apidev.myinteriormart.com${image.url}`
+                                      : ""
+                                  }
+                                  alt="Gallery Image"
+                                />
+                              </div>
+                            </div>
+                          ))}
+                        </Slider>
                       </div>
                     </div>
 
@@ -593,14 +706,21 @@ function Listingdetails() {
                             isBookmarked ? "active" : ""
                           }`}
                           onClick={handleBookmarkToggle}
-                          style={{ marginRight: "5px" }}
+                          style={{ marginRight: "5px" ,fontSize:'13px' }}
                         >
-                          {isBookmarked ? "Bookmark" : "Bookmark"}
+                          <i
+                            className={`fa fa-bookmark ${
+                              isBookmarked ? "icon-active" : ""
+                            }`}
+                            style={{ marginRight: "5px" }}
+                          ></i>
+                          Bookmark
                         </button>
 
                         <button
                           className="btn-custom pushRight btn btn-light btn-sm"
                           onClick={() => setIsSociallinkOpen(true)}
+                          style={{ height: "32px",fontSize:'13px' }}
                         >
                           <i className="icon-share"></i>Share
                         </button>
@@ -610,9 +730,15 @@ function Listingdetails() {
                             isLike ? "active" : ""
                           }`}
                           onClick={handleLikeToggle}
-                          style={{ marginRight: "10px" }}
+                          style={{ marginRight: "10px",fontSize:'13px' }}
                         >
-                          {isLike ? "Like" : "Like"}
+                          <i
+                            className={`fa ${
+                              isLike ? "fa-thumbs-up" : "fa-thumbs-o-up"
+                            } ${isLike ? "icon-active" : ""}`}
+                            style={{ marginRight: "5px" }}
+                          ></i>
+                          Like
                         </button>
 
                         <button
@@ -620,8 +746,15 @@ function Listingdetails() {
                             isSubscribe ? "active" : ""
                           }`}
                           onClick={handleSubscribeToggle}
+                          style={{fontSize:'13px'}}
                         >
-                          {isSubscribe ? "Subscribe" : "Subscribe"}
+                          <i
+                            className={`fa ${
+                              isSubscribe ? "fa-bell" : "fa-bell-o"
+                            } ${isSubscribe ? "icon-active" : ""}`}
+                            style={{ marginRight: "5px" }}
+                          ></i>
+                          Subscribe
                         </button>
                       </div>
                     </div>

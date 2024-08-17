@@ -242,12 +242,12 @@ function Addpayment() {
                       paddingTop: "10px",
                     }}
                   >
-                    <Link to="/addworkinghours">
+                    {/* <Link to="/addworkinghours">
                       <img src={previousarrowimg} style={{ height: "30px" }} />
                     </Link>
                     <Link to="/Uploadimage">
                       <img src={nextarrowimg} style={{ height: "30px" }} />
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
 

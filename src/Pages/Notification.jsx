@@ -4,7 +4,7 @@ import "../FrontEnd/css/dropdown.css";
 import "../FrontEnd/css/Notification.css";
 import useAuthCheck from "../Hooks/useAuthCheck";
 
-const Notification = ({ toggleNotificationMenu }) => {
+const Notification = ({ setHasNotifications }) => {
   const token = useSelector((state) => state.auth.token);
   const [notification, setNotification] = useState([]);
 
@@ -30,6 +30,9 @@ const Notification = ({ toggleNotificationMenu }) => {
 
         const data = await response.json();
         setNotification(data.notification);
+
+        setHasNotifications(data.notification.length > 0);
+
       } catch (error) {
         console.error("Error fetching Notification:", error);
       }
@@ -38,7 +41,7 @@ const Notification = ({ toggleNotificationMenu }) => {
       fetchNotification();
     }
    
-  }, [token]);
+  }, [token,setHasNotifications]);
 
   return (
     <div className="notification1" style={{left:'-132px',width: '329px'}}>

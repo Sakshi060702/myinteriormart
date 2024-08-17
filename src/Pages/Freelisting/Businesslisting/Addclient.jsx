@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { Link,useNavigate } from "react-router-dom";
-import usericon from "../../../FrontEnd/img/user1 (3).jpg";
+import usericon from "../../../FrontEnd/img/dummyowner.jpg";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh"
 import Popupalert from "../../Popupalert";
@@ -173,13 +173,7 @@ function Addclient() {
                       <div className="text-danger">{error.imagetitle}</div>
                     )}
               </div>
-              <button
-              className="btn_1"
-              style={{ backgroundColor: "#E55923", marginTop: "10px" }}
-              onClick={handleSubmit}
-            >
-              Submit
-            </button>
+              
             </div>
           </div>
           <hr style={{ marginTop: "32px" }}></hr>
@@ -202,6 +196,15 @@ function Addclient() {
               {imageTitleFromAPI}
               </div>
             </div>
+          </div>
+          <div style={{paddingLeft:'349px'}}>
+          <button
+              className="btn_1"
+              style={{ backgroundColor: "#E55923", marginTop: "10px" }}
+              onClick={handleSubmit}
+            >
+              Submit
+            </button>
           </div>
 
           {showPopup && (

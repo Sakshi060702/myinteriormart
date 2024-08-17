@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import usericon from "../../FrontEnd/img/user1 (3).jpg";
+import usericon from "../../FrontEnd/img/dummyowner.jpg";
 import "../../FrontEnd/css/Mangelisting.css";
 import { useSelector, useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
@@ -179,13 +179,7 @@ function Galleryimagel() {
                       <div className="text-danger">{error.imagetitle}</div>
                     )}
               </div>
-              <button
-                className="btn_1"
-                style={{ backgroundColor: "#E55923", marginTop: "10px" }}
-                onClick={handleSubmit}
-              >
-                Submit
-              </button>
+              
             </div>
           </div>
           <hr style={{ marginTop: "32px" }}></hr>
@@ -212,6 +206,15 @@ function Galleryimagel() {
               </div>
             ))}
          
+          </div>
+          <div style={{paddingLeft:'471px'}}>
+          <button
+                className="btn_1"
+                style={{ backgroundColor: "#E55923", marginTop: "10px" }}
+                onClick={handleSubmit}
+              >
+                Submit
+              </button>
           </div>
           <div className="text-danger">Upload Maximum 20 Images</div>
           {showPopup && (

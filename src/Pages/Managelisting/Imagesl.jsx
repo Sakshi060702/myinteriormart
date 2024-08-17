@@ -13,7 +13,7 @@ import previousarrowimg from "../../FrontEnd/img/Backarrow.png";
 
 const buttons=[
   {title:"Logo", component:Uploadimagel},
-  {title:"Owner",component:Teamimagel},
+  {title:"Owners",component:Teamimagel},
   {title:"Gallery",component:Galleryimagel},
   {title:"Banner",component:Bannerimagel},
   {title:"Certifications",component:Certificationimagel},

@@ -21,6 +21,8 @@ function Keywordl() {
   const [inputValue, setInputValue] = useState("");
   const [allOptions, setAllOptions] = useState([]);
 
+  const [error, setError] = useState("");
+
   
   const[successMessage,setSuccessMessage]=useState("");
 
@@ -60,8 +62,8 @@ function Keywordl() {
         setBusinessTypes(fetchedBusinessTypes);
         setAllOptions(fetchedOptions); // Set the options for the Select component
       } catch (error) {
-        console.error("API error:", error);
-        alert("Failed to fetch business types. Please try again later.");
+        // console.error("API error:", error);
+        // alert("Failed to fetch business types. Please try again later.");
       }
     };
 
@@ -86,26 +88,31 @@ function Keywordl() {
   };
 
   const handleSelectChange = (selectedOption) => {
-    console.log(selectedOption);
-    console.log(keyword);
-    console.log(formData);
-    console.log(businessTypes,allOptions)
+    // console.log(selectedOption);
+    // console.log(keyword);
+    // console.log(formData);
+    // console.log(businessTypes,allOptions)
+
+  // if (selectedKeywords.length >= 10) {
+  //     setError("You can only add up to 10 keywords.");
+  //     return;
+  //   }
+
+
     setFormData((prevFormData) => ({
       ...prevFormData,
       businessCategory: selectedOption ? selectedOption.value : "",
     }));
 
-    console.log(businessTypes.indexOf(selectedOption.value) > -1); //true
-    console.log(selectedOption.value in businessTypes);
+    // console.log(businessTypes.indexOf(selectedOption.value) > -1); //true
+    // console.log(selectedOption.value in businessTypes);
     if(businessTypes.indexOf(selectedOption.value) > -1){
       
-      console.log("IF BRAVIII");
 
       setErrorMessage("Keyword Alredy Exist.");
       setShowPopup(true);
       setTimeout(() => setShowPopup(false), 2000);
     }else{
-      console.log("HERE ELSE BRAVIII");
       setKeyword(selectedOption.value);
 
       // setErrorMessage("Keyword Added Successfully.");
@@ -143,13 +150,26 @@ function Keywordl() {
         setSelectedKeywords(fetchedKeywords); // Set previously selected keywords
       })
       .catch((error) => {
-        console.error("Error fetching keywords:", error);
+        // console.error("Error fetching keywords:", error);
         // Handle error appropriately
       });
   }, []); // Empty dependency array ensures this runs once on component mount
 
   // Function to handle adding a keyword
   const addKeyword = () => {
+
+   if ((selectedKeywords.length + addedKeywords.length) > 9) {
+      setError("You can only add up to 10 keywords.");
+      setErrorMessage("You can only add up to 10 keywords");
+          setShowPopup(true);
+          setTimeout(() => setShowPopup(false), 2000);
+      return;
+    }
+
+    // console.log("BRAVOOO");
+    // console.log(addedKeywords);
+    // console.log(selectedKeywords);
+    // console.log(selectedKeywords.length + addedKeywords.length);
     if (keyword.trim() !== "") {
       fetch("https://apidev.myinteriormart.com/api/Keywords/ManageKeywords", {
         method: "POST",
@@ -180,14 +200,14 @@ function Keywordl() {
               setShowPopup(true);
               setTimeout(() => setShowPopup(false), 4000);
             } else {
-              console.log("Keyword added successfully");
+              // console.log("Keyword added successfully");
               setAddedKeywords([...addedKeywords, keyword]);
               setKeyword("");
               setErrorMessage("");
              
             }
           } else if (data.success) {
-            console.log("Keyword added successfully");
+            // console.log("Keyword added successfully");
             setAddedKeywords([...addedKeywords, keyword]);
             setKeyword("");
             setErrorMessage("");
@@ -198,7 +218,7 @@ function Keywordl() {
           }
         })
         .catch((error) => {
-          console.error("Error adding keyword:", error);
+          // console.error("Error adding keyword:", error);
           setErrorMessage("Keyword already exists");
           setShowPopup(true);
           setTimeout(() => setShowPopup(false), 4000);
@@ -231,8 +251,8 @@ function Keywordl() {
         }
       })
       .then((data) => {
-        console.log(data);
-        console.log("Keyword removed:", keywordToRemove);
+        // console.log(data);
+        // console.log("Keyword removed:", keywordToRemove);
 
         // Update addedKeywords state by filtering out the removed keyword
         const updatedKeywords = addedKeywords.filter(
@@ -246,8 +266,8 @@ function Keywordl() {
         setSelectedKeywords(updatedSelectedKeywords);
       })
       .catch((error) => {
-        console.error("Error removing keyword:", error);
-        // Handle error if needed
+        // console.error("Error removing keyword:", error);
+      
       });
   };
 
@@ -266,8 +286,8 @@ function Keywordl() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Keywords saved successfully:", data);
-        console.log("Keyword token",token);
+        // console.log("Keywords saved successfully:", data);
+        // console.log("Keyword token",token);
         setSuccessMessage("Seo Keyword Details Saved Successfully");
         setErrorMessage("");
         setShowPopup(true);
@@ -284,7 +304,11 @@ function Keywordl() {
         console.error("Error saving keywords:", error);
         setErrorMessage("Failed to save Seo Keyword details. Please try again later.");
         setSuccessMessage(""); // Clear any existing success message
-        setShowPopup(true);
+        setTimeout(()=>{
+          setShowPopup(true);
+
+        },2000)
+       
         // Handle error if needed
       });
   };
@@ -348,11 +372,11 @@ function Keywordl() {
                       </button>
                     </div>
                   </div>
-                  {showPopup && (
+                  {/* {showPopup && (
                     <div className="popup" style={{textAlign:'center',fontSize:'18px'}}>
                       {errorMessage}
                     </div>
-                  )}
+                  )} */}
                 </div>
                 {/* Display added keywords */}
                 {/* <div className="col-md-6">
