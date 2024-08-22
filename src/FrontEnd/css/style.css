@@ -1120,6 +1120,7 @@ header.header_in .hamburger-inner::after {
     width: 100%;
     text-align: center;
     left:35px;        /*add space left hand side of logo*/
+    bottom: -16px;
   }
 
   #logo img {
@@ -3708,13 +3709,22 @@ a.box_feat h3 {
 }
 
 @media (max-width: 767px) {
+
+
+  .reating-list .reating-number {
+    font-weight: 700;
+    margin: 0px;
+    color: #444 !important;
+    font-size: 10px;
+  }
+
   .strip.map_view .score {
     position: relative;
     top: 3px;
   }
 
   .listing-bottom-list .business-year {
-    font-size: 12px !important;
+    font-size: 5px !important;
     display: block;
     width: 100%;
     margin-right: 20px;
@@ -3727,9 +3737,12 @@ a.box_feat h3 {
   .strip.map_view .listing-bottom-list {
     position: absolute;
     top: -40px;
-    padding: 10px 10px;
+    padding: 1px 4px;
     border-top: 0px;
     left: 29%;
+    margin-top: 39px;
+    margin-left: -141px;
+    padding-top: 5px;
   }
 
   .strip.map_view .wrapper {
@@ -3738,10 +3751,69 @@ a.box_feat h3 {
 
   .strip.map_view .listing-bottom {
     background-color: #f4f4f4;
+    padding-top: 60px;
   }
 
   .strip.map_view {
     margin: 5px 10px;
+  }
+
+  .strip.map_view .listing-bottom-list ul {
+    padding: 0;
+    border-top: 0px;
+    margin-top: -32px;
+    margin-left: -5px;
+  }
+}
+/*today*/
+
+@media (max-width:'564px') {
+  
+  .strip.map_view .score {
+    position: relative;
+    top: 3px;
+  }
+
+  .listing-bottom-list .business-year {
+    font-size: 5px !important;
+    display: block;
+    width: 100%;
+    margin-right: 20px;
+  }
+
+  .listing-bottom-list .reating-list {
+    display: none;
+  }
+
+  .strip.map_view .listing-bottom-list {
+    position: absolute;
+    top: -40px;
+    padding: 1px 4px;
+    border-top: 0px;
+    left: 29%;
+    margin-top: 39px;
+    margin-left: -141px;
+    padding-top: 5px;
+  }
+
+  .strip.map_view .wrapper {
+    padding-bottom: 40px;
+  }
+
+  .strip.map_view .listing-bottom {
+    background-color: #f4f4f4;
+    padding-top: 60px;
+  }
+
+  .strip.map_view {
+    margin: 5px 10px;
+  }
+
+  .strip.map_view .listing-bottom-list ul {
+    padding: 0;
+    border-top: 0px;
+    margin-top: -32px;
+    margin-left: -5px;
   }
 }
 
@@ -3854,6 +3926,16 @@ a.box_feat h3 {
 .strip.map_view ul {
   padding: 20px 5px 15px 15px;
   margin-bottom: 0;
+}
+
+@media (max-width:767px) {
+  .listing-bottom-list ul {
+    padding: 0;
+    border-top: 0px;
+    margin-top: 0px;
+    margin-top: -131px;
+    margin-left: -32px;
+  }
 }
 
 a.address {

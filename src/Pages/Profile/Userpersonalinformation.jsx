@@ -6,6 +6,9 @@ import previousarrowimg from "../../FrontEnd/img/arrow-previous.png";
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
 import Popupalert from "../Popupalert";
+import LocalityPopup from "../Freelisting/Businesslisting/Localitypopup";
+import PincodePopup from "../Freelisting/Businesslisting/Pincodepopup";
+import Areapopup from "../Freelisting/Businesslisting/Areapopup";
 
 const Userpersonalinformation = () => {
   const [countries, setCountries] = useState([]);
@@ -38,6 +41,11 @@ const Userpersonalinformation = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
+
+  const [showAddressPopup, setShowAddressPopup] = useState([false, null]);
+  const[showPincodePopup,setShowPincodePopup]=useState([false,null]);
+  const[showAreaPopup,setShowAreaPopup]=useState([false,null]);
+
 
 
   const navigate = useNavigate();
@@ -506,6 +514,7 @@ const Userpersonalinformation = () => {
                   </option>
                 ))}
               </select>
+              <button onClick={(e)=>{ e.preventDefault(); return setShowAddressPopup([true,selectedCity])}}>Add Locality +</button>
             </div>
             <div className="form-group col-md-4">
               <label>Pincode</label>
@@ -523,6 +532,7 @@ const Userpersonalinformation = () => {
                   </option>
                 ))}
               </select>
+              <button onClick={(e)=>{ e.preventDefault();  return setShowPincodePopup([true,selectedAssembly])}}>Add Pincode +</button>
             </div>
             <div className="form-group col-md-4">
               <label>Area</label>
@@ -540,6 +550,7 @@ const Userpersonalinformation = () => {
                   </option>
                 ))}
               </select>
+              <button onClick={(e)=>{ e.preventDefault();console.log("assembly", selectedAssembly);console.log("pincode",selectedPincode);  return setShowAreaPopup([true,selectedAssembly,selectedPincode])}}>Add Area +</button>
             </div>
             <div className="form-group col-md-12">
               <label htmlFor="localAddress">Local Address</label>
@@ -573,6 +584,29 @@ const Userpersonalinformation = () => {
               </Link>
             </div> */}
           </div>
+
+          {showAddressPopup && (
+                  <LocalityPopup
+                  isOpen={showAddressPopup[0]} cityId={showAddressPopup[1]}
+                  onClose={()=>setShowAddressPopup([false,null])}/>
+                )}
+
+{
+                  showPincodePopup && (
+                    <PincodePopup 
+                    isOpen={showPincodePopup[0]} localityId={showPincodePopup[1]}
+                    onClose={()=>setShowPincodePopup([false,null])}/>
+                  )
+                }
+
+{
+                  showAreaPopup && (
+                    <Areapopup 
+                    isOpen={showAreaPopup[0]} pincodeId={showAreaPopup[1]} localityId={showAreaPopup[1]}
+                    onClose={()=>setShowAreaPopup([false,null,null])}/>
+                  )
+                }
+
           {showPopup && (
   <Popupalert 
     message={successMessage || errorMessage} 

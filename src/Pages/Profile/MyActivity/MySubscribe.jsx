@@ -68,7 +68,7 @@ function MySubscribe() {
                           <span className="visit-date">{subscribe.visitDate}</span>
                           <p className="description">
                             <i className="fa fa-bookmark" style={{ color: 'orange', fontSize: '23px' }}></i>
-                            <span><strong style={{ fontSize: '18px' }}> "{subscribe.userName}" </strong> Bookmarked Your </span>
+                            <span><strong style={{ fontSize: '18px' }}> "{subscribe.userName}" </strong> Subscribed Your </span>
                             listing : "{subscribe.companyName}"
                           </p>
                         </div>

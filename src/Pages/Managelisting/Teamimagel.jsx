@@ -5,6 +5,8 @@ import withAuthh from "../../Hoc/withAuthh";
 import Popupalert from "../Popupalert";
 import useAuthCheck from "../../Hooks/useAuthCheck";
 import { validateImageFile,validateGalleryFile ,validateName} from "../Validation";
+import '../../FrontEnd/css/RegistrationMV.css'
+
 
 function Teamimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -50,8 +52,8 @@ function Teamimagel() {
         console.log(data.imagepath);
         if (data instanceof Object) {
           console.log(data);
-          // console.log("sakshi");
-          setImageDetails(data.imagepath.map((img) => ({ url: img })));
+         console.log(data.imagepath);
+          setImageDetails(data.imagepath.map((img) => ({ url: img ,firstName:data.ownerName,designation:data.designation})));
         }
         // setImageURL(data.imagepath); // Assuming data contains image URL and title
         // setImageTitleFromAPI(data.imagetitle); // Set the image title from API
@@ -147,7 +149,7 @@ function Teamimagel() {
 
   const handleSubmit = async (event) => {
 
-
+    event.preventDefault();
 
     setError({});
     const validationError = validateGalleryFile(selectedFile);
@@ -166,7 +168,7 @@ function Teamimagel() {
 
 
 
-    event.preventDefault();
+    
 
     if (selectedFile.length > 0) {
       const formData = new FormData();
@@ -179,6 +181,8 @@ function Teamimagel() {
       formData.append("lastName", event.target.lastName.value);
       formData.append("countryId", selectedCountry);
       formData.append("stateId", selectedState);
+
+      console.log( event.target.firstName.value);
 
       try {
         const response = await fetch(
@@ -200,7 +204,7 @@ function Teamimagel() {
         
 
         if (result instanceof Object) {
-          setImageDetails(result.ownerImageDetails.imageUrls.map((img)=> ({ url: img })));
+          setImageDetails(result.ownerImageDetails.imageUrls.map((img)=> ({ url: img,firstName:result.ownerImageDetails.firstName,designation:result.ownerImageDetails.designation})));
         }
         // setImageURL(result.imageUrl);// Ensure this is the correct property
         setSuccessMessage("Team Image Uploded Successfully");
@@ -402,20 +406,14 @@ function Teamimagel() {
               ))}
             </select>
           </div>
-
           
-        </form>
-      </div>
-      <hr style={{ marginTop: "32px" }}></hr>
-      <div className="row">
-        <div className="col-md-12">
-          <h2 style={{ textAlign: "center" }}>Team</h2>
-        </div>
-      </div>
-      <div className="row justify-content-center mt-4">
+        <div>
+        <h2 style={{ textAlign: "center", marginLeft:'312px' }}>Team</h2>
+          <div className="row justify-content-center mt-4" style={{marginLeft:'279px'}}>
+         
         {imageDetails.map((image, index) => (
           <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
-            <div className="upload_img_sec">
+            <div className="upload_img_sec" >
               <img
                 className="upload_images"
                 src={
@@ -426,19 +424,43 @@ function Teamimagel() {
                 alt="Gallery Image"
               />
             </div>
+            <div className="img_title text-center">{image.firstName}  {image.designation}</div>
           </div>
         ))}
      
       </div>
-      <div className="text-left col-12 mt-3" style={{paddingLeft:'471px'}}>
+      </div>
+
+          <div className="text-left col-12 mt-3" style={{paddingLeft:'471px'}}>
             <button
               type="submit"
               className="btn_1"
               style={{ backgroundColor: "#E55923", marginTop: "10px" }}
+             
             >
               Submit
             </button>
           </div>
+          
+        </form>
+      </div>
+      {/* <hr style={{ marginTop: "32px" }}></hr> */}
+      {/* <div className="row">
+        <div className="col-md-12">
+          <h2 style={{ textAlign: "center" }}>Team</h2>
+        </div>
+      </div> */}
+      
+      {/* <div className="text-left col-12 mt-3" style={{paddingLeft:'471px'}}>
+            <button
+              type="submit"
+              className="btn_1"
+              style={{ backgroundColor: "#E55923", marginTop: "10px" }}
+              onClick={handleSubmit}
+            >
+              Submit
+            </button>
+          </div> */}
       <div className="text-danger">Upload Maximum 3 Images</div>
       {showPopup && (
         <Popupalert

@@ -106,12 +106,25 @@ function ListingServices({ companyID }) {
         <div className="listing-specialisat box_detail_cus">
             <h6>Services</h6>
             <ul className="listing-specialisat-list">
-                <li><strong>First Category:</strong> {firstCategoryName}</li>
-                <li><strong>Second Category:</strong> {secondCategoryName}</li>
-                <li><strong>Third Category:</strong> {thirdCategoryNames.join(", ")}</li>
-                <li><strong>Fourth Category:</strong> {fourthCategoryNames.join(", ")}</li>
-                <li><strong>Fifth Category:</strong> {fifthCategoryName.join(", ")}</li>
-                <li><strong>Sixth Category:</strong> {sixthCategoryName}</li>
+               
+                {thirdCategoryNames.map((category, index) => (
+                <li key={index}>
+                    <i className="icon-check-1"></i> {category}
+                </li>
+            ))}
+             {fourthCategoryNames.map((category, index) => (
+                <li key={index}>
+                    <i className="icon-check-1"></i> {category}
+                </li>
+            ))}
+             {fifthCategoryName.map((category, index) => (
+                <li key={index}>
+                    <i className="icon-check-1"></i> {category}
+                </li>
+            ))}
+             
+                
+                <li><i className="icon-check-1"></i>{sixthCategoryName}</li>
             </ul>
         </div>
     );

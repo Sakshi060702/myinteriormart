@@ -436,7 +436,7 @@ function Keywordl() {
                   <button className="btn_1" onClick={saveKeywords}>
                     Save & Continue
                   </button>
-                  <Link to="/Sociallinkl" className="pull-center mr-2"><img src={previousarrowimg} style={{height:'30px'}}/></Link>
+                  <Link to="/Sociallinkl" className="pull-center mr-2"><img src={previousarrowimg} style={{height:'30px',marginRight:'25px'}}/></Link>
                 </div>
               </div>
 

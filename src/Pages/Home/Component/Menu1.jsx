@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import logoSticky from "../../../FrontEnd/img/logo_sticky.svg";
 import { NavLink } from "react-router-dom";
 import notificationIcon from "../../../FrontEnd/img/icon/notification1.png";
-import usericon from "../../../FrontEnd/img/icon/user1.png";
+import usericon from "../../../FrontEnd/img/dummyowner.jpg";
 import Dropdown from "../../Dropdown";
 import Notification from "../../Notification";
 import "../../../FrontEnd/css/Header.css";
 import { useSelector, useDispatch } from "react-redux";
-import useAuthCheck from "../../../Hooks/useAuthCheck"; // Correct import
+import useAuthCheck from "../../../Hooks/useAuthCheck"; 
 
 function Menu1() {
   const [showNotificationMenu, setShowNotificationMenu] = useState(false);
@@ -75,7 +75,6 @@ function Menu1() {
     };
   }, []);
 
-
   useEffect(() => {
     const fetchNotifications = async () => {
       if (isAuthenticated) {
@@ -103,8 +102,6 @@ function Menu1() {
 
     fetchNotifications();
   }, [isAuthenticated, token]);
-
-
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -158,7 +155,6 @@ function Menu1() {
     }
   }, [token, userType]);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -181,8 +177,6 @@ function Menu1() {
     fetchData();
   }, [token]);
 
-
-
   return (
     <>
       <header className="header_in">
@@ -202,17 +196,17 @@ function Menu1() {
             </div>
             <div className="col-lg-9 col-12 navitems">
               <ul className={`nav-links ${showMenu ? "active" : ""}`}>
-                <li>
+                {/* <li>
                   <span>
-                    {/* <NavLink
+                    <NavLink
                     to="/categorylist"
                     onClick={closeMenu}
                     style={{ fontSize: "14px", color: "black" }}
                   >
                     Suggestion
-                  </NavLink> */}
+                  </NavLink>
                   </span>
-                </li>
+                </li> */}
 
                 {!isAuthenticated ? (
                   <>
@@ -220,7 +214,11 @@ function Menu1() {
                       <NavLink
                         to="/signup2"
                         className="btn_add listing-btn"
-                        style={{ backgroundColor: "#fe900d", fontSize: "14px" , marginRight:'12px' }}
+                        style={{
+                          backgroundColor: "#fe900d",
+                          fontSize: "14px",
+                          marginRight: "12px",
+                        }}
                         onClick={closeMenu}
                       >
                         Signup
@@ -244,7 +242,7 @@ function Menu1() {
                         <div>
                           <ul>
                             <li>
-                              <NavLink
+                              {/* <NavLink
                                 to="/addcompany"
                                 className="btn_add listing-btn"
                                 style={{
@@ -254,7 +252,7 @@ function Menu1() {
                                 onClick={closeMenu}
                               >
                                 Free Listing
-                              </NavLink>
+                              </NavLink> */}
                             </li>
                           </ul>
                         </div>
@@ -293,10 +291,24 @@ function Menu1() {
                                 src={
                                   userProfile?.imgUrl
                                     ? `https://apidev.myinteriormart.com${userProfile.imgUrl}`
-                                    : ""
+                                    : usericon
                                 }
                                 alt="user icon"
                               />
+                              {isAuthenticated && (
+                                <span
+                                  style={{
+                                    position: "absolute",
+                                    top: "0",
+                                    right: "0",
+                                    width: "12px",
+                                    height: "12px",
+                                    backgroundColor: "green",
+                                    borderRadius: "50%",
+                                    border: "1px solid green",
+                                  }}
+                                />
+                              )}
                               {dropdownOpen && <Dropdown />}
                             </button>
                           </div>
@@ -306,24 +318,23 @@ function Menu1() {
                     {userType === "Business" && (
                       <>
                         <div>
-                        {status !== 1 && (
-  <ul>
-    <li>
-      <NavLink
-        to="/addcompany"
-        className="btn_add listing-btn"
-        style={{
-          backgroundColor: "#fe900d",
-          fontSize: "14px",
-        }}
-        onClick={closeMenu}
-      >
-        Free Listing
-      </NavLink>
-    </li>
-  </ul>
-)}
-                          
+                          {status !== 1 && (
+                            <ul>
+                              <li>
+                                <NavLink
+                                  to="/addcompany"
+                                  className="btn_add listing-btn"
+                                  style={{
+                                    backgroundColor: "#fe900d",
+                                    fontSize: "14px",
+                                  }}
+                                  onClick={closeMenu}
+                                >
+                                  Free Listing
+                                </NavLink>
+                              </li>
+                            </ul>
+                          )}
                         </div>
                         <div
                           className="notification-user"
@@ -335,9 +346,9 @@ function Menu1() {
                             style={{ marginLeft: "20px" }}
                           >
                             <button
-                              type="button"
+                              type="button "
                               onClick={toggleNotificationMenu}
-                              style={{ background: "none", border: "none" }}
+                              className="notification-img"
                             >
                               <img src={notificationIcon} alt="notification" />
                               {hasNotifications && (
@@ -364,24 +375,47 @@ function Menu1() {
                             id="profileid"
                             className="dropdown usericon"
                             ref={dropRef}
-                            style={{ marginLeft: "20px", alignItems: "center" }}
+                            style={{
+                              marginLeft: "20px",
+                              alignItems: "center",
+                              position: "relative",
+                            }}
                           >
                             <button
                               className="usericon-btn dropdown-toggle"
                               type="button"
                               onClick={toggleDropdown}
-                              style={{ background: "none", border: "none" }}
+                              style={{
+                                background: "none",
+                                border: "none",
+                                position: "relative",
+                              }}
                             >
-                              {/* {console.log(imageURL)} */}
                               <img
                                 className="usericon-img"
                                 src={
                                   imageURL
                                     ? `https://apidev.myinteriormart.com${imageURL}`
-                                    : ""
+                                    : usericon
                                 }
                                 alt="user icon"
+                                
                               />
+                            
+                              {isAuthenticated && (
+                                <span
+                                  style={{
+                                    position: "absolute",
+                                    top: "0",
+                                    right: "0",
+                                    width: "12px",
+                                    height: "12px",
+                                    backgroundColor: "green",
+                                    borderRadius: "50%",
+                                    border: "1px solid green",
+                                  }}
+                                />
+                              )}
                               {dropdownOpen && <Dropdown />}
                             </button>
                           </div>

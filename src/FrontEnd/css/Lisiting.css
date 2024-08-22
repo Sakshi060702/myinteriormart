@@ -65,12 +65,16 @@
       padding: 0;
       margin: 0;
       list-style-type: none;
+      background-color: white;
+      padding-top: 10px;
     }
   
     .listing-bottom-list > li {
-      flex: 1; /* Allow items to grow and shrink as needed */
-      text-align: center; /* Center-align text for better appearance */
+      flex: 1; 
+      text-align: center; 
        padding: 5px;
+       margin-right: 3px;
+       
     }
   
     .listing-bottom-list .reating-list {
@@ -94,8 +98,7 @@
 
 
   /*Bookmark css*/
-  /* Add these styles to your CSS file */
-
+ 
 .btn-bookmark {
   background-color: #f3ebeb;
   color: black;
@@ -112,10 +115,40 @@
   color: gray; 
 }
 
-
-.btn-bookmark i.icon-active {
-  background-color: green  
+.btn-bookmark.icon-active i{
+  color: yellow;
 }
+
+.btn-like {
+  background-color: #f3ebeb;
+  color: black;
+}
+.btn-like i {
+  color: gray; 
+}
+.btn-like.icon-active i{
+  color: green;
+}
+
+
+.btn-subscribe {
+  background-color: #f3ebeb;
+  color: black;
+}
+.btn-subscribe i {
+  color: gray; 
+}
+.btn-subscribe.icon-active i{
+  color: red;
+}
+
+
+
+
+
+/* .btn-bookmark i.icon-active {
+  background-color: green  
+}  */
 
 
 /*Pagination*/

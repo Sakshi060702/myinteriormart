@@ -242,6 +242,7 @@ function Addcompanyl() {
                   <div className="form-group col-md-4">
                     <label htmlFor="businessCategory">Business Type</label>
                     <Select
+                   
                       options={filteredOptions}
                       onInputChange={(newValue) => setInputValue(newValue)}
                       onChange={handleSelectChange} // Handle the select change
@@ -259,8 +260,8 @@ function Addcompanyl() {
                           ...provided,
                           border: "1px solid #ccc",
                           borderRadius: "4px",
-                          width: "330px",
-                          height: "50px",
+                         
+                          
                         }),
                       }}
                       value={allOptions.find(

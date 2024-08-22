@@ -64,3 +64,44 @@
   font-size: 1.2rem;
   margin-bottom: 20px;
 }
+
+
+
+@media (max-width: 768px) {
+  .popup3 {
+    width: 70%; /* Adjust width for tablet and mobile screens */
+    padding: 15px;
+  }
+
+  .icon-container {
+    font-size: 40px; /* Adjust icon size for smaller screens */
+  }
+
+  .popup3 h3 {
+    font-size: 18px; /* Adjust heading size */
+  }
+
+  .popup3 h5 {
+    font-size: 14px; /* Adjust message text size */
+  }
+}
+
+/* Media query for very small screens (e.g., mobile) */
+@media (max-width: 480px) {
+  .popup3 {
+    width: 80%; /* Further adjust width for very small screens */
+    padding: 10px;
+  }
+
+  .icon-container {
+    font-size: 30px; /* Further adjust icon size */
+  }
+
+  .popup3 h3 {
+    font-size: 16px; /* Further adjust heading size */
+  }
+
+  .popup3 h5 {
+    font-size: 12px; /* Further adjust message text size */
+  }
+}

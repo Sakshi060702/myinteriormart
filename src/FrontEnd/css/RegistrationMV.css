@@ -1,0 +1,280 @@
+.uplodlogo{
+  padding-left: 471px;
+}
+.uplodcertificate{
+  width: 300px;
+  right: 73px;
+
+}
+@media (max-width: 767px) {
+    .container.sign_up_container {
+      padding: 0 62px; 
+    }
+  
+    .btn_1 {
+      width: 100%;
+    }
+  
+    .form-control {
+      width: 100%; 
+    }
+  
+    .dialog-mfp {
+      width: 100%;
+      margin: 0; 
+    }
+
+    /*Receive otp*/
+    .heading{
+        font-size: 24px;
+    }
+    .container-fluid.sign_up_container{
+        padding: 0px 20px; 
+    }
+  }
+
+
+    /*Login page*/
+    @media (max-width: 768px) {
+        .form-group {
+          margin-left: 0px;
+        }
+      
+        .form-control {
+          width: 100%;
+          padding-right: 53px; 
+        }
+      
+        .clearfix.add_bottom_15 {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+      
+        .checkboxes {
+          margin-right: 0;
+        }
+        .checkboxes1{
+          margin-right: 221px;
+        }
+      
+        .forgetpassword {
+          margin-left: 0;
+          margin-top: 10px;
+        }
+      }
+
+      /*Menu bar*/
+     
+/* .mobile-show {
+    display: none;
+  }
+  
+  .desktop-show {
+    display: flex;
+  }
+  
+ 
+  @media screen and (max-width: 768px) {
+    .mobile-show {
+      display: flex;
+    }
+  
+    .desktop-show {
+      display: none;
+    }
+  
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+    }
+  } */
+
+  /*Home*/
+ 
+@media (max-width: 768px) {
+    .container {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+    
+    #home_main {
+        padding: 0;
+    }
+    
+   
+}
+
+/*Dropdown*/
+@media (max-width: 768px) {
+    .dropdown1 {
+      width: 100%;
+    }
+  
+    .dropdown1 li {
+      justify-content: left;
+      padding-left: 1px;
+      padding-right: 1px;
+    }
+
+    
+
+  
+  }
+  @media (max-width:768px) {
+    .notification1{
+      left: -187px;
+    }
+    
+  }
+
+  @media (max-width:768px) {
+    .dropdown1{
+      left: -16px;
+    }
+  }
+  
+  @media (max-width:768px) {
+    .uplodlogo{
+      padding-left: 2px;
+    }
+  }
+  @media (max-width:768px) {
+    .uplodcertificate{
+      right: 0px;
+    }
+  }
+
+
+
+  @media (max-width: 768px) {
+    .form-group {
+      flex: 1 1 100%; 
+    }
+  
+    .row {
+      margin-left: 0 !important; 
+    }
+  
+    .col-md-3, .col-lg-2, .col-6 {
+      width: 100% !important; 
+    }
+  
+    .text-left {
+      padding-left: 0 !important; 
+      text-align: center;
+    }
+  }
+
+
+
+
+  /*Listing*/
+  .listingrating{
+    margin-top: 0px;
+    margin-top: 0px;
+  }
+  @media (max-width:767px) {
+    .listingrating{
+      margin-top: -23px;
+      margin-top: 10px;
+    }
+  }
+
+  .yearbusiness{
+    font-size: 20px;
+  }
+  @media (max-width:767px) {
+    .yearbusiness{
+      font-size: 12px;
+    }
+  }
+
+  /* .callnowl{
+  
+    
+      top:0px;
+      right: 0px;
+      height: 0px;
+  }
+  @media (max-width:767px) {
+    .callnowl{
+     
+      top:5px;
+      right: 10px;
+      height: 32px;
+    }
+  } */
+
+  .reactingnumberfont{
+    font-size: 20px;
+  }
+  @media (max-width) {
+    .reactingnumberfont{
+      font-size: 10px;
+    }
+  }
+
+
+  @media (max-width: 768px) {
+    /* Hide all stars except the first one */
+    .cat_star .icon_star:nth-child(n+2) {
+      display: none;
+    }
+    
+    /* Hide the rating count on mobile */
+    .rating-count {
+      display: none;
+    }
+  }
+  
+
+
+
+  
+
+  /*Login*/
+  .logininput{
+    margin-left: 90px;
+  }
+  @media (max-width:767px) {
+    .logininput{
+      margin-left: 2px;
+    }
+  }
+
+  .logineye{
+    margin-right: 40px;
+
+  }
+  @media (max-width:767px) {
+    .logineye{
+      margin-right: -22px;
+    }
+  }
+  .loginforgetpassword{
+    margin-left: 70px;
+  }
+  @media (max-width:767px) {
+    .loginforgetpassword{
+      margin-left: 2px;
+    }
+  }
+
+
+  .changepin1{
+    margin-right: 562px;
+  }
+  @media (max-width:767px) {
+    .changepin1{
+      margin-right: 200px;
+    }
+  }
+
+  @media (max-width:576px) {
+    .changepin1{
+      margin-right: 41px;
+    }
+  }
+
+  

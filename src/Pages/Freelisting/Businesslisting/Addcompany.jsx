@@ -9,11 +9,11 @@ import Popupalert from "../../Popupalert";
 import { validateName } from "../../Validation";
 
 function Addcompany() {
-
-  const isAuthenticated= useSelector((state)=>state.auth.isAuthenticated);
-  console.log("0000000000000------------------000000000000000000000", isAuthenticated);
-  
-
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  console.log(
+    "0000000000000------------------000000000000000000000",
+    isAuthenticated
+  );
 
   const [formData, setFormData] = useState({
     companyName: "",
@@ -34,7 +34,7 @@ function Addcompany() {
 
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const[successMessage,setSuccessMessage]=useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const [error, setError] = useState("");
 
@@ -80,7 +80,7 @@ function Addcompany() {
     var newArray = array.slice();
     newArray.unshift(value);
     return newArray;
-  }
+  };
   let filteredOptions = allOptions.filter((option) =>
     option.label.toLowerCase().includes(inputValue.toLowerCase())
   );
@@ -176,7 +176,6 @@ function Addcompany() {
       return;
     }
 
-
     const apiUrl =
       "https://apidev.myinteriormart.com/api/CompanyDetails/AddOrUpdateCompanyDetails";
 
@@ -214,15 +213,16 @@ function Addcompany() {
       setShowPopup(true);
 
       setTimeout(() => {
-      setShowPopup(false);
-      navigate("/addCommunication");
-    }, 2000); // Show popup for 3 seconds before redirect
-
+        setShowPopup(false);
+        navigate("/addCommunication");
+      }, 2000); // Show popup for 3 seconds before redirect
     } catch (error) {
       console.error("API error:", error);
-      setErrorMessage("Failed to save company details. Please try again later.");
-    setSuccessMessage(""); // Clear any existing success message
-    setShowPopup(true);
+      setErrorMessage(
+        "Failed to save company details. Please try again later."
+      );
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   };
 
@@ -249,16 +249,17 @@ function Addcompany() {
                 required
               />
               {error.companyName && (
-                      <div className="text-danger">{error.companyName}</div>
-                    )}
+                <div className="text-danger">{error.companyName}</div>
+              )}
             </div>
             <div className="form-group col-md-4">
               <label htmlFor="businessCategory">Business Type</label>
               <Select
+              className="selectcompnay"
                 options={filteredOptions}
                 onInputChange={(newValue) => setInputValue(newValue)}
                 onChange={handleSelectChange} // Handle the select change
-                placeholder= "Type to search"
+                placeholder="Type to search"
                 noOptionsMessage={() => (
                   <div
                     onClick={handleAddNewOption}
@@ -272,16 +273,25 @@ function Addcompany() {
                     ...provided,
                     border: "1px solid #ccc",
                     borderRadius: "4px",
-                    width: "250px",
-                    height: "50px",
+                   
                   }),
                 }}
                 value={
-                  
-                    allOptions.find((option) => option.value === formData.businessCategory) !== undefined ? (allOptions.find((option) => option.value === formData.businessCategory).value =='' ?
-                    {value:'Select Business Type', label:'Select Business Type'}: allOptions.find((option) => option.value === formData.businessCategory)) : {value:'Select Business Type', label:'Select Business Type'}
-                  
-                  } // Set the selected value
+                  allOptions.find(
+                    (option) => option.value === formData.businessCategory
+                  ) !== undefined
+                    ? allOptions.find(
+                        (option) => option.value === formData.businessCategory
+                      ).value == ""
+                      ? { value: "Type or Select", label: "Type or Select" }
+                      : allOptions.find(
+                          (option) => option.value === formData.businessCategory
+                        )
+                    : {
+                        value: "Select Business Type",
+                        label: "Select Business Type",
+                      }
+                } // Set the selected value
               />
             </div>{" "}
             <div className="form-group col-md-4">
@@ -289,7 +299,7 @@ function Addcompany() {
                 Nature of Business <span className="text-danger">*</span>
               </label>
               <select
-                className="wide add_bottom_10 "
+                className="wide add_bottom_10 selectcompnay  "
                 name="natureOfBusiness"
                 value={formData.natureOfBusiness}
                 onChange={handleChange}
@@ -297,8 +307,7 @@ function Addcompany() {
                 style={{
                   border: "1px, solid #ccc",
                   borderRadius: "4px",
-                  width: "250px",
-                  height: "50px",
+                 
                 }}
               >
                 <option value="" disabled>
@@ -345,7 +354,7 @@ function Addcompany() {
                 Turnover <span className="text-danger">*</span>
               </label>
               <select
-                className="wide add_bottom_10"
+                className="wide add_bottom_10 selectcompnay"
                 id="turnover"
                 name="turnover"
                 value={formData.turnover}
@@ -354,8 +363,7 @@ function Addcompany() {
                 style={{
                   border: "1px, solid #ccc",
                   borderRadius: "4px",
-                  width: "250px",
-                  height: "50px",
+                  
                 }}
               >
                 <option value="" disabled>
@@ -410,10 +418,10 @@ function Addcompany() {
             </div>
           </div>
           {showPopup && (
-            <Popupalert 
-            message={successMessage || errorMessage} 
-            type={successMessage ? 'success' : 'error'} 
-          />
+            <Popupalert
+              message={successMessage || errorMessage}
+              type={successMessage ? "success" : "error"}
+            />
           )}
         </form>
       </div>

@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { loginSuccess,setUserType } from "../../Redux/authSlice";
 import Popupalert from "../Popupalert";
 import { validateMobile } from "../Validation";
+import "../../FrontEnd/css/RegistrationMV.css"
 
 function Login() {
   const location = useLocation();
@@ -87,11 +88,11 @@ function Login() {
       console.log(data);
 
       if (response.ok) {
-        const tokenExpiry = new Date().getTime() + 30 * 60 * 1000;
+        const tokenExpiry = new Date().getTime() + 1440 * 60 * 1000;
 
         
         localStorage.setItem("token_startTime", new Date().getTime());
-        localStorage.setItem("token_endTime", new Date().getTime() + 30 * 60 * 1000);
+        localStorage.setItem("token_endTime", new Date().getTime() + 1440 * 60 * 1000);
 
         dispatch(
           loginSuccess({
@@ -136,17 +137,17 @@ function Login() {
                 <div>
                   <form onSubmit={handleSubmit}>
                     <div className="form-group ">
-                      <div className="icon-wrapper" style={{marginLeft:'90px'}}>
+                      <div className="icon-wrapper logininput" >
                         <i className="icon_phone"></i>
                       </div>
                       <input
-                        className="form-control"
+                        className="form-control logininput"
                         type="text"
                         name="mobile"
                         placeholder="Email/Mobile Number"
                         value={userMobile}
                         onChange={handleMobileChange}
-                        style={{ textAlign: "center", paddingRight: "53px" ,height:'50px',width:'190px',marginLeft:'90px',fontSize:'16px' }}
+                        style={{ textAlign: "center", paddingRight: "53px" ,height:'50px',width:'190px',fontSize:'16px' }}
                       />
                       {error.userMobile && (
                          <div className="text-danger">{error.userMobile}</div>
@@ -191,7 +192,7 @@ function Login() {
                       </div>
                       <i
                         onClick={togglePasswordVisibility}
-                        className={`fa ${
+                        className={`logineye fa ${
                           passwordVisible ? "fa-eye" : "fa-eye-slash"
                         }`}
                         style={{
@@ -202,7 +203,7 @@ function Login() {
                           cursor: "pointer",
                           color: "orange",
                           fontSize: "20px",
-                          marginRight: "40px",
+                          // marginRight: "40px",
                           // marginTop: '20px'
                         }}
                         aria-hidden="true"
@@ -226,9 +227,9 @@ function Login() {
                       </div>
                       <div style={{paddingTop:"5px"}}>
                       <Link
-                      className="forgetpassword"
+                      className="forgetpassword loginforgetpassword"
                       to="/Forgetpassword"
-                      style={{ color: "Orange", textDecoration: "none",marginLeft:'70px' }}
+                      style={{ color: "Orange", textDecoration: "none" }}
                       onMouseOver={(e) => (e.target.style.color = "Black")}
                       onMouseOut={(e) => (e.target.style.color = "Orange")}
                     >

@@ -7,6 +7,7 @@ import withAuthh from "../../Hoc/withAuthh";
 import Popupalert from "../Popupalert";
 import { validateImageFile,validateGalleryFile,validateName } from "../Validation";
 import useAuthCheck from "../../Hooks/useAuthCheck";
+import '../../FrontEnd/css/RegistrationMV.css'
 
 function Galleryimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -196,9 +197,10 @@ function Galleryimagel() {
                   
                   <img
                     className="upload_images"
-                    src={image.url ? `https://apidev.myinteriormart.com${image.url}` :usericon}
+                    src={image.url && image.url !== '' ? `https://apidev.myinteriormart.com${image.url}` : usericon}
                     alt="Gallery Image"
                   />
+                      {/* src={image.url ? `https://apidev.myinteriormart.com${image.url}` :usericon} */}
                 </div>
                 
                 
@@ -207,7 +209,7 @@ function Galleryimagel() {
             ))}
          
           </div>
-          <div style={{paddingLeft:'471px'}}>
+          <div className='uplodlogo'>
           <button
                 className="btn_1"
                 style={{ backgroundColor: "#E55923", marginTop: "10px" }}

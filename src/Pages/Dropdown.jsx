@@ -3,6 +3,7 @@ import "../FrontEnd/css/dropdown.css";
 import { Link ,useNavigate} from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../Redux/authSlice";
+import '../FrontEnd/css/RegistrationMV.css'
 
 const Dropdown = () => {
 
@@ -36,10 +37,10 @@ const Dropdown = () => {
           </Link>
         
         </li> */}
-        <li style={{marginRight:'84px',marginTop:'-8px'}}>
+        <li style={{marginRight:'84px',marginTop:'-8px'}} >
         <i className="fa fa-gear" style={{ marginRight: "10px" }}></i>Settings
         </li>
-        <li style={{marginTop:'-8px'}}>
+        <li style={{marginTop:'-8px' ,marginRight:'1px'}}>
         <i className="fa fa-key" style={{ marginRight: "10px" }}></i>Change Password
         </li>
         <li onClick={handleLogoutClick} style={{marginRight:'84px' ,marginTop:'-8px'}}>

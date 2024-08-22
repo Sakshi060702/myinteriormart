@@ -73,7 +73,7 @@
 @media (max-width: 768px) {
     .selectdrp {
       width: 100%; /* Set to 100% to make it responsive */
-      max-width: 330px; /* Ensure it does not exceed 330px */
+      max-width: 411px; /* Ensure it does not exceed 330px */
     }
   }
 /*css for address dropdown*/
@@ -166,6 +166,28 @@
 }
 
   
+.selectcompnay{
+  width: 250px;
+  height: 50px;
+}
+
+@media (max-width:768px) {
+  .selectcompnay{
+    width: 411px;
+  }
+}
+
+.selectaddress{
+  width: 250px;
+  height: 50px;
+}
+
+
+@media (max-width:768px) {
+  .selectaddress{
+    width: 300px;
+  }
+}
   
 
 

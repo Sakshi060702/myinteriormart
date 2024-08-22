@@ -6,6 +6,7 @@ import withAuthh from "../../Hoc/withAuthh"
 import Popupalert from "../Popupalert";
 import { validateImageFile,validateName } from "../Validation";
 import useAuthCheck from "../../Hooks/useAuthCheck";
+import '../../FrontEnd/css/RegistrationMV.css'
 
 function Certificationimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -171,7 +172,7 @@ function Certificationimagel() {
           </div>
           <div className="row justify-content-center mt-4">
             <div className="col-md-3 col-lg-2 col-6 mb-5">
-              <div className="upload_img_sec" style={{width:'300px', right:'29px'}}>
+              <div className="upload_img_sec uplodcertificate" >
                 <img
                   className="upload_images"
                   src={imageURL ? `https://apidev.myinteriormart.com${imageURL}` :usericon}
@@ -184,7 +185,7 @@ function Certificationimagel() {
               </div>
             </div>
           </div>
-          <div style={{paddingLeft:'471px'}}>
+          <div className='uplodlogo'>
           <button
                 className="btn_1"
                 style={{ backgroundColor: "#E55923", marginTop: "10px" }}

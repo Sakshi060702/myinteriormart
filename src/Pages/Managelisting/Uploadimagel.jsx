@@ -7,6 +7,7 @@ import withAuthh from "../../Hoc/withAuthh";
 import Popupalert from "../Popupalert";
 import { validateImageFile } from "../Validation";
 import useAuthCheck from "../../Hooks/useAuthCheck";
+import '../../FrontEnd/css/RegistrationMV.css'
 
 function Uploadimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -130,7 +131,7 @@ function Uploadimagel() {
             <div className="col-md-6">
               <div className="form-group">
                 <label for="name">
-                  Select Logo Image <span className="text-danger">*</span>
+                  Select Company Logo Image <span className="text-danger">*</span>
                 </label>
 
                 <input
@@ -151,7 +152,7 @@ function Uploadimagel() {
               <hr style={{ marginTop: "32px" }}></hr>
           <div className="row">
             <div className="col-md-12">
-              <h2 style={{textAlign:'center'}}>Logo</h2>
+              <h2 style={{textAlign:'center'}}>Company Logo</h2>
             </div>
           </div>
           <div className="row justify-content-center mt-4">
@@ -172,7 +173,7 @@ function Uploadimagel() {
               </div>
             </div>
           </div>
-          <div style={{paddingLeft:'471px'}}>
+          <div className='uplodlogo'>
           <button
                   className="btn_1"
                   style={{ backgroundColor: "#E55923", marginTop: "10px" }}

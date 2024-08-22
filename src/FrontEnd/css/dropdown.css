@@ -12,6 +12,7 @@
   font-size: 20px;
 }
 
+
 .dropdown1 ul {
   list-style-type: none;
   padding: 0;
@@ -51,7 +52,8 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 20px;
   z-index: 999;
-  left: -70px;
+  left: -132px;
+  width: 329px;
 
   
 }

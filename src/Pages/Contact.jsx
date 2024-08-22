@@ -97,8 +97,7 @@ function Contact() {
                   </div>
                   <div className="contact_heading">Address</div>
                   <div className="contact_text">
-                    Lal Bahadur Shastri Rd, Bhandup West, Mumbai, Maharashtra
-                    400078
+                  Perl Residence Office No.22, opp. Wadia School, D.N.Nagar, Andheri West, Mumbai, Maharashtra 400053
                   </div>
                 </div>
               </div>
@@ -113,7 +112,7 @@ function Contact() {
                   </div>
                   <div className="contact_heading">Helpline</div>
                   <div className="contact_text">
-                    <a href="tel:+919876543210">+91 9876543210</a>
+                    <a href="tel:+919876543210">+91 7700995500</a>
                   </div>
                 </div>
               </div>
@@ -130,7 +129,7 @@ function Contact() {
                     Advertisement
                   </div>
                   <div className="contact_text">
-                    <a href="tel:+919876543210">+91 9876543210</a>
+                    <a href="tel:+919876543210">+91 7700994015</a>
                   </div>
                 </div>
               </div>

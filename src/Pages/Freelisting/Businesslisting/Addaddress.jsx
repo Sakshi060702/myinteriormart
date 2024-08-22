@@ -379,15 +379,14 @@ const Address = () => {
         style={{ marginBottom: '10px', width: '250px', height: '30px' }}
       /> */}
                     <select
-                      className="wide add_bottom_10 country"
+                      className="wide add_bottom_10 country selectaddress"
                       value={selectedCountry}
                       onChange={handleCountryChange}
                       required
                       style={{
                         border: "1px solid #ccc",
                         borderRadius: "4px",
-                        width: "250px",
-                        height: "50px",
+                        
                       }}
                     >
                       <option value="">Select Country</option>
@@ -404,7 +403,7 @@ const Address = () => {
                   <div className="form-group col-md-4">
                     <label htmlFor="state">State<span className="text-danger">*</span></label>
                     <select
-                      className="wide add_bottom_10 state "
+                      className="wide add_bottom_10 state selectaddress "
                       id="state"
                       value={selectedState}
                       onChange={handleStateChange}
@@ -412,8 +411,7 @@ const Address = () => {
                       style={{
                         border: "1px, solid #ccc",
                         borderRadius: "4px",
-                        width: "250px",
-                        height: "50px",
+                       
                       }}
                     >
                       <option value="">Select State</option>
@@ -430,7 +428,7 @@ const Address = () => {
                   <div className="form-group col-md-4">
                     <label htmlFor="city">City<span className="text-danger">*</span></label>
                     <select
-                      className="wide add_bottom_10 city "
+                      className="wide add_bottom_10 city selectaddress "
                       id="city"
                       value={selectedCity}
                       onChange={handleCityChange}
@@ -438,8 +436,7 @@ const Address = () => {
                       style={{
                         border: "1px, solid #ccc",
                         borderRadius: "4px",
-                        width: "250px",
-                        height: "50px",
+                       
                       }}
                     >
                       <option value="">Select City</option>
@@ -455,18 +452,17 @@ const Address = () => {
                   <div className="form-group col-md-4">
                     <label>Locality<span className="text-danger">*</span></label>
                     <select
-                      className="wide add_bottom_10 locality "
+                      className="wide add_bottom_10 locality selectaddress"
                       value={selectedAssembly}
                       onChange={handleLocalityChange}
                       required
                       style={{
                         border: "1px, solid #ccc",
                         borderRadius: "4px",
-                        width: "250px",
-                        height: "50px",
+                       
                       }}
                     >
-                      <option value="">Select Locality</option>
+                      <option value="">Type or Select Locality</option>
                       {filteredassembly.map((assembly) => (
                         <option
                           key={assembly.assemblyID}
@@ -481,18 +477,17 @@ const Address = () => {
                   <div className="form-group col-md-4">
                     <label>Pincode<span className="text-danger">*</span></label>
                     <select
-                      className="wide add_bottom_10 pincode "
+                      className="wide add_bottom_10 pincode selectaddress"
                       value={selectedPincode}
                       onChange={handlePincodeChange}
                       required
                       style={{
                         border: "1px, solid #ccc",
                         borderRadius: "4px",
-                        width: "250px",
-                        height: "50px",
+                       
                       }}
                     >
-                      <option value="">Select Pincode</option>
+                      <option value="">Type or Select Pincode</option>
                       {pincodes.map((pincode) => (
                         <option
                           key={pincode.pincodeID}
@@ -507,18 +502,17 @@ const Address = () => {
                   <div className="form-group col-md-4">
                     <label>Area<span className="text-danger">*</span></label>
                     <select
-                      className="wide add_bottom_10 area "
+                      className="wide add_bottom_10 area selectaddress"
                       value={selectedLocality}
                       onChange={handleAreaChange}
                       required
                       style={{
                         border: "1px, solid #ccc",
                         borderRadius: "4px",
-                        width: "250px",
-                        height: "50px",
+                        
                       }}
                     >
-                      <option value="">Select Area</option>
+                      <option value="">Type or Select Area</option>
                       {localities.map((locality) => (
                         <option
                           key={locality.localityID}
@@ -570,7 +564,7 @@ const Address = () => {
                     </Link>
                   </div>
                 </div>
-                {console.log(showAddressPopup)}
+                {/* {console.log(showAddressPopup)} */}
                 {showAddressPopup && (
                   <LocalityPopup
                   isOpen={showAddressPopup[0]} cityId={showAddressPopup[1]}
@@ -584,7 +578,7 @@ const Address = () => {
                     onClose={()=>setShowPincodePopup([false,null])}/>
                   )
                 }
-                 {console.log(showAreaPopup)}
+                 {/* {console.log(showAreaPopup)} */}
                 {
                   showAreaPopup && (
                     <Areapopup 

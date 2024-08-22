@@ -23,7 +23,7 @@ function Searchbar() {
             }
           );
           const data = await response.json();
-          console.log(data); // Log the data to inspect its structure
+          // console.log(data); // Log the data to inspect its structure
           setResults(data);
           setShowDropdown(true);
         } catch (error) {
@@ -79,7 +79,15 @@ function Searchbar() {
                           <NavLink to={`/listing/${result.categoryId}`}><h6>{result.category}</h6></NavLink>
                         </div>
                       )
-                    }else{
+                    }
+                    else if(result.keyword != null){
+                      return (
+                        <div key={index} className="dropdownItemsearchbar">
+                          <NavLink to={`/listing/${result.categoryId}?searchkey=${result.keyword}`}><h6>{result.keyword}</h6></NavLink>
+                        </div>
+                      )
+                    }
+                    else{
                       return (
                         <div key={index} className="dropdownItemsearchbar">
                           <NavLink to={`/company/${result.listingId}`}><h6>{result.companyName}</h6></NavLink>

@@ -46,3 +46,18 @@ border: 1px solid transparent;
     border: 1px solid #ced4da; 
     background-color: white;
 }
+@media (max-width:767px) {
+  .custom-dropdown {
+    width: 429px;
+      border: 1px solid #ced4da; 
+      background-color: white;
+  }
+}
+
+@media (max-width:480px) {
+  .custom-dropdown {
+    width: 300px;
+      border: 1px solid #ced4da; 
+      background-color: white;
+  }
+}

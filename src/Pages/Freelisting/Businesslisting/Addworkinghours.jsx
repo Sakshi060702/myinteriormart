@@ -214,7 +214,7 @@ function Addworkinghours()
                         
                         <div className="col-md-12">
                           <div className="clearfix add_bottom_15">
-                            <div className="checkboxes float-left">
+                            <div className="checkboxes1 float-left">
                               <label className="container_check">
                                 Saturday Holiday
                                 <input
@@ -235,7 +235,7 @@ function Addworkinghours()
                       {key === "SaturdayFrom" && (
                         <div className="col-md-12">
                           <div className="clearfix add_bottom_15">
-                            <div className="checkboxes float-left">
+                            <div className="checkboxes1 float-left">
                               <label className="container_check">
                                 Sunday Holiday
                                 <input

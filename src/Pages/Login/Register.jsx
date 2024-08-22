@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginSuccess,setUserType } from '../../Redux/authSlice';
 import { validateEmail,validateMobile,validateEmailOptional } from '../Validation';
+import "../../FrontEnd/css/RegistrationMV.css"
 
 function Register() {
     const [vendorType, setVendorType] = useState('');
@@ -110,10 +111,10 @@ function Register() {
         }
 
         // Validate vendor type
-    // if (!vendorType) {
-    //     setError('Please select a user type.');
-    //     return;
-    // }
+    if (!vendorType) {
+        setError('Please select a user type.');
+        return;
+    }
 
 
 
@@ -237,11 +238,11 @@ function Register() {
                                             </div>
                                             
                                         </div>
-                                        {/* {error && !vendorType && <div className="text-danger">Please select a user type.</div>} */}
+                                        {error && !vendorType && <div className="text-danger">Please select a user type.</div>}
                                         {vendorType.toLowerCase() === "business" && businessFields}
                                         <div className="form-group mb-4">
-                                            <div className="icon-wrapper">
-                                                <i className="icon_mail_alt"></i>
+                                            <div className="icon-wrapper" style={{bottom:'24px'}}>
+                                                <i className="icon_mail_alt" ></i>
                                             </div>
                                             <input
                                                 className="form-control"

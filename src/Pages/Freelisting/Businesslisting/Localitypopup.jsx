@@ -13,7 +13,7 @@ const LocalityPopup = ({ isOpen, cityId, onClose }) => {
   const [successMessage, setSuccessMessage] = useState("");
 
  
-  console.log("BRAVOoooooooooooooo ",isOpen, cityId);
+  // console.log("BRAVOoooooooooooooo ",isOpen, cityId);
   if (!isOpen) return null;
 
   const handleChange = (e) => {
@@ -30,7 +30,7 @@ const LocalityPopup = ({ isOpen, cityId, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(formData,cityId);
+      // console.log(formData,cityId);
       formData['cityId']= cityId;
       const response = await fetch(
         "https://apidev.myinteriormart.com/api/Locality/CreateLocality",

@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useSearchParams, useParams, Link } from "react-router-dom";
 import banner from "../../FrontEnd/img/banner/banner2.png";
 import banner1 from "../../FrontEnd/img/listing-img.jpeg"
 import Popup from "./Popup";
 import Getquotespopup from "./Getquotespopup";
 import '../../FrontEnd/css/Lisiting.css';
+import '../../FrontEnd/css/RegistrationMV.css'
+
 import { useSelector } from "react-redux";
 
     
 function Listing() {
   const { secondCategoryId } = useParams();
+  const [searchParams] = useSearchParams();
+  const searching = searchParams.get('searchkey');
+  // console.log(searching,useParams());
   const [listing, setListing] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState([false,null]);
 
@@ -43,7 +48,7 @@ const [totalItems, setTotalItems] = useState(0);
       }
   
       const data = await response.json();
-      console.log("Fetched Data", data);
+      // console.log("Fetched Data", data);
   
       // Filter listings if needed based on subCategoryId
       const filteredListing = data.filter((listing) => {
@@ -53,8 +58,8 @@ const [totalItems, setTotalItems] = useState(0);
       });
   
       setListing(filteredListing);
-      console.log(filteredListing)
-      console.log(itemsPerPage);
+      // console.log(filteredListing)
+      // console.log(itemsPerPage);
   
       
       if (filteredListing.length < itemsPerPage) {
@@ -105,7 +110,7 @@ const [totalItems, setTotalItems] = useState(0);
               <div key={listing.listingId} className="row mb-3">
                 <div className="col-12">
                   <div className="strip map_view">
-                    <div className="row no-gutters">
+                    <div className="row no-gutters" style={{ border: searching == listing.listingKeyword ? '2px solid gray': 'None'}}>
                       <div className="col-3">
                         {listing.logoImage && listing.logoImage.imagePath ? (
                           <img
@@ -123,7 +128,7 @@ const [totalItems, setTotalItems] = useState(0);
                       <div className="col-9">
                         <div className="wrapper">
                           <h3 style={{ color: "black" }}>
-                            <Link to={`/company/${listing.listingId}`}>
+                            <Link to={`/company/${listing.listingId}-${currentPage}-${itemsPerPage}-${secondCategoryId}`}>
                               {" "}
                               {listing.companyName}
                             </Link>
@@ -149,13 +154,13 @@ const [totalItems, setTotalItems] = useState(0);
                       <div className="col-lg-12 listing-bottom">
                         <ul className="listing-bottom-list">
                           <li>
-                            <h5>
+                            <h5 className="yearbusiness">
                               <b> + {listing.businessYear} Year Business</b>
                             </h5>
                           </li>
                           <li>
-                            <p>
-                              <Link className="loc_open call-now">
+                            <p className="">
+                              <Link className="loc_open call-now callnowl">
                                 Call now
                               </Link>
                             </p>
@@ -171,10 +176,10 @@ const [totalItems, setTotalItems] = useState(0);
                               </button>
                             </p>
                           </li>
-                          <li>
+                          <li className="listingrating">
                             <ul className="reating-list">
                               <li>
-                                <h4 className="reating-number">{listing.ratingAverage}.0</h4>
+                                <h4 className="reating-number reactingnumberfont">{listing.ratingAverage}.0</h4>
                               </li>
                               <li className="reating-star">
                                 <div className="cat_star">

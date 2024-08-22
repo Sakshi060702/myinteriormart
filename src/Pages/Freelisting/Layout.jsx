@@ -78,7 +78,7 @@ function Layout({ children }) {
                   />
                   Business Listing
                 </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/Personalinformation">
+                {/* <Dropdown.Item as={Link} to="/Personalinformation">
                   <img
                     src={labourimg}
                     alt="Labour Naka"
@@ -101,7 +101,7 @@ function Layout({ children }) {
                 <Dropdown.Item as={Link} to="/jobpage">
                   <img src={jobimg} alt="Job" style={{ height: "60px" }} />
                   Job
-                </Dropdown.Item>
+                </Dropdown.Item> */}
               </Dropdown.Menu>
             </Dropdown>
           </div>

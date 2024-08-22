@@ -21,7 +21,13 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 function Listingdetails() {
-  const { listingId } = useParams();
+  // const { listingId } = useParams();
+
+  const listingId = useParams().listingId.split('-')[0];
+  const currentPage = useParams().listingId.split('-')[1];
+  const itemsPerPage = useParams().listingId.split('-')[2];
+  const secondCategoryId = useParams().listingId.split('-')[3];
+  // console.log(useParams().listingId.split('-'));
   const [listingDetails, setListingDetails] = useState(null);
 
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -81,9 +87,9 @@ function Listingdetails() {
   }
 
   useEffect(() => {
+
     fetchListingDetails();
   }, [listingId]);
-
   // useEffect(() => {
   //   if (listingDetails) {
   //     const bookmarkStatus = listingDetails.bookmark && listingDetails.bookmark.bookmark;
@@ -102,7 +108,9 @@ function Listingdetails() {
   const fetchListingDetails = async () => {
     try {
       const response = await fetch(
-        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing`,
+        // `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing`,
+        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing?pageNumber=${currentPage}&pageSize=${itemsPerPage}&subCategoryid=${secondCategoryId}`,
+
         {
           method: "GET", // You can adjust the method if needed
           headers: {
@@ -115,6 +123,9 @@ function Listingdetails() {
       const company = data.find(
         (listing) => listing.listingId.toString() === listingId
       );
+      // console.log(data)
+      // console.log("BRAVOOOOOOOOOOOOOOOOOOOOOooo ----------------", company);
+      // console.log("BRAVOOOOOOOOOOOOOOOOOOOOOooo ----------------", listingId);
       setListingDetails(company);
 
       //for bookmark
@@ -550,7 +561,7 @@ function Listingdetails() {
                             >
                               <div
                                 className=""
-                                style={{ width: "100px", marginLeft: "65px" }}
+                                style={{ width: "189px", marginLeft: "50px" }}
                               >
                                 <img
                                   className="upload_images"
@@ -704,14 +715,14 @@ function Listingdetails() {
                         <button
                           className={`btn btn-bookmark ${
                             isBookmarked ? "active" : ""
+                          } ${
+                            isBookmarked ? "icon-active" : ""
                           }`}
                           onClick={handleBookmarkToggle}
                           style={{ marginRight: "5px" ,fontSize:'13px' }}
                         >
                           <i
-                            className={`fa fa-bookmark ${
-                              isBookmarked ? "icon-active" : ""
-                            }`}
+                            className={`fa fa-bookmark`}
                             style={{ marginRight: "5px" }}
                           ></i>
                           Bookmark
@@ -726,32 +737,31 @@ function Listingdetails() {
                         </button>
 
                         <button
-                          className={`btn btn-bookmark ${
+                          className={`btn btn-like ${
                             isLike ? "active" : ""
+                          } ${
+                            isLike ? "icon-active" : ""
                           }`}
                           onClick={handleLikeToggle}
-                          style={{ marginRight: "10px",fontSize:'13px' }}
+                          style={{ marginRight: "5px" ,fontSize:'13px' }}
                         >
                           <i
-                            className={`fa ${
-                              isLike ? "fa-thumbs-up" : "fa-thumbs-o-up"
-                            } ${isLike ? "icon-active" : ""}`}
+                            className={`fa fa-thumbs-up`}
                             style={{ marginRight: "5px" }}
                           ></i>
                           Like
                         </button>
-
                         <button
-                          className={`btn btn-bookmark ${
+                          className={`btn btn-subscribe ${
                             isSubscribe ? "active" : ""
+                          } ${
+                            isSubscribe ? "icon-active" : ""
                           }`}
                           onClick={handleSubscribeToggle}
-                          style={{fontSize:'13px'}}
+                          style={{ marginRight: "5px" ,fontSize:'13px' }}
                         >
                           <i
-                            className={`fa ${
-                              isSubscribe ? "fa-bell" : "fa-bell-o"
-                            } ${isSubscribe ? "icon-active" : ""}`}
+                            className={`fa fa-bell`}
                             style={{ marginRight: "5px" }}
                           ></i>
                           Subscribe

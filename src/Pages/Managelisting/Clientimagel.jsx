@@ -5,6 +5,7 @@ import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
 import Popupalert from "../Popupalert";
 import { validateImageFile,validateName } from "../Validation";
+import '../../FrontEnd/css/RegistrationMV.css'
 
 
 function Clientimagel() {
@@ -191,7 +192,7 @@ function Clientimagel() {
               </div>
             </div>
           </div>
-          <div style={{paddingLeft:'471px'}}>
+          <div className='uplodlogo'>
           <button
               className="btn_1"
               style={{ backgroundColor: "#E55923", marginTop: "10px" }}

@@ -1074,7 +1074,8 @@ option[value=""][disabled] {
 		/* padding: 10px 10px; */
 		border-top: 0px;
 		/* left: calc(100% - 69%); */
-		left: 10px;
+		left: 141px;
+		top: -39px;
 	}
 	.categories-list .item {
 		text-align: center;
@@ -1135,6 +1136,132 @@ option[value=""][disabled] {
 	}
 
 }
+
+/*today*/
+@media (max-width: 767px) {
+	.mim-Box-item a p {
+		font-size: 9px;
+		padding: 3px 2px;
+		display: block;
+		word-break: break-word;
+	}
+	ul#additional_links li a {
+		font-size: 12px;
+	}
+	.bottom-link-sticky-list a {
+		padding: 10px 5px;
+		display: block;
+		color: #444;
+		font-size: 11px!important;
+		text-align: center;
+		font-weight: 500;
+		font-family: 'PoppinsSemiBold';
+	}
+	.strip .wrapper h3 a {
+		font-size: 15px;
+		line-height: 16px;
+	}
+	.strip.map_view .wrapper {
+		padding: 5px;
+	}
+	.strip.map_view .wrapper small {
+		font-size: 12px;
+		line-height: 14px;
+		margin-top: 0px;
+		margin-bottom: 6px;
+	}
+	.strip.map_view .listing-bottom-list {
+		padding: 0px;
+	}
+	.listing-bottom-list .loc_open {
+		font-size: 12.9px;
+		line-height: 14px;
+		top:5px;
+		left: -7px;
+		height: 34px;
+	}
+	.mb-space-remove {
+		padding: 0px;
+	}
+	.strip.map_view figure a img {
+		height: 95px;
+	}
+	.strip.map_view figure {
+		height: 92px;
+	}
+	.strip.map_view .listing-bottom-list li {
+		padding: 0px;
+		margin-right: -5px;
+	}
+	.strip.map_view .listing-bottom-list {
+		position: absolute;
+		top: 3px;
+		/* padding: 10px 10px; */
+		border-top: 0px;
+		/* left: calc(100% - 69%); */
+		left: 141px;
+		top: -39px;
+	}
+	.categories-list .item {
+		text-align: center;
+		display: block;
+		padding: 0px;
+	}
+	.categories-list .item .icon img {
+		text-align: center;
+	}
+	.categories-list .item .icon {
+		display: block;
+		margin: auto;
+		float: inherit;
+		margin-bottom: 10px;
+	}
+	.categories-list .item .detail small.des {
+		display: block;
+	}
+	.categories-list .item .detail a {
+		margin-bottom: 10px;
+	}
+	.categories-list .item .detail {
+		display: inline-block;
+	}
+	.main_title_2 {
+		margin-bottom: 20px;
+	}
+	.company-details {
+		display: block!important;
+	}
+	.listing-details .company-details h5 {
+		width: 100%;
+		margin-bottom: 0px;
+	}
+	.listing-details .company-details small {
+		padding: 6px 0px;
+		display: block;
+	}	
+	iframe#gmap_canvas {
+		height: 250px!important;
+	}
+	.social-details a {
+		margin-bottom: 5px;
+	}
+	.company-listing-tab .nav-tabs .nav-item a {
+		font-size: 12px;
+		padding: 5px;
+	}
+	.review-user {
+		margin-top: 20px;
+	}
+	.review-user img.rounded-circle {
+		margin-bottom: 10px;
+	}
+	.company-addes .company-rating {
+		float: initial;
+		margin: 0 15px;
+	}
+
+}
+
 
 @media (max-width: 1024px) {
 	.navbar-brand-offer .navbar-toggler {

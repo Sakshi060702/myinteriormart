@@ -226,12 +226,22 @@ function Profile2({ children }) {
               <Dropdown.Toggle
                 variant="outline-warning"
                 id="dropdown-basic"
-                style={{ width: "100%" }}
+                style={{ width: "96%" }}
               >
                 Select Options
               </Dropdown.Toggle>
               <Dropdown.Menu style={{ width: "93%" }}>
-                <Dropdown.Item as={Link} to="/editprofile">
+                {userType === "Consumer" &&(
+                  <>
+                   <Dropdown.Item as={Link} to="/Myactivity">
+                  <img
+                    src={myactivityimg}
+                    alt="Edit Profile"
+                    style={{ height: "60px" }}
+                  />
+                 My Activity
+                </Dropdown.Item>
+                   <Dropdown.Item as={Link} to="/editprofile">
                   <img
                     src={editprofile}
                     alt="Edit Profile"
@@ -239,7 +249,73 @@ function Profile2({ children }) {
                   />
                   Edit Profile
                 </Dropdown.Item>
-                {status == 1 && (
+                
+                <Dropdown.Item as={Link} to="/userpersonalinformation">
+                  <img
+                    src={addressimg}
+                    alt="Edit Profile"
+                    style={{ height: "60px" }}
+                  />
+                  Personal Info
+                </Dropdown.Item>
+
+                <Dropdown.Item as={Link} to="/complaint">
+                  <img
+                    src={complaintimg}
+                    alt="Edit Profile"
+                    style={{ height: "60px" }}
+                  />
+                  Complaint
+                </Dropdown.Item>
+
+                <Dropdown.Item as={Link} to="/suggestion">
+                  <img
+                    src={suggestionimg}
+                    alt="Edit Profile"
+                    style={{ height: "60px" }}
+                  />
+                  Suggestion
+                </Dropdown.Item>
+
+                <Dropdown.Item as={Link} to="/chat">
+                  <img
+                    src={chatimg}
+                    alt="Edit Profile"
+                    style={{ height: "60px" }}
+                  />
+                 Chat
+                </Dropdown.Item>
+                <Dropdown.Item as={Link} to="/changepassword">
+                  <img
+                    src={changepassimg}
+                    alt="Edit Profile"
+                    style={{ height: "60px" }}
+                  />
+                 Change Pin
+                </Dropdown.Item>
+                
+
+                  </>
+                )}
+                {userType === "Business" &&(
+                  <>
+                  <Dropdown.Item as={Link} to="/dashboard">
+                  <img
+                    src={dashbordimg}
+                    alt="Edit Profile"
+                    style={{ height: "60px" }}
+                  />
+                 Dashboard
+                </Dropdown.Item>
+                <Dropdown.Item as={Link} to="/Myactivity">
+                  <img
+                    src={myactivityimg}
+                    alt="Edit Profile"
+                    style={{ height: "60px" }}
+                  />
+                 My Activity
+                </Dropdown.Item>
+                {status === 1 && (
                   <>
                     <Dropdown.Item as={Link} to="/labournakapage">
                       <img
@@ -260,71 +336,56 @@ function Profile2({ children }) {
                   </>
                 )}
 
-                <Dropdown.Item as={Link} to="/address1">
-                  <img
-                    src={addressimg}
-                    alt="Address"
-                    style={{ height: "60px" }}
-                  />
-                  Address
-                </Dropdown.Item>
-
-                <Dropdown.Item as={Link} to="/bookmark">
-                  <img
-                    src={bookmarkimg}
-                    alt="Bookmark"
-                    style={{ height: "60px" }}
-                  />
-                  Bookmark
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/like">
-                  <img src={likeimg} alt="Like" style={{ height: "60px" }} />
-                  Like
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/subscribe">
-                  <img
-                    src={subscribeimg}
-                    alt="Subscribe"
-                    style={{ height: "60px" }}
-                  />
-                  Subscribe
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/review">
-                  <img
-                    src={reviewimg}
-                    alt="Review"
-                    style={{ height: "60px" }}
-                  />
-                  Review
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/chat">
-                  <img src={chatimg} alt="Chat" style={{ height: "60px" }} />
-                  Chat
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/suggestion">
-                  <img
-                    src={suggestionimg}
-                    alt="Suggestion"
-                    style={{ height: "60px" }}
-                  />
-                  Suggestion
-                </Dropdown.Item>
                 <Dropdown.Item as={Link} to="/complaint">
                   <img
                     src={complaintimg}
-                    alt="Complaint"
+                    alt="Address"
                     style={{ height: "60px" }}
                   />
-                  Complaint
+                 Complaint
                 </Dropdown.Item>
+
+                <Dropdown.Item as={Link} to="/suggestion">
+                  <img
+                    src={suggestionimg}
+                    alt="Bookmark"
+                    style={{ height: "60px" }}
+                  />
+                 Suggestion
+                </Dropdown.Item>
+                {/* <Dropdown.Item as={Link} to="/like">
+                  <img src={likeimg} alt="Like" style={{ height: "60px" }} />
+                  Like
+                </Dropdown.Item> */}
+                <Dropdown.Item as={Link} to="/chat">
+                  <img
+                    src={chatimg}
+                    alt="Subscribe"
+                    style={{ height: "60px" }}
+                  />
+                 Chat
+                </Dropdown.Item>
+                <Dropdown.Item as={Link} to="/ProfileRegister">
+                  <img
+                    src={registerimg}
+                    alt="Review"
+                    style={{ height: "60px" }}
+                  />
+                  Register
+                </Dropdown.Item>
+               
+               
                 <Dropdown.Item as={Link} to="/changepassword">
                   <img
                     src={changepassimg}
                     alt="Change Password"
                     style={{ height: "60px" }}
                   />
-                  Change Password
+                  Change Pin
                 </Dropdown.Item>
+                  </>
+                )}
+                
               </Dropdown.Menu>
             </Dropdown>
           </div>

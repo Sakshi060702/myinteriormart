@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import "../FrontEnd/css/dropdown.css";
 import "../FrontEnd/css/Notification.css";
 import useAuthCheck from "../Hooks/useAuthCheck";
+import '../FrontEnd/css/RegistrationMV.css'
 
 const Notification = ({ setHasNotifications }) => {
   const token = useSelector((state) => state.auth.token);
@@ -44,7 +45,7 @@ const Notification = ({ setHasNotifications }) => {
   }, [token,setHasNotifications]);
 
   return (
-    <div className="notification1" style={{left:'-132px',width: '329px'}}>
+    <div className="notification1" >
       <div>
         <div className="notificationheader">
           <h5>Notification</h5>
@@ -59,7 +60,7 @@ const Notification = ({ setHasNotifications }) => {
                 ) : (
                   notification.map((notification, index) => (
                     <li key={index} className="notification-item">
-                      <div className="notification-list" style={{display:'flex', width:'263px' ,padding: '10px 0px 10px 4px'}}>
+                      <div className="notification-list" style={{display:'flex'}}>
                         
                         <div className="notification-image">
                           <div>
@@ -67,7 +68,7 @@ const Notification = ({ setHasNotifications }) => {
                             <img
                               src={`https://apidev.myinteriormart.com${notification.profileImage}`}
                               alt={`${notification.companyName} profile`}
-                              style={{ height: '83px', objectFit: 'cover',width: '72px',borderRadius:'53px',margin:'0px 0px 14px -26px',position:'absolute'}}
+                              style={{ height: '63px',width: '45px',margin:'0px 0px 0px -26px',position:'absolute'}}
                             />
                           ) : (
                             <img alt="default" style={{height: '48px', width: '48px', objectFit: 'cover'}} />
@@ -77,17 +78,17 @@ const Notification = ({ setHasNotifications }) => {
                         </div>
                         <div className="notification-content">
                           <div style={{marginRight:'-4px', marginLeft:'-21px'}}>
-                          <span className="visit-date" style={{textAlign:'right', margin:'10px 36px 0px 0px'}}>
+                          <span className="visit-date" style={{textAlign:'right', margin:'9px 15px 0px 24px'}}>
                             {notification.visitDate}
                           </span>
                           </div>
                           <div>
                           <p className="description">
                             <span className="user-name">
-                              <strong style={{fontSize:'23px'}}>{notification.userName}</strong>
+                              <strong style={{fontSize:'13px',paddingLeft:'11px'}}>{notification.userName}</strong>
                             </span>
-                            <br></br>
-                            <span className="activity-text" style={{padding:'8px 33px 0px 40px'}}>
+                            
+                            <span className="activity-text" style={{padding:'2px 0px 1px 26px'}}>
                             <i className="fa fa-bookmark" style={{color:'orange' ,fontSize:'16px' , marginRight:'5px'}}></i> 
                               {notification.activityText}
                             </span>

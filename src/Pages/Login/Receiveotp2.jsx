@@ -65,7 +65,7 @@ function Receiveotp2() {
                     <div id="sign-in-dialog" className="dialog-mfp zoom-anim-dialog" style={{ maxWidth: '500px' }}>
                         <div className="step first">
                             <div>
-                                <h2 className="text-center pt-3" style={{ whiteSpace: 'nowrap' }}>Verify Your Mobile Number</h2>
+                                <h2 className="text-center pt-3 heading" style={{ whiteSpace: 'nowrap' }}>Verify Your Mobile Number</h2>
                                 <div className="row justify-content-center">
                                     <h5>Get Connected to Verified Sellers</h5>
                                 </div>

@@ -16,6 +16,7 @@ import Contractor1 from "./Contractor/Contractor1";
 import Dealer1 from "./Dealer/Dealer1";
 
 import Dealer from "./Component/Dealer";
+import '../../FrontEnd/css/RegistrationMV.css'
 
 
 

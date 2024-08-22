@@ -184,7 +184,7 @@ function Changepassword() {
                 </div>
                 <i
                   onClick={togglelOldPinVisibility}
-                  className={`fa ${oldPinVisible ? "fa-eye" : "fa-eye-slash"}`}
+                  className={` changepin1 fa ${oldPinVisible ? "fa-eye" : "fa-eye-slash"}`}
                   style={{
                     position: "absolute",
                     top: "50%",
@@ -193,7 +193,7 @@ function Changepassword() {
                     cursor: "pointer",
                     color: "orange",
                     fontSize: "20px",
-                    marginRight: "562px",
+                 
                     marginTop: "20px",
                   }}
                   aria-hidden="true"
@@ -229,7 +229,7 @@ function Changepassword() {
                 </div>
                 <i
                   onClick={togglePinVisibility}
-                  className={`fa ${pinVisible ? "fa-eye" : "fa-eye-slash"}`}
+                  className={`changepin1 fa ${pinVisible ? "fa-eye" : "fa-eye-slash"}`}
                   style={{
                     position: "absolute",
                     top: "50%",
@@ -238,7 +238,7 @@ function Changepassword() {
                     cursor: "pointer",
                     color: "orange",
                     fontSize: "20px",
-                    marginRight: "562px",
+                   
                     marginTop: "20px",
                   }}
                   aria-hidden="true"
@@ -281,7 +281,7 @@ function Changepassword() {
                 </div>
                 <i
                   onClick={toggleConfirmPinVisibility}
-                  className={`fa ${
+                  className={`changepin1 fa ${
                     confirmPinVisible ? "fa-eye" : "fa-eye-slash"
                   }`}
                   style={{
@@ -292,7 +292,7 @@ function Changepassword() {
                     cursor: "pointer",
                     color: "orange",
                     fontSize: "20px",
-                    marginRight: "562px",
+                  
                     marginTop: "20px",
                   }}
                   aria-hidden="true"

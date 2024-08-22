@@ -1,32 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useSearchParams } from "react-router-dom";
 import banner from "../../FrontEnd/img/banner/banner2.png";
-import banner1 from "../../FrontEnd/img/listing-img.jpeg"
+import banner1 from "../../FrontEnd/img/listing-img.jpeg";
 import Popup from "./Popup";
 import Getquotespopup from "./Getquotespopup";
 import { useSelector } from "react-redux";
+import "../../FrontEnd/css/Lisiting.css";
 
 function Listingc() {
   const { secondCategoryId } = useParams();
+  const [searchParams] = useSearchParams();
+  const searching = searchParams.get("searchkey");
   const [listing, setListing] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [totalItems, setTotalItems] = useState(0);
+
   useEffect(() => {
     fetchListings();
-  }, [secondCategoryId]);
+  }, [secondCategoryId, currentPage]);
 
   const token = useSelector((state) => state.auth.token);
 
   const fetchListings = async () => {
     try {
       const response = await fetch(
-        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing`,
+        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing?pageNumber=${currentPage}&pageSize=${itemsPerPage}&subCategoryid=${secondCategoryId}`,
         {
-          method: 'GET', // You can adjust the method if needed
+          method: "GET", // You can adjust the method if needed
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -42,10 +49,23 @@ function Listingc() {
         );
       });
       setListing(filterdListing);
+      if (filterdListing.length < itemsPerPage) {
+        setTotalItems(
+          (currentPage - 1) * itemsPerPage + filterdListing.length
+        );
+      } else {
+        setTotalItems(currentPage * itemsPerPage + 1);
+      }
     } catch (error) {
       console.error("Error fetching listings", error);
     }
   };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (
     <>
@@ -79,7 +99,6 @@ function Listingc() {
                           <img
                             // src={listing.logoImage.imagePath}
                             src={`https://apidev.myinteriormart.com${listing.logoImage.imagePath}`}
-
                             alt={`${listing.companyName} Logo`}
                             className="card-img-top"
                             style={{ height: "150px" }}
@@ -93,16 +112,14 @@ function Listingc() {
                       <div className="col-9">
                         <div className="wrapper">
                           <h3 style={{ color: "black" }}>
-                            <Link to={`/company/${listing.listingId}`}>
+                            <Link
+                              to={`/company/${listing.listingId}-${currentPage}-${itemsPerPage}-${secondCategoryId}`}
+                            >
                               {" "}
                               {listing.companyName}
                             </Link>
                           </h3>
-                          <small>
-                            {listing.subCategory
-                              .map((subCat) => subCat.name)
-                              .join(", ")}
-                          </small>
+                          <small>{listing.listingKeyword}</small>
                           <p>
                             <i className="fa fa-map-marker"></i>
                             {listing.locality}, {listing.area}
@@ -132,7 +149,9 @@ function Listingc() {
                             <p>
                               <button
                                 className="btn btn-guotes btn-sm"
-                                onClick={() => setIsPopupOpen(true)}
+                                onClick={() =>
+                                  setIsPopupOpen([true, listing.listingId])
+                                }
                               >
                                 Get Quotes
                               </button>
@@ -141,7 +160,9 @@ function Listingc() {
                           <li>
                             <ul className="reating-list">
                               <li>
-                                <h4 className="reating-number">{listing.ratingAverage}.0</h4>
+                                <h4 className="reating-number">
+                                  {listing.ratingAverage}.0
+                                </h4>
                               </li>
                               <li className="reating-star">
                                 <div className="cat_star">
@@ -170,9 +191,35 @@ function Listingc() {
             <p>No listings found for the selected category.</p>
           )}
         </div>
+        <div className="pagination">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i + 1}
+              onClick={() => handlePageChange(i + 1)}
+              className={currentPage === i + 1 ? "active" : ""}
+            >
+              {i + 1}
+            </button>
+          ))}
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={listing.length < itemsPerPage} // Disable "Next" if fewer than 10 listings
+          >
+            Next
+          </button>
+        </div>
       </div>
       {token ? (
-        <Getquotespopup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
+        <Getquotespopup
+          isOpen={isPopupOpen}
+          onClose={() => setIsPopupOpen(false)}
+        />
       ) : (
         <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
       )}
