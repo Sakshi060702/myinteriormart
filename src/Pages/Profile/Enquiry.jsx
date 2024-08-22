@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import user from '../../FrontEnd/img/listing-img.jpeg'
 import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
+import "../../FrontEnd/css/RegistrationMV.css"
 
 
 function Enquiry() {

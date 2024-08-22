@@ -135,6 +135,30 @@ const Getquotespopup = ({ isOpen, companyID, onClose }) => {
             font-size: 1.2rem;
             cursor: pointer;
           }
+            .textarea1{
+            width:460px;
+            }
+             @media (max-width: 576px) {
+            .form-group label {
+              font-size: 0.9rem;
+            }
+            .form-group input, .form-group textarea {
+              font-size: 0.9rem;
+            }
+            .btn {
+              font-size: 0.9rem;
+              padding: 10px;
+            }
+           .popup-overlay {
+            position: fixed;
+           
+            right: 5px;
+           
+          }
+            .textarea1{
+            width:0px;
+            }
+          }
              
         `}
       </style>
@@ -189,11 +213,11 @@ const Getquotespopup = ({ isOpen, companyID, onClose }) => {
                 <div className="form-group">
                   <label>Message</label>
                   <textarea
-                    className="form-control"
+                    className="form-control textarea1"
                     type="text"
                     name="message"
                     placeholder="Message"
-                    style={{ width: "460px", height: "100px" }}
+                    style={{  height: "100px" }}
                     value={formData.message}
                     onChange={handleChange}
                   />

@@ -1117,7 +1117,7 @@ header.header_in .hamburger-inner::after {
     position: absolute;
     top: 0;
     /* left: -10px; */
-    width: 100%;
+    /* width: 100%; */
     text-align: center;
     left:35px;        /*add space left hand side of logo*/
     bottom: -16px;

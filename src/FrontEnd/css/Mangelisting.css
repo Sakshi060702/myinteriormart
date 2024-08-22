@@ -193,6 +193,15 @@
 }
 
 
+/*Labour naka */
+@media (max-width: 768px) {
+  .link-box {
+    flex-basis: 100%; /* Each box takes up the full width */
+    margin-bottom: 15px;
+  }
+}
+
+
 
 
 

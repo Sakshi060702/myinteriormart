@@ -318,7 +318,7 @@ function Communicationl() {
                   </div>
 
                   <div className="text-left col-12 mt-3" style={{display:'flex'}}>
-                    <button type="submit" className="btn_1" style={{marginRight:'50px'}}>
+                    <button type="submit" className="btn_1" >
                       Save & Continue
                     </button>
                     <div style={{display:"flex",justifyContent:"center",paddingTop:'10px'}}>                    

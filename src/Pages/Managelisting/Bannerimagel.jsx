@@ -195,7 +195,7 @@ function Bannerimagel() {
           <div className='uplodlogo'>
           <button
               className="btn_1"
-              style={{ backgroundColor: "#E55923", marginTop: "10px" }}
+              style={{ backgroundColor: "#fb830d", marginTop: "10px" }}
               onClick={handleSubmit}
             >
               Submit

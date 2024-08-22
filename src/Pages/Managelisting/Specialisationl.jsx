@@ -198,7 +198,7 @@ function Specialisationl() {
               )}
             </div>
             <div className="text-left col-12 mt-3" style={{display:'flex'}}>
-            <button type="submit" onClick={handleSubmit} className="btn_1" style={{marginRight:'50px'}}>
+            <button type="submit" onClick={handleSubmit} className="btn_1">
             Save & Continue
                   </button>
                   <div style={{display:"flex",justifyContent:"center",gap:'10px',paddingTop:'10px'}}>                    

@@ -235,13 +235,13 @@ function Teamimagel() {
           style={{
             display: "flex",
             flexWrap: "wrap",
-            gap: "16px", // Adjust the gap between the form groups as needed
+            gap: "16px", 
           }}
         >
           <div
             className="form-group"
             style={{
-              flex: "1 1 calc(33.3333% - 16px)", // 33.3333% width with the gap considered
+              flex: "1 1 calc(33.3333% - 16px)", 
               boxSizing: "border-box",
             }}
           >
@@ -435,7 +435,7 @@ function Teamimagel() {
             <button
               type="submit"
               className="btn_1"
-              style={{ backgroundColor: "#E55923", marginTop: "10px" }}
+              style={{ backgroundColor: "#fb830d", marginTop: "10px" }}
              
             >
               Submit

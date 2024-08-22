@@ -97,7 +97,7 @@ function Contact() {
                   </div>
                   <div className="contact_heading">Address</div>
                   <div className="contact_text">
-                  Perl Residence Office No.22, opp. Wadia School, D.N.Nagar, Andheri West, Mumbai, Maharashtra 400053
+                  Perl Residence Office No.12, opp. Wadia School, D.N.Nagar, Andheri West, Mumbai, Maharashtra 400053
                   </div>
                 </div>
               </div>

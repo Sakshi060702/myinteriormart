@@ -213,11 +213,12 @@ function Menu1() {
                     <li>
                       <NavLink
                         to="/signup2"
-                        className="btn_add listing-btn"
+                        className="btn_add listing-btn buttonlogin"
                         style={{
                           backgroundColor: "#fe900d",
                           fontSize: "14px",
                           marginRight: "12px",
+                          
                         }}
                         onClick={closeMenu}
                       >
@@ -227,7 +228,7 @@ function Menu1() {
                     <li>
                       <NavLink
                         to="/login"
-                        className="btn_add listing-btn"
+                        className="btn_add listing-btn buttonlogin "
                         style={{ backgroundColor: "#fe900d", fontSize: "14px" }}
                         onClick={closeMenu}
                       >

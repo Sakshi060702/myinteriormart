@@ -300,7 +300,7 @@ function Register() {
                                             </div>
                                             <i
                                                 onClick={togglePinVisibility}
-                                                className={`fa ${pinVisible ? "fa-eye" : "fa-eye-slash"}`}
+                                                className={`registereye fa ${pinVisible ? "fa-eye" : "fa-eye-slash"}`}
                                                 style={{
                                                     position: "absolute",
                                                     top: "50%",
@@ -309,7 +309,7 @@ function Register() {
                                                     cursor: "pointer",
                                                     color: "orange",
                                                     fontSize: "20px",
-                                                    marginRight: '125px',
+                                                   
                                                     marginTop: '20px'
                                                 }}
                                                 aria-hidden="true"
@@ -342,7 +342,7 @@ function Register() {
                                             </div>
                                             <i
                                                 onClick={toggleConfirmPinVisibility}
-                                                className={`fa ${confirmPinVisible ? "fa-eye" : "fa-eye-slash"}`}
+                                                className={`registereye fa ${confirmPinVisible ? "fa-eye" : "fa-eye-slash"}`}
                                                 style={{
                                                     position: "absolute",
                                                     top: "50%",
@@ -351,7 +351,7 @@ function Register() {
                                                     cursor: "pointer",
                                                     color: "orange",
                                                     fontSize: "20px",
-                                                    marginRight: '125px',
+                                                   
                                                     marginTop: '20px'
                                                 }}
                                                 aria-hidden="true"

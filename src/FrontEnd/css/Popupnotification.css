@@ -1,3 +1,11 @@
+
+.popup3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
 .popup3-overlay {
   position: fixed;
   top: 0;
@@ -68,40 +76,42 @@
 
 
 @media (max-width: 768px) {
-  .popup3 {
-    width: 70%; /* Adjust width for tablet and mobile screens */
+  .popup3-content {
+    width: 70%; 
     padding: 15px;
   }
 
   .icon-container {
-    font-size: 40px; /* Adjust icon size for smaller screens */
+    font-size: 2rem; 
   }
 
-  .popup3 h3 {
-    font-size: 18px; /* Adjust heading size */
+  .popup3-content h3 {
+    font-size: 18px; 
   }
 
-  .popup3 h5 {
-    font-size: 14px; /* Adjust message text size */
+  .popup3-content h5 {
+    font-size: 14px; 
   }
 }
 
-/* Media query for very small screens (e.g., mobile) */
 @media (max-width: 480px) {
-  .popup3 {
-    width: 80%; /* Further adjust width for very small screens */
+  .popup3-overlay{
+    margin-right: 13px;
+  }
+  .popup3-content {
+    width: 67%; 
     padding: 10px;
   }
 
   .icon-container {
-    font-size: 30px; /* Further adjust icon size */
+    font-size: 1.5rem; 
   }
 
-  .popup3 h3 {
-    font-size: 16px; /* Further adjust heading size */
+  .popup3-content h3 {
+    font-size: 16px; 
   }
 
-  .popup3 h5 {
-    font-size: 12px; /* Further adjust message text size */
+  .popup3-content h5 {
+    font-size: 12px; 
   }
 }

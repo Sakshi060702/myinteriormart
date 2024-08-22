@@ -194,7 +194,7 @@ function Addcompanyl() {
       setTimeout(() => {
         setShowPopup(false);
         navigate("/communicationl");
-      }, 4000);
+      }, 2000);
     } catch (error) {
       console.error("API error:", error);
       setErrorMessage(

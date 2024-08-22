@@ -3,12 +3,12 @@
 }
 .uplodcertificate{
   width: 300px;
-  right: 73px;
+  right: -1px;
 
 }
 @media (max-width: 767px) {
     .container.sign_up_container {
-      padding: 0 62px; 
+      padding: 0 21px; 
     }
   
     .btn_1 {
@@ -26,7 +26,7 @@
 
     /*Receive otp*/
     .heading{
-        font-size: 24px;
+        font-size: 22px;
     }
     .container-fluid.sign_up_container{
         padding: 0px 20px; 
@@ -48,7 +48,7 @@
         .clearfix.add_bottom_15 {
           display: flex;
           flex-direction: column;
-          align-items: center;
+          /* align-items: center; */
         }
       
         .checkboxes {
@@ -123,14 +123,14 @@
   }
   @media (max-width:768px) {
     .notification1{
-      left: -187px;
+      left: -217px;
     }
     
   }
 
   @media (max-width:768px) {
     .dropdown1{
-      left: -16px;
+      left: -46px;
     }
   }
   
@@ -277,4 +277,85 @@
     }
   }
 
+
+  /*Register*/
+
+  .registereye{
+    margin-right: 125px;
+
+  }
+  @media (max-width:767px) {
+    .registereye{
+      margin-right: 39px;
+    }
+  }
+
+
+  /*Dashboard=>Enquiry*/
+
+  @media (max-width: 768px) {
+    .strip.map_view {
+      padding: 15px;
+    }
+  
+    .enquiry_list_heading {
+      font-size: 1rem;
+    }
+  
+    .enquiry_list_txt {
+      font-size: 0.9rem;
+    }
+  
+    .row {
+      margin-bottom: 10px; /* Add space between rows */
+    }
+  
+    .col-md-3,
+    .col-md-9 {
+      flex: 1 1 100%; /* Make the columns full-width */
+      max-width: 100%;
+    }
+  
+    .enquiry_list_heading,
+    .enquiry_list_txt {
+      text-align: left; /* Align text to the left */
+    }
+  }
+  
+  
+  @media (max-width: 576px) {
+    .strip.map_view {
+      padding: 10px;
+    }
+  
+    .enquiry_list_heading {
+      font-size: 0.9rem;
+    }
+  
+    .enquiry_list_txt {
+      font-size: 0.8rem;
+    }
+  }
+
+  /*Team*/
+
+  @media (max-width: 768px) {
+    .form-group {
+      flex: 1 1 100%;
+      margin-bottom: 16px;
+    }
+    .text-left {
+      text-align: center !important;
+    }
+    .row.justify-content-center {
+      justify-content: center !important;
+    }
+    h2 {
+      margin-left: 0 !important;
+    }
+    .col-12 {
+      padding-left: 0 !important;
+    }
+  }
+  
   
