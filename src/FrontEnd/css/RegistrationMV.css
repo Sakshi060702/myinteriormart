@@ -100,6 +100,7 @@
     
     #home_main {
         padding: 0;
+        /* margin-left: -14px; */
     }
     
    
@@ -137,6 +138,8 @@
   @media (max-width:768px) {
     .uplodlogo{
       padding-left: 2px;
+      margin-left: 43px;
+      margin-right: -33px;
     }
   }
   @media (max-width:768px) {
@@ -187,8 +190,39 @@
   @media (max-width:767px) {
     .yearbusiness{
       font-size: 12px;
+      margin-left: 16px;
+      margin-right: 44px;
     }
   }
+
+
+
+  /* Existing styles remain unchanged */
+
+/* Default - Desktop view */
+.rating-container.mobile {
+  display: none;
+}
+
+/* Mobile view */
+@media (max-width: 767px) {
+  .rating-container.desktop {
+    display: none;
+  }
+
+  .rating-container.mobile {
+    display: block;
+    margin-top: -7px;
+   
+  }
+
+  .business-info-container {
+    display: flex;
+    flex-direction: column-reverse; /* Reverse order on mobile */
+  }
+}
+
+
 
   /* .callnowl{
   
@@ -215,18 +249,18 @@
     }
   }
 
-
-  @media (max-width: 768px) {
+/*this code for show only one star rating*/
+  /* @media (max-width: 768px) {
     /* Hide all stars except the first one */
-    .cat_star .icon_star:nth-child(n+2) {
+    /* .cat_star .icon_star:nth-child(n+2) {
       display: none;
-    }
+    } */
     
-    /* Hide the rating count on mobile */
+    /* Hide the rating count on mobile 
     .rating-count {
       display: none;
     }
-  }
+  } */
   
 
 
@@ -239,7 +273,7 @@
   }
   @media (max-width:767px) {
     .logininput{
-      margin-left: 2px;
+      margin-left: 52px;
     }
   }
 
@@ -249,7 +283,7 @@
   }
   @media (max-width:767px) {
     .logineye{
-      margin-right: -22px;
+      margin-right: 13px;
     }
   }
   .loginforgetpassword{
@@ -286,9 +320,14 @@
   }
   @media (max-width:767px) {
     .registereye{
-      margin-right: 39px;
+      margin-right: 82px;
     }
   }
+  /* @media (max-width:564px) {
+    .registereye{
+      margin-right: 39px;
+    }
+  } */
 
 
   /*Dashboard=>Enquiry*/
@@ -358,4 +397,76 @@
     }
   }
   
+  
+
+  /*Footer*/
+  @media (max-width: 768px) {
+    .footer-logo-container {
+      text-align: center;
+      margin-left: 33px;
+     
+    }
+    .footer-logo-container p {
+      margin: 0 auto;
+      margin-left: -14px;
+    }
+    .footer-content {
+      justify-content: center;
+      text-align: center;
+    }
+  }
+
+
+  /*Listing Detail page*/
+  .social-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  @media (max-width: 767px) {
+    .social-details {
+      justify-content: space-between; 
+    }
+   
+    .social-details > button:nth-child(4),
+    .social-details > button:nth-child(5) {
+      width: 45%; 
+      margin: 10px auto;
+      display: block;
+      text-align: center;
+    }
+    .social-details>button:nth-child(1),
+    .social-details>button:nth-child(2),
+    .social-details>button:nth-child(3){
+      width: 29%; 
+      margin: 10px auto;
+      display: block;
+      text-align: center;
+    }
+  }
+
+
+  /*Freelisting page*/
+  .freelistingbtn{
+    margin-right: 50px;
+  }
+  @media (max-width:767px) {
+    .freelistingbtn{
+      margin-right: 15px;
+    }
+  }
+  
+
+  /*company page */
+  .companykeyword{
+    width: 100%;
+
+  }
+  @media (max-width:767px) {
+    .companykeyword{
+      width:235px
+  
+    }
+  }
   

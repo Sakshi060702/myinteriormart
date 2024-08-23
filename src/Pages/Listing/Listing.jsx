@@ -1,87 +1,79 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useParams, Link } from "react-router-dom";
 import banner from "../../FrontEnd/img/banner/banner2.png";
-import banner1 from "../../FrontEnd/img/listing-img.jpeg"
+import banner1 from "../../FrontEnd/img/listing-img.jpeg";
 import Popup from "./Popup";
 import Getquotespopup from "./Getquotespopup";
-import '../../FrontEnd/css/Lisiting.css';
-import '../../FrontEnd/css/RegistrationMV.css'
+import "../../FrontEnd/css/Lisiting.css";
+import "../../FrontEnd/css/RegistrationMV.css";
 
 import { useSelector } from "react-redux";
 
-    
 function Listing() {
   const { secondCategoryId } = useParams();
   const [searchParams] = useSearchParams();
-  const searching = searchParams.get('searchkey');
+  const searching = searchParams.get("searchkey");
   // console.log(searching,useParams());
   const [listing, setListing] = useState([]);
-  const [isPopupOpen, setIsPopupOpen] = useState([false,null]);
+  const [isPopupOpen, setIsPopupOpen] = useState([false, null]);
 
-const [currentPage, setCurrentPage] = useState(1);
-const [itemsPerPage, setItemsPerPage] = useState(10);
-const [totalItems, setTotalItems] = useState(0);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
     fetchListings();
-  }, [secondCategoryId,currentPage]);
+  }, [secondCategoryId, currentPage]);
 
   const token = useSelector((state) => state.auth.token);
-  
 
   const fetchListings = async () => {
     try {
       const response = await fetch(
         `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing?pageNumber=${currentPage}&pageSize=${itemsPerPage}&subCategoryid=${secondCategoryId}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-  
+
       const data = await response.json();
       // console.log("Fetched Data", data);
-  
+
       // Filter listings if needed based on subCategoryId
       const filteredListing = data.filter((listing) => {
         return listing.subCategory.some(
           (subcat) => subcat.id.toString() === secondCategoryId
         );
       });
-  
+
       setListing(filteredListing);
       // console.log(filteredListing)
       // console.log(itemsPerPage);
-  
-      
+
       if (filteredListing.length < itemsPerPage) {
-       
-        setTotalItems((currentPage - 1) * itemsPerPage + filteredListing.length);
-       
+        setTotalItems(
+          (currentPage - 1) * itemsPerPage + filteredListing.length
+        );
       } else {
-    
-        setTotalItems(currentPage * itemsPerPage + 1); 
-      
+        setTotalItems(currentPage * itemsPerPage + 1);
       }
     } catch (error) {
       console.error("Error fetching listings", error);
     }
   };
 
-  
-  
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  
+
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (
@@ -110,7 +102,15 @@ const [totalItems, setTotalItems] = useState(0);
               <div key={listing.listingId} className="row mb-3">
                 <div className="col-12">
                   <div className="strip map_view">
-                    <div className="row no-gutters" style={{ border: searching == listing.listingKeyword ? '2px solid gray': 'None'}}>
+                    <div
+                      className="row no-gutters"
+                      style={{
+                        border:
+                          searching == listing.listingKeyword
+                            ? "2px solid gray"
+                            : "None",
+                      }}
+                    >
                       <div className="col-3">
                         {listing.logoImage && listing.logoImage.imagePath ? (
                           <img
@@ -128,27 +128,51 @@ const [totalItems, setTotalItems] = useState(0);
                       <div className="col-9">
                         <div className="wrapper">
                           <h3 style={{ color: "black" }}>
-                            <Link to={`/company/${listing.listingId}-${currentPage}-${itemsPerPage}-${secondCategoryId}`}>
+                            <Link
+                              to={`/company/${listing.listingId}-${currentPage}-${itemsPerPage}-${secondCategoryId}`}
+                            >
                               {" "}
                               {listing.companyName}
                             </Link>
                           </h3>
                           <small>{listing.listingKeyword}</small>
-                          {/* <br></br>
-                          <small>
-                            {listing.subCategory
-                              .map((subCat) => subCat.name)
-                              .join(", ")}
-                          </small> */}
+
                           <p>
-                            <i className="fa fa-map-marker"></i>
+                            <i className="fa fa-map-marker" style={{paddingRight:'5px'}}></i>
                             {listing.locality}, {listing.area}
                           </p>
-                          <p>
+                          <div className="business-info-container">
                             <BusinessHours
                               businessWorking={listing.businessWorking}
                             />
-                          </p>
+
+                            {/* Rating below business hours for mobile */}
+                            <div className="rating-container mobile">
+                              <ul className="listingrating">
+                                <ul className="reating-list">
+                                  <li>
+                                    <h4 className="reating-number reactingnumberfont">
+                                      {listing.ratingAverage}.0
+                                    </h4>
+                                  </li>
+                                  <li className="reating-star">
+                                    <div className="cat_star">
+                                      {Array(listing.ratingAverage)
+                                        .fill()
+                                        .map((_, i) => (
+                                          <i
+                                            key={i}
+                                            className="icon_star active"
+                                            style={{ color: "orange" }}
+                                          ></i>
+                                        ))}
+                                    </div>
+                                  </li>
+                                  <li>{listing.ratingCount} Rating</li>
+                                </ul>
+                              </ul>
+                            </div>
+                          </div>
                         </div>
                       </div>
                       <div className="col-lg-12 listing-bottom">
@@ -169,32 +193,38 @@ const [totalItems, setTotalItems] = useState(0);
                             <p>
                               <button
                                 className="btn btn-guotes btn-sm"
-                                onClick={() => setIsPopupOpen([true, listing.listingId])}
+                                onClick={() =>
+                                  setIsPopupOpen([true, listing.listingId])
+                                }
                               >
-                                Get Quotes 
-                                {/* Get Quotes ${listing.listingId} */}
+                                Get Quotes
                               </button>
                             </p>
                           </li>
-                          <li className="listingrating">
-                            <ul className="reating-list">
-                              <li>
-                                <h4 className="reating-number reactingnumberfont">{listing.ratingAverage}.0</h4>
-                              </li>
-                              <li className="reating-star">
-                                <div className="cat_star">
-                                  {Array(listing.ratingAverage)
-                                    .fill()
-                                    .map((_, i) => (
-                                      <i
-                                        key={i}
-                                        className="icon_star active"
-                                        style={{ color: "orange" }}
-                                      ></i>
-                                    ))}
-                                </div>
-                              </li>
-                              <li> {listing.ratingCount} Rating</li>
+                          {/* Rating in listing bottom for desktop */}
+                          <li className="rating-container desktop">
+                            <ul className="listingrating">
+                              <ul className="reating-list">
+                                <li>
+                                  <h4 className="reating-number reactingnumberfont">
+                                    {listing.ratingAverage}.0
+                                  </h4>
+                                </li>
+                                <li className="reating-star">
+                                  <div className="cat_star">
+                                    {Array(listing.ratingAverage)
+                                      .fill()
+                                      .map((_, i) => (
+                                        <i
+                                          key={i}
+                                          className="icon_star active"
+                                          style={{ color: "orange" }}
+                                        ></i>
+                                      ))}
+                                  </div>
+                                </li>
+                                <li>{listing.ratingCount} Rating</li>
+                              </ul>
                             </ul>
                           </li>
                         </ul>
@@ -208,35 +238,43 @@ const [totalItems, setTotalItems] = useState(0);
             <p>No listings found for the selected category.</p>
           )}
         </div>
-         <div className="pagination">
-    <button
-      onClick={() => handlePageChange(currentPage - 1)}
-      disabled={currentPage === 1}
-    >
-      Previous
-    </button>
-    {Array.from({ length: totalPages }, (_, i) => (
-      <button
-        key={i + 1}
-        onClick={() => handlePageChange(i + 1)}
-        className={currentPage === i + 1 ? 'active' : ''}
-      >
-        {i + 1}
-      </button>
-    ))}
-    <button
-      onClick={() => handlePageChange(currentPage + 1)}
-      disabled={listing.length < itemsPerPage}  // Disable "Next" if fewer than 10 listings
-    >
-      Next
-    </button>
-  </div>
+        <div className="pagination">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i + 1}
+              onClick={() => handlePageChange(i + 1)}
+              className={currentPage === i + 1 ? "active" : ""}
+            >
+              {i + 1}
+            </button>
+          ))}
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={listing.length < itemsPerPage} // Disable "Next" if fewer than 10 listings
+          >
+            Next
+          </button>
+        </div>
       </div>
-      
+
       {token ? (
-        <Getquotespopup isOpen={isPopupOpen[0]} companyID={isPopupOpen[1]} onClose={() => setIsPopupOpen([false,null])} />
+        <Getquotespopup
+          isOpen={isPopupOpen[0]}
+          companyID={isPopupOpen[1]}
+          onClose={() => setIsPopupOpen([false, null])}
+        />
       ) : (
-        <Popup isOpen={isPopupOpen[0]} companyID={null} onClose={() => setIsPopupOpen([false,null])} />
+        <Popup
+          isOpen={isPopupOpen[0]}
+          companyID={null}
+          onClose={() => setIsPopupOpen([false, null])}
+        />
       )}
     </>
   );
@@ -255,14 +293,3 @@ const BusinessHours = ({ businessWorking }) => {
   );
 };
 export default Listing;
-
-
-
-
-
-
-
-
-
-
-

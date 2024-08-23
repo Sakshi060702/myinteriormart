@@ -255,7 +255,7 @@ function Addcompany() {
             <div className="form-group col-md-4">
               <label htmlFor="businessCategory">Business Type</label>
               <Select
-              className="selectcompnay"
+              className="companykeyword"
                 options={filteredOptions}
                 onInputChange={(newValue) => setInputValue(newValue)}
                 onChange={handleSelectChange} // Handle the select change
@@ -406,8 +406,8 @@ function Addcompany() {
             <div className="text-left col-12 mt-3">
               <button
                 type="submit"
-                className="btn_1"
-                style={{ marginRight: "50px" }}
+                className="btn_1 freelistingbtn"
+                
               >
                 Save & Continue
               </button>

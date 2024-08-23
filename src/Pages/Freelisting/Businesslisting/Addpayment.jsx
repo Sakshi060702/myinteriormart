@@ -228,8 +228,8 @@ function Addpayment() {
                 >
                   <button
                     type="submit"
-                    className="btn_1"
-                    style={{ marginRight: "50px" }}
+                    className="btn_1 freelistingbtn"
+                   
                     onClick={handleSubmit}
                   >
                     Save & Continue

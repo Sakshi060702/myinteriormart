@@ -125,7 +125,7 @@ function Review1({ listingID }) {
 
                     {isReviewFormOpen && (
                       <div className="write-review-form">
-                        <h6>Leave a Review</h6>
+                        <h6 style={{marginLeft:'3px'}}>Leave a Review</h6>
                         <form onSubmit={handleSubmit}>
                           <div className="form-group col-md-6">
                             <div className="stars">

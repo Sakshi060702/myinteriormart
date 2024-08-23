@@ -1,4 +1,5 @@
 import React from "react";
+import '../../../FrontEnd/css/RegistrationMV.css'
 
 import logoSticky from "../../../FrontEnd/img/logo_sticky.svg";
 import { NavLink } from "react-router-dom";
@@ -13,7 +14,7 @@ const Foot = () => {
     <footer className="shadow" style={{ position: "relative" }}>
       <div className="container py-5" style={{ width: "90%" }}>
         <div className="d-flex justify-content-between flex-wrap">
-          <div>
+          <div className="footer-logo-container">
             <a href="/" className="d-flex align-items-center p-0 text-dark">
               <img
                 src={logoSticky}
@@ -22,7 +23,7 @@ const Foot = () => {
                 className="logo_sticky"
               />
             </a>
-            <p className="my-3" style={{ width: "250px" }}>
+            <p className="my-3" style={{ width: "250px" ,fontSize:'13px' , color:'white'}}>
               We are creating High Quality Resources and tools to Aid developers
               during the development of their projects
             </p>
@@ -62,15 +63,10 @@ const Foot = () => {
               <a href="/" style={{ color: "white" }}>
                 Support
               </a>
-              <NavLink to="/signup2" style={{ color: "white" }}>
-                Sign Up
-              </NavLink>
-              <NavLink to="/login" style={{ color: "white" }}>
-                Sign In
-              </NavLink>
+             
             </div>
           </div>
-          <div>
+          {/* <div>
             <p className="h5 mb-4" style={{ fontWeight: "600" }}>
               Products
             </p>
@@ -88,7 +84,7 @@ const Foot = () => {
                 Contrast
               </a>
             </div>
-          </div>
+          </div> */}
         </div>
         <hr style={{ margin: 0 }} />
         <div className="row">

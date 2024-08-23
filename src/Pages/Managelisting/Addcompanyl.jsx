@@ -362,9 +362,9 @@ function Addcompanyl() {
                     )} */}
                   </div>
                   <div className="form-group col-12">
-                    <label htmlFor="description">About Us</label>
+                    <label htmlFor="description labelabout">About Us</label>
                     <textarea
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm textareaabout"
                       id="description"
                       name="description"
                       style={{ height: "100px" }}

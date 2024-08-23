@@ -30,6 +30,13 @@ function Menu1() {
   // console.log(token);
   const toogleMenu = () => {
     setShowMenu(!showMenu);
+
+   
+    if (!showMenu) {
+      setTimeout(() => {
+        setShowMenu(false);
+      }, 4000);
+    }
   };
 
   const closeMenu = () => {
@@ -218,6 +225,7 @@ function Menu1() {
                           backgroundColor: "#fe900d",
                           fontSize: "14px",
                           marginRight: "12px",
+                          
                           
                         }}
                         onClick={closeMenu}

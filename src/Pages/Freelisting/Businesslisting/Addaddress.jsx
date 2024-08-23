@@ -543,8 +543,8 @@ const Address = () => {
                 >
                   <button
                     type="submit"
-                    className="btn_1"
-                    style={{ marginRight: "50px" }}
+                    className="btn_1 freelistingbtn"
+                   
                   >
                     Save & Continue
                   </button>

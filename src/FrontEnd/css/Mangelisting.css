@@ -180,6 +180,7 @@
 @media (max-width: 767px) {
   .input-width {
     width: 100%; /* Adjust as necessary */
+    padding-left: 5px;
   }
 }
 

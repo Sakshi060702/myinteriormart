@@ -240,6 +240,7 @@ function Addcommunication(){
                       onChange={handleSelectChange}
                       value={formData.languages}
                       required
+                      styles={{marginRight:'2px'}}
                      
                     />
                   </div>
@@ -342,7 +343,7 @@ function Addcommunication(){
                   </div>
 
                   <div className="text-left col-12 mt-3" style={{display:'flex'}}>
-                    <button type="submit" className="btn_1" style={{marginRight:'50px'}}>
+                    <button type="submit" className="btn_1 freelistingbtn" >
                       Save & Continue
                     </button>
                     <div style={{display:"flex",justifyContent:"center",gap:'10px',paddingTop:'10px'}}>                    
