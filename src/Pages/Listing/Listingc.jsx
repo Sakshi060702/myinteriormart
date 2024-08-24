@@ -6,6 +6,7 @@ import Popup from "./Popup";
 import Getquotespopup from "./Getquotespopup";
 import { useSelector } from "react-redux";
 import "../../FrontEnd/css/Lisiting.css";
+import "../../FrontEnd/css/RegistrationMV.css";
 
 function Listingc() {
   const { secondCategoryId } = useParams();
@@ -42,7 +43,7 @@ function Listingc() {
       }
 
       const data = await response.json();
-      console.log("Fetched Data", data);
+      // console.log("Fetched Data", data);
       const filterdListing = data.filter((listing) => {
         return listing.subCategory.some(
           (subcat) => subcat.id.toString() === secondCategoryId

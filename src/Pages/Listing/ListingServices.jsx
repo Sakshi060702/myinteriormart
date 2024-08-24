@@ -25,17 +25,17 @@ function ListingServices({ companyID }) {
                 }
 
                 const data = await response.json();
-                console.log(data);
+                // console.log(data);
                 const allCategories = data.allCategories;
                 let category = data.category;
-                console.log(data.allCategories)
-                console.log(category)
+                // console.log(data.allCategories)
+                // console.log(category)
 
                 if (allCategories && category) {
                     if (category.firstCategoryID) {
                        
                         const firstCategory = allCategories.find(cat => cat.firstCategoryID === category.firstCategoryID);
-                        console.log(firstCategory);
+                        // console.log(firstCategory);
                         setFirstCategoryName(firstCategory?.firstCategoryName || "");
                        
 
@@ -69,8 +69,8 @@ function ListingServices({ companyID }) {
                                 const fifthCategories = secondCategory.fifthCategories.filter(cat => 
                                     category.fifthCategoryID.split(",").map(id => parseInt(id)).includes(cat.fifthCategoryId)
                                 ).map(cat => cat.fifthCategoryName);
-                                console.log(secondCategory.fifthCategories);
-                                console.log(fifthCategories);
+                                // console.log(secondCategory.fifthCategories);
+                                // console.log(fifthCategories);
 
                                 setFifthCategoryName(fifthCategories);
 

@@ -19,7 +19,7 @@ const FourthCategory = () => {
         `https://apidev.myinteriormart.com/api/Category/GetCategories`
       );
       const data = await response.json();
-      console.log("Fetched Fourth Categories Data:", data);
+      // console.log("Fetched Fourth Categories Data:", data);
 
       // Check the structure of `data` and access the array of categories
       if (data && Array.isArray(data.services)) {
@@ -33,7 +33,7 @@ const FourthCategory = () => {
           });
         });
 
-        console.log("Selected Category:", subcategory);
+        // console.log("Selected Category:", subcategory);
 
         setSelectedSubcategory(subcategory);
         setFourthCategories(subcategory ? subcategory.fourthCategories : []);
@@ -56,7 +56,7 @@ const FourthCategory = () => {
       case 4:
         return "3"; // 4 items per row
       default:
-        return "3"; // Default to 3 items per row if more than 4 (you can adjust this as needed)
+        return "3"; // Default to 3 items per row if more than 4 
     }
   };
 

@@ -79,26 +79,27 @@ a.notification {
 }
 
 .usericon-btn.dropdown-toggle:after {
-	border: 0px;
-	border-bottom: 2px solid #999;
-	border-right: 2px solid #999;
-	content: '';
-	display: block;
-	height: 8px;
-	margin-top: -5px;
-	pointer-events: none;
-	position: absolute;
-	right: -16px;
-	top: 50%;
-	transform-origin: 66% 66%;
-	transform: rotate(45deg);
-	transition: all 0.15s ease-in-out;
-	width: 8px;
+    border: 0px;
+    border-bottom: 2px solid #999;
+    border-right: 2px solid #999;
+    content: '';
+    display: block;
+    height: 8px;
+    margin-top: -5px;
+    pointer-events: none;
+    position: absolute;
+    right: -16px;
+    top: 50%;
+    transform-origin: 66% 66%;
+    transform: rotate(45deg); /* Downward arrow by default */
+    transition: all 0.15s ease-in-out;
+    width: 8px;
 }
 
-.usericon.show .usericon-btn.dropdown-toggle:after {
-	transform: rotate(228deg);
+.usericon-btn.dropdown-toggle.open:after {
+    transform: rotate(-135deg); /* Upward arrow when dropdown is open */
 }
+
 
 .usericon {
 	padding: 7px 2px 0 0px;

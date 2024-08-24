@@ -1,19 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link,useSearchParams } from "react-router-dom";
 import banner from "../../FrontEnd/img/banner/banner2.png";
 import banner1 from "../../FrontEnd/img/listing-img.jpeg"
 import Popup from "./Popup";
 import Getquotespopup from "./Getquotespopup";
 import { useSelector } from "react-redux";
+import "../../FrontEnd/css/Lisiting.css";
+import "../../FrontEnd/css/RegistrationMV.css";
 
 function Listingd() {
   const { secondCategoryId } = useParams();
+  const [searchParams] = useSearchParams();
+  const searching = searchParams.get("searchkey");
   const [listing, setListing] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [totalItems, setTotalItems] = useState(0);
+
+
   useEffect(() => {
     fetchListings();
-  }, [secondCategoryId]);
+  }, [secondCategoryId,currentPage]);
 
   const token = useSelector((state) => state.auth.token);
   
@@ -23,7 +33,7 @@ function Listingd() {
       const response = await fetch(
         `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing`,
         {
-          method: 'GET', // You can adjust the method if needed
+          method: 'GET', 
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
@@ -36,17 +46,33 @@ function Listingd() {
       }
 
       const data = await response.json();
-      console.log("Fetched Data", data);
+      // console.log("Fetched Data", data);
       const filterdListing = data.filter((listing) => {
         return listing.subCategory.some(
           (subcat) => subcat.id.toString() === secondCategoryId
         );
       });
       setListing(filterdListing);
+
+      if (filterdListing.length < itemsPerPage) {
+        setTotalItems(
+          (currentPage - 1) * itemsPerPage + filterdListing.length
+        );
+      } else {
+        setTotalItems(currentPage * itemsPerPage + 1);
+      }
+
     } catch (error) {
       console.error("Error fetching listings", error);
     }
   };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
 
   return (
     <>

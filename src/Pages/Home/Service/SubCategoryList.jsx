@@ -5,7 +5,7 @@ import "../../../FrontEnd/css/Service.css";
 import { Link } from "react-router-dom";
 
 const SubCategoryList = () => {
-  const { secondCategoryId } = useParams(); // Ensure parameter name matches the route
+  const { secondCategoryId } = useParams(); 
   const [subCategories, setSubCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -23,7 +23,7 @@ const SubCategoryList = () => {
       const category = data.services.find(
         (cat) => String(cat.secondCategoryID) === secondCategoryId
       );
-      console.log("Selected Category:", category);
+      // console.log("Selected Category:", category);
       setSelectedCategory(category);
       setSubCategories(category ? category.thirdCategories : []);
     } catch (error) {

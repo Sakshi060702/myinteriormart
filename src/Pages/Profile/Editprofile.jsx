@@ -160,7 +160,7 @@ function Editprofile() {
             </div>
             <div className="col-md-6">
               <div className="form-group">
-                <label>First Name</label>
+                <label>First Name<span className="text-danger">*</span></label>
                 <input className="form-control" type="text" name="name" value={fullName} onChange={(e) => setFullName(e.target.value)} />
                 <i className="ti-user" style={{ left: '10px' }}></i>
                 {error.firstname && (
@@ -168,7 +168,7 @@ function Editprofile() {
                     )}
               </div>
               <div className="form-group">
-                <label>Last Name</label>
+                <label>Last Name<span className="text-danger">*</span></label>
                 <input className="form-control" type="text" name="name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
                 <i className="ti-user" style={{ left: '10px' }}></i>
                 {error.lastname && (

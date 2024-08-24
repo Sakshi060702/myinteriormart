@@ -175,7 +175,7 @@ function Menu1() {
           }
         );
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         setStatus(data.status);
       } catch (error) {
         console.error("Error fetching status:", error);
@@ -290,7 +290,7 @@ function Menu1() {
                             style={{ marginLeft: "20px", alignItems: "center" }}
                           >
                             <button
-                              className="usericon-btn dropdown-toggle"
+                               className={`usericon-btn dropdown-toggle ${dropdownOpen ? 'close' : ''}`}
                               type="button"
                               onClick={toggleDropdown}
                               style={{ background: "none", border: "none" }}

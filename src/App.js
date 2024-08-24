@@ -309,6 +309,7 @@ function App() {
 
     <Routes>
       <Route path='/' element={<Home/>}></Route>
+      <Route path="/:cityName" element={<Home />} />
    
    
       <Route path='/labor' element={<Labournaka/>}></Route>

@@ -138,7 +138,10 @@ function Listing() {
                           <small>{listing.listingKeyword}</small>
 
                           <p>
-                            <i className="fa fa-map-marker" style={{paddingRight:'5px'}}></i>
+                            <i
+                              className="fa fa-map-marker"
+                              style={{ paddingRight: "5px" }}
+                            ></i>
                             {listing.locality}, {listing.area}
                           </p>
                           <div className="business-info-container">
@@ -150,25 +153,38 @@ function Listing() {
                             <div className="rating-container mobile">
                               <ul className="listingrating">
                                 <ul className="reating-list">
-                                  <li>
+                                  {/* <li>
                                     <h4 className="reating-number reactingnumberfont">
                                       {listing.ratingAverage}.0
                                     </h4>
-                                  </li>
+                                  </li> */}
                                   <li className="reating-star">
-                                    <div className="cat_star">
-                                      {Array(listing.ratingAverage)
-                                        .fill()
-                                        .map((_, i) => (
-                                          <i
-                                            key={i}
-                                            className="icon_star active"
-                                            style={{ color: "orange" }}
-                                          ></i>
-                                        ))}
-                                    </div>
+                                    <li className="rating-star">
+                                      <div
+                                        className="cat_star"
+                                        style={{ marginLeft: "-10px" }}
+                                      >
+                                        {Array(5)
+                                          .fill()
+                                          .map((_, i) => (
+                                            <i
+                                              key={i}
+                                              className="icon_star"
+                                              style={{
+                                                color:
+                                                  i < listing.ratingAverage
+                                                    ? "orange"
+                                                    : "gray",
+                                                fontSize: "16px",
+                                              }}
+                                            ></i>
+                                          ))}
+                                      </div>
+                                    </li>
                                   </li>
-                                  <li>{listing.ratingCount} Rating</li>
+                                  <li style={{ marginRight: "49px" }}>
+                                    {listing.ratingCount} Rating
+                                  </li>
                                 </ul>
                               </ul>
                             </div>

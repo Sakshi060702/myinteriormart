@@ -35,7 +35,7 @@ function FifthCategory() {
           });
         });
 
-        console.log("Selected Fifth Category:", foundFourthCategory);
+        // console.log("Selected Fifth Category:", foundFourthCategory);
         setSelectedFourthCategory(foundFourthCategory);
         setFifthCategories(
           foundFourthCategory ? foundFourthCategory.fifthCategories : []

@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import contactImage from "../FrontEnd/img/ContactUs.jpeg";
 import locationImage from "../FrontEnd/img/location-pin.png";
 import phoneImage from "../FrontEnd/img/phone.png";
 import megaphoneImage from "../FrontEnd/img/megaphone.png";
 
 function Contact() {
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+
+  useEffect(() => {
+   
+    const loc_Latitude = localStorage.getItem(latitude);
+    const loc_Longitude = localStorage.getItem(longitude);
+
+    if (loc_Latitude && loc_Longitude) {
+      setLatitude(loc_Latitude);
+      setLongitude(loc_Longitude);
+    }
+  }, []);
+
   return (
     <>
       <main style={{ backgroundColor: "white" }}>
@@ -97,7 +111,7 @@ function Contact() {
                   </div>
                   <div className="contact_heading">Address</div>
                   <div className="contact_text">
-                  Perl Residence Office No.12, opp. Wadia School, D.N.Nagar, Andheri West, Mumbai, Maharashtra 400053
+                    Perl Residence Office No.12, opp. Wadia School, D.N.Nagar, Andheri West, Mumbai, Maharashtra 400053
                   </div>
                 </div>
               </div>
@@ -140,4 +154,5 @@ function Contact() {
     </>
   );
 }
+
 export default Contact;

@@ -1,0 +1,67 @@
+.popupcity {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .popupcity-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .popupcity-content {
+    position: relative;
+    background: rgb(255, 254, 254);
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 800px;
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    height: 350px;
+  }
+
+
+  .city-wrapper {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+  }
+  
+  .city-icon {
+    cursor: pointer;
+  }
+  
+  .city-sub-options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 337%;
+    transform: translateX(-50%);
+    background-color: rgb(230, 224, 224);
+    border: 1px solid #ddd;
+    padding: 10px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+
+  
+   
+  }
+  .city-sub-options > div {
+    margin: 0 10px;
+  }
+  
+  .city-wrapper:hover .city-sub-options {
+    display: flex;
+  }
+  
+  

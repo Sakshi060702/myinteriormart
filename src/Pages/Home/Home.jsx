@@ -1,6 +1,6 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import Menu from "./Component/Menu";
-
+import { useParams } from "react-router-dom";
 import '../../FrontEnd/css/reset.css'; // Import reset.css file
 import '../../FrontEnd/css/bootstrap.min.css'; // Import bootstrap.min.css file
 import '../../FrontEnd/css/style.css'; // Import style.css file
@@ -18,9 +18,24 @@ import Dealer1 from "./Dealer/Dealer1";
 import Dealer from "./Component/Dealer";
 import '../../FrontEnd/css/RegistrationMV.css'
 
+import Citypopup from "../Citypopup";
+
 
 
 function Home(){
+
+    const [showpopup,setShowpopup]=useState(false);
+    const { cityName } = useParams();
+    useEffect(()=>{
+        setShowpopup(true);
+
+        const timer=setTimeout(() => {
+            setShowpopup(false)
+        }, 50000);
+
+        return()=>{clearTimeout(timer);}
+    },[]);
+
     return(
         <>
        <div id="page">
@@ -28,6 +43,7 @@ function Home(){
         <Searchbar></Searchbar>
         <main id='home_main'>
             <div className="container">
+          
                 {/* <Banner></Banner> */}
                <Services1></Services1>
                <Contractor1/>
@@ -42,7 +58,7 @@ function Home(){
       
        </div>
        <Enquiry></Enquiry>
-        
+       {showpopup && <Citypopup  />}
         </>
     )
 }

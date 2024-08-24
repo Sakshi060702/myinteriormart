@@ -63,6 +63,7 @@
   @media (max-width: 768px) {
     .link-box {
       flex: 0 1 48%; /* Approximately 45% width to fit two items per row on mobile */
+      text-align: left;
     }
   }
 
