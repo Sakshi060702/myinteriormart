@@ -36,12 +36,17 @@ function Receiveotpemail() {
             });
 
             const data = await response.json();
-            console.log(data); // Log the response data
+            // console.log(data); // Log the response data
+
+            const cityName = localStorage.getItem('cityname');
+            const pathregister = `/register/${cityName}`;
+
+
             
             if (response.ok) {
-                console.log('Hello');
+                // console.log('Hello');
                 if (data) {
-                    navigate('/register',{ state: { email } }); // Redirect to the register page on success
+                    navigate(pathregister,{ state: { email } }); // Redirect to the register page on success
                 } else {
                     setError('Invalid OTP. Please try again.');
                 }

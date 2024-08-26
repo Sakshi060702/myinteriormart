@@ -239,11 +239,8 @@ function Teamimagel() {
           }}
         >
           <div
-            className="form-group"
-            style={{
-              flex: "1 1 calc(33.3333% - 16px)", 
-              boxSizing: "border-box",
-            }}
+            className="form-group teamcode"
+            
           >
             <label htmlFor="name">
               Select Team Member <span className="text-danger">*</span>
@@ -266,11 +263,8 @@ function Teamimagel() {
           </div>
 
           <div
-            className="form-group"
-            style={{
-              flex: "1 1 calc(33.3333% - 16px)", // 33.3333% width with the gap considered
-              boxSizing: "border-box",
-            }}
+            className="form-group teamcode"
+           
           >
             <label htmlFor="designation">
               Select Designation <span className="text-danger">*</span>
@@ -297,11 +291,8 @@ function Teamimagel() {
           </div>
 
           <div
-            className="form-group"
-            style={{
-              flex: "1 1 calc(33.3333% - 16px)", // 33.3333% width with the gap considered
-              boxSizing: "border-box",
-            }}
+            className="form-group teamcode"
+           
           >
             <label htmlFor="firstName">
               First Name <span className="text-danger">*</span>
@@ -323,11 +314,8 @@ function Teamimagel() {
           </div>
 
           <div
-            className="form-group"
-            style={{
-              flex: "1 1 calc(33.3333% - 16px)", // 33.3333% width with the gap considered
-              boxSizing: "border-box",
-            }}
+            className="form-group teamcode"
+           
           >
             <label htmlFor="lastName">
               Last Name <span className="text-danger">*</span>
@@ -349,11 +337,8 @@ function Teamimagel() {
           </div>
 
           <div
-            className="form-group"
-            style={{
-              flex: "1 1 calc(33.3333% - 16px)", // 33.3333% width with the gap considered
-              boxSizing: "border-box",
-            }}
+            className="form-group teamcode"
+           
           >
             <label>
               Country <span className="text-danger">*</span>
@@ -378,11 +363,8 @@ function Teamimagel() {
           </div>
 
           <div
-            className="form-group"
-            style={{
-              flex: "1 1 calc(33.3333% - 16px)", // 33.3333% width with the gap considered
-              boxSizing: "border-box",
-            }}
+            className="form-group teamcode"
+            
           >
             <label htmlFor="state">
               State <span className="text-danger">*</span>
@@ -408,8 +390,8 @@ function Teamimagel() {
           </div>
           
         <div>
-        <h2 style={{ textAlign: "center", marginLeft:'312px' }}>Team</h2>
-          <div className="row justify-content-center mt-4" style={{marginLeft:'279px'}}>
+        <h2 style={{ textAlign: "center", marginLeft:'21px' }}>Team</h2>
+          <div className="row justify-content-center mt-4" style={{marginLeft:'29px'}}>
          
         {imageDetails.map((image, index) => (
           <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>

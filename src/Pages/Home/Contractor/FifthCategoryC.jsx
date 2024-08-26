@@ -83,7 +83,7 @@ function FifthCategoryC() {
                 </span>
                 <Link
                   // to={"/website"}
-                  to={`/listing/${fifthCategory.fourthCategoryID}`}
+                  to={`/listing/${fifthCategory.fourthCategoryID}${localStorage.getItem('cityname')}`}
                   title={fifthCategory.name}
                   className="Linkstyle"
                 >
@@ -93,7 +93,7 @@ function FifthCategoryC() {
                 {fifthCategory.sixthCategories &&
                   fifthCategory.sixthCategories.length > 0 && (
                     <Link
-                      to={`/Sixthcategoriesc/${fifthCategory.fifthCategoryID}`}
+                      to={`/Sixthcategoriesc/${fifthCategory.fifthCategoryID}${localStorage.getItem('cityname')}`}
                       title={fifthCategory.name}
                       style={{ color: "#fe900d" }}
                     >

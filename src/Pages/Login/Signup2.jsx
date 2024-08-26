@@ -102,13 +102,18 @@ function Signup2() {
 
       const data = await response.json();
 
+      const cityName = localStorage.getItem('cityname');
+      const path = `/receiveotp2/${cityName}`;
+
+      const pathemail= `/receiveotpemail/${cityName}`;
+
       if (response.ok) {
         if (mobile) {
-          navigate("/receiveotp2", {
+          navigate(path, {
             state: { otp: data.otp, mobile: inputValue.mobile },
           });
         } else {
-          navigate("/receiveotpemail", {
+          navigate(pathemail, {
             state: { otp: data.otp, email: inputValue.email },
           });
         }

@@ -44,9 +44,13 @@ function Receiveotp2() {
 
             const data = await response.json();
 
+            const cityName = localStorage.getItem('cityname');
+            const pathregister = `/register/${cityName}`;
+
+
             if (response.ok) {
                 if (data) {
-                    navigate('/register',{ state: { mobile } });
+                    navigate(pathregister,{ state: { mobile } });
                 } else {
                     setError('Invalid OTP. Please try again.');
                 }

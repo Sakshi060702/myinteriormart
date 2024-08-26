@@ -145,7 +145,7 @@ function Addpayment() {
 
       const data = await response.json();
       console.log("Response:", data);
-      console.log("Payment token", token);
+      // console.log("Payment token", token);
 
       setSuccessMessage("Payment Details Saved Successfully");
       setErrorMessage("");

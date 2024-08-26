@@ -249,7 +249,10 @@ function Addcategory()
       }
       const data = await response.json();
       console.log("Data saved successfully:", data);
-      console.log("Category Token",token);
+      // console.log("Category Token",token);
+
+      const cityName = localStorage.getItem('cityname');
+        const pathlisting = `/addspecialisation/${cityName}`;
 
       setSuccessMessage("Category Details Saved Successfully");
       setErrorMessage("");
@@ -257,7 +260,7 @@ function Addcategory()
 
       setTimeout(() => {
         setShowPopup(false);
-        navigate("/addspecialisation");
+        navigate(pathlisting);
       }, 2000); // Show popup for 3 seconds before redirect
   
       
@@ -487,8 +490,8 @@ function Addcategory()
                     </button>
                   
                   <div style={{display:"flex",justifyContent:"center",gap:'10px',paddingTop:'10px'}}>                    
-                        <Link to="/address" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
-                      <Link to="/addspecialisation" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
+                        <Link to={`/address/${localStorage.getItem('cityname')}`} ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
+                      <Link to={`/addspecialisation/${localStorage.getItem('cityname')}`} ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
                       </div>
                       </div>
                       {showPopup && (

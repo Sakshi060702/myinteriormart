@@ -10,9 +10,12 @@ const Paymentpopup = ({ isOpen, onClose,message }) => {
   const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate();
 
+  const cityName = localStorage.getItem('cityname');
+  const pathlisting = `/${cityName}`;
+
   const handleContinue = () => {
     onClose();
-    navigate("/");
+    navigate(pathlisting);
   };
 
   

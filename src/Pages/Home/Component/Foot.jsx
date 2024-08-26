@@ -1,8 +1,10 @@
-import React from "react";
-import '../../../FrontEnd/css/RegistrationMV.css'
+import React,{useState,useEffect} from "react";
+import "../../../FrontEnd/css/RegistrationMV.css";
+import { useParams } from "react-router-dom";
 
 import logoSticky from "../../../FrontEnd/img/logo_sticky.svg";
 import { NavLink } from "react-router-dom";
+
 const Foot = () => {
   const scrollToTop = () => {
     window.scrollTo({
@@ -10,6 +12,20 @@ const Foot = () => {
       behavior: "smooth",
     });
   };
+//   const [cityName,setCityName]=useState(null);
+
+  
+
+//   useEffect(() => {
+  
+//     const city_name=localStorage.getItem('cityname');
+
+  
+
+//    if(city_name){
+//      setCityName(city_name)
+//    }
+//  }, []);
   return (
     <footer className="shadow" style={{ position: "relative" }}>
       <div className="container py-5" style={{ width: "90%" }}>
@@ -23,7 +39,10 @@ const Foot = () => {
                 className="logo_sticky"
               />
             </a>
-            <p className="my-3" style={{ width: "250px" ,fontSize:'13px' , color:'white'}}>
+            <p
+              className="my-3"
+              style={{ width: "250px", fontSize: "13px", color: "white" }}
+            >
               We are creating High Quality Resources and tools to Aid developers
               during the development of their projects
             </p>
@@ -40,13 +59,14 @@ const Foot = () => {
                 className="d-flex flex-column"
                 style={{ cursor: "pointer", padding: "0" }}
               >
-                <NavLink to={"/"} style={{ color: "white" }}>
+                <NavLink to={`/${localStorage.getItem('cityname')}`} style={{ color: "white" }}>
                   Home
                 </NavLink>
-                <NavLink to={"/about"} style={{ color: "white" }}>
+                <NavLink to={`/about/${localStorage.getItem('cityname')}`} style={{ color: "white" }}>
                   About Us
                 </NavLink>
-                <NavLink to={"/contact"} style={{ color: "white" }}>
+
+                <NavLink to={`/contact/${localStorage.getItem('cityname')}`} style={{ color: "white" }}>
                   Contact
                 </NavLink>
               </div>
@@ -63,7 +83,6 @@ const Foot = () => {
               <a href="/" style={{ color: "white" }}>
                 Support
               </a>
-             
             </div>
           </div>
           {/* <div>

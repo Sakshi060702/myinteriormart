@@ -68,7 +68,7 @@ function ThirdCategoryD() {
                     />
                   </span>
                   <Link
-                    to={`/listing/${subCategory.secondCategoryID}`}
+                    to={`/listing/${subCategory.secondCategoryID}${localStorage.getItem('cityname')}`}
                     title={subCategory.name}
                     className="Linkstyle"
                   >
@@ -77,7 +77,7 @@ function ThirdCategoryD() {
                   {subCategory.fourthCategories &&
                     subCategory.fourthCategories.length > 0 && (
                       <Link
-                        to={`/Fourthcategoriesd/${subCategory.thirdCategoryID}`}
+                        to={`/Fourthcategoriesd/${subCategory.thirdCategoryID}${localStorage.getItem('cityname')}`}
                         title={subCategory.name}
                         style={{ color: "#fe900d" }}
                       >

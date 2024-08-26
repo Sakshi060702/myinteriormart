@@ -1,10 +1,27 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
+import { useParams } from "react-router-dom";
 
 import founderimg from "../FrontEnd/img/founder.jpg";
 
 function Aboutus() {
+  //  const { cityName } = useParams();
+   const [cityName,setCityName]=useState(null);
+
+  
+
+   useEffect(() => {
+   
+    const city_name=localStorage.getItem('cityname');
+
+   
+
+    if(city_name){
+      setCityName(city_name)
+    }
+  }, []);
   return (
     <>
+    {/* <h6>{cityName}</h6> */}
       <div class="container mt-4 mb-4">
         <div class="row">
           <div class="col-lg-12 col-md-12 col-sm-12">

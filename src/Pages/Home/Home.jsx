@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from "react";
 import Menu from "./Component/Menu";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import '../../FrontEnd/css/reset.css'; // Import reset.css file
 import '../../FrontEnd/css/bootstrap.min.css'; // Import bootstrap.min.css file
 import '../../FrontEnd/css/style.css'; // Import style.css file
@@ -22,18 +22,26 @@ import Citypopup from "../Citypopup";
 
 
 
+
 function Home(){
 
     const [showpopup,setShowpopup]=useState(false);
     const { cityName } = useParams();
+    const navigate=useNavigate();
     useEffect(()=>{
-        setShowpopup(true);
+        const selectedCity=localStorage.getItem("cityname");
+        if(!selectedCity){
+            setShowpopup(true);
 
-        const timer=setTimeout(() => {
-            setShowpopup(false)
-        }, 50000);
-
-        return()=>{clearTimeout(timer);}
+            const timer=setTimeout(() => {
+                setShowpopup(false)
+            }, 6000);
+    
+            return()=>{clearTimeout(timer);}
+        }else if(!cityName){
+            navigate(`/${selectedCity}`,{replace:true});
+        }
+      
     },[]);
 
     return(

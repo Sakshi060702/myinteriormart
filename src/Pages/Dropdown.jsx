@@ -15,9 +15,12 @@ const Dropdown = () => {
     // Handle profile click action
   };
 
+  const cityName = localStorage.getItem('cityname');
+  const pathhome = `/${cityName}`;
+
   const handleLogoutClick = () => {
     dispatch(logout());
-    navigate("/");
+    navigate(pathhome);
    };
 
   return (
@@ -27,7 +30,7 @@ const Dropdown = () => {
           <i style={{ marginRight: "10px" }}></i>Profile
         </li> */}
         <li style={{marginRight:'60px',marginTop:'10px'}}>
-          <Link to="/Myactivity" style={{color:'black'}}>
+          <Link to={`/Myactivity/${localStorage.getItem('cityname')}`} style={{color:'black'}}>
             <i className="fa fa-user" ></i> Dashboard
           </Link>
         </li>

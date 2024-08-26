@@ -337,14 +337,19 @@ const Address = () => {
 
       .then((responseData) => {
         console.log("API response:", responseData);
-        console.log("Address token:", token);
+        // console.log("Address token:", token);
+        
+        const cityName = localStorage.getItem('cityname');
+        const pathlisting = `/addcategory/${cityName}`;
+
+        
         setSuccessMessage("Address Details Saved Successfully");
         setErrorMessage("");
         setShowPopup(true);
 
         setTimeout(() => {
           setShowPopup(false);
-          navigate("/addcategory");
+          navigate(pathlisting);
         }, 2000);
 
        
@@ -556,10 +561,10 @@ const Address = () => {
                       paddingTop: "10px",
                     }}
                   >
-                    <Link to="/addCommunication">
+                    <Link to={`/addCommunication/${localStorage.getItem('cityname')}`}>
                       <img src={previousarrowimg} style={{ height: "30px" }} />
                     </Link>
-                    <Link to="/addcategory">
+                    <Link to={`/addcategory/${localStorage.getItem('cityname')}`}>
                       <img src={nextarrowimg} style={{ height: "30px" }} />
                     </Link>
                   </div>

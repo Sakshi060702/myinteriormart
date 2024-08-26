@@ -28,6 +28,8 @@ const Citypopup = ({}) => {
     // console.log(loc_lat,loc_lon);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredCities, setFilteredCities] = useState([]);
+
+  const [currentCity,setCurrentCity]=useState(null);
   const navigate=useNavigate();
 
   const handleSearchChange = (e) => {
@@ -44,13 +46,23 @@ const Citypopup = ({}) => {
     }
   };
 
-  const handleCitySelect = (cityName) => {
-    navigate(`/${cityName.toLowerCase()}`);
-  };    
+  // const handleCitySelect = (cityName) => {
+  //   navigate(`/${cityName.toLowerCase()}`);
+  // };    
   
-  const handleCitySelect1 = (cityName) => {
+  const handleCitySelect1 = (cityName,pageName="") => {
+    console.log("pagename",pageName)
     const formattedCityName = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    navigate(`/${formattedCityName}`);
+
+    localStorage.setItem("cityname",formattedCityName);
+
+    if (pageName) {
+      navigate(`/${pageName}/${formattedCityName}`);
+    } else {
+      navigate(`/${formattedCityName}`);
+    }
+   
+
   };
   
 
@@ -63,6 +75,8 @@ const Citypopup = ({}) => {
 
         localStorage.setItem("latitude",latitude);
         localStorage.setItem("longitude",longitude);
+
+        
         // console.log("latitude", latitude);
         // console.log("longitude", longitude);
       });
@@ -96,7 +110,7 @@ const Citypopup = ({}) => {
                     <li
                       key={index}
                       className="city-option"
-                      onClick={() => handleCitySelect(city.name)}
+                      onClick={() => handleCitySelect1(city.name)}
                     >
                       {city.name}
                     </li>

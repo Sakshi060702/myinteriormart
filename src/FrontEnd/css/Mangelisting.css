@@ -204,6 +204,16 @@
 
 
 
+.seolinkgroup{
+  width: 251px;
+}
+@media (max-width:767px) {
+  .seolinkgroup{
+    width: 287px;
+  }
+}
+
+
 
 
 

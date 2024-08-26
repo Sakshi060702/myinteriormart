@@ -134,7 +134,10 @@ function Addspecialisation()
     
           const data = await response.json();
           console.log("Response:", data);
-          console.log("Specialisation token",token);
+          // console.log("Specialisation token",token);
+
+          const cityName = localStorage.getItem('cityname');
+        const pathlisting = `/addworkinghours/${cityName}`;
 
           setSuccessMessage("Specialisation Details Saved Successfully");
           setErrorMessage("");
@@ -142,7 +145,7 @@ function Addspecialisation()
     
           setTimeout(() => {
             setShowPopup(false);
-            navigate("/addworkinghours");
+            navigate(pathlisting);
           }, 2000);
 
          
@@ -209,8 +212,8 @@ function Addspecialisation()
                       Save & Continue
                     </button>
                     <div style={{display:"flex",justifyContent:"center",gap:'10px',paddingTop:'10px'}}>                    
-                        <Link to="/addcategory" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
-                      <Link to="/addworkinghours" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
+                        <Link to={`/addcategory/${localStorage.getItem('cityname')}`} ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
+                      <Link to={`/addworkinghours/${localStorage.getItem('cityname')}`} ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
                       </div>
                   </div>
                   {showPopup && (

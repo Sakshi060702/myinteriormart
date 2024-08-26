@@ -162,6 +162,9 @@ function Register() {
 
             const data = await response.json();
 
+            const cityName = localStorage.getItem('cityname');
+            const pathhome = `/${cityName}`;
+
             if (response.ok) {
                 console.log('User Registered successfully', data);
                 dispatch(loginSuccess({token:data.token, user:data.user}))
@@ -170,7 +173,7 @@ function Register() {
                 //  navigate('/');
 
                 if(vendorType.toLocaleLowerCase()==='business'){
-                    navigate('/',{ state: { email:email } });
+                    navigate(pathhome,{ state: { email:email } });
                 }
                 else{
                     navigate('/editprofile');

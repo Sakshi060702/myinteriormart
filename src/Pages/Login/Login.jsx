@@ -87,6 +87,9 @@ function Login() {
       const data = await response.json();
       console.log(data);
 
+      const cityName = localStorage.getItem('cityname');
+      const pathhome = `/${cityName}`;
+
       if (response.ok) {
         const tokenExpiry = new Date().getTime() + 1440 * 60 * 1000;
 
@@ -111,7 +114,7 @@ function Login() {
 
       setTimeout(() => {
       setShowPopup(false);
-      navigate("/");
+      navigate(pathhome);
     }, 2000);
        
       } else {

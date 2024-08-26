@@ -196,7 +196,7 @@ function Communicationl() {
                 <p className="add-lidting-title-from">
                   Add Listing / Add Communication Details
                   <span>
-                    <Link className="back_btn mx-3" to="/labournakapage">
+                  <Link className="back_btn mx-3" to={`/labournakapage/${localStorage.getItem('cityname')}`}>
                       Back
                     </Link>
                   </span>

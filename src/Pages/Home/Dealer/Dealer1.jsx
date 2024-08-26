@@ -59,7 +59,7 @@ function Dealer1() {
 
                     return (
                       <li className="mim-box-list" key={cat.secondCategoryID}>
-                        <Link to={`/Thirdcategoriesd/${cat.secondCategoryID}`}>
+                        <Link to={`/Thirdcategoriesd/${cat.secondCategoryID}${localStorage.getItem('cityname')}`}>
                           <img
                             src={icon}
                             alt={cat.searchKeywordName}
@@ -101,7 +101,7 @@ function Dealer1() {
                                 key={cat.secondCategoryID}
                               >
                                 <Link
-                                  to={`/Thirdcategoriesd/${cat.secondCategoryID}`}
+                                  to={`/Thirdcategoriesd/${cat.secondCategoryID}${localStorage.getItem('cityname')}`}
                                   title={cat.searchKeywordName}
                                 >
                                   <img

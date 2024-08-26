@@ -58,7 +58,7 @@ const Services1 = () => {
                   return (
                     <li key={category.secondCategoryID}>
                       <Link
-                        to={`/subcategories/${category.secondCategoryID}`}
+                        to={`/subcategories/${category.secondCategoryID}/${localStorage.getItem('cityname')}`}
                         title={category.searchKeywordName}
                         style={{ color: "black" }}
                       >
@@ -96,7 +96,7 @@ const Services1 = () => {
                           key={category.secondCategoryID}
                         >
                           <Link
-                            to={`/subcategories/${category.secondCategoryID}`}
+                            to={`/subcategories/${category.secondCategoryID}/${localStorage.getItem('cityname')}`}
                             title={category.searchKeywordName}
                           >
                             <img

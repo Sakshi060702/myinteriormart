@@ -8,14 +8,22 @@ function Contact() {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
 
+  const [cityName,setCityName]=useState(null);
+
   useEffect(() => {
    
     const loc_Latitude = localStorage.getItem(latitude);
     const loc_Longitude = localStorage.getItem(longitude);
 
+    const city_name=localStorage.getItem("cityname");
+
     if (loc_Latitude && loc_Longitude) {
       setLatitude(loc_Latitude);
       setLongitude(loc_Longitude);
+    }
+
+    if(city_name){
+      setCityName(city_name)
     }
   }, []);
 

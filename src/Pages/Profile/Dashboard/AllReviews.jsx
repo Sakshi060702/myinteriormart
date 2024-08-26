@@ -127,7 +127,7 @@ function AllReviews() {
               <p className="add-lidting-title-from">
                 Dashboard / Reviews
                 <span>
-                <Link to="/dashboard" className="back_btn mx-3">Back</Link>
+                <Link to={`/dashboard/${localStorage.getItem('cityname')}`} className="back_btn mx-3">Back</Link>
                 </span>
               </p>
               <div className="list_general reviews">

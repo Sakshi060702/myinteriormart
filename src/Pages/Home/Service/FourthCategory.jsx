@@ -101,7 +101,7 @@ const FourthCategory = () => {
                     />
                   </span>
                   <Link
-                     to={`/listing/${fourthCategory.thirdCategoryID}`}
+                     to={`/listing/${fourthCategory.thirdCategoryID}/${localStorage.getItem('cityname')}`}
                     //  to={"/website"}
                     title={fourthCategory.name}
                     className="Linkstyle"
@@ -112,7 +112,7 @@ const FourthCategory = () => {
                   {fourthCategory.fifthCategories &&
                     fourthCategory.fifthCategories.length > 0 && (
                       <Link
-                        to={`/fifthcategories/${fourthCategory.fourthCategoryID}`}
+                        to={`/fifthcategories/${fourthCategory.fourthCategoryID}/${localStorage.getItem('cityname')}`}
                         title={fourthCategory.name}
                         style={{ color: "#fe900d" }}
                       >

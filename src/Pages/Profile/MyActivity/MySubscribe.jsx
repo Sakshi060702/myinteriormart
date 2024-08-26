@@ -42,7 +42,7 @@ function MySubscribe() {
               <p className="add-lidting-title-from">
                 Dashboard / Subscribe
                 <span>
-                <Link  to="/Myactivity" className="back_btn mx-3">Back</Link>
+                <Link  to={`/Myactivity/${localStorage.getItem('cityname')}`} className="back_btn mx-3">Back</Link>
                 </span>
               </p>
               <div className="list_general like-listing">

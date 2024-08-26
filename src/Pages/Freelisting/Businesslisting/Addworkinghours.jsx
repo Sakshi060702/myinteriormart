@@ -132,8 +132,11 @@ function Addworkinghours()
     
           const result = await response.json();
           console.log(result);
-          console.log("Working hours token",token);
+          // console.log("Working hours token",token);
          
+          const cityName = localStorage.getItem('cityname');
+        const pathlisting = `/addpayment/${cityName}`;
+
 
           setSuccessMessage("Working Hours Details Saved Successfully");
       setErrorMessage("");
@@ -141,7 +144,7 @@ function Addworkinghours()
 
       setTimeout(() => {
         setShowPopup(false);
-        navigate("/addpayment");
+        navigate(pathlisting);
       }, 2000);
 
           
@@ -259,13 +262,13 @@ function Addworkinghours()
                       Save & Continue
                     </button>
                     <div style={{display:"flex",justifyContent:"center",gap:'10px',paddingTop:'10px'}}>                    
-                      <Link to="/addspecialisation">
+                      <Link to={`/addspecialisation/${localStorage.getItem('cityname')}`}>
                         <img
                           src={previousarrowimg}
                           style={{ height: "30px" }}
                         />
                       </Link>
-                      <Link to="/addpayment">
+                      <Link to={`/addpayment/${localStorage.getItem('cityname')}`}>
                         <img src={nextarrowimg} style={{ height: "30px" }} />
                       </Link>
                     </div>

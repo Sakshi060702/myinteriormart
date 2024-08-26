@@ -63,7 +63,7 @@ function Contractor1() {
                         className="mim-box-list"
                         key={category.secondCategoryID}>
                         <Link
-                          to={`/Thirdcategoriesc/${category.secondCategoryID}`}
+                          to={`/Thirdcategoriesc/${category.secondCategoryID}${localStorage.getItem('cityname')}`}
                           title={category.searchKeywordName}
                           style={{ color: "black" }}>
                           <img
@@ -99,7 +99,7 @@ function Contractor1() {
                             className="col-md-3 col-sm-3 col-3 mim-Box-item"
                             key={category.secondCategoryID} >
                             <Link
-                              to={`/Thirdcategoriesc/${category.secondCategoryID}`}
+                              to={`/Thirdcategoriesc/${category.secondCategoryID}${localStorage.getItem('cityname')}`}
                               title={category.searchKeywordName}>
                               <img
                                 src={icon}

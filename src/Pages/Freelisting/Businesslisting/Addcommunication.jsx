@@ -182,8 +182,11 @@ function Addcommunication(){
       }
 
       const responseData = await response.json();
-      console.log("API response:", responseData);
-      console.log("Communication Token",token);
+       console.log("API response:", responseData);
+      // console.log("Communication Token",token);
+
+      const cityName = localStorage.getItem('cityname');
+      const pathlisting = `/address/${cityName}`;
 
       setSuccessMessage("Communication Details Saved  Successfully");
       setErrorMessage("");
@@ -191,7 +194,7 @@ function Addcommunication(){
 
       setTimeout(() => {
         setShowPopup(false);
-        navigate("/address");
+        navigate(pathlisting);
       }, 2000);
 
       
@@ -347,8 +350,8 @@ function Addcommunication(){
                       Save & Continue
                     </button>
                     <div style={{display:"flex",justifyContent:"center",gap:'10px',paddingTop:'10px'}}>                    
-                      <Link to="/addcompany" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
-                    <Link to="/address" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
+                      <Link to={`/addcompany/${localStorage.getItem('cityname')}`} ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
+                    <Link to={`/address/${localStorage.getItem('cityname')}`} ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
                     </div>
 
                   </div>

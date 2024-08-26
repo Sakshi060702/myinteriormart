@@ -76,7 +76,7 @@ function FourthCategoryC() {
                 </span>
                 <Link
                   // to={"/website"}
-                  to={`/listing/${fourthCategory.thirdCategoryID}`}
+                  to={`/listing/${fourthCategory.thirdCategoryID}${localStorage.getItem('cityname')}`}
                   title={fourthCategory.name}
                   className="Linkstyle"
                 >
@@ -86,7 +86,7 @@ function FourthCategoryC() {
                 {fourthCategory.fifthCategories &&
                   fourthCategory.fifthCategories.length > 0 && (
                     <Link
-                      to={`/Fifthcategoriesc/${fourthCategory.fourthCategoryID}`}
+                      to={`/Fifthcategoriesc/${fourthCategory.fourthCategoryID}${localStorage.getItem('cityname')}`}
                       title={fourthCategory.name}
                       style={{ color: "#fe900d" }}
                     >

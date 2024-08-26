@@ -9,6 +9,8 @@ import Teamimagel from "./Teamimagel";
 import Btngroupl from "./Btngroupl";
 import nextarrowimg from "../../FrontEnd/img/Frontarrow.png";
 import previousarrowimg from "../../FrontEnd/img/Backarrow.png";
+import '../../FrontEnd/css/RegistrationMV.css'
+
 
 
 const buttons=[
@@ -35,7 +37,7 @@ function Imagesl() {
               <p className="add-lidting-title-from">
                 Add Listing / Upload Images
                 <span>
-                  <Link className="back_btn mx-3" to="/labournakapage">
+                <Link className="back_btn mx-3" to={`/labournakapage/${localStorage.getItem('cityname')}`}>
                     Back
                   </Link>
                 </span>
@@ -56,7 +58,7 @@ function Imagesl() {
           
                 
               </div>
-              <div style={{display:"flex",justifyContent:"flex-end",gap:'10px'}}>                    
+              <div className="arrowimage">                    
                       <Link to="/paymentmodel" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
                     <Link to="/Sociallinkl" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
                     </div>

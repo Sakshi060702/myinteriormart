@@ -129,7 +129,7 @@ function Listing() {
                         <div className="wrapper">
                           <h3 style={{ color: "black" }}>
                             <Link
-                              to={`/company/${listing.listingId}-${currentPage}-${itemsPerPage}-${secondCategoryId}`}
+                              to={`/company/${listing.listingId}-${currentPage}-${itemsPerPage}-${secondCategoryId}/${localStorage.getItem('cityname')}`}
                             >
                               {" "}
                               {listing.companyName}

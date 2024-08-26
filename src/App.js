@@ -2,6 +2,12 @@ import Home from "./Pages/Home/Home";
 import { useEffect } from "react";
 import { Route,Routes } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+
+
+
+
+
+
 import Labournaka from "./Pages/Tab/Labournaka";
 
 
@@ -302,7 +308,7 @@ function App() {
   
 
   return (
-   
+
     <>
 
 <Menu1/>
@@ -315,7 +321,11 @@ function App() {
       <Route path='/labor' element={<Labournaka/>}></Route>
       <Route path="/buy" element={<Buy/>}></Route>
       <Route path="/job" element={<Job/>}></Route>
+
       <Route path='/about' element={<Aboutus/>}></Route>
+      
+
+      
       <Route path="/contact" element={<Contact></Contact>}></Route>
 
       <Route path="/legaladvisory" element={<LegalAdvisory></LegalAdvisory>}/>
@@ -617,10 +627,105 @@ function App() {
 
 
 
+{/*New Routes for custom url*/}
+
+<Route path="/about/:cityName" element={<Aboutus />} />
+<Route path="/contact/:cityName" element={<Contact></Contact>}></Route>
+
+<Route path="/login/:cityName" element={<Login/>}/>
+
+<Route path="/signup2/:cityName" element={<Signup2/>}/>
+
+<Route path="/receiveotp2/:cityName" element={<Receiveotp2/>}/>
+
+<Route path="/register/:cityName" element={<Register/>}/>
+
+<Route path="/receiveotpemail/:cityName" element={<Receiveotpemail/>}/>
+
+<Route path="/Myactivity/:cityName" element={<Profile2><Myactivity /></Profile2>} />
+<Route path="/dashboard/:cityName" element={<Profile2><Dashboard /></Profile2>} />
+<Route path="/labournakapage/:cityName" element={<Profile2><Labournakapage /></Profile2>} />
+<Route path="/enquiry/:cityName" element={<Profile2><Enquiry /></Profile2>} />
+<Route path="/chat/:cityName" element={<Profile2><Chat /></Profile2>} />
+<Route path="/suggestion/:cityName" element={<Profile2><Suggestion /></Profile2>} />
+<Route path="/complaint/:cityName" element={<Profile2><Complaint /></Profile2>} />
+<Route path="/changepassword/:cityName" element={<Profile2><Changepassword /></Profile2>} />
+<Route path="/ProfileRegister/:cityName" element={<Profile2><ProfileRegister /></Profile2>} />
+
+<Route path="/editprofile/:cityName" element={<Profile2><Editprofile /></Profile2>} />
+<Route path="/userpersonalinformation/:cityName"  element={<Profile2><Userpersonalinformation/></Profile2>}/>
+
+<Route path="/addcompanyl/:cityName" element={<Addcompanyl></Addcompanyl>}/>
+<Route path="/addressl/:cityName" element={<Addressl></Addressl>}/>
+<Route path="/communicationl/:cityName" element={<Communicationl/>}/>
+<Route path="/categoryl/:cityName" element={<Categoriesl/>}/>
+<Route path="/specialisationl/:cityName" element={<Specialisationl/>}/>
+<Route path="/paymentmodel/:cityName" element={<Paymentmodel/>}/>
+<Route path="/workinghoursl/:cityName" element={<Workinghoursl/>}/>
+<Route path="/uploadimagel/:cityName" element={<Uploadimagel/>}/>
+<Route path="/Sociallinkl/:cityName" element={<Sociallinkl/>}/>
+<Route path="/Keywordl/:cityName" element={<Keywordl/>}/>
+<Route path="/Imagesl/:cityName" element={<Imagesl/>}/>
+<Route path="/Galleryimage/:cityName" element={<Galleryimagel/>}/>
+
+<Route path="/Categoryapi/:cityName" element={<Categoryapi/>}/>
+
+<Route exact path="/services1" element={<Services1/>} />
+  <Route path="/subcategories/:secondCategoryId/:cityName" element={<SubCategoryList/>} />
+  <Route path="/fourthcategories/:thirdCategoryId/:cityName" element={<FourthCategory/>} />
+  <Route path="/fifthcategories/:fourthCategoryId/:cityName" element={<FifthCategory/>} />
+  <Route path="/sixthcategories/:fifthCategoryId/:cityName" element={<SixthCategory/>} />
+
+  <Route exact path="/contractor1" element={<Contractor1/>} />
+  <Route path="/Thirdcategoriesc/:secondCategoryId/:cityName" element={<ThirdcategoryC/>} />
+   <Route path="/Fourthcategoriesc/:thirdCategoryId/:cityName" element={<FourthCategoryC/>} />
+   <Route path="/Fifthcategoriesc/:fourthCategoryId/:cityName" element={<FifthCategoryC/>} />
+  <Route path="/Sixthcategoriesc/:fifthCategoryId/:cityName" element={<SixthCategoryC/>} />
+
+<Route exact path="/Dealer" element={<Dealer1/>}/>
+<Route path="/Thirdcategoriesd/:secondCategoryId/:cityName" element={<ThirdCategoryD/>} />
+<Route path="/Fourthcategoriesd/:thirdCategoryId/:cityName" element={<FourthCategoryD/>} />
+<Route path="/Fifthcategoriesd/:fourthCategoryId/:cityName" element={<FifthCategoryD/>} />
+  <Route path="/Sixthcategoriesd/:fifthCategoryId/:cityName" element={<SixthCategoryD/>} />
+
+  <Route path="/listing/:secondCategoryId/:cityName" element={<Listingc/>}/>
+<Route path="/company/:listingId/:cityName" element={<Listingdetailsc/>}/>
+
+<Route path="/listing/:secondCategoryId/:cityName" element={<Listingd/>}/>
+<Route path="/listing/:secondCategoryId/:cityName" element={<Listingdetailsd/>}/>
+
+
+  <Route path="/listing/:secondCategoryId/:cityName" element={<Listing/>}/>
+<Route path="/company/:listingId/:cityName" element={<Listingdetails/>}/>
+
+<Route path="/AllBookmark/:cityName" element={<AllBookmark/>}/>
+<Route path="/AllLike/:cityName" element={<AllLike/>}/>
+<Route path="/AllSubscribe/:cityName" element={<AllSubscribe/>}/>
+<Route path="/AllReviews/:cityName" element={<AllReviews/>}/>
+
+<Route path="/MyBookmark/:cityName" element={<MyBookmark/>}/>
+<Route path="/MyLike/:cityName" element={<MyLike/>}/>
+<Route path="/Mysubscribe/:cityName" element={<MySubscribe/>}/>
+<Route path="/MyReview/:cityName" element={<MyReviews/>}/>
+
+{/*Freelisting pages*/}
+<Route path="/addCommunication/:cityName" element={<Layout><Addcommunication /></Layout>} />
+<Route path="/address/:cityName" element={<Layout><Address /></Layout>} />
+<Route path="/addcategory/:cityName" element={<Layout><Addcategory /></Layout>} />
+<Route path="/addspecialisation/:cityName" element={<Layout><Addspecialisation /></Layout>} />
+<Route path="/addworkinghours/:cityName" element={<Layout><Addworkinghours /></Layout>} />
+<Route path="/addpayment/:cityName" element={<Layout><Addpayment /></Layout>} />
+<Route path="/addcompany/:cityName" element={<Layout><Addcompany /></Layout>} />
+<Route path="/Workingdetails/:cityName" element={<Layout><Workingdetails/></Layout>} />
+<Route path="/Addseokeyword/:cityName" element={<Layout><Addseokeyword/></Layout>} />
+<Route path="/Addsociallink/:cityName" element={<Layout><Addsociallink/></Layout>} />
+
+<Route path="/Uploadimage/:cityName" element={<Layout><Uploadimage/></Layout>} />
 
     </Routes>
      <Foot/>
     </> 
+    
   );
 
 }

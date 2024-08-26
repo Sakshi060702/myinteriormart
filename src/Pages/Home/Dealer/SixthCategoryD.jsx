@@ -77,7 +77,7 @@ function SixthCategoryD() {
                   </span>
                   <Link
                     // to={"/website"}
-                    to={`/listing/${sixthCategory.fifthCategoryID}`}
+                    to={`/listing/${sixthCategory.fifthCategoryID}${localStorage.getItem('cityname')}`}
                     title={sixthCategory.name}
                     className="Linkstyle"
                   >

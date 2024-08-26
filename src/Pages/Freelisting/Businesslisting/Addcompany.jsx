@@ -204,8 +204,11 @@ function Addcompany() {
       }
 
       const responseData = await response.json();
-      console.log("API response:", responseData);
-      console.log("Token", token);
+      // console.log("API response:", responseData);
+      // console.log("Token", token);
+
+      const cityName = localStorage.getItem('cityname');
+      const pathlisting = `/addCommunication/${cityName}`;
 
       // alert("Company details saved successfully!");
       setSuccessMessage("Company Details Saved Successfully");
@@ -214,7 +217,7 @@ function Addcompany() {
 
       setTimeout(() => {
         setShowPopup(false);
-        navigate("/addCommunication");
+        navigate(pathlisting);
       }, 2000); // Show popup for 3 seconds before redirect
     } catch (error) {
       console.error("API error:", error);
@@ -412,7 +415,7 @@ function Addcompany() {
                 Save & Continue
               </button>
 
-              <Link to="/addCommunication" className="pull-center">
+              <Link to={`/addCommunication/${localStorage.getItem('cityname')}`} className="pull-center">
                 <img src={nextarrowimg} style={{ height: "30px" }} />
               </Link>
             </div>

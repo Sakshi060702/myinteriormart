@@ -1,5 +1,5 @@
 .uplodlogo{
-  padding-left: 471px;
+  padding-left: 416px;
 }
 .uplodcertificate{
   width: 300px;
@@ -138,8 +138,8 @@
   @media (max-width:768px) {
     .uplodlogo{
       padding-left: 2px;
-      margin-left: 43px;
-      margin-right: -33px;
+      margin-left: 8px;
+      margin-right: -10px;
     }
   }
   @media (max-width:768px) {
@@ -469,4 +469,34 @@
   
     }
   }
+
+  /*Imagel arrow*/
+  .arrowimage{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  @media (max-width:767px) {
+    .arrowimage{
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+  }
+
+  .teamcode {
+    flex: 1 1 calc(33.3333% - 2px); 
+      box-sizing:border-box;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .teamcode {
+      flex: -1 1 calc(33.3333%  16px); 
+      box-sizing:border-box;
+    }
+   
+  }
+  
+
+
   
