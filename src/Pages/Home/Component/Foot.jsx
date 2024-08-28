@@ -59,14 +59,14 @@ const Foot = () => {
                 className="d-flex flex-column"
                 style={{ cursor: "pointer", padding: "0" }}
               >
-                <NavLink to={`/${localStorage.getItem('cityname')}`} style={{ color: "white" }}>
+                <NavLink to={`/in-${localStorage.getItem('cityname')}`} style={{ color: "white" }}>
                   Home
                 </NavLink>
-                <NavLink to={`/about/${localStorage.getItem('cityname')}`} style={{ color: "white" }}>
+                <NavLink to={`/about/in-${localStorage.getItem('cityname')}`} style={{ color: "white" }}>
                   About Us
                 </NavLink>
 
-                <NavLink to={`/contact/${localStorage.getItem('cityname')}`} style={{ color: "white" }}>
+                <NavLink to={`/contact/in-${localStorage.getItem('cityname')}`} style={{ color: "white" }}>
                   Contact
                 </NavLink>
               </div>

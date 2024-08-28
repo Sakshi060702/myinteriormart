@@ -88,7 +88,7 @@ function Login() {
       console.log(data);
 
       const cityName = localStorage.getItem('cityname');
-      const pathhome = `/${cityName}`;
+      const pathhome = `/in-${cityName}`;
 
       if (response.ok) {
         const tokenExpiry = new Date().getTime() + 1440 * 60 * 1000;

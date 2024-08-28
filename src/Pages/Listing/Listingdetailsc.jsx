@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import Services from "../Services/Webdevelopment/Website/Services";
 import Webreviews from "../Services/Webdevelopment/Website/Webreviews";
 import profile from "../../FrontEnd/img/profile.svg";
@@ -12,9 +12,35 @@ import Getquotespopup from "./Getquotespopup";
 import Sociallink from "./Sociallink";
 import "../../FrontEnd/css/Lisiting.css";
 import { useSelector } from "react-redux";
+import CryptoJS from "crypto-js";
 
 function Listingdetailsc() {
   const { listingId } = useParams();
+
+  
+  const encryptionKey = 'myinterriorMart@SECRETKEY';
+
+  const encrypt = (text) => {
+    
+    return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
+  };
+  
+  
+  const decrypt = (ciphertext) => {
+    const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
+    console.log(bytes);
+    console.log(bytes.toString(CryptoJS.enc.Utf8));
+    return bytes.toString(CryptoJS.enc.Utf8);
+  };
+
+  const [searchParams] = useSearchParams();
+  console.log(searchParams);
+  const listingId_enc = searchParams.get("listingEncyt");
+  console.log(listingId_enc);
+  console.log(decrypt(listingId_enc));
+  console.log("RTEST");
+
+
   const [listingDetails, setListingDetails] = useState(null);
 
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -38,6 +64,8 @@ function Listingdetailsc() {
   useEffect(() => {
     fetchListingDetails();
   }, [listingId]);
+
+
 
   // useEffect(() => {
   //   if (listingDetails) {

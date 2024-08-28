@@ -52,7 +52,7 @@ function Myactivity() {
           <h5>My Activity</h5>
           <div className="row">
             <div className="col-md-4 col-6 mb-3">
-            <Link to={`/MyBookmark/${localStorage.getItem('cityname')}`}>
+            <Link to={`/MyBookmark/in-${localStorage.getItem('cityname')}`}>
                 <div className="add_listing_card d-flex align-items-center justify-content-start">
                   <div className="add_listing_card_title">Bookmarks</div>
                   <div className="this_count">{counts.bookmarksCount}</div>
@@ -61,7 +61,7 @@ function Myactivity() {
             </div>
 
             <div className="col-md-4 col-6 mb-3">
-              <Link to={`/MyLike/${localStorage.getItem('cityname')}`}>
+              <Link to={`/MyLike/in-${localStorage.getItem('cityname')}`}>
                 <div className="add_listing_card d-flex align-items-center justify-content-start">
                   <div className="add_listing_card_title">Likes</div>
                   <div className="this_count">{counts.likesCount}</div>
@@ -70,7 +70,7 @@ function Myactivity() {
             </div>
 
             <div className="col-md-4 col-6 mb-3">
-              <Link to={`/MyReview/${localStorage.getItem('cityname')}`}>
+              <Link to={`/MyReview/in-${localStorage.getItem('cityname')}`}>
                 <div className="add_listing_card d-flex align-items-center justify-content-start">
                   <div className="add_listing_card_title">Reviews</div>
                   <div className="this_count">{counts.reviewsCount}</div>
@@ -79,7 +79,7 @@ function Myactivity() {
             </div>
 
             <div className="col-md-4 col-6 mb-3">
-              <Link to={`/Mysubscribe/${localStorage.getItem('cityname')}`}>
+              <Link to={`/Mysubscribe/in-${localStorage.getItem('cityname')}`}>
                 <div className="add_listing_card d-flex align-items-center justify-content-start">
                   <div className="add_listing_card_title">Subscribe</div>
                   <div className="this_count">{counts.subscribersCount}</div>

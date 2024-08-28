@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
 
 function FifthCategory() {
-  const { fourthCategoryId } = useParams();
+  const { fourthCategoryId,fourthCategoryName ,subcategoryName,secondCategoryName} = useParams();
   const [fifthCategories, setFifthCategories] = useState([]);
   const [selectedFourthCategory, setSelectedFourthCategory] = useState(null);
 
   useEffect(() => {
     fetchFifthCategories();
-  }, [fourthCategoryId]);
+  }, [fourthCategoryId,fourthCategoryName,subcategoryName,secondCategoryName]);
 
   const fetchFifthCategories = async () => {
     try {
@@ -18,28 +18,28 @@ function FifthCategory() {
         `https://apidev.myinteriormart.com/api/Category/GetCategories`
       );
       const data = await response.json();
-      console.log("Fetched data:", data);
 
-      // Assuming data has a structure like { services: [...] }
       if (data && data.services && Array.isArray(data.services)) {
         let foundFourthCategory = null;
 
-        // Find the correct fourthCategory based on fourthCategoryId
+        // Find the correct fourthCategory based on fourthCategoryName
         data.services.forEach((service) => {
           service.thirdCategories.forEach((thirdCategory) => {
             thirdCategory.fourthCategories.forEach((fourthCategory) => {
-              if (fourthCategory.fourthCategoryID === fourthCategoryId) {
+              if (fourthCategory.name.replace(/\s+/g, "-").toLowerCase() === fourthCategoryName) {
                 foundFourthCategory = fourthCategory;
               }
             });
           });
         });
 
-        // console.log("Selected Fifth Category:", foundFourthCategory);
-        setSelectedFourthCategory(foundFourthCategory);
-        setFifthCategories(
-          foundFourthCategory ? foundFourthCategory.fifthCategories : []
-        );
+        if (foundFourthCategory) {
+          setSelectedFourthCategory(foundFourthCategory);
+          setFifthCategories(foundFourthCategory.fifthCategories || []);
+        } else {
+          console.error("Fourth Category not found with name:", fourthCategoryName);
+          setFifthCategories([]); // Set to empty if not found
+        }
       } else {
         console.error("Unexpected data format or missing services array", data);
       }
@@ -82,18 +82,20 @@ function FifthCategory() {
                   />
                 </span>
                 <Link
-                  // to={"/website"}
-                  to={`/listing/${fifthCategory.fourthCategoryID}/${localStorage.getItem('cityname')}`}
-                  title={fifthCategory.name}
-                  className="Linkstyle"
-                >
+                      to={`/All/${fifthCategory.name
+                            .replace(/\s+/g, "-").toLowerCase()}/${fourthCategoryName}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}`}
+                      title={fifthCategory.name}
+                      className="Linkstyle"
+                    >
                   {fifthCategory.name}
                 </Link>
 
                 {fifthCategory.sixthCategories &&
                   fifthCategory.sixthCategories.length > 0 && (
                     <Link
-                      to={`/sixthcategories/${fifthCategory.fifthCategoryID}/${localStorage.getItem('cityname')}`}
+                      to={`/${fifthCategory.name
+                        .replace(/\s+/g, "-")
+                        .toLowerCase()}/${fourthCategoryName}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}`}
                       title={fifthCategory.name}
                       style={{ color: "#fe900d" }}
                     >

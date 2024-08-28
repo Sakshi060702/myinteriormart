@@ -35,7 +35,7 @@ function Home(){
 
             const timer=setTimeout(() => {
                 setShowpopup(false)
-            }, 6000);
+            }, 3000);
     
             return()=>{clearTimeout(timer);}
         }else if(!cityName){

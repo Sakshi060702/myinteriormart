@@ -2,12 +2,39 @@ import React, { useState, useEffect, useRef } from "react";
 import { debounce } from "lodash";
 import { Link, NavLink } from "react-router-dom";
 import "../../../FrontEnd/css/Serchbar.css";
+import { useParams } from "react-router-dom";
+import CryptoJS from "crypto-js";
 
 function Searchbar() {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
+  const [searchType, setSearchType] = useState('');
+
+  const encryptionKey = 'myinterriorMart@SECRETKEY';
+
+const encrypt = (text) => {
+  
+  return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
+};
+
+
+const decrypt = (ciphertext) => {
+  const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
+  return bytes.toString(CryptoJS.enc.Utf8);
+};
+
+const [currentPage, setCurrentPage] = useState(1);
+const [itemsPerPage, setItemsPerPage] = useState(10);
+const [totalItems, setTotalItems] = useState(0);
+
+
+const handleSearch = (searchTerm, type) => {
+  setSearchType(type);
+  setSearchTerm(searchTerm); // Trigger the search
+};
+
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -72,29 +99,31 @@ function Searchbar() {
               {showDropdown && results.length > 0 && (
                 <div className="dropdownsearchbar" ref={dropdownRef}>
                   {results.map((result, index) => {
-                    console.log(result);
-                    if(result.listingId == null && result.companyName == null){
+                    console.log(typeof result.listingId);
+                    if(result.listingId == null && result.companyName == null && result.keyword==null){
                       return (
                         <div key={index} className="dropdownItemsearchbar">
-                          <NavLink to={`/listing/${result.categoryId}`}><h6>{result.category}</h6></NavLink>
+                          1<NavLink to={`/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}`}><h6>{result.category}</h6></NavLink>
                         </div>
                       )
                     }
-                    else if(result.keyword != null){
+                    else if(result.keyword != null && result.companyName == null){
                       return (
                         <div key={index} className="dropdownItemsearchbar">
-                          <NavLink to={`/listing/${result.categoryId}?searchkey=${result.keyword}`}><h6>{result.keyword}</h6></NavLink>
+                          2<NavLink to={`/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?searchkey=${encodeURIComponent(result.keyword)}`}><h6>{result.keyword}</h6></NavLink>
                         </div>
                       )
                     }
-                    else{
+                    else if (result.companyName != null && result.listingId != null) {
                       return (
                         <div key={index} className="dropdownItemsearchbar">
-                          <NavLink to={`/company/${result.listingId}`}><h6>{result.companyName}</h6></NavLink>
+                          <NavLink to={`/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}`}>
+                            <h6>{result.companyName}</h6>
+                          </NavLink>
                         </div>
-                      )
+                      );
                     }
-                    
+      
                     }
                   )}
                 </div>

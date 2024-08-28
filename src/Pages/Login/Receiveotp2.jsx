@@ -45,7 +45,7 @@ function Receiveotp2() {
             const data = await response.json();
 
             const cityName = localStorage.getItem('cityname');
-            const pathregister = `/register/${cityName}`;
+            const pathregister = `/register/in-${cityName}`;
 
 
             if (response.ok) {

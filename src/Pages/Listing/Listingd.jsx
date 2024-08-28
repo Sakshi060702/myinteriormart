@@ -120,37 +120,79 @@ function Listingd() {
                       <div className="col-9">
                         <div className="wrapper">
                           <h3 style={{ color: "black" }}>
-                            <Link to={`/company/${listing.listingId}`}>
+                            <Link  to={`/company/${listing.listingId}-${currentPage}-${itemsPerPage}-${secondCategoryId}/${localStorage.getItem('cityname')}`}>
                               {" "}
                               {listing.companyName}
                             </Link>
                           </h3>
-                          <small>
+                          {/* <small>
                             {listing.subCategory
                               .map((subCat) => subCat.name)
                               .join(", ")}
-                          </small>
+                          </small> */}
+
+<small>{listing.listingKeyword}</small>
                           <p>
                             <i className="fa fa-map-marker"></i>
                             {listing.locality}, {listing.area}
                           </p>
-                          <p>
+                          <div className="business-info-container">
                             <BusinessHours
                               businessWorking={listing.businessWorking}
                             />
-                          </p>
+
+                            {/* Rating below business hours for mobile */}
+                            <div className="rating-container mobile">
+                              <ul className="listingrating">
+                                <ul className="reating-list">
+                                  {/* <li>
+                                    <h4 className="reating-number reactingnumberfont">
+                                      {listing.ratingAverage}.0
+                                    </h4>
+                                  </li> */}
+                                  <li className="reating-star">
+                                    <li className="rating-star">
+                                      <div
+                                        className="cat_star"
+                                        style={{ marginLeft: "-10px" }}
+                                      >
+                                        {Array(5)
+                                          .fill()
+                                          .map((_, i) => (
+                                            <i
+                                              key={i}
+                                              className="icon_star"
+                                              style={{
+                                                color:
+                                                  i < listing.ratingAverage
+                                                    ? "orange"
+                                                    : "gray",
+                                                fontSize: "16px",
+                                              }}
+                                            ></i>
+                                          ))}
+                                      </div>
+                                    </li>
+                                  </li>
+                                  <li style={{ marginRight: "49px" }}>
+                                    {listing.ratingCount} Rating
+                                  </li>
+                                </ul>
+                              </ul>
+                            </div>
+                          </div>
                         </div>
                       </div>
                       <div className="col-lg-12 listing-bottom">
                         <ul className="listing-bottom-list">
                           <li>
-                            <h5>
+                            <h5 className="yearbusiness">
                               <b> + {listing.businessYear} Year Business</b>
                             </h5>
                           </li>
                           <li>
-                            <p>
-                              <Link className="loc_open call-now">
+                            <p className="">
+                              <Link className="loc_open call-now callnowl">
                                 Call now
                               </Link>
                             </p>
@@ -159,31 +201,38 @@ function Listingd() {
                             <p>
                               <button
                                 className="btn btn-guotes btn-sm"
-                                onClick={() => setIsPopupOpen(true)}
+                                onClick={() =>
+                                  setIsPopupOpen([true, listing.listingId])
+                                }
                               >
                                 Get Quotes
                               </button>
                             </p>
                           </li>
-                          <li>
-                            <ul className="reating-list">
-                              <li>
-                                <h4 className="reating-number">{listing.ratingAverage}.0</h4>
-                              </li>
-                              <li className="reating-star">
-                                <div className="cat_star">
-                                  {Array(listing.ratingAverage)
-                                    .fill()
-                                    .map((_, i) => (
-                                      <i
-                                        key={i}
-                                        className="icon_star active"
-                                        style={{ color: "orange" }}
-                                      ></i>
-                                    ))}
-                                </div>
-                              </li>
-                              <li> {listing.ratingCount} Rating</li>
+                          {/* Rating in listing bottom for desktop */}
+                          <li className="rating-container desktop">
+                            <ul className="listingrating">
+                              <ul className="reating-list">
+                                <li>
+                                  <h4 className="reating-number reactingnumberfont">
+                                    {listing.ratingAverage}.0
+                                  </h4>
+                                </li>
+                                <li className="reating-star">
+                                  <div className="cat_star">
+                                    {Array(listing.ratingAverage)
+                                      .fill()
+                                      .map((_, i) => (
+                                        <i
+                                          key={i}
+                                          className="icon_star active"
+                                          style={{ color: "orange" }}
+                                        ></i>
+                                      ))}
+                                  </div>
+                                </li>
+                                <li>{listing.ratingCount} Rating</li>
+                              </ul>
                             </ul>
                           </li>
                         </ul>
@@ -196,6 +245,29 @@ function Listingd() {
           ) : (
             <p>No listings found for the selected category.</p>
           )}
+        </div>
+        <div className="pagination">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i + 1}
+              onClick={() => handlePageChange(i + 1)}
+              className={currentPage === i + 1 ? "active" : ""}
+            >
+              {i + 1}
+            </button>
+          ))}
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={listing.length < itemsPerPage} // Disable "Next" if fewer than 10 listings
+          >
+            Next
+          </button>
         </div>
       </div>
       {token ? (

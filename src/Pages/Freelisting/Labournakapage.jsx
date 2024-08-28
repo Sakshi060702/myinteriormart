@@ -26,7 +26,7 @@ function Labournakapage() {
           {/* First row */}
           <div className="col-12 mt-3">
             <div className="link-group">
-              <Link  to={`/addcompanyl/${localStorage.getItem('cityname')}`} className="link-box">
+              <Link  to={`/addcompanyl/in-${localStorage.getItem('cityname')}`} className="link-box">
                 <div className="link-large">
                   <img
                     src={companyimg}
@@ -36,7 +36,7 @@ function Labournakapage() {
                   Company Details
                 </div>
               </Link>
-              <Link  to={`/communicationl/${localStorage.getItem('cityname')}`} className="link-box">
+              <Link  to={`/communicationl/in-${localStorage.getItem('cityname')}`} className="link-box">
                 <div className="link-large">
                   <img
                     src={communicationimg}
@@ -46,7 +46,7 @@ function Labournakapage() {
                   Communication
                 </div>
               </Link>
-              <Link to={`/addressl/${localStorage.getItem('cityname')}`}  className="link-box">
+              <Link to={`/addressl/in-${localStorage.getItem('cityname')}`}  className="link-box">
                 <div className="link-large">
                   <img
                     src={addressimg}
@@ -62,20 +62,20 @@ function Labournakapage() {
           {/* Second row */}
           <div className="col-12 mt-3">
             <div className="link-group">
-              <Link to={ `/Categoryapi/${localStorage.getItem('cityname')}`} className="link-box">
+              <Link to={ `/Categoryapi/in-${localStorage.getItem('cityname')}`} className="link-box">
                 {" "}
                 <div className="link-large">
                   <img src={categoryimg} className="managelistingimg" />
                   Categories
                 </div>
               </Link>
-              <Link to={`/specialisationl/${localStorage.getItem('cityname')}`} className="link-box">
+              <Link to={`/specialisationl/in-${localStorage.getItem('cityname')}`} className="link-box">
                 <div className="link-large">
                   <img src={specialisationimg} className="managelistingimg" />
                   Specialisations
                 </div>
               </Link>
-              <Link to={`/workinghoursl/${localStorage.getItem('cityname')}`} className="link-box">
+              <Link to={`/workinghoursl/in-${localStorage.getItem('cityname')}`} className="link-box">
                 {" "}
                  <div className="link-large">
                   <img src={workinghoursimg} className="managelistingimg" />
@@ -88,19 +88,19 @@ function Labournakapage() {
           {/* Third row */}
           <div className="col-12 mt-3">
             <div className="link-group">
-              <Link to={`/paymentmodel/${localStorage.getItem('cityname')}`} className="link-box">
+              <Link to={`/paymentmodel/in-${localStorage.getItem('cityname')}`} className="link-box">
                 <div className="link-large">
                   <img src={paymentmodeimg} className="managelistingimg" />
                   Payment Modes
                 </div>
               </Link>
-              <Link to={`/Imagesl/${localStorage.getItem('cityname')}`} className="link-box">
+              <Link to={`/Imagesl/in-${localStorage.getItem('cityname')}`} className="link-box">
                 <div className="link-large">
                   <img src={uploadimg} className="managelistingimg" />
                   Upload Images
                 </div>
               </Link>
-              <Link to={`/Sociallinkl/${localStorage.getItem('cityname')}`} className="link-box">
+              <Link to={`/Sociallinkl/in-${localStorage.getItem('cityname')}`} className="link-box">
                 <div className="link-large">
                   <img src={sociallinkimg} className="managelistingimg" />
                   Add Social Links
@@ -111,7 +111,7 @@ function Labournakapage() {
 
           <div className="col-12 mt-3">
             <div className="link-group seolinkgroup" >
-              <Link to={`/Keywordl/${localStorage.getItem('cityname')}`} className="link-box">
+              <Link to={`/Keywordl/in-${localStorage.getItem('cityname')}`} className="link-box">
                 <div className="link-large">
                   <img src={seoimg} className="managelistingimg" />
                   SEO Keywords

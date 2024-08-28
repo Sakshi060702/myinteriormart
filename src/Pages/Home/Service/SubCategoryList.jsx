@@ -5,13 +5,13 @@ import "../../../FrontEnd/css/Service.css";
 import { Link } from "react-router-dom";
 
 const SubCategoryList = () => {
-  const { secondCategoryId } = useParams(); 
+  const { secondCategoryId,categoryName } = useParams(); 
   const [subCategories, setSubCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
     fetchSubCategories();
-  }, [secondCategoryId]);
+  }, [categoryName]);
 
   const fetchSubCategories = async () => {
     try {
@@ -19,13 +19,19 @@ const SubCategoryList = () => {
         "https://apidev.myinteriormart.com/api/Category/GetCategories"
       );
       const data = await response.json();
-      console.log("Fetched Data:", data);
+      // console.log("Fetched Data:", data);
       const category = data.services.find(
-        (cat) => String(cat.secondCategoryID) === secondCategoryId
+        (cat) => cat.name.replace(/\s+/g, "-").toLowerCase() === categoryName
       );
       // console.log("Selected Category:", category);
-      setSelectedCategory(category);
-      setSubCategories(category ? category.thirdCategories : []);
+      if(category){
+        setSelectedCategory(category);
+        setSubCategories(category ? category.thirdCategories : []);
+      }
+      else{
+        console.error("There is not category");
+      }
+    
     } catch (error) {
       console.error("Error fetching subcategories:", error);
     }
@@ -67,7 +73,10 @@ const SubCategoryList = () => {
                       />
                     </span>
                     <Link
-                      to={`/listing/${subCategory.secondCategoryID}/${localStorage.getItem('cityname')}`}
+                      to={`/All/${subCategory.name
+                            .replace(/\s+/g, "-").toLowerCase()}/${selectedCategory.name
+                              .replace(/\s+/g, "-")
+                            .toLowerCase()}/in-${localStorage.getItem('cityname')}`}
                       title={subCategory.name}
                       className="Linkstyle"
                     >
@@ -77,7 +86,10 @@ const SubCategoryList = () => {
                     {subCategory.fourthCategories &&
                       subCategory.fourthCategories.length > 0 && (
                         <Link
-                          to={`/fourthcategories/${subCategory.thirdCategoryID}/${localStorage.getItem('cityname')}`}
+                          to={`/${subCategory.name
+                            .replace(/\s+/g, "-").toLowerCase()}/${selectedCategory.name
+                              .replace(/\s+/g, "-")
+                            .toLowerCase()}/in-${localStorage.getItem('cityname')}`}
                           title={subCategory.name}
                           style={{ color: "#fe900d" }}
                         >

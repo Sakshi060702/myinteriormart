@@ -206,6 +206,8 @@ import FourthCategory from "./Pages/Home/Service/FourthCategory";
 import FifthCategory from "./Pages/Home/Service/FifthCategory";
 import SixthCategory from "./Pages/Home/Service/SixthCategory";
 
+import FourthCategoryListing from "./Pages/Home/Service/FourthCategoryListing";
+
 import Contractor1 from "./Pages/Home/Contractor/Contractor1";
 import ThirdcategoryC from "./Pages/Home/Contractor/ThirdcategoryC";
 import FourthCategoryC from "./Pages/Home/Contractor/FourthCategoryC";
@@ -261,6 +263,8 @@ import MySubscribe from "./Pages/Profile/MyActivity/MySubscribe";
 import MyReviews from "./Pages/Profile/MyActivity/MyReview";
 
 import Userpersonalinformation from "./Pages/Profile/Userpersonalinformation";
+import FifthCategoryListing from "./Pages/Home/Service/FifthCategoryListing";
+import SixthCategoryListing from "./Pages/Home/Service/SixthCategoryListing";
 
 // import Dashboardprofile from "./Pages/Profile/Dashboardprofile";
 // import Editprofileregister from "./Pages/Dashboardregisterprofile/Editprofileregister";
@@ -670,11 +674,16 @@ function App() {
 
 <Route path="/Categoryapi/:cityName" element={<Categoryapi/>}/>
 
-<Route exact path="/services1" element={<Services1/>} />
-  <Route path="/subcategories/:secondCategoryId/:cityName" element={<SubCategoryList/>} />
-  <Route path="/fourthcategories/:thirdCategoryId/:cityName" element={<FourthCategory/>} />
-  <Route path="/fifthcategories/:fourthCategoryId/:cityName" element={<FifthCategory/>} />
-  <Route path="/sixthcategories/:fifthCategoryId/:cityName" element={<SixthCategory/>} />
+  <Route exact path="/services1" element={<Services1/>} />
+  <Route path="/:categoryName/:cityName" element={<SubCategoryList />} />
+
+  <Route path="/:subcategoryName/:secondCategoryName/:cityName" element={<FourthCategory/>} />
+  <Route path="/:fourthCategoryName/:subcategoryName/:secondCategoryName/:cityName" element={<FifthCategory/>} />
+  <Route path="/:fifthCategoryName/:fourthCategoryName/:subcategoryName/:secondCategoryName/:cityName" element={<SixthCategory/>} />
+
+  <Route path="/All/:fourthCategoryName/:subcategoryName/:secondCategoryName/:cityName" element={<FourthCategoryListing/>}/>
+  <Route path="/All/:fifthCategoryName/:fourthCategoryName/:subcategoryName/:secondCategoryName/:cityName" element={<FifthCategoryListing/>}/>
+  <Route path="/All/:sixthCategoryName/:fifthCategoryName/:fourthCategoryName/:subcategoryName/:secondCategoryName/:cityName" element={<SixthCategoryListing/>}/>
 
   <Route exact path="/contractor1" element={<Contractor1/>} />
   <Route path="/Thirdcategoriesc/:secondCategoryId/:cityName" element={<ThirdcategoryC/>} />
@@ -695,8 +704,8 @@ function App() {
 <Route path="/listing/:secondCategoryId/:cityName" element={<Listingdetailsd/>}/>
 
 
-  <Route path="/listing/:secondCategoryId/:cityName" element={<Listing/>}/>
-<Route path="/company/:listingId/:cityName" element={<Listingdetails/>}/>
+<Route path="/All/:subcategoryName/:secondCategoryName/:cityName" element={<Listing/>}/>
+<Route path="/company/:company/:secondCategoryName/:cityName" element={<Listingdetails/>}/>
 
 <Route path="/AllBookmark/:cityName" element={<AllBookmark/>}/>
 <Route path="/AllLike/:cityName" element={<AllLike/>}/>

@@ -62,7 +62,7 @@ function Profile2({ children }) {
               {userType === "Consumer" && (
                 <>
                   
-                  <Link to={`/Myactivity/${localStorage.getItem('cityname')}`}>
+                  <Link to={`/Myactivity/in-${localStorage.getItem('cityname')}`}>
                     {" "}
                     <img
                       src={myactivityimg}
@@ -71,7 +71,7 @@ function Profile2({ children }) {
                     />
                     My Activity
                   </Link>
-                  <Link to={`/editprofile/${localStorage.getItem('cityname')}`}>
+                  <Link to={`/editprofile/in-${localStorage.getItem('cityname')}`}>
                     {" "}
                     <img
                       src={editprofile}
@@ -81,7 +81,7 @@ function Profile2({ children }) {
                     Edit Profile
                   </Link>
 
-                  <Link to={`/userpersonalinformation/${localStorage.getItem('cityname')}`}>
+                  <Link to={`/userpersonalinformation/in-${localStorage.getItem('cityname')}`}>
                     {" "}
                     <img
                       src={addressimg}
@@ -91,7 +91,7 @@ function Profile2({ children }) {
                     Personal Info
                   </Link>
 
-                  <Link to={`/complaint/${localStorage.getItem('cityname')}`}>
+                  <Link to={`/complaint/in-${localStorage.getItem('cityname')}`}>
                     {" "}
                     <img
                       src={complaintimg}
@@ -100,7 +100,7 @@ function Profile2({ children }) {
                     />
                     Complaint
                   </Link>
-                  <Link to={`/suggestion/${localStorage.getItem('cityname')}`}>
+                  <Link to={`/suggestion/in-${localStorage.getItem('cityname')}`}>
                     {" "}
                     <img
                       src={suggestionimg}
@@ -109,7 +109,7 @@ function Profile2({ children }) {
                     />
                     Suggestion
                   </Link>
-                  <Link to={`/chat/${localStorage.getItem('cityname')}`}>
+                  <Link to={`/chat/in-${localStorage.getItem('cityname')}`}>
                     {" "}
                     <img
                       src={chatimg}
@@ -119,7 +119,7 @@ function Profile2({ children }) {
                     Chat
                   </Link>
                   
-                  <Link to={`/changepassword/${localStorage.getItem('cityname')}`}>
+                  <Link to={`/changepassword/in-${localStorage.getItem('cityname')}`}>
                     {" "}
                     <img
                       src={changepassimg}
@@ -133,7 +133,7 @@ function Profile2({ children }) {
 
               {userType === "Business" && (
                 <>
-                  <Link to={`/dashboard/${localStorage.getItem('cityname')}`}>
+                  <Link to={`/dashboard/in-${localStorage.getItem('cityname')}`}>
                     {" "}
                     <img
                       src={dashbordimg}
@@ -142,7 +142,7 @@ function Profile2({ children }) {
                     />
                     Dashboard
                   </Link>
-                  <Link to={`/Myactivity/${localStorage.getItem('cityname')}`}>
+                  <Link to={`/Myactivity/in-${localStorage.getItem('cityname')}`}>
                     {" "}
                     <img
                       src={myactivityimg}
@@ -152,7 +152,7 @@ function Profile2({ children }) {
                     My Activity
                   </Link>
                   {status=== 1 && (
-                    <><Link to={`/labournakapage/${localStorage.getItem('cityname')}`}>
+                    <><Link to={`/labournakapage/in-${localStorage.getItem('cityname')}`}>
                     <img
                       src={managlistingimg}
                       alt="Manage Listing"
@@ -160,7 +160,7 @@ function Profile2({ children }) {
                     />
                     Manage Listing
                   </Link>
-                  <Link to={`/enquiry/${localStorage.getItem('cityname')}`}>
+                  <Link to={`/enquiry/in-${localStorage.getItem('cityname')}`}>
                     <img
                       src={enquiryimg}
                       alt="Enquiry"
@@ -170,7 +170,7 @@ function Profile2({ children }) {
                   </Link></>
                   )}
                   
-                  <Link to={`/complaint/${localStorage.getItem('cityname')}`}>
+                  <Link to={`/complaint/in-${localStorage.getItem('cityname')}`}>
                     {" "}
                     <img
                       src={complaintimg}
@@ -179,7 +179,7 @@ function Profile2({ children }) {
                     />
                     Complaint
                   </Link>
-                  <Link to={`/suggestion/${localStorage.getItem('cityname')}`}>
+                  <Link to={`/suggestion/in-${localStorage.getItem('cityname')}`}>
                     {" "}
                     <img
                       src={suggestionimg}
@@ -188,7 +188,7 @@ function Profile2({ children }) {
                     />
                     Suggestion
                   </Link>
-                  <Link to={`/chat/${localStorage.getItem('cityname')}`}>
+                  <Link to={`/chat/in-${localStorage.getItem('cityname')}`}>
                     {" "}
                     <img
                       src={chatimg}
@@ -197,7 +197,7 @@ function Profile2({ children }) {
                     />
                     Chat
                   </Link>
-                  <Link to={`/ProfileRegister/${localStorage.getItem('cityname')}`}>
+                  <Link to={`/ProfileRegister/in-${localStorage.getItem('cityname')}`}>
                     {" "}
                     <img
                       src={registerimg}
@@ -207,7 +207,7 @@ function Profile2({ children }) {
                     Register
                   </Link>
 
-                  <Link to={`/changepassword/${localStorage.getItem('cityname')}`}>
+                  <Link to={`/changepassword/in-${localStorage.getItem('cityname')}`}>
                     {" "}
                     <img
                       src={changepassimg}
@@ -233,7 +233,7 @@ function Profile2({ children }) {
               <Dropdown.Menu style={{ width: "93%" }}>
                 {userType === "Consumer" &&(
                   <>
-                   <Dropdown.Item as={Link} to={`/Myactivity/${localStorage.getItem('cityname')}`}>
+                   <Dropdown.Item as={Link} to={`/Myactivity/in-${localStorage.getItem('cityname')}`}>
                   <img
                     src={myactivityimg}
                     alt="Edit Profile"
@@ -241,7 +241,7 @@ function Profile2({ children }) {
                   />
                  My Activity
                 </Dropdown.Item>
-                   <Dropdown.Item as={Link} to={`/editprofile/${localStorage.getItem('cityname')}`}>
+                   <Dropdown.Item as={Link} to={`/editprofile/in-${localStorage.getItem('cityname')}`}>
                   <img
                     src={editprofile}
                     alt="Edit Profile"
@@ -250,7 +250,7 @@ function Profile2({ children }) {
                   Edit Profile
                 </Dropdown.Item>
                 
-                <Dropdown.Item as={Link} to={`/userpersonalinformation/${localStorage.getItem('cityname')}`}>
+                <Dropdown.Item as={Link} to={`/userpersonalinformation/in-${localStorage.getItem('cityname')}`}>
                   <img
                     src={addressimg}
                     alt="Edit Profile"
@@ -259,7 +259,7 @@ function Profile2({ children }) {
                   Personal Info
                 </Dropdown.Item>
 
-                <Dropdown.Item as={Link} to={`/complaint/${localStorage.getItem('cityname')}`}>
+                <Dropdown.Item as={Link} to={`/complaint/in-${localStorage.getItem('cityname')}`}>
                   <img
                     src={complaintimg}
                     alt="Edit Profile"
@@ -268,7 +268,7 @@ function Profile2({ children }) {
                   Complaint
                 </Dropdown.Item>
 
-                <Dropdown.Item as={Link} to={`/suggestion/${localStorage.getItem('cityname')}`}>
+                <Dropdown.Item as={Link} to={`/suggestion/in-${localStorage.getItem('cityname')}`}>
                   <img
                     src={suggestionimg}
                     alt="Edit Profile"
@@ -277,7 +277,7 @@ function Profile2({ children }) {
                   Suggestion
                 </Dropdown.Item>
 
-                <Dropdown.Item as={Link} to={`/chat/${localStorage.getItem('cityname')}`}>
+                <Dropdown.Item as={Link} to={`/chat/in-${localStorage.getItem('cityname')}`}>
                   <img
                     src={chatimg}
                     alt="Edit Profile"
@@ -285,7 +285,7 @@ function Profile2({ children }) {
                   />
                  Chat
                 </Dropdown.Item>
-                <Dropdown.Item as={Link} to={`/changepassword/${localStorage.getItem('cityname')}`}>
+                <Dropdown.Item as={Link} to={`/changepassword/in-${localStorage.getItem('cityname')}`}>
                   <img
                     src={changepassimg}
                     alt="Edit Profile"
@@ -299,7 +299,7 @@ function Profile2({ children }) {
                 )}
                 {userType === "Business" &&(
                   <>
-                  <Dropdown.Item as={Link} to={`/dashboard/${localStorage.getItem('cityname')}`}>
+                  <Dropdown.Item as={Link} to={`/dashboard/in-${localStorage.getItem('cityname')}`}>
                   <img
                     src={dashbordimg}
                     alt="Edit Profile"
@@ -307,7 +307,7 @@ function Profile2({ children }) {
                   />
                  Dashboard
                 </Dropdown.Item>
-                <Dropdown.Item as={Link} to={`/Myactivity/${localStorage.getItem('cityname')}`}>
+                <Dropdown.Item as={Link} to={`/Myactivity/in-${localStorage.getItem('cityname')}`}>
                   <img
                     src={myactivityimg}
                     alt="Edit Profile"
@@ -317,7 +317,7 @@ function Profile2({ children }) {
                 </Dropdown.Item>
                 {status === 1 && (
                   <>
-                    <Dropdown.Item as={Link} to={`/labournakapage/${localStorage.getItem('cityname')}`}>
+                    <Dropdown.Item as={Link} to={`/labournakapage/in-${localStorage.getItem('cityname')}`}>
                       <img
                         src={listingicon}
                         alt="Edit Profile"
@@ -325,7 +325,7 @@ function Profile2({ children }) {
                       />
                       Manage Listing
                     </Dropdown.Item>
-                    <Dropdown.Item as={Link} to={`/enquiry/${localStorage.getItem('cityname')}`}>
+                    <Dropdown.Item as={Link} to={`/enquiry/in-${localStorage.getItem('cityname')}`}>
                       <img
                         src={enquiryimg}
                         alt="Enquiry"
@@ -336,7 +336,7 @@ function Profile2({ children }) {
                   </>
                 )}
 
-                <Dropdown.Item as={Link} to={`/complaint/${localStorage.getItem('cityname')}`}>
+                <Dropdown.Item as={Link} to={`/complaint/in-${localStorage.getItem('cityname')}`}>
                   <img
                     src={complaintimg}
                     alt="Address"
@@ -345,7 +345,7 @@ function Profile2({ children }) {
                  Complaint
                 </Dropdown.Item>
 
-                <Dropdown.Item as={Link} to={`/suggestion/${localStorage.getItem('cityname')}`}>
+                <Dropdown.Item as={Link} to={`/suggestion/in-${localStorage.getItem('cityname')}`}>
                   <img
                     src={suggestionimg}
                     alt="Bookmark"
@@ -357,7 +357,7 @@ function Profile2({ children }) {
                   <img src={likeimg} alt="Like" style={{ height: "60px" }} />
                   Like
                 </Dropdown.Item> */}
-                <Dropdown.Item as={Link} to={`/chat/${localStorage.getItem('cityname')}`}>
+                <Dropdown.Item as={Link} to={`/chat/in-${localStorage.getItem('cityname')}`}>
                   <img
                     src={chatimg}
                     alt="Subscribe"
@@ -365,7 +365,7 @@ function Profile2({ children }) {
                   />
                  Chat
                 </Dropdown.Item>
-                <Dropdown.Item as={Link} to={`/ProfileRegister/${localStorage.getItem('cityname')}`}>
+                <Dropdown.Item as={Link} to={`/ProfileRegister/in-${localStorage.getItem('cityname')}`}>
                   <img
                     src={registerimg}
                     alt="Review"
@@ -375,7 +375,7 @@ function Profile2({ children }) {
                 </Dropdown.Item>
                
                
-                <Dropdown.Item as={Link} to={`/changepassword/${localStorage.getItem('cityname')}`}>
+                <Dropdown.Item as={Link} to={`/changepassword/in-${localStorage.getItem('cityname')}`}>
                   <img
                     src={changepassimg}
                     alt="Change Password"

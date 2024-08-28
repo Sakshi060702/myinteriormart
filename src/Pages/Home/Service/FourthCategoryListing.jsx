@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useParams, Link } from "react-router-dom";
-import banner from "../../FrontEnd/img/banner/banner2.png";
-import banner1 from "../../FrontEnd/img/listing-img.jpeg";
-import Popup from "./Popup";
-import Getquotespopup from "./Getquotespopup";
-import "../../FrontEnd/css/Lisiting.css";
-import "../../FrontEnd/css/RegistrationMV.css";
+import banner from "../../../FrontEnd/img/banner/banner2.png";
+import banner1 from "../../../FrontEnd/img/listing-img.jpeg";
+import Popup from "../../Listing/Popup";
+import Getquotespopup from "../../Listing/Getquotespopup";
+import "../../../FrontEnd/css/Lisiting.css";
+import "../../../FrontEnd/css/RegistrationMV.css";
 import CryptoJS from "crypto-js";
 
 import { useSelector } from "react-redux";
@@ -25,8 +25,8 @@ const decrypt = (ciphertext) => {
 
 
 
-function Listing() {
-  const { secondCategoryId ,secondCategoryName,subcategoryName} = useParams();
+function FourthCategoryListing() {
+  const { secondCategoryId ,secondCategoryName,subcategoryName,fourthCategoryName} = useParams();
   const [searchParams] = useSearchParams();
   const searching = searchParams.get("searchkey");
   // console.log(searching,useParams());
@@ -39,7 +39,7 @@ function Listing() {
 
   useEffect(() => {
     fetchListings();
-  }, [secondCategoryId, currentPage,secondCategoryName,subcategoryName]);
+  }, [secondCategoryId, currentPage,secondCategoryName,subcategoryName,fourthCategoryName]);
 
   const token = useSelector((state) => state.auth.token);
 
@@ -48,7 +48,7 @@ function Listing() {
   const fetchListings = async () => {
     try {
       const response = await fetch(
-        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing?pageNumber=${currentPage}&pageSize=${itemsPerPage}&subCategoryName=${secondCategoryName}`,
+        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing?pageNumber=${currentPage}&pageSize=${itemsPerPage}&subCategoryName=${fourthCategoryName}`,
         {
           method: "GET",
           headers: {
@@ -327,4 +327,4 @@ const BusinessHours = ({ businessWorking }) => {
     </p>
   );
 };
-export default Listing;
+export default FourthCategoryListing;

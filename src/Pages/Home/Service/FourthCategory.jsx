@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
 
 const FourthCategory = () => {
-  const { thirdCategoryId } = useParams();
+  const { thirdCategoryId,subcategoryName,secondCategoryName } = useParams();
   const [fourthCategories, setFourthCategories] = useState([]);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
 
   useEffect(() => {
     fetchFourthCategories();
-  }, [thirdCategoryId]);
+  }, [thirdCategoryId,subcategoryName,secondCategoryName]);
 
   const fetchFourthCategories = async () => {
     try {
@@ -22,23 +22,16 @@ const FourthCategory = () => {
       // console.log("Fetched Fourth Categories Data:", data);
 
       // Check the structure of `data` and access the array of categories
-      if (data && Array.isArray(data.services)) {
-        // Traverse through the categories to find the matching third category
-        let subcategory = null;
-        data.services.forEach((category) => {
-          category.thirdCategories.forEach((thirdCategory) => {
-            if (String(thirdCategory.thirdCategoryID) === thirdCategoryId) {
-              subcategory = thirdCategory;
-            }
-          });
-        });
-
-        // console.log("Selected Category:", subcategory);
-
-        setSelectedSubcategory(subcategory);
-        setFourthCategories(subcategory ? subcategory.fourthCategories : []);
+      const category = data.services.find(
+        (cat) => cat.name.replace(/\s+/g, "-").toLowerCase() === secondCategoryName
+      );
+      const subCategory = category?.thirdCategories.find(
+        (sub) => sub.name.replace(/\s+/g, "-").toLowerCase() === subcategoryName
+      );
+      if (subCategory) {
+        setFourthCategories(subCategory.fourthCategories || []);
       } else {
-        console.error("Unexpected data format:", data);
+        console.error("Subcategory not found");
       }
     } catch (error) {
       console.error("Error fetching fourth categories:", error);
@@ -70,6 +63,7 @@ const FourthCategory = () => {
           <h2>Popular Categories</h2>
         </div>
         <div className="row justify-content-center categories-list">
+          
           <ul
             className={`subcategories-list d-flex justify-content-${
               fourthCategories.length < 4 ? "center" : "start"
@@ -101,18 +95,20 @@ const FourthCategory = () => {
                     />
                   </span>
                   <Link
-                     to={`/listing/${fourthCategory.thirdCategoryID}/${localStorage.getItem('cityname')}`}
-                    //  to={"/website"}
-                    title={fourthCategory.name}
-                    className="Linkstyle"
-                  >
+                      to={`/All/${fourthCategory.name
+                            .replace(/\s+/g, "-").toLowerCase()}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}`}
+                      title={fourthCategory.name}
+                      className="Linkstyle"
+                    >
                     {fourthCategory.name}
                   </Link>
 
                   {fourthCategory.fifthCategories &&
                     fourthCategory.fifthCategories.length > 0 && (
                       <Link
-                        to={`/fifthcategories/${fourthCategory.fourthCategoryID}/${localStorage.getItem('cityname')}`}
+                        to={`/${fourthCategory.name
+                          .replace(/\s+/g, "-")
+                          .toLowerCase()}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}`}
                         title={fourthCategory.name}
                         style={{ color: "#fe900d" }}
                       >

@@ -30,7 +30,7 @@ const Dropdown = () => {
           <i style={{ marginRight: "10px" }}></i>Profile
         </li> */}
         <li style={{marginRight:'60px',marginTop:'10px'}}>
-          <Link to={`/Myactivity/${localStorage.getItem('cityname')}`} style={{color:'black'}}>
+          <Link to={`/Myactivity/in-${localStorage.getItem('cityname')}`} style={{color:'black'}}>
             <i className="fa fa-user" ></i> Dashboard
           </Link>
         </li>

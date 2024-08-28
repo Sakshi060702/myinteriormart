@@ -58,7 +58,9 @@ const Services1 = () => {
                   return (
                     <li key={category.secondCategoryID}>
                       <Link
-                        to={`/subcategories/${category.secondCategoryID}/${localStorage.getItem('cityname')}`}
+                        to={`/${category.name
+                          .replace(/\s+/g, "-")
+                          .toLowerCase()}/in-${localStorage.getItem("cityname")}`}
                         title={category.searchKeywordName}
                         style={{ color: "black" }}
                       >
@@ -96,11 +98,14 @@ const Services1 = () => {
                           key={category.secondCategoryID}
                         >
                           <Link
-                            to={`/subcategories/${category.secondCategoryID}/${localStorage.getItem('cityname')}`}
-                            title={category.searchKeywordName}
-                          >
+                        to={`/${category.name
+                          .replace(/\s+/g, "-")
+                          .toLowerCase()}/in-${localStorage.getItem("cityname")}`}
+                        title={category.searchKeywordName}
+                        style={{ color: "black" }}
+                      >
                             <img
-                              src={icon}
+                              src={icon}  
                               alt={category.searchKeywordName}
                               className="img-fluid bigimage"
                             />

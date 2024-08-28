@@ -68,10 +68,27 @@ const Citypopup = ({}) => {
 
   const handleGetLocation = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
+      navigator.geolocation.getCurrentPosition(async(position) => {
         const { latitude, longitude } = position.coords;
 
-        window.location.href = `/contact?lat=${latitude}&lng=${longitude}`;
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+        );
+        const data = await response.json();
+
+        const cityName = data.address.city || data.address.town || data.address.village;
+
+        console.log("data",data);
+        console.log("cityname",cityName);
+
+        const LocationbyCity = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+        navigate(`/${cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`);
+        setCurrentCity(LocationbyCity);
+
+        localStorage.setItem("cityname",LocationbyCity);
+
+        // window.location.href = `/contact?lat=${latitude}&lng=${longitude}`;
 
         localStorage.setItem("latitude",latitude);
         localStorage.setItem("longitude",longitude);
@@ -127,6 +144,10 @@ const Citypopup = ({}) => {
             <button className="get-location-button" onClick={handleGetLocation}>
               Get My Location
             </button>
+            {/* <div className="current-city">
+  {currentCity && <p>Current city: {currentCity}</p>}
+</div> */}
+
             <hr />
             <div></div>
             <div>

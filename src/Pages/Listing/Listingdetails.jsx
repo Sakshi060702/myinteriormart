@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import Services from "../Services/Webdevelopment/Website/Services";
 import Webreviews from "../Services/Webdevelopment/Website/Webreviews";
 import profile from "../../FrontEnd/img/profile.svg";
@@ -20,14 +20,84 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import '../../FrontEnd/css/RegistrationMV.css'
+import CryptoJS from "crypto-js";
 
 function Listingdetails() {
   // const { listingId } = useParams();
+  console.log("RTEST");
+  const [searchParams] = useSearchParams();
+  console.log(searchParams);
 
-  const listingId = useParams().listingId.split('-')[0];
-  const currentPage = useParams().listingId.split('-')[1];
-  const itemsPerPage = useParams().listingId.split('-')[2];
-  const secondCategoryId = useParams().listingId.split('-')[3];
+const { listingPage,secondCategoryName } = useParams();
+
+// const currentPage = listingPage.split('-')[1];
+// const itemsPerPage = listingPage.split('-')[2];
+
+const currentPage = searchParams.get("page");
+const itemsPerPage = searchParams.get("itemperpage");
+
+console.log("currentpage",currentPage);
+console.log("Itemperpage",itemsPerPage)
+
+
+
+// const secondCategoryName = encryptedListingId.split('-')[3];
+
+
+
+// const decryptedListingId = decrypt(listingId_enc);
+// console.log(decryptedListingId); 
+
+
+
+  // const {encryptedListingId}=useParams();
+  // const listingId1=decrypt(encryptedListingId)
+  // console.log(listingId1)
+
+  
+  const encryptionKey = 'myinterriorMart@SECRETKEY';
+
+  const encrypt = (text) => {
+    
+    return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
+  };
+  
+  
+//   const decrypt = (ciphertext) => {
+//     const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
+//     console.log(bytes);
+//     console.log(bytes.toString(CryptoJS.enc.Utf8));
+// const decryptstring=bytes.toString(CryptoJS.enc.Utf8);
+// const decryptint=parseInt(decryptstring);
+// console.log(typeof decryptstring)
+// console.log("string",decryptstring)
+// console.log("inttt",parseInt(decryptstring))
+//     return decryptint
+
+
+    
+//   };
+
+const decrypt = (ciphertext) => {
+  const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
+  console.log(bytes);
+  console.log(bytes.toString(CryptoJS.enc.Utf8));
+  return bytes.toString(CryptoJS.enc.Utf8);
+
+
+  
+};
+
+
+ 
+  const listingId_enc = searchParams.get("listingEncyt");
+  const listingId = decrypt(decodeURIComponent(listingId_enc));
+  console.log(listingId_enc);
+  console.log("listingid",listingId)
+  console.log(decrypt(listingId_enc));
+  console.log("RTEST");
+  
+
   // console.log(useParams().listingId.split('-'));
   const [listingDetails, setListingDetails] = useState(null);
 
@@ -64,6 +134,16 @@ function Listingdetails() {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
+
+  // if(){
+  // }
+  
+
+
+
+
+
+
 
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -110,7 +190,7 @@ function Listingdetails() {
     try {
       const response = await fetch(
         // `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing`,
-        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing?pageNumber=${currentPage}&pageSize=${itemsPerPage}&subCategoryid=${secondCategoryId}`,
+        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing?pageNumber=${currentPage}&pageSize=${itemsPerPage}&subCategoryName=${secondCategoryName}`,
 
         {
           method: "GET", // You can adjust the method if needed
@@ -464,6 +544,7 @@ function Listingdetails() {
 
   return (
     <>
+   
       <div className="container individual-listing">
         <div className="row">
           {listingDetails ? (

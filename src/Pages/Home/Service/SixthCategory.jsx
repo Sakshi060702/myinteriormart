@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
 
 function SixthCategory() {
-  const { fifthCategoryId } = useParams();
+  const { fifthCategoryId ,fifthCategoryName,fourthCategoryName,subcategoryName,secondCategoryName} = useParams();
   const [sixthCategories, setSixthCategories] = useState([]);
 
   useEffect(() => {
     fetchSixthCategories();
-  }, [fifthCategoryId]);
+  }, [fifthCategoryId,fifthCategoryName,fourthCategoryName,subcategoryName,secondCategoryName]);
 
   const fetchSixthCategories = async () => {
     try {
@@ -27,7 +27,7 @@ function SixthCategory() {
           service.thirdCategories.forEach((thirdCategory) => {
             thirdCategory.fourthCategories.forEach((fourthCategory) => {
               fourthCategory.fifthCategories.forEach((fifthCategory) => {
-                if (fifthCategory.fifthCategoryID === fifthCategoryId) {
+                if (fifthCategory.name.replace(/\s+/g, "-").toLowerCase() === fifthCategoryName) {
                   foundSixthCategories = fifthCategory.sixthCategories;
                 }
               });
@@ -35,7 +35,13 @@ function SixthCategory() {
           });
         });
 
-        setSixthCategories(foundSixthCategories);
+        if(foundSixthCategories)
+        {
+          
+          setSixthCategories(foundSixthCategories);
+        }
+       else{console.error("Error")}
+       
       } else {
         console.error("Unexpected data format or missing services array", data);
       }
@@ -81,11 +87,11 @@ function SixthCategory() {
                     />
                   </span>
                   <Link
-                    // to={"/website"}
-                    to={`/listing/${sixthCategory.fifthCategoryID}/${localStorage.getItem('cityname')}`}
-                    title={sixthCategory.name}
-                    className="Linkstyle"
-                  >
+                      to={`/All/${sixthCategory.name
+                            .replace(/\s+/g, "-").toLowerCase()}/${fifthCategoryName}/${fourthCategoryName}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}`}
+                      title={sixthCategory.name}
+                      className="Linkstyle"
+                    >
                     {sixthCategory.name}
                   </Link>
                 </div>

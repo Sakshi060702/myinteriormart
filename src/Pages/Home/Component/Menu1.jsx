@@ -191,7 +191,7 @@ function Menu1() {
           <div className="row">
             <div className="col-lg-3 col-12">
               <div id="logo" className="logo">
-                <NavLink to={`/${localStorage.getItem('cityname')}`} title="index">
+                <NavLink to={`/in-${localStorage.getItem('cityname')}`} title="index">
                   <img
                     src={logoSticky}
                     width="220"
@@ -219,7 +219,7 @@ function Menu1() {
                   <>
                     <li>
                       <NavLink
-                        to={`/signup2/${localStorage.getItem('cityname')}`}
+                        to={`/signup2/in-${localStorage.getItem('cityname')}`}
                         className="btn_add listing-btn buttonlogin"
                         style={{
                           backgroundColor: "#fe900d",
@@ -235,7 +235,7 @@ function Menu1() {
                     </li>
                     <li>
                       <NavLink
-                        to={`/login/${localStorage.getItem('cityname')}`}
+                        to={`/login/in-${localStorage.getItem('cityname')}`}
                         className="btn_add listing-btn buttonlogin "
                         style={{ backgroundColor: "#fe900d", fontSize: "14px" }}
                         onClick={closeMenu}
@@ -245,7 +245,7 @@ function Menu1() {
                     </li>
                     <li style={{marginLeft:'13px'}}>
                     <NavLink
-                        to={`/signup2/${localStorage.getItem('cityname')}`}
+                        // to={`/signup2/in-${localStorage.getItem('cityname')}`}
                         className="btn_add listing-btn buttonlogin"
                         style={{
                           backgroundColor: "#fe900d",
@@ -261,7 +261,7 @@ function Menu1() {
                 </li> 
                 <li>
                 <NavLink
-                        to={`/signup2/${localStorage.getItem('cityname')}`}
+                        to={`/signup2/in-${localStorage.getItem('cityname')}`}
                         className="btn_add listing-btn buttonlogin"
                         style={{
                           backgroundColor: "#fe900d",
@@ -363,7 +363,7 @@ function Menu1() {
                             <ul>
                               <li>
                                 <NavLink
-                                  to={`/addcompany/${localStorage.getItem('cityname')}`}
+                                  to={`/addcompany/in-${localStorage.getItem('cityname')}`}
                                   className="btn_add listing-btn"
                                   style={{
                                     backgroundColor: "#fe900d",
