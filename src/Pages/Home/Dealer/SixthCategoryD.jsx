@@ -2,10 +2,31 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
+import { useSearchParams } from "react-router-dom";
+import CryptoJS from "crypto-js";
+
+const encryptionKey = 'myinterriorMart@SECRETKEY';
+
+const encrypt = (text) => {
+  
+  return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
+};
+
+
+const decrypt = (ciphertext) => {
+  const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
+  return bytes.toString(CryptoJS.enc.Utf8);
+};
 
 function SixthCategoryD() {
-  const { fifthCategoryId } = useParams();
+  const {fifthCategoryName,fourthCategoryName,subcategoryName,secondCategoryName} = useParams();
+
   const [sixthCategories, setSixthCategories] = useState([]);
+  const [searchParams] = useSearchParams();
+ 
+
+  const listingId_enc = searchParams.get("fcatEncyt");
+  const fifthCategoryId  = decrypt(decodeURIComponent(listingId_enc));
 
   useEffect(() => {
     fetchSixthCategories();
@@ -77,7 +98,8 @@ function SixthCategoryD() {
                   </span>
                   <Link
                     // to={"/website"}
-                    to={`/listing/${sixthCategory.fifthCategoryID}${localStorage.getItem('cityname')}`}
+                    to={`/All/${sixthCategory.name
+                      .replace(/\s+/g, "-").toLowerCase()}/${fifthCategoryName}/${fourthCategoryName}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(sixthCategory.secondCategoryID)))}`}
                     title={sixthCategory.name}
                     className="Linkstyle"
                   >

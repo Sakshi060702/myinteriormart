@@ -686,16 +686,16 @@ function App() {
   <Route path="/All/:sixthCategoryName/:fifthCategoryName/:fourthCategoryName/:subcategoryName/:secondCategoryName/:cityName" element={<SixthCategoryListing/>}/>
 
   <Route exact path="/contractor1" element={<Contractor1/>} />
-  <Route path="/Thirdcategoriesc/:secondCategoryId/:cityName" element={<ThirdcategoryC/>} />
-   <Route path="/Fourthcategoriesc/:thirdCategoryId/:cityName" element={<FourthCategoryC/>} />
-   <Route path="/Fifthcategoriesc/:fourthCategoryId/:cityName" element={<FifthCategoryC/>} />
-  <Route path="/Sixthcategoriesc/:fifthCategoryId/:cityName" element={<SixthCategoryC/>} />
+  <Route path="/Contractor/:categoryName/:cityName" element={<ThirdcategoryC/>} />
+   <Route path="/Contractor/:subcategoryName/:secondCategoryName/:cityName" element={<FourthCategoryC/>} />
+   <Route path="/Contractor/:fourthCategoryName/:subcategoryName/:secondCategoryName/:cityName" element={<FifthCategoryC/>} />
+  <Route path="/Contractor/:fifthCategoryName/:fourthCategoryName/:subcategoryName/:secondCategoryName/:cityName" element={<SixthCategoryC/>} />
 
 <Route exact path="/Dealer" element={<Dealer1/>}/>
-<Route path="/Thirdcategoriesd/:secondCategoryId/:cityName" element={<ThirdCategoryD/>} />
-<Route path="/Fourthcategoriesd/:thirdCategoryId/:cityName" element={<FourthCategoryD/>} />
-<Route path="/Fifthcategoriesd/:fourthCategoryId/:cityName" element={<FifthCategoryD/>} />
-  <Route path="/Sixthcategoriesd/:fifthCategoryId/:cityName" element={<SixthCategoryD/>} />
+<Route path="/Dealer/Category/:categoryName/:cityName" element={<ThirdCategoryD/>} />
+<Route path="/Dealer/Category/:subcategoryName/:secondCategoryName/:cityName" element={<FourthCategoryD/>} />
+<Route path="/Dealer/Category/:fourthCategoryName/:subcategoryName/:secondCategoryName/:cityName" element={<FifthCategoryD/>} />
+  <Route path="/Dealer/Category/:fifthCategoryName/:fourthCategoryName/:subcategoryName/:secondCategoryName/:cityName" element={<SixthCategoryD/>} />
 
   <Route path="/listing/:secondCategoryId/:cityName" element={<Listingc/>}/>
 <Route path="/company/:listingId/:cityName" element={<Listingdetailsc/>}/>

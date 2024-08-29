@@ -1,17 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
 
 import { Link } from "react-router-dom";
+import CryptoJS from "crypto-js";
+
+const encryptionKey = 'myinterriorMart@SECRETKEY';
+
+const encrypt = (text) => {
+  
+  return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
+};
+
+
+const decrypt = (ciphertext) => {
+  const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
+  return bytes.toString(CryptoJS.enc.Utf8);
+};
 
 const SubCategoryList = () => {
-  const { secondCategoryId,categoryName } = useParams(); 
+  const {categoryName } = useParams(); 
   const [subCategories, setSubCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [searchParams] = useSearchParams();
+
+const listingId_enc = searchParams.get("fircatEncyt");
+const secondCategoryId = decrypt(decodeURIComponent(listingId_enc));
+console.log(secondCategoryId);
+console.log("listingid",secondCategoryId)
+console.log(decrypt(listingId_enc));
 
   useEffect(() => {
     fetchSubCategories();
-  }, [categoryName]);
+  }, [secondCategoryId]);
 
   const fetchSubCategories = async () => {
     try {
@@ -19,18 +41,16 @@ const SubCategoryList = () => {
         "https://apidev.myinteriormart.com/api/Category/GetCategories"
       );
       const data = await response.json();
-      // console.log("Fetched Data:", data);
-      const category = data.services.find(
-        (cat) => cat.name.replace(/\s+/g, "-").toLowerCase() === categoryName
+       console.log("Fetched Data:", data);
+       const category = data.services.find(
+        (cat) => String(cat.secondCategoryID) === String(secondCategoryId)
       );
-      // console.log("Selected Category:", category);
-      if(category){
-        setSelectedCategory(category);
-        setSubCategories(category ? category.thirdCategories : []);
-      }
-      else{
-        console.error("There is not category");
-      }
+       console.log("Selected Category:", category);
+       console.log("category",setSelectedCategory(category))
+       console.log("category2", setSubCategories(category ? category.thirdCategories : []))
+      
+       setSelectedCategory(category);
+       setSubCategories(category ? category.thirdCategories : []);
     
     } catch (error) {
       console.error("Error fetching subcategories:", error);
@@ -49,7 +69,7 @@ const SubCategoryList = () => {
         <div className="row justify-content-center categories-list">
           {selectedCategory && (
             <ul className="subcategories-list d-flex justify-content-center flex-wrap">
-              {subCategories.map((subCategory, index) => (
+              {subCategories.map((subCategory) => (
                 <li
                   key={subCategory.thirdCategoryID}
                   className={`col-lg-3 col-6 d-flex justify-content-center`}
@@ -76,7 +96,7 @@ const SubCategoryList = () => {
                       to={`/All/${subCategory.name
                             .replace(/\s+/g, "-").toLowerCase()}/${selectedCategory.name
                               .replace(/\s+/g, "-")
-                            .toLowerCase()}/in-${localStorage.getItem('cityname')}`}
+                            .toLowerCase()}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(subCategory.secondCategoryID)))}`}
                       title={subCategory.name}
                       className="Linkstyle"
                     >
@@ -89,7 +109,7 @@ const SubCategoryList = () => {
                           to={`/${subCategory.name
                             .replace(/\s+/g, "-").toLowerCase()}/${selectedCategory.name
                               .replace(/\s+/g, "-")
-                            .toLowerCase()}/in-${localStorage.getItem('cityname')}`}
+                            .toLowerCase()}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(subCategory.thirdCategoryID)))}`}
                           title={subCategory.name}
                           style={{ color: "#fe900d" }}
                         >

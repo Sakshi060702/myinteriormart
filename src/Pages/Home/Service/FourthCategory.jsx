@@ -2,11 +2,34 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
+import { useSearchParams } from "react-router-dom";
+import CryptoJS from "crypto-js";
+
+const encryptionKey = 'myinterriorMart@SECRETKEY';
+
+const encrypt = (text) => {
+  
+  return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
+};
+
+
+const decrypt = (ciphertext) => {
+  const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
+  return bytes.toString(CryptoJS.enc.Utf8);
+};
 
 const FourthCategory = () => {
-  const { thirdCategoryId,subcategoryName,secondCategoryName } = useParams();
+  const {subcategoryName,secondCategoryName } = useParams();
   const [fourthCategories, setFourthCategories] = useState([]);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+  const [searchParams] = useSearchParams();
+ 
+
+const listingId_enc = searchParams.get("secatEncyt");
+const thirdCategoryId = decrypt(decodeURIComponent(listingId_enc));
+console.log(thirdCategoryId);
+console.log("listingid",thirdCategoryId)
+console.log(decrypt(listingId_enc))
 
   useEffect(() => {
     fetchFourthCategories();
@@ -21,18 +44,28 @@ const FourthCategory = () => {
       const data = await response.json();
       // console.log("Fetched Fourth Categories Data:", data);
 
+      
       // Check the structure of `data` and access the array of categories
-      const category = data.services.find(
-        (cat) => cat.name.replace(/\s+/g, "-").toLowerCase() === secondCategoryName
-      );
-      const subCategory = category?.thirdCategories.find(
-        (sub) => sub.name.replace(/\s+/g, "-").toLowerCase() === subcategoryName
-      );
-      if (subCategory) {
-        setFourthCategories(subCategory.fourthCategories || []);
+
+      if (data && Array.isArray(data.services)) {
+        let subcategory = null;
+        data.services.forEach((category) => {
+          category.thirdCategories.forEach((thirdCategory) => {
+            if (String(thirdCategory.thirdCategoryID) === thirdCategoryId) {
+              subcategory = thirdCategory;
+            }
+          });
+        });
+        console.log("Selected Category :", subcategory);
+
+        setSelectedSubcategory(subcategory);
+        setFourthCategories(subcategory ? subcategory.fourthCategories : []);
       } else {
-        console.error("Subcategory not found");
+        console.error("Unexpected data format :", data);
       }
+
+
+      
     } catch (error) {
       console.error("Error fetching fourth categories:", error);
     }
@@ -96,7 +129,7 @@ const FourthCategory = () => {
                   </span>
                   <Link
                       to={`/All/${fourthCategory.name
-                            .replace(/\s+/g, "-").toLowerCase()}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}`}
+                            .replace(/\s+/g, "-").toLowerCase()}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(fourthCategory.secondCategoryID)))}`}
                       title={fourthCategory.name}
                       className="Linkstyle"
                     >
@@ -108,7 +141,7 @@ const FourthCategory = () => {
                       <Link
                         to={`/${fourthCategory.name
                           .replace(/\s+/g, "-")
-                          .toLowerCase()}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}`}
+                          .toLowerCase()}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}?thcatEncyt=${encodeURIComponent(encrypt(parseInt(fourthCategory.fourthCategoryID)))}`}
                         title={fourthCategory.name}
                         style={{ color: "#fe900d" }}
                       >

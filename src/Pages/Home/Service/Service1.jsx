@@ -4,6 +4,20 @@ import ListingHomeImage from "../../../FrontEnd/img/banner/Services.jpg";
 import fslide from "../../../FrontEnd/img/banner/Dream Land Home.jpg";
 import "../../../FrontEnd/css/Service.css";
 import "../../../FrontEnd/css/Cate.css";
+import CryptoJS from "crypto-js";
+
+const encryptionKey = 'myinterriorMart@SECRETKEY';
+
+const encrypt = (text) => {
+  
+  return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
+};
+
+
+const decrypt = (ciphertext) => {
+  const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
+  return bytes.toString(CryptoJS.enc.Utf8);
+};
 
 const Services1 = () => {
   const [categories, setCategories] = useState([]);
@@ -60,7 +74,7 @@ const Services1 = () => {
                       <Link
                         to={`/${category.name
                           .replace(/\s+/g, "-")
-                          .toLowerCase()}/in-${localStorage.getItem("cityname")}`}
+                          .toLowerCase()}/in-${localStorage.getItem("cityname")}?fircatEncyt=${encodeURIComponent(encrypt(parseInt(category.secondCategoryID)))}`}
                         title={category.searchKeywordName}
                         style={{ color: "black" }}
                       >
@@ -100,7 +114,7 @@ const Services1 = () => {
                           <Link
                         to={`/${category.name
                           .replace(/\s+/g, "-")
-                          .toLowerCase()}/in-${localStorage.getItem("cityname")}`}
+                          .toLowerCase()}/in-${localStorage.getItem("cityname")}?fircatEncyt=${encodeURIComponent(encrypt(parseInt(category.secondCategoryID)))}`}
                         title={category.searchKeywordName}
                         style={{ color: "black" }}
                       >

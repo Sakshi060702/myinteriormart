@@ -4,6 +4,20 @@ import ListingHomeImage from "../../../FrontEnd/img/banner/Dealers.jpg";
 import { Link } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
 import "../../../FrontEnd/css/Cate.css";
+import CryptoJS from "crypto-js";
+
+const encryptionKey = 'myinterriorMart@SECRETKEY';
+
+const encrypt = (text) => {
+  
+  return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
+};
+
+
+const decrypt = (ciphertext) => {
+  const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
+  return bytes.toString(CryptoJS.enc.Utf8);
+};
 
 function Dealer1() {
   const [catDealer, setcatDealer] = useState([]);
@@ -59,7 +73,11 @@ function Dealer1() {
 
                     return (
                       <li className="mim-box-list" key={cat.secondCategoryID}>
-                        <Link to={`/Thirdcategoriesd/${cat.secondCategoryID}${localStorage.getItem('cityname')}`}>
+<Link
+                          to={`/Dealer/Category/${cat.name
+                            .replace(/\s+/g, "-")
+                            .toLowerCase()}/in-${localStorage.getItem("cityname")}?fircatEncyt=${encodeURIComponent(encrypt(parseInt(cat.secondCategoryID)))}`}
+  >
                           <img
                             src={icon}
                             alt={cat.searchKeywordName}
@@ -101,8 +119,10 @@ function Dealer1() {
                                 key={cat.secondCategoryID}
                               >
                                 <Link
-                                  to={`/Thirdcategoriesd/${cat.secondCategoryID}${localStorage.getItem('cityname')}`}
-                                  title={cat.searchKeywordName}
+                          to={`/Dealer/Category/${cat.name
+                            .replace(/\s+/g, "-")
+                            .toLowerCase()}/in-${localStorage.getItem("cityname")}?fircatEncyt=${encodeURIComponent(encrypt(parseInt(cat.secondCategoryID)))}`}
+                                   title={cat.searchKeywordName}
                                 >
                                   <img
                                     src={icon}

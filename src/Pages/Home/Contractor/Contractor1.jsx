@@ -4,9 +4,23 @@ import ContractorImage from "../../../FrontEnd/img/banner/Contractor.jpg";
 import { Link } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
 import "../../../FrontEnd/css/Cate.css";
+import CryptoJS from "crypto-js";
 
 import fslide from "../../../FrontEnd/img/banner/Dream Land Home.jpg";
 import sslide from "../../../FrontEnd/img/banner/Furniture.jpg";
+
+const encryptionKey = 'myinterriorMart@SECRETKEY';
+
+const encrypt = (text) => {
+  
+  return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
+};
+
+
+const decrypt = (ciphertext) => {
+  const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
+  return bytes.toString(CryptoJS.enc.Utf8);
+};
 
 function Contractor1() {
   const [catContractor, setcatContractor] = useState([]);
@@ -63,7 +77,10 @@ function Contractor1() {
                         className="mim-box-list"
                         key={category.secondCategoryID}>
                         <Link
-                          to={`/Thirdcategoriesc/${category.secondCategoryID}${localStorage.getItem('cityname')}`}
+                          to={`/Contractor/${category.name
+                            .replace(/\s+/g, "-")
+                            .toLowerCase()}/in-${localStorage.getItem("cityname")}?fircatEncyt=${encodeURIComponent(encrypt(parseInt(category.secondCategoryID)))}`}
+  
                           title={category.searchKeywordName}
                           style={{ color: "black" }}>
                           <img
@@ -99,7 +116,10 @@ function Contractor1() {
                             className="col-md-3 col-sm-3 col-3 mim-Box-item"
                             key={category.secondCategoryID} >
                             <Link
-                              to={`/Thirdcategoriesc/${category.secondCategoryID}${localStorage.getItem('cityname')}`}
+                              to={`/Contractor/${category.name
+                                .replace(/\s+/g, "-")
+                                .toLowerCase()}/in-${localStorage.getItem("cityname")}?fircatEncyt=${encodeURIComponent(encrypt(parseInt(category.secondCategoryID)))}`}
+      
                               title={category.searchKeywordName}>
                               <img
                                 src={icon}

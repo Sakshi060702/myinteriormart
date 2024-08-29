@@ -2,12 +2,29 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
+import { useSearchParams } from "react-router-dom";
+import CryptoJS from "crypto-js";
+
+const encryptionKey = "myinterriorMart@SECRETKEY";
+
+const encrypt = (text) => {
+  return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
+};
+
+const decrypt = (ciphertext) => {
+  const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
+  return bytes.toString(CryptoJS.enc.Utf8);
+};
 
 function ThirdCategoryD() {
-  const { secondCategoryId } = useParams();
+  // const { secondCategoryId } = useParams();
   const [subCategories, setSubCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
+  const [searchParams] = useSearchParams();
+
+  const listingId_enc = searchParams.get("fircatEncyt");
+  const secondCategoryId = decrypt(decodeURIComponent(listingId_enc));
   useEffect(() => {
     fetchThirdCategories();
   }, [secondCategoryId]);
@@ -68,16 +85,30 @@ function ThirdCategoryD() {
                     />
                   </span>
                   <Link
-                    to={`/listing/${subCategory.secondCategoryID}${localStorage.getItem('cityname')}`}
-                    title={subCategory.name}
-                    className="Linkstyle"
+                     to={`/All/${subCategory.name
+                      .replace(/\s+/g, "-")
+                      .toLowerCase()}/${selectedCategory.name
+                      .replace(/\s+/g, "-")
+                      .toLowerCase()}/in-${localStorage.getItem(
+                      "cityname"
+                    )}?secatEncyt=${encodeURIComponent(
+                      encrypt(parseInt(subCategory.secondCategoryID))
+                    )}`}
                   >
                     {subCategory.name}
                   </Link>
                   {subCategory.fourthCategories &&
                     subCategory.fourthCategories.length > 0 && (
                       <Link
-                        to={`/Fourthcategoriesd/${subCategory.thirdCategoryID}${localStorage.getItem('cityname')}`}
+                      to={`/Dealer/Category/${subCategory.name
+                        .replace(/\s+/g, "-")
+                        .toLowerCase()}/${selectedCategory.name
+                        .replace(/\s+/g, "-")
+                        .toLowerCase()}/in-${localStorage.getItem(
+                        "cityname"
+                      )}?secatEncyt=${encodeURIComponent(
+                        encrypt(parseInt(subCategory.thirdCategoryID))
+                      )}`}
                         title={subCategory.name}
                         style={{ color: "#fe900d" }}
                       >

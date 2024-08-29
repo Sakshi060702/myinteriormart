@@ -36,6 +36,8 @@ const { listingPage,secondCategoryName } = useParams();
 const currentPage = searchParams.get("page");
 const itemsPerPage = searchParams.get("itemperpage");
 
+// const secondCategoryId = useParams().listingId.split('-')[3];
+
 console.log("currentpage",currentPage);
 console.log("Itemperpage",itemsPerPage)
 
@@ -96,6 +98,13 @@ const decrypt = (ciphertext) => {
   console.log("listingid",listingId)
   console.log(decrypt(listingId_enc));
   console.log("RTEST");
+
+
+  const secondcategory_enc = searchParams.get("secondCategoryId");
+  const secondCategoryId = decrypt(decodeURIComponent(secondcategory_enc));
+  console.log(secondcategory_enc);
+  console.log("secondcategory",secondCategoryId)
+  console.log(decrypt(secondcategory_enc));
   
 
   // console.log(useParams().listingId.split('-'));
@@ -186,11 +195,13 @@ const decrypt = (ciphertext) => {
 
   const token = useSelector((state) => state.auth.token);
 
+  const fomattedcity=localStorage.getItem('cityname')
+
   const fetchListingDetails = async () => {
     try {
       const response = await fetch(
         // `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing`,
-        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing?pageNumber=${currentPage}&pageSize=${itemsPerPage}&subCategoryName=${secondCategoryName}`,
+        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing?pageNumber=${currentPage}&pageSize=${itemsPerPage}&subCategoryid=${secondCategoryId}&cityName=${fomattedcity}`,
 
         {
           method: "GET", // You can adjust the method if needed

@@ -26,7 +26,7 @@ const decrypt = (ciphertext) => {
 
 
 function FourthCategoryListing() {
-  const { secondCategoryId ,secondCategoryName,subcategoryName,fourthCategoryName} = useParams();
+  const { secondCategoryName,subcategoryName} = useParams();
   const [searchParams] = useSearchParams();
   const searching = searchParams.get("searchkey");
   // console.log(searching,useParams());
@@ -37,18 +37,33 @@ function FourthCategoryListing() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [totalItems, setTotalItems] = useState(0);
 
+
+const listingId_enc = searchParams.get("secatEncyt");
+const secondCategoryId = decrypt(decodeURIComponent(listingId_enc));
+console.log(secondCategoryId);
+console.log("listingid",secondCategoryId)
+console.log(decrypt(listingId_enc));
+
   useEffect(() => {
     fetchListings();
-  }, [secondCategoryId, currentPage,secondCategoryName,subcategoryName,fourthCategoryName]);
+  }, [secondCategoryId,currentPage,secondCategoryName,subcategoryName]);
 
   const token = useSelector((state) => state.auth.token);
 
-  console.log(encrypt(listing.listingId));
+  // console.log(encrypt(listing.listingId));
+  const fomattedcity=localStorage.getItem('cityname')
+ 
+
+ 
+
+
+
+ 
 
   const fetchListings = async () => {
     try {
       const response = await fetch(
-        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing?pageNumber=${currentPage}&pageSize=${itemsPerPage}&subCategoryName=${fourthCategoryName}`,
+        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing?pageNumber=${currentPage}&pageSize=${itemsPerPage}&subCategoryid=${secondCategoryId}&cityName=${fomattedcity}`,
         {
           method: "GET",
           headers: {
@@ -66,20 +81,20 @@ function FourthCategoryListing() {
       // console.log("Fetched Data", data);
 
       // Filter listings if needed based on subCategoryId
-      const filteredListing = data.filter((listing) => {
+      const filterdListing = data.filter((listing) => {
         return listing.subCategory.some(
-          (subcat) => subcat.name.toLowerCase().replace(/\s+/g, "-") === secondCategoryName.toLowerCase()
+          (subcat) => subcat.id.toString() === secondCategoryId
         );
       });
       
 
-      setListing(filteredListing);
+      setListing(filterdListing);
       // console.log(filteredListing)
       // console.log(itemsPerPage);
 
-      if (filteredListing.length < itemsPerPage) {
+      if (filterdListing.length < itemsPerPage) {
         setTotalItems(
-          (currentPage - 1) * itemsPerPage + filteredListing.length
+          (currentPage - 1) * itemsPerPage + filterdListing.length
         );
       } else {
         setTotalItems(currentPage * itemsPerPage + 1);
@@ -148,7 +163,7 @@ function FourthCategoryListing() {
                         <div className="wrapper">
                           <h3 style={{ color: "black" }}>
                           <Link
-                              to={`/company/${listing.companyName.replace(/\s+/g, "-").toLowerCase()}/${secondCategoryName}/in-${localStorage.getItem('cityname')} ?listingEncyt=${encodeURIComponent(encrypt(listing.listingId))}&page=${currentPage}&itemperpage=${itemsPerPage}`}
+                              to={`/company/${listing.companyName.replace(/\s+/g, "-").toLowerCase()}/${secondCategoryName}/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(listing.listingId))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(encrypt(parseInt(secondCategoryId)))}`}
                             >
                               {" "}
                               {listing.companyName}

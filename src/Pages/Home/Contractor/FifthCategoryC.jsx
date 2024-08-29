@@ -2,11 +2,36 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
+import { useSearchParams } from "react-router-dom";
+import CryptoJS from "crypto-js";
+
+const encryptionKey = 'myinterriorMart@SECRETKEY';
+
+const encrypt = (text) => {
+  
+  return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
+};
+
+
+const decrypt = (ciphertext) => {
+  const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
+  return bytes.toString(CryptoJS.enc.Utf8);
+};
+
 
 function FifthCategoryC() {
-  const { fourthCategoryId } = useParams();
+  const { fourthCategoryName ,subcategoryName,secondCategoryName} = useParams();
   const [fifthCategories, setFifthCategories] = useState([]);
   const [selectedFourthCategory, setSelectedFourthCategory] = useState(null);
+
+  const [searchParams] = useSearchParams();
+ 
+
+  const listingId_enc = searchParams.get("thcatEncyt");
+  const fourthCategoryId  = decrypt(decodeURIComponent(listingId_enc));
+  console.log(fourthCategoryId);
+  console.log("listingid",fourthCategoryId)
+  console.log(decrypt(listingId_enc))
 
   useEffect(() => {
     fetchFifthCategories();
@@ -83,7 +108,9 @@ function FifthCategoryC() {
                 </span>
                 <Link
                   // to={"/website"}
-                  to={`/listing/${fifthCategory.fourthCategoryID}${localStorage.getItem('cityname')}`}
+                  to={`/All/${fifthCategory.name
+                    .replace(/\s+/g, "-").toLowerCase()}/${fourthCategoryName}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(fifthCategory.secondCategoryID)))}`}
+
                   title={fifthCategory.name}
                   className="Linkstyle"
                 >
@@ -93,7 +120,9 @@ function FifthCategoryC() {
                 {fifthCategory.sixthCategories &&
                   fifthCategory.sixthCategories.length > 0 && (
                     <Link
-                      to={`/Sixthcategoriesc/${fifthCategory.fifthCategoryID}${localStorage.getItem('cityname')}`}
+ to={`/Contractor/${fifthCategory.name
+                        .replace(/\s+/g, "-")
+                        .toLowerCase()}/${fourthCategoryName}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}?fcatEncyt=${encodeURIComponent(encrypt(parseInt(fifthCategory.fifthCategoryID)))}`}
                       title={fifthCategory.name}
                       style={{ color: "#fe900d" }}
                     >

@@ -2,11 +2,36 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
+import { useSearchParams } from "react-router-dom";
+import CryptoJS from "crypto-js";
+
+const encryptionKey = 'myinterriorMart@SECRETKEY';
+
+const encrypt = (text) => {
+  
+  return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
+};
+
+
+const decrypt = (ciphertext) => {
+  const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
+  return bytes.toString(CryptoJS.enc.Utf8);
+};
 
 function FifthCategory() {
-  const { fourthCategoryId,fourthCategoryName ,subcategoryName,secondCategoryName} = useParams();
+  const { fourthCategoryName ,subcategoryName,secondCategoryName} = useParams();
   const [fifthCategories, setFifthCategories] = useState([]);
   const [selectedFourthCategory, setSelectedFourthCategory] = useState(null);
+
+  
+  const [searchParams] = useSearchParams();
+ 
+
+const listingId_enc = searchParams.get("thcatEncyt");
+const fourthCategoryId  = decrypt(decodeURIComponent(listingId_enc));
+console.log(fourthCategoryId);
+console.log("listingid",fourthCategoryId)
+console.log(decrypt(listingId_enc))
 
   useEffect(() => {
     fetchFifthCategories();
@@ -22,27 +47,25 @@ function FifthCategory() {
       if (data && data.services && Array.isArray(data.services)) {
         let foundFourthCategory = null;
 
-        // Find the correct fourthCategory based on fourthCategoryName
         data.services.forEach((service) => {
           service.thirdCategories.forEach((thirdCategory) => {
             thirdCategory.fourthCategories.forEach((fourthCategory) => {
-              if (fourthCategory.name.replace(/\s+/g, "-").toLowerCase() === fourthCategoryName) {
+              if (fourthCategory.fourthCategoryID === fourthCategoryId)
                 foundFourthCategory = fourthCategory;
-              }
             });
           });
         });
-
-        if (foundFourthCategory) {
-          setSelectedFourthCategory(foundFourthCategory);
-          setFifthCategories(foundFourthCategory.fifthCategories || []);
-        } else {
-          console.error("Fourth Category not found with name:", fourthCategoryName);
-          setFifthCategories([]); // Set to empty if not found
-        }
+        console.log("Selected Fifth Category :", foundFourthCategory);
+        setSelectedFourthCategory(foundFourthCategory);
+        setFifthCategories(
+          foundFourthCategory ? foundFourthCategory.fifthCategories : []
+        );
       } else {
-        console.error("Unexpected data format or missing services array", data);
+        console.error("Unexpected data format", data);
       }
+
+
+      
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -83,7 +106,7 @@ function FifthCategory() {
                 </span>
                 <Link
                       to={`/All/${fifthCategory.name
-                            .replace(/\s+/g, "-").toLowerCase()}/${fourthCategoryName}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}`}
+                            .replace(/\s+/g, "-").toLowerCase()}/${fourthCategoryName}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(fifthCategory.secondCategoryID)))}`}
                       title={fifthCategory.name}
                       className="Linkstyle"
                     >
@@ -95,7 +118,7 @@ function FifthCategory() {
                     <Link
                       to={`/${fifthCategory.name
                         .replace(/\s+/g, "-")
-                        .toLowerCase()}/${fourthCategoryName}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}`}
+                        .toLowerCase()}/${fourthCategoryName}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}?fcatEncyt=${encodeURIComponent(encrypt(parseInt(fifthCategory.fifthCategoryID)))}`}
                       title={fifthCategory.name}
                       style={{ color: "#fe900d" }}
                     >

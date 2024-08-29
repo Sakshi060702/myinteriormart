@@ -2,11 +2,31 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
+import { useSearchParams } from "react-router-dom";
+
+import CryptoJS from "crypto-js";
+
+const encryptionKey = 'myinterriorMart@SECRETKEY';
+
+const encrypt = (text) => {
+  
+  return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
+};
+
+
+const decrypt = (ciphertext) => {
+  const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
+  return bytes.toString(CryptoJS.enc.Utf8);
+};
 
 function FourthCategoryD() {
-  const { thirdCategoryId } = useParams();
+  const {subcategoryName,secondCategoryName } = useParams();
   const [fourthCategories, setFourthCategories] = useState([]);
   const [selectedFourthCategory, setSelectedFourthCategory] = useState(null);
+  const [searchParams] = useSearchParams();
+
+  const listingId_enc = searchParams.get("secatEncyt");
+const thirdCategoryId = decrypt(decodeURIComponent(listingId_enc));
 
   useEffect(() => {
     fetchFourthCategories();
@@ -76,7 +96,9 @@ function FourthCategoryD() {
                 </span>
                 <Link
                   // to={"/website"}
-                  to={`/listing/${fourthCategory.thirdCategoryID}${localStorage.getItem('cityname')}`}
+                  to={`/All/${fourthCategory.name
+                    .replace(/\s+/g, "-").toLowerCase()}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(fourthCategory.secondCategoryID)))}`}
+
                   title={fourthCategory.name}
                   className="Linkstyle"
                 >
@@ -86,7 +108,9 @@ function FourthCategoryD() {
                 {fourthCategory.fifthCategories &&
                   fourthCategory.fifthCategories.length > 0 && (
                     <Link
-                      to={`/Fifthcategoriesd/${fourthCategory.fourthCategoryID}${localStorage.getItem('cityname')}`}
+                    to={`/Dealer/Category/${fourthCategory.name
+                      .replace(/\s+/g, "-")
+                      .toLowerCase()}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}?thcatEncyt=${encodeURIComponent(encrypt(parseInt(fourthCategory.fourthCategoryID)))}`}
                       title={fourthCategory.name}
                       style={{ color: "#fe900d" }}
                     >
