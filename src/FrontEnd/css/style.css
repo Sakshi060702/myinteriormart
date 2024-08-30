@@ -3993,6 +3993,7 @@ a.address:hover {
 .loc_open.call-now {
   background-image: linear-gradient(to right, #ffffff, #ffffff);
   color: #fe900d;
+  height: 32px;
 }
 
 .loc_open.call-now:hover,

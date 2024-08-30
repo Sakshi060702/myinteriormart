@@ -137,7 +137,8 @@ const Areapopup = ({ isOpen, pincodeId,localityId, onClose }) => {
                   />
                 </div>
               </div>
-              <div style={{paddingLeft:'10px'}}> 
+              <div style={{display:'flex'}}>
+              <div style={{paddingLeft:'10px',marginRight:'11px'}}> 
                 <button
                 className="btn"
                 style={{ backgroundColor: "green" }}
@@ -152,6 +153,8 @@ const Areapopup = ({ isOpen, pincodeId,localityId, onClose }) => {
               >
                 Cancel
               </button></div>
+              </div>
+             
               
              
               

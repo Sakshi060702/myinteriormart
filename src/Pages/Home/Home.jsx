@@ -33,16 +33,22 @@ function Home(){
         if(!selectedCity){
             setShowpopup(true);
 
-            const timer=setTimeout(() => {
-                setShowpopup(false)
-            }, 3000);
+            // const timer=setTimeout(() => {
+            //     setShowpopup(false)
+            // }, 3000);
     
-            return()=>{clearTimeout(timer);}
+            // return()=>{clearTimeout(timer);}
         }else if(!cityName){
             navigate(`/${selectedCity}`,{replace:true});
         }
       
     },[]);
+
+    const handleClosePopup = () => {
+        setShowpopup(false);
+      };
+
+    
 
     return(
         <>
@@ -66,7 +72,7 @@ function Home(){
       
        </div>
        <Enquiry></Enquiry>
-       {showpopup && <Citypopup  />}
+       {showpopup && <Citypopup onClose={handleClosePopup} />}
         </>
     )
 }

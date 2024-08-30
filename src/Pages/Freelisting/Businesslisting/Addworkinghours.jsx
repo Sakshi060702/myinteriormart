@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh"
 import Popupalert from "../../Popupalert";
 import useAuthCheck from "../../../Hooks/useAuthCheck";
+import { width } from "@fortawesome/free-solid-svg-icons/faL";
 
 function Addworkinghours()
 {
@@ -189,7 +190,7 @@ function Addworkinghours()
                             {key}<span className="text-danger">*</span>
                             <input
                               className="form-control form-control-sm input-width"
-                             
+                             style={{width:'353px'}}
                               type={
                                 key.includes("Holiday") ? "checkbox" : "time"
                               }

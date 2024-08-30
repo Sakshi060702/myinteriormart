@@ -15,6 +15,7 @@ function Menu1() {
   const [hasNotifications, setHasNotifications] = useState(false);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownOpenClass = "";
   const [showMenu, setShowMenu] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
 
@@ -51,11 +52,13 @@ function Menu1() {
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
+    
   };
 
   const handleClickOutside = (event) => {
     if (dropRef.current && !dropRef.current.contains(event.target)) {
       setDropdownOpen(false);
+      
     }
   };
 
@@ -217,33 +220,7 @@ function Menu1() {
 
                 {!isAuthenticated ? (
                   <>
-                    <li>
-                      <NavLink
-                        to={`/signup2/in-${localStorage.getItem('cityname')}`}
-                        className="btn_add listing-btn buttonlogin"
-                        style={{
-                          backgroundColor: "#fe900d",
-                          fontSize: "14px",
-                          marginRight: "12px",
-                          
-                          
-                        }}
-                        onClick={closeMenu}
-                      >
-                        Signup
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink
-                        to={`/login/in-${localStorage.getItem('cityname')}`}
-                        className="btn_add listing-btn buttonlogin "
-                        style={{ backgroundColor: "#fe900d", fontSize: "14px" }}
-                        onClick={closeMenu}
-                      >
-                        Login
-                      </NavLink>
-                    </li>
-                    <li style={{marginLeft:'13px'}}>
+                  <li style={{marginLeft:'13px'}}>
                     <NavLink
                         // to={`/signup2/in-${localStorage.getItem('cityname')}`}
                         className="btn_add listing-btn buttonlogin"
@@ -274,7 +251,34 @@ function Menu1() {
                       >
                         Freelisting
                       </NavLink>
-                </li> 
+                </li>
+                    <li>
+                      <NavLink
+                        to={`/signup2/in-${localStorage.getItem('cityname')}`}
+                        className="btn_add listing-btn buttonlogin"
+                        style={{
+                          backgroundColor: "#fe900d",
+                          fontSize: "14px",
+                          marginRight: "12px",
+                          
+                          
+                        }}
+                        onClick={closeMenu}
+                      >
+                        Signup
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to={`/login/in-${localStorage.getItem('cityname')}`}
+                        className="btn_add listing-btn buttonlogin "
+                        style={{ backgroundColor: "#fe900d", fontSize: "14px" }}
+                        onClick={closeMenu}
+                      >
+                        Login
+                      </NavLink>
+                    </li>
+                     
                   </>
                 ) : (
                   <>
@@ -423,13 +427,14 @@ function Menu1() {
                             }}
                           >
                             <button
-                              className="usericon-btn dropdown-toggle"
+                              className={`usericon-btn dropdown-toggle ${dropdownOpen ? 'buttonActive' : ''}`}
                               type="button"
                               onClick={toggleDropdown}
                               style={{
                                 background: "none",
                                 border: "none",
                                 position: "relative",
+                                padding: '0 25px 0 0'
                               }}
                             >
                               <img
@@ -448,7 +453,7 @@ function Menu1() {
                                   style={{
                                     position: "absolute",
                                     top: "0",
-                                    right: "0",
+                                    right: "25px",
                                     width: "12px",
                                     height: "12px",
                                     backgroundColor: "green",

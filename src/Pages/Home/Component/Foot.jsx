@@ -27,10 +27,11 @@ const Foot = () => {
 //    }
 //  }, []);
   return (
+    <>
     <footer className="shadow" style={{ position: "relative" }}>
       <div className="container py-5" style={{ width: "90%" }}>
         <div className="d-flex justify-content-between flex-wrap">
-          <div className="footer-logo-container">
+          {/* <div className="footer-logo-container">
             <a href="/" className="d-flex align-items-center p-0 text-dark">
               <img
                 src={logoSticky}
@@ -46,11 +47,11 @@ const Foot = () => {
               We are creating High Quality Resources and tools to Aid developers
               during the development of their projects
             </p>
-          </div>
+          </div> */}
           <div>
-            <p className="h5 mb-4" style={{ fontWeight: "600" }}>
+            {/* <p className="h5 mb-4" style={{ fontWeight: "600" }}>
               Quick Links
-            </p>
+            </p> */}
             <div
               className="d-flex flex-column"
               style={{ cursor: "pointer", padding: "0" }}
@@ -73,37 +74,79 @@ const Foot = () => {
             </div>
           </div>
           <div>
-            <p className="h5 mb-4" style={{ fontWeight: "600" }}>
+            {/* <p className="h5 mb-4" style={{ fontWeight: "600" }}>
               Help
-            </p>
+            </p> */}
             <div
               className="d-flex flex-column"
               style={{ cursor: "pointer", padding: "0" }}
             >
               <a href="/" style={{ color: "white" }}>
-                Support
+                Buy
               </a>
             </div>
           </div>
-          {/* <div>
-            <p className="h5 mb-4" style={{ fontWeight: "600" }}>
+          <div>
+            {/* <p className="h5 mb-4" style={{ fontWeight: "600" }}>
               Products
-            </p>
+            </p> */}
             <div
               className="d-flex flex-column"
               style={{ cursor: "pointer", padding: "0" }}
             >
               <a href="/" style={{ color: "white" }}>
-                Windframe
+                Sell
               </a>
-              <a href="/" style={{ color: "white" }}>
-                Loop
-              </a>
-              <a href="/" style={{ color: "white" }}>
-                Contrast
-              </a>
+              
             </div>
-          </div> */}
+          </div>
+
+          <div>
+            {/* <p className="h5 mb-4" style={{ fontWeight: "600" }}>
+              Products
+            </p> */}
+            <div
+              className="d-flex flex-column"
+              style={{ cursor: "pointer", padding: "0" }}
+            >
+              <a href="/" style={{ color: "white" }}>
+                Offer
+              </a>
+              
+            </div>
+          </div>
+
+
+          <div>
+            {/* <p className="h5 mb-4" style={{ fontWeight: "600" }}>
+              Products
+            </p> */}
+            <div
+              className="d-flex flex-column"
+              style={{ cursor: "pointer", padding: "0" }}
+            >
+              <a href="/" style={{ color: "white" }}>
+                Job
+              </a>
+              
+            </div>
+          </div>
+
+          <div>
+            {/* <p className="h5 mb-4" style={{ fontWeight: "600" }}>
+              Products
+            </p> */}
+            <div
+              className="d-flex flex-column"
+              style={{ cursor: "pointer", padding: "0" }}
+            >
+              <a href="/" style={{ color: "white" }}>
+                Labour Naka
+              </a>
+              
+            </div>
+          </div>
+          
         </div>
         <hr style={{ margin: 0 }} />
         <div className="row">
@@ -181,6 +224,24 @@ const Foot = () => {
         </div>
       </div>
     </footer>
+    {/* <span style={{background:'blue',position:'fixed',bottom:'0',width:'100%' ,color:'yellow'}}>Testing</span> */}
+    <div class="container-fluid bottom-link-sticky">
+         <div class="row">
+            <div class="col-3 bottom-link-sticky-list">
+               <a href="#" title="suggestion">suggestion</a>
+            </div>
+            <div class="col-3 bottom-link-sticky-list">
+               <a href="#" title="Post Add">Post Add</a>
+            </div>
+            <div class="col-3 bottom-link-sticky-list">
+               <a href="#" title="Send Enquiry">Send Enquiry</a>
+            </div>
+            <div class="col-3 bottom-link-sticky-list">
+               <a href="#" title="Share">Share</a>
+            </div>
+         </div>
+      </div>
+    </>
   );
 };
 

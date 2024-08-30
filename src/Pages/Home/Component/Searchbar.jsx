@@ -11,6 +11,7 @@ function Searchbar() {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const [searchType, setSearchType] = useState('');
+  const { secondCategoryName,subcategoryName,secondCategoryId} = useParams();
 
   const encryptionKey = 'myinterriorMart@SECRETKEY';
 
@@ -103,7 +104,7 @@ const handleSearch = (searchTerm, type) => {
                     if(result.listingId == null && result.companyName == null && result.keyword==null){
                       return (
                         <div key={index} className="dropdownItemsearchbar">
-                          <NavLink to={`/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}`}><h6>{result.category}</h6></NavLink>
+                          <NavLink to={`/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}><h6>{result.category}</h6></NavLink>
                         </div>
                       )
                     }
@@ -118,7 +119,7 @@ const handleSearch = (searchTerm, type) => {
                         //if search is keyword
                         return (
                           <div key={index} className="dropdownItemsearchbar">
-                            <NavLink to={`/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?searchkey=${encodeURIComponent(result.keyword)}`}><h6>{result.keyword}</h6></NavLink>
+                            <NavLink to={`/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?searchkey=${encodeURIComponent(result.keyword)}&secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}><h6>{result.keyword}</h6></NavLink>
                           </div>
                         )
                       }
@@ -127,7 +128,8 @@ const handleSearch = (searchTerm, type) => {
                         //if search is company
                         return (
                           <div key={index} className="dropdownItemsearchbar">
-                            <NavLink to={`/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}`}>
+                            <NavLink to={`/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}
+                            >
                               <h6>{result.companyName}</h6>
                             </NavLink>
                           </div>
@@ -139,7 +141,8 @@ const handleSearch = (searchTerm, type) => {
                     else  {
                       return (
                         <div key={index} className="dropdownItemsearchbar">
-                          3<NavLink to={`/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}`}>
+                          3<NavLink to={`/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/${result.category}/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}
+                          >
                             <h6>{result.companyName}</h6>
                           </NavLink>
                         </div>

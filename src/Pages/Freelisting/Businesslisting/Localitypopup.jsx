@@ -133,7 +133,8 @@ const LocalityPopup = ({ isOpen, cityId, onClose }) => {
                   />
                 </div>
               </div>
-              <div style={{paddingLeft:'10px'}}> 
+              <div style={{display:"flex"}}>
+              <div style={{paddingLeft:'10px',marginRight:'13px'}}> 
                 <button
                 className="btn"
                 style={{ backgroundColor: "green" }}
@@ -148,6 +149,8 @@ const LocalityPopup = ({ isOpen, cityId, onClose }) => {
               >
                 Cancel
               </button></div>
+              </div>
+              
               
              
               

@@ -40,7 +40,7 @@ function Listing() {
 const listingId_enc = searchParams.get("secatEncyt");
 const secondCategoryId = decrypt(decodeURIComponent(listingId_enc));
 console.log(secondCategoryId);
-console.log("listingid",secondCategoryId)
+console.log("secondcategoryid",secondCategoryId)
 console.log(decrypt(listingId_enc));
 
   useEffect(() => {

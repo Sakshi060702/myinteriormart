@@ -78,6 +78,11 @@ a.notification {
 	content: "" !important;
 }
 
+
+.usericon-btn.dropdown-toggle.buttonActive:after {
+	transform: rotate(225deg) !important;
+}
+
 .usericon-btn.dropdown-toggle:after {
     border: 0px;
     border-bottom: 2px solid #999;
@@ -88,7 +93,7 @@ a.notification {
     margin-top: -5px;
     pointer-events: none;
     position: absolute;
-    right: -16px;
+    right: 4px;
     top: 50%;
     transform-origin: 66% 66%;
     transform: rotate(45deg); /* Downward arrow by default */

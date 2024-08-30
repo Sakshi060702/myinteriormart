@@ -4,9 +4,12 @@ import usericon from "../../FrontEnd/img/dummyowner.jpg";
 import withAuthh from "../../Hoc/withAuthh";
 import Popupalert from "../Popupalert";
 import useAuthCheck from "../../Hooks/useAuthCheck";
-import { validateImageFile,validateGalleryFile ,validateName} from "../Validation";
-import '../../FrontEnd/css/RegistrationMV.css'
-
+import {
+  validateImageFile,
+  validateGalleryFile,
+  validateName,
+} from "../Validation";
+import "../../FrontEnd/css/RegistrationMV.css";
 
 function Teamimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -26,13 +29,12 @@ function Teamimagel() {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  const[error,setError]=useState("");
+  const [error, setError] = useState("");
 
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
 
   const isAuthenticated = useAuthCheck();
-
 
   useEffect(() => {
     const fetchTeamImage = async () => {
@@ -52,8 +54,14 @@ function Teamimagel() {
         console.log(data.imagepath);
         if (data instanceof Object) {
           console.log(data);
-         console.log(data.imagepath);
-          setImageDetails(data.imagepath.map((img) => ({ url: img ,firstName:data.ownerName,designation:data.designation})));
+          console.log(data.imagepath);
+          setImageDetails(
+            data.imagepath.map((img) => ({
+              url: img,
+              firstName: data.ownerName,
+              designation: data.designation,
+            }))
+          );
         }
         // setImageURL(data.imagepath); // Assuming data contains image URL and title
         // setImageTitleFromAPI(data.imagetitle); // Set the image title from API
@@ -61,11 +69,9 @@ function Teamimagel() {
         console.error(error);
       }
     };
-    if(isAuthenticated){
+    if (isAuthenticated) {
       fetchTeamImage();
     }
-
-   
   }, [token]);
 
   const apiUrl =
@@ -148,27 +154,21 @@ function Teamimagel() {
   };
 
   const handleSubmit = async (event) => {
-
     event.preventDefault();
 
     setError({});
     const validationError = validateGalleryFile(selectedFile);
     const validationFirstName = validateName(event.target.firstName.value);
     const validationLastName = validateName(event.target.lastName.value);
-    
 
-    if (validationError||validationFirstName||validationLastName) {
-      setError({ imageFile: validationError,
-        firstname:validationFirstName,
-        lastname:validationLastName,
-       });
+    if (validationError || validationFirstName || validationLastName) {
+      setError({
+        imageFile: validationError,
+        firstname: validationFirstName,
+        lastname: validationLastName,
+      });
       return;
     }
-
-
-
-
-    
 
     if (selectedFile.length > 0) {
       const formData = new FormData();
@@ -182,7 +182,7 @@ function Teamimagel() {
       formData.append("countryId", selectedCountry);
       formData.append("stateId", selectedState);
 
-      console.log( event.target.firstName.value);
+      console.log(event.target.firstName.value);
 
       try {
         const response = await fetch(
@@ -201,10 +201,15 @@ function Teamimagel() {
 
         const result = await response.json();
         console.log("Upload result:", result);
-        
 
         if (result instanceof Object) {
-          setImageDetails(result.ownerImageDetails.imageUrls.map((img)=> ({ url: img,firstName:result.ownerImageDetails.firstName,designation:result.ownerImageDetails.designation})));
+          setImageDetails(
+            result.ownerImageDetails.imageUrls.map((img) => ({
+              url: img,
+              firstName: result.ownerImageDetails.firstName,
+              designation: result.ownerImageDetails.designation,
+            }))
+          );
         }
         // setImageURL(result.imageUrl);// Ensure this is the correct property
         setSuccessMessage("Team Image Uploded Successfully");
@@ -235,13 +240,10 @@ function Teamimagel() {
           style={{
             display: "flex",
             flexWrap: "wrap",
-            gap: "16px", 
+            gap: "16px",
           }}
         >
-          <div
-            className="form-group teamcode"
-            
-          >
+          <div className="form-group teamcode">
             <label htmlFor="name">
               Select Team Member <span className="text-danger">*</span>
             </label>
@@ -255,17 +257,13 @@ function Teamimagel() {
                 height: "50px",
                 width: "100%", // Make the input file take the full width of the form group
               }}
-              
             />
             {error.imageFile && (
-                      <div className="text-danger">{error.imageFile}</div>
-                    )}
+              <div className="text-danger">{error.imageFile}</div>
+            )}
           </div>
 
-          <div
-            className="form-group teamcode"
-           
-          >
+          <div className="form-group teamcode">
             <label htmlFor="designation">
               Select Designation <span className="text-danger">*</span>
             </label>
@@ -290,10 +288,7 @@ function Teamimagel() {
             </select>
           </div>
 
-          <div
-            className="form-group teamcode"
-           
-          >
+          <div className="form-group teamcode">
             <label htmlFor="firstName">
               First Name <span className="text-danger">*</span>
             </label>
@@ -309,14 +304,11 @@ function Teamimagel() {
               }}
             />
             {error.firstname && (
-                      <div className="text-danger">{error.firstname}</div>
-                    )}
+              <div className="text-danger">{error.firstname}</div>
+            )}
           </div>
 
-          <div
-            className="form-group teamcode"
-           
-          >
+          <div className="form-group teamcode">
             <label htmlFor="lastName">
               Last Name <span className="text-danger">*</span>
             </label>
@@ -332,14 +324,11 @@ function Teamimagel() {
               }}
             />
             {error.lastname && (
-                      <div className="text-danger">{error.lastname}</div>
-                    )}
+              <div className="text-danger">{error.lastname}</div>
+            )}
           </div>
 
-          <div
-            className="form-group teamcode"
-           
-          >
+          <div className="form-group teamcode">
             <label>
               Country <span className="text-danger">*</span>
             </label>
@@ -362,10 +351,7 @@ function Teamimagel() {
             </select>
           </div>
 
-          <div
-            className="form-group teamcode"
-            
-          >
+          <div className="form-group teamcode">
             <label htmlFor="state">
               State <span className="text-danger">*</span>
             </label>
@@ -388,42 +374,82 @@ function Teamimagel() {
               ))}
             </select>
           </div>
-          
-        <div>
-        <h2 style={{ textAlign: "center", marginLeft:'21px' }}>Team</h2>
-          <div className="row justify-content-center mt-4" style={{marginLeft:'29px'}}>
-         
-        {imageDetails.map((image, index) => (
-          <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
-            <div className="upload_img_sec" >
-              <img
-                className="upload_images"
-                src={
-                  image.url
-                    ? `https://apidev.myinteriormart.com${image.url}`
-                    : usericon
-                }
-                alt="Gallery Image"
-              />
-            </div>
-            <div className="img_title text-center">{image.firstName}  {image.designation}</div>
-          </div>
-        ))}
-     
-      </div>
-      </div>
 
-          <div className="text-left col-12 mt-3" style={{paddingLeft:'471px'}}>
+          <div>
+            <div> <h2 style={{ textAlign: "center", marginLeft: "470px" }}>Team</h2></div>
+           
+            <div
+              className="row justify-content-center mt-4"
+              style={{ marginLeft: "29px" }}
+            >
+
+
+
+{imageDetails.length === 0 || !imageDetails.some(img => img.url) ? (
+            <div className="col-md-3 col-lg-2 col-6 mb-5" style={{left:'216px',marginRight:'33px'}}>
+              <div className="upload_img_sec" style={{width:'107px'}}>
+                <img
+                  className="upload_images"
+                  src={usericon}
+                  alt="Default User Icon"
+                />
+              </div>
+              
+            </div>
+          ) : (
+            imageDetails.map((image, index) => (
+              <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
+                  <div className="upload_img_sec">
+                    <img
+                      className="upload_images"
+                      src={
+                        image.url
+                          ? `https://apidev.myinteriormart.com${image.url}`
+                          : usericon
+                      }
+                      alt="Gallery Image"
+                    />
+                  </div>
+                  <div className="img_title text-center">
+                    {image.firstName} {image.designation}
+                  </div>
+                </div>
+            ))
+          )}
+
+              {/* {imageDetails.map((image, index) => (
+                <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
+                  <div className="upload_img_sec">
+                    <img
+                      className="upload_images"
+                      src={
+                        image.url
+                          ? `https://apidev.myinteriormart.com${image.url}`
+                          : usericon
+                      }
+                      alt="Gallery Image"
+                    />
+                  </div>
+                  <div className="img_title text-center">
+                    {image.firstName} {image.designation}
+                  </div>
+                </div>
+              ))} */}
+            </div>
+          </div>
+
+          <div
+            className="text-left col-12 mt-3"
+            style={{ paddingLeft: "471px" }}
+          >
             <button
               type="submit"
               className="btn_1"
               style={{ backgroundColor: "#fb830d", marginTop: "10px" }}
-             
             >
               Submit
             </button>
           </div>
-          
         </form>
       </div>
       {/* <hr style={{ marginTop: "32px" }}></hr> */}
@@ -432,7 +458,7 @@ function Teamimagel() {
           <h2 style={{ textAlign: "center" }}>Team</h2>
         </div>
       </div> */}
-      
+
       {/* <div className="text-left col-12 mt-3" style={{paddingLeft:'471px'}}>
             <button
               type="submit"

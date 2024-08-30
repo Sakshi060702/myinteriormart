@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { useSearchParams, useParams, Link,useNavigate } from "react-router-dom";
 import "../Pages/Freelisting/Businesslisting/Businesslisting.css";
 import "../FrontEnd/css/Citypopup.css";
-import mumbaiimag from "../FrontEnd/img/icon/mumbai.avif";
-import hydimg from "../FrontEnd/img/icon/hyd.png";
-import delhi from "../FrontEnd/img/icon/delhi.avif";
-import ahmd from "../FrontEnd/img/icon/ahd.avif";
-import chennai from "../FrontEnd/img/icon/chen.avif";
-import pune from "../FrontEnd/img/icon/pune.png";
+import mumbaiimag from "../FrontEnd/img/icon/Mumbai (3).png";
+import hydimg from "../FrontEnd/img/icon/hydrabad.png";
+import delhi from "../FrontEnd/img/icon/Delhi.png";
+import ahmd from "../FrontEnd/img/icon/Amedabad.png";
+import chennai from "../FrontEnd/img/icon/Chennai (2).png";
+import pune from "../FrontEnd/img/icon/Pune (1).png";
 import ben from "../FrontEnd/img/icon/bengluru.png";
-import kolkata from "../FrontEnd/img/icon/kolk.avif";
+import kolkata from "../FrontEnd/img/icon/Kolkata (3).png";
 
 const cities = [
   { name: "Mumbai" },
@@ -21,7 +21,7 @@ const cities = [
   { name: "Kolkata" },
 ];
 
-const Citypopup = ({}) => {
+const Citypopup = ({onClose}) => {
     // const [searchParams] = useSearchParams();
     // const loc_lat = searchParams.get("loc_lat");
     // const loc_lon = searchParams.get("loc_lon");
@@ -104,8 +104,11 @@ const Citypopup = ({}) => {
 
   return (
     <div className="popupcity">
-      <div className="popupcity-overlay">
-        <div className="popupcity-content">
+      <div className="popupcity-overlay" onClick={onClose}>
+        <div className="popupcity-content" onClick={(e) => e.stopPropagation()}>
+        <button className="close-button" onClick={onClose}>
+            X
+          </button>
           <div style={{ paddingBottom: "20px", textAlign: "center" }}>
             <div style={{ paddingTop: "32px", paddingBottom: "0px" }}>
               <div className="search">

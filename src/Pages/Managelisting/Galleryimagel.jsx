@@ -191,22 +191,31 @@ function Galleryimagel() {
           </div>
           <div className="row justify-content-center mt-4">
             {console.log(imageDetails)}
-            {imageDetails.map((image, index) => (
+            {imageDetails.length === 0 || !imageDetails.some(img => img.url) ? (
+            <div className="col-md-3 col-lg-2 col-6 mb-5">
+              <div className="upload_img_sec">
+                <img
+                  className="upload_images"
+                  src={usericon}
+                  alt="Default User Icon"
+                />
+              </div>
+              
+            </div>
+          ) : (
+            imageDetails.map((image, index) => (
               <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
                 <div className="upload_img_sec">
-                  
                   <img
                     className="upload_images"
-                    src={image.url && image.url !== '' ? `https://apidev.myinteriormart.com${image.url}` : usericon}
+                    src={image.url ? `https://apidev.myinteriormart.com${image.url}` : usericon}
                     alt="Gallery Image"
                   />
-                      {/* src={image.url ? `https://apidev.myinteriormart.com${image.url}` :usericon} */}
                 </div>
-                
-                
                 <div className="img_title text-center">{image.title}</div>
               </div>
-            ))}
+            ))
+          )}
          
           </div>
           <div className='uplodlogo'>
