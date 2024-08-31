@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useParams, Link } from "react-router-dom";
-import banner from "../../FrontEnd/img/banner/banner2.png";
+import banner from "../../FrontEnd/img/home_section_1.jpg";
 import banner1 from "../../FrontEnd/img/listing-img.jpeg";
 import Popup from "./Popup";
 import Getquotespopup from "./Getquotespopup";
@@ -132,7 +132,7 @@ console.log(decrypt(listingId_enc));
           {listing.length > 0 ? (
             listing.map((listing) => (
               <div key={listing.listingId} className="row mb-3">
-                <div className="col-12">
+                <div className="col-10">
                   <div className="strip map_view">
                     <div
                       className="row no-gutters"
@@ -143,21 +143,8 @@ console.log(decrypt(listingId_enc));
                             : "None",
                       }}
                     >
-                      <div className="col-3">
-                        {listing.logoImage && listing.logoImage.imagePath ? (
-                          <img
-                            src={`https://apidev.myinteriormart.com${listing.logoImage.imagePath}`}
-                            alt={`${listing.companyName} Logo`}
-                            className="card-img-top"
-                            style={{ height: "150px" }}
-                          />
-                        ) : (
-                          <div className="client_first_letter">
-                            {listing.companyFirstLetter}
-                          </div>
-                        )}
-                      </div>
-                      <div className="col-9">
+                      
+                      <div className="col-6">
                         <div className="wrapper">
                           <h3 style={{ color: "black" }}>
                           <Link
@@ -223,6 +210,24 @@ console.log(decrypt(listingId_enc));
                           </div>
                         </div>
                       </div>
+
+
+                      <div className="col-4">
+                        {listing.logoImage && listing.logoImage.imagePath ? (
+                          <img
+                            src={`https://apidev.myinteriormart.com${listing.logoImage.imagePath}`}
+                            alt={`${listing.companyName} Logo`}
+                            className="card-img-top"
+                            style={{ height: "150px" }}
+                          />
+                        ) : (
+                          <div className="client_first_letter">
+                            {listing.companyFirstLetter}
+                          </div>
+                        )}
+                      </div>
+
+                      
                       <div className="col-lg-12 listing-bottom">
                         <ul className="listing-bottom-list">
                           <li>
@@ -231,8 +236,8 @@ console.log(decrypt(listingId_enc));
                             </h5>
                           </li>
                           <li>
-                            <p className="">
-                              <Link className="loc_open call-now callnowl">
+                            <p className="" style={{marginBottom:'0px'}}>
+                              <Link className="loc_open call-now callnowl" style={{top:'2px',padding:'7px 5px'}}>
                                 Call now
                               </Link>
                             </p>
@@ -260,15 +265,21 @@ console.log(decrypt(listingId_enc));
                                 </li>
                                 <li className="reating-star">
                                   <div className="cat_star">
-                                    {Array(listing.ratingAverage)
-                                      .fill()
-                                      .map((_, i) => (
-                                        <i
-                                          key={i}
-                                          className="icon_star active"
-                                          style={{ color: "orange" }}
-                                        ></i>
-                                      ))}
+                                  {Array(5)
+                                          .fill()
+                                          .map((_, i) => (
+                                            <i
+                                              key={i}
+                                              className="icon_star"
+                                              style={{
+                                                color:
+                                                  i < listing.ratingAverage
+                                                    ? "orange"
+                                                    : "gray",
+                                                fontSize: "16px",
+                                              }}
+                                            ></i>
+                                          ))}
                                   </div>
                                 </li>
                                 <li>{listing.ratingCount} Rating</li>
@@ -280,6 +291,24 @@ console.log(decrypt(listingId_enc));
                     </div>
                   </div>
                 </div>
+
+
+              <div className="col-2">
+              <div className="grid-item" style={{paddingBottom:'6px'}}>
+                <img
+                  src={banner}
+                  alt="Banner"
+                  style={{ height: "108px", width: "100%" }}
+                />
+              </div>
+              <div className="grid-item">
+                <img
+                  src={banner1}
+                  alt="Banner"
+                  style={{ height: "115px", width: "100%" }}
+                />
+              </div>
+            </div>
               </div>
             ))
           ) : (

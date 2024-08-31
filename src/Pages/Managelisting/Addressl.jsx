@@ -4,7 +4,7 @@ import "../Freelisting/Businesslisting/Businesslisting.css";
 import nextarrowimg from "../../FrontEnd/img/Frontarrow.png";
 import previousarrowimg from "../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
-import withAuthh from "../../Hoc/withAuthh"
+import withAuthh from "../../Hoc/withAuthh";
 import Popupalert from "../Popupalert";
 import LocalityPopup from "../Freelisting/Businesslisting/Localitypopup";
 import PincodePopup from "../Freelisting/Businesslisting/Pincodepopup";
@@ -28,21 +28,23 @@ const Addressl = () => {
   const [localAddress, setLocalAddress] = useState("");
 
   const navigate = useNavigate();
-  const token=useSelector((state)=>state.auth.token);
+  const token = useSelector((state) => state.auth.token);
 
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const[successMessage,setSuccessMessage]=useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const [showAddressPopup, setShowAddressPopup] = useState([false, null]);
-  const[showPincodePopup,setShowPincodePopup]=useState([false,null]);
-  const[showAreaPopup,setShowAreaPopup]=useState([false,null]);
+  const [showPincodePopup, setShowPincodePopup] = useState([false, null]);
+  const [showAreaPopup, setShowAreaPopup] = useState([false, null]);
 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [pincodeSearchQuery, setPincodeSearchQuery] = useState("");
 
   const apiUrl =
     "https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster";
 
-  const fetchData = async(type, parentID = null) => {
+  const fetchData = async (type, parentID = null) => {
     let body = {
       type,
       CountryID: setSelectedCountry,
@@ -77,14 +79,21 @@ const Addressl = () => {
     }
   };
 
-
-  
   useEffect(() => {
     fetchData("countries").then((data) => {
       if (data) setCountries(data.country);
     });
-  
   }, [token]);
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredCountries = countries.filter((country) =>
+    country.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  
 
   useEffect(() => {
     const fetchUserAddress = async () => {
@@ -267,6 +276,16 @@ const Addressl = () => {
     }
   };
 
+
+  const handlePincodeSearchChange = (e) => {
+    setPincodeSearchQuery(e.target.value);
+  };
+
+  
+  const filteredPincodes = pincodes.filter((pincode) =>
+    pincode.number.toString().includes(pincodeSearchQuery)
+  );
+
   const handleAreaChange = (e) => {
     const localityID = e.target.value;
     setSelectedLocality(localityID);
@@ -291,7 +310,7 @@ const Addressl = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(submissionData),
     })
@@ -299,20 +318,21 @@ const Addressl = () => {
 
       .then((responseData) => {
         console.log("API response:", responseData);
-        console.log("Address token:",token);
+        console.log("Address token:", token);
         setSuccessMessage("Address Details Saved Successfully");
         setErrorMessage("");
         setShowPopup(true);
-  
+
         setTimeout(() => {
-        setShowPopup(false);
-        navigate("/Categoryapi");
-      }, 2000);
-       
+          setShowPopup(false);
+          navigate("/Categoryapi");
+        }, 2000);
       })
       .catch((error) => {
         console.error("API error:", error);
-        setErrorMessage("Failed to save Address details. Please try again later.");
+        setErrorMessage(
+          "Failed to save Address details. Please try again later."
+        );
         setSuccessMessage(""); // Clear any existing success message
         setShowPopup(true);
       });
@@ -328,7 +348,10 @@ const Addressl = () => {
               <p className="add-lidting-title-from">
                 Add Listing / Add Address Details
                 <span>
-                <Link className="back_btn mx-3" to={`/labournakapage/${localStorage.getItem('cityname')}`}>
+                  <Link
+                    className="back_btn mx-3"
+                    to={`/labournakapage/${localStorage.getItem("cityname")}`}
+                  >
                     Back
                   </Link>
                 </span>
@@ -336,7 +359,16 @@ const Addressl = () => {
               <form onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="form-group col-md-4">
-                    <label>Country<span className="text-danger">*</span></label>
+                    <label>
+                      Country<span className="text-danger">*</span>
+                    </label>
+                    {/* <input
+        type="text"
+        placeholder="Search Country"
+        value={searchQuery}
+        onChange={handleSearchChange}
+        className="form-control mb-2"
+      /> */}
                     <select
                       className="wide add_bottom_10 country selectdrp"
                       value={selectedCountry}
@@ -344,7 +376,7 @@ const Addressl = () => {
                       required
                     >
                       <option value="">Select Country</option>
-                      {countries.map((country) => (
+                      {filteredCountries.map((country) => (
                         <option
                           key={country.countryID}
                           value={country.countryID}
@@ -355,7 +387,9 @@ const Addressl = () => {
                     </select>
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="state">State<span className="text-danger">*</span></label>
+                    <label htmlFor="state">
+                      State<span className="text-danger">*</span>
+                    </label>
                     <select
                       className="wide add_bottom_10 state selectdrp"
                       id="state"
@@ -372,7 +406,9 @@ const Addressl = () => {
                     </select>
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="city">City<span className="text-danger">*</span></label>
+                    <label htmlFor="city">
+                      City<span className="text-danger">*</span>
+                    </label>
                     <select
                       className="wide add_bottom_10 city selectdrp"
                       id="city"
@@ -391,7 +427,9 @@ const Addressl = () => {
                 </div>
                 <div className="row">
                   <div className="form-group col-md-4">
-                    <label>Locality<span className="text-danger">*</span></label>
+                    <label>
+                      Locality<span className="text-danger">*</span>
+                    </label>
                     <select
                       className="wide add_bottom_10 locality selectdrp"
                       value={selectedAssembly}
@@ -408,10 +446,19 @@ const Addressl = () => {
                         </option>
                       ))}
                     </select>
-                    <button onClick={(e)=>{ e.preventDefault(); return setShowAddressPopup([true,selectedCity])}}>Add Locality +</button>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        return setShowAddressPopup([true, selectedCity]);
+                      }}
+                    >
+                      Add Locality +
+                    </button>
                   </div>
                   <div className="form-group col-md-4">
-                    <label>Pincode<span className="text-danger">*</span></label>
+                    <label>
+                      Pincode<span className="text-danger">*</span>
+                    </label>
                     <select
                       className="wide add_bottom_10 pincode selectdrp"
                       value={selectedPincode}
@@ -419,7 +466,7 @@ const Addressl = () => {
                       required
                     >
                       <option value="">Select Pincode</option>
-                      {pincodes.map((pincode) => (
+                      {filteredPincodes.map((pincode) => (
                         <option
                           key={pincode.pincodeID}
                           value={pincode.pincodeID}
@@ -428,10 +475,19 @@ const Addressl = () => {
                         </option>
                       ))}
                     </select>
-                    <button onClick={(e)=>{ e.preventDefault();  return setShowPincodePopup([true,selectedAssembly])}}>Add Pincode +</button>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        return setShowPincodePopup([true, selectedAssembly]);
+                      }}
+                    >
+                      Add Pincode +
+                    </button>
                   </div>
                   <div className="form-group col-md-4">
-                    <label>Area<span className="text-danger">*</span></label>
+                    <label>
+                      Area<span className="text-danger">*</span>
+                    </label>
                     <select
                       className="wide add_bottom_10 area selectdrp"
                       value={selectedLocality}
@@ -448,7 +504,20 @@ const Addressl = () => {
                         </option>
                       ))}
                     </select>
-                    <button onClick={(e)=>{ e.preventDefault();console.log("assembly", selectedAssembly);console.log("pincode",selectedPincode);  return setShowAreaPopup([true,selectedAssembly,selectedPincode])}}>Add Area +</button>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        console.log("assembly", selectedAssembly);
+                        console.log("pincode", selectedPincode);
+                        return setShowAreaPopup([
+                          true,
+                          selectedAssembly,
+                          selectedPincode,
+                        ]);
+                      }}
+                    >
+                      Add Area +
+                    </button>
                   </div>
                   <div className="form-group col-md-12">
                     <label htmlFor="localAddress">Local Address</label>
@@ -460,50 +529,65 @@ const Addressl = () => {
                       value={localAddress}
                       onChange={(e) => setLocalAddress(e.target.value)}
                       required
-                     
-                      
                     />
                   </div>
                 </div>
-                <div className="text-left col-12 mt-3" style={{display:'flex'}}>
-                <button type="submit" className="btn_1" >
-                Save & Continue
+                <div
+                  className="text-left col-12 mt-3"
+                  style={{ display: "flex" }}
+                >
+                  <button type="submit" className="btn_1">
+                    Save & Continue
                   </button>
-                  <div style={{display:"flex",justifyContent:"center",gap:'10px',paddingTop:'10px'}}>                                          <Link to="/communicationl" ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
-                    <Link to="/Categoryapi" ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
-                    </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      gap: "10px",
+                      paddingTop: "10px",
+                    }}
+                  >
+                    {" "}
+                    <Link to="/communicationl">
+                      <img src={previousarrowimg} style={{ height: "30px" }} />
+                    </Link>
+                    <Link to="/Categoryapi">
+                      <img src={nextarrowimg} style={{ height: "30px" }} />
+                    </Link>
+                  </div>
                 </div>
 
                 {showAddressPopup && (
                   <LocalityPopup
-                  isOpen={showAddressPopup[0]} cityId={showAddressPopup[1]}
-                  onClose={()=>setShowAddressPopup([false,null])}/>
+                    isOpen={showAddressPopup[0]}
+                    cityId={showAddressPopup[1]}
+                    onClose={() => setShowAddressPopup([false, null])}
+                  />
                 )}
 
-{
-                  showPincodePopup && (
-                    <PincodePopup 
-                    isOpen={showPincodePopup[0]} localityId={showPincodePopup[1]}
-                    onClose={()=>setShowPincodePopup([false,null])}/>
-                  )
-                }
+                {showPincodePopup && (
+                  <PincodePopup
+                    isOpen={showPincodePopup[0]}
+                    localityId={showPincodePopup[1]}
+                    onClose={() => setShowPincodePopup([false, null])}
+                  />
+                )}
 
-{
-                  showAreaPopup && (
-                    <Areapopup 
-                    isOpen={showAreaPopup[0]} pincodeId={showAreaPopup[1]} localityId={showAreaPopup[1]}
-                    onClose={()=>setShowAreaPopup([false,null,null])}/>
-                  )
-                }
-
-
+                {showAreaPopup && (
+                  <Areapopup
+                    isOpen={showAreaPopup[0]}
+                    pincodeId={showAreaPopup[1]}
+                    localityId={showAreaPopup[1]}
+                    onClose={() => setShowAreaPopup([false, null, null])}
+                  />
+                )}
 
                 {showPopup && (
-            <Popupalert 
-            message={successMessage || errorMessage} 
-            type={successMessage ? 'success' : 'error'} 
-          />
-          )}
+                  <Popupalert
+                    message={successMessage || errorMessage}
+                    type={successMessage ? "success" : "error"}
+                  />
+                )}
               </form>
             </div>
           </div>
@@ -514,5 +598,3 @@ const Addressl = () => {
 };
 
 export default withAuthh(Addressl);
-
-

@@ -8,6 +8,7 @@ import Notification from "../../Notification";
 import "../../../FrontEnd/css/Header.css";
 import { useSelector, useDispatch } from "react-redux";
 import useAuthCheck from "../../../Hooks/useAuthCheck"; 
+import '../../../FrontEnd/css/RegistrationMV.css'
 
 function Menu1() {
   const [showNotificationMenu, setShowNotificationMenu] = useState(false);
@@ -180,6 +181,25 @@ function Menu1() {
         const data = await response.json();
         // console.log(data);
         setStatus(data.status);
+
+
+        /** Start new api integration with listingID from response */
+        // const response_n = await fetch(
+        //   "https://apidev.myinteriormart.com/api/ClaimedListings/Claimedlisting",
+        //   {
+        //     method: "POST",
+        //     headers: {
+        //       // Authorization: `Bearer ${token}`,
+        //     },
+        //     body: {
+        //       CompanyId: data.listingId
+        //     }
+        //   }
+        // );
+        // const data_n = await response_n.json();
+        // console.log(data_n)
+
+        /** End */
       } catch (error) {
         console.error("Error fetching status:", error);
       }
@@ -223,12 +243,12 @@ function Menu1() {
                   <li style={{marginLeft:'13px'}}>
                     <NavLink
                         // to={`/signup2/in-${localStorage.getItem('cityname')}`}
-                        className="btn_add listing-btn buttonlogin"
+                        className=" listing-btn buttonlogin suggestionstyle"
                         style={{
-                          backgroundColor: "#fe900d",
+                        
                           fontSize: "14px",
                           marginRight: "12px",
-                          
+
                           
                         }}
                         onClick={closeMenu}
@@ -236,7 +256,7 @@ function Menu1() {
                         Suggestion
                       </NavLink>
                 </li> 
-                <li>
+                   <li>
                 <NavLink
                         to={`/signup2/in-${localStorage.getItem('cityname')}`}
                         className="btn_add listing-btn buttonlogin"
@@ -252,12 +272,14 @@ function Menu1() {
                         Freelisting
                       </NavLink>
                 </li>
+                  
+               
                     <li>
                       <NavLink
                         to={`/signup2/in-${localStorage.getItem('cityname')}`}
-                        className="btn_add listing-btn buttonlogin"
+                        className="listing-btn buttonlogin suggestionbtn"
                         style={{
-                          backgroundColor: "#fe900d",
+                         
                           fontSize: "14px",
                           marginRight: "12px",
                           
@@ -271,8 +293,8 @@ function Menu1() {
                     <li>
                       <NavLink
                         to={`/login/in-${localStorage.getItem('cityname')}`}
-                        className="btn_add listing-btn buttonlogin "
-                        style={{ backgroundColor: "#fe900d", fontSize: "14px" }}
+                        className=" listing-btn buttonlogin suggestionbtn "
+                        style={{ fontSize: "14px" }}
                         onClick={closeMenu}
                       >
                         Login
@@ -323,13 +345,14 @@ function Menu1() {
                             id="profileid"
                             className="dropdown usericon"
                             ref={dropRef}
-                            style={{ marginLeft: "20px", alignItems: "center" }}
+                            style={{ marginLeft: "20px", alignItems: "center" ,position: "relative", }}
                           >
                             <button
-                               className={`usericon-btn dropdown-toggle ${dropdownOpen ? 'close' : ''}`}
+                               className={`usericon-btn dropdown-toggle ${dropdownOpen ? 'buttonActive'  : ''}`}
                               type="button"
                               onClick={toggleDropdown}
-                              style={{ background: "none", border: "none" }}
+                              style={{ background: "none", border: "none",position: "relative",
+                                padding: '0 25px 0 0' }}
                             >
                               <img
                                 className="usericon-img"
@@ -344,7 +367,7 @@ function Menu1() {
                                 <span
                                   style={{
                                     position: "absolute",
-                                    top: "0",
+                                    top: "33px",
                                     right: "0",
                                     width: "12px",
                                     height: "12px",
@@ -452,7 +475,7 @@ function Menu1() {
                                 <span
                                   style={{
                                     position: "absolute",
-                                    top: "0",
+                                    top: "33px",
                                     right: "25px",
                                     width: "12px",
                                     height: "12px",

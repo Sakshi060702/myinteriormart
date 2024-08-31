@@ -62,7 +62,7 @@ const Citypopup = ({onClose}) => {
       navigate(`/${formattedCityName}`);
     }
    
-
+    onClose();
   };
   
 
@@ -154,116 +154,80 @@ const Citypopup = ({onClose}) => {
             <hr />
             <div></div>
             <div>
-              <div style={{ textAlign: "center" }}>
-                <h4>Popular cities</h4>
-              </div>
-              <div
-                className="image-container"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginTop: "15px",
-                }}
-              >
-                <div className="city-wrapper">
-                  <div className="city-icon">
-                    <button onClick={()=>handleCitySelect1("Mumbai")}>
-                    <img
-                      src={mumbaiimag}
-                      alt="Mumbai"
-                      style={{ margin: "0 10px" }}
-                    />
-                    <br></br>
-                    <h6>Mumbai</h6>
-                    </button>
-                    
-                  </div>
-                  <div className="city-sub-options ">
-                    <div><button onClick={()=>handleCitySelect1("Mumbai:Central & South")}>Mumbai:Central & South</button></div>
-                    <div>Mumbai:Western</div>
-                    <div>Navi Mumbai</div>
-                    <div>Thane</div>
-                    <div>Kalyan</div>
-                  </div>
-                </div>
-                <div>
-                <button onClick={()=>handleCitySelect1("Hyderabad")}>
-                  {" "}
-                  <img
-                    src={hydimg}
-                    alt="Hyderabad"
-                    style={{ margin: "0 10px" }}
-                  />
-                  <br></br>
-                  <h6>Hyderabad</h6>
-                  </button>
-                </div>
-                <div className="city-wrapper">
-                  <div className="city-icon">
-                  <button onClick={()=>handleCitySelect1("Delhi")}>
-                    <img
-                      src={delhi}
-                      alt="Mumbai"
-                      style={{ margin: "0 10px" }}
-                    />
-                    <br></br>
-                    <h6>Delhi</h6>
-                    </button>
-                  </div>
-                  <div className="city-sub-options ">
-                    <div>Noida</div>
-                    <div>Gurugram</div>
-                    <div>Delhi</div>
-                    <div>Ghaziabad</div>
-                    <div>Faridabad</div>
-                  </div>
-                </div>
-                <div>
-                <button onClick={()=>handleCitySelect1("Bengaluru")}>
-                  <img src={ben} alt="Bengaluru" style={{ margin: "0 10px" }} />
-                  <br></br>
-                  <h6>Bengaluru</h6>
-                  </button>
-                </div>
-                <div>
-                <button onClick={()=>handleCitySelect1("Ahmedabad")}>
-                  <img src={ahmd} alt="Mumbai" style={{ margin: "0 10px" }} />
-                  <br></br>
-                  <h6>Ahmedabad</h6>
-                  </button>
-                </div>
-                <div>
-                  {" "}
-                  <button onClick={()=>handleCitySelect1("Pune")}>
-                  <img
-                    src={pune}
-                    alt="Hyderabad"
-                    style={{ margin: "0 10px" }}
-                  />
-                  <br></br>
-                  <h6>Pune</h6>
-                  </button>
-                </div>
-                <div>
-                <button onClick={()=>handleCitySelect1("Chennai")}>
-                  <img src={chennai} alt="Delhi" style={{ margin: "0 10px" }} />
-                  <br></br>
-                  <h6>Chennai</h6>
-                  </button>
-                </div>
-                <div>
-                <button onClick={()=>handleCitySelect1("Kolkata")}>
-                  <img
-                    src={kolkata}
-                    alt="Bengaluru"
-                    style={{ margin: "0 10px" }}
-                  />
-                  <br></br>
-                  <h6>Kolkata</h6>
-                  </button>
-                </div>
-              </div>
-            </div>
+  <div style={{ textAlign: "center" }}>
+    <h4>Popular cities</h4>
+  </div>
+  <div className="cityimage-container" style={{ marginTop: "15px" }}>
+    <div className="city-wrapper">
+      <div className="city-icon">
+        <button onClick={() => handleCitySelect1("Mumbai")}>
+          <img src={mumbaiimag} alt="Mumbai" />
+          <h6>Mumbai</h6>
+        </button>
+      </div>
+      <div className="city-sub-options">
+        <div><button onClick={() => handleCitySelect1("Mumbai:Central & South")}>Mumbai:Central & South</button></div>
+        <div><button onClick={() => handleCitySelect1("Mumbai:Western")}>Mumbai:Western</button></div>
+        <div> <button onClick={() => handleCitySelect1("Navi Mumbai")}>Navi Mumbai</button></div>
+        <div><button onClick={() => handleCitySelect1("Thane")}>Thane</button></div>
+        <div><button onClick={() => handleCitySelect1("Kalyan")}>Kalyan</button></div>
+      </div>
+    </div>
+    <div className="city-icon">
+      <button onClick={() => handleCitySelect1("Hyderabad")}>
+        <img src={hydimg} alt="Hyderabad" />
+        <h6>Hyderabad</h6>
+      </button>
+    </div>
+    <div >
+      <div className="city-icon">
+        <button onClick={() => handleCitySelect1("Delhi")}>
+          <img src={delhi} alt="Delhi" />
+          <h6>Delhi</h6>
+        </button>
+      </div>
+      {/* <div className="city-sub-options">
+        <div>Noida</div>
+        <div>Gurugram</div>
+        <div>Delhi</div>
+        <div>Ghaziabad</div>
+        <div>Faridabad</div>
+      </div> */}
+    </div>
+    <div className="city-icon">
+      <button onClick={() => handleCitySelect1("Bengaluru")}>
+        <img src={ben} alt="Bengaluru" />
+        <h6>Bengaluru</h6>
+      </button>
+    </div>
+    <div className="city-icon">
+      <button onClick={() => handleCitySelect1("Ahmedabad")}>
+        <img src={ahmd} alt="Ahmedabad" />
+        <h6>Ahmedabad</h6>
+      </button>
+    </div>
+    <div className="city-icon">
+      <button onClick={() => handleCitySelect1("Pune")}>
+        <img src={pune} alt="Pune" />
+        <h6>Pune</h6>
+      </button>
+    </div>
+    <div className="city-icon">
+      <button onClick={() => handleCitySelect1("Chennai")}>
+        <img src={chennai} alt="Chennai" />
+        <h6>Chennai</h6>
+      </button>
+    </div>
+    <div className="city-icon">
+      <button onClick={() => handleCitySelect1("Kolkata")}>
+        <img src={kolkata} alt="Kolkata" />
+        <h6>Kolkata</h6>
+      </button>
+    </div>
+  </div>
+</div>
+
+
           </div>
         </div>
       </div>

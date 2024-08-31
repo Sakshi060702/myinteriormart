@@ -908,7 +908,7 @@ div#RatingBar {
     background-color: #fff;
     margin-right: 2px;
 	margin-bottom: 0px;
-	border: 1px solid #fe900d;
+	/* border: 1px solid #fe900d; */
 	color: #fe900d;
 }
 
@@ -929,8 +929,8 @@ div#RatingBar {
 }
 
 .company-listing-tab .nav-tabs .nav-item a.active {
-    background-color: #fe900d;
-	color: #fff;
+    /* background-color: #fe900d; */
+	color: #fe900d;
 	border-bottom: 0px solid #fe900d;
 }
 
@@ -968,7 +968,7 @@ option[value=""][disabled] {
 @media (max-width: 767px) {
 	.listing-btn,
 	a.notification {
-		display: none;
+		/* display: none; */
 	}
 	.usericon {
 		padding: 7px 2px 0 0px;
