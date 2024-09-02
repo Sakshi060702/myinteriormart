@@ -48,6 +48,15 @@ function Home(){
         setShowpopup(false);
       };
 
+      useEffect(()=>{
+        
+          const defualtCity="mumbai";
+          localStorage.setItem("cityname",defualtCity);
+        
+          navigate(`/${defualtCity}`)
+        }
+       );
+
     
 
     return(
@@ -72,7 +81,7 @@ function Home(){
       
        </div>
        <Enquiry></Enquiry>
-       {showpopup && <Citypopup onClose={handleClosePopup} />}
+       {/* {showpopup && <Citypopup onClose={handleClosePopup} />} */}
         </>
     )
 }

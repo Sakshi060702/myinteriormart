@@ -179,8 +179,30 @@ function Menu1() {
           }
         );
         const data = await response.json();
-        // console.log(data);
+        console.log(data);
         setStatus(data.status);
+
+        const listingId=data.listingId;
+        console.log("listingid",listingId)
+
+        if(listingId){
+          const response_n = await fetch(
+              "https://apidev.myinteriormart.com/api/ClaimedListings/Claimedlisting",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                  
+                },
+                body: JSON.stringify({
+                  CompanyId: listingId
+                })
+              }
+            );
+            const data_n = await response_n.json();
+            console.log(data_n)
+        }
 
 
         /** Start new api integration with listingID from response */
@@ -189,7 +211,8 @@ function Menu1() {
         //   {
         //     method: "POST",
         //     headers: {
-        //       // Authorization: `Bearer ${token}`,
+        //       "Content-Type": "application/json",
+        //       Authorization: `Bearer ${token}`,
         //     },
         //     body: {
         //       CompanyId: data.listingId

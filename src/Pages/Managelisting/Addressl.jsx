@@ -120,6 +120,9 @@ const Addressl = () => {
         setSelectedLocality(data.localityID);
         setLocalAddress(data.localAddress);
 
+        console.log("locality",data.assemblyID)
+        console.log("pincode",data.pincodeID)
+
         console.log("User Address Fetched", data);
       } catch (error) {
         console.error("Error fetching user categories:", error);
@@ -173,6 +176,7 @@ const Addressl = () => {
   }, [selectedAssembly, assemblies]);
 
   useEffect(() => {
+    console.log(selectedPincode)
     if (selectedPincode) {
       const selectpincode = pincodes.find(
         (address) => address.pincodeID === selectedPincode
@@ -259,8 +263,14 @@ const Addressl = () => {
 
   const handlePincodeChange = (e) => {
     const pincodeID = e.target.value;
+
+    console.log(selectedPincode);
+    console.log(e.target.value);
+    console.log(pincodeID);
     setSelectedPincode(pincodeID);
+    
     setSelectedLocality("");
+    
 
     const selectedPincodeData = pincodes.find(
       (pincode) => pincode.pincodeID === parseInt(pincodeID)
@@ -509,10 +519,15 @@ const Addressl = () => {
                         e.preventDefault();
                         console.log("assembly", selectedAssembly);
                         console.log("pincode", selectedPincode);
-                        return setShowAreaPopup([
+                        console.log([
                           true,
                           selectedAssembly,
                           selectedPincode,
+                        ]);
+                        return setShowAreaPopup([
+                          true,
+                          selectedAssembly,
+                         selectedPincode,
                         ]);
                       }}
                     >
@@ -577,7 +592,7 @@ const Addressl = () => {
                   <Areapopup
                     isOpen={showAreaPopup[0]}
                     pincodeId={showAreaPopup[1]}
-                    localityId={showAreaPopup[1]}
+                    localityId={showAreaPopup[2]}
                     onClose={() => setShowAreaPopup([false, null, null])}
                   />
                 )}

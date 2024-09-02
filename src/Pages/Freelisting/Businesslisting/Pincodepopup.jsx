@@ -13,7 +13,7 @@ const PincodePopup = ({ isOpen, localityId, onClose }) => {
   const [successMessage, setSuccessMessage] = useState("");
 
  
-  console.log("BRAVOoooooooooooooo ",isOpen, localityId);
+  // console.log("BRAVOoooooooooooooo ",isOpen, localityId);
   if (!isOpen) return null;
 
   const handleChange = (e) => {

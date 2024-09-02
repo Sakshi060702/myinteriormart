@@ -315,7 +315,9 @@ function App() {
 
     <>
 
-<Menu1/>
+<div className="sticky-menu">
+        <Menu1 />
+      </div>
 
     <Routes>
       <Route path='/' element={<Home/>}></Route>
@@ -705,7 +707,7 @@ function App() {
 
 
 <Route path="/All/:subcategoryName/:secondCategoryName/:cityName" element={<Listing/>}/>
-<Route path="/company/:company/:secondCategoryName/:cityName" element={<Listingdetails/>}/>
+<Route path="/company/:company/:secondCategoryName/:companyname/:cityName" element={<Listingdetails/>}/>
 
 <Route path="/AllBookmark/:cityName" element={<AllBookmark/>}/>
 <Route path="/AllLike/:cityName" element={<AllLike/>}/>

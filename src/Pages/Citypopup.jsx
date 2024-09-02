@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams, useParams, Link,useNavigate } from "react-router-dom";
 import "../Pages/Freelisting/Businesslisting/Businesslisting.css";
 import "../FrontEnd/css/Citypopup.css";
@@ -31,6 +31,20 @@ const Citypopup = ({onClose}) => {
 
   const [currentCity,setCurrentCity]=useState(null);
   const navigate=useNavigate();
+
+  //to show defulat city mumbai after selection update the city
+  useEffect(()=>{
+    const storedCity=localStorage.getItem("cityname");
+    if(!storedCity){
+      const defualtCity="mumbai";
+      localStorage.setItem("cityname",defualtCity);
+      setCurrentCity(defualtCity);
+      navigate(`/${defualtCity}`)
+    }
+    else{
+setCurrentCity(storedCity)
+    }
+  },[navigate]);
 
   const handleSearchChange = (e) => {
     const query = e.target.value;

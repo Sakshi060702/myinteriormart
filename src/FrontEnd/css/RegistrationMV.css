@@ -335,6 +335,7 @@
   @media (max-width: 768px) {
     .strip.map_view {
       padding: 15px;
+      
     }
   
     .enquiry_list_heading {
@@ -365,6 +366,7 @@
   @media (max-width: 576px) {
     .strip.map_view {
       padding: 10px;
+      /* width: 90%; */
     }
   
     .enquiry_list_heading {
@@ -570,6 +572,86 @@
     }
   }
   
+/*listingpage company name*/
+.listingcompany{
+  color: black;
+}
+
+.listingcompany:hover {
+  color: black; 
+}
+
+.listingbanner{
+  display: block;
+}
+@media (max-width:767px) {
+  .listingbanner{
+    display: none;
+  }
+}
 
 
+.listingimage{
+  height: 141px;
+  width: 141px;
+}
+@media (max-width:767px) {
+  .listingimage{
+    height: 100px;
+    width: 100px;
+    position: relative;
+    margin-left: 183px;
+  }
+}
   
+
+.sticky-searchbar {
+  position: -webkit-sticky; 
+  position: sticky;
+  top: 60px; /* Adjust this value based on the height of your header */
+  z-index: 999;
+  background-color: white; 
+}
+
+
+.sticky-menu {
+  position: -webkit-sticky; 
+  position: sticky;
+  top: 0; 
+  z-index: 1000; 
+  background-color: white; 
+}
+
+
+.listingcompanyletter {
+  margin-right: 28px;
+  
+}
+
+@media (max-width: 767px) {
+  .listingcompanyletter {
+    position: absolute !important 
+  }
+}
+
+.stripmapviewdesign{
+
+}
+@media (max-width:767px) {
+  .stripmapviewdesign{
+width: 90%;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

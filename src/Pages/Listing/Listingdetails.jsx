@@ -16,6 +16,7 @@ import useAuthCheck from "../../Hooks/useAuthCheck";
 import Listingspecialisation from "./Listingspecialisation";
 import Listingpayment from "./Listingpayment";
 import ListinServices from "./ListingServices";
+import Listingkeyword from "./Listingkeyword";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -619,7 +620,7 @@ const decrypt = (ciphertext) => {
                     <span className="cust-type">Owner</span> */}
                   </div>
                 </div>
-                <ListinServices companyID={listingDetails.listingId} />
+                <Listingkeyword companyID={listingDetails.listingId} />
                 <Listingspecialisation companyID={listingDetails.listingId} />
                 <Listingpayment companyID={listingDetails.listingId} />
               </div>
@@ -805,7 +806,7 @@ const decrypt = (ciphertext) => {
                           onClick={() => setIsPopupOpen(true)}
                           style={{ marginRight: "10px", font: "bold" }}
                         >
-                          Get Quotes
+                          Get Claim
                         </button>
                         <button
                           className={`btn btn-bookmark ${

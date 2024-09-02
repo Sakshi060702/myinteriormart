@@ -13,7 +13,7 @@ const Areapopup = ({ isOpen, pincodeId,localityId, onClose }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
- 
+  console.log(isOpen, pincodeId,localityId, onClose );
   console.log("pincode ",isOpen, pincodeId);
   console.log("locality ",isOpen, localityId);
   if (!isOpen) return null;
@@ -33,8 +33,11 @@ const Areapopup = ({ isOpen, pincodeId,localityId, onClose }) => {
     e.preventDefault();
     try {
      
-      formData['pincodeId']= pincodeId;
-      formData['localityId']= localityId;
+      // formData['pincodeId']= pincodeId;
+      // formData['localityId']= localityId;
+
+      formData['pincodeId']= localityId;
+      formData['localityId']= pincodeId;
 
       const response = await fetch(
         "https://apidev.myinteriormart.com/api/Area/CreateArea",
