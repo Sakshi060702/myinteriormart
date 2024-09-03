@@ -93,23 +93,30 @@ function SixthCategory() {
                 } col-6`}
               >
                 <div className="item">
-                  <span
-                    className="icon"
-                    style={{
-                      display: "inline-block",
-                      width: "40px",
-                      height: "40px",
-                      overflow: "hidden",
-                      position: "relative",
-                      marginRight: "10px",
-                    }}
-                  >
-                    <img
-                      src={`/img/circle-right-arrow.svg`}
-                      alt="service"
-                      className="img-fluid image imgstyle"
-                    />
-                  </span>
+                <span
+  className="icon"
+  style={{
+    display: "inline-block",
+    width: "40px",
+    height: "40px",
+    overflow: "hidden",
+    position: "relative",
+    marginRight: "10px",
+  }}
+>
+  <div
+    style={{
+      width: "15px",
+      height: "15px",
+      backgroundColor: "orange",
+      borderRadius: "50%",
+      position: "absolute",
+      top: "37%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+    }}
+  ></div>
+</span>
                   <Link
                       to={`/All/${sixthCategory.name
                             .replace(/\s+/g, "-").toLowerCase()}/${fifthCategoryName}/${fourthCategoryName}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(sixthCategory.secondCategoryID)))}`}

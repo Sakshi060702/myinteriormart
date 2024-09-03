@@ -513,6 +513,7 @@ const decrypt = (ciphertext) => {
           {
             method: "POST",
             headers: {
+              "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
@@ -667,6 +668,7 @@ const decrypt = (ciphertext) => {
                                       : ""
                                   }
                                   alt="Gallery Image"
+                                  style={{marginRight:'-42px'}}
                                 />
                               </div>
                             </div>

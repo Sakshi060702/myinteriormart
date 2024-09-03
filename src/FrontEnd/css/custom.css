@@ -540,9 +540,9 @@ footer ul {
 .categories-list .item .icon {
 	width: 65px;
 	text-align: center;
-	background-color: #fff;
+	background-color: #f9f9f9;
 	display: block;
-	border: 1px solid #fe900d;
+	/* border: 1px solid #fe900d; */
 	float: left;
 	margin-right: 12px;
 	padding: 7px;
@@ -1183,7 +1183,7 @@ option[value=""][disabled] {
 		font-size: 12.9px;
 		line-height: 14px;
 		top:5px;
-		left: -7px;
+		left: -5px;
 		height: 31px;
 		padding-top: 7px;
 	}
@@ -1374,7 +1374,7 @@ option[value=""][disabled] {
 		position: fixed;
 		bottom: 0;
 		background-color: #fff;
-		width: 100%;
+		width: 50%;
 		box-shadow: 0px 0px 30px 0px rgb(0 0 0 / 10%);
 		z-index: 100000;
 	}

@@ -734,7 +734,10 @@ function App() {
 <Route path="/Uploadimage/:cityName" element={<Layout><Uploadimage/></Layout>} />
 
     </Routes>
-     <Foot/>
+    <div className="sticky-footer">
+    <Foot/>
+    </div>
+    
     </> 
     
   );

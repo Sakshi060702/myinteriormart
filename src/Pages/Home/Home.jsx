@@ -25,36 +25,37 @@ import Citypopup from "../Citypopup";
 
 function Home(){
 
-    const [showpopup,setShowpopup]=useState(false);
+    // const [showpopup,setShowpopup]=useState(false);
     const { cityName } = useParams();
     const navigate=useNavigate();
-    useEffect(()=>{
-        const selectedCity=localStorage.getItem("cityname");
-        if(!selectedCity){
-            setShowpopup(true);
+    // useEffect(()=>{
+    //     const selectedCity=localStorage.getItem("cityname");
+    //     if(!selectedCity){
+    //         setShowpopup(true);
 
-            // const timer=setTimeout(() => {
-            //     setShowpopup(false)
-            // }, 3000);
+    //         // const timer=setTimeout(() => {
+    //         //     setShowpopup(false)
+    //         // }, 3000);
     
-            // return()=>{clearTimeout(timer);}
-        }else if(!cityName){
-            navigate(`/${selectedCity}`,{replace:true});
-        }
+    //         // return()=>{clearTimeout(timer);}
+    //     }else if(!cityName){
+    //         navigate(`/${selectedCity}`,{replace:true});
+    //     }
       
-    },[]);
+    // },[]);
 
-    const handleClosePopup = () => {
-        setShowpopup(false);
-      };
+    // const handleClosePopup = () => {
+    //     setShowpopup(false);
+    //   };
 
       useEffect(()=>{
         
           const defualtCity="mumbai";
           localStorage.setItem("cityname",defualtCity);
         
-          navigate(`/${defualtCity}`)
-        }
+          navigate(`/${localStorage.getItem("cityname")}`)
+        },
+        [navigate]
        );
 
     

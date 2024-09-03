@@ -102,9 +102,9 @@ function Listing() {
   return (
     <>
       <div className="container" style={{ marginBottom: "30px" }}>
-        <div className="sticky-searchbar">
+        {/* <div className="sticky-searchbar">
         <Searchbar />
-        </div>
+        </div> */}
         
         <div
           className="banner-block one-block"
@@ -196,11 +196,11 @@ function Listing() {
                               <div className="rating-container mobile">
                                 <ul className="listingrating">
                                   <ul className="reating-list">
-                                    {/* <li>
+                                    <li>
                                     <h4 className="reating-number reactingnumberfont">
-                                      {listing.ratingAverage}.0
+                                      {listing.ratingAverage}
                                     </h4>
-                                  </li> */}
+                                  </li>
                                     <li className="reating-star">
                                       <li className="rating-star">
                                         <div
@@ -225,9 +225,9 @@ function Listing() {
                                         </div>
                                       </li>
                                     </li>
-                                    <li style={{ marginRight: "49px" }}>
+                                    {/* <li style={{ marginRight: "49px" }}>
                                       {listing.ratingCount} Rating
-                                    </li>
+                                    </li> */}
                                   </ul>
                                 </ul>
                               </div>
@@ -255,15 +255,11 @@ function Listing() {
 
                         <div className="col-lg-12 listing-bottom">
                           <ul className="listing-bottom-list">
-                            <li>
-                              <h5 className="yearbusiness">
-                                <b> + {listing.businessYear} Year Business</b>
-                              </h5>
-                            </li>
+                          
                             {/* Rating in listing bottom for desktop */}
                             <li
-                              className="rating-container desktop"
-                              style={{ marginLeft: "263px" }}
+                              className="rating-container desktop st"
+                              style={{ marginLeft: "8px" }}
                             >
                               <ul className="listingrating">
                                 <ul className="reating-list">
@@ -295,19 +291,24 @@ function Listing() {
                                 </ul>
                               </ul>
                             </li>
+                            <li className="listingyear">
+                              <h5 className="yearbusiness">
+                                <b> + {listing.businessYear} Year Business</b>
+                              </h5>
+                            </li>
                             <br></br>
-                            <li>
-                              <p className="" style={{ marginBottom: "0px" }}>
+                            <li style={{marginLeft:'4px',marginRight:'5px'}}>
+                              <p className="listingcallnow" >
                                 <Link
-                                  className="loc_open call-now callnowl"
-                                  style={{ top: "2px", padding: "7px 5px" }}
+                                  className="loc_open call-now callnowl  listingcallnowinner"
+                                  style={{ top: "2px" }}
                                 >
                                   Call now
                                 </Link>
                               </p>
                             </li>
                             <li>
-                              <p style={{ marginRight: "445px" }}>
+                              <p className="listinggetclaim">
                                 <button
                                   className="btn btn-guotes btn-sm"
                                   onClick={() =>

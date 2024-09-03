@@ -366,7 +366,7 @@
   @media (max-width: 576px) {
     .strip.map_view {
       padding: 10px;
-      /* width: 90%; */
+      width: 144%;
     }
   
     .enquiry_list_heading {
@@ -597,10 +597,11 @@
 }
 @media (max-width:767px) {
   .listingimage{
-    height: 100px;
-    width: 100px;
+    height: 106px !important;
+    width: 109px !important;
     position: relative;
-    margin-left: 183px;
+    margin-left: 165px;
+    margin-top: 0px;
   }
 }
   
@@ -622,6 +623,13 @@
   background-color: white; 
 }
 
+.sticky-footer{
+  position: -webkit-sticky; 
+  position: sticky;
+  top: 0; 
+  z-index: 1000; 
+  background-color: orange; 
+}
 
 .listingcompanyletter {
   margin-right: 28px;
@@ -639,9 +647,119 @@
 }
 @media (max-width:767px) {
   .stripmapviewdesign{
-width: 90%;
+width: 119%;
   }
 }
+
+.listingcallnow{
+  margin-bottom: 0px;
+}
+@media (max-width:767px) {
+  .listingcallnow{
+    margin-bottom: 23px;
+  }
+}
+
+.listingcallnowinner{
+  padding: 2px 7px !important;
+}
+@media (max-width:767px) {
+  .listingcallnowinner{
+    padding: 2px 5px !important;
+    /* background-color: orange !important;
+    color: white !important; */
+  }
+}
+
+.listingyear{
+  margin-left: 267px;
+}
+@media (max-width:767px) {
+  .listingyear{
+    margin-left: 0px;
+  }
+}
+
+
+.freelistingbtn{
+  margin-right: 12px;
+  display: none;
+  
+}
+@media (max-width:767px) {
+  .freelistingbtn{
+    margin-right: -23px;
+    text-wrap: nowrap;
+    width: 73px !important;
+  }
+}
+
+
+
+/* Default: hide the mobile freelisting button on larger screens */
+.mobile-freelisting {
+  display: none !important;
+}
+
+/* Show the mobile freelisting button only on smaller screens */
+@media (max-width: 767px) {
+  .mobile-freelisting {
+    display: block !important;
+    margin-bottom: 10px;
+    text-align: center; 
+  }
+}
+
+/*Freelisting dekstop but not for mobile*/
+.menu-freelisting
+{
+  display: block !important;
+}
+
+@media (max-width: 767px) {
+  .menu-freelisting
+{
+  display: none !important;
+}
+
+}
+
+
+
+/* Default styling (Desktop) */
+.free-listing-mobile {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  /* On Mobile */
+  .free-listing-desktop {
+    display: none !important;
+  }
+
+  .free-listing-mobile {
+    display: block !important;
+    margin-top: 10px; /* Adjust as necessary */
+    text-align: center; /* Center it if needed */
+  }
+}
+
+
+.listinggetclaim{
+  margin-right: 445px;
+}
+@media (max-width:767px) {
+  .listinggetclaim{
+    margin-right: 0px;
+    margin-left: -12px;
+  }
+}
+
+
+
+
+
+
 
 
 

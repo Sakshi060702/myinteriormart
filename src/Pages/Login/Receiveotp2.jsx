@@ -84,7 +84,7 @@ function Receiveotp2() {
                                             <div style={{ marginTop: '-20px' }}>
                                                 <img src={mobileImage} alt="Mobile Icon" style={{ width: '80px', height: '80px', marginRight: '10px' }} />
                                             </div>
-                                            <div>
+                                            {/* <div>
                                                 <input
                                                     type="text"
                                                     name="generatedOTP"
@@ -94,7 +94,7 @@ function Receiveotp2() {
                                                     style={{ width: '120px', height: '50px' }}
                                                     className="form-control input"
                                                 />
-                                            </div>
+                                            </div> */}
                                         </div>
                                         <div className=" mb-4  align-items-center otp-inputs">
                                             {userOtp.map((digit, index) => (

@@ -248,6 +248,24 @@ function Menu1() {
               </div>
             </div>
             <div className="col-lg-9 col-12 navitems">
+              
+              <div>
+               
+{!isAuthenticated && (
+  <NavLink
+    to={`/signup2/in-${localStorage.getItem('cityname')}`}
+    className="btn_add listing-btn buttonlogin freelistingbtn mobile-freelisting"
+    style={{
+      backgroundColor: "#fe900d",
+      fontSize: "14px",
+    }}
+    // onClick={closeMenu}
+  >
+    Free Listing
+  </NavLink>
+)}
+
+              </div>
               <ul className={`nav-links ${showMenu ? "active" : ""}`}>
                 {/* <li>
                   <span>
@@ -274,7 +292,7 @@ function Menu1() {
 
                           
                         }}
-                        onClick={closeMenu}
+                        // onClick={closeMenu}
                       >
                         Suggestion
                       </NavLink>
@@ -282,7 +300,7 @@ function Menu1() {
                    <li>
                 <NavLink
                         to={`/signup2/in-${localStorage.getItem('cityname')}`}
-                        className="btn_add listing-btn buttonlogin"
+                        className="btn_add listing-btn buttonlogin menu-freelisting"
                         style={{
                           backgroundColor: "#fe900d",
                           fontSize: "14px",
@@ -290,7 +308,7 @@ function Menu1() {
                           
                           
                         }}
-                        onClick={closeMenu}
+                        // onClick={closeMenu}
                       >
                         Freelisting
                       </NavLink>
@@ -308,7 +326,7 @@ function Menu1() {
                           
                           
                         }}
-                        onClick={closeMenu}
+                        // onClick={closeMenu}
                       >
                         Signup
                       </NavLink>
@@ -318,7 +336,7 @@ function Menu1() {
                         to={`/login/in-${localStorage.getItem('cityname')}`}
                         className=" listing-btn buttonlogin suggestionbtn "
                         style={{ fontSize: "14px" }}
-                        onClick={closeMenu}
+                        // onClick={closeMenu}
                       >
                         Login
                       </NavLink>
@@ -409,12 +427,12 @@ function Menu1() {
                     {userType === "Business" && (
                       <>
                         <div>
-                          {status !== 1 && (
+                        {status !== 1 && (
                             <ul>
                               <li>
                                 <NavLink
                                   to={`/addcompany/in-${localStorage.getItem('cityname')}`}
-                                  className="btn_add listing-btn"
+                                  className="btn_add listing-btn menu-freelisting"
                                   style={{
                                     backgroundColor: "#fe900d",
                                     fontSize: "14px",
@@ -512,11 +530,30 @@ function Menu1() {
                             </button>
                           </div>
                         </div>
+
+
                       </>
                     )}
+                    
                   </>
                 )}
               </ul>
+              {userType === "Business" &&(
+                      <div >
+      {status !== 1 && (
+        <NavLink
+          to={`/addcompany/in-${localStorage.getItem('cityname')}`}
+          className="btn_add listing-btn mobile-freelisting freelistingbtn"
+          style={{
+            backgroundColor: "#fe900d",
+            fontSize: "14px",
+          }}
+        >
+          Free Listing
+        </NavLink>
+      )}
+    </div>
+                    )}
               <div
                 className="burger"
                 onClick={toogleMenu}

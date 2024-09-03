@@ -75,23 +75,31 @@ console.log(decrypt(listingId_enc));
                   className={`col-lg-3 col-6 d-flex justify-content-center`}
                 >
                   <div className="item">
-                    <span
-                      className="icon"
-                      style={{
-                        display: "inline-block",
-                        width: "40px",
-                        height: "40px",
-                        overflow: "hidden",
-                        position: "relative",
-                        marginRight: "10px",
-                      }}
-                    >
-                      <img
-                        src={`/img/circle-right-arrow.svg`}
-                        alt="service"
-                        className="img-fluid image imgstyle"
-                      />
-                    </span>
+                  <span
+  className="icon"
+  style={{
+    display: "inline-block",
+    width: "40px",
+    height: "40px",
+    overflow: "hidden",
+    position: "relative",
+    marginRight: "10px",
+  }}
+>
+  <div
+    style={{
+      width: "15px",
+      height: "15px",
+      backgroundColor: "orange",
+      borderRadius: "50%",
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+    }}
+  ></div>
+</span>
+
                     <Link
                       to={`/All/${subCategory.name
                             .replace(/\s+/g, "-").toLowerCase()}/${selectedCategory.name
