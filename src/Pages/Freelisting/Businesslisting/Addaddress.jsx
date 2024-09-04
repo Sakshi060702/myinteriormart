@@ -362,6 +362,10 @@ const Address = () => {
       });
   };
 
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
   return (
     <>
       <div>
@@ -587,7 +591,7 @@ const Address = () => {
                 {
                   showAreaPopup && (
                     <Areapopup 
-                    isOpen={showAreaPopup[0]} pincodeId={showAreaPopup[1]} localityId={showAreaPopup[1]}
+                    isOpen={showAreaPopup[0]} pincodeId={showAreaPopup[1]} localityId={showAreaPopup[2]}
                     onClose={()=>setShowAreaPopup([false,null,null])}/>
                   )
                 }
@@ -598,6 +602,7 @@ const Address = () => {
                   <Popupalert 
                   message={successMessage || errorMessage} 
                   type={successMessage ? 'success' : 'error'} 
+                  onClose={handleClosePopup}
                 />)}
               </form>
             </div>

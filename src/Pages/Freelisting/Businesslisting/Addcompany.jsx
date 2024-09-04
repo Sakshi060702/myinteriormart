@@ -179,14 +179,14 @@ function Addcompany() {
     const apiUrl =
       "https://apidev.myinteriormart.com/api/CompanyDetails/AddOrUpdateCompanyDetails";
 
-    console.log("Submitting data:", formData);
-    console.log(formData.companyName);
-    console.log(formData.businessTypes);
-    console.log(formData.natureOfBusiness);
-    console.log(formData.yearOfEstablishment);
-    console.log(formData.numberOfEmployees);
-    console.log(formData.turnover);
-    console.log(formData.gstNumber);
+    // console.log("Submitting data:", formData);
+    // console.log(formData.companyName);
+    // console.log(formData.businessTypes);
+    // console.log(formData.natureOfBusiness);
+    // console.log(formData.yearOfEstablishment);
+    // console.log(formData.numberOfEmployees);
+    // console.log(formData.turnover);
+    // console.log(formData.gstNumber);
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -228,6 +228,10 @@ function Addcompany() {
       setShowPopup(true);
     }
   };
+
+  const handleClosePopup = () => {
+        setShowPopup(false);
+      };
 
   return (
     <>
@@ -424,6 +428,7 @@ function Addcompany() {
             <Popupalert
               message={successMessage || errorMessage}
               type={successMessage ? "success" : "error"}
+              onClose={handleClosePopup}
             />
           )}
         </form>

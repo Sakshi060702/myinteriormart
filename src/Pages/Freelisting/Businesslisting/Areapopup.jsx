@@ -50,31 +50,32 @@ const Areapopup = ({ isOpen, pincodeId,localityId, onClose }) => {
           body: JSON.stringify(formData),
         }
       );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
       const data = await response.json();
-      console.log(data);
-    //   setSuccessMessage("Locality Added  Successfully");
-    //   setErrorMessage("");
-    //   setShowPopup(true);
-      onClose();
+      if (response.ok) {
+        console.log(data);
+        setSuccessMessage("Area Added  Successfully");
+        setErrorMessage("");
+        setShowPopup(true);
+      }
+     
+      // console.log(data);
+     
 
-    //   setTimeout(() => {
-    //     setShowPopup(false);
-    //     onClose();
-    //   }, 2000);
+      setTimeout(() => {
+        setShowPopup(false);
+        onClose();
+      }, 2000);
       // Handle success (e.g., show a success message or close the popup)
     //   onClose();
     } catch (error) {
-      console.error("Error submitting the form:", error);
-    //   setErrorMessage("Failed to Send Enquiry. Please try again later.");
-    //   setSuccessMessage("");
-    //   setShowPopup(true);
+       console.error("Error submitting the form:", error);
+      setErrorMessage("Failed to Add Area. Please try again later.");
+      setSuccessMessage("");
+      setShowPopup(true);
 
-    //   setTimeout(() => {
-    //     setShowPopup(false);
-    //   }, 2000);
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 2000);
       // Handle error (e.g., show an error message)
     }
   };

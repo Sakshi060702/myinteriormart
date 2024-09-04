@@ -126,7 +126,9 @@ function Clientimagel() {
       setShowPopup(true);
     }
   };
-
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
   return (
     <>
       <div className="row imageSection" id="logo_section">
@@ -205,6 +207,7 @@ function Clientimagel() {
             <Popupalert 
             message={successMessage || errorMessage} 
             type={successMessage ? 'success' : 'error'} 
+            onClose={handleClosePopup}
           />
           )}
 

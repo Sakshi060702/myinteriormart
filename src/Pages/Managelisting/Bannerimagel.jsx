@@ -127,6 +127,10 @@ function Bannerimagel() {
     }
   };
 
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
 
   return (
     <>
@@ -205,6 +209,8 @@ function Bannerimagel() {
             <Popupalert 
             message={successMessage || errorMessage} 
             type={successMessage ? 'success' : 'error'} 
+            
+onClose={handleClosePopup}
           />
           )}
         </div>

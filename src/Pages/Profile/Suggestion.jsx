@@ -78,6 +78,10 @@ function Suggestion() {
       setShowPopup(true);
     }
   };
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
 
   return (
     <>
@@ -131,6 +135,7 @@ function Suggestion() {
                   <Popupalert
                     message={successMessage || errorMessage}
                     type={successMessage ? "success" : "error"}
+                    onClose={handleClosePopup}
                   />
                 )}
           </form>

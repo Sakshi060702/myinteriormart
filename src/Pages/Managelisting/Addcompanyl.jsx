@@ -205,6 +205,10 @@ function Addcompanyl() {
     }
   };
 
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
   return (
     <>
       <div className="container my-5">
@@ -386,6 +390,7 @@ function Addcompanyl() {
                   <Popupalert
                     message={successMessage || errorMessage}
                     type={successMessage ? "success" : "error"}
+                    onClose={handleClosePopup}
                   />
                 )}
               </form>

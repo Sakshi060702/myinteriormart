@@ -165,7 +165,9 @@ function Addpayment() {
       // Handle error (e.g., show an error message)
     }
   };
-
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
   return (
     <>
       <div>
@@ -255,6 +257,7 @@ function Addpayment() {
                   <Popupalert
                     message={successMessage || errorMessage}
                     type={successMessage ? "success" : "error"}
+                    onClose={handleClosePopup}
                   />
                 )}
 

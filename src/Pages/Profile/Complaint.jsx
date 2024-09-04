@@ -94,6 +94,10 @@ function Complaint() {
     }
   };
 
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
   return (
     <>
       <div
@@ -134,7 +138,7 @@ function Complaint() {
                     )}
               </div>
               <div className="form-group col-12">
-                <label > File<span className="text-danger">*</span></label>
+                <label style={{marginLeft:'5px'}}> File<span className="text-danger">*</span></label>
                 <br></br>
                 <input
                   type="file"
@@ -160,6 +164,7 @@ function Complaint() {
                   <Popupalert
                     message={successMessage || errorMessage}
                     type={successMessage ? "success" : "error"}
+                    onClose={handleClosePopup}
                   />
                 )}
           </form>

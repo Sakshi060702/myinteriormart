@@ -60,7 +60,7 @@ const PincodePopup = ({ isOpen, localityId, onClose }) => {
       onClose();
     } catch (error) {
       console.error("Error submitting the form:", error);
-      setErrorMessage("Failed to Send Enquiry. Please try again later.");
+      setErrorMessage("Pincode already exists.");
       setSuccessMessage("");
       setShowPopup(true);
 

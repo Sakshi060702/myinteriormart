@@ -129,6 +129,10 @@ function Login() {
     }
   };
 
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
   return (
     <div className="container sign_up_container">
       <div className="row justify-content-center">
@@ -268,6 +272,7 @@ function Login() {
             <Popupalert 
             message={successMessage || errorMessage} 
             type={successMessage ? 'success' : 'error'} 
+            onClose={handleClosePopup}
           />
           )}
             </div>

@@ -217,6 +217,11 @@ function Addcommunication(){
 
   ];
 
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
+
   return (
     <>
       <div className="">
@@ -359,6 +364,7 @@ function Addcommunication(){
   <Popupalert 
     message={successMessage || errorMessage} 
     type={successMessage ? 'success' : 'error'} 
+    onClose={handleClosePopup}
   />
 )}
                  

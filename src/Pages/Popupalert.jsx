@@ -2,13 +2,16 @@ import React from 'react';
 import '../Pages/Freelisting/Businesslisting/Businesslisting.css';
 import '../FrontEnd/css/Popupnotification.css';
 
-const Popupalert = ({ message, type }) => {
+const Popupalert = ({ message, type,onClose }) => {
   const isSuccess = type === "success";
 
   return (
     <div className={`popup3 ${type}`}>
-      <div className='popup3-overlay'>
-        <div className="popup3-content">
+      <div className='popup3-overlay'onClick={onClose}>
+        <div className="popup3-content" onClick={(e) => e.stopPropagation()}>
+        <button className="close-button" onClick={onClose}>
+            X
+          </button>
           <div style={{paddingBottom:'20px', textAlign: 'center'}}>
             <div className={`icon-container ${isSuccess ? 'success-icon-container' : 'error-icon-container'}`} style={{paddingLeft:'10px',paddingBottom:'15px'}}>
               <span className={isSuccess ? 'success-icon' : 'error-icon'} >

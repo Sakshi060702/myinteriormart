@@ -135,7 +135,9 @@ function Editprofile() {
   const handleSelect = (eventKey) => {
     setSelectGender(eventKey);
   };
-
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
   return (
     <div className="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
       <div className="add-review">
@@ -205,6 +207,7 @@ function Editprofile() {
   <Popupalert 
     message={successMessage || errorMessage} 
     type={successMessage ? 'success' : 'error'} 
+    onClose={handleClosePopup}
   />
 )}
         </form>

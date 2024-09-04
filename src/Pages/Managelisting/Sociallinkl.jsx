@@ -116,6 +116,10 @@ function Sociallinkl() {
       setShowPopup(true);
     }
   }
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
   return (
     <>
       <div className="container my-5">
@@ -239,6 +243,7 @@ function Sociallinkl() {
             <Popupalert 
             message={successMessage || errorMessage} 
             type={successMessage ? 'success' : 'error'} 
+            onClose={handleClosePopup}
           />
           )}
               </div>

@@ -158,6 +158,10 @@ function Addspecialisation()
           // Handle error (e.g., show an error message)
         }
       };
+
+      const handleClosePopup = () => {
+        setShowPopup(false);
+      };
     
     return(
 
@@ -220,6 +224,9 @@ function Addspecialisation()
             <Popupalert 
             message={successMessage || errorMessage} 
             type={successMessage ? 'success' : 'error'} 
+            
+
+onClose={handleClosePopup}
           />
           )}
             </div>

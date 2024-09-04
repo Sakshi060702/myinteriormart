@@ -231,6 +231,9 @@ function Teamimagel() {
       setShowPopup(true);
     }
   };
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
 
   return (
     <>
@@ -474,6 +477,7 @@ function Teamimagel() {
         <Popupalert
           message={successMessage || errorMessage}
           type={successMessage ? "success" : "error"}
+          onClose={handleClosePopup}
         />
       )}
     </>

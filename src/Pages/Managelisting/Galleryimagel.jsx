@@ -141,6 +141,10 @@ function Galleryimagel() {
     }
   };
 
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
   return (
     <>
       <div className="row imageSection" id="logo_section">
@@ -232,6 +236,7 @@ function Galleryimagel() {
             <Popupalert
               message={successMessage || errorMessage}
               type={successMessage ? "success" : "error"}
+              onClose={handleClosePopup}
             />
           )}
         </div>

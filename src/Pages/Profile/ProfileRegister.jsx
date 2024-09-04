@@ -76,6 +76,10 @@ function ProfileRegister() {
     }
   };
 
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
   return (
     <>
       <div
@@ -140,6 +144,8 @@ function ProfileRegister() {
                   <Popupalert
                     message={successMessage || errorMessage}
                     type={successMessage ? "success" : "error"}
+                    
+onClose={handleClosePopup}
                   />
                 )}
           </form>

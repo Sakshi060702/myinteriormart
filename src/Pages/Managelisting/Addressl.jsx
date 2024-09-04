@@ -348,6 +348,10 @@ const Addressl = () => {
       });
   };
 
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
   return (
     <>
       <div className="container my-5">
@@ -601,6 +605,7 @@ const Addressl = () => {
                   <Popupalert
                     message={successMessage || errorMessage}
                     type={successMessage ? "success" : "error"}
+                    onClose={handleClosePopup}
                   />
                 )}
               </form>

@@ -119,6 +119,9 @@ function Paymentmodel() {
       // Handle error (e.g., show an error message)
     }
   }
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
   return (
     <>
       <div className="container my-5">
@@ -176,6 +179,7 @@ function Paymentmodel() {
             <Popupalert 
             message={successMessage || errorMessage} 
             type={successMessage ? 'success' : 'error'} 
+            onClose={handleClosePopup}
           />
           )}
             </div>

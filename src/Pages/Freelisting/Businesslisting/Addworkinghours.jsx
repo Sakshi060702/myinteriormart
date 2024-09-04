@@ -156,6 +156,10 @@ function Addworkinghours()
     setShowPopup(true);
         }
       };
+
+      const handleClosePopup = () => {
+        setShowPopup(false);
+      };
     
     return(
 <>
@@ -278,6 +282,7 @@ function Addworkinghours()
             <Popupalert 
             message={successMessage || errorMessage} 
             type={successMessage ? 'success' : 'error'} 
+            onClose={handleClosePopup}
           />
           )}
                 </div>

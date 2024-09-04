@@ -173,6 +173,10 @@ function Communicationl() {
       setShowPopup(true);
     }
   };
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
 
   const languageOptionsList  = [
     { value: 'English', label: 'English' },
@@ -331,6 +335,7 @@ function Communicationl() {
             <Popupalert 
             message={successMessage || errorMessage} 
             type={successMessage ? 'success' : 'error'} 
+            onClose={handleClosePopup}
           />
           )}
                 </div>

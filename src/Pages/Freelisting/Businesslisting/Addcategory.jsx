@@ -271,6 +271,9 @@ function Addcategory()
     setShowPopup(true);
     }
   };
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
 
     return(
 
@@ -498,6 +501,7 @@ function Addcategory()
            <Popupalert 
            message={successMessage || errorMessage} 
            type={successMessage ? 'success' : 'error'} 
+           onClose={handleClosePopup}
          />
           )}
                 </form>

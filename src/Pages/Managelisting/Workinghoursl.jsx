@@ -141,6 +141,9 @@ useEffect(()=>{
       setShowPopup(true);
     }
   };
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
 
   return (
     <>
@@ -268,6 +271,7 @@ useEffect(()=>{
             <Popupalert 
             message={successMessage || errorMessage} 
             type={successMessage ? 'success' : 'error'} 
+            onClose={handleClosePopup}
           />
           )}
                 </div>

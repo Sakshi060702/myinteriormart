@@ -94,10 +94,23 @@ function Changepassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
-      oldPassword,
-      newPassword,
-      confirmPassword,
+      oldPassword:oldPin.join(""),
+      newPassword:pin.join(""),
+      confirmPassword:confirmPin.join(""),
     };
+    if (!data.oldPassword || !data.newPassword || !data.confirmPassword) {
+      setErrorMessage("All fields are compulsory.");
+      setShowPopup(true);
+      return;
+  }
+
+  // Check if new PIN and confirm PIN match
+  if (data.newPassword !== data.confirmPassword) {
+      setErrorMessage("New PIN and Confirm PIN do not match.");
+      setShowPopup(true);
+      return;
+  }
+  
     try {
       const response = await fetch(
         "https://apidev.myinteriormart.com/api/ForgotPassword/ForgotPassword",
@@ -127,9 +140,9 @@ function Changepassword() {
       }, 2000);
 
       // Reset form fields after successful submission
-      setoldPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
+      setOldPin(["","",""]);
+      setPin(["","",""]);
+      setConfirmPin(["","",""]);
     } catch (error) {
       console.error("Error submitting form:", error);
       setErrorMessage(
@@ -138,6 +151,9 @@ function Changepassword() {
       setSuccessMessage(""); // Clear any existing success message
       setShowPopup(true);
     }
+  };
+  const handleClosePopup = () => {
+    setShowPopup(false);
   };
   return (
     <>
@@ -314,6 +330,7 @@ function Changepassword() {
                   <Popupalert
                     message={successMessage || errorMessage}
                     type={successMessage ? "success" : "error"}
+                    onClose={handleClosePopup}
                   />
                 )}
 

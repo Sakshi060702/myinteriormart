@@ -48,26 +48,26 @@ const LocalityPopup = ({ isOpen, cityId, onClose }) => {
       }
       const data = await response.json();
       console.log(data);
-    //   setSuccessMessage("Locality Added  Successfully");
-    //   setErrorMessage("");
-    //   setShowPopup(true);
-      onClose();
+      setSuccessMessage("Locality Added Successfully");
+      setErrorMessage("");
+      setShowPopup(true);
 
-    //   setTimeout(() => {
-    //     setShowPopup(false);
-    //     onClose();
-    //   }, 2000);
-      // Handle success (e.g., show a success message or close the popup)
-    //   onClose();
+      setTimeout(() => {
+        setShowPopup(false);
+        onClose();
+      }, 2000);
+
+      
+      
     } catch (error) {
       console.error("Error submitting the form:", error);
-    //   setErrorMessage("Failed to Send Enquiry. Please try again later.");
-    //   setSuccessMessage("");
-    //   setShowPopup(true);
+      setErrorMessage("Locality already exists.");
+      setSuccessMessage("");
+      setShowPopup(true);
 
-    //   setTimeout(() => {
-    //     setShowPopup(false);
-    //   }, 2000);
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 2000);
       // Handle error (e.g., show an error message)
     }
   };
@@ -155,13 +155,14 @@ const LocalityPopup = ({ isOpen, cityId, onClose }) => {
              
               
             </div>
-          </form>
-          {showPopup && (
+            {showPopup && (
             <Popupalert
               message={successMessage || errorMessage}
               type={successMessage ? "success" : "error"}
             />
           )}
+          </form>
+          
         </div>
       </div>
     </>

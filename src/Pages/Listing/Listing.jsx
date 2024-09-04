@@ -102,9 +102,9 @@ function Listing() {
   return (
     <>
       <div className="container" style={{ marginBottom: "30px" }}>
-        {/* <div className="sticky-searchbar">
+        <div className="sticky-searchbar">
         <Searchbar />
-        </div> */}
+        </div>
         
         <div
           className="banner-block one-block"

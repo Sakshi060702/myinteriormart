@@ -20,93 +20,75 @@ import Listingkeyword from "./Listingkeyword";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import '../../FrontEnd/css/RegistrationMV.css'
+import "../../FrontEnd/css/RegistrationMV.css";
 import CryptoJS from "crypto-js";
 
 function Listingdetails() {
   // const { listingId } = useParams();
-  console.log("RTEST");
+  // console.log("RTEST");
   const [searchParams] = useSearchParams();
-  console.log(searchParams);
+  // console.log(searchParams);
 
-const { listingPage,secondCategoryName } = useParams();
+  const { listingPage, secondCategoryName } = useParams();
 
-// const currentPage = listingPage.split('-')[1];
-// const itemsPerPage = listingPage.split('-')[2];
+  // const currentPage = listingPage.split('-')[1];
+  // const itemsPerPage = listingPage.split('-')[2];
 
-const currentPage = searchParams.get("page");
-const itemsPerPage = searchParams.get("itemperpage");
+  const currentPage = searchParams.get("page");
+  const itemsPerPage = searchParams.get("itemperpage");
 
-// const secondCategoryId = useParams().listingId.split('-')[3];
+  // const secondCategoryId = useParams().listingId.split('-')[3];
 
-console.log("currentpage",currentPage);
-console.log("Itemperpage",itemsPerPage)
+  console.log("currentpage", currentPage);
+  console.log("Itemperpage", itemsPerPage);
 
+  // const secondCategoryName = encryptedListingId.split('-')[3];
 
-
-// const secondCategoryName = encryptedListingId.split('-')[3];
-
-
-
-// const decryptedListingId = decrypt(listingId_enc);
-// console.log(decryptedListingId); 
-
-
+  // const decryptedListingId = decrypt(listingId_enc);
+  // console.log(decryptedListingId);
 
   // const {encryptedListingId}=useParams();
   // const listingId1=decrypt(encryptedListingId)
   // console.log(listingId1)
 
-  
-  const encryptionKey = 'myinterriorMart@SECRETKEY';
+  const encryptionKey = "myinterriorMart@SECRETKEY";
 
   const encrypt = (text) => {
-    
     return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
   };
-  
-  
-//   const decrypt = (ciphertext) => {
-//     const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
-//     console.log(bytes);
-//     console.log(bytes.toString(CryptoJS.enc.Utf8));
-// const decryptstring=bytes.toString(CryptoJS.enc.Utf8);
-// const decryptint=parseInt(decryptstring);
-// console.log(typeof decryptstring)
-// console.log("string",decryptstring)
-// console.log("inttt",parseInt(decryptstring))
-//     return decryptint
 
+  //   const decrypt = (ciphertext) => {
+  //     const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
+  //     console.log(bytes);
+  //     console.log(bytes.toString(CryptoJS.enc.Utf8));
+  // const decryptstring=bytes.toString(CryptoJS.enc.Utf8);
+  // const decryptint=parseInt(decryptstring);
+  // console.log(typeof decryptstring)
+  // console.log("string",decryptstring)
+  // console.log("inttt",parseInt(decryptstring))
+  //     return decryptint
 
-    
-//   };
+  //   };
 
-const decrypt = (ciphertext) => {
-  const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
-  console.log(bytes);
-  console.log(bytes.toString(CryptoJS.enc.Utf8));
-  return bytes.toString(CryptoJS.enc.Utf8);
+  const decrypt = (ciphertext) => {
+    const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
+    // console.log(bytes);
+    // console.log(bytes.toString(CryptoJS.enc.Utf8));
+    return bytes.toString(CryptoJS.enc.Utf8);
+  };
 
-
-  
-};
-
-
- 
   const listingId_enc = searchParams.get("listingEncyt");
   const listingId = decrypt(decodeURIComponent(listingId_enc));
-  console.log(listingId_enc);
-  console.log("listingid",listingId)
-  console.log(decrypt(listingId_enc));
-  console.log("RTEST");
-
+  // console.log(listingId_enc);
+  // console.log("listingid",listingId)
+  // console.log(decrypt(listingId_enc));
+  // console.log("RTEST");
 
   const secondcategory_enc = searchParams.get("secondCategoryId");
   const secondCategoryId = decrypt(decodeURIComponent(secondcategory_enc));
-  console.log(secondcategory_enc);
-  console.log("secondcategory",secondCategoryId)
-  console.log(decrypt(secondcategory_enc));
-  
+  // console.log(secondcategory_enc);
+  // console.log("secondcategory",secondCategoryId)
+  // console.log(decrypt(secondcategory_enc));
 
   // console.log(useParams().listingId.split('-'));
   const [listingDetails, setListingDetails] = useState(null);
@@ -135,27 +117,22 @@ const decrypt = (ciphertext) => {
 
   const [imageDetails, setImageDetails] = useState([]);
 
+  const [teamimageDetails, setTeamImageDetails] = useState([]);
+
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true,           // Enable autoplay
-    autoplaySpeed: 3000,      // Set autoplay speed in milliseconds
+    autoplay: true, // Enable autoplay
+    autoplaySpeed: 3000, // Set autoplay speed in milliseconds
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
 
   // if(){
   // }
-  
-
-
-
-
-
-
 
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -180,7 +157,6 @@ const decrypt = (ciphertext) => {
   }
 
   useEffect(() => {
-
     fetchListingDetails();
   }, [listingId]);
   // useEffect(() => {
@@ -198,7 +174,7 @@ const decrypt = (ciphertext) => {
 
   const token = useSelector((state) => state.auth.token);
 
-  const fomattedcity=localStorage.getItem('cityname')
+  const fomattedcity = localStorage.getItem("cityname");
 
   const fetchListingDetails = async () => {
     try {
@@ -445,7 +421,6 @@ const decrypt = (ciphertext) => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
               companyID: parseInt(listingId),
@@ -461,9 +436,10 @@ const decrypt = (ciphertext) => {
         console.error(error);
       }
     };
-    if (isAuthenticated) {
-      fetchBannerImage();
-    }
+    // if (isAuthenticated) {
+    //   fetchBannerImage();
+    // }
+    fetchBannerImage();
   }, []);
 
   useEffect(() => {
@@ -475,7 +451,6 @@ const decrypt = (ciphertext) => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
               companyID: parseInt(listingId),
@@ -489,21 +464,17 @@ const decrypt = (ciphertext) => {
         console.log(data);
         if (data instanceof Object) {
           console.log(data);
-          // console.log("sakshi");
-          setImageDetails(
+          setTeamImageDetails(
             data.imagepath.map((img) => ({ url: img, title: data.ownerName }))
           );
         }
-        // setImageURL(data.imagepath); // Assuming data contains image URL and title
-        // setImageTitleFromAPI(data.imagetitle); // Set the image title from API
       } catch (error) {
         console.error(error);
       }
     };
-    if (isAuthenticated) {
-      fetchTeamImage();
-    }
-  }, []);
+
+    fetchTeamImage(); // Don't forget to call the fetch function inside useEffect
+  }, [listingId]);
 
   useEffect(() => {
     const fetchGalleryImage = async () => {
@@ -514,7 +485,6 @@ const decrypt = (ciphertext) => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
               companyID: parseInt(listingId),
@@ -535,10 +505,11 @@ const decrypt = (ciphertext) => {
         console.error(error);
       }
     };
-    if (isAuthenticated) {
-      fetchGalleryImage();
-    }
-  }, [token]);
+    fetchGalleryImage();
+    // if (isAuthenticated) {
+    //   fetchGalleryImage();
+    // }
+  }, [listingId]);
 
   //for address
   const toggleAddress = () => {
@@ -559,7 +530,6 @@ const decrypt = (ciphertext) => {
 
   return (
     <>
-   
       <div className="container individual-listing">
         <div className="row">
           {listingDetails ? (
@@ -596,27 +566,35 @@ const decrypt = (ciphertext) => {
                 <div className="box_detail_cus">
                   <div className="cust-profile">
                     {/* <img src={profile} alt="profile"></img> */}
-                    {imageDetails.length > 0 ? (
-                      <div>
-                        <div>
-                          <img
-                            className="upload_images"
-                            src={`https://apidev.myinteriormart.com${imageDetails[0].url}`}
-                            alt="Owner Image"
-                          />
-                          <h6>{imageDetails.title}</h6>
-                          {/* {console.log(imageDetails.title)} */}
-                        </div>
-                      </div>
-                    ) : (
+                    {teamimageDetails.length > 0 && (
                       <div>
                         <img
                           className="upload_images"
-                          src={profile} // Default image URL
-                          alt="Default Image"
+                          src={
+                            teamimageDetails[0].url
+                              ? `https://apidev.myinteriormart.com${teamimageDetails[0].url}`
+                              : ""
+                          }
+                          alt="Owner Image"
                         />
+                        <h6>{teamimageDetails[0].title}</h6>
                       </div>
                     )}
+
+                    {/* {teamimageDetails.map((image, index) => (
+                      <div key={index}>
+                        <img
+                          className="upload_images"
+                          src={
+                            image.url
+                              ? `https://apidev.myinteriormart.com${image.url}`
+                              : ""
+                          }
+                          alt="Owner Image"
+                        />
+
+                      </div>
+                    ))} */}
                     {/* <h6 className="cust_name">Habiba Humaza</h6>
                     <span className="cust-type">Owner</span> */}
                   </div>
@@ -635,7 +613,7 @@ const decrypt = (ciphertext) => {
                       style={{ width: "100%", height: "200px" }}
                     /> */}
                     <img
-                      className="upload_images"
+                      className="upload_imagesbanner "
                       src={
                         imageURL
                           ? `https://apidev.myinteriormart.com${imageURL}`
@@ -661,14 +639,14 @@ const decrypt = (ciphertext) => {
                                 style={{ width: "189px", marginLeft: "50px" }}
                               >
                                 <img
-                                  className="upload_images"
+                                  className="upload_imagesgallery "
                                   src={
                                     image.url
                                       ? `https://apidev.myinteriormart.com${image.url}`
                                       : ""
                                   }
                                   alt="Gallery Image"
-                                  style={{marginRight:'-42px'}}
+                                  style={{ marginRight: "-42px" }}
                                 />
                               </div>
                             </div>
@@ -813,11 +791,9 @@ const decrypt = (ciphertext) => {
                         <button
                           className={`btn btn-bookmark ${
                             isBookmarked ? "active" : ""
-                          } ${
-                            isBookmarked ? "icon-active" : ""
-                          }`}
+                          } ${isBookmarked ? "icon-active" : ""}`}
                           onClick={handleBookmarkToggle}
-                          style={{ marginRight: "5px" ,fontSize:'13px' }}
+                          style={{ marginRight: "5px", fontSize: "13px" }}
                         >
                           <i
                             className={`fa fa-bookmark`}
@@ -829,19 +805,17 @@ const decrypt = (ciphertext) => {
                         <button
                           className="btn-custom pushRight btn btn-light btn-sm"
                           onClick={() => setIsSociallinkOpen(true)}
-                          style={{ height: "32px",fontSize:'13px' }}
+                          style={{ height: "32px", fontSize: "13px" }}
                         >
                           <i className="icon-share"></i>Share
                         </button>
 
                         <button
-                          className={`btn btn-like ${
-                            isLike ? "active" : ""
-                          } ${
+                          className={`btn btn-like ${isLike ? "active" : ""} ${
                             isLike ? "icon-active" : ""
                           }`}
                           onClick={handleLikeToggle}
-                          style={{ marginRight: "5px" ,fontSize:'13px' }}
+                          style={{ marginRight: "5px", fontSize: "13px" }}
                         >
                           <i
                             className={`fa fa-thumbs-up`}
@@ -852,11 +826,9 @@ const decrypt = (ciphertext) => {
                         <button
                           className={`btn btn-subscribe ${
                             isSubscribe ? "active" : ""
-                          } ${
-                            isSubscribe ? "icon-active" : ""
-                          }`}
+                          } ${isSubscribe ? "icon-active" : ""}`}
                           onClick={handleSubscribeToggle}
-                          style={{ marginRight: "5px" ,fontSize:'13px' }}
+                          style={{ marginRight: "5px", fontSize: "13px" }}
                         >
                           <i
                             className={`fa fa-bell`}

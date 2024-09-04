@@ -127,6 +127,10 @@ function Certificationimagel() {
     }
   };
 
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
   return (
     <>
       <div className="row imageSection" id="logo_section">
@@ -198,6 +202,7 @@ function Certificationimagel() {
             <Popupalert 
             message={successMessage || errorMessage} 
             type={successMessage ? 'success' : 'error'} 
+            onClose={handleClosePopup}
           />
           )}
         </div>

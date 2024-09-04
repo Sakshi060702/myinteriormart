@@ -194,15 +194,15 @@ function Register() {
                 <option value="">Select Business Type</option>
                 <option value="44">Dealers</option>
                 <option value="41">Services</option>
-                <option value="45">Manufacturers</option>
+                {/* <option value="45">Manufacturers</option>
                 <option value="47">Rental Services</option>
-                <option value="46">Labours</option>
+                <option value="46">Labours</option> */}
                 <option value="43">Contractors</option>
-                <option value="40">Repairs</option>
+                {/* <option value="40">Repairs</option>
                 <option value="39">premium Categories</option>
                 <option value="53">wholesalers</option>
                 <option value="54 ">distributors</option>
-                <option value="48">Labor Contractors</option>
+                <option value="48">Labor Contractors</option> */}
                 {/* Add more options as needed */}
             </select>
         </div>

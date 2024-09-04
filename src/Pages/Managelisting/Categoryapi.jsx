@@ -248,6 +248,11 @@ function Categoryapi() {
     }
   };
 
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
+
   return (
     <>
       <div className="container my-5">
@@ -478,6 +483,7 @@ function Categoryapi() {
             <Popupalert 
             message={successMessage || errorMessage} 
             type={successMessage ? 'success' : 'error'} 
+            onClose={handleClosePopup}
           />
           )}
               </form>
