@@ -366,7 +366,7 @@
   @media (max-width: 576px) {
     .strip.map_view {
       padding: 10px;
-      width: 144%;
+      width: 166%;
     }
   
     .enquiry_list_heading {
@@ -600,10 +600,13 @@
     height: 106px !important;
     width: 109px !important;
     position: relative;
-    margin-left: 165px;
+    margin-left: 207px ;
     margin-top: 0px;
   }
 }
+
+
+
   
 
 .sticky-searchbar {
@@ -765,10 +768,72 @@ width: 119%;
   }
 } */
 
+/*Webreviews*/
+.webreview{
+  color: black !important;
+}
+
+.webreview:hover{
+  color: orange !important;
+}
+
+/*footer*/
+.footertabs{
+  padding-left: 188px;
+}
+@media (max-width:767px) {
+  .footertabs{
+    padding-left: 0px;
+  }
+}
+
+
+/* .listingstar{
+  margin-left: -10px;
+}
+@media (max-width:767px) {
+  .listingstar{
+    margin-left: -36px;
+  }
+} */
+
+.workinghoursw{
+  width: 336px !important;
+}
+@media (max-width:767px) {
+  .workinghoursw{
+    width: 269px !important;
+  }
+}
+
+
+.freelistingpagebtn{
+  width: 28%;
+}
+@media (max-width:767px) {
+  .freelistingpagebtn{
+    width: 166px !important;
+  }
+}
 
 
 
+.listing-buttons-year-container {
+  display: flex;
+  flex-direction: column; /* Default order for desktop */
+}
 
+/* For mobile view */
+@media (max-width: 768px) {
+  .listing-buttons-year-container {
+    flex-direction: column-reverse; /* Reverse order for mobile */
+  }
+
+  /* Aligning buttons close together for mobile */
+  .listing-call-now, .listing-get-claim {
+    margin-bottom: 8px;
+  }
+}
 
 
 

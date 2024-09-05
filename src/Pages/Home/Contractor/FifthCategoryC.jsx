@@ -131,7 +131,7 @@ function FifthCategoryC() {
                         .replace(/\s+/g, "-")
                         .toLowerCase()}/${fourthCategoryName}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}?fcatEncyt=${encodeURIComponent(encrypt(parseInt(fifthCategory.fifthCategoryID)))}`}
                       title={fifthCategory.name}
-                      style={{ color: "#fe900d" }}
+                      style={{ color: "gray" }}
                     >
                       View More ...
                     </Link>

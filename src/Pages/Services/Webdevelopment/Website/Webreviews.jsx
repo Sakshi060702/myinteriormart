@@ -24,9 +24,9 @@ function Webreviews() {
         <div className="step">
           <ul className="nav nav-tabs" id="tab_checkout" role="tablist">
             {buttons.map((button, index) => (
-              <li className="nav-item" key={index}>
+              <li className="nav-item " key={index}>
                 <a
-                  className={`nav-link ${
+                  className={`nav-link webreview ${
                     selectedButton === index ? "active" : ""
                   }`}
                   id={`${button.title.toLocaleLowerCase()}-tab`}

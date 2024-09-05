@@ -61,7 +61,7 @@ const Foot = () => {
     <>
       <footer className="shadow" style={{ position: "relative" }}>
         <div className="container py-5" style={{ width: "90%" }}>
-          <div className="d-flex justify-content-between flex-wrap">
+          <div className="d-flex justify-content-between flex-wrap footertabs">
             {/* <div className="footer-logo-container">
             <a href="/" className="d-flex align-items-center p-0 text-dark">
               <img
@@ -87,7 +87,7 @@ const Foot = () => {
                 className="d-flex flex-column"
                 style={{ cursor: "pointer", padding: "0" }}
               >
-                <div
+                {/* <div
                   className="d-flex flex-column"
                   style={{ cursor: "pointer", padding: "0" }}
                 >
@@ -110,7 +110,7 @@ const Foot = () => {
                   >
                     Contact
                   </NavLink>
-                </div>
+                </div> */}
               </div>
             </div>
             <div>
@@ -121,9 +121,12 @@ const Foot = () => {
                 className="d-flex flex-column"
                 style={{ cursor: "pointer", padding: "0" }}
               >
-                <a href="/" style={{ color: "white" }}>
-                  Buy
-                </a>
+                <NavLink
+                    to={`/in-${localStorage.getItem("cityname")}`}
+                    style={{ color: "white" ,paddingBottom:'17px'}}
+                  >
+                    Home
+                  </NavLink>
               </div>
             </div>
             <div>
@@ -134,9 +137,12 @@ const Foot = () => {
                 className="d-flex flex-column"
                 style={{ cursor: "pointer", padding: "0" }}
               >
-                <a href="/" style={{ color: "white" }}>
-                  Sell
-                </a>
+                <NavLink
+                    to={`/about/in-${localStorage.getItem("cityname")}`}
+                    style={{ color: "white" ,paddingBottom:'17px'}}
+                  >
+                    About Us
+                  </NavLink>
               </div>
             </div>
 
@@ -148,9 +154,12 @@ const Foot = () => {
                 className="d-flex flex-column"
                 style={{ cursor: "pointer", padding: "0" }}
               >
-                <a href="/" style={{ color: "white" }}>
-                  Offer
-                </a>
+                <NavLink
+                    to={`/contact/in-${localStorage.getItem("cityname")}`}
+                    style={{ color: "white",paddingBottom:'17px' }}
+                  >
+                    Contact
+                  </NavLink>
               </div>
             </div>
 
@@ -158,28 +167,28 @@ const Foot = () => {
               {/* <p className="h5 mb-4" style={{ fontWeight: "600" }}>
               Products
             </p> */}
-              <div
+              {/* <div
                 className="d-flex flex-column"
                 style={{ cursor: "pointer", padding: "0" }}
               >
                 <a href="/" style={{ color: "white" }}>
                   Job
                 </a>
-              </div>
+              </div> */}
             </div>
 
             <div>
               {/* <p className="h5 mb-4" style={{ fontWeight: "600" }}>
               Products
             </p> */}
-              <div
+              {/* <div
                 className="d-flex flex-column"
                 style={{ cursor: "pointer", padding: "0" }}
               >
                 <a href="/" style={{ color: "white" }}>
                   Labour Naka
                 </a>
-              </div>
+              </div> */}
             </div>
           </div>
           <hr style={{ margin: 0 }} />
@@ -204,30 +213,31 @@ const Foot = () => {
               <div className="follow_us">
                 <ul>
                   <li>
-                    <a href="#0">
+                  <a href="https://www.facebook.com/sharer/sharer.php?description"  target="_blank" rel="noopener noreferrer"><i className="ti-facebook"></i></a>
+                    {/* <a href="#0">
                       <i className="ti-facebook"></i>
-                    </a>
+                    </a> */}
                   </li>
                   <li>
-                    <a href="#0">
+                    <a href="http://twitter.com/share?text" target="_blank" rel="noopener noreferrer">
                       <i className="ti-twitter-alt"></i>
                     </a>
                   </li>
                   <li>
-                    <a href="#0">
+                    <a href="https://www.google.co.in/"  target="_blank" rel="noopener noreferrer">
                       <i className="ti-google"></i>
                     </a>
                   </li>
                   <li>
-                    <a href="#0">
+                    <a href="https://www.pinterest.com/pin/create/button/?description" target="_blank" rel="noopener noreferrer">
                       <i className="ti-pinterest"></i>
                     </a>
                   </li>
-                  <li>
-                    <a href="#0">
-                      <i className="ti-instagram"></i>
+                  {/* <li>
+                    <a href="https://web.whatsapp.com/send?text"  target="_blank" rel="noopener noreferrer">
+                    <i class="ti-whatsapp" style={{color:'white'}}></i>
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </div>

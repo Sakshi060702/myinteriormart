@@ -552,7 +552,7 @@ const Address = () => {
                 >
                   <button
                     type="submit"
-                    className="btn_1 freelistingbtn"
+                    className="btn_1 freelistingpagebtn"
                    
                   >
                     Save & Continue

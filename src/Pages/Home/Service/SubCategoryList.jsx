@@ -119,7 +119,7 @@ console.log(decrypt(listingId_enc));
                               .replace(/\s+/g, "-")
                             .toLowerCase()}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(subCategory.thirdCategoryID)))}`}
                           title={subCategory.name}
-                          style={{ color: "#fe900d" }}
+                          style={{ color: "gray" }}
                         >
                           View More ...
                         </Link>

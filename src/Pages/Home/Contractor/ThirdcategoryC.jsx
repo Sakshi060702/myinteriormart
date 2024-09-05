@@ -125,7 +125,7 @@ function ThirdcategoryC() {
                           encrypt(parseInt(subCategory.thirdCategoryID))
                         )}`}
                         title={subCategory.name}
-                        style={{ color: "#fe900d" }}
+                        style={{ color: "gray" }}
                       >
                         View More ...
                       </Link>

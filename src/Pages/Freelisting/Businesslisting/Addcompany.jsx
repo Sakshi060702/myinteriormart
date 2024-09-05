@@ -413,7 +413,7 @@ function Addcompany() {
             <div className="text-left col-12 mt-3">
               <button
                 type="submit"
-                className="btn_1 freelistingbtn"
+                className="btn_1 freelistingpagebtn"
                 
               >
                 Save & Continue

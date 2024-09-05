@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams, useParams, Link } from "react-router-dom";
 import banner from "../../FrontEnd/img/home_section_1.jpg";
 import banner1 from "../../FrontEnd/img/listing-img.jpeg";
-import nextarrowimage from "../../FrontEnd/img/Frontarrow.png"
-import previousarrowimg from "../../FrontEnd/img/Backarrow.png"
+import nextarrowimage from "../../FrontEnd/img/Frontarrow.png";
+import previousarrowimg from "../../FrontEnd/img/Backarrow.png";
 import Popup from "./Popup";
 import Getquotespopup from "./Getquotespopup";
 import "../../FrontEnd/css/Lisiting.css";
@@ -42,11 +42,32 @@ function Listing() {
   console.log("secondcategoryid", secondCategoryId);
   console.log(decrypt(listingId_enc));
 
+  //for mobile pagination
+
+  const useIsMobile = () => {
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth <= 768);
+      };
+      window.addEventListener("resize", handleResize);
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }, []);
+
+    return isMobile;
+  };
+
+  const isMobile = useIsMobile();
+
   useEffect(() => {
     fetchListings();
   }, [secondCategoryId, currentPage, secondCategoryName, subcategoryName]);
 
   const token = useSelector((state) => state.auth.token);
+  console.log("token", token);
 
   // console.log(encrypt(listing.listingId));
 
@@ -93,9 +114,63 @@ function Listing() {
     }
   };
 
+  const fetchListingsmobile = async (isAppending = false) => {
+    try {
+      const response = await fetch(
+        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing?pageNumber=${currentPage}&pageSize=${itemsPerPage}&subCategoryid=${secondCategoryId}&cityName=${fomattedcity}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      // console.log("Fetched Data", data);
+
+      // Filter listings if needed based on subCategoryId
+      const filterdListing = data.filter((listing) => {
+        return listing.subCategory.some(
+          (subcat) => subcat.id.toString() === secondCategoryId
+        );
+      });
+
+      // setListing(filterdListing);
+      // console.log(filteredListing)
+      // console.log(itemsPerPage);
+
+      if (isAppending) {
+        // Append new listings to existing ones
+        setListing((prevListings) => [...prevListings, ...filterdListing]);
+      } else {
+        // Replace the listings if not appending (for initial load)
+        setListing(filterdListing);
+      }
+    } catch (error) {
+      console.error("Error fetching listings", error);
+    }
+  };
+
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
+  const handleViewMore = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+    fetchListingsmobile(true); // Fetch and append new listings
+  };
+
+  useEffect(() => {
+    if (isMobile) {
+      fetchListingsmobile();
+    }
+  }, [currentPage, isMobile]);
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -103,9 +178,9 @@ function Listing() {
     <>
       <div className="container" style={{ marginBottom: "30px" }}>
         <div className="sticky-searchbar">
-        <Searchbar />
+          <Searchbar />
         </div>
-        
+
         <div
           className="banner-block one-block"
           style={{ marginBottom: "30px" }}
@@ -193,41 +268,86 @@ function Listing() {
                               />
 
                               {/* Rating below business hours for mobile */}
+                              {/* Rating below business hours for mobile */}
                               <div className="rating-container mobile">
-                                <ul className="listingrating">
+                                <div
+                                  className="listingrating"
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <h4
+                                    className="reating-number reactingnumberfont"
+                                    style={{ marginRight: "8px" }}
+                                  >
+                                    {listing.ratingAverage}
+                                  </h4>
+                                  <div
+                                    className="cat_star listingstar"
+                                    style={{
+                                      display: "flex",
+                                      paddingBottom: "11px",
+                                    }}
+                                  >
+                                    {Array(5)
+                                      .fill()
+                                      .map((_, i) => (
+                                        <i
+                                          key={i}
+                                          className="icon_star"
+                                          style={{
+                                            color:
+                                              i < listing.ratingAverage
+                                                ? "orange"
+                                                : "gray",
+                                            fontSize: "16px",
+                                            marginRight: "2px",
+                                          }}
+                                        ></i>
+                                      ))}
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div
+                                className="rating-container desktop st"
+                                style={{ marginLeft: "8px" }}
+                              >
+                                <ul
+                                  className="listingrating"
+                                  style={{
+                                    marginTop: "-40px",
+                                    marginLeft: "-26px",
+                                    marginBottom: "-13px",
+                                  }}
+                                >
                                   <ul className="reating-list">
                                     <li>
-                                    <h4 className="reating-number reactingnumberfont">
-                                      {listing.ratingAverage}
-                                    </h4>
-                                  </li>
-                                    <li className="reating-star">
-                                      <li className="rating-star">
-                                        <div
-                                          className="cat_star"
-                                          style={{ marginLeft: "-10px" }}
-                                        >
-                                          {Array(5)
-                                            .fill()
-                                            .map((_, i) => (
-                                              <i
-                                                key={i}
-                                                className="icon_star"
-                                                style={{
-                                                  color:
-                                                    i < listing.ratingAverage
-                                                      ? "orange"
-                                                      : "gray",
-                                                  fontSize: "16px",
-                                                }}
-                                              ></i>
-                                            ))}
-                                        </div>
-                                      </li>
+                                      <h4 className="reating-number reactingnumberfont">
+                                        {listing.ratingAverage}.0
+                                      </h4>
                                     </li>
-                                    {/* <li style={{ marginRight: "49px" }}>
-                                      {listing.ratingCount} Rating
-                                    </li> */}
+                                    <li className="reating-star">
+                                      <div className="cat_star">
+                                        {Array(5)
+                                          .fill()
+                                          .map((_, i) => (
+                                            <i
+                                              key={i}
+                                              className="icon_star"
+                                              style={{
+                                                color:
+                                                  i < listing.ratingAverage
+                                                    ? "orange"
+                                                    : "gray",
+                                                fontSize: "16px",
+                                              }}
+                                            ></i>
+                                          ))}
+                                      </div>
+                                    </li>
+                                    <li>{listing.ratingCount} Rating</li>
                                   </ul>
                                 </ul>
                               </div>
@@ -235,7 +355,7 @@ function Listing() {
                           </div>
                         </div>
 
-                        <div className="col-2 listingcompanyletter" >
+                        <div className="col-2 listingcompanyletter">
                           {listing.logoImage && listing.logoImage.imagePath ? (
                             <img
                               src={`https://apidev.myinteriormart.com${listing.logoImage.imagePath}`}
@@ -255,75 +375,60 @@ function Listing() {
 
                         <div className="col-lg-12 listing-bottom">
                           <ul className="listing-bottom-list">
-                          
                             {/* Rating in listing bottom for desktop */}
-                            <li
-                              className="rating-container desktop st"
-                              style={{ marginLeft: "8px" }}
-                            >
-                              <ul className="listingrating">
-                                <ul className="reating-list">
+                            <div>
+                              <div>
+                                <li className="listingyear">
+                                  <h5 className="yearbusiness">
+                                    <b>
+                                      {" "}
+                                      + {listing.businessYear} Year Business
+                                    </b>
+                                  </h5>
+                                </li>
+                              </div>
+                              </div>
+
+                              <div style={{ display: "flex" }}>
+                                <div>
+                                  <li
+                                    style={{
+                                      marginLeft: "4px",
+                                      marginRight: "0px",
+                                      marginTop: "-6px",
+                                    }}
+                                  >
+                                    <p className="listingcallnow">
+                                      <Link
+                                        className="loc_open call-now callnowl  listingcallnowinner"
+                                        style={{ top: "2px" }}
+                                      >
+                                        Call now
+                                      </Link>
+                                    </p>
+                                  </li>
+                                </div>
+                                <div>
                                   <li>
-                                    <h4 className="reating-number reactingnumberfont">
-                                      {listing.ratingAverage}.0
-                                    </h4>
+                                    <p className="listinggetclaim">
+                                      <button
+                                        className="btn btn-guotes btn-sm"
+                                        onClick={() =>
+                                          setIsPopupOpen([
+                                            true,
+                                            listing.listingId,
+                                          ])
+                                        }
+                                      >
+                                        Get Claim
+                                      </button>
+                                    </p>
                                   </li>
-                                  <li className="reating-star">
-                                    <div className="cat_star">
-                                      {Array(5)
-                                        .fill()
-                                        .map((_, i) => (
-                                          <i
-                                            key={i}
-                                            className="icon_star"
-                                            style={{
-                                              color:
-                                                i < listing.ratingAverage
-                                                  ? "orange"
-                                                  : "gray",
-                                              fontSize: "16px",
-                                            }}
-                                          ></i>
-                                        ))}
-                                    </div>
-                                  </li>
-                                  <li>{listing.ratingCount} Rating</li>
-                                </ul>
-                              </ul>
-                            </li>
-                            <li className="listingyear">
-                              <h5 className="yearbusiness">
-                                <b> + {listing.businessYear} Year Business</b>
-                              </h5>
-                            </li>
-                            <br></br>
-                            <li style={{marginLeft:'4px',marginRight:'5px'}}>
-                              <p className="listingcallnow" >
-                                <Link
-                                  className="loc_open call-now callnowl  listingcallnowinner"
-                                  style={{ top: "2px" }}
-                                >
-                                  Call now
-                                </Link>
-                              </p>
-                            </li>
-                            <li>
-                              <p className="listinggetclaim">
-                                <button
-                                  className="btn btn-guotes btn-sm"
-                                  onClick={() =>
-                                    setIsPopupOpen([true, listing.listingId])
-                                  }
-                                >
-                                  Get Claim
-                                </button>
-                              </p>
-                            </li>
+                                </div>
+                              </div>
+                            
                           </ul>
                         </div>
-
-
-                        
                       </div>
                     </div>
                   </div>
@@ -347,7 +452,7 @@ function Listing() {
                 </div>
               ))
             ) : (
-              <p>No listings found for the selected category.</p>
+              <p>Comming soon.</p>
             )}
           </div>
 
@@ -370,29 +475,41 @@ function Listing() {
         </div>
 
         <div className="pagination">
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            {/* Previous */}
-            <img src={previousarrowimg} style={{ height: "30px" }} />
-          </button>
-          {Array.from({ length: totalPages }, (_, i) => (
-            <button
-              key={i + 1}
-              onClick={() => handlePageChange(i + 1)}
-              className={currentPage === i + 1 ? "active" : ""}
-            >
-              {i + 1}
+          {/* for dekstop */}
+          {!isMobile && (
+            <>
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                {/* Previous */}
+                <img src={previousarrowimg} style={{ height: "30px" }} />
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i + 1}
+                  onClick={() => handlePageChange(i + 1)}
+                  className={currentPage === i + 1 ? "active" : ""}
+                >
+                  {i + 1}
+                </button>
+              ))}
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={listing.length < itemsPerPage} // Disable "Next" if fewer than 10 listings
+              >
+                {/* Next */}
+                <img src={nextarrowimage} style={{ height: "30px" }} />
+              </button>
+            </>
+          )}
+
+          {/* mobile view more */}
+          {isMobile && listing.length === itemsPerPage && (
+            <button onClick={handleViewMore} className="view-more-btn">
+              View More
             </button>
-          ))}
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={listing.length < itemsPerPage} // Disable "Next" if fewer than 10 listings
-          >
-            {/* Next */}
-            <img src={nextarrowimage} style={{ height: "30px" }} />
-          </button>
+          )}
         </div>
       </div>
 

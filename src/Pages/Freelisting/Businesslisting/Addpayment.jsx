@@ -230,7 +230,7 @@ function Addpayment() {
                 >
                   <button
                     type="submit"
-                    className="btn_1 freelistingbtn"
+                    className="btn_1 freelistingpagebtn"
                    
                     onClick={handleSubmit}
                   >

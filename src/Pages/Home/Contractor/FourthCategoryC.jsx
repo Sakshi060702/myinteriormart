@@ -124,7 +124,7 @@ console.log(decrypt(listingId_enc))
                       .replace(/\s+/g, "-")
                       .toLowerCase()}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}?thcatEncyt=${encodeURIComponent(encrypt(parseInt(fourthCategory.fourthCategoryID)))}`}
                   title={fourthCategory.name}
-                      style={{ color: "#fe900d" }}
+                      style={{ color: "gray" }}
                     >
                       View More ...
                     </Link>

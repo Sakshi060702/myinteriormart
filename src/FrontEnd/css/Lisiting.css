@@ -101,9 +101,12 @@
   /*Bookmark css*/
  
 .btn-bookmark {
-  background-color: #f3ebeb;
+  background-color: white;
   color: black;
   /* border: 1px solid black; */
+}
+.btn-bookmark:hover{
+color: rgb(254, 144, 13);
 }
 
 /* .btn-bookmark.active {
@@ -121,9 +124,14 @@
 }
 
 .btn-like {
-  background-color: #f3ebeb;
+  background-color:white;
   color: black;
 }
+
+.btn-like:hover{
+color: rgb(254, 144, 13);
+}
+
 .btn-like i {
   color: gray; 
 }
@@ -132,15 +140,29 @@
 }
 
 
+
 .btn-subscribe {
-  background-color: #f3ebeb;
+  background-color: white;
   color: black;
 }
+
+.btn-subscribe:hover{
+color: rgb(254, 144, 13);
+}
+
 .btn-subscribe i {
   color: gray; 
 }
 .btn-subscribe.icon-active i{
   color: red;
+}
+
+.btnshare{
+background-color: white !important ;
+color:black !important;
+}
+.btnshare:hover{
+  color: rgb(254, 144, 13) !important;
 }
 
 

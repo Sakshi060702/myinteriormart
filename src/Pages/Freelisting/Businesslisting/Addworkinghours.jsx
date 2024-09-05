@@ -193,8 +193,8 @@ function Addworkinghours()
                           <label>
                             {key}<span className="text-danger">*</span>
                             <input
-                              className="form-control form-control-sm input-width"
-                             style={{width:'353px'}}
+                              className="form-control form-control-sm input-width workinghoursw"
+                            
                               type={
                                 key.includes("Holiday") ? "checkbox" : "time"
                               }
@@ -263,7 +263,7 @@ function Addworkinghours()
                     </div>
                   ))}
                    <div className="text-left col-12 mt-3" style={{display:'flex'}}>
-                    <button type="submit" className="btn_1 freelistingbtn" >
+                    <button type="submit" className="btn_1 freelistingpagebtn" >
                       Save & Continue
                     </button>
                     <div style={{display:"flex",justifyContent:"center",gap:'10px',paddingTop:'10px'}}>                    

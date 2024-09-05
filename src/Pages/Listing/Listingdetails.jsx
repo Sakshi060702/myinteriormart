@@ -803,7 +803,7 @@ function Listingdetails() {
                         </button>
 
                         <button
-                          className="btn-custom pushRight btn btn-light btn-sm"
+                          className="btn-custom pushRight btn btn-light btn-sm btnshare"
                           onClick={() => setIsSociallinkOpen(true)}
                           style={{ height: "32px", fontSize: "13px" }}
                         >

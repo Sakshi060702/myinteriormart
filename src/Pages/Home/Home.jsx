@@ -63,8 +63,8 @@ function Home(){
     return(
         <>
        <div id="page">
-        
-        <Searchbar></Searchbar>
+        <div className="sticky-searchbar"> <Searchbar></Searchbar></div>
+       
         <main id='home_main'>
             <div className="container">
           
