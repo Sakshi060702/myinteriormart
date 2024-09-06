@@ -254,11 +254,8 @@ function Menu1() {
 {!isAuthenticated && (
   <NavLink
     to={`/signup2/in-${localStorage.getItem('cityname')}`}
-    className="btn_add listing-btn buttonlogin freelistingbtn mobile-freelisting"
-    style={{
-      backgroundColor: "#fe900d",
-      fontSize: "14px",
-    }}
+    className="listing-btn buttonlogin freelistingbtn mobile-freelisting mobilefreelistingbtn"
+   
     // onClick={closeMenu}
   >
     Free Listing
@@ -543,11 +540,8 @@ function Menu1() {
       {status !== 1 && (
         <NavLink
           to={`/addcompany/in-${localStorage.getItem('cityname')}`}
-          className="btn_add listing-btn mobile-freelisting freelistingbtn"
-          style={{
-            backgroundColor: "#fe900d",
-            fontSize: "14px",
-          }}
+          className=" listing-btn mobile-freelisting freelistingbtn mobilefreelistingbtn"
+          
         >
           Free Listing
         </NavLink>

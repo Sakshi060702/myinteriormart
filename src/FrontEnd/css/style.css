@@ -3050,7 +3050,7 @@ a.box_feat h3 {
 
 /*-------- 2.3 Listing --------*/
 #results {
-  padding: 34px 0;
+  padding: 17px 0;
   color: #fff;
   background: #fff;
   position: relative;
@@ -3059,7 +3059,7 @@ a.box_feat h3 {
 
 @media (max-width: 767px) {
   #results {
-    padding: 40px 15px;
+    padding: 13px 15px;
   }
 }
 

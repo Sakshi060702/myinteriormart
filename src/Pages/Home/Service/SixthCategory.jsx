@@ -111,7 +111,7 @@ function SixthCategory() {
       backgroundColor: "orange",
       borderRadius: "50%",
       position: "absolute",
-      top: "37%",
+      top: "35%",
       left: "50%",
       transform: "translate(-50%, -50%)",
     }}

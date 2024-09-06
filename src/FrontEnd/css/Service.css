@@ -85,7 +85,7 @@
 
 .Linkstyle{
   color: black;
-  font-weight: bold;
+  /* font-weight: bold; */
   display: block;
   /* white-space: nowrap; */
   overflow: hidden;
@@ -96,6 +96,50 @@
   color: #fe900d; /* Change to the color you want on hover */
 }
 
+.categorylink{
+  margin-right: 0px !important;
+}
+@media (max-width:767px) {
+  .categorylink{
+    margin-right: 11px !important;
+  }
+}
+
+
+
+
+/* Mobile View */
+@media (max-width: 768px) {
+  .subcategories-list .item {
+    display: flex;
+    align-items: flex-start !important;
+    /* justify-content: space-between; */
+    /* width: 100%; */
+  }
+
+  .icon {
+    margin-right: 5px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .category-link {
+    flex-grow: 1;
+    padding-right: 10px;
+    text-align: left;
+  }
+
+  .more-link {
+    color: orange;
+    white-space: nowrap;
+  }
+
+  .subcategories-list .item span,
+  .subcategories-list .item a {
+    display: inline-block;
+    margin: 0;
+  }
+}
 
 
 

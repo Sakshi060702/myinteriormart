@@ -59,6 +59,14 @@ const Sociallink = ({ isOpen, onClose }) => {
             height: 60px; /* Adjust size as needed */
             marginBottom :10px;
           }
+            @media(max-width:767px)
+            {
+            .socialimg {
+            width: 40px; /* Adjust size as needed */
+            height: 40px; /* Adjust size as needed */
+            
+          }
+            }
              
         `}
       </style >

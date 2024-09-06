@@ -7,6 +7,8 @@ import Getquotespopup from "../../Listing/Getquotespopup";
 import Popup from "../../Listing/Popup";
 import { useSelector } from "react-redux";
 import Sociallink from "../../Listing/Sociallink";
+import { useNavigate } from "react-router-dom";
+
 
 const Foot = () => {
   const scrollToTop = () => {
@@ -17,10 +19,13 @@ const Foot = () => {
   };
 
   const token = useSelector((state) => state.auth.token);
+  const userType = useSelector((state) => state.auth.userType);
   const [isPopupOpen, setIsPopupOpen] = useState([false, null]);
   const [status, setStatus] = useState("");
   const [listingId, setListingId] = useState(null);
   const [isSociallinkOpen, setIsSociallinkOpen] = useState(false);
+
+  const navigate=useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,6 +52,19 @@ const Foot = () => {
     fetchData();
   }, [token]);
 
+ const handleDashboardButtonClick=()=>{
+    if(token){
+    
+      navigate(`/Myactivity/in-${localStorage.getItem('cityname')}`)
+    }
+    else{
+      navigate(`/in-${localStorage.getItem('cityname')}`)
+    }
+  }
+
+  const homeButtonClick=()=>{
+    navigate(`/in-${localStorage.getItem("cityname")}`);
+  }
   //   const [cityName,setCityName]=useState(null);
 
   //   useEffect(() => {
@@ -272,26 +290,32 @@ const Foot = () => {
       <div class="container-fluid bottom-link-sticky">
         <div class="row">
           <div class="col-3 bottom-link-sticky-list">
-            <NavLink
-              to={`/in-${localStorage.getItem("cityname")}`}
-              style={{ color: "black" }}
+            
+            <button
+            style={{ paddingTop: "7px" }}
+             onClick={homeButtonClick}
             >
               Home
-            </NavLink>
+            </button>
+          </div>
+          <div class="col-3 bottom-link-sticky-list">
+            <button style={{ paddingTop: "7px" }} onClick={handleDashboardButtonClick}>
+              You
+            </button>
           </div>
           <div class="col-3 bottom-link-sticky-list">
             <button style={{ paddingTop: "7px" }}>
               Suggestion
             </button>
           </div>
-          <div class="col-3 bottom-link-sticky-list">
+          {/* <div class="col-3 bottom-link-sticky-list">
             <button
               onClick={() => setIsPopupOpen([true, listingId])}
               style={{ paddingTop: "7px" }}
             >
               Send Enquiry
             </button>
-          </div>
+          </div> */}
           <div class="col-3 bottom-link-sticky-list">
             <button onClick={() => setIsSociallinkOpen(true)} style={{ paddingTop: "7px",paddingLeft:'14px' }}>Share</button>
           </div>

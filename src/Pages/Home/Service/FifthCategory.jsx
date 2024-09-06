@@ -105,7 +105,7 @@ console.log(decrypt(listingId_enc))
       backgroundColor: "orange",
       borderRadius: "50%",
       position: "absolute",
-      top: "50%",
+      top: "35%",
       left: "50%",
       transform: "translate(-50%, -50%)",
     }}
@@ -115,7 +115,7 @@ console.log(decrypt(listingId_enc))
                       to={`/All/${fifthCategory.name
                             .replace(/\s+/g, "-").toLowerCase()}/${fourthCategoryName}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(fifthCategory.secondCategoryID)))}`}
                       title={fifthCategory.name}
-                      className="Linkstyle"
+                      className="Linkstyle categorylink"
                     >
                   {fifthCategory.name}
                 </Link>
@@ -127,9 +127,9 @@ console.log(decrypt(listingId_enc))
                         .replace(/\s+/g, "-")
                         .toLowerCase()}/${fourthCategoryName}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}?fcatEncyt=${encodeURIComponent(encrypt(parseInt(fifthCategory.fifthCategoryID)))}`}
                       title={fifthCategory.name}
-                      style={{ color: "gray" }}
+                      style={{ color: "orange" }}
                     >
-                      View More ...
+                      More ...
                     </Link>
                   )}
               </div>

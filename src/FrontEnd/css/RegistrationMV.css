@@ -192,6 +192,7 @@
       font-size: 12px;
       margin-left: 16px;
       margin-right: 44px;
+      margin-top: 13px;
     }
   }
 
@@ -836,6 +837,53 @@ width: 119%;
 }
 
 
+.mobilefreelistingbtn{
+  background-color: white !important;
+  color:orange !important;
+}
+
+
+.listingyearmim{
+  margin-left: 0px;
+}
+@media (max-width:767px) {
+  .listingyearmim{
+    margin-left: 214px;
+  }
+}
+
+.listingcallnow_btn{
+  top: 2px !important;
+}
+@media (max-width:767px) {
+  .listingcallnow_btn{
+    top: 12px !important;
+  }
+}
+
+.getclaimbtn{
+  margin-left: 0px;
+}
+@media (max-width:767px) {
+  .getclaimbtn{
+    margin-left: 19px;
+  }
+}
+
+
+.listingcompanyname{
+  margin-left: 15px;
+  padding-top: 18px;
+  font-size: 22px;
+}
+
+@media (max-width:767px) {
+  .listingcompanyname{
+    margin-left: 4px;
+    padding-top: 6px;
+    font-size: 15px;
+  }
+}
 
 
 

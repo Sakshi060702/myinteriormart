@@ -205,7 +205,8 @@ function Listing() {
                 <div key={listing.listingId} className="row mb-10">
                   <div className="col-12">
                     <div className="strip map_view stripmapviewdesign">
-                      {/* <h4>
+                      {/* <h5>Hello world</h5> */}
+                      <h6 className="listingcompanyname">
                         <Link
                           className="listingcompany"
                           to={`/company/${listing.companyName
@@ -223,7 +224,7 @@ function Listing() {
                           {" "}
                           {listing.companyName}
                         </Link>
-                      </h4> */}
+                      </h6>
                       <div
                         className="row no-gutters "
                         style={{
@@ -235,7 +236,7 @@ function Listing() {
                       >
                         <div className="col-6">
                           <div className="wrapper">
-                            <h3 style={{ color: "black" }}>
+                            {/* <h3 style={{ color: "black" }}>
                               <Link
                                 to={`/company/${listing.companyName
                                   .replace(/\s+/g, "-")
@@ -252,7 +253,7 @@ function Listing() {
                                 {" "}
                                 {listing.companyName}
                               </Link>
-                            </h3>
+                            </h3> */}
                             <small>{listing.listingKeyword}</small>
 
                             <p>
@@ -378,55 +379,55 @@ function Listing() {
                             {/* Rating in listing bottom for desktop */}
                             <div>
                               <div>
-                                <li className="listingyear">
+                                <li className="listingyear listingyearmim">
                                   <h5 className="yearbusiness">
-                                    <b>
+                                    <p>
                                       {" "}
                                       + {listing.businessYear} Year Business
-                                    </b>
+                                    </p>
                                   </h5>
                                 </li>
                               </div>
-                              </div>
-
-                              <div style={{ display: "flex" }}>
-                                <div>
-                                  <li
-                                    style={{
-                                      marginLeft: "4px",
-                                      marginRight: "0px",
-                                      marginTop: "-6px",
-                                    }}
-                                  >
-                                    <p className="listingcallnow">
-                                      <Link
-                                        className="loc_open call-now callnowl  listingcallnowinner"
-                                        style={{ top: "2px" }}
-                                      >
-                                        Call now
-                                      </Link>
-                                    </p>
-                                  </li>
-                                </div>
-                                <div>
-                                  <li>
-                                    <p className="listinggetclaim">
-                                      <button
-                                        className="btn btn-guotes btn-sm"
-                                        onClick={() =>
-                                          setIsPopupOpen([
-                                            true,
-                                            listing.listingId,
-                                          ])
-                                        }
-                                      >
-                                        Get Claim
-                                      </button>
-                                    </p>
-                                  </li>
-                                </div>
-                              </div>
                             
+
+                            <div style={{ display: "flex" }}>
+                              <div>
+                                <li
+                                  style={{
+                                    marginLeft: "4px",
+                                    marginRight: "0px",
+                                    marginTop: "-6px",
+                                  }}
+                                >
+                                  <p className="listingcallnow">
+                                    <Link
+                                      className="loc_open call-now callnowl  listingcallnowinner listingcallnow_btn"
+                                     
+                                    >
+                                      Call now
+                                    </Link>
+                                  </p>
+                                </li>
+                              </div>
+                              <div>
+                                <li>
+                                  <p className="listinggetclaim">
+                                    <button
+                                      className="btn btn-guotes btn-sm getclaimbtn"
+                                      onClick={() =>
+                                        setIsPopupOpen([
+                                          true,
+                                          listing.listingId,
+                                        ])
+                                      }
+                                    >
+                                      Get Claim
+                                    </button>
+                                  </p>
+                                </li>
+                              </div>
+                            </div>
+                            </div>
                           </ul>
                         </div>
                       </div>

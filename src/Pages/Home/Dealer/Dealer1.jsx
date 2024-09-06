@@ -92,7 +92,7 @@ function Dealer1() {
                 </ul>
               </div>
             </div>
-            <div className="col-lg-10 col-md-12 brand-category-list">
+            <div className="col-lg-10 col-md-12 brand-category-list" >
               <div className="mim-Box">
                 <div className="row no-gutters">
                   <div className="col-md-4 mim-Box-img">
@@ -115,7 +115,7 @@ function Dealer1() {
                             const icon = `/FileManager/CategoryIcons/Second/${cat.imageURL}.png`;
                             return (
                               <div
-                                className="col-md-3 col-sm-3 col-3 mim-Box-item"
+                                className="col-md-3 col-sm-3 col-3 mim-Box-item" style={{height:'142px'}}
                                 key={cat.secondCategoryID}
                               >
                                 <Link

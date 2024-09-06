@@ -93,7 +93,7 @@ console.log(decrypt(listingId_enc));
       backgroundColor: "orange",
       borderRadius: "50%",
       position: "absolute",
-      top: "50%",
+      top: "35%",
       left: "50%",
       transform: "translate(-50%, -50%)",
     }}
@@ -106,7 +106,7 @@ console.log(decrypt(listingId_enc));
                               .replace(/\s+/g, "-")
                             .toLowerCase()}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(subCategory.secondCategoryID)))}`}
                       title={subCategory.name}
-                      className="Linkstyle"
+                      className="Linkstyle categorylink"
                     >
                       {subCategory.name}
                     </Link>
@@ -119,9 +119,9 @@ console.log(decrypt(listingId_enc));
                               .replace(/\s+/g, "-")
                             .toLowerCase()}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(subCategory.thirdCategoryID)))}`}
                           title={subCategory.name}
-                          style={{ color: "gray" }}
+                          style={{ color: "orange" }}
                         >
-                          View More ...
+                          More ...
                         </Link>
                       )}
                   </div>

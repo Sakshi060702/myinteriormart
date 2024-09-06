@@ -85,7 +85,7 @@ function ThirdCategoryD() {
       backgroundColor: "orange",
       borderRadius: "50%",
       position: "absolute",
-      top: "50%",
+      top: "35%",
       left: "50%",
       transform: "translate(-50%, -50%)",
     }}
@@ -101,6 +101,7 @@ function ThirdCategoryD() {
                     )}?secatEncyt=${encodeURIComponent(
                       encrypt(parseInt(subCategory.secondCategoryID))
                     )}`}
+                  className="categorylink"
                   >
                     {subCategory.name}
                   </Link>
@@ -117,9 +118,9 @@ function ThirdCategoryD() {
                         encrypt(parseInt(subCategory.thirdCategoryID))
                       )}`}
                         title={subCategory.name}
-                        style={{ color: "gray" }}
+                        style={{ color: "orange" }}
                       >
-                        View More ...
+                         More ...
                       </Link>
                     )}
                 </div>

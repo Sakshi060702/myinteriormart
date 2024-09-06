@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ListingHomeImage from "../../../FrontEnd/img/banner/Services.jpg";
-import fslide from "../../../FrontEnd/img/banner/Dream Land Home.jpg";
+import fslide from "../../../FrontEnd/img/banner/Dream Land Home1.jpg";
+import seslide from "../../../FrontEnd/img/access_bg.jpg";
+import tslide from "../../../FrontEnd/img/banner/Interior1.jpg"
 import "../../../FrontEnd/css/Service.css";
 import "../../../FrontEnd/css/Cate.css";
 import CryptoJS from "crypto-js";
+import { Carousel } from 'react-bootstrap';
 
-const encryptionKey = 'myinterriorMart@SECRETKEY';
+const encryptionKey = "myinterriorMart@SECRETKEY";
 
 const encrypt = (text) => {
-  
   return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
 };
-
 
 const decrypt = (ciphertext) => {
   const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
@@ -74,7 +75,11 @@ const Services1 = () => {
                       <Link
                         to={`/${category.name
                           .replace(/\s+/g, "-")
-                          .toLowerCase()}/in-${localStorage.getItem("cityname")}?fircatEncyt=${encodeURIComponent(encrypt(parseInt(category.secondCategoryID)))}`}
+                          .toLowerCase()}/in-${localStorage.getItem(
+                          "cityname"
+                        )}?fircatEncyt=${encodeURIComponent(
+                          encrypt(parseInt(category.secondCategoryID))
+                        )}`}
                         title={category.searchKeywordName}
                         style={{ color: "black" }}
                       >
@@ -92,10 +97,16 @@ const Services1 = () => {
               </ul>
             </div>
           </div>
-          <div className="col-lg-10 col-md-12 brand-category-list">
+          <div
+            className="col-lg-10 col-md-12 brand-category-list"
+            style={{ paddingLeft: "2px" }}
+          >
             <div className="mim-Box">
               <div className="row no-gutters">
-                <div className="col-md-4 mim-Box-img">
+                <div
+                  className="col-md-4 mim-Box-img"
+                  style={{ paddingRight: "2px" }}
+                >
                   <img
                     src={ListingHomeImage}
                     className="img-fluid"
@@ -108,18 +119,23 @@ const Services1 = () => {
                       const icon = `/FileManager/CategoryIcons/Second/${category.imageURL}.png`;
                       return (
                         <div
-                          className="col-md-3 col-sm-3 col-3 mim-Box-item"
+                          className="col-md-3 col-sm-3 col-3 mim-Box-item "
+                          style={{ height: "142px" }}
                           key={category.secondCategoryID}
                         >
                           <Link
-                        to={`/${category.name
-                          .replace(/\s+/g, "-")
-                          .toLowerCase()}/in-${localStorage.getItem("cityname")}?fircatEncyt=${encodeURIComponent(encrypt(parseInt(category.secondCategoryID)))}`}
-                        title={category.searchKeywordName}
-                        style={{ color: "black" }}
-                      >
+                            to={`/${category.name
+                              .replace(/\s+/g, "-")
+                              .toLowerCase()}/in-${localStorage.getItem(
+                              "cityname"
+                            )}?fircatEncyt=${encodeURIComponent(
+                              encrypt(parseInt(category.secondCategoryID))
+                            )}`}
+                            title={category.searchKeywordName}
+                            style={{ color: "black" }}
+                          >
                             <img
-                              src={icon}  
+                              src={icon}
                               alt={category.searchKeywordName}
                               className="img-fluid bigimage"
                             />
@@ -136,17 +152,36 @@ const Services1 = () => {
         </div>
       </div>
       <div className="row py-1">
-        <div
-          id="carouselExampleFade"
-          className="carousel slide carousel-fade"
-          data-ride="carousel"
-        >
-          <div className="carousel-inner">
-            <div className="carousel-item active">
-              <img src={fslide} className="img-fluid" alt="First Slide" />
-            </div>
-          </div>
-        </div>
+      <Carousel>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src={fslide}
+          alt="First slide"
+          style={{ width: '100%', maxWidth: '1200px', height: 'auto',objectFit:'cover' }}
+        />
+        {/* <Carousel.Caption>
+          <h3>First Slide</h3>
+        </Carousel.Caption> */}
+      </Carousel.Item>
+
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src={tslide}
+          alt="Second slide"
+          style={{ width: '100%', maxWidth: '1200px', height: 'auto' }}
+        />
+        {/* <Carousel.Caption>
+          <h3>Second Slide</h3>
+        </Carousel.Caption> */}
+      </Carousel.Item>
+
+      {/* Add more slides as needed */}
+    </Carousel>
+
+
+        
       </div>
     </div>
   );

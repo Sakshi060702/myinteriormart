@@ -5,9 +5,13 @@ import { Link } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
 import "../../../FrontEnd/css/Cate.css";
 import CryptoJS from "crypto-js";
+import { Carousel } from 'react-bootstrap';
+import fslide from "../../../FrontEnd/img/banner/Dream Land Home1.jpg";
+import seslide from "../../../FrontEnd/img/access_bg.jpg";
+import tslide from "../../../FrontEnd/img/banner/Interior1.jpg"
 
-import fslide from "../../../FrontEnd/img/banner/Dream Land Home.jpg";
-import sslide from "../../../FrontEnd/img/banner/Furniture.jpg";
+
+
 
 const encryptionKey = 'myinterriorMart@SECRETKEY';
 
@@ -97,10 +101,10 @@ function Contractor1() {
                 </ul>
               </div>
             </div>
-            <div className="col-lg-10 col-md-12 brand-category-list">
+            <div className="col-lg-10 col-md-12 brand-category-list" style={{paddingLeft:'2px'}}>
               <div className="mim-Box">
                 <div className="row no-gutters">
-                  <div className="col-md-4 mim-Box-img">
+                  <div className="col-md-4 mim-Box-img" style={{paddingRight:'2px'}}>
                     <img
                       src={ContractorImage}
                       className="img-fluid"
@@ -113,7 +117,7 @@ function Contractor1() {
                         const icon = `/FileManager/CategoryIcons/Second/${category.imageURL}.png`;
                         return (
                           <div
-                            className="col-md-3 col-sm-3 col-3 mim-Box-item"
+                            className="col-md-3 col-sm-3 col-3 mim-Box-item" style={{height:'142px'}}
                             key={category.secondCategoryID} >
                             <Link
                               to={`/Contractor/${category.name
@@ -165,20 +169,34 @@ function Contractor1() {
       </div>
 
       <div class="row py-1">
-        <div
-          id="carouselExampleFade"
-          class="carousel slide carousel-fade"
-          data-ride="carousel"
-        >
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src={fslide} className="img-fluid" alt="First Slide" />
-            </div>
-            <div class="carousel-item">
-              <img src={sslide} className="img-fluid" alt="Second Slide" />
-            </div>
-          </div>
-        </div>
+      <Carousel>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src={fslide}
+          alt="First slide"
+          style={{ width: '100%', maxWidth: '1200px', height: 'auto',objectFit:'cover' }}
+        />
+        {/* <Carousel.Caption>
+          <h3>First Slide</h3>
+        </Carousel.Caption> */}
+      </Carousel.Item>
+
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src={tslide}
+          alt="Second slide"
+          style={{ width: '100%', maxWidth: '1200px', height: 'auto' }}
+        />
+        {/* <Carousel.Caption>
+          <h3>Second Slide</h3>
+        </Carousel.Caption> */}
+      </Carousel.Item>
+
+      {/* Add more slides as needed */}
+    </Carousel>
+
       </div>
     </>
   );

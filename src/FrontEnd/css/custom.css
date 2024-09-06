@@ -1093,7 +1093,7 @@ option[value=""][disabled] {
 	}
 	.categories-list .item .icon {
 		display: block;
-		margin: auto;
+		/* margin: auto; */
 		float: inherit;
 		margin-bottom: 10px;
 	}
@@ -1222,7 +1222,7 @@ option[value=""][disabled] {
 	}
 	.categories-list .item .icon {
 		display: block;
-		margin: auto;
+		/* margin: auto; */
 		float: inherit;
 		margin-bottom: 10px;
 	}
