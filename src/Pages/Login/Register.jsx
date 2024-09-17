@@ -277,7 +277,7 @@ function Register() {
                                                 )}
                                         </div>
                                         <div className="pin-group">
-                                            <label htmlFor="pin">PIN Code</label>
+                                            <label htmlFor="pin">Enter PIN</label>
                                             <div className="pin-input-group">
                                                 {[...Array(4)].map((_, index) => (
                                                     <input
@@ -319,7 +319,7 @@ function Register() {
                                             ></i>
                                         </div>
                                         <div className="pin-group">
-                                            <label htmlFor="confirm-pin">Confirm PIN Code</label>
+                                            <label htmlFor="confirm-pin">Enter Confirm PIN</label>
                                             <div className="pin-input-group">
                                                 {[...Array(4)].map((_, index) => (
                                                     <input

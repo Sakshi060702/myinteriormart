@@ -105,14 +105,18 @@ function Clientimagel() {
         setImageURL(result.imageUrl);
         
 
-        setSuccessMessage("Image Uploded Successfully");
-        setErrorMessage("");
-        setShowPopup(true);
+        const cityName = localStorage.getItem('cityname');
+        const pathlisting = `/Sociallinkl/${cityName}`;
+        navigate(pathlisting);
+
+      //   setSuccessMessage("Image Uploded Successfully");
+      //   setErrorMessage("");
+      //   setShowPopup(true);
   
-        setTimeout(() => {
-        setShowPopup(false);
-        navigate("/Sociallinkl");
-      }, 2000);
+      //   setTimeout(() => {
+      //   setShowPopup(false);
+      //   navigate("/Sociallinkl");
+      // }, 2000);
         // You can handle the result here if needed, e.g., show a success message
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);

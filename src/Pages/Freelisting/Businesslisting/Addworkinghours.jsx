@@ -138,15 +138,16 @@ function Addworkinghours()
           const cityName = localStorage.getItem('cityname');
         const pathlisting = `/addpayment/${cityName}`;
 
-
-          setSuccessMessage("Working Hours Details Saved Successfully");
-      setErrorMessage("");
-      setShowPopup(true);
-
-      setTimeout(() => {
-        setShowPopup(false);
         navigate(pathlisting);
-      }, 2000);
+
+      //     setSuccessMessage("Working Hours Details Saved Successfully");
+      // setErrorMessage("");
+      // setShowPopup(true);
+
+      // setTimeout(() => {
+      //   setShowPopup(false);
+      //   navigate(pathlisting);
+      // }, 2000);
 
           
         } catch (error) {

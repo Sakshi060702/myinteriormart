@@ -103,16 +103,16 @@
     background-color: #fb830d;
     color: white;
     margin-left: 10px;
-    border: 1px solid blue;
+    border: 1px solid orange;
   }
   
   .button:hover {
-    background-color: orange;
+    background-color: #fb830d;
   }
   
   .button.selected {
     background-color: #fb830d;
-    color: black; /* Explicitly set the color to white */
+    color: white; /* Explicitly set the color to white */
   }
 
   

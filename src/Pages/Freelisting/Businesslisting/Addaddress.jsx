@@ -342,15 +342,15 @@ const Address = () => {
         const cityName = localStorage.getItem('cityname');
         const pathlisting = `/addcategory/${cityName}`;
 
-        
-        setSuccessMessage("Address Details Saved Successfully");
-        setErrorMessage("");
-        setShowPopup(true);
+        navigate(pathlisting);
+        // setSuccessMessage("Address Details Saved Successfully");
+        // setErrorMessage("");
+        // setShowPopup(true);
 
-        setTimeout(() => {
-          setShowPopup(false);
-          navigate(pathlisting);
-        }, 2000);
+        // setTimeout(() => {
+        //   setShowPopup(false);
+        //   navigate(pathlisting);
+        // }, 2000);
 
        
       })

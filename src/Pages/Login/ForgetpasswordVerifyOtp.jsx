@@ -161,7 +161,7 @@ function ForgetpasswordVerifyotp() {
                       <div className="">
                       <div style={{ paddingLeft: "80px" }}>
                         <div className="pin-group">
-                          <label htmlFor="pin">New PIN</label>
+                          <label htmlFor="pin">Enter New PIN</label>
                           <div className="pin-input-group">
                             {[...Array(4)].map((_, index) => (
                               <input
@@ -212,7 +212,7 @@ function ForgetpasswordVerifyotp() {
                         </div>
 
                         <div className="pin-group">
-                          <label htmlFor="confirm-pin">Confirm PIN</label>
+                          <label htmlFor="confirm-pin">Enter Confirm PIN</label>
                           <div className="pin-input-group">
                             {[...Array(4)].map((_, index) => (
                               <input

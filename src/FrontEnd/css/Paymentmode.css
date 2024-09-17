@@ -61,9 +61,30 @@
     justify-content: center;
     margin-top: 40px;
     margin-left: 54px;
-    background-color: rgb(5, 184, 5);
+    background-color:orange;
     color: white;
     height: 50px;
     width: 347px;
   }
 
+  @media (max-width:767px) {
+    .popupbutton-container {
+      display: flex;
+      justify-content: center;
+    
+      margin-left: 10px;
+      background-color:orange;
+      color: white;
+      height: 46px;
+      width: 297px;
+    }
+  }
+
+  .paymentimage{
+    margin-left: 190px;
+  }
+  @media (max-width:767px) {
+    .paymentimage{
+      margin-left: 125px;
+    }
+  }

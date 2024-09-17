@@ -6,14 +6,14 @@ import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh";
 import Select from "react-select";
 import Popupalert from "../../Popupalert";
-import { validateName } from "../../Validation";
+import { validateName ,validateDescriptionLength} from "../../Validation";
 
 function Addcompany() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  console.log(
-    "0000000000000------------------000000000000000000000",
-    isAuthenticated
-  );
+  // console.log(
+  //   "0000000000000------------------000000000000000000000",
+  //   isAuthenticated
+  // );
 
   const [formData, setFormData] = useState({
     companyName: "",
@@ -167,11 +167,13 @@ function Addcompany() {
 
     const companynameError = validateName(formData.companyName);
     // const gstnumberError = validateGstNumber(formData.gstNumber);
+    const descriptionErrror=validateDescriptionLength(formData.description);
 
-    if (companynameError) {
+    if (companynameError||descriptionErrror) {
       setError({
         companyName: companynameError,
         // gstNumber: gstnumberError,
+        description:descriptionErrror
       });
       return;
     }
@@ -211,14 +213,15 @@ function Addcompany() {
       const pathlisting = `/addCommunication/${cityName}`;
 
       // alert("Company details saved successfully!");
-      setSuccessMessage("Company Details Saved Successfully");
-      setErrorMessage("");
-      setShowPopup(true);
+      navigate(pathlisting);
+      // setSuccessMessage("Company Details Saved Successfully");
+      // setErrorMessage("");
+      // setShowPopup(true);
 
-      setTimeout(() => {
-        setShowPopup(false);
-        navigate(pathlisting);
-      }, 2000); // Show popup for 3 seconds before redirect
+      // setTimeout(() => {
+      //   setShowPopup(false);
+      //   navigate(pathlisting);
+      // }, 2000); // Show popup for 3 seconds before redirect
     } catch (error) {
       console.error("API error:", error);
       setErrorMessage(
@@ -399,7 +402,7 @@ function Addcompany() {
               />
             </div>
             <div className="form-group col-12">
-              <label htmlFor="description">About Us</label>
+              <label htmlFor="description">About Us <span className="text-danger">*</span></label>
               <textarea
                 className="form-control form-control-sm"
                 id="description"
@@ -407,8 +410,12 @@ function Addcompany() {
                 style={{ height: "100px" }}
                 value={formData.description}
                 onChange={handleChange}
+                // onKeyUp={validateDescriptionLength(formData.description)}
                 required
               ></textarea>
+              {error.description && (
+                      <div className="text-danger">{error.description}</div>
+                    )}
             </div>
             <div className="text-left col-12 mt-3">
               <button

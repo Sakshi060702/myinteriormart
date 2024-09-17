@@ -188,14 +188,16 @@ function Addcommunication(){
       const cityName = localStorage.getItem('cityname');
       const pathlisting = `/address/${cityName}`;
 
-      setSuccessMessage("Communication Details Saved  Successfully");
-      setErrorMessage("");
-      setShowPopup(true);
+      navigate(pathlisting);
 
-      setTimeout(() => {
-        setShowPopup(false);
-        navigate(pathlisting);
-      }, 2000);
+      // setSuccessMessage("Communication Details Saved  Successfully");
+      // setErrorMessage("");
+      // setShowPopup(true);
+
+      // setTimeout(() => {
+      //   setShowPopup(false);
+      //   navigate(pathlisting);
+      // }, 2000);
 
       
     } catch (error) {

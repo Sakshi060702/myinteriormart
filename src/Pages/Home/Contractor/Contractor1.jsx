@@ -172,10 +172,10 @@ function Contractor1() {
       <Carousel>
       <Carousel.Item>
         <img
-          className="d-block w-100"
+          className="d-block w-100 bannerimg"
           src={fslide}
           alt="First slide"
-          style={{ width: '100%', maxWidth: '1200px', height: 'auto',objectFit:'cover' }}
+          style={{ width: '100%', maxWidth: '1200px' }}
         />
         {/* <Carousel.Caption>
           <h3>First Slide</h3>
@@ -184,10 +184,10 @@ function Contractor1() {
 
       <Carousel.Item>
         <img
-          className="d-block w-100"
+          className="d-block w-100 bannerimg"
           src={tslide}
           alt="Second slide"
-          style={{ width: '100%', maxWidth: '1200px', height: 'auto' }}
+          style={{ width: '100%', maxWidth: '1200px' }}
         />
         {/* <Carousel.Caption>
           <h3>Second Slide</h3>

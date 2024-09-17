@@ -125,16 +125,19 @@ function Specialisationl() {
       }
 
       const data = await response.json();
-      console.log("Response:", data);
-      console.log("Specialisation token",token);
-      setSuccessMessage("Specialisation Details Saved Successfully");
-      setErrorMessage("");
-      setShowPopup(true);
+      const cityName = localStorage.getItem('cityname');
+      const pathlisting = `/workinghoursl/${cityName}`;
+      navigate(pathlisting);
+    //   console.log("Response:", data);
+    //   console.log("Specialisation token",token);
+    //   setSuccessMessage("Specialisation Details Saved Successfully");
+    //   setErrorMessage("");
+    //   setShowPopup(true);
 
-      setTimeout(() => {
-      setShowPopup(false);
-      navigate("/workinghoursl");
-    }, 2000);
+    //   setTimeout(() => {
+    //   setShowPopup(false);
+    //   navigate("/workinghoursl");
+    // }, 2000);
       
       // Handle success (e.g., show a success message, redirect, etc.)
     } catch (error) {

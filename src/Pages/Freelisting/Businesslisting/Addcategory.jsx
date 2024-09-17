@@ -254,14 +254,16 @@ function Addcategory()
       const cityName = localStorage.getItem('cityname');
         const pathlisting = `/addspecialisation/${cityName}`;
 
-      setSuccessMessage("Category Details Saved Successfully");
-      setErrorMessage("");
-      setShowPopup(true);
-
-      setTimeout(() => {
-        setShowPopup(false);
         navigate(pathlisting);
-      }, 2000); // Show popup for 3 seconds before redirect
+
+      // setSuccessMessage("Category Details Saved Successfully");
+      // setErrorMessage("");
+      // setShowPopup(true);
+
+      // setTimeout(() => {
+      //   setShowPopup(false);
+      //   navigate(pathlisting);
+      // }, 2000); // Show popup for 3 seconds before redirect
   
       
        

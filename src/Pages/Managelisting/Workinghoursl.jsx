@@ -123,16 +123,20 @@ useEffect(()=>{
       );
 
       const result = await response.json();
-      console.log(result);
-      console.log("Working hours token",token);
-      setSuccessMessage("Working Hours Details Saved Successfully");
-      setErrorMessage("");
-      setShowPopup(true);
+      const cityName = localStorage.getItem('cityname');
+      const pathlisting = `/paymentmodel/${cityName}`;
+      navigate(pathlisting);
 
-      setTimeout(() => {
-      setShowPopup(false);
-      navigate("/paymentmodel");
-    }, 2000);
+    //   console.log(result);
+    //   console.log("Working hours token",token);
+    //   setSuccessMessage("Working Hours Details Saved Successfully");
+    //   setErrorMessage("");
+    //   setShowPopup(true);
+
+    //   setTimeout(() => {
+    //   setShowPopup(false);
+    //   navigate("/paymentmodel");
+    // }, 2000);
       
     } catch (error) {
       console.error("Error:", error);

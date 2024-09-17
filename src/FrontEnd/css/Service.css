@@ -170,3 +170,14 @@
   }
 }
 
+
+.bannerimg{
+  height: auto;
+  object-fit: cover;
+}
+@media (max-width:767px) {
+  .bannerimg{
+    height: 100%;
+    object-fit: inherit;
+  }
+}

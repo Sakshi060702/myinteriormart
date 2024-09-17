@@ -147,14 +147,16 @@ function Addpayment() {
       console.log("Response:", data);
       // console.log("Payment token", token);
 
-      setSuccessMessage("Payment Details Saved Successfully");
-      setErrorMessage("");
-      setShowPopup(true);
+      checkStatusNavigate();
 
-      setTimeout(() => {
-        setShowPopup(false);
-        checkStatusNavigate();
-      }, 2000);
+      // setSuccessMessage("Payment Details Saved Successfully");
+      // setErrorMessage("");
+      // setShowPopup(true);
+
+      // setTimeout(() => {
+      //   setShowPopup(false);
+      //   checkStatusNavigate();
+      // }, 2000);
     } catch (error) {
       console.error("Error:", error);
       setErrorMessage(

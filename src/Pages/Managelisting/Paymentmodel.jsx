@@ -98,16 +98,20 @@ function Paymentmodel() {
       }
 
       const data = await response.json();
-      console.log("Response:", data);
-      console.log("Payment token",token);
-      setSuccessMessage("Payment Details Saved Successfully");
-      setErrorMessage("");
-      setShowPopup(true);
+      const cityName = localStorage.getItem('cityname');
+      const pathlisting = `/Imagesl/${cityName}`;
+      navigate(pathlisting);
 
-      setTimeout(() => {
-      setShowPopup(false);
-      navigate("/Imagesl");
-    }, 2000);
+    //   console.log("Response:", data);
+    //   console.log("Payment token",token);
+    //   setSuccessMessage("Payment Details Saved Successfully");
+    //   setErrorMessage("");
+    //   setShowPopup(true);
+
+    //   setTimeout(() => {
+    //   setShowPopup(false);
+    //   navigate("/Imagesl");
+    // }, 2000);
      
       
       // Handle success (e.g., show a success message, redirect, etc.)

@@ -3,6 +3,7 @@ import { Link,useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import '../../../FrontEnd/css/Paymentmode.css';
 import userimage from'../../../FrontEnd/img/success.jpg'
+import successimg from '../../../FrontEnd/img/mimsuccess.png'
 
 const Paymentpopup = ({ isOpen, onClose,message }) => {
 
@@ -27,8 +28,8 @@ const Paymentpopup = ({ isOpen, onClose,message }) => {
         <div className="popup2-overlay" onClick={onClose}>
           <div className="popup2-content" onClick={(e) => e.stopPropagation()}>
             <div>
-              <img src={userimage} style={{height:'80px',width:'80px', marginLeft:'190px',marginBottom:'12px'}}></img>
-            <h3 className="success-message" style={{ textAlign: 'center' }}>SUCCESS</h3>
+              <img src={successimg} className="paymentimage" style={{height:'80px',width:'80px',marginBottom:'12px'}}></img>
+            <h3 className="success-message" style={{ textAlign: 'center',color:'orange' }}>SUCCESS</h3>
             <h6 style={{ textAlign: 'center' }}>{message}</h6>
            
             </div>

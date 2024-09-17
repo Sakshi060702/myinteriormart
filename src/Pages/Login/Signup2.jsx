@@ -159,7 +159,7 @@ function Signup2() {
         <div className="col-md-6">
           <div id="sign-in-dialog" className="dialog-mfp zoom-anim-dialog">
             <div className="step first">
-              <h2 className="text-center pt-3">Sign In</h2>
+              <h2 className="text-center pt-3">Sign Up</h2>
               <div className="tab-content checkout">
                 <div>
                   <form onSubmit={handleSubmit}>

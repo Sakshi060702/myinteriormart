@@ -96,16 +96,22 @@ function Sociallinkl() {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const responseData = await response.json();
-      console.log("API response:", responseData);
-      console.log("Social Link token",token);
-      setSuccessMessage("Social Link Details Saved Successfully");
-      setErrorMessage("");
-      setShowPopup(true);
 
-      setTimeout(() => {
-      setShowPopup(false);
-      navigate("/Keywordl");
-    }, 2000);
+      const cityName = localStorage.getItem('cityname');
+      const pathlisting = `/Keywordl/${cityName}`;
+      navigate(pathlisting);
+
+
+    //   console.log("API response:", responseData);
+    //   console.log("Social Link token",token);
+    //   setSuccessMessage("Social Link Details Saved Successfully");
+    //   setErrorMessage("");
+    //   setShowPopup(true);
+
+    //   setTimeout(() => {
+    //   setShowPopup(false);
+    //   navigate("/Keywordl");
+    // }, 2000);
       
      
     }

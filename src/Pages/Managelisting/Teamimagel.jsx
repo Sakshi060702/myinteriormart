@@ -10,6 +10,7 @@ import {
   validateName,
 } from "../Validation";
 import "../../FrontEnd/css/RegistrationMV.css";
+import Select from "react-select";
 
 function Teamimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -24,6 +25,9 @@ function Teamimagel() {
 
   const [imageDetails, setImageDetails] = useState([]);
   const [imageTitle, setImageTitle] = useState("");
+
+  const MAX_IMAGES = 3;
+  const [remaingImages, setRemainingImages] = useState(MAX_IMAGES);
 
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -62,6 +66,8 @@ function Teamimagel() {
               designation: data.designation,
             }))
           );
+
+          setRemainingImages(MAX_IMAGES - data.imagepath.length);
         }
         // setImageURL(data.imagepath); // Assuming data contains image URL and title
         // setImageTitleFromAPI(data.imagetitle); // Set the image title from API
@@ -146,7 +152,21 @@ function Teamimagel() {
   };
 
   const handleFileChange = (event) => {
-    setSelectedFile(Array.from(event.target.files));
+    const files = Array.from(event.target.files);
+
+    const totalUplodedImages = imageDetails.length;
+    const newTotalUplodedImages =
+      totalUplodedImages + (files ? files.length : 0);
+
+    if (newTotalUplodedImages > MAX_IMAGES) {
+      const validFileCount = MAX_IMAGES - totalUplodedImages;
+      const validFiles = files.slice(0, validFileCount);
+      setSelectedFile(validFiles);
+      setRemainingImages(0);
+    } else {
+      setSelectedFile(files);
+      setRemainingImages(MAX_IMAGES - newTotalUplodedImages);
+    }
   };
 
   const handleBusinessCategoryChange = (event) => {
@@ -210,20 +230,22 @@ function Teamimagel() {
               designation: result.ownerImageDetails.designation,
             }))
           );
+
+          setRemainingImages(MAX_IMAGES - result.imageUrls.length);
         }
         // setImageURL(result.imageUrl);// Ensure this is the correct property
-        setSuccessMessage("Team Image Uploded Successfully");
-        setErrorMessage("");
-        setShowPopup(true);
+        // setSuccessMessage("Team Image Uploded Successfully");
+        // setErrorMessage("");
+        // setShowPopup(true);
 
-        setTimeout(() => {
-          setShowPopup(false);
-        }, 2000);
+        // setTimeout(() => {
+        //   setShowPopup(false);
+        // }, 2000);
       } catch (error) {
-        console.error("Error uploading image:", error);
-        setErrorMessage("Failed to Upload Image. Please try again later.");
-        setSuccessMessage(""); // Clear any existing success message
-        setShowPopup(true);
+        // console.error("Error uploading image:", error);
+        // setErrorMessage("Failed to Upload Image. Please try again later.");
+        // setSuccessMessage(""); // Clear any existing success message
+        // setShowPopup(true);
       }
     } else {
       setErrorMessage("Please select File and Title.");
@@ -234,6 +256,33 @@ function Teamimagel() {
   const handleClosePopup = () => {
     setShowPopup(false);
   };
+
+  const handleCounChange = (selectedOption) => {
+    setSelectedCountry(selectedOption ? selectedOption.value : "");
+  };
+
+  const countryOptions = countries.map((country) => ({
+    value: country.countryID,
+    label: country.name,
+  }));
+
+  const handleStaChange = (selectedOption) => {
+    setSelectedState(selectedOption ? selectedOption.value : "");
+  };
+
+  const stateOptions = states.map((state) => ({
+    value: state.stateID,
+    label: state.name,
+  }));
+
+  const businessCategoryOptions = [
+    { value: "Owner", label: "Owner" },
+    { value: "Proprietor", label: "Proprietor" },
+    { value: "Director", label: "Director" },
+    { value: "Manager", label: "Manager" },
+  ];
+
+
 
   return (
     <>
@@ -270,25 +319,33 @@ function Teamimagel() {
             <label htmlFor="designation">
               Select Designation <span className="text-danger">*</span>
             </label>
-            <select
-              className="wide add_bottom_10 selectdrp"
-              name="businessCategory"
-              onChange={handleBusinessCategoryChange}
-              required
-              value={selectedBusinessCategory}
-              style={{
-                width: "100%",
-                height: "50px", // Adjust height as needed
-              }}
-            >
-              <option value="" disabled>
-                Select Business Category
-              </option>
-              <option value="Owner">Owner</option>
-              <option value="Proprietor">Proprietor</option>
-              <option value="Director">Director</option>
-              <option value="Manager">Manager</option>
-            </select>
+             <Select
+    className="wide add_bottom_10 selectdrp"
+    value={businessCategoryOptions.find(
+      (option) => option.value === selectedBusinessCategory
+    )}
+    onChange={handleBusinessCategoryChange}
+    options={businessCategoryOptions}
+    placeholder="Select Business Category"
+    styles={{
+      option: (provided, state) => ({
+        ...provided,
+        backgroundColor: state.isFocused ? "orange" : "white", // Orange background on hover
+        color: state.isFocused ? "white" : "black", // Text color adjustment
+        cursor: "pointer",
+      }),
+      control: (base) => ({
+        ...base,
+        height: "50px", // Set the height to match your existing design
+        borderColor: "#ccc",
+        "&:hover": { borderColor: "#aaa" }, // Hover effect for the control
+      }),
+      placeholder: (defaultStyles) => ({
+        ...defaultStyles,
+        fontSize: "16px", // Adjust font size for the placeholder
+      }),
+    }}
+  />
           </div>
 
           <div className="form-group teamcode">
@@ -352,6 +409,34 @@ function Teamimagel() {
                 </option>
               ))}
             </select>
+            {/* <Select
+              className="wide add_bottom_10 country selectdrp"
+              value={countryOptions.find(
+                (option) => option.value === selectedCountry
+              )}
+              onChange={handleCounChange}
+              options={countryOptions}
+              placeholder="Select Country"
+              styles={{
+                option: (provided, state) => ({
+                  ...provided,
+                  backgroundColor: state.isFocused ? "orange" : "white", // Orange background on hover
+                  color: state.isFocused ? "white" : "black", // Adjust text color for readability
+                  cursor: "pointer",
+                }),
+                control: (base) => ({
+                  ...base,
+                  width: "150%",
+                  height: "50px", // Adjust the height as per your requirement
+                  borderColor: "#ccc",
+                  "&:hover": { borderColor: "#aaa" }, // Hover effect for the control
+                }),
+                placeholder: (defaultStyles) => ({
+                  ...defaultStyles,
+                  fontSize: "16px", // Adjust font size for placeholder if needed
+                }),
+              }}
+            /> */}
           </div>
 
           <div className="form-group teamcode">
@@ -379,46 +464,49 @@ function Teamimagel() {
           </div>
 
           <div>
-            <div> <h2 style={{ textAlign: "center", marginLeft: "470px" }}>Team</h2></div>
-           
+            <div>
+              {" "}
+              <h2 style={{ textAlign: "center", marginLeft: "470px" }}>Team</h2>
+            </div>
+
             <div
               className="row justify-content-center mt-4"
               style={{ marginLeft: "29px" }}
             >
-
-
-
-{imageDetails.length === 0 || !imageDetails.some(img => img.url) ? (
-            <div className="col-md-3 col-lg-2 col-6 mb-5" style={{left:'216px',marginRight:'33px'}}>
-              <div className="upload_img_sec" style={{width:'107px'}}>
-                <img
-                  className="upload_images"
-                  src={usericon}
-                  alt="Default User Icon"
-                />
-              </div>
-              
-            </div>
-          ) : (
-            imageDetails.map((image, index) => (
-              <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
-                  <div className="upload_img_sec">
+              {imageDetails.length === 0 ||
+              !imageDetails.some((img) => img.url) ? (
+                <div
+                  className="col-md-3 col-lg-2 col-6 mb-5"
+                  style={{ left: "216px", marginRight: "33px" }}
+                >
+                  <div className="upload_img_sec" style={{ width: "107px" }}>
                     <img
                       className="upload_images"
-                      src={
-                        image.url
-                          ? `https://apidev.myinteriormart.com${image.url}`
-                          : usericon
-                      }
-                      alt="Gallery Image"
+                      src={usericon}
+                      alt="Default User Icon"
                     />
                   </div>
-                  <div className="img_title text-center">
-                    {image.firstName} {image.designation}
-                  </div>
                 </div>
-            ))
-          )}
+              ) : (
+                imageDetails.map((image, index) => (
+                  <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
+                    <div className="upload_img_sec">
+                      <img
+                        className="upload_images"
+                        src={
+                          image.url
+                            ? `https://apidev.myinteriormart.com${image.url}`
+                            : usericon
+                        }
+                        alt="Gallery Image"
+                      />
+                    </div>
+                    <div className="img_title text-center">
+                      {image.firstName} {image.designation}
+                    </div>
+                  </div>
+                ))
+              )}
 
               {/* {imageDetails.map((image, index) => (
                 <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
@@ -472,6 +560,11 @@ function Teamimagel() {
               Submit
             </button>
           </div> */}
+      <div className="text-danger">
+        {remaingImages > 0
+          ? `You can upload ${remaingImages} more image`
+          : "Maximum 3 images reached"}
+      </div>
       <div className="text-danger">Upload Maximum 3 Images</div>
       {showPopup && (
         <Popupalert

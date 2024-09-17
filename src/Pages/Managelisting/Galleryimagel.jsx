@@ -13,6 +13,9 @@ function Galleryimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageTitle, setImageTitle] = useState("");
   const [imageDetails, setImageDetails] = useState([]);
+  
+  const MAX_IMAGES=20;
+  const[remaingImages,setRemainingImages]=useState(MAX_IMAGES);
 
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
@@ -27,7 +30,21 @@ function Galleryimagel() {
 
 
   const handleFileChange = (event) => {
-    setSelectedFile(Array.from(event.target.files));
+    const files = Array.from(event.target.files);
+
+    const totalUplodedImages=imageDetails.length;
+    const newTotalUplodedImages=totalUplodedImages+(files?files.length:0);
+
+    if (newTotalUplodedImages > MAX_IMAGES) {
+    
+      const validFileCount = MAX_IMAGES - totalUplodedImages;
+      const validFiles=files.slice(0, validFileCount);
+      setSelectedFile(validFiles); 
+      setRemainingImages(0);
+    } else {
+      setSelectedFile(files);
+      setRemainingImages(MAX_IMAGES - newTotalUplodedImages);
+    }
   };
 
   const handleTitleChange = (event) => {
@@ -55,6 +72,7 @@ function Galleryimagel() {
           console.log(data);
           console.log();
           setImageDetails(data.imagepath.map((img)=> ({ url: img, title: data.imagetitle })));
+          setRemainingImages(MAX_IMAGES - data.imagepath.length);
         
         }
       } catch (error) {
@@ -113,6 +131,7 @@ function Galleryimagel() {
 
         if (result instanceof Object) {
           setImageDetails(result.imageUrls.map((img)=> ({ url: img, title: result.imageTitle })));
+          setRemainingImages(MAX_IMAGES - result.imageUrls.length);
           // setImageDetails((prevDetails) =>
           //   prevDetails.concat(result.map((image) => ({ url: image.imageUrls, title: image.imageTitle })))
           // );
@@ -230,6 +249,11 @@ function Galleryimagel() {
               >
                 Submit
               </button>
+          </div>
+          <div className="text-danger">
+            {remaingImages > 0 
+              ? `You can upload ${remaingImages} more image`
+              : "Maximum 20 images reached"}
           </div>
           <div className="text-danger">Upload Maximum 20 Images</div>
           {showPopup && (

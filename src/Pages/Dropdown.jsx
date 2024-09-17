@@ -31,7 +31,7 @@ const Dropdown = () => {
         </li> */}
         <li style={{marginRight:'60px',marginTop:'10px'}}>
           <Link to={`/Myactivity/in-${localStorage.getItem('cityname')}`} style={{color:'black'}}>
-            <i className="fa fa-user" ></i> Dashboard
+            <i className="fa fa-user" style={{color:'orange'}} ></i> Dashboard
           </Link>
         </li>
         {/* <li>
@@ -41,13 +41,13 @@ const Dropdown = () => {
         
         </li> */}
         <li style={{marginRight:'84px',marginTop:'-8px'}} >
-        <i className="fa fa-gear" style={{ marginRight: "10px" }}></i>Settings
+        <i className="fa fa-gear" style={{ marginRight: "10px" ,color:'orange' }}></i>Settings
         </li>
         <li style={{marginTop:'-8px' ,marginRight:'1px'}}>
-        <i className="fa fa-key" style={{ marginRight: "10px" }}></i>Change Password
+        <i className="fa fa-key" style={{ marginRight: "10px",color:'orange' }}></i>Change Password
         </li>
         <li onClick={handleLogoutClick} style={{marginRight:'84px' ,marginTop:'-8px'}}>
-          <i className="fa fa-sign-out" style={{ marginRight: "10px" }}></i>Logout
+          <i className="fa fa-sign-out" style={{ marginRight: "10px",color:'orange' }}></i>Logout
         </li>
       </ul>
     </div>

@@ -139,14 +139,16 @@ function Addspecialisation()
           const cityName = localStorage.getItem('cityname');
         const pathlisting = `/addworkinghours/${cityName}`;
 
-          setSuccessMessage("Specialisation Details Saved Successfully");
-          setErrorMessage("");
-          setShowPopup(true);
+        navigate(pathlisting);
+
+          // setSuccessMessage("Specialisation Details Saved Successfully");
+          // setErrorMessage("");
+          // setShowPopup(true);
     
-          setTimeout(() => {
-            setShowPopup(false);
-            navigate(pathlisting);
-          }, 2000);
+          // setTimeout(() => {
+          //   setShowPopup(false);
+          //   navigate(pathlisting);
+          // }, 2000);
 
          
           // Handle success (e.g., show a success message, redirect, etc.)

@@ -155,16 +155,20 @@ function Communicationl() {
       }
 
       const responseData = await response.json();
-      console.log("API response:", responseData);
-      console.log("Communication Token",token);
-      setSuccessMessage("Communication Details Saved Successfully");
-      setErrorMessage("");
-      setShowPopup(true);
+      // console.log("API response:", responseData);
+      // console.log("Communication Token",token);
 
-      setTimeout(() => {
-      setShowPopup(false);
-      navigate("/addressl");;
-    }, 2000);
+      const cityName = localStorage.getItem('cityname');
+      const pathlisting = `/addressl/${cityName}`;
+      navigate(pathlisting);
+    //   setSuccessMessage("Communication Details Saved Successfully");
+    //   setErrorMessage("");
+    //   setShowPopup(true);
+
+    //   setTimeout(() => {
+    //   setShowPopup(false);
+    //   navigate("/addressl");;
+    // }, 2000);
       
     } catch (error) {
       console.error("API error:", error);
@@ -175,6 +179,25 @@ function Communicationl() {
   };
   const handleClosePopup = () => {
     setShowPopup(false);
+  };
+
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isFocused ? "#ffa500" : "white", // Orange on hover
+      color: state.isFocused ? "white" : "black", // Text color change on hover
+      padding: 10,
+    }),
+    control: (provided) => ({
+      ...provided,
+      height: "50px", // Increase the height of the select box
+      minHeight: "50px", // Ensure minimum height of the select box
+      border: "1px solid #ccc",
+      boxShadow: "none",
+      "&:hover": {
+        border: "1px solid orange", // Border on hover
+      },
+    }),
   };
 
 
@@ -219,6 +242,7 @@ function Communicationl() {
                       onChange={handleSelectChange}
                       value={formData.languages}
                       required
+                      styles={customStyles}
                      
                     />
                   </div>
