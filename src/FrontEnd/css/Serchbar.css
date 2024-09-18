@@ -2,6 +2,13 @@
     position: relative;
 }
 
+@media (max-width:767px) {
+    .search {
+        position: relative;
+        margin-top: 9px;
+    }
+}
+
 .dropdownsearchbar {
     position: absolute;
     top: 100%;

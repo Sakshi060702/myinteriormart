@@ -81,8 +81,8 @@ function Receiveotp2() {
                                             <p>Enter 4 digit One Time Password (OTP) sent to your Mobile Number +91 {mobile} via SMS</p>
                                         </div>
                                         <div className="form-group mb-4 d-flex align-items-center">
-                                            <div style={{ marginTop: '-20px' }}>
-                                                <img src={mobileImage} alt="Mobile Icon" style={{ width: '80px', height: '80px', marginRight: '10px' }} />
+                                            <div className="otpimage" style={{ marginTop: '-20px' }}>
+                                                <img src={mobileImage} alt="Mobile Icon" style={{ width: '80px', height: '80px', marginRight: '10px'}} />
                                             </div>
                                             {/* <div>
                                                 <input

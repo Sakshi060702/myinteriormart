@@ -48,14 +48,14 @@ const Sociallink = ({ isOpen, onClose }) => {
             cursor: pointer;
           }
           .socialimg {
-            width: 60px;
-            height: 60px;
+            width: 47px;
+            height: 47px;
             margin-bottom: 10px;
           }
           @media(max-width:767px) {
             .socialimg {
-              width: 40px;
-              height: 40px;
+              width: 37px;
+              height: 37px;
             }
             .popup-content {
               position: fixed;

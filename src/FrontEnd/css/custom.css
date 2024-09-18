@@ -1181,7 +1181,7 @@ option[value=""][disabled] {
 	}
 	.listing-bottom-list .loc_open {
 		font-size: 12.9px;
-		line-height: 14px;
+		line-height: 22px;
 		top:1px;
 		left: 7px;
 		height: 31px;
@@ -1404,7 +1404,7 @@ option[value=""][disabled] {
 		display: none;
 	}
 	.listing-list {
-		margin: 0px -5px;
+		margin: 0px -8px;
 	}
 	.individual-listing-main {
 		order: 1;

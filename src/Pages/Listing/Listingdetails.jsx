@@ -129,6 +129,11 @@ function Listingdetails() {
     autoplaySpeed: 3000, // Set autoplay speed in milliseconds
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
+    appendDots: dots => (
+      <div style={{ marginBottom: "57px" }}>
+        <ul> {dots} </ul>
+      </div>
+    )
   };
 
   // if(){
@@ -605,7 +610,7 @@ function Listingdetails() {
               </div>
               <div className="col-lg-9 individual-listing-main padding-5">
                 <div className="listing-gallery">
-                  <div className="gallery">
+                  <div className="gallery listingbanner">
                     {/* <img
                       src={banner2}
                       alt="Image2"
@@ -623,10 +628,45 @@ function Listingdetails() {
                     />
                     {console.log("Banner", imageURL)}
                   </div>
+
+                  <div className="gallery listinggallery">
+                    {/* <img
+                      src={banner2}
+                      alt="Image2"
+                      title="Image2"
+                      style={{ width: "100%", height: "200px" }}
+                    /> */}
+                    <Slider {...settings}>
+                          {imageDetails.map((image, index) => (
+                            <div
+                              className="col-md-3 col-lg-2 col-6 mb-5"
+                              key={index}
+                            >
+                              <div
+                                className=""
+                                style={{ width: "189px", marginLeft: "50px" }}
+                              >
+                                <img
+                                  className="upload_imagesgallery "
+                                  src={
+                                    image.url
+                                      ? `https://apidev.myinteriormart.com${image.url}`
+                                      : ""
+                                  }
+                                  alt="Gallery Image"
+                                  style={{ marginRight: "-42px" }}
+                                />
+                              </div>
+                            </div>
+                          ))}
+                        </Slider>
+                    {console.log("Banner", imageURL)}
+                  </div>
+
                 </div>
                 <div className="company-listing-main">
                   <div className="listing-details">
-                    <div className="col-lg-4 col-md-12 company-map padding-all-5">
+                    <div className="col-lg-4 col-md-12 company-map padding-all-5 listingbanner">
                       <div className="pro-large-img img-zoom gallery1">
                         <Slider {...settings}>
                           {imageDetails.map((image, index) => (
@@ -654,6 +694,38 @@ function Listingdetails() {
                         </Slider>
                       </div>
                     </div>
+                    <div className="col-lg-4 col-md-12 company-map padding-all-5 listinggallery">
+                      <div className="pro-large-img img-zoom gallery1">
+                      <img
+                      className="upload_imagesbanner "
+                      src={
+                        imageURL
+                          ? `https://apidev.myinteriormart.com${imageURL}`
+                          : banner2
+                      }
+                      alt="Banner Image"
+                    />
+                      </div>
+                    </div>
+
+
+                    {/* <div className="listinggallery">
+                <div className="listing-gallery">
+                  <div className="gallery">
+                   
+                    <img
+                      className="upload_imagesbanner "
+                      src={
+                        imageURL
+                          ? `https://apidev.myinteriormart.com${imageURL}`
+                          : banner2
+                      }
+                      alt="Banner Image"
+                    />
+                    {console.log("Banner", imageURL)}
+                  </div>
+                </div>
+                    </div> */}
 
                     <div className="col-lg-8 col-md-12 company-details-list padding-all-5">
                       <div className="company-addes">

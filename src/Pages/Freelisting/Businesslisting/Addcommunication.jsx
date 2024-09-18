@@ -223,6 +223,25 @@ function Addcommunication(){
     setShowPopup(false);
   };
 
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isFocused ? "#ffa500" : "white", // Orange on hover
+      color: state.isFocused ? "white" : "black", // Text color change on hover
+      padding: 10,
+    }),
+    control: (provided) => ({
+      ...provided,
+      height: "50px", // Increase the height of the select box
+      minHeight: "50px", // Ensure minimum height of the select box
+      border: "1px solid #ccc",
+      marginLeft: "-9px",
+      boxShadow: "none",
+      "&:hover": {
+        border: "1px solid gray", // Border on hover
+      },
+    }),
+  };
 
   return (
     <>
@@ -250,7 +269,8 @@ function Addcommunication(){
                       onChange={handleSelectChange}
                       value={formData.languages}
                       required
-                      styles={{marginRight:'2px'}}
+                      // styles={{marginRight:'2px'}}
+                      styles={customStyles}
                      
                     />
                   </div>

@@ -129,10 +129,14 @@ function Signup2() {
   };
 
   const customStyles = {
-    option: (provided) => ({
+    option: (provided,state) => ({
       ...provided,
       display: "flex",
       alignItems: "center",
+      backgroundColor: state.isFocused 
+      ? "orange" :state.isSelected ?"white"
+      : provided.backgroundColor,
+    color: state.isFocused  ? "white" :state.isSelected?'black' : provided.color,
     }),
     singleValue: (provided) => ({
       ...provided,

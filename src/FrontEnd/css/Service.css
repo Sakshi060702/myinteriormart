@@ -101,7 +101,7 @@
 }
 @media (max-width:767px) {
   .categorylink{
-    margin-right: 11px !important;
+    /* margin-right: 11px !important; */
   }
 }
 

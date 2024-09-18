@@ -307,7 +307,7 @@ function Menu1() {
                         }}
                         // onClick={closeMenu}
                       >
-                        Freelisting
+                        Free Listing
                       </NavLink>
                 </li>
                   

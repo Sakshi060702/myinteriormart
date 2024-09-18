@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
-import usericon from "../../FrontEnd/img/placeholder-banner-690-x-120.jpg";
+import usericon from "../../FrontEnd/img/Banner 690 x 120.png";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
 import Popupalert from "../Popupalert";

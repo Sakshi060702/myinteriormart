@@ -366,6 +366,65 @@ const Address = () => {
     setShowPopup(false);
   };
 
+  //country
+  const handleCounChange = (selectedOption) => {
+    setSelectedCountry(selectedOption ? selectedOption.value : "");
+  };
+
+  const countryOptions = filteredCountries.map((country) => ({
+    value: country.countryID,
+    label: country.name,
+  }));
+
+  const handleStaChange = (selectedOption) => {
+    setSelectedState(selectedOption ? selectedOption.value : "");
+  };
+
+  const stateOptions = states.map((state) => ({
+    value: state.stateID,
+    label: state.name,
+  }));
+
+
+  const handleCiChange = (selectedOption) => {
+    setSelectedCity(selectedOption ? selectedOption.value : "");
+  };
+
+  const cityOptions = cities.map((city) => ({
+    value: city.cityID,
+    label: city.name,
+  }));
+
+  const handleLocalChange = (selectedOption) => {
+    setSelectedAssembly(selectedOption ? selectedOption.value : "");
+  };
+
+  const assemblyOptions = assemblies.map((assembly) => ({
+    value: assembly.assemblyID,
+    label: assembly.name,
+  }));
+
+  const handlePinChange = (selectedOption) => {
+    setSelectedPincode(selectedOption ? selectedOption.value : "");
+  };
+
+  const pincodeOptions = pincodes.map((pincode) => ({
+    value: pincode.pincodeID,
+    label: pincode.number,
+  }));
+
+
+  const handleArChange = (selectedOption) => {
+    setSelectedLocality(selectedOption ? selectedOption.value : "");
+  };
+
+  const localityOptions = localities.map((locality) => ({
+    value: locality.localityID,
+    label: locality.name,
+  }));
+
+  
+
   return (
     <>
       <div>
@@ -387,150 +446,175 @@ const Address = () => {
         onChange={handleSearchChange}
         style={{ marginBottom: '10px', width: '250px', height: '30px' }}
       /> */}
-                    <select
-                      className="wide add_bottom_10 country selectaddress"
-                      value={selectedCountry}
-                      onChange={handleCountryChange}
-                      required
-                      style={{
-                        border: "1px solid #ccc",
-                        borderRadius: "4px",
-                        
+                    <Select
+                      className="wide add_bottom_10 country selectdrp"
+                      value={countryOptions.find(
+                        (option) => option.value === selectedCountry
+                      )}
+                      onChange={handleCounChange}
+                      options={countryOptions}
+                      placeholder="Select Country"
+                      styles={{
+                        option: (provided, state) => ({
+                          ...provided,
+                          backgroundColor: state.isFocused ? "orange" : "white", // Background color orange on hover
+                          color: state.isFocused ? "white" : "black", // Adjust text color for contrast
+                          cursor: "pointer",
+                        }),
+                        control: (base) => ({
+                          ...base,
+                          width:'76%',
+                          height: "50px",
+                          minHeight: "50px",
+                          // borderColor: "#ccc",
+                          // "&:hover": { borderColor: "#aaa" },
+                        }),
                       }}
-                    >
-                      <option value="">Select Country</option>
-                      {filteredCountries.map((country) => (
-                        <option
-                          key={country.countryID}
-                          value={country.countryID}
-                        >
-                          {country.name}
-                        </option>
-                      ))}
-                    </select>
+                    />
                   </div>
                   <div className="form-group col-md-4">
                     <label htmlFor="state">State<span className="text-danger">*</span></label>
-                    <select
-                      className="wide add_bottom_10 state selectaddress "
-                      id="state"
-                      value={selectedState}
-                      onChange={handleStateChange}
-                      required
-                      style={{
-                        border: "1px, solid #ccc",
-                        borderRadius: "4px",
-                       
+                    <Select
+                      className="wide add_bottom_10 state selectdrp"
+                      value={stateOptions.find(
+                        (option) => option.value === selectedState
+                      )}
+                      onChange={handleStaChange}
+                      options={stateOptions}
+                      placeholder="Select State"
+                      styles={{
+                        option: (provided, state) => ({
+                          ...provided,
+                          backgroundColor: state.isFocused ? "orange" : "white", // Hover background color change
+                          color: state.isFocused ? "white" : "black", // Text color for contrast
+                          cursor: "pointer",
+                        }),
+                        control: (base) => ({
+                          ...base,
+                          width:'76%',
+                          height: "50px",
+                          minHeight: "50px",
+                          borderColor: "#ccc",
+                          "&:hover": { borderColor: "#aaa" }, // Hover effect for the control
+                        }),
                       }}
-                    >
-                      <option value="">Select State</option>
-                      {filteredState.map((states) => (
-                        <option
-                          key={states.stateID}
-                          value={states.stateID}
-                        >
-                          {states.name}
-                        </option>
-                      ))}
-                    </select>
+                    />
                   </div>
                   <div className="form-group col-md-4">
                     <label htmlFor="city">City<span className="text-danger">*</span></label>
-                    <select
-                      className="wide add_bottom_10 city selectaddress "
-                      id="city"
-                      value={selectedCity}
-                      onChange={handleCityChange}
-                      required
-                      style={{
-                        border: "1px, solid #ccc",
-                        borderRadius: "4px",
-                       
+                    <Select
+                      className="wide add_bottom_10 city selectdrp"
+                      value={cityOptions.find(
+                        (option) => option.value === selectedCity
+                      )}
+                      onChange={handleCiChange}
+                      options={cityOptions}
+                      placeholder="Select City"
+                      styles={{
+                        option: (provided, state) => ({
+                          ...provided,
+                          backgroundColor: state.isFocused ? "orange" : "white", // Orange background on hover
+                          color: state.isFocused ? "white" : "black", // Adjust text color for contrast
+                          cursor: "pointer",
+                        }),
+                        control: (base) => ({
+                          ...base,
+                          width:'76%',
+                          height: "50px",
+                          minHeight: "50px",
+                          borderColor: "#ccc",
+                          "&:hover": { borderColor: "#aaa" }, // Control hover effect
+                        }),
                       }}
-                    >
-                      <option value="">Select City</option>
-                      {filteredCity.map((city) => (
-                        <option key={city.cityID} value={city.cityID}>
-                          {city.name}
-                        </option>
-                      ))}
-                    </select>
+                    />
                   </div>
                 </div>
                 <div className="row">
                   <div className="form-group col-md-4">
                     <label>Locality<span className="text-danger">*</span></label>
-                    <select
-                      className="wide add_bottom_10 locality selectaddress"
-                      value={selectedAssembly}
-                      onChange={handleLocalityChange}
-                      required
-                      style={{
-                        border: "1px, solid #ccc",
-                        borderRadius: "4px",
-                       
+                    <Select
+                      className="wide add_bottom_10 locality selectdrp"
+                      value={assemblyOptions.find(
+                        (option) => option.value === selectedAssembly
+                      )}
+                      onChange={handleLocalChange}
+                      options={assemblyOptions}
+                      placeholder="Select Locality"
+                      styles={{
+                        option: (provided, state) => ({
+                          ...provided,
+                          backgroundColor: state.isFocused ? "orange" : "white", // Orange background on hover
+                          color: state.isFocused ? "white" : "black", // Adjust text color for contrast
+                          cursor: "pointer",
+                        }),
+                        control: (base) => ({
+                          ...base,
+                          width:'76%',
+                          height: "50px",
+                          minHeight: "50px",
+                          borderColor: "#ccc",
+                          "&:hover": { borderColor: "#aaa" }, // Control hover effect
+                        }),
                       }}
-                    >
-                      <option value="">Type or Select Locality</option>
-                      {filteredassembly.map((assembly) => (
-                        <option
-                          key={assembly.assemblyID}
-                          value={assembly.assemblyID}
-                        >
-                          {assembly.name}
-                        </option>
-                      ))}
-                    </select>
+                    />
                     <button onClick={(e)=>{ e.preventDefault(); console.log(cities, cities.cityId); return setShowAddressPopup([true,selectedCity])}}>Add Locality +</button>
                   </div>
                   <div className="form-group col-md-4">
                     <label>Pincode<span className="text-danger">*</span></label>
-                    <select
-                      className="wide add_bottom_10 pincode selectaddress"
-                      value={selectedPincode}
-                      onChange={handlePincodeChange}
-                      required
-                      style={{
-                        border: "1px, solid #ccc",
-                        borderRadius: "4px",
-                       
+                    <Select
+                      className="wide add_bottom_10 pincode selectdrp"
+                      value={pincodeOptions.find(
+                        (option) => option.value === selectedPincode
+                      )}
+                      onChange={handlePinChange}
+                      options={pincodeOptions}
+                      placeholder="Select Pincode"
+                      styles={{
+                        option: (provided, state) => ({
+                          ...provided,
+                          backgroundColor: state.isFocused ? "orange" : "white", // Orange background on hover
+                          color: state.isFocused ? "white" : "black", // Adjust text color for contrast
+                          cursor: "pointer",
+                        }),
+                        control: (base) => ({
+                          ...base,
+                          width:'76%',
+                          height: "50px",
+                          minHeight: "50px",
+                          borderColor: "#ccc",
+                          "&:hover": { borderColor: "#aaa" }, // Hover effect for the control
+                        }),
                       }}
-                    >
-                      <option value="">Type or Select Pincode</option>
-                      {pincodes.map((pincode) => (
-                        <option
-                          key={pincode.pincodeID}
-                          value={pincode.pincodeID}
-                        >
-                          {pincode.number}
-                        </option>
-                      ))}
-                    </select>
+                    />
                     <button onClick={(e)=>{ e.preventDefault();  return setShowPincodePopup([true,selectedAssembly])}}>Add Pincode +</button>
                   </div>
                   <div className="form-group col-md-4">
                     <label>Area<span className="text-danger">*</span></label>
-                    <select
-                      className="wide add_bottom_10 area selectaddress"
-                      value={selectedLocality}
-                      onChange={handleAreaChange}
-                      required
-                      style={{
-                        border: "1px, solid #ccc",
-                        borderRadius: "4px",
-                        
+                    <Select
+                      className="wide add_bottom_10 area selectdrp"
+                      value={localityOptions.find(
+                        (option) => option.value === selectedLocality
+                      )}
+                      onChange={handleArChange}
+                      options={localityOptions}
+                      placeholder="Select Area"
+                      styles={{
+                        option: (provided, state) => ({
+                          ...provided,
+                          backgroundColor: state.isFocused ? "orange" : "white", // Orange background on hover
+                          color: state.isFocused ? "white" : "black", // Adjust text color for better contrast
+                          cursor: "pointer",
+                        }),
+                        control: (base) => ({
+                          ...base,
+                          width:'76%',
+                          height: "50px",
+                          minHeight: "50px",
+                          borderColor: "#ccc",
+                          "&:hover": { borderColor: "#aaa" }, // Control hover effect
+                        }),
                       }}
-                    >
-                      <option value="">Type or Select Area</option>
-                      {localities.map((locality) => (
-                        <option
-                          key={locality.localityID}
-                          value={locality.localityID}
-                        >
-                          {locality.name}
-                        </option>
-                      ))}
-                    </select>
+                    />
                     <button onClick={(e)=>{ e.preventDefault();console.log("assembly", selectedAssembly);console.log("pincode",selectedPincode);  return setShowAreaPopup([true,selectedAssembly,selectedPincode])}}>Add Area +</button>
                   </div>
                   <div className="form-group col-md-12">

@@ -236,6 +236,43 @@ function Addcompany() {
         setShowPopup(false);
       };
 
+
+      const options = [
+        { value: "Proprietorship", label: "Proprietorship" },
+        { value: "Private Limited Company", label: "Private Limited Company" },
+        { value: "Public Limited Company", label: "Public Limited Company" },
+      ];
+    
+      const customStyles = {
+        option: (provided, state) => ({
+          ...provided,
+          backgroundColor: state.isFocused ? "#ffa500" : "white", // Orange on hover
+          color: state.isFocused ? "white" : "black", // Text color change on hover
+          padding: 10,
+        }),
+        control: (provided) => ({
+          ...provided,
+          height: "50px", // Increase the height of the select box
+          minHeight: "50px", // Ensure minimum height of the select box
+          border: "1px solid #ccc",
+          boxShadow: "none",
+          "&:hover": {
+            border: "1px solid gray", // Border on hover
+          },
+        }),
+      };
+
+      const turnoverOptions = [
+        { value: "Upto 1 Lac", label: "Upto 1 Lac" },
+        { value: "Upto 2 Lacs", label: "Upto 2 Lacs" },
+        { value: "Upto 3 Lacs", label: "Upto 3 Lacs" },
+        { value: "Upto 5 Lacs", label: "Upto 5 Lacs" },
+        { value: "Upto 50 Lacs", label: "Upto 50 Lacs" },
+        { value: "Upto 1 Crore", label: "Upto 1 Crore" },
+        { value: "Upto 10 Crore & Above", label: "Upto 10 Crore & Above" },
+      ];
+
+
   return (
     <>
       <div className="">
@@ -283,7 +320,21 @@ function Addcompany() {
                     ...provided,
                     border: "1px solid #ccc",
                     borderRadius: "4px",
+                    height: "50px", // Increase the height of the select box
+                          minHeight: "50px",
                    
+                  }),
+                  option: (provided, state) => ({
+                    ...provided,
+                    backgroundColor: state.isFocused
+                      ? "orange"
+                      : provided.backgroundColor,
+                    color: state.isFocused ? "white" : provided.color,
+                    cursor: "pointer",
+                  }),
+                  menu: (provided) => ({
+                    ...provided,
+                    zIndex: 9999,
                   }),
                 }}
                 value={
@@ -308,29 +359,23 @@ function Addcompany() {
               <label>
                 Nature of Business <span className="text-danger">*</span>
               </label>
-              <select
-                className="wide add_bottom_10 selectcompnay  "
-                name="natureOfBusiness"
-                value={formData.natureOfBusiness}
-                onChange={handleChange}
-                required
-                style={{
-                  border: "1px, solid #ccc",
-                  borderRadius: "4px",
-                 
-                }}
-              >
-                <option value="" disabled>
-                  Select Nature of Business
-                </option>
-                <option value="Proprietorship">Proprietorship</option>
-                <option value="Private Limited Company">
-                  Private Limited Company
-                </option>
-                <option value="Public Limited Company">
-                  Public Limited Company
-                </option>
-              </select>
+              <Select
+                      styles={customStyles}
+                      name="natureOfBusiness"
+                      options={options}
+                      value={options.find(
+                        (option) => option.value === formData.natureOfBusiness
+                      )}
+                      onChange={(selectedOption) =>
+                        handleChange({
+                          target: {
+                            name: "natureOfBusiness",
+                            value: selectedOption.value,
+                          },
+                        })
+                      }
+                      // isClearable
+                    />
             </div>
             <div className="form-group col-md-4">
               <label className="control-label">
@@ -363,32 +408,23 @@ function Addcompany() {
               <label className="control-label" htmlFor="turnover">
                 Turnover <span className="text-danger">*</span>
               </label>
-              <select
-                className="wide add_bottom_10 selectcompnay"
-                id="turnover"
-                name="turnover"
-                value={formData.turnover}
-                onChange={handleChange}
-                required
-                style={{
-                  border: "1px, solid #ccc",
-                  borderRadius: "4px",
-                  
-                }}
-              >
-                <option value="" disabled>
-                  Select Turnover
-                </option>
-                <option value="Upto 1 Lac">Upto 1 Lac</option>
-                <option value="Upto 2 Lacs">Upto 2 Lacs</option>
-                <option value="Upto 3 Lacs">Upto 3 Lacs</option>
-                <option value="Upto 5 Lacs">Upto 5 Lacs</option>
-                <option value="Upto 50 Lacs">Upto 50 Lacs</option>
-                <option value="Upto 1 Crore">Upto 1 Crore</option>
-                <option value="Upto 10 Crore & Above">
-                  Upto 10 Crore & Above
-                </option>
-              </select>
+              <Select
+                      styles={customStyles}
+                      id="turnover"
+                      name="turnover"
+                      options={turnoverOptions}
+                      value={turnoverOptions.find(
+                        (option) => option.value === formData.turnover
+                      )}
+                      onChange={(selectedOption) =>
+                        handleChange({
+                          target: {
+                            name: "turnover",
+                            value: selectedOption.value,
+                          },
+                        })
+                      }
+                    />
             </div>
             <div className="form-group col-md-4">
               <label>GST Number</label>

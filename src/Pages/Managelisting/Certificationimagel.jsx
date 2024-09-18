@@ -4,7 +4,7 @@ import usericon from "../../FrontEnd/img/certificate.jpg";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
 import Popupalert from "../Popupalert";
-import { validateImageFile,validateName } from "../Validation";
+import { validateImageFile,validateGalleryFile,validateName } from "../Validation";
 import useAuthCheck from "../../Hooks/useAuthCheck";
 import '../../FrontEnd/css/RegistrationMV.css'
 
@@ -13,6 +13,7 @@ function Certificationimagel() {
   const [imageTitle, setImageTitle] = useState("");
   const [imageURL, setImageURL] = useState(null);
   const [imageTitleFromAPI, setImageTitleFromAPI] = useState("");
+  const [imageDetails, setImageDetails] = useState([]);
  
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -21,12 +22,32 @@ function Certificationimagel() {
 
   const isAuthenticated = useAuthCheck();
 
+  const MAX_IMAGES=20;
+  const[remaingImages,setRemainingImages]=useState(MAX_IMAGES);
+
+
   const token=useSelector((state)=>state.auth.token);
   const dispatch = useDispatch();
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    const files = Array.from(event.target.files);
+
+    const totalUplodedImages=imageDetails.length;
+    const newTotalUplodedImages=totalUplodedImages+(files?files.length:0);
+
+    if (newTotalUplodedImages > MAX_IMAGES) {
+    
+      const validFileCount = MAX_IMAGES - totalUplodedImages;
+      const validFiles=files.slice(0, validFileCount);
+      setSelectedFile(validFiles); 
+      setRemainingImages(0);
+    } else {
+      setSelectedFile(files);
+      setRemainingImages(MAX_IMAGES - newTotalUplodedImages);
+    }
   };
+
+
   const handleTitleChange = (event) => {
     setImageTitle(event.target.value);
   };
@@ -46,8 +67,13 @@ function Certificationimagel() {
           throw new Error("Failed to fetch user profile");
         }
         const data = await response.json();
-        setImageURL(data.imagepath); // Assuming data contains image URL and title
-        setImageTitleFromAPI(data.imagetitle); // Set the image title from API
+        if (data instanceof Object) {
+          console.log(data);
+          console.log();
+          setImageDetails(data.imageUrls.map((img)=> ({ url: img, title: data.imagetitle })));
+          setRemainingImages(MAX_IMAGES - data.imagepath.length);
+        
+        }
       } catch (error) {
         console.error(error);
       }
@@ -63,7 +89,7 @@ function Certificationimagel() {
 
 
     setError({});
-    const validationError = validateImageFile(selectedFile);
+    const validationError = validateGalleryFile(selectedFile);
     const validationName=validateName(imageTitle);
 
 
@@ -77,7 +103,9 @@ function Certificationimagel() {
 
     if (selectedFile && imageTitle) {
       const formData = new FormData();
-      formData.append("file", selectedFile);
+      selectedFile.forEach((file) => {
+        formData.append("file", file);
+      });
       formData.append("imageTitle", imageTitle);
 
       try {
@@ -102,18 +130,26 @@ function Certificationimagel() {
        
 
         // Update state with new image URL
-        setImageURL(result.imageUrl);
-        setImageTitle("");
-        setSelectedFile(null);
+        // setImageURL(result.imageUrl);
+        // setImageTitle("");
+        // setSelectedFile(null);
 
-        setSuccessMessage("Certification Image Uploded Successfully");
-      setErrorMessage("");
-      setShowPopup(true);
+        if (result instanceof Object) {
+          setImageDetails(result.imageUrls.map((img)=> ({ url: img, title: result.imageTitle })));
+          setRemainingImages(MAX_IMAGES - result.imageUrls.length);
+          // setImageDetails((prevDetails) =>
+          //   prevDetails.concat(result.map((image) => ({ url: image.imageUrls, title: image.imageTitle })))
+          // );
+          // console.log("Updated imageDetails", result.map((image) => ({ url: image.imageUrls, title: image.imageTitle })));
+        }
+    //     setSuccessMessage("Certification Image Uploded Successfully");
+    //   setErrorMessage("");
+    //   setShowPopup(true);
 
-      setTimeout(() => {
-      setShowPopup(false);
+    //   setTimeout(() => {
+    //   setShowPopup(false);
      
-    }, 2000);
+    // }, 2000);
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
         setErrorMessage("Failed to Upload Image. Please try again later.");
@@ -141,7 +177,13 @@ function Certificationimagel() {
                 <label htmlFor="name">
                   Select Certification Image <span className="text-danger">*</span>
                 </label>
-                <input type="file" onChange={handleFileChange} className="file-input" />
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  className="file-input"
+                  multiple
+                  accept="image/*"
+                />
                 {error.imageFile && (
                       <div className="text-danger">{error.imageFile}</div>
                     )}
@@ -175,19 +217,33 @@ function Certificationimagel() {
             </div>
           </div>
           <div className="row justify-content-center mt-4">
+            {console.log(imageDetails)}
+            {imageDetails.length === 0 || !imageDetails.some(img => img.url) ? (
             <div className="col-md-3 col-lg-2 col-6 mb-5">
-              <div className="upload_img_sec uplodcertificate" >
+              <div className="upload_img_sec">
                 <img
                   className="upload_images"
-                  src={imageURL ? `https://apidev.myinteriormart.com${imageURL}` :usericon}
-                  alt="Certification Image"
-                  
+                  src={usericon}
+                  alt="Default User Icon"
                 />
               </div>
-              <div className="img_title text-center">
-                {imageTitleFromAPI}
-              </div>
+              
             </div>
+          ) : (
+            imageDetails.map((image, index) => (
+              <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
+                <div className="upload_img_sec">
+                  <img
+                    className="upload_images"
+                    src={image.url ? `https://apidev.myinteriormart.com${image.url}` : usericon}
+                    alt="Gallery Image"
+                  />
+                </div>
+                <div className="img_title text-center">{image.title}</div>
+              </div>
+            ))
+          )}
+         
           </div>
           <div className='uplodlogo'>
           <button
@@ -197,6 +253,11 @@ function Certificationimagel() {
               >
                 Submit
               </button>
+          </div>
+          <div className="text-danger">
+            {remaingImages > 0 
+              ? `You can upload ${remaingImages} more image`
+              : "Maximum 20 images reached"}
           </div>
           {showPopup && (
             <Popupalert 

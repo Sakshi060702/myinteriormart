@@ -241,7 +241,7 @@ function Addcompanyl() {
       border: "1px solid #ccc",
       boxShadow: "none",
       "&:hover": {
-        border: "1px solid orange", // Border on hover
+        border: "1px solid gray", // Border on hover
       },
     }),
   };

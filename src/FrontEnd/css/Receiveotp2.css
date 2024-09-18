@@ -21,6 +21,14 @@
     outline: none;
 }
 
+.otpimage{
+    margin-left: 202px;
+}
+@media (max-width:767px) {
+    .otpimage{
+        margin-left: 0px;
+    } 
+}
 
 
 

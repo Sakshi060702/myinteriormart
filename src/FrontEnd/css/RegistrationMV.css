@@ -96,6 +96,7 @@
     .container {
         padding-right: 10px;
         padding-left: 10px;
+        padding-top: 12px !important;
     }
     
     #home_main {
@@ -321,7 +322,7 @@
   }
   @media (max-width:767px) {
     .registereye{
-      margin-right: 82px;
+      margin-right: 30px;
     }
   }
   /* @media (max-width:564px) {
@@ -508,7 +509,7 @@
     cursor: pointer;
     display: inline-block;
     text-decoration: none;
-    color: orange !important;
+    color: black !important;
     font-weight: 500;
     transition: all 0.3s ease-in-out;
     border-radius: 3px;
@@ -601,7 +602,7 @@
     height: 106px !important;
     width: 109px !important;
     position: relative;
-    margin-left: 207px ;
+    margin-left: 191px ;
     margin-top: 0px;
   }
 }
@@ -838,8 +839,8 @@ width: 119%;
 
 
 .mobilefreelistingbtn{
-  background-color: white !important;
-  color:orange !important;
+  background-color: orange !important;
+  color:white !important;
 }
 
 
@@ -886,7 +887,23 @@ width: 119%;
 }
 
 
+.listinggallery{
+  display: none;
+}
+@media (max-width:767px) {
+  .listinggallery{
+    display: block;
+  }
+}
 
+.listingbanner{
+  display: block;
+}
+@media (max-width:767px) {
+  .listingbanner{
+    display: none;
+  }
+}
 
 
 

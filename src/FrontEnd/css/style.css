@@ -944,7 +944,7 @@ header.header_in ul#top_menu li a {
 
 @media (max-width: 991px) {
   header.header_in {
-    padding: 10px 0 5px 0;
+    padding: 0px 0 5px 0;
   }
 
   header.header_in ul#top_menu {
@@ -1130,7 +1130,7 @@ header.header_in .hamburger-inner::after {
   }
 
   .header_in #logo img {
-    margin: 0;
+    margin: -16px;
   }
 
 
@@ -10357,8 +10357,9 @@ a.btn_3:hover,
 @media (max-width: 767px) {
 
   .listing-btn {
-    padding: 8px 5px !important;
+    padding: 3px 5px !important;
     font-size: 12px !important;
+    margin-top: 11px !important;
   }
 
 

@@ -199,7 +199,7 @@ function Listing() {
         </div>
 
         <div style={{ display: "flex" }}>
-          <div className="listing-list row col-md-8 col-lg-8 col-sm-12 col-xl-8">
+          <div className="listing-list col-8 ">
             {listing.length > 0 ? (
               listing.map((listing) => (
                 <div key={listing.listingId} className="row mb-10">
@@ -394,7 +394,7 @@ function Listing() {
                               <div>
                                 <li
                                   style={{
-                                    marginLeft: "4px",
+                                    marginLeft: "-1px",
                                     marginRight: "0px",
                                     marginTop: "-6px",
                                   }}

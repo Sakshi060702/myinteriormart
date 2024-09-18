@@ -628,9 +628,9 @@ const Addressl = () => {
                     <button
                       onClick={(e) => {
                         e.preventDefault();
-                        console.log("assembly", selectedAssembly);
-                        console.log("pincode", selectedPincode);
-                        console.log([true, selectedAssembly, selectedPincode]);
+                        // console.log("assembly", selectedAssembly);
+                        // console.log("pincode", selectedPincode);
+                        // console.log([true, selectedAssembly, selectedPincode]);
                         return setShowAreaPopup([
                           true,
                           selectedAssembly,

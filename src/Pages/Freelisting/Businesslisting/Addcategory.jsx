@@ -6,6 +6,7 @@ import "../../../FrontEnd/css/Mangelisting.css";
 import { useSelector } from "react-redux";
 import withAuthh from "../../../Hoc/withAuthh"
 import Popupalert from "../../Popupalert";
+import Select from "react-select";
 
 function Addcategory()
 {
@@ -277,6 +278,26 @@ function Addcategory()
     setShowPopup(false);
   };
 
+
+  const handleCategoryChange = (selectedOption) => {
+    setSelectedFirstCategory(selectedOption ? selectedOption.value : "");
+  };
+
+  const categoryOptions = firstCategories.map((category) => ({
+    value: category.firstCategoryID,
+    label: category.firstCategoryName,
+  }));
+
+  const handleSecCategoryChange = (selectedOption) => {
+    setSelectedSecondCategory(selectedOption ? selectedOption.value : "");
+  };
+
+  const secondCategoryOptions = secondCategories.map((category) => ({
+    value: category.secondCategoryId,
+    label: category.secondCategoryName,
+  }));
+
+
     return(
 
         <>
@@ -295,42 +316,59 @@ function Addcategory()
                     <div className="form-group col-md-6">
                       <label htmlFor="fcategory">First Category <span className="text-danger">*</span></label>
                       <br></br>
-                      <select
-                        className="wide add_bottom_10 fcategory selectdrp"
-                        value={selectedFirstCategory}
-                        onChange={handleFirstCategoryChange}
-                       
-                      >
-                        <option value="">Select First Category</option>
-                        {firstCategories.map((category) => (
-                          <option
-                            key={category.firstCategoryID}
-                            value={category.firstCategoryID}
-                          >
-                            {category.firstCategoryName}
-                          </option>
-                        ))}
-                      </select>
+                      <Select
+                      className="wide add_bottom_10 fcategory selectdrp"
+                      value={categoryOptions.find(
+                        (option) => option.value === selectedFirstCategory
+                      )}
+                      onChange={handleCategoryChange}
+                      options={categoryOptions}
+                      placeholder="Select First Category"
+                      styles={{
+                        option: (provided, state) => ({
+                          ...provided,
+                          backgroundColor: state.isFocused ? "orange" : "white", // Change background to orange on hover
+                          color: state.isFocused ? "white" : "black", // Adjust text color for contrast
+                          cursor: "pointer",
+                        }),
+                        control: (base) => ({
+                          ...base,
+                         
+                          height: "50px", // Increase the height of the select box
+                          minHeight: "50px",
+                          borderColor: "#ccc",
+                          "&:hover": { borderColor: "#aaa" },
+                        }),
+                      }}
+                    />
                     </div>
                     <div className="form-group col-md-6">
                       <label htmlFor="scategory">Second Category <span className="text-danger">*</span></label>
                       <br></br>
-                      <select
-                        className="wide add_bottom_10 scategory selectdrp"
-                        value={selectedSecondCategory}
-                        onChange={handleSecondCategoryChange}
-                        
-                      >
-                        <option value="">Select Second Category</option>
-                        {secondCategories.map((category) => (
-                          <option
-                            key={category.secondCategoryId}
-                            value={category.secondCategoryId}
-                          >
-                            {category.secondCategoryName}
-                          </option>
-                        ))}
-                      </select>
+                      <Select
+                      className="wide add_bottom_10 scategory selectdrp"
+                      value={secondCategoryOptions.find(
+                        (option) => option.value === selectedSecondCategory
+                      )}
+                      onChange={handleSecCategoryChange}
+                      options={secondCategoryOptions}
+                      placeholder="Select Second Category"
+                      styles={{
+                        option: (provided, state) => ({
+                          ...provided,
+                          backgroundColor: state.isFocused ? "orange" : "white", // Hover background color
+                          color: state.isFocused ? "white" : "black", // Adjust text color for contrast
+                          cursor: "pointer",
+                        }),
+                        control: (base) => ({
+                          ...base,
+                          height: "50px", // Increase the height of the select box
+                          minHeight: "50px",
+                          borderColor: "#ccc",
+                          "&:hover": { borderColor: "#aaa" },
+                        }),
+                      }}
+                    />
                     </div>
                   </div>
                   <div className="row">

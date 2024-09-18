@@ -182,9 +182,15 @@ function Editprofile() {
                 <div className="custom-select-form">
                   <label htmlFor="gender">Gender:</label>
                   <DropdownButton id="dropdown-basic-button" className="custom-dropdown" title={selectGender} onSelect={handleSelect} variant="light">
-                    <Dropdown.Item eventKey="Male">Male</Dropdown.Item>
-                    <Dropdown.Item eventKey="Female">Female</Dropdown.Item>
-                    <Dropdown.Item eventKey="Other">Other</Dropdown.Item>
+                    <Dropdown.Item eventKey="Male" style={{ transition: "background-color 0.3s" }}
+  onMouseEnter={(e) => (e.target.style.backgroundColor = "orange")}
+  onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}>Male</Dropdown.Item>
+                    <Dropdown.Item eventKey="Female" style={{ transition: "background-color 0.3s" }}
+  onMouseEnter={(e) => (e.target.style.backgroundColor = "orange")}
+  onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}>Female</Dropdown.Item>
+                    <Dropdown.Item eventKey="Other" style={{ transition: "background-color 0.3s" }}
+  onMouseEnter={(e) => (e.target.style.backgroundColor = "orange")}
+  onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}>Other</Dropdown.Item>
                   </DropdownButton>
                 </div>
               </div>

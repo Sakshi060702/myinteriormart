@@ -4,7 +4,7 @@ import usericon from "../../FrontEnd/img/dummyowner.jpg";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
 import Popupalert from "../Popupalert";
-import { validateImageFile,validateName } from "../Validation";
+import { validateImageFile,validateName,validateGalleryFile } from "../Validation";
 import '../../FrontEnd/css/RegistrationMV.css'
 
 
@@ -13,12 +13,19 @@ function Clientimagel() {
   const [imageTitle, setImageTitle] = useState("");
   const [imageURL, setImageURL] = useState(null);
   const [imageTitleFromAPI, setImageTitleFromAPI] = useState("");
+  const [imageDetails, setImageDetails] = useState([]);
  
+
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
 
   const[error,setError]=useState("");
+
+  const MAX_IMAGES=50;
+  const[remaingImages,setRemainingImages]=useState(MAX_IMAGES);
+
+
 
 
   const navigate=useNavigate();
@@ -26,7 +33,21 @@ function Clientimagel() {
   const dispatch = useDispatch();
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    const files = Array.from(event.target.files);
+
+    const totalUplodedImages=imageDetails.length;
+    const newTotalUplodedImages=totalUplodedImages+(files?files.length:0);
+
+    if (newTotalUplodedImages > MAX_IMAGES) {
+    
+      const validFileCount = MAX_IMAGES - totalUplodedImages;
+      const validFiles=files.slice(0, validFileCount);
+      setSelectedFile(validFiles); 
+      setRemainingImages(0);
+    } else {
+      setSelectedFile(files);
+      setRemainingImages(MAX_IMAGES - newTotalUplodedImages);
+    }
   };
 
   const handleTitleChange = (event) => {
@@ -48,9 +69,13 @@ function Clientimagel() {
           throw new Error("Failed to fetch user profile");
         }
         const data = await response.json();
-        setImageURL(data.imagepath); // Assuming data contains image URL and title
-        setImageTitleFromAPI(data.imagetitle); // Set the image title from API
+        if (data instanceof Object) {
+          console.log(data);
+          console.log();
+          setImageDetails(data.imagepath.map((img)=> ({ url: img, title: data.imagetitle })));
+          setRemainingImages(MAX_IMAGES - data.imagepath.length);
         
+        }
        
       } catch (error) {
         console.error(error);
@@ -69,7 +94,7 @@ function Clientimagel() {
 
 
     setError({});
-    const validationError = validateImageFile(selectedFile);
+    const validationError = validateGalleryFile(selectedFile);
     const validationName=validateName(imageTitle);
 
     if (validationError||validationName) {
@@ -81,7 +106,9 @@ function Clientimagel() {
 
     if (selectedFile && imageTitle) {
       const formData = new FormData();
-      formData.append("file", selectedFile);
+      selectedFile.forEach((file) => {
+        formData.append("file", file);
+      });
       formData.append("imageTitle", imageTitle);
 
       try {
@@ -102,7 +129,14 @@ function Clientimagel() {
         console.log(result); // Log the result for debugging purposes
         console.log("Client Image Token",token)
         // alert("Client Image Uploded Successfully")
-        setImageURL(result.imageUrl);
+        if (result instanceof Object) {
+          setImageDetails(result.imageUrls.map((img)=> ({ url: img, title: result.imageTitle })));
+          setRemainingImages(MAX_IMAGES - result.imageUrls.length);
+          // setImageDetails((prevDetails) =>
+          //   prevDetails.concat(result.map((image) => ({ url: image.imageUrls, title: image.imageTitle })))
+          // );
+          // console.log("Updated imageDetails", result.map((image) => ({ url: image.imageUrls, title: image.imageTitle })));
+        }
         
 
         const cityName = localStorage.getItem('cityname');
@@ -144,11 +178,13 @@ function Clientimagel() {
                   Select Client Logo Image <span className="text-danger">*</span>
                 </label>
                 <form>
-                  <input
-                    type="file"
-                    onChange={handleFileChange}
-                     className="file-input"
-                  />
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  className="file-input"
+                  multiple
+                  accept="image/*"
+                />
                    {error.imageFile && (
                       <div className="text-danger">{error.imageFile}</div>
                     )}
@@ -184,19 +220,33 @@ function Clientimagel() {
             </div>
           </div>
           <div className="row justify-content-center mt-4">
+            {console.log(imageDetails)}
+            {imageDetails.length === 0 || !imageDetails.some(img => img.url) ? (
             <div className="col-md-3 col-lg-2 col-6 mb-5">
               <div className="upload_img_sec">
                 <img
                   className="upload_images"
-                  src={imageURL? `https://apidev.myinteriormart.com${imageURL}` : usericon}
-                  alt="Client Image"
-                 
+                  src={usericon}
+                  alt="Default User Icon"
                 />
               </div>
-              <div className="img_title text-center">
-              {imageTitleFromAPI}
-              </div>
+              
             </div>
+          ) : (
+            imageDetails.map((image, index) => (
+              <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
+                <div className="upload_img_sec">
+                  <img
+                    className="upload_images"
+                    src={image.url ? `https://apidev.myinteriormart.com${image.url}` : usericon}
+                    alt="Gallery Image"
+                  />
+                </div>
+                <div className="img_title text-center">{image.title}</div>
+              </div>
+            ))
+          )}
+         
           </div>
           <div className='uplodlogo'>
           <button
@@ -206,6 +256,11 @@ function Clientimagel() {
             >
               Submit
             </button>
+          </div>
+          <div className="text-danger">
+            {remaingImages > 0 
+              ? `You can upload ${remaingImages} more image`
+              : "Maximum 50 images reached"}
           </div>
           {showPopup && (
             <Popupalert 

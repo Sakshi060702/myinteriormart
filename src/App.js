@@ -2,6 +2,7 @@ import Home from "./Pages/Home/Home";
 import { useEffect } from "react";
 import { Route,Routes } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 
 
@@ -309,11 +310,24 @@ function App() {
   }
 
 
+  useEffect(() => {
+    const currentUrl = window.location.href;
+    document.title = `My Interior Mart - ${currentUrl}`;
+    console.log("url",currentUrl);
+  }, []);
+
+
   
 
   return (
 
     <>
+
+<Helmet>
+         <meta charset="utf-8" />
+   <title>My Interiormart</title>
+   <meta name="description" content="My Interiormart" />
+        </Helmet>
 
 <div className="sticky-menu">
         <Menu1 />
