@@ -27,7 +27,7 @@ const decrypt = (ciphertext) => {
 };
 
 const [currentPage, setCurrentPage] = useState(1);
-const [itemsPerPage, setItemsPerPage] = useState(10);
+const [itemsPerPage, setItemsPerPage] = useState(100);
 const [totalItems, setTotalItems] = useState(0);
 
 
@@ -141,8 +141,8 @@ const handleSearch = (searchTerm, type) => {
                     else  {
                       return (
                         <div key={index} className="dropdownItemsearchbar">
-                          3<NavLink to={`/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/${result.category}/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}
-                          >
+                           <NavLink to={`/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/${result.category.replace(/\s+/g, "-").toLowerCase()}/locality/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}
+                            >
                             <h6>{result.companyName}</h6>
                           </NavLink>
                         </div>

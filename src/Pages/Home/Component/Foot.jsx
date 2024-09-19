@@ -294,17 +294,20 @@ const Foot = () => {
             <button
             style={{ paddingTop: "7px" }}
              onClick={homeButtonClick}
-            >
+            ><i className="fa fa-home" style={{ color:'orange',marginRight:'2px' }}></i>
               Home
             </button>
           </div>
           <div class="col-3 bottom-link-sticky-list">
             <button style={{ paddingTop: "7px" }} onClick={handleDashboardButtonClick}>
+            <i className="fa fa-user" style={{ color:'orange',marginRight:'2px' }}></i>
               You
             </button>
           </div>
           <div class="col-3 bottom-link-sticky-list">
             <button style={{ paddingTop: "7px" }}>
+            <i className="fa fa-lightbulb-o" style={{ color:'orange',marginRight:'2px' }}></i>
+            
               Suggestion
             </button>
           </div>
@@ -317,7 +320,8 @@ const Foot = () => {
             </button>
           </div> */}
           <div class="col-3 bottom-link-sticky-list">
-            <button onClick={() => setIsSociallinkOpen(true)} style={{ paddingTop: "7px",paddingLeft:'14px' }}>Share</button>
+            <button onClick={() => setIsSociallinkOpen(true)} style={{ paddingTop: "7px",paddingLeft:'14px' }}>
+            <i className="fa fa-share" style={{ color:'orange',marginRight:'2px' }}></i>Share</button>
           </div>
         </div>
       </div>

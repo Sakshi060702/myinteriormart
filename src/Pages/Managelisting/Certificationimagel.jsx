@@ -67,10 +67,12 @@ function Certificationimagel() {
           throw new Error("Failed to fetch user profile");
         }
         const data = await response.json();
+        console.log("Get response", data);
+        console.log(data instanceof Object);
         if (data instanceof Object) {
           console.log(data);
           console.log();
-          setImageDetails(data.imageUrls.map((img)=> ({ url: img, title: data.imagetitle })));
+          setImageDetails(data.imagepath.map((img)=> ({ url: img, title: data.imagetitle })));
           setRemainingImages(MAX_IMAGES - data.imagepath.length);
         
         }
@@ -81,7 +83,8 @@ function Certificationimagel() {
     if(isAuthenticated){
       fetchGalleryImage();
     }
-   
+
+ 
   }, [token]);
 
   const handleSubmit = async (event) => {

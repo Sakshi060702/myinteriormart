@@ -9,6 +9,7 @@ import Popupalert from "../Popupalert";
 import LocalityPopup from "../Freelisting/Businesslisting/Localitypopup";
 import PincodePopup from "../Freelisting/Businesslisting/Pincodepopup";
 import Areapopup from "../Freelisting/Businesslisting/Areapopup";
+import Select from 'react-select';
 
 const Userpersonalinformation = () => {
   const [countries, setCountries] = useState([]);
@@ -28,6 +29,7 @@ const Userpersonalinformation = () => {
   const [address, setLocalAddress] = useState("");
 
   const [qualificationId, setQualifications] = useState([]);
+  
   const [selectedQualification, setSelectedQualification] = useState("");
 
   const [dateOfBirth, setDateofBirth] = useState([]);
@@ -303,15 +305,18 @@ const Userpersonalinformation = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setQualifications(data.qualifications);
+        const qualificationOptions = data.qualifications.map(q => ({
+          value: q.id,
+          label: q.name
+        }));
+        setQualifications(qualificationOptions);
       } else {
         console.error("Failed to fetch qualifications");
       }
     } catch (error) {
-      console.error("Error fetching qualifications of user :", error);
+      console.error("Error fetching qualifications:", error);
     }
   };
-
   const handleMaritalStatusChange = (event) => {
     setSelectedMaritalStatus(event.target.value);
   };
@@ -378,6 +383,97 @@ const Userpersonalinformation = () => {
     setShowPopup(false);
   };
 
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isFocused ? 'orange' : provided.backgroundColor,
+      color: 'black',
+    }),
+    control: (provided) => ({
+      ...provided,
+      border: '1px solid #ccc',
+      borderRadius: '4px',
+      width: '250px',
+      height: '50px',
+    }),
+    menu: (provided) => ({
+      ...provided,
+      width: '250px',
+    }),
+  };
+  
+  const maritalStatusOptions = [
+    { value: 'Single', label: 'Single' },
+    { value: 'Married', label: 'Married' },
+  ];
+
+  const handleChange = (selectedOption) => {
+    setSelectedMaritalStatus(selectedOption);
+  };
+
+  const handlequaliChange = (selectedOption) => {
+    setSelectedQualification(selectedOption);
+  };
+
+  //country
+  const handleCounChange = (selectedOption) => {
+    setSelectedCountry(selectedOption ? selectedOption.value : "");
+  };
+
+  const countryOptions = countries.map((country) => ({
+    value: country.countryID,
+    label: country.name,
+  }));
+
+  const handleStaChange = (selectedOption) => {
+    setSelectedState(selectedOption ? selectedOption.value : "");
+  };
+
+  const stateOptions = states.map((state) => ({
+    value: state.stateID,
+    label: state.name,
+  }));
+
+
+  const handleCiChange = (selectedOption) => {
+    setSelectedCity(selectedOption ? selectedOption.value : "");
+  };
+
+  const cityOptions = cities.map((city) => ({
+    value: city.cityID,
+    label: city.name,
+  }));
+
+  const handleLocalChange = (selectedOption) => {
+    setSelectedAssembly(selectedOption ? selectedOption.value : "");
+  };
+
+  const assemblyOptions = assemblies.map((assembly) => ({
+    value: assembly.assemblyID,
+    label: assembly.name,
+  }));
+
+
+  const handlePinChange = (selectedOption) => {
+    setSelectedPincode(selectedOption ? selectedOption.value : "");
+  };
+
+  const pincodeOptions = pincodes.map((pincode) => ({
+    value: pincode.pincodeID,
+    label: pincode.number,
+  }));
+
+  const handleArChange = (selectedOption) => {
+    setSelectedLocality(selectedOption ? selectedOption.value : "");
+  };
+
+  const localityOptions = localities.map((locality) => ({
+    value: locality.localityID,
+    label: locality.name,
+  }));
+
+
+
   return (
     <>
       <div className="">
@@ -409,151 +505,200 @@ const Userpersonalinformation = () => {
               <label>
                 Marital Status <span className="text-danger">*</span>
               </label>
-              <select
-                className="wide add_bottom_10 "
-                name="maritalStatus"
-                value={selectedMaritalStatus}
-                onChange={handleMaritalStatusChange}
-                required
-                style={{border:'1px, solid #ccc',borderRadius:'4px', width:'250px', height:'50px'}}
-              >
-                <option value="" disabled>
-                  Select Marital Status
-                </option>
-                <option value="Single">Single</option>
-                <option value="Married">Married</option>
-              </select>
+              <Select
+      styles={customStyles}
+      options={maritalStatusOptions}
+      value={selectedMaritalStatus}
+      onChange={handleChange}
+      placeholder="Select Marital Status"
+     
+    />
             </div>
 
             <div className="form-group col-md-4">
               <label>
                 Qualification <span className="text-danger">*</span>
               </label>
-              <select
-                className="wide add_bottom_10 "
-                name="qualification"
-                value={selectedQualification}
-                onChange={handleQualificationChange}
-                required
-                style={{border:'1px, solid #ccc',borderRadius:'4px', width:'250px', height:'50px'}}
-              >
-                <option value="" disabled>
-                  Qualification
-                </option>
-                {qualificationId.map((qualificationId) => (
-                  <option key={qualificationId.id} value={qualificationId.id}>
-                    {qualificationId.name}
-                  </option>
-                ))}
-              </select>
+               <Select
+      styles={customStyles}
+      options={qualificationId}
+      value={selectedQualification}
+      onChange={handlequaliChange}
+      placeholder="Qualification"
+     
+    />
             </div>
             <div className="form-group col-md-4">
               <label>Country</label>
-              <select
-                className="wide add_bottom_10 country "
-                value={selectedCountry}
-                onChange={handleCountryChange}
-                required
-                style={{border:'1px, solid #ccc',borderRadius:'4px', width:'250px', height:'50px'}}
-              >
-                <option value="">Select Country</option>
-                {countries.map((country) => (
-                  <option key={country.countryID} value={country.countryID}>
-                    {country.name}
-                  </option>
-                ))}
-              </select>
+              <Select
+                      className="wide add_bottom_10 country selectdrp"
+                      value={countryOptions.find(
+                        (option) => option.value === selectedCountry
+                      )}
+                      onChange={handleCounChange}
+                      options={countryOptions}
+                      placeholder="Select Country"
+                      styles={{
+                        option: (provided, state) => ({
+                          ...provided,
+                          backgroundColor: state.isFocused ? "orange" : "white", // Background color orange on hover
+                          color: state.isFocused ? "white" : "black", // Adjust text color for contrast
+                          cursor: "pointer",
+                        }),
+                        control: (base) => ({
+                          ...base,
+                          width:'76%',
+                          height: "50px",
+                          minHeight: "50px",
+                          // borderColor: "#ccc",
+                          // "&:hover": { borderColor: "#aaa" },
+                        }),
+                      }}
+                    />
             </div>
             <div className="form-group col-md-4">
               <label htmlFor="state">State</label>
-              <select
-                className="wide add_bottom_10 state"
-                id="state"
-                value={selectedState}
-                onChange={handleStateChange}
-                required
-                style={{border:'1px, solid #ccc',borderRadius:'4px', width:'250px', height:'50px'}}
-              >
-                <option value="">Select State</option>
-                {states.map((state) => (
-                  <option key={state.stateID} value={state.stateID}>
-                    {state.name}
-                  </option>
-                ))}
-              </select>
+              <Select
+                      className="wide add_bottom_10 state selectdrp"
+                      value={stateOptions.find(
+                        (option) => option.value === selectedState
+                      )}
+                      onChange={handleStaChange}
+                      options={stateOptions}
+                      placeholder="Select State"
+                      styles={{
+                        option: (provided, state) => ({
+                          ...provided,
+                          backgroundColor: state.isFocused ? "orange" : "white", // Hover background color change
+                          color: state.isFocused ? "white" : "black", // Text color for contrast
+                          cursor: "pointer",
+                        }),
+                        control: (base) => ({
+                          ...base,
+                          width:'76%',
+                          height: "50px",
+                          minHeight: "50px",
+                          borderColor: "#ccc",
+                          "&:hover": { borderColor: "#aaa" }, // Hover effect for the control
+                        }),
+                      }}
+                    />
             </div>
             <div className="form-group col-md-4">
               <label htmlFor="city">City</label>
-              <select
-                className="wide add_bottom_10 city "
-                id="city"
-                value={selectedCity}
-                onChange={handleCityChange}
-                required
-                style={{border:'1px, solid #ccc',borderRadius:'4px', width:'250px', height:'50px'}}
-              >
-                <option value="">Select City</option>
-                {cities.map((city) => (
-                  <option key={city.cityID} value={city.cityID}>
-                    {city.name}
-                  </option>
-                ))}
-              </select>
+              <Select
+                      className="wide add_bottom_10 city selectdrp"
+                      value={cityOptions.find(
+                        (option) => option.value === selectedCity
+                      )}
+                      onChange={handleCiChange}
+                      options={cityOptions}
+                      placeholder="Select City"
+                      styles={{
+                        option: (provided, state) => ({
+                          ...provided,
+                          backgroundColor: state.isFocused ? "orange" : "white", // Orange background on hover
+                          color: state.isFocused ? "white" : "black", // Adjust text color for contrast
+                          cursor: "pointer",
+                        }),
+                        control: (base) => ({
+                          ...base,
+                          width:'76%',
+                          height: "50px",
+                          minHeight: "50px",
+                          borderColor: "#ccc",
+                          "&:hover": { borderColor: "#aaa" }, // Control hover effect
+                        }),
+                      }}
+                    />
             </div>
           </div>
           <div className="row">
             <div className="form-group col-md-4">
               <label>Locality</label>
-              <select
-                className="wide add_bottom_10 locality"
-                value={selectedAssembly}
-                onChange={handleLocalityChange}
-                required
-                style={{border:'1px, solid #ccc',borderRadius:'4px', width:'250px', height:'50px'}}
-              >
-                <option value="">Select Locality</option>
-                {assemblies.map((assembly) => (
-                  <option key={assembly.assemblyID} value={assembly.assemblyID}>
-                    {assembly.name}
-                  </option>
-                ))}
-              </select>
+              <Select
+                      className="wide add_bottom_10 locality selectdrp"
+                      value={assemblyOptions.find(
+                        (option) => option.value === selectedAssembly
+                      )}
+                      onChange={handleLocalChange}
+                      options={assemblyOptions}
+                      placeholder="Select Locality"
+                      styles={{
+                        option: (provided, state) => ({
+                          ...provided,
+                          backgroundColor: state.isFocused ? "orange" : "white", // Orange background on hover
+                          color: state.isFocused ? "white" : "black", // Adjust text color for contrast
+                          cursor: "pointer",
+                        }),
+                        control: (base) => ({
+                          ...base,
+                          width:'76%',
+                          height: "50px",
+                          minHeight: "50px",
+                          borderColor: "#ccc",
+                          "&:hover": { borderColor: "#aaa" }, // Control hover effect
+                        }),
+                      }}
+                    />
               <button onClick={(e)=>{ e.preventDefault(); return setShowAddressPopup([true,selectedCity])}}>Add Locality +</button>
             </div>
             <div className="form-group col-md-4">
               <label>Pincode</label>
-              <select
-                className="wide add_bottom_10 pincode "
-                value={selectedPincode}
-                onChange={handlePincodeChange}
-                required
-                style={{border:'1px, solid #ccc',borderRadius:'4px', width:'250px', height:'50px'}}
-              >
-                <option value="">Select Pincode</option>
-                {pincodes.map((pincode) => (
-                  <option key={pincode.pincodeID} value={pincode.pincodeID}>
-                    {pincode.number}
-                  </option>
-                ))}
-              </select>
+             <Select
+                      className="wide add_bottom_10 pincode selectdrp"
+                      value={pincodeOptions.find(
+                        (option) => option.value === selectedPincode
+                      )}
+                      onChange={handlePinChange}
+                      options={pincodeOptions}
+                      placeholder="Select Pincode"
+                      styles={{
+                        option: (provided, state) => ({
+                          ...provided,
+                          backgroundColor: state.isFocused ? "orange" : "white", // Orange background on hover
+                          color: state.isFocused ? "white" : "black", // Adjust text color for contrast
+                          cursor: "pointer",
+                        }),
+                        control: (base) => ({
+                          ...base,
+                          width:'76%',
+                          height: "50px",
+                          minHeight: "50px",
+                          borderColor: "#ccc",
+                          "&:hover": { borderColor: "#aaa" }, // Hover effect for the control
+                        }),
+                      }}
+                    />
               <button onClick={(e)=>{ e.preventDefault();  return setShowPincodePopup([true,selectedAssembly])}}>Add Pincode +</button>
             </div>
             <div className="form-group col-md-4">
               <label>Area</label>
-              <select
-                className="wide add_bottom_10 area "
-                value={selectedLocality}
-                onChange={handleAreaChange}
-                required
-                style={{border:'1px, solid #ccc',borderRadius:'4px', width:'250px', height:'50px'}}
-              >
-                <option value="">Select Area</option>
-                {localities.map((locality) => (
-                  <option key={locality.localityID} value={locality.localityID}>
-                    {locality.name}
-                  </option>
-                ))}
-              </select>
+              <Select
+                      className="wide add_bottom_10 area selectdrp"
+                      value={localityOptions.find(
+                        (option) => option.value === selectedLocality
+                      )}
+                      onChange={handleArChange}
+                      options={localityOptions}
+                      placeholder="Select Area"
+                      styles={{
+                        option: (provided, state) => ({
+                          ...provided,
+                          backgroundColor: state.isFocused ? "orange" : "white", // Orange background on hover
+                          color: state.isFocused ? "white" : "black", // Adjust text color for better contrast
+                          cursor: "pointer",
+                        }),
+                        control: (base) => ({
+                          ...base,
+                          width:'76%',
+                          height: "50px",
+                          minHeight: "50px",
+                          borderColor: "#ccc",
+                          "&:hover": { borderColor: "#aaa" }, // Control hover effect
+                        }),
+                      }}
+                    />
               <button onClick={(e)=>{ e.preventDefault();console.log("assembly", selectedAssembly);console.log("pincode",selectedPincode);  return setShowAreaPopup([true,selectedAssembly,selectedPincode])}}>Add Area +</button>
             </div>
             <div className="form-group col-md-12">

@@ -22,6 +22,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../../FrontEnd/css/RegistrationMV.css";
 import CryptoJS from "crypto-js";
+import Searchbar from "../Home/Component/Searchbar";
 
 function Listingdetails() {
   // const { listingId } = useParams();
@@ -535,6 +536,9 @@ function Listingdetails() {
 
   return (
     <>
+     <div className="sticky-searchbar">
+          <Searchbar />
+        </div>
       <div className="container individual-listing">
         <div className="row">
           {listingDetails ? (

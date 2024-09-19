@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import ListingHomeImage from "../../../FrontEnd/img/banner/Services.jpg";
 import fslide from "../../../FrontEnd/img/banner/Dream Land Home1.jpg";
 import seslide from "../../../FrontEnd/img/access_bg.jpg";
-import tslide from "../../../FrontEnd/img/banner/Interior1.jpg"
+import tslide from "../../../FrontEnd/img/banner/Interior1.jpg";
 import "../../../FrontEnd/css/Service.css";
 import "../../../FrontEnd/css/Cate.css";
 import CryptoJS from "crypto-js";
-import { Carousel } from 'react-bootstrap';
+import { Carousel } from "react-bootstrap";
 
 const encryptionKey = "myinterriorMart@SECRETKEY";
 
@@ -23,6 +23,8 @@ const decrypt = (ciphertext) => {
 const Services1 = () => {
   const [categories, setCategories] = useState([]);
   const [isMobileMenuVisible, setIsMobileMenuVisible] = useState(false);
+  const [serviceBanners, setServiceBanners] = useState([]);
+  const[homeMegaBannerImages, setHomeMegaBannerImage]=useState([]);
 
   useEffect(() => {
     fetchCategories();
@@ -46,6 +48,41 @@ const Services1 = () => {
   const toggleMobileMenu = () => {
     setIsMobileMenuVisible(!isMobileMenuVisible);
   };
+
+  useEffect(() => {
+    const fetchBannerImages = async () => {
+      try {
+        const response = await fetch(
+          `https://apidev.myinteriormart.com/api/Banners/GetFilteredBanners`
+        );
+        const data = await response.json();
+
+        setServiceBanners(data.galleryBannerImages.servicesBanners);
+      } catch (error) {
+        console.error("Error fetching banner images:", error);
+      }
+    };
+
+    fetchBannerImages();
+  }, []);
+
+
+  useEffect(() => {
+    const fetchHorizontalBanners = async () => {
+      try {
+        const response = await fetch(
+          `https://apidev.myinteriormart.com/api/Banners/GetFilteredBanners`
+        );
+        const data = await response.json();
+
+        setHomeMegaBannerImage(data.homeMegaBannerImages);
+      } catch (error) {
+        console.error("Error fetching banner images:", error);
+      }
+    };
+
+    fetchHorizontalBanners();
+  }, []);
 
   return (
     <div className="category-featured">
@@ -107,11 +144,22 @@ const Services1 = () => {
                   className="col-md-4 mim-Box-img"
                   style={{ paddingRight: "2px" }}
                 >
-                  <img
-                    src={ListingHomeImage}
-                    className="img-fluid"
-                    alt="Banner"
-                  />
+                  <Carousel>
+                    {serviceBanners.length > 0 ? (
+                      serviceBanners.map((banner) => (
+                        <Carousel.Item key={banner.id}>
+                          <img
+                            className="d-block w-100 bannerimg"
+                            src={`https://admin.myinteriormart.com${banner.imagePath}`}
+                            alt={`Banner ${banner.location}`}
+                            style={{ width: "100%", maxWidth: "1200px" , maxWidth:'1200px' }}
+                          />
+                        </Carousel.Item>
+                      ))
+                    ) : (
+                      <p>Loading...</p>
+                    )}
+                  </Carousel>
                 </div>
                 <div className="col-md-8">
                   <div className="row no-gutters">
@@ -152,36 +200,22 @@ const Services1 = () => {
         </div>
       </div>
       <div className="row py-1">
-      <Carousel>
-      <Carousel.Item>
-        <img
-          className="d-block w-100 bannerimg"
-          src={fslide}
-          alt="First slide"
-          style={{ width: '100%', maxWidth: '1200px' }}
-        />
-        {/* <Carousel.Caption>
-          <h3>First Slide</h3>
-        </Carousel.Caption> */}
-      </Carousel.Item>
-
-      <Carousel.Item>
-        <img
-          className="d-block w-100 bannerimg"
-          src={tslide}
-          alt="Second slide"
-          style={{ width: '100%', maxWidth: '1200px', }}
-        />
-        {/* <Carousel.Caption>
-          <h3>Second Slide</h3>
-        </Carousel.Caption> */}
-      </Carousel.Item>
-
-      {/* Add more slides as needed */}
+      <Carousel style={{width:'100%'}}>
+      {homeMegaBannerImages.length > 0 ? (
+        homeMegaBannerImages.map((banner,index) => (
+          <Carousel.Item key={banner.id}>
+            <img
+              className="d-block w-100 bannerimg"
+              src={`https://admin.myinteriormart.com${banner.imagePath}`}
+              alt={`Banner ${banner.location}`}
+              style={{ width: "100%", maxWidth: "1200px" }}
+            />
+          </Carousel.Item>
+        ))
+      ) : (
+        <p>Loading...</p>
+      )}
     </Carousel>
-
-
-        
       </div>
     </div>
   );

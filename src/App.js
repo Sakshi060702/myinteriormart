@@ -267,6 +267,8 @@ import Userpersonalinformation from "./Pages/Profile/Userpersonalinformation";
 import FifthCategoryListing from "./Pages/Home/Service/FifthCategoryListing";
 import SixthCategoryListing from "./Pages/Home/Service/SixthCategoryListing";
 
+import Usersuggestion from "./Pages/Home/Component/Usersuggestion";
+
 // import Dashboardprofile from "./Pages/Profile/Dashboardprofile";
 // import Editprofileregister from "./Pages/Dashboardregisterprofile/Editprofileregister";
 // import Personalinforegister from "./Pages/Dashboardregisterprofile/Personalinforegister";
@@ -746,6 +748,8 @@ function App() {
 <Route path="/Addsociallink/:cityName" element={<Layout><Addsociallink/></Layout>} />
 
 <Route path="/Uploadimage/:cityName" element={<Layout><Uploadimage/></Layout>} />
+
+<Route path="/Usersuggestion/:cityName" element={<Usersuggestion/>}/>
 
     </Routes>
     <div className="sticky-footer">

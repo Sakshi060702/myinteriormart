@@ -12,6 +12,15 @@ import "../../FrontEnd/css/Lisiting.css";
 
 const Sociallink = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      // alert('Link copied to clipboard!');
+    }).catch(err => {
+      console.error('Failed to copy:', err);
+    });
+  };
+  
   
   return (
     <>
@@ -87,22 +96,31 @@ const Sociallink = ({ isOpen, onClose }) => {
           <br />
           <div style={{ overflowX: 'auto' }}>
             <div style={{ marginBottom: '15px', display: 'flex', alignItems: 'center' }}>
-              <a href="https://web.whatsapp.com/send?text" target="_blank" rel="noopener noreferrer">
+              <a  
+              href={`https://web.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer">
                 <img src={whatsappimg} className="socialimg" alt="whatsapp" style={{ marginLeft: '14px' }} />
               </a>
-              <a href="https://www.facebook.com/sharer/sharer.php?description" target="_blank" rel="noopener noreferrer">
+              <a  href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer">
                 <img src={facebookimg} className="socialimg" alt="facebook" />
               </a>
-              <a href="https://www.pinterest.com/pin/create/button/?description" target="_blank" rel="noopener noreferrer">
+              <a href={`https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer">
                 <img src={pintarestimg} className="socialimg" alt="pinterest" />
               </a>
-              <a href="https://www.linkedin.com/sharing/share-offsite" target="_blank" rel="noopener noreferrer">
+              <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer">
                 <img src={linkdenimg} className="socialimg" alt="linkedin" />
               </a>
-              <a href="http://twitter.com/share?text" target="_blank" rel="noopener noreferrer">
+              <a href={`http://twitter.com/share?text=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer">
                 <img src={ximg} className="socialimg" alt="x" />
               </a>
-              <a target="_blank" rel="noopener noreferrer">
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault(); 
+                  copyToClipboard();
+                }}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <img src={copylink} className="socialimg" alt="copy link" />
               </a>
             </div>

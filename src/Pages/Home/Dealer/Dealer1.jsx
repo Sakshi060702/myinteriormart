@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
 import "../../../FrontEnd/css/Cate.css";
 import CryptoJS from "crypto-js";
+import { Carousel } from "react-bootstrap";
 
 const encryptionKey = 'myinterriorMart@SECRETKEY';
 
@@ -22,6 +23,7 @@ const decrypt = (ciphertext) => {
 function Dealer1() {
   const [catDealer, setcatDealer] = useState([]);
   const [isMobileMenuVisible, setIsMobileMenuVisible] = useState(false);
+  const [dealerBanners, setdealerBanners] = useState([]);
 
   useEffect(() => {
     fetchCategories();
@@ -45,6 +47,22 @@ function Dealer1() {
   const toggleMobileMenu = () => {
     setIsMobileMenuVisible(!isMobileMenuVisible);
   };
+
+  useEffect(()=>{
+    const fetchBannerImages=async()=>{
+      try{
+        const response=await fetch(
+          `https://apidev.myinteriormart.com/api/Banners/GetFilteredBanners`
+        )
+        const data=await response.json();
+        setdealerBanners(data.galleryBannerImages.dealerBanners)
+      }
+      catch(error){
+console.error("Error fetching banner images",error)
+      }
+    };
+    fetchBannerImages();
+  },[]);
 
   return (
     <>
@@ -96,11 +114,22 @@ function Dealer1() {
               <div className="mim-Box">
                 <div className="row no-gutters">
                   <div className="col-md-4 mim-Box-img">
-                    <img
-                      src={ListingHomeImage}
-                      className="img-fluid"
-                      alt="Banner"
-                    />
+                  <Carousel>
+                    {dealerBanners.length > 0 ? (
+                      dealerBanners.map((banner) => (
+                        <Carousel.Item key={banner.id}>
+                          <img
+                            className="d-block w-100 bannerimg"
+                            src={`https://admin.myinteriormart.com${banner.imagePath}`}
+                            alt={`Banner ${banner.location}`}
+                            style={{ width: "100%", maxWidth: "1200px" , maxWidth:'1200px' }}
+                          />
+                        </Carousel.Item>
+                      ))
+                    ) : (
+                      <p>Loading...</p>
+                    )}
+                  </Carousel>
                   </div>
                   <div className="col-md-8">
                     <div className="tab-content checkout" id="myTabContent">

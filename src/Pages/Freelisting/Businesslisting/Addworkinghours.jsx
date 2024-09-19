@@ -104,6 +104,10 @@ function Addworkinghours()
           ThursdayTo: MondayTo,
           FridayFrom: MondayFrom,
           FridayTo: MondayTo,
+          SaturdayFrom:MondayFrom,
+          SaturdayTo:MondayTo,
+          SundayFrom:MondayFrom,
+          SundayTo:MondayTo
         });
       };
     

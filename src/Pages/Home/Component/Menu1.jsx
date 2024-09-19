@@ -280,7 +280,7 @@ function Menu1() {
                   <>
                   <li style={{marginLeft:'13px'}}>
                     <NavLink
-                        // to={`/signup2/in-${localStorage.getItem('cityname')}`}
+                         to={`/Usersuggestion/in-${localStorage.getItem('cityname')}`}
                         className=" listing-btn buttonlogin suggestionstyle"
                         style={{
                         
