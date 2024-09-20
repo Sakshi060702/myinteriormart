@@ -349,8 +349,8 @@ function Addcompany() {
                           (option) => option.value === formData.businessCategory
                         )
                     : {
-                        value: "Select Business Type",
-                        label: "Select Business Type",
+                        value: "Select or Type",
+                        label: "Select or Type",
                       }
                 } // Set the selected value
               />

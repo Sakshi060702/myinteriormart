@@ -319,17 +319,19 @@ function App() {
   }, []);
 
 
-  
+  const currentUrl = window.location.href;
 
+  // dynTitle
+  
   return (
 
     <>
 
-<Helmet>
-         <meta charset="utf-8" />
-   <title>My Interiormart</title>
-   <meta name="description" content="My Interiormart" />
-        </Helmet>
+    <Helmet>
+      <meta charset="utf-8" />
+      <title>{`My Interiormart`}</title>
+      <meta name="description" content="My Interiormart" />
+    </Helmet>
 
 <div className="sticky-menu">
         <Menu1 />
@@ -748,6 +750,11 @@ function App() {
 <Route path="/Addsociallink/:cityName" element={<Layout><Addsociallink/></Layout>} />
 
 <Route path="/Uploadimage/:cityName" element={<Layout><Uploadimage/></Layout>} />
+
+<Route
+          path="/selectcategory/:cityName" element={<Layout><SelectCategory /></Layout>
+          }
+        />
 
 <Route path="/Usersuggestion/:cityName" element={<Usersuggestion/>}/>
 

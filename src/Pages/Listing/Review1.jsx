@@ -102,13 +102,13 @@ function Review1({ listingID }) {
                   <div className="Count_review">
                     <div className="review-form mb-3">
                       <div className="d-flex justify-content-between  ">
-                        <div className="Count_review">
+                        {/* <div className="Count_review">
                           {companyDetails && (
                             <span>
                               {companyDetails.ratingCount} Reviews, 100% genuine ratings from My Interior Mart users
                             </span>
                           )}
-                        </div>
+                        </div> */}
                         <span className="desk_mrg">
                           <a
                             className="btn btn-link"

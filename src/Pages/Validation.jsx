@@ -88,9 +88,9 @@ export const validateEmail = (email) => {
 
   export const validateDescriptionLength = (description) => {
     // console.log(description);
-    const wordCount = description.trim().split(/\s+/).length;
-    if (wordCount < 100) {
-      return "The description must be at least 100 words.";
+    const wordCount = description.trim();
+    if (wordCount.length < 100) {
+      return "The description must be at least 100 Characters.";
     }
     return "";
   };

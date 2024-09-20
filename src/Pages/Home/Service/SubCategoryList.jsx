@@ -6,13 +6,11 @@ import "../../../FrontEnd/css/Service.css";
 import { Link } from "react-router-dom";
 import CryptoJS from "crypto-js";
 
-const encryptionKey = 'myinterriorMart@SECRETKEY';
+const encryptionKey = "myinterriorMart@SECRETKEY";
 
 const encrypt = (text) => {
-  
   return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
 };
-
 
 const decrypt = (ciphertext) => {
   const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
@@ -20,16 +18,16 @@ const decrypt = (ciphertext) => {
 };
 
 const SubCategoryList = () => {
-  const {categoryName } = useParams(); 
+  const { categoryName } = useParams();
   const [subCategories, setSubCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [searchParams] = useSearchParams();
 
-const listingId_enc = searchParams.get("fircatEncyt");
-const secondCategoryId = decrypt(decodeURIComponent(listingId_enc));
-console.log(secondCategoryId);
-console.log("listingid",secondCategoryId)
-console.log(decrypt(listingId_enc));
+  const listingId_enc = searchParams.get("fircatEncyt");
+  const secondCategoryId = decrypt(decodeURIComponent(listingId_enc));
+  console.log(secondCategoryId);
+  console.log("listingid", secondCategoryId);
+  console.log(decrypt(listingId_enc));
 
   useEffect(() => {
     fetchSubCategories();
@@ -41,17 +39,19 @@ console.log(decrypt(listingId_enc));
         "https://apidev.myinteriormart.com/api/Category/GetCategories"
       );
       const data = await response.json();
-       console.log("Fetched Data:", data);
-       const category = data.services.find(
+      console.log("Fetched Data:", data);
+      const category = data.services.find(
         (cat) => String(cat.secondCategoryID) === String(secondCategoryId)
       );
-       console.log("Selected Category:", category);
-       console.log("category",setSelectedCategory(category))
-       console.log("category2", setSubCategories(category ? category.thirdCategories : []))
-      
-       setSelectedCategory(category);
-       setSubCategories(category ? category.thirdCategories : []);
-    
+      console.log("Selected Category:", category);
+      console.log("category", setSelectedCategory(category));
+      console.log(
+        "category2",
+        setSubCategories(category ? category.thirdCategories : [])
+      );
+
+      setSelectedCategory(category);
+      setSubCategories(category ? category.thirdCategories : []);
     } catch (error) {
       console.error("Error fetching subcategories:", error);
     }
@@ -75,36 +75,41 @@ console.log(decrypt(listingId_enc));
                   className={`col-lg-3 col-6 d-flex justify-content-center`}
                 >
                   <div className="item">
-                  <span
-  className="icon"
-  style={{
-    display: "inline-block",
-    width: "40px",
-    height: "40px",
-    overflow: "hidden",
-    position: "relative",
-    marginRight: "10px",
-  }}
->
-  <div
-    style={{
-      width: "15px",
-      height: "15px",
-      backgroundColor: "orange",
-      borderRadius: "50%",
-      position: "absolute",
-      top: "35%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-    }}
-  ></div>
-</span>
+                    <span
+                      className="icon"
+                      style={{
+                        display: "inline-block",
+                        width: "40px",
+                        height: "40px",
+                        overflow: "hidden",
+                        position: "relative",
+                        marginRight: "10px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: "15px",
+                          height: "15px",
+                          backgroundColor: "orange",
+                          borderRadius: "50%",
+                          position: "absolute",
+                          top: "35%",
+                          left: "50%",
+                          transform: "translate(-50%, -50%)",
+                        }}
+                      ></div>
+                    </span>
 
                     <Link
                       to={`/All/${subCategory.name
-                            .replace(/\s+/g, "-").toLowerCase()}/${selectedCategory.name
-                              .replace(/\s+/g, "-")
-                            .toLowerCase()}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(subCategory.secondCategoryID)))}`}
+                        .replace(/\s+/g, "-")
+                        .toLowerCase()}/${selectedCategory.name
+                        .replace(/\s+/g, "-")
+                        .toLowerCase()}/in-${localStorage.getItem(
+                        "cityname"
+                      )}?secatEncyt=${encodeURIComponent(
+                        encrypt(parseInt(subCategory.secondCategoryID))
+                      )}`}
                       title={subCategory.name}
                       className="Linkstyle categorylink"
                     >
@@ -115,9 +120,14 @@ console.log(decrypt(listingId_enc));
                       subCategory.fourthCategories.length > 0 && (
                         <Link
                           to={`/${subCategory.name
-                            .replace(/\s+/g, "-").toLowerCase()}/${selectedCategory.name
-                              .replace(/\s+/g, "-")
-                            .toLowerCase()}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(subCategory.thirdCategoryID)))}`}
+                            .replace(/\s+/g, "-")
+                            .toLowerCase()}/${selectedCategory.name
+                            .replace(/\s+/g, "-")
+                            .toLowerCase()}/in-${localStorage.getItem(
+                            "cityname"
+                          )}?secatEncyt=${encodeURIComponent(
+                            encrypt(parseInt(subCategory.thirdCategoryID))
+                          )}`}
                           title={subCategory.name}
                           style={{ color: "orange" }}
                         >

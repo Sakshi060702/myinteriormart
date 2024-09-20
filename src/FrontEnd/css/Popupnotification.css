@@ -115,3 +115,14 @@
     font-size: 12px; 
   }
 }
+
+
+.loginpopup{
+  margin-top: 41px;
+  padding-top: 10px;
+  color:white !important;
+  background-color: orange;
+  height: 50px;
+margin-left: 40px;
+margin-right: 40px;
+}

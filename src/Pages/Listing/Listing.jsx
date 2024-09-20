@@ -191,7 +191,7 @@ function Listing() {
                 <img
                   src={banner1}
                   alt="Banner"
-                  style={{ height: "230px", width: "100%" }}
+                  style={{ height: "110px", width: "100%" }}
                 />
               </div>
             </div>
@@ -199,7 +199,7 @@ function Listing() {
         </div>
 
         <div style={{ display: "flex" }}>
-          <div className="listing-list col-8 ">
+          <div className="listing-list col-9 ">
             {listing.length > 0 ? (
               listing.map((listing) => (
                 <div key={listing.listingId} className="row mb-10">
@@ -282,7 +282,7 @@ function Listing() {
                                     className="reating-number reactingnumberfont"
                                     style={{ marginRight: "8px" }}
                                   >
-                                    {listing.ratingAverage}
+                                    {listing.ratingAverage}.0
                                   </h4>
                                   <div
                                     className="cat_star listingstar"
@@ -291,7 +291,7 @@ function Listing() {
                                       paddingBottom: "11px",
                                     }}
                                   >
-                                    {Array(5)
+                                    {Array(1)
                                       .fill()
                                       .map((_, i) => (
                                         <i
@@ -365,12 +365,13 @@ function Listing() {
                               // style={{ height: "150px" }}
                             />
                           ) : (
-                            <div
-                              className="client_first_letter listingimage"
-                              // style={{ height: "141px", width: "141px" }}
-                            >
-                              {listing.companyFirstLetter}
-                            </div>
+                            // <div
+                            //   className="client_first_letter listingimage"
+                            //   // style={{ height: "141px", width: "141px" }}
+                            // >
+                            //   {listing.companyFirstLetter}
+                            // </div>
+                            <></>
                           )}
                         </div>
 
@@ -421,7 +422,7 @@ function Listing() {
                                         ])
                                       }
                                     >
-                                      Get Claim
+                                      Get Quotes
                                     </button>
                                   </p>
                                 </li>
@@ -453,11 +454,11 @@ function Listing() {
                 </div>
               ))
             ) : (
-              <p>Comming soon.</p>
+              <p>Coming soon.</p>
             )}
           </div>
 
-          <div className="col-4 listingbanner">
+          <div className="col-3 listingbanner">
             <div className="grid-item" style={{ paddingBottom: "6px" }}>
               <img
                 src={banner}
@@ -479,13 +480,13 @@ function Listing() {
           {/* for dekstop */}
           {!isMobile && (
             <>
-              <button
+              {/* <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
               >
-                {/* Previous */}
+                Previous
                 <img src={previousarrowimg} style={{ height: "30px" }} />
-              </button>
+              </button> */}
               {Array.from({ length: totalPages }, (_, i) => (
                 <button
                   key={i + 1}
@@ -499,8 +500,8 @@ function Listing() {
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={listing.length < itemsPerPage} // Disable "Next" if fewer than 10 listings
               >
-                {/* Next */}
-                <img src={nextarrowimage} style={{ height: "30px" }} />
+                Next
+                {/* <img src={nextarrowimage} style={{ height: "30px" }} /> */}
               </button>
             </>
           )}

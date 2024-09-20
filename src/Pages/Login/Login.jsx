@@ -9,6 +9,7 @@ import { loginSuccess,setUserType } from "../../Redux/authSlice";
 import Popupalert from "../Popupalert";
 import { validateMobile } from "../Validation";
 import "../../FrontEnd/css/RegistrationMV.css"
+import Loginpopupalert from "../Loginpopupalert";
 
 function Login() {
   const location = useLocation();
@@ -269,7 +270,7 @@ function Login() {
                 </div>
               </div>
               {showPopup && (
-            <Popupalert 
+            <Loginpopupalert 
             message={successMessage || errorMessage} 
             type={successMessage ? 'success' : 'error'} 
             onClose={handleClosePopup}

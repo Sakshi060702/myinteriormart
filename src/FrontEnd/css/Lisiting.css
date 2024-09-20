@@ -199,3 +199,18 @@ color:black !important;
   cursor: not-allowed;
   background-color: #e9ecef;
 }
+
+
+
+/* Limited text with 7 lines and ellipsis */
+.limited-text {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+}
+
+.full-text {
+  white-space: normal;
+}

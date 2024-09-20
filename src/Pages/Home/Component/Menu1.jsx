@@ -428,7 +428,7 @@ function Menu1() {
                             <ul>
                               <li>
                                 <NavLink
-                                  to={`/addcompany/in-${localStorage.getItem('cityname')}`}
+                                  to={`/selectcategory/in-${localStorage.getItem('cityname')}`}
                                   className="btn_add listing-btn menu-freelisting"
                                   style={{
                                     backgroundColor: "#fe900d",

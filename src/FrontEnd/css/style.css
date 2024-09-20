@@ -425,7 +425,7 @@ h1.main_title_in {
 .main_title_2 span em {
   width: 60px;
   height: 2px;
-  background-color: #004dda;
+  background-color: orange;
   display: block;
   margin: auto;
 }
@@ -3521,7 +3521,7 @@ a.box_feat h3 {
 .strip ul li:first-child {
   font-size: 13px;
   font-size: 0.8125rem;
-  margin-top: -4px;
+  margin-top: -3px;
 }
 
 .strip ul li:first-child i {
@@ -3652,7 +3652,7 @@ a.box_feat h3 {
 }
 
 .strip .reating-list li:last-child {
-  margin-right: 0px;
+  margin-right: 119px;
 }
 
 .strip .reating-list li {
@@ -3981,10 +3981,10 @@ a.address:hover {
 
 .loc_open {
   color: #fff;
-  background-image: linear-gradient(to right, #fe900d, #f6a816);
+  /* background-image: linear-gradient(to right, #fe900d, #f6a816); */
   border: 1px solid #fe900d;
   font-size: 14px;
-  line-height: 16px;
+  line-height: 23px;
   font-weight: 400;
   display: block;
   min-width: 97px;
@@ -4007,11 +4007,11 @@ a.address:hover {
   }
 }
 
-.loc_open.call-now:hover,
+/* .loc_open.call-now:hover,
 .loc_open.call-now:active {
   background-image: linear-gradient(to right, #fe900d, #f6a816);
   color: #fff;
-}
+} */
 
 
 
@@ -9886,7 +9886,7 @@ article.blog .post_info ul li:last-child i {
 }
 
 .btn-guotes {
-  background-color: gray;
+  background-color: orange;
   color: #fff;
   /* padding: 10px 15px !important; */ /*remove the padding of btn quotes*/
 }

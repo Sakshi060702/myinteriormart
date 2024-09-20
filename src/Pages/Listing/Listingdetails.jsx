@@ -112,6 +112,8 @@ function Listingdetails() {
 
   const [showFullAddress, setShowFullAddress] = useState(false);
 
+  const [showFullAboutus, setShowFullAboutus] = useState(false);
+
   const isAuthenticated = useAuthCheck();
 
   const [imageURL, setImageURL] = useState(null);
@@ -130,11 +132,11 @@ function Listingdetails() {
     autoplaySpeed: 3000, // Set autoplay speed in milliseconds
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
-    appendDots: dots => (
+    appendDots: (dots) => (
       <div style={{ marginBottom: "57px" }}>
         <ul> {dots} </ul>
       </div>
-    )
+    ),
   };
 
   // if(){
@@ -522,6 +524,11 @@ function Listingdetails() {
     setShowFullAddress(!showFullAddress);
   };
 
+  //for about us
+  const toggleAboutus = () => {
+    setShowFullAboutus(!showFullAboutus);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     // Perform submission logic here
@@ -536,9 +543,9 @@ function Listingdetails() {
 
   return (
     <>
-     <div className="sticky-searchbar">
-          <Searchbar />
-        </div>
+      <div className="sticky-searchbar">
+        <Searchbar />
+      </div>
       <div className="container individual-listing">
         <div className="row">
           {listingDetails ? (
@@ -557,17 +564,18 @@ function Listingdetails() {
                           style={{ height: "100px" }}
                         />
                       ) : (
-                        <div
-                          className="client_first_letter"
-                          style={{
-                            height: "100px",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          {listingDetails.companyFirstLetter}
-                        </div>
+                        // <div
+                        //   className="client_first_letter"
+                        //   style={{
+                        //     height: "100px",
+                        //     display: "flex",
+                        //     alignItems: "center",
+                        //     justifyContent: "center",
+                        //   }}
+                        // >
+                        //   {listingDetails.companyFirstLetter}
+                        // </div>
+                        <></>
                       )}
                     </div>
                   </div>
@@ -641,32 +649,31 @@ function Listingdetails() {
                       style={{ width: "100%", height: "200px" }}
                     /> */}
                     <Slider {...settings}>
-                          {imageDetails.map((image, index) => (
-                            <div
-                              className="col-md-3 col-lg-2 col-6 mb-5"
-                              key={index}
-                            >
-                              <div
-                                className=""
-                                style={{ width: "189px", marginLeft: "50px" }}
-                              >
-                                <img
-                                  className="upload_imagesgallery "
-                                  src={
-                                    image.url
-                                      ? `https://apidev.myinteriormart.com${image.url}`
-                                      : ""
-                                  }
-                                  alt="Gallery Image"
-                                  style={{ marginRight: "-42px" }}
-                                />
-                              </div>
-                            </div>
-                          ))}
-                        </Slider>
+                      {imageDetails.map((image, index) => (
+                        <div
+                          className="col-md-3 col-lg-2 col-6 mb-5"
+                          key={index}
+                        >
+                          <div
+                            className=""
+                            style={{ width: "189px", marginLeft: "50px" }}
+                          >
+                            <img
+                              className="upload_imagesgallery "
+                              src={
+                                image.url
+                                  ? `https://apidev.myinteriormart.com${image.url}`
+                                  : ""
+                              }
+                              alt="Gallery Image"
+                              style={{ marginRight: "-42px" }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </Slider>
                     {console.log("Banner", imageURL)}
                   </div>
-
                 </div>
                 <div className="company-listing-main">
                   <div className="listing-details">
@@ -700,18 +707,17 @@ function Listingdetails() {
                     </div>
                     <div className="col-lg-4 col-md-12 company-map padding-all-5 listinggallery">
                       <div className="pro-large-img img-zoom gallery1">
-                      <img
-                      className="upload_imagesbanner "
-                      src={
-                        imageURL
-                          ? `https://apidev.myinteriormart.com${imageURL}`
-                          : banner2
-                      }
-                      alt="Banner Image"
-                    />
+                        <img
+                          className="upload_imagesbanner "
+                          src={
+                            imageURL
+                              ? `https://apidev.myinteriormart.com${imageURL}`
+                              : banner2
+                          }
+                          alt="Banner Image"
+                        />
                       </div>
                     </div>
-
 
                     {/* <div className="listinggallery">
                 <div className="listing-gallery">
@@ -777,7 +783,8 @@ function Listingdetails() {
                             </a>
                           </span>
                         </p>
-                        <p>
+                        <div style={{display:'flex'}}>
+                        <p style={{marginRight:'20px'}}>
                           <span>
                             <i
                               className="fa fa-map-o"
@@ -795,8 +802,11 @@ function Listingdetails() {
                             {listingDetails.locality}
                           </span>
                         </p>
+                        </div>
+                       
                       </div>
-                      <div className="col-lg-12 mb-1 px-0 year_gst">
+                      <div style={{display:'flex'}}>
+                      <div className="col-lg-6 mb-1 px-0 year_gst" style={{marginRight:'-24px'}}>
                         <p className="m-0">
                           <i
                             className="fa fa-calendar"
@@ -806,7 +816,7 @@ function Listingdetails() {
                           {listingDetails.yearOfEstablishment}
                         </p>
                       </div>
-                      <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
+                      <div className="col-lg-6 px-0 mb-1 year_gst mt-0">
                         <p className="mb-0">
                           <i
                             className="fa fa-users"
@@ -815,17 +825,19 @@ function Listingdetails() {
                           {listingDetails.numberOfEmployees} Employees
                         </p>
                       </div>
+                      </div>
+                      
                       <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
                         <p className="mb-0">
                           <b>Turnover :</b>
                           {listingDetails.turnover}
                         </p>
                       </div>
-                      <div classname="col-lg-12 mb-1 px-0 year_gst">
+                      {/* <div classname="col-lg-12 mb-1 px-0 year_gst">
                         <p className="m-0">
                           <i className="fa fa-language mr-1"></i>
                         </p>
-                      </div>
+                      </div> */}
                       <div classname="col-lg-12 mb-1 p-0">
                         <i
                           className="fa fa-mobile"
@@ -919,7 +931,18 @@ function Listingdetails() {
                     <div className="row px-3">
                       <div className="col-12">
                         <h3>About us</h3>
-                        <p>{listingDetails.description}</p>
+                        <p
+                          className={
+                            showFullAboutus ? "full-text" : "limited-text"
+                          }
+                        >
+                          {listingDetails.description}
+                        </p>
+                        {listingDetails.description.length > 300 && (
+                          <button onClick={toggleAboutus} style={{color:'orange'}}>
+                            {showFullAboutus ? "Less" : "More ..."}
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>

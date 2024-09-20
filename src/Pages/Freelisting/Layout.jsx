@@ -20,7 +20,7 @@ function Layout({ children }) {
               role="tablist"
               aria-orientation="vertical"
             >
-              {/* <Link to="/selectcategory">Select Category</Link> */}
+              <Link to="/selectcategory">Select Category</Link>
               <Link to="/addcompany">
                 {" "}
                 <img

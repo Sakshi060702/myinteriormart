@@ -258,7 +258,7 @@ function Addcommunication(){
                 <div className="row">
                   <div className="form-group col-md-4">
                     <label htmlFor="lang">
-                      Languages <span className="text-danger">*</span>
+                      Known Languages <span className="text-danger">*</span>
                     </label>
                     <Select
                       isMulti

@@ -54,11 +54,23 @@ const Foot = () => {
 
  const handleDashboardButtonClick=()=>{
     if(token){
-    
+    console.log('token',token)
       navigate(`/Myactivity/in-${localStorage.getItem('cityname')}`)
     }
     else{
-      navigate(`/in-${localStorage.getItem('cityname')}`)
+      console.log('token',token);
+      navigate(`/signup2/in-${localStorage.getItem('cityname')}`)
+    }
+  }
+
+  const handleSuggestionButtonClick=()=>{
+    if(token){
+    console.log('token',token)
+      navigate(`/Usersuggestion/in-${localStorage.getItem('cityname')}`)
+    }
+    else{
+      console.log('token',token);
+      navigate(`/signup2/in-${localStorage.getItem('cityname')}`)
     }
   }
 
@@ -147,6 +159,7 @@ const Foot = () => {
                   </NavLink>
               </div>
             </div>
+            <div style={{borderLeft:'2px solid white',height:'20px'}}></div>
             <div>
               {/* <p className="h5 mb-4" style={{ fontWeight: "600" }}>
               Products
@@ -163,6 +176,8 @@ const Foot = () => {
                   </NavLink>
               </div>
             </div>
+
+            <div style={{borderLeft:'2px solid white',height:'20px'}}></div>
 
             <div>
               {/* <p className="h5 mb-4" style={{ fontWeight: "600" }}>
@@ -292,23 +307,26 @@ const Foot = () => {
           <div class="col-3 bottom-link-sticky-list">
             
             <button
-            style={{ paddingTop: "7px" }}
+            style={{marginBottom:'-17px',marginTop:'9px' }}
              onClick={homeButtonClick}
             ><i className="fa fa-home" style={{ color:'orange',marginRight:'2px' }}></i>
-              Home
+            <p> Home</p>
+             
             </button>
           </div>
           <div class="col-3 bottom-link-sticky-list">
-            <button style={{ paddingTop: "7px" }} onClick={handleDashboardButtonClick}>
+            <button style={{marginBottom:'-17px',marginTop:'9px' }} onClick={handleDashboardButtonClick}>
             <i className="fa fa-user" style={{ color:'orange',marginRight:'2px' }}></i>
-              You
+            <p>
+             You</p>
+             
             </button>
           </div>
           <div class="col-3 bottom-link-sticky-list">
-            <button style={{ paddingTop: "7px" }}>
+            <button style={{marginBottom:'-17px',marginTop:'9px' }} onClick={handleSuggestionButtonClick}>
             <i className="fa fa-lightbulb-o" style={{ color:'orange',marginRight:'2px' }}></i>
-            
-              Suggestion
+            <p>Suggestion</p>
+              
             </button>
           </div>
           {/* <div class="col-3 bottom-link-sticky-list">
@@ -320,8 +338,9 @@ const Foot = () => {
             </button>
           </div> */}
           <div class="col-3 bottom-link-sticky-list">
-            <button onClick={() => setIsSociallinkOpen(true)} style={{ paddingTop: "7px",paddingLeft:'14px' }}>
-            <i className="fa fa-share" style={{ color:'orange',marginRight:'2px' }}></i>Share</button>
+            <button onClick={() => setIsSociallinkOpen(true)} style={{ marginBottom:'-17px',marginTop:'9px',paddingLeft:'14px' }}>
+            <i className="fa fa-share" style={{ color:'orange',marginRight:'2px' }}></i>
+            <p>Share</p></button>
           </div>
         </div>
       </div>

@@ -97,7 +97,7 @@
 }
 
 .categorylink{
-  margin-right: 0px !important;
+  margin-right: 6px !important;
 }
 @media (max-width:767px) {
   .categorylink{
@@ -105,7 +105,10 @@
   }
 }
 
-
+.subcategories-list .item {
+  display: flex;
+  align-items: flex-start !important;
+}
 
 
 /* Mobile View */
@@ -210,3 +213,9 @@
     opacity: 0.5;
   }
 } */
+
+
+/* Last category alignment logic */
+.last-category-left-align {
+  justify-content: flex-start !important;
+}
