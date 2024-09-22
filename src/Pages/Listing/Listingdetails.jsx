@@ -122,6 +122,9 @@ function Listingdetails() {
 
   const [teamimageDetails, setTeamImageDetails] = useState([]);
 
+
+  const [status, setStatus] = useState("");
+
   const settings = {
     dots: true,
     infinite: false,
@@ -421,6 +424,28 @@ function Listingdetails() {
   }, [listingDetails]);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://apidev.myinteriormart.com/api/ManageListingFromStatus/GetManageListingFromStatus",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = await response.json();
+        console.log(data);
+        setStatus(data.status);
+      } catch (error) {
+        console.error("Error fetching status:", error);
+      }
+    };
+    fetchData();
+  }, [token]);
+
+  useEffect(() => {
     const fetchBannerImage = async () => {
       try {
         const response = await fetch(
@@ -541,6 +566,9 @@ function Listingdetails() {
   const fullAddress = listingDetails.fullAddress;
   const shortAddress = fullAddress.split(",").slice(0, 2).join(", ");
 
+
+  
+
   return (
     <>
       <div className="sticky-searchbar">
@@ -617,6 +645,7 @@ function Listingdetails() {
                   </div>
                 </div>
                 <Listingkeyword companyID={listingDetails.listingId} />
+                
                 <Listingspecialisation companyID={listingDetails.listingId} />
                 <Listingpayment companyID={listingDetails.listingId} />
               </div>

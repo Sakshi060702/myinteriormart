@@ -32,6 +32,9 @@ function Addcategory()
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
 
+  const firstcat=localStorage.getItem('businessType')
+  console.log('businesstype',firstcat);
+
   useEffect(() => {
     const fetchData = async () => {
       try {

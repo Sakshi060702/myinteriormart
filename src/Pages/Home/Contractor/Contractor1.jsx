@@ -216,25 +216,55 @@ function Contractor1() {
         </div>
       </div>
 
-      <div class="row py-1">
-      <Carousel style={{ width: "100%" }}>
-  {homeMegaBannerImages.length > 0 ? (
-    homeMegaBannerImages.map((banner, index) => (
-      <Carousel.Item key={banner.id}>
-        <img
-          className="d-block w-100 bannerimg"
-          src={`https://admin.myinteriormart.com${banner.imagePath}`}
-          alt={`Banner ${banner.location}`}
-          style={{ width: "100%", maxWidth: "1200px" }}
-        />
-      </Carousel.Item>
-    ))
-  ) : (
-    <p>Loading...</p>
-  )}
-</Carousel>
+      <div className="row py-1">
+        <div style={{height: '110px', width: '50%'}}>
+        <Carousel interval={300}  autoPlay={true} fade animationEffect="Fade"        
+    pause={false} >
+      {homeMegaBannerImages.length > 0 ? (
+        homeMegaBannerImages.map((banner,index) => (
+          <Carousel.Item key={banner.id}>
+            <div className="fade-image-container">
+            <img
+              className="d-block w-100 bannerimg"
+              src={`https://admin.myinteriormart.com${banner.imagePath}`}
+              alt={`Banner ${banner.location}`}
+              style={{ width: "100%", maxWidth: "1200px" }}
+            />
+            </div>
+            
+          </Carousel.Item>
+        ))
+      ) : (
+        <p>Loading...</p>
+      )}
+    </Carousel>
+        </div>
+      
 
+<div style={{height: '110px', width: '50%'}}>
+    <Carousel  interval={300}  autoPlay={true} fade animationEffect="Fade"        
+    pause={false} >
+    {homeMegaBannerImages.length > 0 ? (
+      homeMegaBannerImages.map((banner, index) => (
+        <Carousel.Item key={banner.id}>
+          <div className="fade-image-container">
+          <img
+            className="d-block w-100 bannerimg"
+            src={`https://admin.myinteriormart.com${banner.imagePath}`}
+            alt={`Banner ${banner.location}`}
+            style={{ width: '100%', maxWidth: '1200px' }}
+          />
+          </div>
+         
+        </Carousel.Item>
+      ))
+    ) : (
+      <p>Loading...</p>
+    )}
+  </Carousel>
+  </div>
       </div>
+      
     </>
   );
 }

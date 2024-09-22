@@ -49,7 +49,11 @@ function Addcommunication(){
     }
   }, [location.state]);
 
+const useremail=localStorage.getItem("email");
+console.log(useremail);
 
+const telphone=localStorage.getItem('mobile');
+console.log(telphone);
 
   useEffect(() => {
     // Function to fetch communication details
@@ -78,9 +82,14 @@ function Addcommunication(){
           ? responseData.language.split(',').map(lang => ({ value: lang, label: lang }))
           : [];
 
+          // const storedemail=localStorage.getItem("email")||responseData.email || "";
+          // const storedmobile=localStorage.getItem("mobile")||responseData.telephoneSecond || "";
+
+          // console.log('storedemail',storedemail);
+
         setFormData({
-          email: responseData.email || "",
-          registerMobile: responseData.telephoneSecond || "",
+          email: useremail,
+          registerMobile: telphone,
           mobile: responseData.mobile || "",
           telephone: responseData.telephone || "",
           website: responseData.website || "",
@@ -103,10 +112,10 @@ function Addcommunication(){
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
+    setFormData({
+      ...formData,
       [name]: value
-    }));
+    });
   };
 
   const handleInputChange = (event) => {
@@ -137,34 +146,39 @@ function Addcommunication(){
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-
     setError("");
-
-    const emailError=validateEmail(formData.email);
-    const registermobileError=validateMobile(formData.registerMobile)
-    const mobileError=validateMobile(formData.mobile);
-    const telephoneError=validateMobile(formData.telephone);
-
-    if(emailError||registermobileError||mobileError||telephoneError){
+  
+    
+    const updatedFormData = {
+      ...formData,
+      email: formData.email || useremail ,
+      registerMobile:formData.registerMobile||telphone,
+    };
+  
+    const emailError = validateEmail(updatedFormData.email);
+    const registermobileError = validateMobile(updatedFormData.registerMobile);
+    const mobileError = validateMobile(updatedFormData.mobile);
+    const telephoneError = validateMobile(updatedFormData.telephone);
+  
+    if (emailError || registermobileError || mobileError || telephoneError) {
       setError({
-        communicationEmail:emailError,
-        communicationRegisterMobile:registermobileError,
-        commuincationMobile:registermobileError,
-        communicationTelephone:telephoneError,
+        communicationEmail: emailError,
+        communicationRegisterMobile: registermobileError,
+        communicationMobile: registermobileError,
+        communicationTelephone: telephoneError,
       });
       return;
     }
-
+  
     const apiUrl = "https://apidev.myinteriormart.com/api/Communication/AddOrUpdateCommunication";
-
+  
     const submissionData = {
-      ...formData,
+      ...updatedFormData,
       language: formData.languages.map(option => option.value).join(',') // Convert array to comma-separated string
     };
-
+  
     console.log("Submitting data:", submissionData);
-
+  
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -174,40 +188,29 @@ function Addcommunication(){
         },
         body: JSON.stringify(submissionData)
       });
-
+  
       if (!response.ok) {
         const errorData = await response.json();
         console.error("API response error data:", errorData);
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
+  
       const responseData = await response.json();
-       console.log("API response:", responseData);
-      // console.log("Communication Token",token);
-
+      console.log("API response:", responseData);
+  
       const cityName = localStorage.getItem('cityname');
       const pathlisting = `/address/${cityName}`;
-
+  
       navigate(pathlisting);
-
-      // setSuccessMessage("Communication Details Saved  Successfully");
-      // setErrorMessage("");
-      // setShowPopup(true);
-
-      // setTimeout(() => {
-      //   setShowPopup(false);
-      //   navigate(pathlisting);
-      // }, 2000);
-
-      
+  
     } catch (error) {
       console.error("API error:", error);
       setErrorMessage("Failed to save communication details. Please try again later.");
-    setSuccessMessage(""); // Clear any existing success message
-    setShowPopup(true);
+      setSuccessMessage(""); // Clear any existing success message
+      setShowPopup(true);
     }
   };
-
+  
   const languageOptionsList  = [
     { value: 'English', label: 'English' },
     { value: 'Hindi', label: 'Hindi' },
@@ -282,7 +285,8 @@ function Addcommunication(){
                       name="email"
                       id="email"
                       placeholder="Enter Your Email"
-                      value={formData.email}
+                      value={formData.email || useremail || ""}
+                      // value={useremail != "" ? useremail : formData.email}
                       onChange={handleChange}
                       required
                     />
@@ -300,7 +304,7 @@ function Addcommunication(){
                       name="registerMobile"
                       id="Mobile"
                       placeholder="Enter Registered Mobile Number"
-                      value={formData.registerMobile}
+                      value={formData.registerMobile||telphone||""}
                       onChange={handleChange}
                      maxLength={10}
                       required

@@ -36,6 +36,8 @@ function Listing() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [totalItems, setTotalItems] = useState(0);
 
+  
+
   const listingId_enc = searchParams.get("secatEncyt");
   const secondCategoryId = decrypt(decodeURIComponent(listingId_enc));
   console.log(secondCategoryId);
@@ -204,6 +206,17 @@ function Listing() {
               listing.map((listing) => (
                 <div key={listing.listingId} className="row mb-10">
                   <div className="col-12">
+                    <Link to={`/company/${listing.companyName
+                            .replace(/\s+/g, "-")
+                            .toLowerCase()}/${secondCategoryName}/in-${listing.locality
+                            .replace(/\s+/g, "-")
+                            .toLowerCase()}/${localStorage.getItem(
+                            "cityname"
+                          )}?listingEncyt=${encodeURIComponent(
+                            encrypt(listing.listingId)
+                          )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
+                            encrypt(parseInt(secondCategoryId))
+                          )}`}>
                     <div className="strip map_view stripmapviewdesign">
                       {/* <h5>Hello world</h5> */}
                       <h6 className="listingcompanyname">
@@ -254,16 +267,16 @@ function Listing() {
                                 {listing.companyName}
                               </Link>
                             </h3> */}
-                            <small>{listing.listingKeyword}</small>
+                            <small className="listingcolor">{listing.listingKeyword}</small>
 
-                            <p>
+                            <p className="listingcolor">
                               <i
                                 className="fa fa-map-marker"
                                 style={{ paddingRight: "5px" }}
                               ></i>
                               {listing.locality}, {listing.area}
                             </p>
-                            <div className="business-info-container">
+                            <div className="business-info-container listingcolor">
                               <BusinessHours
                                 businessWorking={listing.businessWorking}
                               />
@@ -433,6 +446,8 @@ function Listing() {
                         </div>
                       </div>
                     </div>
+                    </Link>
+
                   </div>
 
                   {/* <div className="col-2">

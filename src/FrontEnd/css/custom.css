@@ -651,8 +651,8 @@ footer ul {
 
 .listing-specialisat-list {
 	padding: 14px 14px 14px 14px;
-	height: 317px;
-	height: 230px;
+	/* height: 317px;
+	height: 230px; */
 	overflow: hidden;
 	overflow-y: scroll;
 }

@@ -77,6 +77,27 @@
     text-align: left;
 }
 
+
+
+@media (max-width:767px) {
+  .notification1{
+    position: fixed;
+    top: 50px;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+    border-radius: 0;
+    padding: 20px;
+    overflow-y: scroll;
+  }
+  .notificationheader{
+    font-size: 18px;
+  }
+  
+  
+}
+
 .login{
   display: flex;
   align-items: center;

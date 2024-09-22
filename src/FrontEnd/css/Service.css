@@ -219,3 +219,39 @@
 .last-category-left-align {
   justify-content: flex-start !important;
 }
+
+
+.carousel-fade .carousel-item{
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.carousel-fade .carousel-item.active {
+  opacity: 1;
+}
+
+
+
+.fade-image-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+.fade-image {
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out; 
+}
+
+.carousel-item.active .fade-image {
+  opacity: 2; 
+}
+
+.keywordbox{
+  height: auto; 
+  min-height: 50px; 
+  overflow: auto; 
+  box-sizing: border-box; 
+  padding: 15px; 
+}

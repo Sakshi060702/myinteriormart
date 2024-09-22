@@ -8,6 +8,7 @@ import "../../../FrontEnd/css/Service.css";
 import "../../../FrontEnd/css/Cate.css";
 import CryptoJS from "crypto-js";
 import { Carousel } from "react-bootstrap";
+import { height, width } from "@fortawesome/free-solid-svg-icons/faL";
 
 const encryptionKey = "myinterriorMart@SECRETKEY";
 
@@ -168,7 +169,7 @@ const Services1 = () => {
                       return (
                         <div
                           className="col-md-3 col-sm-3 col-3 mim-Box-item "
-                          style={{ height: "142px" }}
+                          style={{ height: "152px" }}
                           key={category.secondCategoryID}
                         >
                           <Link
@@ -200,22 +201,52 @@ const Services1 = () => {
         </div>
       </div>
       <div className="row py-1">
-      <Carousel style={{width:'100%'}}>
+        <div style={{height: '110px', width: '50%'}}>
+        <Carousel interval={3000}  autoPlay={true} fade animationEffect="Fade"        
+    pause={false} >
       {homeMegaBannerImages.length > 0 ? (
         homeMegaBannerImages.map((banner,index) => (
           <Carousel.Item key={banner.id}>
+            <div className="fade-image-container">
             <img
               className="d-block w-100 bannerimg"
               src={`https://admin.myinteriormart.com${banner.imagePath}`}
               alt={`Banner ${banner.location}`}
               style={{ width: "100%", maxWidth: "1200px" }}
             />
+            </div>
+            
           </Carousel.Item>
         ))
       ) : (
         <p>Loading...</p>
       )}
     </Carousel>
+        </div>
+      
+
+<div style={{height: '110px', width: '50%'}}>
+    <Carousel  interval={1000}  autoPlay={true} fade animationEffect="Fade"        
+    pause={false} >
+    {homeMegaBannerImages.length > 0 ? (
+      homeMegaBannerImages.map((banner, index) => (
+        <Carousel.Item key={banner.id}>
+          <div className="fade-image-container">
+          <img
+            className="d-block w-100 bannerimg"
+            src={`https://admin.myinteriormart.com${banner.imagePath}`}
+            alt={`Banner ${banner.location}`}
+            style={{ width: '100%', maxWidth: '1200px' }}
+          />
+          </div>
+         
+        </Carousel.Item>
+      ))
+    ) : (
+      <p>Loading...</p>
+    )}
+  </Carousel>
+  </div>
       </div>
     </div>
   );

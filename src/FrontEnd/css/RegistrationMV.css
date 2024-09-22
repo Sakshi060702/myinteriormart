@@ -125,7 +125,7 @@
   }
   @media (max-width:768px) {
     .notification1{
-      left: -217px;
+      /* left: -217px; */
     }
     
   }
@@ -906,7 +906,13 @@ width: 119%;
 }
 
 
+.listingcolor{
+  color: gray !important;
+}
 
+.listingcolor2{
+  color: #81969c;
+}
 
 
 

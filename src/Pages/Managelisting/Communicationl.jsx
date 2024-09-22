@@ -73,9 +73,14 @@ function Communicationl() {
           ? responseData.language.split(',').map(lang => ({ value: lang, label: lang }))
           : [];
 
+          const storedemail=localStorage.getItem("email")||responseData.email || "";
+          const storedmobile=localStorage.getItem("mobile")||responseData.telephoneSecond || "";
+
+          console.log('storedemail',storedemail);
+
         setFormData({
-          email: responseData.email || "",
-          registerMobile: responseData.telephoneSecond || "",
+          email: storedemail,
+          registerMobile: storedmobile,
           mobile: responseData.mobile || "",
           telephone: responseData.telephone || "",
           website: responseData.website || "",

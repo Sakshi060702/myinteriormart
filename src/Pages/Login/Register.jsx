@@ -166,7 +166,14 @@ function Register() {
             const pathhome = `/in-${cityName}`;
 
             if (response.ok) {
-                console.log('User Registered successfully', data);
+                // console.log('User Registered successfully', data);
+
+                localStorage.setItem('email',email);
+                localStorage.setItem('mobile',mobile);
+                if (vendorType.toLowerCase() === 'business') {
+                    localStorage.setItem('businessType', businesscategory); 
+                }
+
                 dispatch(loginSuccess({token:data.token, user:data.user}))
                 dispatch(setUserType(vendorType));
                 setSuccessMessage('User Registered successfully');
