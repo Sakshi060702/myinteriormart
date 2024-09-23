@@ -314,7 +314,7 @@ function Listing() {
                                             color:
                                               i < listing.ratingAverage
                                                 ? "orange"
-                                                : "gray",
+                                                : "",
                                             fontSize: "16px",
                                             marginRight: "2px",
                                           }}
@@ -354,7 +354,7 @@ function Listing() {
                                                 color:
                                                   i < listing.ratingAverage
                                                     ? "orange"
-                                                    : "gray",
+                                                    : "",
                                                 fontSize: "16px",
                                               }}
                                             ></i>
@@ -378,13 +378,13 @@ function Listing() {
                               // style={{ height: "150px" }}
                             />
                           ) : (
-                            // <div
-                            //   className="client_first_letter listingimage"
-                            //   // style={{ height: "141px", width: "141px" }}
-                            // >
-                            //   {listing.companyFirstLetter}
-                            // </div>
-                            <></>
+                            <div
+                              className="client_first_letter listingimage"
+                              style={{ height: "141px", width: "141px" }}
+                            >
+                              {listing.companyFirstLetter}
+                            </div>
+                            
                           )}
                         </div>
 
@@ -397,7 +397,7 @@ function Listing() {
                                   <h5 className="yearbusiness">
                                     <p>
                                       {" "}
-                                      + {listing.businessYear} Year Business
+                                      Since {listing.businessYear} Year 
                                     </p>
                                   </h5>
                                 </li>

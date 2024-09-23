@@ -57,6 +57,10 @@ function Addcategory()
 
         if (allCategories && allCategories.length > 0) {
           setFirstCategories(allCategories);
+
+          if(firstcat){
+            setSelectedFirstCategory(parseInt(firstcat))
+          }
         }
         console.log(data);
       } catch (error) {

@@ -427,23 +427,28 @@ function Listingdetails() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://apidev.myinteriormart.com/api/ManageListingFromStatus/GetManageListingFromStatus",
+          "https://apidev.myinteriormart.com/api/Keywordshowfromstatus/GetKeywordshow",
           {
-            method: "GET",
+            method: "POST",
             headers: {
-              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
             },
+            body: JSON.stringify({
+              companyID: listingDetails.listingId, 
+            }),
           }
         );
         const data = await response.json();
         console.log(data);
-        setStatus(data.status);
+        setStatus(data.data.status); 
+        console.log("Status inside fetch:", data.data.status);
+
       } catch (error) {
         console.error("Error fetching status:", error);
       }
     };
     fetchData();
-  }, [token]);
+  }, [listingDetails]);
 
   useEffect(() => {
     const fetchBannerImage = async () => {
@@ -592,18 +597,18 @@ function Listingdetails() {
                           style={{ height: "100px" }}
                         />
                       ) : (
-                        // <div
-                        //   className="client_first_letter"
-                        //   style={{
-                        //     height: "100px",
-                        //     display: "flex",
-                        //     alignItems: "center",
-                        //     justifyContent: "center",
-                        //   }}
-                        // >
-                        //   {listingDetails.companyFirstLetter}
-                        // </div>
-                        <></>
+                        <div
+                          className="client_first_letter"
+                          style={{
+                            height: "100px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          {listingDetails.companyFirstLetter}
+                        </div>
+                       
                       )}
                     </div>
                   </div>
@@ -644,7 +649,12 @@ function Listingdetails() {
                     <span className="cust-type">Owner</span> */}
                   </div>
                 </div>
-                <Listingkeyword companyID={listingDetails.listingId} />
+                <>{status === 1 ? (
+        <Listingkeyword companyID={listingDetails.listingId} />
+      ) : (
+        <p>Status is not 1, component not shown</p>
+      )}</>
+                {/* <Listingkeyword companyID={listingDetails.listingId} /> */}
                 
                 <Listingspecialisation companyID={listingDetails.listingId} />
                 <Listingpayment companyID={listingDetails.listingId} />
@@ -734,19 +744,7 @@ function Listingdetails() {
                         </Slider>
                       </div>
                     </div>
-                    <div className="col-lg-4 col-md-12 company-map padding-all-5 listinggallery">
-                      <div className="pro-large-img img-zoom gallery1">
-                        <img
-                          className="upload_imagesbanner "
-                          src={
-                            imageURL
-                              ? `https://apidev.myinteriormart.com${imageURL}`
-                              : banner2
-                          }
-                          alt="Banner Image"
-                        />
-                      </div>
-                    </div>
+                    
 
                     {/* <div className="listinggallery">
                 <div className="listing-gallery">
@@ -977,6 +975,19 @@ function Listingdetails() {
                   </div>
 
                   <Webreviews />
+                  <div className="col-lg-4 col-md-12 company-map padding-all-5 listinggallery">
+                      <div className="pro-large-img img-zoom gallery1">
+                        <img
+                          className="upload_imagesbanner "
+                          src={
+                            imageURL
+                              ? `https://apidev.myinteriormart.com${imageURL}`
+                              : banner2
+                          }
+                          alt="Banner Image"
+                        />
+                      </div>
+                    </div>
                 </div>
               </div>
             </>

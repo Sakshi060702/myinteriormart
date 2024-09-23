@@ -235,8 +235,8 @@ const Foot = () => {
                   <a href="privacy-policy.html">Privacy</a>
                 </li>
                 <li>
-                  <a target="_blank" href="http://peaceinfotech.com/">
-                    © PeaceInfotech Services Pvt. Ltd
+                  <a target="_blank" href="https://myinteriormart.com/">
+                    © Myinteriormart
                   </a>
                 </li>
               </ul>

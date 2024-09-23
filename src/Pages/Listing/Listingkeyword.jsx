@@ -49,12 +49,13 @@ function Listingkeyword({ companyID }) {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://apidev.myinteriormart.com/api/ManageListingFromStatus/GetManageListingFromStatus",
+          "https://apidev.myinteriormart.com/api/Keywordshowfromstatus/GetKeywordshow",
           {
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,
             },
+           
           }
         );
         const data = await response.json();

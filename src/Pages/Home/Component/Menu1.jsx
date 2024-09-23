@@ -539,7 +539,7 @@ function Menu1() {
                       <div >
       {status !== 1 && (
         <NavLink
-          to={`/addcompany/in-${localStorage.getItem('cityname')}`}
+          to={`/selectcategory/in-${localStorage.getItem('cityname')}`}
           className=" listing-btn mobile-freelisting freelistingbtn mobilefreelistingbtn"
           
         >
@@ -553,11 +553,16 @@ function Menu1() {
                 onClick={toogleMenu}
                 style={{ marginLeft: "30px" }}
               >
-                <div className={`menu-icon ${showMenu ? "open" : ""}`}>
+                  <div className={`arrow-icon ${showMenu ? "open" : ""}`}>
+                  <span className="arrow" style={{display:'inline-block',letterSpacing:'5px',fontWeight:'bold'}}>&#9662;</span>
+        </div>
+                {/* <div className={`menu-icon ${showMenu ? "open" : ""}`}>
                   <div className="line line1"></div>
                   <div className="line line2"></div>
                   <div className="line line3"></div>
-                </div>
+                </div> */}
+
+                
               </div>
             </div>
           </div>

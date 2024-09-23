@@ -137,9 +137,14 @@ const Sociallink = ({ isOpen, onClose }) => {
               }}
             >
               <a
-                href={`https://web.whatsapp.com/send?text=${encodeURIComponent(
-                  window.location.href
-                )} `}
+                // href={`https://web.whatsapp.com/send?text=${encodeURIComponent(
+                //   window.location.href
+                // )} `}
+                href={`${
+                  /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+                    ? `whatsapp://send?text=${encodeURIComponent(window.location.href)}`
+                    : `https://web.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`
+                }`}
                 target="_blank"
                 rel="noopener noreferrer"
               >

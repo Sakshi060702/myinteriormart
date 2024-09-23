@@ -29,6 +29,7 @@ const SubCategoryList = () => {
   console.log("listingid", secondCategoryId);
   console.log(decrypt(listingId_enc));
 
+  console.log('hello');
   useEffect(() => {
     fetchSubCategories();
   }, [secondCategoryId]);
@@ -66,13 +67,19 @@ const SubCategoryList = () => {
           </span>
           <h2>Popular Categories</h2>
         </div>
-        <div className="row justify-content-center categories-list">
+        <div className="row  categories-list">
           {selectedCategory && (
-            <ul className="subcategories-list d-flex justify-content-center flex-wrap">
-              {subCategories.map((subCategory) => (
-                <li
+            <ul className="subcategories-list d-flex  flex-wrap">
+              {subCategories.map((subCategory,index) => {
+                 const categoriesPerRow = 4;
+                 const isFirstRow = index < categoriesPerRow;
+               
+
+                const justifyContentClass = isFirstRow ? "center" : "start";
+                return(
+                  <li
                   key={subCategory.thirdCategoryID}
-                  className={`col-lg-3 col-6 d-flex justify-content-center`}
+                  className={`col-lg-3 col-6 d-flex justify-content-${justifyContentClass}`}
                 >
                   <div className="item">
                     <span
@@ -136,7 +143,9 @@ const SubCategoryList = () => {
                       )}
                   </div>
                 </li>
-              ))}
+                )
+                
+})}
             </ul>
           )}
         </div>
