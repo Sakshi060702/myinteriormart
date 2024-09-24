@@ -7,13 +7,11 @@ import "../../../FrontEnd/css/Cate.css";
 import CryptoJS from "crypto-js";
 import { Carousel } from "react-bootstrap";
 
-const encryptionKey = 'myinterriorMart@SECRETKEY';
+const encryptionKey = "myinterriorMart@SECRETKEY";
 
 const encrypt = (text) => {
-  
   return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
 };
-
 
 const decrypt = (ciphertext) => {
   const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
@@ -48,21 +46,20 @@ function Dealer1() {
     setIsMobileMenuVisible(!isMobileMenuVisible);
   };
 
-  useEffect(()=>{
-    const fetchBannerImages=async()=>{
-      try{
-        const response=await fetch(
+  useEffect(() => {
+    const fetchBannerImages = async () => {
+      try {
+        const response = await fetch(
           `https://apidev.myinteriormart.com/api/Banners/GetFilteredBanners`
-        )
-        const data=await response.json();
-        setdealerBanners(data.galleryBannerImages.dealerBanners)
-      }
-      catch(error){
-console.error("Error fetching banner images",error)
+        );
+        const data = await response.json();
+        setdealerBanners(data.galleryBannerImages.dealerBanners);
+      } catch (error) {
+        console.error("Error fetching banner images", error);
       }
     };
     fetchBannerImages();
-  },[]);
+  }, []);
 
   return (
     <>
@@ -91,11 +88,15 @@ console.error("Error fetching banner images",error)
 
                     return (
                       <li className="mim-box-list" key={cat.secondCategoryID}>
-<Link
+                        <Link
                           to={`/Dealer/Category/${cat.name
                             .replace(/\s+/g, "-")
-                            .toLowerCase()}/in-${localStorage.getItem("cityname")}?fircatEncyt=${encodeURIComponent(encrypt(parseInt(cat.secondCategoryID)))}`}
-  >
+                            .toLowerCase()}/in-${localStorage.getItem(
+                            "cityname"
+                          )}?fircatEncyt=${encodeURIComponent(
+                            encrypt(parseInt(cat.secondCategoryID))
+                          )}`}
+                        >
                           <img
                             src={icon}
                             alt={cat.searchKeywordName}
@@ -110,26 +111,39 @@ console.error("Error fetching banner images",error)
                 </ul>
               </div>
             </div>
-            <div className="col-lg-10 col-md-12 brand-category-list" >
+            <div className="col-lg-10 col-md-12 brand-category-list">
               <div className="mim-Box">
                 <div className="row no-gutters">
                   <div className="col-md-4 mim-Box-img">
-                  <Carousel>
-                    {dealerBanners.length > 0 ? (
-                      dealerBanners.map((banner) => (
-                        <Carousel.Item key={banner.id}>
-                          <img
-                            className="d-block w-100 bannerimg"
-                            src={`https://admin.myinteriormart.com${banner.imagePath}`}
-                            alt={`Banner ${banner.location}`}
-                            style={{ width: "100%", maxWidth: "1200px" , maxWidth:'1200px' }}
-                          />
-                        </Carousel.Item>
-                      ))
-                    ) : (
-                      <p>Loading...</p>
-                    )}
-                  </Carousel>
+                    <Carousel
+                      interval={5000}
+                      autoPlay={true}
+                      fade
+                      animationEffect="Fade"
+                      pause={false}
+                      controls={false}
+                    >
+                      {dealerBanners.length > 0 ? (
+                        dealerBanners.map((banner) => (
+                          <Carousel.Item key={banner.id}>
+                            <a href={banner.bannerLink} target="_blank" rel="noopener noreferrer">
+                            <img
+                              className="d-block w-100 bannerimg"
+                              src={`https://admin.myinteriormart.com${banner.imagePath}`}
+                              alt={`Banner ${banner.location}`}
+                              style={{
+                                width: "100%",
+                                maxWidth: "1200px",
+                                maxWidth: "1200px",
+                              }}
+                            />
+                            </a>
+                          </Carousel.Item>
+                        ))
+                      ) : (
+                        <p>Loading...</p>
+                      )}
+                    </Carousel>
                   </div>
                   <div className="col-md-8">
                     <div className="tab-content checkout" id="myTabContent">
@@ -144,14 +158,19 @@ console.error("Error fetching banner images",error)
                             const icon = `/FileManager/CategoryIcons/Second/${cat.imageURL}.png`;
                             return (
                               <div
-                                className="col-md-3 col-sm-3 col-3 mim-Box-item" style={{height:'142px'}}
+                                className="col-md-3 col-sm-3 col-3 mim-Box-item"
+                                style={{ height: "142px" }}
                                 key={cat.secondCategoryID}
                               >
                                 <Link
-                          to={`/Dealer/Category/${cat.name
-                            .replace(/\s+/g, "-")
-                            .toLowerCase()}/in-${localStorage.getItem("cityname")}?fircatEncyt=${encodeURIComponent(encrypt(parseInt(cat.secondCategoryID)))}`}
-                                   title={cat.searchKeywordName}
+                                  to={`/Dealer/Category/${cat.name
+                                    .replace(/\s+/g, "-")
+                                    .toLowerCase()}/in-${localStorage.getItem(
+                                    "cityname"
+                                  )}?fircatEncyt=${encodeURIComponent(
+                                    encrypt(parseInt(cat.secondCategoryID))
+                                  )}`}
+                                  title={cat.searchKeywordName}
                                 >
                                   <img
                                     src={icon}

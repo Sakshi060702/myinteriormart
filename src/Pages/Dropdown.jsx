@@ -24,13 +24,13 @@ const Dropdown = () => {
    };
 
   return (
-    <div className="dropdown1" style={{width:'195px'}}>
+    <div className="dropdown1 profiledrp" >
       <ul style={{justifyContent:'left'}}>
         {/* <li onClick={handleProfileClick}>
           <i style={{ marginRight: "10px" }}></i>Profile
         </li> */}
         <li style={{marginRight:'60px',marginTop:'10px'}}>
-          <Link to={`/Myactivity/in-${localStorage.getItem('cityname')}`} style={{color:'black'}}>
+          <Link className="droplink" to={`/Myactivity/in-${localStorage.getItem('cityname')}`} style={{color:'black'}}>
             <i className="fa fa-user" style={{color:'orange'}} ></i> Dashboard
           </Link>
         </li>
@@ -40,13 +40,13 @@ const Dropdown = () => {
           </Link>
         
         </li> */}
-        <li style={{marginRight:'84px',marginTop:'-8px'}} >
+        <li className="droplink drpsetting" >
         <i className="fa fa-gear" style={{ marginRight: "10px" ,color:'orange' }}></i>Settings
         </li>
-        <li style={{marginTop:'-8px' ,marginRight:'1px'}}>
+        <li style={{marginTop:'-8px' ,marginRight:'1px'}} className="droplink">
         <i className="fa fa-key" style={{ marginRight: "10px",color:'orange' }}></i>Change Password
         </li>
-        <li onClick={handleLogoutClick} style={{marginRight:'84px' ,marginTop:'-8px'}}>
+        <li onClick={handleLogoutClick}  className="droplink drpsetting">
           <i className="fa fa-sign-out" style={{ marginRight: "10px",color:'orange' }}></i>Logout
         </li>
       </ul>

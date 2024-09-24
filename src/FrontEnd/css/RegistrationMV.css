@@ -602,7 +602,7 @@
     height: 106px !important;
     width: 109px !important;
     position: relative;
-    margin-left: 230px ;
+    margin-left: 175px ;
     margin-top: 0px;
   }
 }
@@ -925,4 +925,47 @@ width: 119%;
 }
 
 
+.profiledrp{
+  width: 195px;
+}
+@media (max-width:767px) {
+  .profiledrp{
+    width: 172px;
+  }
+}
+@media (max-width:767px) {
+  .droplink{
+    font-size: 12px !important;
+  }
+}
+.drpsetting{
+  margin-right: 84px !important;
+  margin-top: -8px !important;
+}
+@media (max-width:767px) {
+  .drpsetting{
+    margin-right: 69px !important;
+    margin-top: -8px !important;
+  }
+}
+
+.profileimgp{
+  padding: 0 25px 0 0 ;
+  margin-left: 0px;
+}
+@media (max-width:767px) {
+  .profileimgp{
+    padding: 0 0 0 0;
+    margin-left: -13px;
+  }
+}
+
+/* .profileimgbtn{
+  margin-left: 0px;
+}
+@media (max-width:767px) {
+  .profileimgbtn{
+    margin-left: -13px;
+  }
+} */
 

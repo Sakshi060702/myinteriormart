@@ -10253,13 +10253,15 @@ a.btn_3:hover,
 }
 
 #home_main .carousel-item {
-  height: 110px;
+  /* height: 110px; */
 }
 
 #home_main .carousel-item img {
-  height: 100%;
+  /* height: 100%; */
   width: 100vw;
 }
+
+
 
 
 .contact_us_img_sec img {
@@ -10471,7 +10473,7 @@ a.btn_3:hover,
 
   .notification .notification-list {
     position: relative;
-    padding: 8px 10px 8px 15px;
+    padding: 8px 73px 8px 15px;
     margin-bottom: 5px;
   }
 
@@ -10501,9 +10503,9 @@ a.btn_3:hover,
   }
 
   .notify_body {
-    height: 218px;
+    height: 400px;
     padding: 0;
-    overflow: auto;
+    overflow: hidden;
     margin-top: 0px;
   }
 

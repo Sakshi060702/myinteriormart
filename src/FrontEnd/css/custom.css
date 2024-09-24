@@ -101,6 +101,25 @@ a.notification {
     width: 8px;
 }
 
+@media (max-width:767px) {
+	.usericon-btn.dropdown-toggle:after {
+		border: 0px;
+		border-bottom: 2px solid #999;
+		border-right: 2px solid #999;
+		content: '';
+		display: block;
+		height: 8px;
+		margin-top: -5px;
+		pointer-events: none;
+		position: absolute;
+		right: -9px;
+		top: 50%;
+		transform-origin: 66% 66%;
+		transform: rotate(45deg); /* Downward arrow by default */
+		transition: all 0.15s ease-in-out;
+		width: 8px;
+	}
+}
 .usericon-btn.dropdown-toggle.open:after {
     transform: rotate(-135deg); /* Upward arrow when dropdown is open */
 }
@@ -1749,5 +1768,13 @@ hr {
 
 	.usericon .dropdown-menu {
 		left: 0px!important;
+	}
+}
+@media (max-width:767px) {
+	.notification-list {
+		background-color: #fff;
+		padding: 15px;
+		margin-bottom: 15px;
+		border: 1px solid gainsboro;
 	}
 }

@@ -37,7 +37,7 @@ function Menu1() {
     if (!showMenu) {
       setTimeout(() => {
         setShowMenu(false);
-      }, 4000);
+      }, 60000);
     }
   };
 
@@ -488,14 +488,14 @@ function Menu1() {
                             }}
                           >
                             <button
-                              className={`usericon-btn dropdown-toggle ${dropdownOpen ? 'buttonActive' : ''}`}
+                              className={`usericon-btn profileimgp dropdown-toggle ${dropdownOpen ? 'buttonActive' : ''}`}
                               type="button"
                               onClick={toggleDropdown}
                               style={{
                                 background: "none",
                                 border: "none",
                                 position: "relative",
-                                padding: '0 25px 0 0'
+                               
                               }}
                             >
                               <img

@@ -126,3 +126,14 @@
 margin-left: 40px;
 margin-right: 40px;
 }
+
+
+.loginErrorpopup{
+  margin-top: 41px;
+  padding-top: 10px;
+  color:white !important;
+  background-color: red;
+  height: 50px;
+margin-left: 40px;
+margin-right: 40px;
+}

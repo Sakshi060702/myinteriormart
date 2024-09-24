@@ -105,14 +105,14 @@ function Bannerimagel() {
        
         setImageURL(result.imageUrl);
 
-        setSuccessMessage("Banner Image Uploded Successfully");
-      setErrorMessage("");
-      setShowPopup(true);
+    //     setSuccessMessage("Banner Image Uploded Successfully");
+    //   setErrorMessage("");
+    //   setShowPopup(true);
 
-      setTimeout(() => {
-      setShowPopup(false);
+    //   setTimeout(() => {
+    //   setShowPopup(false);
      
-    }, 2000);
+    // }, 2000);
         // You can handle the result here if needed, e.g., show a success message
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);

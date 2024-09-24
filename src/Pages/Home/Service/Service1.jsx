@@ -25,7 +25,9 @@ const Services1 = () => {
   const [categories, setCategories] = useState([]);
   const [isMobileMenuVisible, setIsMobileMenuVisible] = useState(false);
   const [serviceBanners, setServiceBanners] = useState([]);
-  const[homeMegaBannerImages, setHomeMegaBannerImage]=useState([]);
+  const [homeMegaBannerImages, setHomeMegaBannerImage] = useState([]);
+
+  const [showSecondBanner, setShowSecondBanner] = useState(false);
 
   useEffect(() => {
     fetchCategories();
@@ -67,7 +69,6 @@ const Services1 = () => {
     fetchBannerImages();
   }, []);
 
-
   useEffect(() => {
     const fetchHorizontalBanners = async () => {
       try {
@@ -84,6 +85,16 @@ const Services1 = () => {
 
     fetchHorizontalBanners();
   }, []);
+
+  useEffect(() => {
+    if (homeMegaBannerImages.length > 0) {
+      const timer = setTimeout(() => {
+        setShowSecondBanner(true);
+      }, homeMegaBannerImages.length * 3000); // Adjust the timing as needed
+
+      return () => clearTimeout(timer); // Cleanup the timer on unmount
+    }
+  }, [homeMegaBannerImages]);
 
   return (
     <div className="category-featured">
@@ -145,16 +156,25 @@ const Services1 = () => {
                   className="col-md-4 mim-Box-img"
                   style={{ paddingRight: "2px" }}
                 >
-                  <Carousel>
+                  <Carousel
+                    interval={5000}
+                    autoPlay={true}
+                    fade
+                    animationEffect="Fade"
+                    pause={false}
+                    controls={false}
+                  >
                     {serviceBanners.length > 0 ? (
                       serviceBanners.map((banner) => (
                         <Carousel.Item key={banner.id}>
-                          <img
+                          <a href={banner.bannerLink} target="_blank" rel="noopener noreferrer">
+                            <img
                             className="d-block w-100 bannerimg"
                             src={`https://admin.myinteriormart.com${banner.imagePath}`}
                             alt={`Banner ${banner.location}`}
-                            style={{ width: "100%", maxWidth: "1200px" , maxWidth:'1200px' }}
                           />
+                          </a>
+                          
                         </Carousel.Item>
                       ))
                     ) : (
@@ -201,52 +221,65 @@ const Services1 = () => {
         </div>
       </div>
       <div className="row py-1">
-        <div style={{height: '110px', width: '50%'}}>
-        <Carousel interval={3000}  autoPlay={true} fade animationEffect="Fade"        
-    pause={false} >
-      {homeMegaBannerImages.length > 0 ? (
-        homeMegaBannerImages.map((banner,index) => (
-          <Carousel.Item key={banner.id}>
-            <div className="fade-image-container">
-            <img
-              className="d-block w-100 bannerimg"
-              src={`https://admin.myinteriormart.com${banner.imagePath}`}
-              alt={`Banner ${banner.location}`}
-              style={{ width: "100%", maxWidth: "1200px" }}
-            />
-            </div>
-            
-          </Carousel.Item>
-        ))
-      ) : (
-        <p>Loading...</p>
-      )}
-    </Carousel>
+        <div className="carouelheight">
+          <Carousel
+            interval={2500}
+            autoPlay={true}
+            fade
+            animationEffect="Fade"
+            pause={false}
+            controls={false}
+          >
+            {homeMegaBannerImages.length > 0 ? (
+              homeMegaBannerImages.map((banner, index) => (
+                <Carousel.Item key={banner.id}>
+                  <div className="fade-image-container">
+                  <a href={banner.bannerLink} target="_blank" rel="noopener noreferrer">
+                    <img
+                      className="d-block w-100 bannerimg"
+                      src={`https://admin.myinteriormart.com${banner.imagePath}`}
+                      alt={`Banner ${banner.location}`}
+                      style={{ width: "100%", maxWidth: "1200px" }}
+                    />
+                    </a>
+                  </div>
+                </Carousel.Item>
+              ))
+            ) : (
+              <p>Loading...</p>
+            )}
+          </Carousel>
         </div>
-      
 
-<div style={{height: '110px', width: '50%'}}>
-    <Carousel  interval={1000}  autoPlay={true} fade animationEffect="Fade"        
-    pause={false} >
-    {homeMegaBannerImages.length > 0 ? (
-      homeMegaBannerImages.map((banner, index) => (
-        <Carousel.Item key={banner.id}>
-          <div className="fade-image-container">
-          <img
-            className="d-block w-100 bannerimg"
-            src={`https://admin.myinteriormart.com${banner.imagePath}`}
-            alt={`Banner ${banner.location}`}
-            style={{ width: '100%', maxWidth: '1200px' }}
-          />
-          </div>
-         
-        </Carousel.Item>
-      ))
-    ) : (
-      <p>Loading...</p>
-    )}
-  </Carousel>
-  </div>
+        <div className="carouelheight carouselshow">
+          <Carousel
+            interval={3000}
+            autoPlay={true}
+            fade
+            animationEffect="Fade"
+            pause={false}
+            controls={false}
+          >
+            {homeMegaBannerImages.length > 0 ? (
+              homeMegaBannerImages.map((banner, index) => (
+                <Carousel.Item key={banner.id}>
+                  <div className="fade-image-container">
+                  <a href={banner.bannerLink} target="_blank" rel="noopener noreferrer">
+                    <img
+                      className="d-block w-100 bannerimg"
+                      src={`https://admin.myinteriormart.com${banner.imagePath}`}
+                      alt={`Banner ${banner.location}`}
+                      style={{ width: "100%", maxWidth: "1200px" }}
+                    />
+                    </a>
+                  </div>
+                </Carousel.Item>
+              ))
+            ) : (
+              <p>Loading...</p>
+            )}
+          </Carousel>
+        </div>
       </div>
     </div>
   );
