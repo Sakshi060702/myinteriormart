@@ -99,7 +99,7 @@ function Addpayment() {
         setShowPopup(true);
         setTimeout(() => {
           setShowPopup(false);
-          navigate("/Uploadimage");
+          // navigate("/Uploadimage");
         }, 2000);
       } else {
         setPaymentPopupMessage(

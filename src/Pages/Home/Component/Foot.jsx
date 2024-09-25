@@ -24,6 +24,14 @@ const Foot = () => {
   const [status, setStatus] = useState("");
   const [listingId, setListingId] = useState(null);
   const [isSociallinkOpen, setIsSociallinkOpen] = useState(false);
+  const [socialLink,setSocialLink]=useState({
+    facebook:'',
+    instagram:'',
+    whatsapp:'',
+    linkedin:'',
+    twitter:'',
+    youtube:'',
+  })
 
   const navigate=useNavigate();
 
@@ -87,6 +95,29 @@ const Foot = () => {
   //      setCityName(city_name)
   //    }
   //  }, []);
+
+  useEffect(()=>{
+    const fetchSocialkink=async()=>{
+      try{
+const response=await fetch(`https://apidev.myinteriormart.com/api/PortalSetting/GetPortalSetting`);
+const data=await response.json();
+const portallink=data.portalSettings[0];
+setSocialLink({
+  facebook:portallink.facebook,
+  instagram:portallink.instagram,
+  whatsapp:portallink.whatsapp,
+  linkedin:portallink.linkedin,
+  twitter:portallink.twitter,
+  twitter:portallink.twitter,
+
+})
+      }
+      catch(error){
+console.log('Error in fetching social link',error)
+      }
+    };
+    fetchSocialkink();
+  },[])
   return (
     <>
       <footer className="shadow" style={{ position: "relative" }}>
@@ -246,26 +277,38 @@ const Foot = () => {
               <div className="follow_us">
                 <ul>
                   <li>
-                  <a href="https://www.facebook.com/sharer/sharer.php?description"  target="_blank" rel="noopener noreferrer"><i className="ti-facebook"></i></a>
+                  <a href={socialLink.facebook}  target="_blank" rel="noopener noreferrer"><i className="ti-facebook"></i></a>
                     {/* <a href="#0">
                       <i className="ti-facebook"></i>
                     </a> */}
                   </li>
                   <li>
-                    <a href="http://twitter.com/share?text" target="_blank" rel="noopener noreferrer">
+                    <a href={socialLink.instagram} target="_blank" rel="noopener noreferrer">
+                      <i className="ti-instagram"></i>
+                    </a>
+                  </li>
+                 
+                  <li>
+                    <a href={socialLink.whatsapp} target="_blank" rel="noopener noreferrer">
+                      <i className="ti-whatsapp"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href={socialLink.linkedin} target="_blank" rel="noopener noreferrer">
+                      <i className="ti-linkedin"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href={socialLink.twitter} target="_blank" rel="noopener noreferrer">
                       <i className="ti-twitter-alt"></i>
                     </a>
                   </li>
                   <li>
-                    <a href="https://www.google.co.in/"  target="_blank" rel="noopener noreferrer">
-                      <i className="ti-google"></i>
+                    <a href={socialLink.youtube} target="_blank" rel="noopener noreferrer">
+                      <i className="ti-youtube"></i>
                     </a>
                   </li>
-                  <li>
-                    <a href="https://www.pinterest.com/pin/create/button/?description" target="_blank" rel="noopener noreferrer">
-                      <i className="ti-pinterest"></i>
-                    </a>
-                  </li>
+                  
                   {/* <li>
                     <a href="https://web.whatsapp.com/send?text"  target="_blank" rel="noopener noreferrer">
                     <i class="ti-whatsapp" style={{color:'white'}}></i>

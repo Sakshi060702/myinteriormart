@@ -9,6 +9,7 @@ function Contact() {
   const [longitude, setLongitude] = useState(null);
 
   const [cityName,setCityName]=useState(null);
+  const[contactInfo,setContactInfo]=useState('');
 
   useEffect(() => {
    
@@ -26,6 +27,26 @@ function Contact() {
       setCityName(city_name)
     }
   }, []);
+
+
+  useEffect(()=>{
+    const fetchContcatinfo=async()=>{
+      try{
+const response=await fetch(`https://apidev.myinteriormart.com/api/PortalSetting/GetPortalSetting`);
+const data=await response.json();
+const portallink=data.portalSettings[0];
+setContactInfo({
+  address:portallink.address,
+  contactinformation:portallink.contactinformation,
+ 
+})
+      }
+      catch(error){
+console.log('Error in fetching social link',error)
+      }
+    };
+    fetchContcatinfo();
+  },[])
 
   return (
     <>
@@ -119,7 +140,7 @@ function Contact() {
                   </div>
                   <div className="contact_heading">Address</div>
                   <div className="contact_text">
-                    Perl Residence Office No.12, opp. Wadia School, D.N.Nagar, Andheri West, Mumbai, Maharashtra 400053
+                    {contactInfo.address}
                   </div>
                 </div>
               </div>
@@ -134,7 +155,7 @@ function Contact() {
                   </div>
                   <div className="contact_heading">Helpline</div>
                   <div className="contact_text">
-                    <a href="tel:+919876543210">+91 7700995500</a>
+                    <a href="tel:+919876543210">{contactInfo.contactinformation}</a>
                   </div>
                 </div>
               </div>
@@ -151,7 +172,7 @@ function Contact() {
                     Advertisement
                   </div>
                   <div className="contact_text">
-                    <a href="tel:+919876543210">+91 7700994015</a>
+                    <a href="tel:+919876543210">{contactInfo.contactinformation}</a>
                   </div>
                 </div>
               </div>

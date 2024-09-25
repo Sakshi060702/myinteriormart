@@ -30,6 +30,7 @@ const Loginpopupalert = ({ message, type, onClose }) => {
                     width: "80px",
                     marginBottom: "12px",
                     marginLeft: "6px",
+                    marginTop:'26px'
                   }}
                 ></img>
                 {/* <div className={`icon-container ${isSuccess ? 'success-icon-container' : 'error-icon-container'}`} style={{paddingLeft:'10px',paddingBottom:'15px'}}>
@@ -41,7 +42,7 @@ const Loginpopupalert = ({ message, type, onClose }) => {
                 {/* <h3 className={isSuccess ? "success-message" : "error-message"}>
               {isSuccess ? "Success" : "Error"}
             </h3> */}
-                <h5>Your User Credential Login Successful</h5>
+                {/* <h5>Your User Credential Login Successful</h5> */}
                 <div className="loginpopup">
                   <h5>{message}</h5>
                 </div>
@@ -55,6 +56,7 @@ const Loginpopupalert = ({ message, type, onClose }) => {
                     width: "80px",
                     marginBottom: "12px",
                     marginLeft: "6px",
+                     marginTop:'26px'
                   }}
                 ></img>
                 {/* <div className={`icon-container ${isSuccess ? 'success-icon-container' : 'error-icon-container'}`} style={{paddingLeft:'10px',paddingBottom:'15px'}}>

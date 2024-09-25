@@ -495,51 +495,13 @@ function Listingdetails() {
     fetchBannerImage();
   }, []);
 
-  const fetchTeamImage = async () => {
-    try {
-      const response = await fetch(
-        "https://apidev.myinteriormart.com/api/AlldetailsparticularListingbind/GetOwnerImage",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            companyID: parseInt(listingId),
-          }),
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch user profile");
-      }
-      const data = await response.json();
-      console.log(data);
-
-      if (data instanceof Object) {
-        // Find the state name based on the state ID from the owner image API
-        const stateName = states.find(
-          (state) => state.StateID === data.stateId
-        )?.StateName;
-
-        setTeamImageDetails(
-          data.imagepath.map((img) => ({
-            url: img,
-            title: data.ownerName,
-            designation: data.designation,
-            state: stateName || "State not found", // Use state name if found
-          }))
-        );
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const fetchData = async (type, parentID = null) => {
+  //address api
+  const fetchStates = async (type,countryID,stateID, parentID = null) => {
+console.log(type,countryID, parentID );
     let body = {
       type,
-      CountryID: setSelectedCountry,
-      StateID: setSelectedState,
+      CountryID: countryID,
+      StateID: stateID,
       CityID: setSelectedCity,
       AssemblyID: setSelectedAssembly,
       PincodeID: setSelectedPincode,
@@ -548,41 +510,94 @@ function Listingdetails() {
     };
     if (parentID) body.parentID = parentID;
 
+
     try {
       const response = await fetch(
-        "https://apidev.myinteriormart.com/api/FetchAddressMaster/FetchAddressDropdownMaster",
+        "https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-           
+            Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(body),
+           body: JSON.stringify(body),
         }
       );
-
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        throw new Error("Failed to fetch states");
       }
       const data = await response.json();
-      console.log(`Data fetched for ${type}:`, data);
-      return data;
+      // console.log('address array',data);
+
+      // console.log(countryID);
+      const country_detials = data['country'].filter((count) => count.countryID == countryID);
+
+      if (!country_detials.length) {
+        console.error("Country not found");
+        return [];
+      }
+
+
+      const states_details = country_detials[0]['states'].filter((count) => count.stateID == stateID);
+
+      // console.log('address array',country_detials[0].name, states_details[0].name);
+      // return data.country[0]?.states || []; 
+      return states_details;
     } catch (error) {
-      console.error(`Error fetching ${type}:`, error);
-      return null;
+      console.error(error);
+      return [];
+    }
+  };
+
+  // Fetch team image and state details
+  const fetchTeamImage = async () => {
+    try {
+      // Fetch owner image details
+      const ownerImageResponse = await fetch(
+        "https://apidev.myinteriormart.com/api/AlldetailsparticularListingbind/GetOwnerImage",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            companyID: parseInt(listingId), 
+          }),
+        }
+      );
+      if (!ownerImageResponse.ok) {
+        throw new Error("Failed to fetch owner image details");
+      }
+      const ownerImageData = await ownerImageResponse.json();
+      // console.log('Owner Image Data:', ownerImageData);
+      
+      const fetchedStates = await fetchStates(undefined,ownerImageData.countryId, ownerImageData.stateId);
+      // console.log('fechedstates',fetchedStates);
+     
+      const stateName = fetchedStates.find(
+        (state) => state.stateID === ownerImageData.stateId
+      )?.name || "State not found";
+
+      // console.log(stateName);
+
+      // Update team image details
+      setTeamImageDetails(
+        ownerImageData.imagepath.map((img) => ({
+          url: img,
+          title: `${ownerImageData.ownerName} ${ownerImageData.lastName}`,
+          designation: ownerImageData.designation,
+          state: stateName, 
+        }))
+      );
+    } catch (error) {
+      console.error(error);
     }
   };
 
   useEffect(() => {
-    // Fetch states
-    fetchData("states").then((data) => {
-      if (data) setStates(data.states); // Assuming the API returns a `states` array
-    });
-  }, [token]);
+    fetchTeamImage(); 
+  }, []);
 
-  useEffect(() => {
-    fetchTeamImage();
-  }, [listingId, states]); // Fetch team images once states are fetched
 
   useEffect(() => {
     const fetchGalleryImage = async () => {
@@ -699,7 +714,7 @@ function Listingdetails() {
                         />
                         <h6>{teamimageDetails[0].title}</h6>
                         <h6>{teamimageDetails[0].designation}</h6>
-                        <h6>{teamimageDetails[0].state}</h6>
+                        <h6>From : {teamimageDetails[0].state}</h6>
                       </div>
                     )}
 
@@ -724,7 +739,7 @@ function Listingdetails() {
                 <>{status === 1 ? (
         <Listingkeyword companyID={listingDetails.listingId} />
       ) : (
-        <p>Status is not 1, component not shown</p>
+       <></>
       )}</>
                 {/* <Listingkeyword companyID={listingDetails.listingId} /> */}
                 

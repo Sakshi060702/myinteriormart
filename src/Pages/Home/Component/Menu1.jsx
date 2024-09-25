@@ -7,8 +7,8 @@ import Dropdown from "../../Dropdown";
 import Notification from "../../Notification";
 import "../../../FrontEnd/css/Header.css";
 import { useSelector, useDispatch } from "react-redux";
-import useAuthCheck from "../../../Hooks/useAuthCheck"; 
-import '../../../FrontEnd/css/RegistrationMV.css'
+import useAuthCheck from "../../../Hooks/useAuthCheck";
+import "../../../FrontEnd/css/RegistrationMV.css";
 
 function Menu1() {
   const [showNotificationMenu, setShowNotificationMenu] = useState(false);
@@ -24,6 +24,8 @@ function Menu1() {
 
   const [status, setStatus] = useState("");
 
+  const [logoSticky, setLogoSticky] = useState("");
+
   const isAuthenticated = useAuthCheck();
   const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -33,7 +35,6 @@ function Menu1() {
   const toogleMenu = () => {
     setShowMenu(!showMenu);
 
-   
     if (!showMenu) {
       setTimeout(() => {
         setShowMenu(false);
@@ -53,13 +54,11 @@ function Menu1() {
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
-    
   };
 
   const handleClickOutside = (event) => {
     if (dropRef.current && !dropRef.current.contains(event.target)) {
       setDropdownOpen(false);
-      
     }
   };
 
@@ -156,7 +155,7 @@ function Menu1() {
             throw new Error("Failed to fetch logo image");
           }
           const data = await response.json();
-          setImageURL(data.imagepath); // Assuming data contains image URL
+          setImageURL(data.imagepath);
         } catch (error) {
           console.error(error);
         }
@@ -182,28 +181,26 @@ function Menu1() {
         console.log(data);
         setStatus(data.status);
 
-        const listingId=data.listingId;
-        console.log("listingid",listingId)
+        const listingId = data.listingId;
+        console.log("listingid", listingId);
 
-        if(listingId){
+        if (listingId) {
           const response_n = await fetch(
-              "https://apidev.myinteriormart.com/api/ClaimedListings/Claimedlisting",
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
-                  
-                },
-                body: JSON.stringify({
-                  CompanyId: listingId
-                })
-              }
-            );
-            const data_n = await response_n.json();
-            console.log(data_n)
+            "https://apidev.myinteriormart.com/api/ClaimedListings/Claimedlisting",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({
+                CompanyId: listingId,
+              }),
+            }
+          );
+          const data_n = await response_n.json();
+          console.log(data_n);
         }
-
 
         /** Start new api integration with listingID from response */
         // const response_n = await fetch(
@@ -230,6 +227,22 @@ function Menu1() {
     fetchData();
   }, [token]);
 
+  useEffect(() => {
+    const fetchLogo = async () => {
+      try {
+        const response = await fetch(
+          `https://apidev.myinteriormart.com/api/PortalSetting/GetPortalSetting`
+        );
+        const data = await response.json();
+        const logopath = data.portalSettings[0].logopath;
+        setLogoSticky(`https://admin.myinteriormart.com${logopath}`);
+      } catch (error) {
+        console.error("Error fetching banner images:", error);
+      }
+    };
+    fetchLogo();
+  }, []);
+
   return (
     <>
       <header className="header_in">
@@ -237,7 +250,10 @@ function Menu1() {
           <div className="row">
             <div className="col-lg-3 col-12">
               <div id="logo" className="logo">
-                <NavLink to={`/in-${localStorage.getItem('cityname')}`} title="index">
+                <NavLink
+                  to={`/in-${localStorage.getItem("cityname")}`}
+                  title="index"
+                >
                   <img
                     src={logoSticky}
                     width="220"
@@ -248,20 +264,17 @@ function Menu1() {
               </div>
             </div>
             <div className="col-lg-9 col-12 navitems">
-              
               <div>
-               
-{!isAuthenticated && (
-  <NavLink
-    to={`/signup2/in-${localStorage.getItem('cityname')}`}
-    className="listing-btn buttonlogin freelistingbtn mobile-freelisting mobilefreelistingbtn"
-   
-    // onClick={closeMenu}
-  >
-    Free Listing
-  </NavLink>
-)}
+                {!isAuthenticated && (
+                  <NavLink
+                    to={`/signup2/in-${localStorage.getItem("cityname")}`}
+                    className="listing-btn buttonlogin freelistingbtn mobile-freelisting mobilefreelistingbtn freelistingmargin"
 
+                    // onClick={closeMenu}
+                  >
+                    Free Listing
+                  </NavLink>
+                )}
               </div>
               <ul className={`nav-links ${showMenu ? "active" : ""}`}>
                 {/* <li>
@@ -278,50 +291,43 @@ function Menu1() {
 
                 {!isAuthenticated ? (
                   <>
-                  <li style={{marginLeft:'13px'}}>
-                    <NavLink
-                         to={`/Usersuggestion/in-${localStorage.getItem('cityname')}`}
+                    <li style={{ marginLeft: "13px" }}>
+                      <NavLink
+                        to={`/Usersuggestion/in-${localStorage.getItem(
+                          "cityname"
+                        )}`}
                         className=" listing-btn buttonlogin suggestionstyle"
                         style={{
-                        
                           fontSize: "14px",
                           marginRight: "12px",
-
-                          
                         }}
                         // onClick={closeMenu}
                       >
                         Suggestion
                       </NavLink>
-                </li> 
-                   <li>
-                <NavLink
-                        to={`/signup2/in-${localStorage.getItem('cityname')}`}
-                        className="btn_add listing-btn buttonlogin menu-freelisting"
+                    </li>
+                    <li>
+                      <NavLink
+                        to={`/signup2/in-${localStorage.getItem("cityname")}`}
+                        className="btn_add listing-btn buttonlogin menu-freelisting freelistingmargin"
                         style={{
                           backgroundColor: "#fe900d",
                           fontSize: "14px",
                           marginRight: "12px",
-                          
-                          
                         }}
                         // onClick={closeMenu}
                       >
                         Free Listing
                       </NavLink>
-                </li>
-                  
-               
+                    </li>
+
                     <li>
                       <NavLink
-                        to={`/signup2/in-${localStorage.getItem('cityname')}`}
+                        to={`/signup2/in-${localStorage.getItem("cityname")}`}
                         className="listing-btn buttonlogin suggestionbtn"
                         style={{
-                         
                           fontSize: "14px",
                           marginRight: "12px",
-                          
-                          
                         }}
                         // onClick={closeMenu}
                       >
@@ -330,7 +336,7 @@ function Menu1() {
                     </li>
                     <li>
                       <NavLink
-                        to={`/login/in-${localStorage.getItem('cityname')}`}
+                        to={`/login/in-${localStorage.getItem("cityname")}`}
                         className=" listing-btn buttonlogin suggestionbtn "
                         style={{ fontSize: "14px" }}
                         // onClick={closeMenu}
@@ -338,7 +344,6 @@ function Menu1() {
                         Login
                       </NavLink>
                     </li>
-                     
                   </>
                 ) : (
                   <>
@@ -383,14 +388,24 @@ function Menu1() {
                             id="profileid"
                             className="dropdown usericon"
                             ref={dropRef}
-                            style={{ marginLeft: "20px", alignItems: "center" ,position: "relative", }}
+                            style={{
+                              marginLeft: "20px",
+                              alignItems: "center",
+                              position: "relative",
+                            }}
                           >
                             <button
-                               className={`usericon-btn dropdown-toggle ${dropdownOpen ? 'buttonActive'  : ''}`}
+                              className={`usericon-btn dropdown-toggle ${
+                                dropdownOpen ? "buttonActive" : ""
+                              }`}
                               type="button"
                               onClick={toggleDropdown}
-                              style={{ background: "none", border: "none",position: "relative",
-                                padding: '0 25px 0 0' }}
+                              style={{
+                                background: "none",
+                                border: "none",
+                                position: "relative",
+                                padding: "0 25px 0 0",
+                              }}
                             >
                               <img
                                 className="usericon-img"
@@ -421,14 +436,17 @@ function Menu1() {
                         </div>
                       </>
                     )}
+                   
                     {userType === "Business" && (
                       <>
                         <div>
-                        {status !== 1 && (
+                          {status !== 1 && (
                             <ul>
                               <li>
                                 <NavLink
-                                  to={`/selectcategory/in-${localStorage.getItem('cityname')}`}
+                                  to={`/selectcategory/in-${localStorage.getItem(
+                                    "cityname"
+                                  )}`}
                                   className="btn_add listing-btn menu-freelisting"
                                   style={{
                                     backgroundColor: "#fe900d",
@@ -447,7 +465,7 @@ function Menu1() {
                           style={{ display: "flex", alignItems: "center" }}
                         >
                           <div
-                            className="dropdown notification"
+                            className="dropdown notification menu-freelisting"
                             ref={notificationRef}
                             style={{ marginLeft: "20px" }}
                           >
@@ -488,14 +506,15 @@ function Menu1() {
                             }}
                           >
                             <button
-                              className={`usericon-btn profileimgp dropdown-toggle ${dropdownOpen ? 'buttonActive' : ''}`}
+                              className={`usericon-btn profileimgp dropdown-toggle ${
+                                dropdownOpen ? "buttonActive" : ""
+                              }`}
                               type="button"
                               onClick={toggleDropdown}
                               style={{
                                 background: "none",
                                 border: "none",
                                 position: "relative",
-                               
                               }}
                             >
                               <img
@@ -506,9 +525,8 @@ function Menu1() {
                                     : usericon
                                 }
                                 alt="user icon"
-                                
                               />
-                            
+
                               {isAuthenticated && (
                                 <span
                                   style={{
@@ -527,42 +545,235 @@ function Menu1() {
                             </button>
                           </div>
                         </div>
-
-
                       </>
                     )}
-                    
                   </>
                 )}
               </ul>
-              {userType === "Business" &&(
-                      <div >
-      {status !== 1 && (
-        <NavLink
-          to={`/selectcategory/in-${localStorage.getItem('cityname')}`}
-          className=" listing-btn mobile-freelisting freelistingbtn mobilefreelistingbtn"
-          
-        >
-          Free Listing
-        </NavLink>
-      )}
-    </div>
+
+{/* new */}
+
+              {/* for mobile view */}
+             
+              {userType === "Business" && (
+                <>
+                  <div>
+                    {status !== 1 && (
+                      <NavLink
+                        to={`/selectcategory/in-${localStorage.getItem(
+                          "cityname"
+                        )}`}
+                        className=" listing-btn mobile-freelisting freelistingbtn mobilefreelistingbtn freelistingmargin"
+                      >
+                        Free Listing
+                      </NavLink>
                     )}
+                  </div>
+                  <div
+                    className="notification-user listing-btn mobile-freelisting"
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <div
+                      className="dropdown notification notificationm"
+                      ref={notificationRef}
+                      
+                    >
+                      <button
+                        type="button "
+                        onClick={toggleNotificationMenu}
+                        className="notification-img"
+                      >
+                        <img src={notificationIcon} alt="notification" />
+                        {hasNotifications && (
+                          <span
+                            style={{
+                              position: "absolute",
+                              top: "0px",
+                              right: "0px",
+                              height: "12px",
+                              width: "12px",
+                              backgroundColor: "orange",
+                              borderRadius: "50%",
+                            }}
+                          ></span>
+                        )}
+                        {showNotificationMenu && (
+                          <Notification
+                            setHasNotifications={setHasNotifications}
+                          />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    id="profileid"
+                    className="dropdown usericon listing-btn mobile-freelisting profileimgm"
+                    ref={dropRef}
+                  
+                  >
+                    <button
+                      className={`usericon-btn profileimgp dropdown-toggle ${
+                        dropdownOpen ? "buttonActive" : ""
+                      }`}
+                      type="button"
+                      onClick={toggleDropdown}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        position: "relative",
+                      }}
+                    >
+                      <img
+                        className="usericon-img"
+                        src={
+                          imageURL
+                            ? `https://apidev.myinteriormart.com${imageURL}`
+                            : usericon
+                        }
+                        alt="user icon"
+                      />
+
+                      {isAuthenticated && (
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "33px",
+                            right: "25px",
+                            width: "12px",
+                            height: "12px",
+                            backgroundColor: "green",
+                            borderRadius: "50%",
+                            border: "1px solid green",
+                          }}
+                        />
+                      )}
+                      {isAuthenticated && dropdownOpen && <Dropdown />}
+                    </button>
+                  </div>
+                </>
+              )}
+
+
+{userType === "Consumer" && (
+                <>
+                  
+                  
+                  <div
+                    id="profileid"
+                    className="dropdown usericon listing-btn mobile-freelisting profileimgm"
+                    ref={dropRef}
+                  
+                  >
+                    <button
+                      className={`usericon-btn profileimgp dropdown-toggle ${
+                        dropdownOpen ? "buttonActive" : ""
+                      }`}
+                      type="button"
+                      onClick={toggleDropdown}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        position: "relative",
+                      }}
+                    >
+                      <img
+                        className="usericon-img"
+                        src={
+                          imageURL
+                            ? `https://apidev.myinteriormart.com${imageURL}`
+                            : usericon
+                        }
+                        alt="user icon"
+                      />
+
+                      {isAuthenticated && (
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "33px",
+                            right: "25px",
+                            width: "12px",
+                            height: "12px",
+                            backgroundColor: "green",
+                            borderRadius: "50%",
+                            border: "1px solid green",
+                          }}
+                        />
+                      )}
+                      {isAuthenticated && dropdownOpen && <Dropdown />}
+                    </button>
+                  </div>
+                </>
+              )}
+
+
+
+
+
+
+              {userType !== "Business" && userType !=='Consumer'&& (
+                <>
+                  
+                  <div
+                    id="profileid"
+                    className="dropdown usericon listing-btn mobile-freelisting profileimgm"
+                    ref={dropRef}
+                  
+                  >
+                    <button
+                      className={`usericon-btn profileimgp dropdown-toggle ${
+                        dropdownOpen ? "buttonActive" : ""
+                      }`}
+                      type="button"
+                      onClick={toogleMenu}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        position: "relative",
+                      }}
+                    >
+                      <img
+                        className="usericon-img"
+                        src={
+                          imageURL
+                            ? `https://apidev.myinteriormart.com${imageURL}`
+                            : usericon
+                        }
+                        alt="user icon"
+                      />
+
+                      {isAuthenticated && (
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "33px",
+                            right: "25px",
+                            width: "12px",
+                            height: "12px",
+                            backgroundColor: "green",
+                            borderRadius: "50%",
+                            border: "1px solid green",
+                          }}
+                        />
+                      )}
+                      {isAuthenticated && dropdownOpen && <Dropdown />}
+                    </button>
+                  </div>
+                </>
+              )}
               <div
                 className="burger"
                 onClick={toogleMenu}
                 style={{ marginLeft: "30px" }}
               >
-                  <div className={`arrow-icon ${showMenu ? "open" : ""}`}>
+                {/* <div className={`arrow-icon ${showMenu ? "open" : ""}`}>
                   <span className="arrow" style={{display:'inline-block',letterSpacing:'5px',fontWeight:'bold'}}>&#9662;</span>
-        </div>
+        </div> */}
                 {/* <div className={`menu-icon ${showMenu ? "open" : ""}`}>
                   <div className="line line1"></div>
                   <div className="line line2"></div>
                   <div className="line line3"></div>
                 </div> */}
-
-                
               </div>
             </div>
           </div>

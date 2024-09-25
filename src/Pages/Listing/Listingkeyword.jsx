@@ -45,28 +45,28 @@ function Listingkeyword({ companyID }) {
     getPaymentKeywords();
   }, [companyID]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://apidev.myinteriormart.com/api/Keywordshowfromstatus/GetKeywordshow",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         "https://apidev.myinteriormart.com/api/Keywordshowfromstatus/GetKeywordshow",
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //           },
            
-          }
-        );
-        const data = await response.json();
-        console.log(data);
-        setStatus(data.status);
-      } catch (error) {
-        console.error("Error fetching status:", error);
-      }
-    };
-    fetchData();
-  }, [token]);
+  //         }
+  //       );
+  //       const data = await response.json();
+  //       console.log(data);
+  //       setStatus(data.status);
+  //     } catch (error) {
+  //       console.error("Error fetching status:", error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [token]);
 
   return (
     <>

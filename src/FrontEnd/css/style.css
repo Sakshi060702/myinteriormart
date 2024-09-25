@@ -1115,7 +1115,7 @@ header.header_in .hamburger-inner::after {
   #logo {
     float: none;
     position: absolute;
-    top: 0;
+    top: 21px;
     /* left: -10px; */
     /* width: 100%; */
     text-align: center;
@@ -10372,7 +10372,7 @@ a.btn_3:hover,
 
   #logo img {
     width: auto;
-    height: 40px;
+    height: 39px;
     margin-left: -30px !important;
     margin-top: 12px !important;
   }
