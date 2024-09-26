@@ -90,7 +90,7 @@ function Contractor1() {
         <div className="show-brand">
           <div className="row">
             <div className="col-lg-2 col-md-12 category-list">
-              <div className="navbar-brand">
+              <div className="navbar-brand contractor">
                 <button
                   className="btn btn-link navbar-brand-btn"
                   type="button"
@@ -186,8 +186,8 @@ function Contractor1() {
                         const icon = `/FileManager/CategoryIcons/Second/${category.imageURL}.png`;
                         return (
                           <div
-                            className="col-md-3 col-sm-3 col-3 mim-Box-item"
-                            style={{ height: "142px" }}
+                            className="col-md-3 col-sm-3 col-3 mim-Box-item servicecategorybox"
+                            
                             key={category.secondCategoryID}
                           >
                             <Link

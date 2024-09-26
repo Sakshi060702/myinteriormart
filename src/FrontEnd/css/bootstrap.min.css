@@ -8239,7 +8239,7 @@ button.bg-dark:hover {
 
 .mt-5,
 .my-5 {
-    margin-top: 3rem !important
+    margin-top: 3rem 
 }
 
 .mr-5,
@@ -8249,8 +8249,20 @@ button.bg-dark:hover {
 
 .mb-5,
 .my-5 {
-    margin-bottom: 3rem !important
+    margin-bottom: 3rem 
 }
+
+/* @media (max-width:767px) {
+    .mb-5,
+.my-5 {
+    margin-bottom: -1rem !important
+}
+
+.mt-5,
+.my-5 {
+    margin-top: 0rem !important
+}
+} */
 
 .ml-5,
 .mx-5 {

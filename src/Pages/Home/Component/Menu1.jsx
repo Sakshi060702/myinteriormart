@@ -16,6 +16,7 @@ function Menu1() {
   const [hasNotifications, setHasNotifications] = useState(false);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const[dropOpen,setDrpOpen]=useState(false);
   const dropdownOpenClass = "";
   const [showMenu, setShowMenu] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
@@ -56,18 +57,31 @@ function Menu1() {
     setDropdownOpen(!dropdownOpen);
   };
 
+ 
+
   const handleClickOutside = (event) => {
+    const parent_node = event.target.parentElement.parentElement;
+    const parent_id = parent_node.id;
+    if(parent_id == "dropdown_logged_in_menu"){
+      return;
+
+    }
     if (dropRef.current && !dropRef.current.contains(event.target)) {
       setDropdownOpen(false);
     }
   };
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+
+  const toggleDropdownmobile = () => {
+    setDrpOpen(!dropOpen);
+  };
+
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
 
   const notificationRef = useRef(null);
   const handleclickoutside = (event) => {
@@ -420,8 +434,8 @@ function Menu1() {
                                 <span
                                   style={{
                                     position: "absolute",
-                                    top: "33px",
-                                    right: "0",
+                                    top: "31px",
+                                    right: "-2px",
                                     width: "12px",
                                     height: "12px",
                                     backgroundColor: "green",
@@ -516,7 +530,7 @@ function Menu1() {
                                 border: "none",
                                 position: "relative",
                               }}
-                            >
+                            > 
                               <img
                                 className="usericon-img"
                                 src={
@@ -551,7 +565,7 @@ function Menu1() {
                 )}
               </ul>
 
-{/* new */}
+
 
               {/* for mobile view */}
              
@@ -613,10 +627,10 @@ function Menu1() {
                   >
                     <button
                       className={`usericon-btn profileimgp dropdown-toggle ${
-                        dropdownOpen ? "buttonActive" : ""
+                        dropOpen ? "buttonActive" : ""
                       }`}
                       type="button"
-                      onClick={toggleDropdown}
+                      onClick={toggleDropdownmobile}
                       style={{
                         background: "none",
                         border: "none",
@@ -638,7 +652,7 @@ function Menu1() {
                           style={{
                             position: "absolute",
                             top: "33px",
-                            right: "25px",
+                            right: "0px",
                             width: "12px",
                             height: "12px",
                             backgroundColor: "green",
@@ -647,7 +661,7 @@ function Menu1() {
                           }}
                         />
                       )}
-                      {isAuthenticated && dropdownOpen && <Dropdown />}
+                      {isAuthenticated && dropOpen && <Dropdown />}
                     </button>
                   </div>
                 </>
@@ -666,10 +680,10 @@ function Menu1() {
                   >
                     <button
                       className={`usericon-btn profileimgp dropdown-toggle ${
-                        dropdownOpen ? "buttonActive" : ""
+                        dropOpen ? "buttonActive" : ""
                       }`}
                       type="button"
-                      onClick={toggleDropdown}
+                      onClick={toggleDropdownmobile}
                       style={{
                         background: "none",
                         border: "none",
@@ -691,7 +705,7 @@ function Menu1() {
                           style={{
                             position: "absolute",
                             top: "33px",
-                            right: "25px",
+                            right: "0px",
                             width: "12px",
                             height: "12px",
                             backgroundColor: "green",
@@ -700,7 +714,7 @@ function Menu1() {
                           }}
                         />
                       )}
-                      {isAuthenticated && dropdownOpen && <Dropdown />}
+                      {isAuthenticated && dropOpen && <Dropdown />}
                     </button>
                   </div>
                 </>
@@ -747,7 +761,7 @@ function Menu1() {
                           style={{
                             position: "absolute",
                             top: "33px",
-                            right: "25px",
+                            right: "0px",
                             width: "12px",
                             height: "12px",
                             backgroundColor: "green",
@@ -756,25 +770,25 @@ function Menu1() {
                           }}
                         />
                       )}
-                      {isAuthenticated && dropdownOpen && <Dropdown />}
+                      {isAuthenticated && dropOpen && <Dropdown />}
                     </button>
                   </div>
                 </>
               )}
-              <div
+              {/* <div
                 className="burger"
                 onClick={toogleMenu}
                 style={{ marginLeft: "30px" }}
               >
-                {/* <div className={`arrow-icon ${showMenu ? "open" : ""}`}>
+                <div className={`arrow-icon ${showMenu ? "open" : ""}`}>
                   <span className="arrow" style={{display:'inline-block',letterSpacing:'5px',fontWeight:'bold'}}>&#9662;</span>
-        </div> */}
-                {/* <div className={`menu-icon ${showMenu ? "open" : ""}`}>
+        </div>
+                <div className={`menu-icon ${showMenu ? "open" : ""}`}>
                   <div className="line line1"></div>
                   <div className="line line2"></div>
                   <div className="line line3"></div>
-                </div> */}
-              </div>
+                </div>
+              </div> */}
             </div>
           </div>
         </div>

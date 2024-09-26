@@ -57,7 +57,7 @@ function Layout({ children }) {
               </Link> */}
             </div>
           </div>
-          <div className="col-lg-3 mb-5" id="mob_view">
+          <div className="col-lg-3 mb-5 selectoption" id="mob_view">
             <Dropdown>
               <Dropdown.Toggle
                 variant="outline-warning"

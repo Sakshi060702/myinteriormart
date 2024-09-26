@@ -668,7 +668,7 @@ console.log(type,countryID, parentID );
         <div className="row">
           {listingDetails ? (
             <>
-              <div className="col-lg-3 individual-listing-sidebar padding-5">
+              <div className="col-lg-3 individual-listing-sidebar padding-5 pagebottom">
                 <div className="box_detail_cus">
                   <div className="p-3">
                     <div className="user_logo_sec">
@@ -712,7 +712,7 @@ console.log(type,countryID, parentID );
                           }
                           alt="Owner Image"
                         />
-                        <h6>{teamimageDetails[0].title}</h6>
+                        <h5>{teamimageDetails[0].title}</h5>
                         <h6>{teamimageDetails[0].designation}</h6>
                         <h6>From : {teamimageDetails[0].state}</h6>
                       </div>
@@ -746,8 +746,8 @@ console.log(type,countryID, parentID );
                 <Listingspecialisation companyID={listingDetails.listingId} />
                 <Listingpayment companyID={listingDetails.listingId} />
               </div>
-              <div className="col-lg-9 individual-listing-main padding-5">
-                <div className="listing-gallery">
+              <div className="col-lg-9 individual-listing-main padding-5 ">
+                <div className="listing-gallery ">
                   <div className="gallery listingbanner">
                     {/* <img
                       src={banner2}
@@ -858,8 +858,9 @@ console.log(type,countryID, parentID );
                             {listingDetails.companyName}
                           </h5>
                         </div>
-                        <span className="company-category-name"></span>
-                        <span className="company-rating">
+
+                        <span className="company-category-name">{listingDetails.listingKeyword}</span> <br></br>
+                        <span className="company-rating" style={{marginLeft:'2px'}}>
                           {listingDetails.ratingAverage}.0
                           <div className="cat_star">
                             {Array(listingDetails.ratingAverage)
@@ -919,8 +920,8 @@ console.log(type,countryID, parentID );
                         </div>
                        
                       </div>
-                      <div style={{display:'flex'}}>
-                      <div className="col-lg-6 mb-1 px-0 year_gst" style={{marginRight:'-24px'}}>
+                      {/* <div style={{display:'flex'}}> */}
+                      <div className="col-lg-6 mb-1 px-0 year_gst">
                         <p className="m-0">
                           <i
                             className="fa fa-calendar"
@@ -939,7 +940,7 @@ console.log(type,countryID, parentID );
                           {listingDetails.numberOfEmployees} Employees
                         </p>
                       </div>
-                      </div>
+                      {/* </div> */}
                       
                       <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
                         <p className="mb-0">
@@ -982,7 +983,7 @@ console.log(type,countryID, parentID );
                           workingtime={listingDetails.workingtime}
                         />
                       </div>
-                      <div className="social-details">
+                      <div className="social-details desktop">
                         <button
                           className="btn btn-guotes btn-sm"
                           onClick={() => setIsPopupOpen(true)}
@@ -1039,9 +1040,69 @@ console.log(type,countryID, parentID );
                           Subscribe
                         </button>
                       </div>
+                      <div className="social-details mobile">
+                        <button
+                          className={`btn btn-bookmark ${
+                            isBookmarked ? "active" : ""
+                          } ${isBookmarked ? "icon-active" : ""}`}
+                          onClick={handleBookmarkToggle}
+                          style={{ marginRight: "5px", fontSize: "13px" }}
+                        >
+                          <i
+                            className={`fa fa-bookmark`}
+                            style={{ marginRight: "5px" }}
+                          ></i>
+                          Bookmark
+                        </button>
+
+                        <button
+                          className="btn-custom pushRight btn btn-light btn-sm btnshare"
+                          onClick={() => setIsSociallinkOpen(true)}
+                          style={{ height: "32px", fontSize: "13px" }}
+                        >
+                          <i className="icon-share"></i>Share
+                        </button>
+
+                        <button
+                          className={`btn btn-like ${isLike ? "active" : ""} ${
+                            isLike ? "icon-active" : ""
+                          }`}
+                          onClick={handleLikeToggle}
+                          style={{ marginRight: "5px", fontSize: "13px" }}
+                        >
+                          <i
+                            className={`fa fa-thumbs-up`}
+                            style={{ marginRight: "5px" }}
+                          ></i>
+                          Like
+                        </button>
+                        <button
+                          className={`btn btn-subscribe ${
+                            isSubscribe ? "active" : ""
+                          } ${isSubscribe ? "icon-active" : ""}`}
+                          onClick={handleSubscribeToggle}
+                          style={{ marginRight: "5px", fontSize: "13px" }}
+                        >
+                          <i
+                            className={`fa fa-bell`}
+                            style={{ marginRight: "5px" }}
+                          ></i>
+                          Subscribe
+                        </button>
+                        
+                      </div>
+                      <div className="social-details mobile">
+                        <button
+                            className="btn btn-guotes btn-sm"
+                            onClick={() => setIsPopupOpen(true)}
+                            style={{ marginRight: "10px", font: "bold" }}
+                          >
+                            Get Claim
+                          </button>
+                      </div>
                     </div>
                   </div>
-                  <div className="banner-block one-block my-5">
+                  <div className="banner-block one-block my-5 listingaboutus">
                     <div className="row px-3">
                       <div className="col-12">
                         <h3>About us</h3>
@@ -1062,7 +1123,7 @@ console.log(type,countryID, parentID );
                   </div>
 
                   <Webreviews />
-                  <div className="col-lg-4 col-md-12 company-map padding-all-5 listinggallery">
+                  <div className="col-lg-4 col-md-12 company-map padding-all-5 listinggallery listingb">
                       <div className="pro-large-img img-zoom gallery1">
                         <img
                           className="upload_imagesbanner "

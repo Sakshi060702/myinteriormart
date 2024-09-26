@@ -158,8 +158,8 @@ function Dealer1() {
                             const icon = `/FileManager/CategoryIcons/Second/${cat.imageURL}.png`;
                             return (
                               <div
-                                className="col-md-3 col-sm-3 col-3 mim-Box-item"
-                                style={{ height: "142px" }}
+                                className="col-md-3 col-sm-3 col-3 mim-Box-item servicecategorybox"
+                                
                                 key={cat.secondCategoryID}
                               >
                                 <Link

@@ -88,7 +88,7 @@ function Review1({ listingID }) {
 
   return (
     <>
-      <div className="company-listing-tab">
+      <div className="company-listing-tab ">
         <div className="step">
           <div className="tab-content checkout">
             <div
@@ -99,7 +99,7 @@ function Review1({ listingID }) {
             >
               <div className="review-form mb-3">
                 <div className="d-flex justify-content-between align-items-center ">
-                  <div className="Count_review">
+                  <div className="Count_review writereview">
                     <div className="review-form mb-3">
                       <div className="d-flex justify-content-between  ">
                         {/* <div className="Count_review">

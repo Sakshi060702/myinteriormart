@@ -20,7 +20,7 @@ function Webreviews() {
 
   return (
     <main>
-      <div className="company-listing-tab">
+      <div className="company-listing-tab listingreviews">
         <div className="step">
           <ul className="nav nav-tabs" id="tab_checkout" role="tablist">
             {buttons.map((button, index) => (

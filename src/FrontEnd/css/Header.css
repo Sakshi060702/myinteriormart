@@ -160,7 +160,7 @@
       width:40px !important;
       height: 40px !important;
       border-radius: 25%;
-      border: 1px solid black;
+      /* border: 1px solid black; */
       
      
     }
@@ -177,7 +177,7 @@
       width:40px;
       height: 40px;
       border-radius: 25%;
-      border: 1px solid black;
+      /* border: 1px solid black; */
   
     }
   }

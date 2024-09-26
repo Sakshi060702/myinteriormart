@@ -3757,7 +3757,7 @@ a.box_feat h3 {
   }
 
   .strip.map_view {
-    margin: 5px 10px;
+    margin: 12px 10px;
   }
 
   .strip.map_view .listing-bottom-list ul {
@@ -10107,6 +10107,17 @@ a.btn_3:hover,
   height: 100%;
 }
 
+@media (max-width:767px) {
+  .select_category_img {
+    width: 95%;
+    height: 95%;
+  }
+
+  .select_category_sec {
+    padding: 0px 0;
+  }
+}
+
 .select_category_info h5 {
   font-size: 20px;
   color: #fb830d;
@@ -10545,6 +10556,7 @@ a.btn_3:hover,
     margin: auto;
     width: 220px;
     height: 65px;
+    margin-top: 4px;
   }
 
   .select_category_info h5 {

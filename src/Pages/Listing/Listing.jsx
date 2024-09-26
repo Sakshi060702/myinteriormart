@@ -247,7 +247,7 @@ function Listing() {
                               : "None",
                         }}
                       >
-                        <div className="col-6">
+                        <div className="col-6 listingdiv">
                           <div className="wrapper">
                             {/* <h3 style={{ color: "black" }}>
                               <Link
@@ -274,7 +274,7 @@ function Listing() {
                                 className="fa fa-map-marker"
                                 style={{ paddingRight: "5px" }}
                               ></i>
-                              {listing.locality}, {listing.area}
+                             {listing.area},{listing.locality}
                             </p>
                             <div className="business-info-container listingcolor">
                               <BusinessHours
@@ -332,7 +332,7 @@ function Listing() {
                                   className="listingrating"
                                   style={{
                                     marginTop: "-40px",
-                                    marginLeft: "-26px",
+                                    marginLeft: "-38px",
                                     marginBottom: "-13px",
                                   }}
                                 >
@@ -388,7 +388,7 @@ function Listing() {
                           )}
                         </div>
 
-                        <div className="col-lg-12 listing-bottom">
+                        <div className="col-lg-12 listing-bottom listingbottom">
                           <ul className="listing-bottom-list">
                             {/* Rating in listing bottom for desktop */}
                             <div>
@@ -428,11 +428,15 @@ function Listing() {
                                   <p className="listinggetclaim">
                                     <button
                                       className="btn btn-guotes btn-sm getclaimbtn"
-                                      onClick={() =>
+                                      onClick={(event) =>{
+                                        event.preventDefault();
+                                        event.stopPropagation();
                                         setIsPopupOpen([
                                           true,
                                           listing.listingId,
                                         ])
+                                      }
+                                        
                                       }
                                     >
                                       Get Quotes
@@ -523,8 +527,8 @@ function Listing() {
 
           {/* mobile view more */}
           {isMobile && listing.length === itemsPerPage && (
-            <button onClick={handleViewMore} className="view-more-btn">
-              View More
+            <button onClick={handleViewMore} className="view-more-btn" style={{borderRadius:'32px',backgroundColor:'white'}}>
+              More Search Results
             </button>
           )}
         </div>

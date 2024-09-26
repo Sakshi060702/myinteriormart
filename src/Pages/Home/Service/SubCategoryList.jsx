@@ -66,89 +66,99 @@ const SubCategoryList = () => {
             <em></em>
           </span>
           <h2>Popular Categories</h2>
+          
         </div>
-        <div className="row  categories-list">
-          {selectedCategory && (
-            <ul className="subcategories-list d-flex  flex-wrap">
-              {subCategories.map((subCategory,index) => {
-                 const categoriesPerRow = 4;
-                 const isFirstRow = index < categoriesPerRow;
-               
+        <div className="row categories-list">
+  {selectedCategory && (
+    <ul className="subcategories-list d-flex flex-wrap">
+      {subCategories.map((subCategory, index) => {
+        const categoriesPerRow = 4;
+        const totalCategories = subCategories.length;
 
-                const justifyContentClass = isFirstRow ? "center" : "start";
-                return(
-                  <li
-                  key={subCategory.thirdCategoryID}
-                  className={`col-lg-3 col-6 d-flex justify-content-${justifyContentClass}`}
+       
+        const isFirstRow = index < categoriesPerRow;
+        
+        const remainingCategories = totalCategories % categoriesPerRow;
+        const isLastRow = totalCategories > categoriesPerRow && index >= Math.floor(totalCategories / categoriesPerRow) * categoriesPerRow;
+
+        
+        let justifyContentClass;
+        if (isFirstRow && totalCategories <= categoriesPerRow) {
+          justifyContentClass = "center"; 
+        } else if (isLastRow && remainingCategories !== 0 && remainingCategories < categoriesPerRow) {
+          justifyContentClass = "start"; 
+        } else {
+          justifyContentClass = "center"; 
+        }
+
+        return (
+          <li
+            key={subCategory.thirdCategoryID}
+            className={`col-lg-3 col-6 d-flex justify-content-${justifyContentClass}`}
+          >
+            <div className="item">
+              <span
+                className="icon"
+                style={{
+                  display: "inline-block",
+                  width: "40px",
+                  height: "40px",
+                  overflow: "hidden",
+                  position: "relative",
+                  marginRight: "10px",
+                }}
+              >
+                <div
+                  style={{
+                    width: "15px",
+                    height: "15px",
+                    backgroundColor: "orange",
+                    borderRadius: "50%",
+                    position: "absolute",
+                    top: "35%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                ></div>
+              </span>
+
+              <Link
+                to={`/All/${subCategory.name
+                  .replace(/\s+/g, "-")
+                  .toLowerCase()}/${selectedCategory.name
+                  .replace(/\s+/g, "-")
+                  .toLowerCase()}/in-${localStorage.getItem("cityname")}?secatEncyt=${encodeURIComponent(
+                  encrypt(parseInt(subCategory.secondCategoryID))
+                )}`}
+                title={subCategory.name}
+                className="Linkstyle categorylink"
+              >
+                {subCategory.name}
+              </Link>
+
+              {subCategory.fourthCategories && subCategory.fourthCategories.length > 0 && (
+                <Link
+                  to={`/${subCategory.name
+                    .replace(/\s+/g, "-")
+                    .toLowerCase()}/${selectedCategory.name
+                    .replace(/\s+/g, "-")
+                    .toLowerCase()}/in-${localStorage.getItem("cityname")}?secatEncyt=${encodeURIComponent(
+                    encrypt(parseInt(subCategory.thirdCategoryID))
+                  )}`}
+                  title={subCategory.name}
+                  style={{ color: "orange" }}
                 >
-                  <div className="item">
-                    <span
-                      className="icon"
-                      style={{
-                        display: "inline-block",
-                        width: "40px",
-                        height: "40px",
-                        overflow: "hidden",
-                        position: "relative",
-                        marginRight: "10px",
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: "15px",
-                          height: "15px",
-                          backgroundColor: "orange",
-                          borderRadius: "50%",
-                          position: "absolute",
-                          top: "35%",
-                          left: "50%",
-                          transform: "translate(-50%, -50%)",
-                        }}
-                      ></div>
-                    </span>
+                  More ...
+                </Link>
+              )}
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+  )}
+</div>
 
-                    <Link
-                      to={`/All/${subCategory.name
-                        .replace(/\s+/g, "-")
-                        .toLowerCase()}/${selectedCategory.name
-                        .replace(/\s+/g, "-")
-                        .toLowerCase()}/in-${localStorage.getItem(
-                        "cityname"
-                      )}?secatEncyt=${encodeURIComponent(
-                        encrypt(parseInt(subCategory.secondCategoryID))
-                      )}`}
-                      title={subCategory.name}
-                      className="Linkstyle categorylink"
-                    >
-                      {subCategory.name}
-                    </Link>
-
-                    {subCategory.fourthCategories &&
-                      subCategory.fourthCategories.length > 0 && (
-                        <Link
-                          to={`/${subCategory.name
-                            .replace(/\s+/g, "-")
-                            .toLowerCase()}/${selectedCategory.name
-                            .replace(/\s+/g, "-")
-                            .toLowerCase()}/in-${localStorage.getItem(
-                            "cityname"
-                          )}?secatEncyt=${encodeURIComponent(
-                            encrypt(parseInt(subCategory.thirdCategoryID))
-                          )}`}
-                          title={subCategory.name}
-                          style={{ color: "orange" }}
-                        >
-                          More ...
-                        </Link>
-                      )}
-                  </div>
-                </li>
-                )
-                
-})}
-            </ul>
-          )}
-        </div>
       </div>
     </div>
   );

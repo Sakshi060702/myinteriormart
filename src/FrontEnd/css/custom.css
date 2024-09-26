@@ -33,6 +33,45 @@
 }
 
 
+@media (min-width:320px)  {
+
+	.social-details.desktop{
+		display: none;
+	}
+	.social-details.mobile{
+		display: flex;
+		flex-wrap: nowrap;
+	}
+	.social-details.mobile > .btn{
+		margin: 0;
+		padding: 0px 6px;
+	}
+
+	.listinggetclaim > .getclaimbtn{
+		background-color: white !important;
+        color: orange;
+	}
+
+
+	.dropdown.usericon.listing-btn.mobile-freelisting.profileimgm{
+		float: right;
+		right: 10px;
+	}
+
+	 /* smartphones, Android phones, landscape iPhone */ 
+}
+@media (min-width:600px)  { /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */ }
+@media (min-width:801px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */ }
+@media (min-width:1025px) { 
+	
+	.social-details.desktop{
+		display: block;
+	}
+	
+	.social-details.mobile{
+		display: none;
+	}
+ }
 
 
 .ui-state-active,
@@ -345,6 +384,13 @@ footer ul {
 	width: 40px;
 	margin-bottom: 15px;
 	margin-top: 20px;
+}
+@media (max-width:767px) {
+	.mim-Box-item img {
+		width: 40px;
+		margin-bottom: 2px;
+		margin-top: 7px;
+	}
 }
 
 .main-Box-item p {
@@ -665,7 +711,7 @@ footer ul {
 .box_detail_cus {
 	background-color: #fff;
 	box-shadow: 0px 0px 30px 0px rgb(0 0 0 / 10%);
-	margin-bottom: 15px;
+	margin-bottom: 7px;
 }
 
 .listing-specialisat-list {
@@ -1328,6 +1374,12 @@ option[value=""][disabled] {
 	.navbar-brand {
 		width: 50%!important;
 	}
+
+	.navbar-brand.contractor{
+		width: 60%!important;
+	
+	}
+
 	.navbar-brand-offer-menu {
 		width: 50%!important;
 	}
