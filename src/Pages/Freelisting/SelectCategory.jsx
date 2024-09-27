@@ -6,8 +6,8 @@ function SelectCategory(){
         <>
         <div className="tab-pane fade active show" id="v-pills-category" role="tabpanel" aria-labelledby="v-pills-category-tab">
       <h5>Post your free ad</h5>
-      <div className="row py-5">
-        <div className="col-md-12 d-flex justify-content-center">
+      <div className="row py-5 selectcategoryblock">
+        <div className="col-md-12 d-flex justify-content-center selectcategory">
           <div className="select_category_sec d-flex align-items-center">
             <div className="select_category_img_sec">
                <img src={leftImage} alt="img" className="select_category_img" />

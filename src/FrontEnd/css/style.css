@@ -1119,7 +1119,7 @@ header.header_in .hamburger-inner::after {
     /* left: -10px; */
     /* width: 100%; */
     text-align: center;
-    left:35px;        /*add space left hand side of logo*/
+    left:11px;        /*add space left hand side of logo*/
     bottom: -16px;
   }
 
@@ -10514,7 +10514,7 @@ a.btn_3:hover,
   }
 
   .notify_body {
-    height: 400px;
+    height: 1000px;
     padding: 0;
     overflow: hidden;
     margin-top: 0px;

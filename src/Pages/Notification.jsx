@@ -45,7 +45,8 @@ const Notification = ({ setHasNotifications }) => {
   }, [token,setHasNotifications]);
 
   return (
-    <div className="notification1" >
+    <>
+    <div className="notification1 notificationdekstoppage" >
       <div>
         <div className="notificationheader">
           <h5>Notification</h5>
@@ -77,7 +78,7 @@ const Notification = ({ setHasNotifications }) => {
                           
                         </div>
                         <div className="notification-content">
-                          <div style={{marginRight:'-4px', marginLeft:'-21px'}}>
+                          <div className="notificationcontent">
                           <span className="visit-date" style={{textAlign:'right', margin:'9px 15px 0px 24px'}}>
                             {notification.visitDate}
                           </span>
@@ -106,6 +107,73 @@ const Notification = ({ setHasNotifications }) => {
         </div>
       </div>
     </div>
+    
+    {/* for mobile view  */}
+
+    <div className="notification1 notificationmobilepage" >
+      <div>
+        <div className="notificationheader">
+          <h5>Notification</h5>
+          {/* <a onClick={toggleNotificationMenu}>View All</a>  */}
+        </div>
+        <div className="notify_body">
+          <div>
+            <div className="list_general like-listing">
+              <ul>
+                {notification.length === 0 ? (
+                  <li>No notifications available</li>
+                ) : (
+                  notification.map((notification, index) => (
+                    <li key={index} className="notification-item">
+                      <div className="notification-list" style={{display:'flex'}}>
+                        
+                        <div className="notification-image">
+                          <div>
+                          {notification.profileImage ? (
+                            <img
+                              src={`https://apidev.myinteriormart.com${notification.profileImage}`}
+                              alt={`${notification.companyName} profile`}
+                              style={{ height: '63px',width: '45px',margin:'0px 0px 0px -26px',position:'absolute'}}
+                            />
+                          ) : (
+                            <img alt="default" style={{height: '48px', width: '48px', objectFit: 'cover'}} />
+                          )}
+                          </div>
+                          
+                        </div>
+                        <div className="notification-content ">
+                          <div className="notificationcontent">
+                          <span className="visit-date" style={{textAlign:'right', margin:'9px 15px 0px 24px'}}>
+                            {notification.visitDate}
+                          </span>
+                          </div>
+                          <div>
+                          <p className="description">
+                            <span className="user-name notificationusername">
+                              <strong style={{fontSize:'13px',paddingLeft:'11px'}}>{notification.userName}</strong>
+                            </span>
+                            
+                            <span className="activity-text" style={{padding:'2px 0px 1px 26px'}}>
+                            <i className="fa fa-bookmark" style={{color:'orange' ,fontSize:'16px' , marginRight:'5px'}}></i> 
+                              {notification.activityText}
+                            </span>
+                          </p>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </li>
+                  ))
+                )}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </>
+    
   );
 };
 

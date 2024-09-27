@@ -527,7 +527,7 @@ function Listing() {
 
           {/* mobile view more */}
           {isMobile && listing.length === itemsPerPage && (
-            <button onClick={handleViewMore} className="view-more-btn" style={{borderRadius:'32px',backgroundColor:'white'}}>
+            <button onClick={handleViewMore} className="view-more-btn" style={{borderRadius:'32px',backgroundColor:'white',paddingTop:'5px',paddingBottom:'5px',fontSize:'12px',width:'172px'}}>
               More Search Results
             </button>
           )}

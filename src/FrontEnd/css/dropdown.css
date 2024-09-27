@@ -82,7 +82,7 @@
 @media (max-width:767px) {
   .notification1{
     position: fixed;
-    top: 50px;
+    top: 94px;
     left: 0;
     width: 100vw;
     height: 100vh;
@@ -168,4 +168,46 @@
 /* Adjust the form group containing the dropdown */
 .form-group {
   margin-bottom: 20px;
+}
+
+
+.notificationdot{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 12px;
+  width: 12px;
+  background-color: orange;
+  border-radius: 50%;
+}
+@media (max-width:767px) {
+  .notificationdot{
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    height: 12px;
+    width: 12px;
+    background-color: orange;
+    border-radius: 50%;
+  }
+}
+
+.notificationdekstoppage{
+  display: block;
+}
+@media (max-width:767px) {
+  .notificationpage{
+    display: none;
+  }
+  
+}
+
+.notificationmobilepage{
+  display: none;
+}
+@media (max-width:767px) {
+  .notificationmobilepage{
+    display: block;
+  }
+  
 }

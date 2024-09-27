@@ -120,8 +120,10 @@ function Listingdetails() {
 
   const [imageDetails, setImageDetails] = useState([]);
 
+  const [slideIndex, setSlideIndex] = useState(1);
+
   const [teamimageDetails, setTeamImageDetails] = useState([]);
-  
+
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
@@ -136,9 +138,7 @@ function Listingdetails() {
   const [selectedPincode, setSelectedPincode] = useState("");
   const [selectedLocality, setSelectedLocality] = useState("");
 
-
   const [status, setStatus] = useState("");
-
 
   const settings = {
     dots: true,
@@ -449,15 +449,14 @@ function Listingdetails() {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              companyID: listingDetails.listingId, 
+              companyID: listingDetails.listingId,
             }),
           }
         );
         const data = await response.json();
         console.log(data);
-        setStatus(data.data.status); 
+        setStatus(data.data.status);
         console.log("Status inside fetch:", data.data.status);
-
       } catch (error) {
         console.error("Error fetching status:", error);
       }
@@ -496,8 +495,8 @@ function Listingdetails() {
   }, []);
 
   //address api
-  const fetchStates = async (type,countryID,stateID, parentID = null) => {
-console.log(type,countryID, parentID );
+  const fetchStates = async (type, countryID, stateID, parentID = null) => {
+    console.log(type, countryID, parentID);
     let body = {
       type,
       CountryID: countryID,
@@ -510,7 +509,6 @@ console.log(type,countryID, parentID );
     };
     if (parentID) body.parentID = parentID;
 
-
     try {
       const response = await fetch(
         "https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster",
@@ -520,7 +518,7 @@ console.log(type,countryID, parentID );
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-           body: JSON.stringify(body),
+          body: JSON.stringify(body),
         }
       );
       if (!response.ok) {
@@ -530,18 +528,21 @@ console.log(type,countryID, parentID );
       // console.log('address array',data);
 
       // console.log(countryID);
-      const country_detials = data['country'].filter((count) => count.countryID == countryID);
+      const country_detials = data["country"].filter(
+        (count) => count.countryID == countryID
+      );
 
       if (!country_detials.length) {
         console.error("Country not found");
         return [];
       }
 
-
-      const states_details = country_detials[0]['states'].filter((count) => count.stateID == stateID);
+      const states_details = country_detials[0]["states"].filter(
+        (count) => count.stateID == stateID
+      );
 
       // console.log('address array',country_detials[0].name, states_details[0].name);
-      // return data.country[0]?.states || []; 
+      // return data.country[0]?.states || [];
       return states_details;
     } catch (error) {
       console.error(error);
@@ -561,7 +562,7 @@ console.log(type,countryID, parentID );
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            companyID: parseInt(listingId), 
+            companyID: parseInt(listingId),
           }),
         }
       );
@@ -570,13 +571,17 @@ console.log(type,countryID, parentID );
       }
       const ownerImageData = await ownerImageResponse.json();
       // console.log('Owner Image Data:', ownerImageData);
-      
-      const fetchedStates = await fetchStates(undefined,ownerImageData.countryId, ownerImageData.stateId);
+
+      const fetchedStates = await fetchStates(
+        undefined,
+        ownerImageData.countryId,
+        ownerImageData.stateId
+      );
       // console.log('fechedstates',fetchedStates);
-     
-      const stateName = fetchedStates.find(
-        (state) => state.stateID === ownerImageData.stateId
-      )?.name || "State not found";
+
+      const stateName =
+        fetchedStates.find((state) => state.stateID === ownerImageData.stateId)
+          ?.name || "State not found";
 
       // console.log(stateName);
 
@@ -586,7 +591,7 @@ console.log(type,countryID, parentID );
           url: img,
           title: `${ownerImageData.ownerName} ${ownerImageData.lastName}`,
           designation: ownerImageData.designation,
-          state: stateName, 
+          state: stateName,
         }))
       );
     } catch (error) {
@@ -595,9 +600,8 @@ console.log(type,countryID, parentID );
   };
 
   useEffect(() => {
-    fetchTeamImage(); 
+    fetchTeamImage();
   }, []);
-
 
   useEffect(() => {
     const fetchGalleryImage = async () => {
@@ -634,6 +638,30 @@ console.log(type,countryID, parentID );
     // }
   }, [listingId]);
 
+
+  const [selectedImage, setSelectedImage] = useState(0); 
+
+  const handleThumbnailClick = (index) => {
+    setSelectedImage(index); 
+  };
+
+  const showSlides=(n)=>{
+    if(n>imageDetails.length){
+      setSlideIndex(1);
+    }
+    else if(n<1){
+      setSlideIndex(imageDetails.length)
+    }
+    else{
+      setSlideIndex(n);
+    }
+  }
+
+  const plusSlides=(n)=>{
+    showSlides(slideIndex+n);
+  };
+  
+
   //for address
   const toggleAddress = () => {
     setShowFullAddress(!showFullAddress);
@@ -655,9 +683,6 @@ console.log(type,countryID, parentID );
 
   const fullAddress = listingDetails.fullAddress;
   const shortAddress = fullAddress.split(",").slice(0, 2).join(", ");
-
-
-  
 
   return (
     <>
@@ -693,7 +718,6 @@ console.log(type,countryID, parentID );
                         >
                           {listingDetails.companyFirstLetter}
                         </div>
-                       
                       )}
                     </div>
                   </div>
@@ -736,13 +760,15 @@ console.log(type,countryID, parentID );
                     <span className="cust-type">Owner</span> */}
                   </div>
                 </div>
-                <>{status === 1 ? (
-        <Listingkeyword companyID={listingDetails.listingId} />
-      ) : (
-       <></>
-      )}</>
+                <>
+                  {status === 1 ? (
+                    <Listingkeyword companyID={listingDetails.listingId} />
+                  ) : (
+                    <></>
+                  )}
+                </>
                 {/* <Listingkeyword companyID={listingDetails.listingId} /> */}
-                
+
                 <Listingspecialisation companyID={listingDetails.listingId} />
                 <Listingpayment companyID={listingDetails.listingId} />
               </div>
@@ -774,7 +800,7 @@ console.log(type,countryID, parentID );
                       title="Image2"
                       style={{ width: "100%", height: "200px" }}
                     /> */}
-                    <Slider {...settings}>
+                    {/* <Slider {...settings}>
                       {imageDetails.map((image, index) => (
                         <div
                           className="col-md-3 col-lg-2 col-6 mb-5"
@@ -797,7 +823,37 @@ console.log(type,countryID, parentID );
                           </div>
                         </div>
                       ))}
-                    </Slider>
+                    </Slider> */}
+                     {/* Main Image Display */}
+      <div className="main-image">
+        <img
+          src={imageDetails[selectedImage]?.url ? `https://apidev.myinteriormart.com${imageDetails[selectedImage].url}` : ''}
+          alt="Main Display"
+          className="main-image-display photogallerymain"
+          
+        />
+      </div>
+
+      {/* Thumbnails Display */}
+      <div className="thumbnails scrollmenu" style={{  marginTop: '20px',overflowX:'auto',whiteSpace:'nowrap' }}>
+        {imageDetails.map((image, index) => (
+          <div
+            key={index}
+            className="thumbnail imgScroll photogallerythumbnail"
+            onClick={() => handleThumbnailClick(index)} // Handle thumbnail click
+            style={{
+             
+              border: selectedImage === index ? '2px solid gray' : '2px solid transparent', // Highlight selected thumbnail
+            }}
+          >
+            <img
+              src={image.url ? `https://apidev.myinteriormart.com${image.url}` : ''}
+              alt="Thumbnail"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }} // Fit image into square box
+            />
+          </div>
+        ))}
+      </div>
                     {console.log("Banner", imageURL)}
                   </div>
                 </div>
@@ -805,33 +861,40 @@ console.log(type,countryID, parentID );
                   <div className="listing-details">
                     <div className="col-lg-4 col-md-12 company-map padding-all-5 listingbanner">
                       <div className="pro-large-img img-zoom gallery1">
-                        <Slider {...settings}>
-                          {imageDetails.map((image, index) => (
-                            <div
-                              className="col-md-3 col-lg-2 col-6 mb-5"
-                              key={index}
-                            >
-                              <div
-                                className=""
-                                style={{ width: "189px", marginLeft: "50px" }}
-                              >
-                                <img
-                                  className="upload_imagesgallery "
-                                  src={
-                                    image.url
-                                      ? `https://apidev.myinteriormart.com${image.url}`
-                                      : ""
-                                  }
-                                  alt="Gallery Image"
-                                  style={{ marginRight: "-42px" }}
-                                />
-                              </div>
-                            </div>
-                          ))}
-                        </Slider>
+                      <div className="image-gallery">
+      {/* Main Image Display */}
+      <div className="main-image">
+        <img
+          src={imageDetails[selectedImage]?.url ? `https://apidev.myinteriormart.com${imageDetails[selectedImage].url}` : ''}
+          alt="Main Display"
+          className="main-image-display photogallerymain"
+         
+        />
+      </div>
+
+      {/* Thumbnails Display */}
+      <div className="thumbnails scrollmenu" style={{  marginTop: '20px',overflowX:'auto',whiteSpace:'nowrap' }}>
+        {imageDetails.map((image, index) => (
+          <div
+            key={index}
+            className="thumbnail imgScroll photogallerythumbnail"
+            onClick={() => handleThumbnailClick(index)} // Handle thumbnail click
+            style={{
+              
+              border: selectedImage === index ? '2px solid gray' : '2px solid transparent', // Highlight selected thumbnail
+            }}
+          >
+            <img
+              src={image.url ? `https://apidev.myinteriormart.com${image.url}` : ''}
+              alt="Thumbnail"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }} // Fit image into square box
+            />
+          </div>
+        ))}
+      </div>
+    </div>
                       </div>
                     </div>
-                    
 
                     {/* <div className="listinggallery">
                 <div className="listing-gallery">
@@ -858,23 +921,29 @@ console.log(type,countryID, parentID );
                             {listingDetails.companyName}
                           </h5>
                         </div>
-
-                        <span className="company-category-name">{listingDetails.listingKeyword}</span> <br></br>
-                        <span className="company-rating" style={{marginLeft:'2px'}}>
-                          {listingDetails.ratingAverage}.0
-                          <div className="cat_star">
-                            {Array(listingDetails.ratingAverage)
-                              .fill()
-                              .map((_, i) => (
-                                <i
-                                  key={i}
-                                  className="icon_star active"
-                                  style={{ color: "orange" }}
-                                ></i>
-                              ))}
-                          </div>
-                          {listingDetails.ratingCount} Rating
-                        </span>
+                        <div style={{display:"flex"}}>
+                          <span className="company-category-name" style={{ marginRight:'18px'}}>
+                            {listingDetails.listingKeyword}
+                          </span>
+                          <span
+                            className="company-rating"
+                            style={{ marginLeft: "2px" }}
+                          >
+                            {listingDetails.ratingAverage}.0
+                            <div className="cat_star">
+                              {Array(listingDetails.ratingAverage)
+                                .fill()
+                                .map((_, i) => (
+                                  <i
+                                    key={i}
+                                    className="icon_star active"
+                                    style={{ color: "orange" }}
+                                  ></i>
+                                ))}
+                            </div>
+                            {listingDetails.ratingCount} Rating
+                          </span>
+                        </div>
                       </div>
                       <div className="col-lg-12 mim-Address">
                         <p>
@@ -898,41 +967,40 @@ console.log(type,countryID, parentID );
                             </a>
                           </span>
                         </p>
-                        <div style={{display:'flex'}}>
-                        <p style={{marginRight:'20px'}}>
-                          <span>
-                            <i
-                              className="fa fa-map-o"
-                              style={{ marginRight: "8px" }}
-                            ></i>
-                            {listingDetails.area}
-                          </span>
-                        </p>
-                        <p>
-                          <span>
-                            <i
-                              className="fa fa-map-signs"
-                              style={{ marginRight: "8px" }}
-                            ></i>
-                            {listingDetails.locality}
-                          </span>
-                        </p>
+                        <div style={{ display: "flex" }}>
+                          <p style={{ marginRight: "20px" }}>
+                            <span>
+                              <i
+                                className="fa fa-map-o"
+                                style={{ marginRight: "8px" }}
+                              ></i>
+                              {listingDetails.area}
+                            </span>
+                          </p>
+                          <p>
+                            <span>
+                              <i
+                                className="fa fa-map-signs"
+                                style={{ marginRight: "8px" }}
+                              ></i>
+                              {listingDetails.locality}
+                            </span>
+                          </p>
                         </div>
-                       
                       </div>
-                      {/* <div style={{display:'flex'}}> */}
+                      <div style={{display:'flex'}}>
                       <div className="col-lg-6 mb-1 px-0 year_gst">
                         <p className="m-0">
                           <i
                             className="fa fa-calendar"
                             style={{ marginRight: "8px" }}
                           ></i>
-                          Year of Establishment{" "}
+                          Since{" "}
                           {listingDetails.yearOfEstablishment}
                         </p>
                       </div>
                       <div className="col-lg-6 px-0 mb-1 year_gst mt-0">
-                        <p className="mb-0">
+                        <p className="mb-0 noemployee">
                           <i
                             className="fa fa-users"
                             style={{ marginRight: "8px" }}
@@ -940,8 +1008,8 @@ console.log(type,countryID, parentID );
                           {listingDetails.numberOfEmployees} Employees
                         </p>
                       </div>
-                      {/* </div> */}
-                      
+                      </div>
+
                       <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
                         <p className="mb-0">
                           <b>Turnover :</b>
@@ -989,116 +1057,115 @@ console.log(type,countryID, parentID );
                           onClick={() => setIsPopupOpen(true)}
                           style={{ marginRight: "10px", font: "bold" }}
                         >
+                          Get Quotes
+                        </button>
+                        <button
+                          className={`btn btn-bookmark ${
+                            isBookmarked ? "active" : ""
+                          } ${isBookmarked ? "icon-active" : ""}`}
+                          onClick={handleBookmarkToggle}
+                          style={{ marginRight: "5px", fontSize: "13px" }}
+                        >
+                          <i
+                            className={`fa fa-bookmark`}
+                            style={{ marginRight: "5px" }}
+                          ></i>
+                          Bookmark
+                        </button>
+
+                        <button
+                          className="btn-custom pushRight btn btn-light btn-sm btnshare"
+                          onClick={() => setIsSociallinkOpen(true)}
+                          style={{ height: "32px", fontSize: "13px" }}
+                        >
+                          <i className="icon-share"></i>Share
+                        </button>
+
+                        <button
+                          className={`btn btn-like ${isLike ? "active" : ""} ${
+                            isLike ? "icon-active" : ""
+                          }`}
+                          onClick={handleLikeToggle}
+                          style={{ marginRight: "5px", fontSize: "13px" }}
+                        >
+                          <i
+                            className={`fa fa-thumbs-up`}
+                            style={{ marginRight: "5px" }}
+                          ></i>
+                          Like
+                        </button>
+                        <button
+                          className={`btn btn-subscribe ${
+                            isSubscribe ? "active" : ""
+                          } ${isSubscribe ? "icon-active" : ""}`}
+                          onClick={handleSubscribeToggle}
+                          style={{ marginRight: "5px", fontSize: "13px" }}
+                        >
+                          <i
+                            className={`fa fa-bell`}
+                            style={{ marginRight: "5px" }}
+                          ></i>
+                          Subscribe
+                        </button>
+                      </div>
+                      <div className="social-details mobile">
+                        <button
+                          className={`btn btn-bookmark ${
+                            isBookmarked ? "active" : ""
+                          } ${isBookmarked ? "icon-active" : ""}`}
+                          onClick={handleBookmarkToggle}
+                          style={{ marginRight: "5px", fontSize: "13px" }}
+                        >
+                          <i
+                            className={`fa fa-bookmark`}
+                            style={{ marginRight: "5px" }}
+                          ></i>
+                          Bookmark
+                        </button>
+
+                        <button
+                          className="btn-custom pushRight btn btn-light btn-sm btnshare"
+                          onClick={() => setIsSociallinkOpen(true)}
+                          style={{ height: "32px", fontSize: "13px" }}
+                        >
+                          <i className="icon-share"></i>Share
+                        </button>
+
+                        <button
+                          className={`btn btn-like ${isLike ? "active" : ""} ${
+                            isLike ? "icon-active" : ""
+                          }`}
+                          onClick={handleLikeToggle}
+                          style={{ marginRight: "5px", fontSize: "13px" }}
+                        >
+                          <i
+                            className={`fa fa-thumbs-up`}
+                            style={{ marginRight: "5px" }}
+                          ></i>
+                          Like
+                        </button>
+                        <button
+                          className={`btn btn-subscribe ${
+                            isSubscribe ? "active" : ""
+                          } ${isSubscribe ? "icon-active" : ""}`}
+                          onClick={handleSubscribeToggle}
+                          style={{ marginRight: "5px", fontSize: "13px" }}
+                        >
+                          <i
+                            className={`fa fa-bell`}
+                            style={{ marginRight: "5px" }}
+                          ></i>
+                          Subscribe
+                        </button>
+                      </div>
+                      <div className="social-details mobile">
+                        <button
+                          className="btn btn-guotes btn-sm"
+                          onClick={() => setIsPopupOpen(true)}
+                          style={{ marginRight: "10px", font: "bold" }}
+                        >
                           Get Claim
                         </button>
-                        <button
-                          className={`btn btn-bookmark ${
-                            isBookmarked ? "active" : ""
-                          } ${isBookmarked ? "icon-active" : ""}`}
-                          onClick={handleBookmarkToggle}
-                          style={{ marginRight: "5px", fontSize: "13px" }}
-                        >
-                          <i
-                            className={`fa fa-bookmark`}
-                            style={{ marginRight: "5px" }}
-                          ></i>
-                          Bookmark
-                        </button>
-
-                        <button
-                          className="btn-custom pushRight btn btn-light btn-sm btnshare"
-                          onClick={() => setIsSociallinkOpen(true)}
-                          style={{ height: "32px", fontSize: "13px" }}
-                        >
-                          <i className="icon-share"></i>Share
-                        </button>
-
-                        <button
-                          className={`btn btn-like ${isLike ? "active" : ""} ${
-                            isLike ? "icon-active" : ""
-                          }`}
-                          onClick={handleLikeToggle}
-                          style={{ marginRight: "5px", fontSize: "13px" }}
-                        >
-                          <i
-                            className={`fa fa-thumbs-up`}
-                            style={{ marginRight: "5px" }}
-                          ></i>
-                          Like
-                        </button>
-                        <button
-                          className={`btn btn-subscribe ${
-                            isSubscribe ? "active" : ""
-                          } ${isSubscribe ? "icon-active" : ""}`}
-                          onClick={handleSubscribeToggle}
-                          style={{ marginRight: "5px", fontSize: "13px" }}
-                        >
-                          <i
-                            className={`fa fa-bell`}
-                            style={{ marginRight: "5px" }}
-                          ></i>
-                          Subscribe
-                        </button>
-                      </div>
-                      <div className="social-details mobile">
-                        <button
-                          className={`btn btn-bookmark ${
-                            isBookmarked ? "active" : ""
-                          } ${isBookmarked ? "icon-active" : ""}`}
-                          onClick={handleBookmarkToggle}
-                          style={{ marginRight: "5px", fontSize: "13px" }}
-                        >
-                          <i
-                            className={`fa fa-bookmark`}
-                            style={{ marginRight: "5px" }}
-                          ></i>
-                          Bookmark
-                        </button>
-
-                        <button
-                          className="btn-custom pushRight btn btn-light btn-sm btnshare"
-                          onClick={() => setIsSociallinkOpen(true)}
-                          style={{ height: "32px", fontSize: "13px" }}
-                        >
-                          <i className="icon-share"></i>Share
-                        </button>
-
-                        <button
-                          className={`btn btn-like ${isLike ? "active" : ""} ${
-                            isLike ? "icon-active" : ""
-                          }`}
-                          onClick={handleLikeToggle}
-                          style={{ marginRight: "5px", fontSize: "13px" }}
-                        >
-                          <i
-                            className={`fa fa-thumbs-up`}
-                            style={{ marginRight: "5px" }}
-                          ></i>
-                          Like
-                        </button>
-                        <button
-                          className={`btn btn-subscribe ${
-                            isSubscribe ? "active" : ""
-                          } ${isSubscribe ? "icon-active" : ""}`}
-                          onClick={handleSubscribeToggle}
-                          style={{ marginRight: "5px", fontSize: "13px" }}
-                        >
-                          <i
-                            className={`fa fa-bell`}
-                            style={{ marginRight: "5px" }}
-                          ></i>
-                          Subscribe
-                        </button>
-                        
-                      </div>
-                      <div className="social-details mobile">
-                        <button
-                            className="btn btn-guotes btn-sm"
-                            onClick={() => setIsPopupOpen(true)}
-                            style={{ marginRight: "10px", font: "bold" }}
-                          >
-                            Get Claim
-                          </button>
                       </div>
                     </div>
                   </div>
@@ -1114,7 +1181,10 @@ console.log(type,countryID, parentID );
                           {listingDetails.description}
                         </p>
                         {listingDetails.description.length > 300 && (
-                          <button onClick={toggleAboutus} style={{color:'orange'}}>
+                          <button
+                            onClick={toggleAboutus}
+                            style={{ color: "orange" }}
+                          >
                             {showFullAboutus ? "Less" : "More ..."}
                           </button>
                         )}
@@ -1124,18 +1194,18 @@ console.log(type,countryID, parentID );
 
                   <Webreviews />
                   <div className="col-lg-4 col-md-12 company-map padding-all-5 listinggallery listingb">
-                      <div className="pro-large-img img-zoom gallery1">
-                        <img
-                          className="upload_imagesbanner "
-                          src={
-                            imageURL
-                              ? `https://apidev.myinteriormart.com${imageURL}`
-                              : banner2
-                          }
-                          alt="Banner Image"
-                        />
-                      </div>
+                    <div className="pro-large-img img-zoom gallery1">
+                      <img
+                        className="upload_imagesbanner "
+                        src={
+                          imageURL
+                            ? `https://apidev.myinteriormart.com${imageURL}`
+                            : banner2
+                        }
+                        alt="Banner Image"
+                      />
                     </div>
+                  </div>
                 </div>
               </div>
             </>
@@ -1270,7 +1340,8 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
   return (
     <div>
       <div className="current-status">
-        <p onClick={toggleDropdown} style={{ cursor: "pointer" }}>
+        {/* <p onClick={toggleDropdown} style={{ cursor: "pointer" }}> */}
+        <p  style={{ cursor: "pointer" }}>
           <span style={{ color: isOpen ? "green" : "red" }}>
             {isOpen ? <b>Open</b> : <b>Closed Now</b>}
           </span>
@@ -1291,12 +1362,12 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
               Opens {nextOpenDay ? `${nextTime} at ${nextOpenDay.day}` : "soon"}
             </>
           )}
-          <i
+          {/* <i
             className={`fa ${
               isDropdownOpen ? "fa-chevron-up" : "fa-chevron-down"
             }`}
             style={{ marginLeft: "8px" }}
-          ></i>
+          ></i> */}
         </p>
       </div>
 

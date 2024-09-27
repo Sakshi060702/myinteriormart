@@ -69,14 +69,14 @@ function Uploadimagel() {
        
         setImageURL(result.imageUrl);
 
-      setSuccessMessage("Logo Image Uploded Successfully");
-      setErrorMessage("");
-      setShowPopup(true);
+    //   setSuccessMessage("Logo Image Uploded Successfully");
+    //   setErrorMessage("");
+    //   setShowPopup(true);
 
-      setTimeout(() => {
-      setShowPopup(false);
+    //   setTimeout(() => {
+    //   setShowPopup(false);
      
-    }, 2000);
+    // }, 2000);
        
         // You can handle the result here if needed, e.g., show a success message
       } catch (error) {

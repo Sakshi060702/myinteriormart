@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import logoSticky from "../../../FrontEnd/img/logo_sticky.svg";
 import { NavLink } from "react-router-dom";
 import notificationIcon from "../../../FrontEnd/img/icon/notification1.png";
-import usericon from "../../../FrontEnd/img/userman1.png";
+import usericon from "../../../FrontEnd/img/icon (16).png";
 import Dropdown from "../../Dropdown";
 import Notification from "../../Notification";
 import "../../../FrontEnd/css/Header.css";
@@ -278,7 +278,7 @@ function Menu1() {
               </div>
             </div>
             <div className="col-lg-9 col-12 navitems">
-              <div>
+              <div style={{marginRight:'24px'}}>
                 {!isAuthenticated && (
                   <NavLink
                     to={`/signup2/in-${localStorage.getItem("cityname")}`}
@@ -488,18 +488,10 @@ function Menu1() {
                               onClick={toggleNotificationMenu}
                               className="notification-img"
                             >
-                              <img src={notificationIcon} alt="notification" />
+                              <img src={notificationIcon} alt="notification"  />
                               {hasNotifications && (
-                                <span
-                                  style={{
-                                    position: "absolute",
-                                    top: "0px",
-                                    right: "0px",
-                                    height: "12px",
-                                    width: "12px",
-                                    backgroundColor: "orange",
-                                    borderRadius: "50%",
-                                  }}
+                                <span className="notificationdot"
+                                 
                                 ></span>
                               )}
                               {showNotificationMenu && (
@@ -600,15 +592,7 @@ function Menu1() {
                         <img src={notificationIcon} alt="notification" />
                         {hasNotifications && (
                           <span
-                            style={{
-                              position: "absolute",
-                              top: "0px",
-                              right: "0px",
-                              height: "12px",
-                              width: "12px",
-                              backgroundColor: "orange",
-                              borderRadius: "50%",
-                            }}
+                            className="notificationdot"
                           ></span>
                         )}
                         {showNotificationMenu && (

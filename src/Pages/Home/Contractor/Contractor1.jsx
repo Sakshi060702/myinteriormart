@@ -212,7 +212,7 @@ function Contractor1() {
                       })}
                     </div>
                   </div>
-                  <div
+                  {/* <div
                     className="tab-pane fade"
                     id="monopoly"
                     role="tabpanel"
@@ -235,7 +235,7 @@ function Contractor1() {
                     aria-labelledby="running"
                   >
                     dasd1a231d31sad
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

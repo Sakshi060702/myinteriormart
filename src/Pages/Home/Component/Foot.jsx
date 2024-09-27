@@ -121,7 +121,7 @@ console.log('Error in fetching social link',error)
   return (
     <>
       <footer className="shadow" style={{ position: "relative" }}>
-        <div className="container py-5" style={{ width: "90%" }}>
+        <div className="container footerspace" style={{ width: "90%" }}>
           <div className="d-flex justify-content-between flex-wrap footertabs">
             {/* <div className="footer-logo-container">
             <a href="/" className="d-flex align-items-center p-0 text-dark">
@@ -226,6 +226,42 @@ console.log('Error in fetching social link',error)
                   </NavLink>
               </div>
             </div>
+            <div style={{borderLeft:'2px solid white',height:'20px'}}></div>
+            <div>
+              
+              <div
+                className="d-flex flex-column terms"
+                style={{ cursor: "pointer", padding: "0" }}
+              >
+                <a href="termsandconditions.html" style={{ color: "white",paddingBottom:'17px' }}>Terms and conditions</a>
+              </div>
+            </div>
+            <div style={{borderLeft:'2px solid white',height:'20px'}}></div>
+
+            <div>
+              
+              <div
+                className="d-flex flex-column"
+                style={{ cursor: "pointer", padding: "0" }}
+              >
+                <a href="privacy-policy.html" style={{ color: "white",paddingBottom:'17px' }}>Privacy</a>
+              </div>
+            </div>
+            <div style={{borderLeft:'2px solid white',height:'20px'}}></div>
+
+            <div>
+              
+              <div
+                className="d-flex flex-column plink"
+                style={{ cursor: "pointer", padding: "0" }}
+              >
+                <a target="_blank" href="https://myinteriormart.com/" style={{ color: "white",paddingBottom:'17px' }}>
+                    © Myinteriormart
+                  </a>
+              </div>
+            </div>
+
+            
 
             <div>
               {/* <p className="h5 mb-4" style={{ fontWeight: "600" }}>
@@ -257,7 +293,7 @@ console.log('Error in fetching social link',error)
           </div>
           <hr style={{ margin: 0 }} />
           <div className="row">
-            <div className="col-lg-8 col-12 block-center-footer">
+            {/* <div className="col-lg-8 col-12 block-center-footer">
               <ul id="additional_links">
                 <li>
                   <a href="termsandconditions.html">Terms and conditions</a>
@@ -271,9 +307,9 @@ console.log('Error in fetching social link',error)
                   </a>
                 </li>
               </ul>
-            </div>
+            </div> */}
 
-            <div className="col-lg-4 col-12 block-center-footer">
+            <div className="col-lg-4 col-12 block-center-footer sociallink">
               <div className="follow_us">
                 <ul>
                   <li>

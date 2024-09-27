@@ -5,6 +5,14 @@
     align-items: flex-start;
     margin-bottom: 10px;
   }
+
+  @media (max-width:767px) {
+    .notification-item {
+      display: block;
+      /* align-items: flex-start; */
+      margin-bottom: 10px;
+    }
+  }
   
   .notification-image {
     /* height: 50px; */
@@ -42,4 +50,22 @@
     font-size: 14px;
     color: #555;
   }
+
+  .notificationcontent{
+    margin-right: -4px;
+    margin-left: -21px;
+  }
+
+  @media (max-width:767px) {
+    .notificationcontent{
+      margin-right: 65px;
+    margin-left: -21px;
+    }
+  }
   
+  
+  @media (max-width:767px) {
+    .notificationusername{
+      margin-left: -42px;
+    }
+  }
