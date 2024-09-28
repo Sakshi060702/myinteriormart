@@ -9,7 +9,6 @@ import { useSelector } from "react-redux";
 import Sociallink from "../../Listing/Sociallink";
 import { useNavigate } from "react-router-dom";
 
-
 const Foot = () => {
   const scrollToTop = () => {
     window.scrollTo({
@@ -24,16 +23,16 @@ const Foot = () => {
   const [status, setStatus] = useState("");
   const [listingId, setListingId] = useState(null);
   const [isSociallinkOpen, setIsSociallinkOpen] = useState(false);
-  const [socialLink,setSocialLink]=useState({
-    facebook:'',
-    instagram:'',
-    whatsapp:'',
-    linkedin:'',
-    twitter:'',
-    youtube:'',
-  })
+  const [socialLink, setSocialLink] = useState({
+    facebook: "",
+    instagram: "",
+    whatsapp: "",
+    linkedin: "",
+    twitter: "",
+    youtube: "",
+  });
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,31 +59,29 @@ const Foot = () => {
     fetchData();
   }, [token]);
 
- const handleDashboardButtonClick=()=>{
-    if(token){
-    console.log('token',token)
-      navigate(`/Myactivity/in-${localStorage.getItem('cityname')}`)
+  const handleDashboardButtonClick = () => {
+    if (token) {
+      console.log("token", token);
+      navigate(`/Myactivity/in-${localStorage.getItem("cityname")}`);
+    } else {
+      console.log("token", token);
+      navigate(`/signup2/in-${localStorage.getItem("cityname")}`);
     }
-    else{
-      console.log('token',token);
-      navigate(`/signup2/in-${localStorage.getItem('cityname')}`)
-    }
-  }
+  };
 
-  const handleSuggestionButtonClick=()=>{
-    if(token){
-    console.log('token',token)
-      navigate(`/Usersuggestion/in-${localStorage.getItem('cityname')}`)
+  const handleSuggestionButtonClick = () => {
+    if (token) {
+      console.log("token", token);
+      navigate(`/Usersuggestion/in-${localStorage.getItem("cityname")}`);
+    } else {
+      console.log("token", token);
+      navigate(`/signup2/in-${localStorage.getItem("cityname")}`);
     }
-    else{
-      console.log('token',token);
-      navigate(`/signup2/in-${localStorage.getItem('cityname')}`)
-    }
-  }
+  };
 
-  const homeButtonClick=()=>{
+  const homeButtonClick = () => {
     navigate(`/in-${localStorage.getItem("cityname")}`);
-  }
+  };
   //   const [cityName,setCityName]=useState(null);
 
   //   useEffect(() => {
@@ -96,28 +93,28 @@ const Foot = () => {
   //    }
   //  }, []);
 
-  useEffect(()=>{
-    const fetchSocialkink=async()=>{
-      try{
-const response=await fetch(`https://apidev.myinteriormart.com/api/PortalSetting/GetPortalSetting`);
-const data=await response.json();
-const portallink=data.portalSettings[0];
-setSocialLink({
-  facebook:portallink.facebook,
-  instagram:portallink.instagram,
-  whatsapp:portallink.whatsapp,
-  linkedin:portallink.linkedin,
-  twitter:portallink.twitter,
-  twitter:portallink.twitter,
-
-})
-      }
-      catch(error){
-console.log('Error in fetching social link',error)
+  useEffect(() => {
+    const fetchSocialkink = async () => {
+      try {
+        const response = await fetch(
+          `https://apidev.myinteriormart.com/api/PortalSetting/GetPortalSetting`
+        );
+        const data = await response.json();
+        const portallink = data.portalSettings[0];
+        setSocialLink({
+          facebook: portallink.facebook,
+          instagram: portallink.instagram,
+          whatsapp: portallink.whatsapp,
+          linkedin: portallink.linkedin,
+          twitter: portallink.twitter,
+          twitter: portallink.twitter,
+        });
+      } catch (error) {
+        console.log("Error in fetching social link", error);
       }
     };
     fetchSocialkink();
-  },[])
+  }, []);
   return (
     <>
       <footer className="shadow" style={{ position: "relative" }}>
@@ -183,14 +180,16 @@ console.log('Error in fetching social link',error)
                 style={{ cursor: "pointer", padding: "0" }}
               >
                 <NavLink
-                    to={`/in-${localStorage.getItem("cityname")}`}
-                    style={{ color: "white" ,paddingBottom:'17px'}}
-                  >
-                    Home
-                  </NavLink>
+                  to={`/in-${localStorage.getItem("cityname")}`}
+                  style={{ color: "white", paddingBottom: "17px" }}
+                >
+                  Home
+                </NavLink>
               </div>
             </div>
-            <div style={{borderLeft:'2px solid white',height:'20px'}}></div>
+            <div
+              style={{ borderLeft: "2px solid white", height: "20px" }}
+            ></div>
             <div>
               {/* <p className="h5 mb-4" style={{ fontWeight: "600" }}>
               Products
@@ -200,15 +199,17 @@ console.log('Error in fetching social link',error)
                 style={{ cursor: "pointer", padding: "0" }}
               >
                 <NavLink
-                    to={`/about/in-${localStorage.getItem("cityname")}`}
-                    style={{ color: "white" ,paddingBottom:'17px'}}
-                  >
-                    About Us
-                  </NavLink>
+                  to={`/about/in-${localStorage.getItem("cityname")}`}
+                  style={{ color: "white", paddingBottom: "17px" }}
+                >
+                  About Us
+                </NavLink>
               </div>
             </div>
 
-            <div style={{borderLeft:'2px solid white',height:'20px'}}></div>
+            <div
+              style={{ borderLeft: "2px solid white", height: "20px" }}
+            ></div>
 
             <div>
               {/* <p className="h5 mb-4" style={{ fontWeight: "600" }}>
@@ -219,49 +220,135 @@ console.log('Error in fetching social link',error)
                 style={{ cursor: "pointer", padding: "0" }}
               >
                 <NavLink
-                    to={`/contact/in-${localStorage.getItem("cityname")}`}
-                    style={{ color: "white",paddingBottom:'17px' }}
-                  >
-                    Contact
-                  </NavLink>
+                  to={`/contact/in-${localStorage.getItem("cityname")}`}
+                  style={{ color: "white", paddingBottom: "17px" }}
+                >
+                  Contact
+                </NavLink>
               </div>
             </div>
-            <div style={{borderLeft:'2px solid white',height:'20px'}}></div>
+            <div
+              style={{ borderLeft: "2px solid white", height: "20px" }}
+            ></div>
             <div>
-              
               <div
                 className="d-flex flex-column terms"
                 style={{ cursor: "pointer", padding: "0" }}
               >
-                <a href="termsandconditions.html" style={{ color: "white",paddingBottom:'17px' }}>Terms and conditions</a>
+                <a
+                  href=" privacy-policy.html"
+                  style={{ color: "white", paddingBottom: "17px" }}
+                >
+                  Privacy
+                </a>
               </div>
             </div>
-            <div style={{borderLeft:'2px solid white',height:'20px'}}></div>
+            <div
+              className="privacyline"
+              style={{ borderLeft: "2px solid white", height: "20px" }}
+            ></div>
 
             <div>
-              
               <div
                 className="d-flex flex-column"
                 style={{ cursor: "pointer", padding: "0" }}
               >
-                <a href="privacy-policy.html" style={{ color: "white",paddingBottom:'17px' }}>Privacy</a>
+                <a
+                  href="termsandconditions.html"
+                  style={{ color: "white", paddingBottom: "17px" }}
+                >
+                  Terms and conditions
+                </a>
               </div>
             </div>
-            <div style={{borderLeft:'2px solid white',height:'20px'}}></div>
+            <div
+              style={{ borderLeft: "2px solid white", height: "20px" }}
+            ></div>
+            {/* mobile view social link */}
+            <div style={{marginLeft:'-47px'}} >
+              <div className="follow_us Footsociallinkm">
+                <ul style={{marginTop:'-13px',marginLeft:'41px',marginRight:'-16px'}}>
+                  <li>
+                    <a
+                      href={socialLink.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i className="ti-facebook"></i>
+                    </a>
+                    {/* <a href="#0">
+                      <i className="ti-facebook"></i>
+                    </a> */}
+                  </li>
+                  <li>
+                    <a
+                      href={socialLink.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i className="ti-instagram"></i>
+                    </a>
+                  </li>
 
+                  <li>
+                    <a
+                      href={socialLink.whatsapp}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i className="ti-whatsapp"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href={socialLink.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i className="ti-linkedin"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href={socialLink.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i className="ti-twitter-alt"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href={socialLink.youtube}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i className="ti-youtube"></i>
+                    </a>
+                  </li>
+
+                  {/* <li>
+                    <a href="https://web.whatsapp.com/send?text"  target="_blank" rel="noopener noreferrer">
+                    <i class="ti-whatsapp" style={{color:'white'}}></i>
+                    </a>
+                  </li> */}
+                </ul>
+              </div>
+            </div>
             <div>
-              
               <div
                 className="d-flex flex-column plink"
                 style={{ cursor: "pointer", padding: "0" }}
               >
-                <a target="_blank" href="https://myinteriormart.com/" style={{ color: "white",paddingBottom:'17px' }}>
-                    © Myinteriormart
-                  </a>
+                <a
+                  target="_blank"
+                  href="https://myinteriormart.com/"
+                  style={{ color: "white", paddingBottom: "17px" }}
+                >
+                  © my Interior Mart Team
+                </a>
               </div>
             </div>
-
-            
 
             <div>
               {/* <p className="h5 mb-4" style={{ fontWeight: "600" }}>
@@ -309,42 +396,68 @@ console.log('Error in fetching social link',error)
               </ul>
             </div> */}
 
-            <div className="col-lg-4 col-12 block-center-footer sociallink">
+            <div className="col-lg-4 col-12 block-center-footer sociallink Footsociallinkd">
               <div className="follow_us">
                 <ul>
                   <li>
-                  <a href={socialLink.facebook}  target="_blank" rel="noopener noreferrer"><i className="ti-facebook"></i></a>
+                    <a
+                      href={socialLink.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i className="ti-facebook"></i>
+                    </a>
                     {/* <a href="#0">
                       <i className="ti-facebook"></i>
                     </a> */}
                   </li>
                   <li>
-                    <a href={socialLink.instagram} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={socialLink.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <i className="ti-instagram"></i>
                     </a>
                   </li>
-                 
+
                   <li>
-                    <a href={socialLink.whatsapp} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={socialLink.whatsapp}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <i className="ti-whatsapp"></i>
                     </a>
                   </li>
                   <li>
-                    <a href={socialLink.linkedin} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={socialLink.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <i className="ti-linkedin"></i>
                     </a>
                   </li>
                   <li>
-                    <a href={socialLink.twitter} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={socialLink.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <i className="ti-twitter-alt"></i>
                     </a>
                   </li>
                   <li>
-                    <a href={socialLink.youtube} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={socialLink.youtube}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <i className="ti-youtube"></i>
                     </a>
                   </li>
-                  
+
                   {/* <li>
                     <a href="https://web.whatsapp.com/send?text"  target="_blank" rel="noopener noreferrer">
                     <i class="ti-whatsapp" style={{color:'white'}}></i>
@@ -384,28 +497,39 @@ console.log('Error in fetching social link',error)
       <div class="container-fluid bottom-link-sticky">
         <div class="row">
           <div class="col-3 bottom-link-sticky-list">
-            
             <button
-            style={{marginBottom:'-17px',marginTop:'9px' }}
-             onClick={homeButtonClick}
-            ><i className="fa fa-home" style={{ color:'orange',marginRight:'2px' }}></i>
-            <p> Home</p>
-             
+              style={{ marginBottom: "-17px", marginTop: "9px" }}
+              onClick={homeButtonClick}
+            >
+              <i
+                className="fa fa-home"
+                style={{ color: "orange", marginRight: "2px" }}
+              ></i>
+              <p> Home</p>
             </button>
           </div>
           <div class="col-3 bottom-link-sticky-list">
-            <button style={{marginBottom:'-17px',marginTop:'9px' }} onClick={handleDashboardButtonClick}>
-            <i className="fa fa-user" style={{ color:'orange',marginRight:'2px' }}></i>
-            <p>
-             You</p>
-             
+            <button
+              style={{ marginBottom: "-17px", marginTop: "9px" }}
+              onClick={handleDashboardButtonClick}
+            >
+              <i
+                className="fa fa-user"
+                style={{ color: "orange", marginRight: "2px" }}
+              ></i>
+              <p>You</p>
             </button>
           </div>
           <div class="col-3 bottom-link-sticky-list">
-            <button style={{marginBottom:'-17px',marginTop:'9px' }} onClick={handleSuggestionButtonClick}>
-            <i className="fa fa-lightbulb-o" style={{ color:'orange',marginRight:'2px' }}></i>
-            <p>Suggestion</p>
-              
+            <button
+              style={{ marginBottom: "-17px", marginTop: "9px" }}
+              onClick={handleSuggestionButtonClick}
+            >
+              <i
+                className="fa fa-lightbulb-o"
+                style={{ color: "orange", marginRight: "2px" }}
+              ></i>
+              <p>Suggestion</p>
             </button>
           </div>
           {/* <div class="col-3 bottom-link-sticky-list">
@@ -417,9 +541,20 @@ console.log('Error in fetching social link',error)
             </button>
           </div> */}
           <div class="col-3 bottom-link-sticky-list">
-            <button onClick={() => setIsSociallinkOpen(true)} style={{ marginBottom:'-17px',marginTop:'9px',paddingLeft:'14px' }}>
-            <i className="fa fa-share" style={{ color:'orange',marginRight:'2px' }}></i>
-            <p>Share</p></button>
+            <button
+              onClick={() => setIsSociallinkOpen(true)}
+              style={{
+                marginBottom: "-17px",
+                marginTop: "9px",
+                paddingLeft: "14px",
+              }}
+            >
+              <i
+                className="fa fa-share"
+                style={{ color: "orange", marginRight: "2px" }}
+              ></i>
+              <p>Share</p>
+            </button>
           </div>
         </div>
       </div>

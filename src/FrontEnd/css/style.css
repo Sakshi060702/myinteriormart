@@ -3757,7 +3757,7 @@ a.box_feat h3 {
   }
 
   .strip.map_view {
-    margin: 12px 10px;
+    margin: 5px 10px;
   }
 
   .strip.map_view .listing-bottom-list ul {
@@ -9710,7 +9710,7 @@ article.blog .post_info ul li:last-child i {
 .upload_imagesbanner {
   width: 100%;
   height: 220px;
-  object-fit: cover;
+  object-fit: cover !important;
 }
 
 .upload_imagesgallery {

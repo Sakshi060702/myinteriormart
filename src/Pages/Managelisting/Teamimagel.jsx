@@ -19,6 +19,7 @@ function Teamimagel() {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [selectedBusinessCategory, setSelectedBusinessCategory] = useState("");
+  const [selectTitle, setSelectTitel] = useState("");
 
   const [imageURL, setImageURL] = useState(null);
   const [imageTitleFromAPI, setImageTitleFromAPI] = useState("");
@@ -173,6 +174,9 @@ function Teamimagel() {
     setSelectedBusinessCategory(event.target.value);
   };
 
+  const handleTitleChange = (event) => {
+    setSelectTitel(event.target.value);
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -195,7 +199,7 @@ function Teamimagel() {
       selectedFile.forEach((file) => {
         formData.append("file", file);
       });
-
+      formData.append("MrndMs", selectTitle);
       formData.append("designation", selectedBusinessCategory);
       formData.append("firstName", event.target.firstName.value);
       formData.append("lastName", event.target.lastName.value);
@@ -282,7 +286,10 @@ function Teamimagel() {
     { value: "Manager", label: "Manager" },
   ];
 
-
+  const maritalStatusOptions = [
+    { value: "Single", label: "Single" },
+    { value: "Married", label: "Married" },
+  ];
 
   return (
     <>
@@ -319,7 +326,7 @@ function Teamimagel() {
             <label htmlFor="designation">
               Select Designation <span className="text-danger">*</span>
             </label>
-             {/* <Select
+            {/* <Select
     className="wide add_bottom_10 selectdrp"
     value={businessCategoryOptions.find(
       (option) => option.value === selectedBusinessCategory
@@ -347,7 +354,7 @@ function Teamimagel() {
     }}
   /> */}
 
-<select
+            <select
               className="wide add_bottom_10 selectdrp"
               name="businessCategory"
               onChange={handleBusinessCategoryChange}
@@ -365,6 +372,30 @@ function Teamimagel() {
               <option value="Proprietor">Proprietor</option>
               <option value="Director">Director</option>
               <option value="Manager">Manager</option>
+            </select>
+          </div>
+
+          <div className="form-group teamcode">
+            <label htmlFor="designation">
+              Select Title <span className="text-danger">*</span>
+            </label>
+
+            <select
+              className="wide add_bottom_10 selectdrp"
+              name="businessCategory"
+              onChange={handleTitleChange}
+              required
+              value={selectTitle}
+              style={{
+                width: "100%",
+                height: "50px", // Adjust height as needed
+              }}
+            >
+              <option value="" disabled>
+                Select Title
+              </option>
+              <option value="Mr">Mr</option>
+              <option value="Mrs">Mrs</option>
             </select>
           </div>
 
@@ -493,44 +524,42 @@ function Teamimagel() {
               className="row justify-content-center mt-4"
               style={{ marginLeft: "29px" }}
             >
-               {imageDetails.length > 0 &&
-    imageDetails.map((image, index) => (
-      <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
-        <div className="upload_img_sec">
-          <img
-            className="upload_images"
-            src={
-              image.url
-                ? `https://apidev.myinteriormart.com${image.url}`
-                : usericon
-            }
-            alt="Gallery Image"
-          />
-        </div>
-        <div className="img_title text-center">
-          {image.firstName} {image.designation}
-        </div>
-      </div>
-    ))}
+              {imageDetails.length > 0 &&
+                imageDetails.map((image, index) => (
+                  <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
+                    <div className="upload_img_sec">
+                      <img
+                        className="upload_images"
+                        src={
+                          image.url
+                            ? `https://apidev.myinteriormart.com${image.url}`
+                            : usericon
+                        }
+                        alt="Gallery Image"
+                      />
+                    </div>
+                    <div className="img_title text-center">
+                      {image.firstName} {image.designation}
+                    </div>
+                  </div>
+                ))}
 
-{imageDetails.length < 3 &&
-    [...Array(3 - imageDetails.length)].map((_, index) => (
-      <div
-        className="col-md-3 col-lg-2 col-6 mb-5"
-        key={`dummy-${index}`}
-        style={{ left: "216px", marginRight: "33px" }}
-      >
-        <div className="upload_img_sec" style={{ width: "107px" }}>
-          <img
-            className="upload_images"
-            src={usericon}
-            alt="Default User Icon"
-          />
-        </div>
-      </div>
-    ))}
-
-    
+              {imageDetails.length < 3 &&
+                [...Array(3 - imageDetails.length)].map((_, index) => (
+                  <div
+                    className="col-md-3 col-lg-2 col-6 mb-5"
+                    key={`dummy-${index}`}
+                    style={{ left: "216px", marginRight: "33px" }}
+                  >
+                    <div className="upload_img_sec" style={{ width: "107px" }}>
+                      <img
+                        className="upload_images"
+                        src={usericon}
+                        alt="Default User Icon"
+                      />
+                    </div>
+                  </div>
+                ))}
 
               {/* {imageDetails.map((image, index) => (
                 <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>

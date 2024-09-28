@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const Certificate = (companyID) => {
-  const [imageURLs, setImageURLs] = useState([]); // Array to store multiple image URLs
+  const [imageURLs, setImageURLs] = useState([]); 
   const [error, setError] = useState("");
- 
+  const { listingId } = useParams();
+//  console.log('companyid',companyID.listingID)
+ const company_idFetch = {companyID: companyID.listingID.companyID};
+//  console.log('company_idFetch',company_idFetch)
+
 
   useEffect(() => {
     const fetchGalleryImages = async () => {
@@ -12,12 +17,12 @@ const Certificate = (companyID) => {
         const response = await fetch(
           "https://apidev.myinteriormart.com/api/AlldetailsparticularListingbind/GetCertificateImage",
           {
-            method: "POST", // Use POST method
+            method: "POST", 
             headers: {
               "Content-Type": "application/json",
               
             },
-            body: JSON.stringify({ companyID }), 
+            body: JSON.stringify(company_idFetch), 
           }
         );
 
@@ -27,9 +32,9 @@ const Certificate = (companyID) => {
 
         const data = await response.json();
         
-        // Assuming 'data.imagepath' contains an array of image URLs
+       
         if (data && data.imagepath) {
-          setImageURLs(data.imagepath.map((img) => ({ url: img }))); // Set array of images
+          setImageURLs(data.imagepath.map((img) => ({ url: img }))); 
         }
       } catch (error) {
         console.error("Error fetching images:", error);
@@ -37,10 +42,13 @@ const Certificate = (companyID) => {
       }
     };
 
+    if(companyID)
+    {
+      fetchGalleryImages(); 
+    }
+      
     
-      fetchGalleryImages(); // Fetch images only when token is available
-    
-  }, [ companyID]); // Dependency array
+  }, [ companyID]); 
 
   return (
     <div className="labournakaclient-container">
@@ -53,7 +61,7 @@ const Certificate = (companyID) => {
                 className="upload_images"
                 src={`https://apidev.myinteriormart.com${image.url}`}
                 alt={`Certificate ${index + 1}`}
-                style={{ paddingTop: '10px', margin: '10px' }} // Add some margin between images
+                style={{ paddingTop: '10px', margin: '10px',height:'100px',width:'100px' }} 
               />
             ))
           ) : (

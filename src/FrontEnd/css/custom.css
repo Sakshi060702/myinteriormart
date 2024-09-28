@@ -1143,7 +1143,7 @@ option[value=""][disabled] {
 	.strip.map_view .listing-bottom-list {
 		position: absolute;
 		top: 3px;
-		/* padding: 10px 10px; */
+		padding: 10px 10px;
 		border-top: 0px;
 		/* left: calc(100% - 69%); */
 		left: 141px;
@@ -1180,7 +1180,7 @@ option[value=""][disabled] {
 	}
 	.listing-details .company-details h5 {
 		width: 100%;
-		margin-bottom: 0px;
+		margin-bottom: 6px;
 	}
 	.listing-details .company-details small {
 		padding: 6px 0px;
@@ -1269,7 +1269,7 @@ option[value=""][disabled] {
 	.strip.map_view .listing-bottom-list {
 		position: absolute;
 		top: 3px;
-		padding: 10px 10px;
+		padding: 20px 1px 0px 0px;
 		border-top: 0px;
 		/* left: calc(100% - 69%); */
 		left: 128px;
@@ -1277,6 +1277,7 @@ option[value=""][disabled] {
 		top: -40px;
 		margin-left: -138px;
 		margin-right: -29px;
+		bottom: 18px;
 	}
 	.categories-list .item {
 		text-align: center;
@@ -1309,7 +1310,7 @@ option[value=""][disabled] {
 	}
 	.listing-details .company-details h5 {
 		width: 100%;
-		margin-bottom: 0px;
+		margin-bottom: 6px;
 	}
 	.listing-details .company-details small {
 		padding: 6px 0px;

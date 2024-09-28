@@ -157,10 +157,11 @@
 
   @media (max-width:767px) {
     .usericon-img{
-      width:37px !important;
-      height: 37px !important;
+      width:30px !important;
+      height: 29px !important;
       border-radius: 25%;
       /* border: 1px solid black; */
+      margin-top: 5px;
       
      
     }

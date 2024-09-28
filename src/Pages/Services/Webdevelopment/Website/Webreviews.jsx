@@ -13,8 +13,9 @@ const buttons = [
   { title: "Certificate", component: Certificate },
 ];
 
-function Webreviews() {
+function Webreviews(props) {
   const { listingId } = useParams();
+  // console.log("Listing ID:", listingId, props);
   const [selectedButton, setSelectedButton] = useState(0);
   const SelectedComponent = buttons[selectedButton].component;
 
@@ -42,8 +43,8 @@ function Webreviews() {
               </li>
             ))}
           </ul>
-          {console.log(listingId)}
-          <SelectedComponent listingID={listingId} />
+          {/* {console.log(props)} */}
+          <SelectedComponent listingID={props} />
         </div>
       </div>
     </main>

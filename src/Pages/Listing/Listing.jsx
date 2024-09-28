@@ -184,8 +184,8 @@ function Listing() {
         </div>
 
         <div
-          className="banner-block one-block"
-          style={{ marginBottom: "30px" }}
+          className="banner-block one-block categorybanner"
+          
         >
           <div className="row">
             <div className="col-12">
@@ -293,7 +293,7 @@ function Listing() {
                                 >
                                   <h4
                                     className="reating-number reactingnumberfont"
-                                    style={{ marginRight: "8px" }}
+                                    style={{ marginRight: "8px",fontSize:'12px' }}
                                   >
                                     {listing.ratingAverage}.0
                                   </h4>
@@ -315,7 +315,7 @@ function Listing() {
                                               i < listing.ratingAverage
                                                 ? "orange"
                                                 : "",
-                                            fontSize: "16px",
+                                            fontSize: "12px",
                                             marginRight: "2px",
                                           }}
                                         ></i>
@@ -428,6 +428,9 @@ function Listing() {
                                   <p className="listinggetclaim">
                                     <button
                                       className="btn btn-guotes btn-sm getclaimbtn"
+                                      style={{
+                                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', transition: 'box-shadow 0.3s ease-in-out'
+                                      }}
                                       onClick={(event) =>{
                                         event.preventDefault();
                                         event.stopPropagation();
@@ -527,7 +530,7 @@ function Listing() {
 
           {/* mobile view more */}
           {isMobile && listing.length === itemsPerPage && (
-            <button onClick={handleViewMore} className="view-more-btn" style={{borderRadius:'32px',backgroundColor:'white',paddingTop:'5px',paddingBottom:'5px',fontSize:'12px',width:'172px'}}>
+            <button onClick={handleViewMore} className="view-more-btn" style={{borderRadius:'32px',backgroundColor:'white',paddingTop:'5px',paddingBottom:'5px',fontSize:'12px',width:'172px',color:'gray'}}>
               More Search Results
             </button>
           )}

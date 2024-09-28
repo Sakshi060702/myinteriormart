@@ -425,7 +425,7 @@
   .social-details {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    /* gap: 10px; */
   }
   
   @media (max-width: 767px) {
@@ -603,7 +603,7 @@
     width: 109px !important;
     position: relative;
     margin-left: 205px ;
-    margin-top: 0px;
+    margin-top: -23px;
   }
 }
 
@@ -722,6 +722,7 @@ width: 119%;
     display: block !important;
     margin-bottom: 10px;
     text-align: center; 
+    margin-right: -7px;
   }
 }
 
@@ -1106,6 +1107,7 @@ width: 119%;
 @media (max-width:767px) {
   .selectcategoryblock{
     margin-bottom: -40px;
+    margin-top: -42px;
   }
 }
 
@@ -1132,7 +1134,7 @@ width: 119%;
 
 @media (max-width:767px) {
   .terms{
-    margin-left: 23px;
+    margin-left: 2px;
   }
 }
 
@@ -1202,3 +1204,64 @@ div.scrollmenu .imgScroll:hover {
   
   }
 }
+
+.categorybanner{
+  margin-bottom: 30px !important;
+}
+@media (max-width:767px) {
+  .categorybanner{
+    margin-bottom: -11px !important;
+  }
+}
+
+.companyrating{
+  margin-left: 286px !important;
+}
+@media (max-width:767px) {
+  .companyrating{
+    margin-left: 70px !important;
+  }
+}
+
+.listingdetailslocality{
+  margin-right: 97px;
+}
+@media (max-width:767px) {
+  .listingdetailslocality{
+    margin-right: 85px;
+  }
+}
+
+.woringhours{
+  margin-bottom: 1px;
+}
+
+.privacyline{
+  display: block;
+}
+@media (max-width:767px) {
+  .privacyline{
+    display: none;
+  }
+}
+
+.Footsociallinkd{
+  display: block !important;
+}
+@media (max-width:767px) {
+  .Footsociallinkd{
+    display: none !important ;
+  }
+}
+
+.Footsociallinkm{
+  display: none !important;
+}
+@media (max-width:767px) {
+  .Footsociallinkm{
+    display: block !important 
+  }
+}
+
+
+
