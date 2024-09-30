@@ -1327,7 +1327,7 @@ option[value=""][disabled] {
 		padding: 5px;
 	}
 	.review-user {
-		margin-top: 20px;
+		margin-top: -6px;
 	}
 	.review-user img.rounded-circle {
 		margin-bottom: 10px;
@@ -1763,7 +1763,8 @@ iframe#gmap_canvas {
     background-color: #fff;
     padding: 15px;
     margin-bottom: 15px;
-    border: 1px solid #fe900d;
+    border: 1px solid gainsboro;
+	border-radius: 12px;
 }
 
 .notification-list p {

@@ -67,7 +67,7 @@ const Clientreview = (companyID) => {
             imageURLs.map((image, index) => (
               <img
                 key={index}
-                className="upload_images"
+                className="upload_images ListingClient uploadimages"
                 src={`https://apidev.myinteriormart.com${image.url}`}
                 alt={`Certificate ${index + 1}`}
                 style={{ paddingTop: '10px', margin: '10px',height:'100px',width:'100px' }} 

@@ -3,13 +3,12 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 const Certificate = (companyID) => {
-  const [imageURLs, setImageURLs] = useState([]); 
+  const [imageURLs, setImageURLs] = useState([]);
   const [error, setError] = useState("");
   const { listingId } = useParams();
-//  console.log('companyid',companyID.listingID)
- const company_idFetch = {companyID: companyID.listingID.companyID};
-//  console.log('company_idFetch',company_idFetch)
-
+  //  console.log('companyid',companyID.listingID)
+  const company_idFetch = { companyID: companyID.listingID.companyID };
+  //  console.log('company_idFetch',company_idFetch)
 
   useEffect(() => {
     const fetchGalleryImages = async () => {
@@ -17,12 +16,11 @@ const Certificate = (companyID) => {
         const response = await fetch(
           "https://apidev.myinteriormart.com/api/AlldetailsparticularListingbind/GetCertificateImage",
           {
-            method: "POST", 
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
-              
             },
-            body: JSON.stringify(company_idFetch), 
+            body: JSON.stringify(company_idFetch),
           }
         );
 
@@ -31,10 +29,9 @@ const Certificate = (companyID) => {
         }
 
         const data = await response.json();
-        
-       
+
         if (data && data.imagepath) {
-          setImageURLs(data.imagepath.map((img) => ({ url: img }))); 
+          setImageURLs(data.imagepath.map((img) => ({ url: img })));
         }
       } catch (error) {
         console.error("Error fetching images:", error);
@@ -42,13 +39,10 @@ const Certificate = (companyID) => {
       }
     };
 
-    if(companyID)
-    {
-      fetchGalleryImages(); 
+    if (companyID) {
+      fetchGalleryImages();
     }
-      
-    
-  }, [ companyID]); 
+  }, [companyID]);
 
   return (
     <div className="labournakaclient-container">
@@ -58,10 +52,10 @@ const Certificate = (companyID) => {
             imageURLs.map((image, index) => (
               <img
                 key={index}
-                className="upload_images"
+                className="upload_images ListingClient uploadimages"
                 src={`https://apidev.myinteriormart.com${image.url}`}
                 alt={`Certificate ${index + 1}`}
-                style={{ paddingTop: '10px', margin: '10px',height:'100px',width:'100px' }} 
+               
               />
             ))
           ) : (
@@ -69,7 +63,6 @@ const Certificate = (companyID) => {
           )}
         </div>
       </div>
-      
     </div>
   );
 };

@@ -45,7 +45,7 @@ function Listingpayment({ companyID }) {
   return (
     <div className="listing-specialisat box_detail_cus">
       <h6>Payment</h6>
-      <ul className="listing-specialisat-list">
+      <ul className="listing-specialisat-list listingspecialisation">
         {payment.map((item, index) => (
           <li key={index}>
             <i className="icon-check-1"></i>{" "}

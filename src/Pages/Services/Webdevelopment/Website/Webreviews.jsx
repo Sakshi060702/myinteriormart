@@ -9,8 +9,8 @@ import Review1 from "../../../Listing/Review1";
 
 const buttons = [
   { title: "Reviews", component: Review1 },
-  { title: "Client", component: Clientreviews },
-  { title: "Certificate", component: Certificate },
+  { title: "Our Client", component: Clientreviews },
+  { title: "Certificates", component: Certificate },
 ];
 
 function Webreviews(props) {

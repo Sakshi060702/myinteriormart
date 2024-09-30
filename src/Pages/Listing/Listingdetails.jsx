@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { faL } from "@fortawesome/free-solid-svg-icons/faL";
 import Popup from "./Popup";
 import Sociallink from "./Sociallink";
+import Sharelink from "./Sharelink";
 import "../../FrontEnd/css/Lisiting.css";
 import Getquotespopup from "./Getquotespopup";
 import { useSelector } from "react-redux";
@@ -41,8 +42,8 @@ function Listingdetails() {
 
   // const secondCategoryId = useParams().listingId.split('-')[3];
 
-  console.log("currentpage", currentPage);
-  console.log("Itemperpage", itemsPerPage);
+  // console.log("currentpage", currentPage);
+  // console.log("Itemperpage", itemsPerPage);
 
   // const secondCategoryName = encryptedListingId.split('-')[3];
 
@@ -961,7 +962,7 @@ function Listingdetails() {
                         </div>
                         <div style={{ display: "flex" }}>
                           <span
-                            className="company-category-name"
+                            className="company-category-name listingcolor"
                             style={{ marginRight: "18px" }}
                           >
                             {listingDetails.listingKeyword}
@@ -979,7 +980,7 @@ function Listingdetails() {
                                   ></i>
                                 ))}
                             </div>
-                            {listingDetails.ratingCount} Rating
+                            ({listingDetails.ratingCount})
                           </span>
                         </div>
                       </div>
@@ -1149,7 +1150,7 @@ function Listingdetails() {
                           Subscribe
                         </button>
                       </div>
-                      <div className="social-details mobile">
+                      <div className="social-details mobile" style={{marginLeft:'-11px'}}>
                         <button
                           className={`btn btn-bookmark ${
                             isBookmarked ? "active" : ""
@@ -1199,7 +1200,7 @@ function Listingdetails() {
                           Subscribe
                         </button>
                       </div>
-                      <div className="social-details mobile">
+                      <div className="social-details mobile" style={{marginTop:'-15px'}}>
                         <button
                           className="btn btn-guotes btn-sm"
                           onClick={() => setIsPopupOpen(true)}
@@ -1219,7 +1220,7 @@ function Listingdetails() {
                           className={
                             showFullAboutus ? "full-text" : "limited-text"
                           }
-                          style={{ display: "inline" }}
+                          style={{textIndent:'30px', display: "inline" }}
                         >
                           {showFullAboutus
                             ? listingDetails.description
@@ -1250,7 +1251,7 @@ function Listingdetails() {
                   <div className="col-lg-4 col-md-12 company-map padding-all-5 listinggallery listingb">
                     <div
                       className="pro-large-img img-zoom gallery1"
-                      style={{ marginTop: "-49px", marginBottom: "-49px" }}
+                      style={{ marginTop: "-4px", marginBottom: "-49px" }}
                     >
                       <img
                         className="upload_imagesbanner "

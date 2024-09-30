@@ -73,7 +73,7 @@ function Listingkeyword({ companyID }) {
     
       <div className="listing-specialisat box_detail_cus keywordbox" >
         <h6>Keyword</h6>
-        <ul className="listing-specialisat-list">
+        <ul className="listing-specialisat-list listingspecialisation">
           {paymentKeywords.map((keyword, index) => (
             <li key={index}>
               <i className="icon-check-1"></i> {keyword}
