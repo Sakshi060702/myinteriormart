@@ -312,7 +312,8 @@ function Teamimagel() {
               multiple
               accept="image/*"
               style={{
-                border: "1px solid grey",
+                border: "1px solid #ccc",
+                borderRadius:'4px',
                 height: "50px",
                 width: "100%", // Make the input file take the full width of the form group
               }}
@@ -355,7 +356,7 @@ function Teamimagel() {
   /> */}
 
             <select
-              className="wide add_bottom_10 selectdrp"
+              className="wide add_bottom_10 selectdrp ownerdrp"
               name="businessCategory"
               onChange={handleBusinessCategoryChange}
               required
@@ -381,7 +382,7 @@ function Teamimagel() {
             </label>
 
             <select
-              className="wide add_bottom_10 selectdrp"
+              className="wide add_bottom_10 selectdrp ownerdrp"
               name="businessCategory"
               onChange={handleTitleChange}
               required
@@ -444,7 +445,7 @@ function Teamimagel() {
               Country <span className="text-danger">*</span>
             </label>
             <select
-              className="wide add_bottom_10 country selectdrp"
+              className="wide add_bottom_10 country selectdrp ownerdrp"
               value={selectedCountry}
               onChange={handleCountryChange}
               required
@@ -494,8 +495,9 @@ function Teamimagel() {
             <label htmlFor="state">
               State <span className="text-danger">*</span>
             </label>
+            <br></br>
             <select
-              className="wide add_bottom_10 state selectdrp"
+              className="wide add_bottom_10 state selectdrp ownerdrp"
               id="state"
               value={selectedState}
               onChange={handleStateChange}
@@ -521,7 +523,7 @@ function Teamimagel() {
             </div>
 
             <div
-              className="row justify-content-center mt-4"
+              className="row d-flex justify-content-center mt-4"
               style={{ marginLeft: "29px" }}
             >
               {imageDetails.length > 0 &&

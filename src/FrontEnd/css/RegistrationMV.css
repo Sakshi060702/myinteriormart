@@ -600,11 +600,11 @@
 }
 @media (max-width:767px) {
   .listingimage{
-    height: 106px !important;
-    width: 109px !important;
+    height: 90px !important;
+    width: 101px !important;
     position: relative;
     margin-left: 205px ;
-    margin-top: -23px;
+    margin-top: -6px;
   }
 }
 
@@ -618,6 +618,7 @@
   top: 60px; /* Adjust this value based on the height of your header */
   z-index: 999;
   background-color: white; 
+  
 }
 
 @media (max-width:767px) {
@@ -627,6 +628,7 @@
     top: 91px; 
     z-index: 999;
     background-color: white; 
+    margin-top: -12px;
   }
 }
 
@@ -1063,6 +1065,13 @@ width: 119%;
   margin-bottom: -18px;
 }
 
+@media (max-width:767px) {
+  .listingbottom{
+  /* margin-bottom: -18px; */
+  padding-top: 35px !important;
+  margin-bottom: 1px !important;
+}
+}
 .writereview{
   margin-left: 0px;
 }
@@ -1268,7 +1277,7 @@ div.scrollmenu .imgScroll:hover {
 .ListingClient{
   padding-top: 10px;
   margin:10px;
-  height: 105px !important;
+  height: 124px !important;
   width: 127px !important;
   margin-bottom: 32px;
   margin-top: 20px;
@@ -1305,3 +1314,22 @@ div.scrollmenu .imgScroll:hover {
     margin-bottom: 10px;
   }
 }
+
+/* Owner page */
+
+.ownerdrp{
+  border: 1px solid #ccc !important;
+  border: 4px;
+  width: 488px !important;
+}
+
+/* @media (max-width:767px) {
+  .footer-link-sticky{
+    display: block;
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    box-shadow: 0px 0px 30px 0px rgb(0 0 0 / 10%);
+        z-index: 100000;
+  }
+} */

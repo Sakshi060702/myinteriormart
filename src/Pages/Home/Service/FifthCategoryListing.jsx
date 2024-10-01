@@ -10,7 +10,7 @@ import CryptoJS from "crypto-js";
 import Searchbar from "../Component/Searchbar";
 import nextarrowimage from "../../../FrontEnd/img/Frontarrow.png";
 import previousarrowimg from "../../../FrontEnd/img/Backarrow.png";
-
+import { Carousel } from "react-bootstrap";
 
 import { useSelector } from "react-redux";
 
@@ -30,7 +30,7 @@ const decrypt = (ciphertext) => {
 
 
 function FifthCategoryListing() {
-  const { secondCategoryName,subcategoryName} = useParams();
+  const { secondCategoryName, subcategoryName } = useParams();
   const [searchParams] = useSearchParams();
   const searching = searchParams.get("searchkey");
   // console.log(searching,useParams());
@@ -40,53 +40,45 @@ function FifthCategoryListing() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [totalItems, setTotalItems] = useState(0);
+  const [homecategoryBanners, setHomeCategoryBanners] = useState([]);
+  const[advertiseCategoryBanner,setAdvertiseCategoryBanner]=useState([]);
 
+  const listingId_enc = searchParams.get("secatEncyt");
+  const secondCategoryId = decrypt(decodeURIComponent(listingId_enc));
+  console.log(secondCategoryId);
+  console.log("secondcategoryid", secondCategoryId);
+  console.log(decrypt(listingId_enc));
 
-const listingId_enc = searchParams.get("secatEncyt");
-const secondCategoryId = decrypt(decodeURIComponent(listingId_enc));
-console.log(secondCategoryId);
-console.log("listingid",secondCategoryId)
-console.log(decrypt(listingId_enc));
+  //for mobile pagination
 
+  const useIsMobile = () => {
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
- //for mobile pagination
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth <= 768);
+      };
+      window.addEventListener("resize", handleResize);
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }, []);
 
- const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    return isMobile;
+  };
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  return isMobile;
-};
-
-const isMobile = useIsMobile();
-
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     fetchListings();
-  }, [secondCategoryId,currentPage,secondCategoryName,subcategoryName]);
+  }, [secondCategoryId, currentPage, secondCategoryName, subcategoryName]);
 
   const token = useSelector((state) => state.auth.token);
+  console.log("token", token);
 
   // console.log(encrypt(listing.listingId));
-  const fomattedcity=localStorage.getItem('cityname')
- 
 
-
-
- 
-
-
-
- 
+  const fomattedcity = localStorage.getItem("cityname");
 
   const fetchListings = async () => {
     try {
@@ -114,16 +106,13 @@ const isMobile = useIsMobile();
           (subcat) => subcat.id.toString() === secondCategoryId
         );
       });
-      
 
       setListing(filterdListing);
       // console.log(filteredListing)
       // console.log(itemsPerPage);
 
       if (filterdListing.length < itemsPerPage) {
-        setTotalItems(
-          (currentPage - 1) * itemsPerPage + filterdListing.length
-        );
+        setTotalItems((currentPage - 1) * itemsPerPage + filterdListing.length);
       } else {
         setTotalItems(currentPage * itemsPerPage + 1);
       }
@@ -131,6 +120,43 @@ const isMobile = useIsMobile();
       console.error("Error fetching listings", error);
     }
   };
+
+
+  // Horizontal banner
+  useEffect(() => {
+    const fetchCategoryBanners = async () => {
+      try {
+        const response = await fetch(
+          `https://apidev.myinteriormart.com/api/Banners/GetFilteredBanners`
+        );
+        const data =await response.json();
+        console.log(data);
+        setHomeCategoryBanners(data.categoryBanners.homecategoryBanners);
+      } catch (error) {
+        console.error("Error fetching banner images:", error);
+      }
+    };
+    fetchCategoryBanners();
+  }, []);
+
+
+  //Vertical Banners
+
+  useEffect(() => {
+    const fetchAdvertismentBanners = async () => {
+      try {
+        const response = await fetch(
+          `https://apidev.myinteriormart.com/api/Banners/GetFilteredBanners`
+        );
+        const data =await response.json();
+        console.log(data);
+        setAdvertiseCategoryBanner(data.categoryBanners.advertiseCategoryBanner);
+      } catch (error) {
+        console.error("Error fetching banner images:", error);
+      }
+    };
+    fetchAdvertismentBanners();
+  }, []);
 
   const fetchListingsmobile = async (isAppending = false) => {
     try {
@@ -175,8 +201,6 @@ const isMobile = useIsMobile();
     }
   };
 
-
-
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -192,7 +216,6 @@ const isMobile = useIsMobile();
     }
   }, [currentPage, isMobile]);
 
-
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (
@@ -202,62 +225,111 @@ const isMobile = useIsMobile();
           <Searchbar />
         </div>
 
-        <div
-          className="banner-block one-block"
-          style={{ marginBottom: "30px" }}
-        >
+        <div className="banner-block one-block categorybanner">
           <div className="row">
             <div className="col-12">
-              <div className="grid-item">
-                <img
+              <div className="grid-item listingpagebanner">
+                {/* <img
                   src={banner1}
                   alt="Banner"
-                  style={{ height: "230px", width: "100%" }}
-                />
+                  style={{ height: "110px", width: "100%" }}
+                /> */}
+                <div>
+                  <Carousel
+                    interval={2500}
+                    autoPlay={true}
+                    fade
+                    animationEffect="Fade"
+                    pause={false}
+                    controls={false}
+                  >
+                    {homecategoryBanners.length > 0 ? (
+                      homecategoryBanners.map((banner) => (
+                        <Carousel.Item key={banner.id}>
+                          <a
+                            href={banner.bannerLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <img
+                              className="d-block w-100 bannerimg"
+                              src={`https://admin.myinteriormart.com${banner.imagePath}`}
+                              alt={`Banner ${banner.location}`}
+                              style={{ height: "110px", width: "100%" }}
+                            />
+                          </a>
+                        </Carousel.Item>
+                      ))
+                    ) : (
+                      <p>Loading...</p>
+                    )}
+                  </Carousel>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <div style={{ display: "flex" }}>
-          <div className="listing-list col-8 ">
+          <div className="listing-list col-9 ">
             {listing.length > 0 ? (
               listing.map((listing) => (
                 <div key={listing.listingId} className="row mb-10">
                   <div className="col-12">
-                    <div className="strip map_view stripmapviewdesign">
-                      {/* <h5>Hello world</h5> */}
-                      <h6 className="listingcompanyname">
-                        <Link
-                          className="listingcompany"
-                          to={`/company/${listing.companyName
-                            .replace(/\s+/g, "-")
-                            .toLowerCase()}/${secondCategoryName}/in-${listing.locality
-                            .replace(/\s+/g, "-")
-                            .toLowerCase()}/${localStorage.getItem(
-                            "cityname"
-                          )}?listingEncyt=${encodeURIComponent(
-                            encrypt(listing.listingId)
-                          )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
-                            encrypt(parseInt(secondCategoryId))
-                          )}`}
+                    <Link
+                      to={`/company/${listing.companyName
+                        .replace(/\s+/g, "-")
+                        .toLowerCase()}/${secondCategoryName}/in-${listing.locality
+                        .replace(/\s+/g, "-")
+                        .toLowerCase()}/${localStorage.getItem(
+                        "cityname"
+                      )}?listingEncyt=${encodeURIComponent(
+                        encrypt(listing.listingId)
+                      )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
+                        encrypt(parseInt(secondCategoryId))
+                      )}`}
+                    >
+                      <div className="strip map_view stripmapviewdesign">
+                        {/* <h5>Hello world</h5> */}
+                        <h6 className="listingcompanyname">
+                          <Link
+                            className="listingcompany"
+                            to={`/company/${listing.companyName
+                              .replace(/\s+/g, "-")
+                              .toLowerCase()}/${secondCategoryName}/in-${listing.locality
+                              .replace(/\s+/g, "-")
+                              .toLowerCase()}/${localStorage.getItem(
+                              "cityname"
+                            )}?listingEncyt=${encodeURIComponent(
+                              encrypt(listing.listingId)
+                            )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
+                              encrypt(parseInt(secondCategoryId))
+                            )}`}
+                          >
+                            {" "}
+                            <h5
+                              style={{
+                                fontWeight: "600",
+                                fontFamily: "PoppinsSemiBold",
+                              }}
+                            >
+                              {" "}
+                              {listing.companyName}
+                            </h5>
+                          </Link>
+                        </h6>
+                        <div
+                          className="row no-gutters "
+                          style={{
+                            border:
+                              searching == listing.listingKeyword
+                                ? "2px solid gray"
+                                : "None",
+                          }}
                         >
-                          {" "}
-                          {listing.companyName}
-                        </Link>
-                      </h6>
-                      <div
-                        className="row no-gutters "
-                        style={{
-                          border:
-                            searching == listing.listingKeyword
-                              ? "2px solid gray"
-                              : "None",
-                        }}
-                      >
-                        <div className="col-6">
-                          <div className="wrapper">
-                            {/* <h3 style={{ color: "black" }}>
+                          <div className="col-6 listingdiv">
+                            <div className="wrapper listingdetailsdiv">
+                              {/* <h3 style={{ color: "black" }}>
                               <Link
                                 to={`/company/${listing.companyName
                                   .replace(/\s+/g, "-")
@@ -275,184 +347,195 @@ const isMobile = useIsMobile();
                                 {listing.companyName}
                               </Link>
                             </h3> */}
-                            <small>{listing.listingKeyword}</small>
+                              <small className="listingcolor">
+                                {listing.listingKeyword}
+                              </small>
 
-                            <p>
-                              <i
-                                className="fa fa-map-marker"
-                                style={{ paddingRight: "5px" }}
-                              ></i>
-                              {listing.locality}, {listing.area}
-                            </p>
-                            <div className="business-info-container">
-                              <BusinessHours
-                                businessWorking={listing.businessWorking}
-                              />
+                              <p className="listingcolor">
+                                <i
+                                  className="fa fa-map-marker"
+                                  style={{ paddingRight: "5px" }}
+                                ></i>
+                                {listing.area},{listing.locality}
+                              </p>
+                              <div className="business-info-container listingcolor">
+                                <BusinessHours
+                                  businessWorking={listing.businessWorking}
+                                />
 
-                              {/* Rating below business hours for mobile */}
-                              {/* Rating below business hours for mobile */}
-                              <div className="rating-container mobile">
-                                <div
-                                  className="listingrating"
-                                  style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  <h4
-                                    className="reating-number reactingnumberfont"
-                                    style={{ marginRight: "8px" }}
-                                  >
-                                    {listing.ratingAverage}
-                                  </h4>
+                                {/* Rating below business hours for mobile */}
+                                {/* Rating below business hours for mobile */}
+                                <div className="rating-container mobile">
                                   <div
-                                    className="cat_star listingstar"
+                                    className="listingrating"
                                     style={{
                                       display: "flex",
-                                      paddingBottom: "11px",
+                                      alignItems: "center",
                                     }}
                                   >
-                                    {Array(5)
-                                      .fill()
-                                      .map((_, i) => (
-                                        <i
-                                          key={i}
-                                          className="icon_star"
-                                          style={{
-                                            color:
-                                              i < listing.ratingAverage
-                                                ? "orange"
-                                                : "gray",
-                                            fontSize: "16px",
-                                            marginRight: "2px",
-                                          }}
-                                        ></i>
-                                      ))}
+                                    <h4
+                                      className="reating-number reactingnumberfont"
+                                      style={{
+                                        marginRight: "8px",
+                                        fontSize: "12px",
+                                      }}
+                                    >
+                                      {listing.ratingAverage}.0
+                                    </h4>
+                                    <div
+                                      className="cat_star listingstar"
+                                      style={{
+                                        display: "flex",
+                                        paddingBottom: "11px",
+                                      }}
+                                    >
+                                      {Array(1)
+                                        .fill()
+                                        .map((_, i) => (
+                                          <i
+                                            key={i}
+                                            className="icon_star"
+                                            style={{
+                                              color:
+                                                i < listing.ratingAverage
+                                                  ? "orange"
+                                                  : "",
+                                              fontSize: "12px",
+                                              marginRight: "2px",
+                                            }}
+                                          ></i>
+                                        ))}
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
 
-                              <div
-                                className="rating-container desktop st"
-                                style={{ marginLeft: "8px" }}
-                              >
-                                <ul
-                                  className="listingrating"
-                                  style={{
-                                    marginTop: "-40px",
-                                    marginLeft: "-26px",
-                                    marginBottom: "-13px",
-                                  }}
+                                <div
+                                  className="rating-container desktop st"
+                                  style={{ marginLeft: "8px" }}
                                 >
-                                  <ul className="reating-list">
-                                    <li>
-                                      <h4 className="reating-number reactingnumberfont">
-                                        {listing.ratingAverage}.0
-                                      </h4>
-                                    </li>
-                                    <li className="reating-star">
-                                      <div className="cat_star">
-                                        {Array(5)
-                                          .fill()
-                                          .map((_, i) => (
-                                            <i
-                                              key={i}
-                                              className="icon_star"
-                                              style={{
-                                                color:
-                                                  i < listing.ratingAverage
-                                                    ? "orange"
-                                                    : "gray",
-                                                fontSize: "16px",
-                                              }}
-                                            ></i>
-                                          ))}
-                                      </div>
-                                    </li>
-                                    <li>{listing.ratingCount} Rating</li>
+                                  <ul
+                                    className="listingrating"
+                                    style={{
+                                      marginTop: "-40px",
+                                      marginLeft: "-38px",
+                                      marginBottom: "-13px",
+                                    }}
+                                  >
+                                    <ul className="reating-list">
+                                      <li>
+                                        <h4 className="reating-number reactingnumberfont">
+                                          {listing.ratingAverage}.0
+                                        </h4>
+                                      </li>
+                                      <li className="reating-star">
+                                        <div className="cat_star">
+                                          {Array(5)
+                                            .fill()
+                                            .map((_, i) => (
+                                              <i
+                                                key={i}
+                                                className="icon_star"
+                                                style={{
+                                                  color:
+                                                    i < listing.ratingAverage
+                                                      ? "orange"
+                                                      : "",
+                                                  fontSize: "16px",
+                                                }}
+                                              ></i>
+                                            ))}
+                                        </div>
+                                      </li>
+                                      <li>{listing.ratingCount} Rating</li>
+                                    </ul>
                                   </ul>
-                                </ul>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
 
-                        <div className="col-2 listingcompanyletter">
-                          {listing.logoImage && listing.logoImage.imagePath ? (
-                            <img
-                              src={`https://apidev.myinteriormart.com${listing.logoImage.imagePath}`}
-                              alt={`${listing.companyName} Logo`}
-                              className="card-img-top listingimage"
-                              // style={{ height: "150px" }}
-                            />
-                          ) : (
-                            <div
-                              className="client_first_letter listingimage"
-                              // style={{ height: "141px", width: "141px" }}
-                            >
-                              {listing.companyFirstLetter}
-                            </div>
-                          )}
-                        </div>
-
-                        <div className="col-lg-12 listing-bottom">
-                          <ul className="listing-bottom-list">
-                            {/* Rating in listing bottom for desktop */}
-                            <div>
-                              <div>
-                                <li className="listingyear listingyearmim">
-                                  <h5 className="yearbusiness">
-                                    <p>
-                                      {" "}
-                                      + {listing.businessYear} Year Business
-                                    </p>
-                                  </h5>
-                                </li>
+                          <div className="col-2 listingcompanyletter">
+                            {listing.logoImage &&
+                            listing.logoImage.imagePath ? (
+                              <img
+                                src={`https://apidev.myinteriormart.com${listing.logoImage.imagePath}`}
+                                alt={`${listing.companyName} Logo`}
+                                className="card-img-top listingimage"
+                                // style={{ height: "150px" }}
+                              />
+                            ) : (
+                              <div
+                                className="client_first_letter listingimage"
+                                style={{ height: "141px", width: "141px" }}
+                              >
+                                {listing.companyFirstLetter}
                               </div>
-                            
+                            )}
+                          </div>
 
-                            <div style={{ display: "flex" }}>
+                          <div className="col-lg-12 listing-bottom listingbottom">
+                            <ul className="listing-bottom-list">
+                              {/* Rating in listing bottom for desktop */}
                               <div>
-                                <li
-                                  style={{
-                                    marginLeft: "-1px",
-                                    marginRight: "0px",
-                                    marginTop: "-6px",
-                                  }}
-                                >
-                                  <p className="listingcallnow">
-                                    <Link
-                                      className="loc_open call-now callnowl  listingcallnowinner listingcallnow_btn"
-                                     
+                                <div>
+                                  <li className="listingyear listingyearmim">
+                                    <h5 className="yearbusiness">
+                                      <p style={{ color: "gray" }}>
+                                        {" "}
+                                        Since {listing.businessYear} Year
+                                      </p>
+                                    </h5>
+                                  </li>
+                                </div>
+
+                                <div style={{ display: "flex" }}>
+                                  <div>
+                                    <li
+                                      style={{
+                                        marginLeft: "-1px",
+                                        marginRight: "4px",
+                                        marginTop: "-6px",
+                                      }}
                                     >
-                                      Call now
-                                    </Link>
-                                  </p>
-                                </li>
+                                      <p className="listingcallnow">
+                                        <Link className="loc_open call-now callnowl  listingcallnowinner listingcallnow_btn">
+                                          Call now
+                                        </Link>
+                                      </p>
+                                    </li>
+                                  </div>
+                                  <div>
+                                    <li>
+                                      <p className="listinggetclaim">
+                                        <button
+                                          className="btn btn-guotes btn-sm getclaimbtn"
+                                          style={{
+                                            boxShadow:
+                                              "0 4px 8px rgba(0, 0, 0, 0.2)",
+                                            transition:
+                                              "box-shadow 0.3s ease-in-out",
+                                          }}
+                                          onClick={(event) => {
+                                            event.preventDefault();
+                                            event.stopPropagation();
+                                            setIsPopupOpen([
+                                              true,
+                                              listing.listingId,
+                                            ]);
+                                          }}
+                                        >
+                                          Get Quotes
+                                        </button>
+                                      </p>
+                                    </li>
+                                  </div>
+                                </div>
                               </div>
-                              <div>
-                                <li>
-                                  <p className="listinggetclaim">
-                                    <button
-                                      className="btn btn-guotes btn-sm getclaimbtn"
-                                      onClick={() =>
-                                        setIsPopupOpen([
-                                          true,
-                                          listing.listingId,
-                                        ])
-                                      }
-                                    >
-                                      Get Claim
-                                    </button>
-                                  </p>
-                                </li>
-                              </div>
-                            </div>
-                            </div>
-                          </ul>
+                            </ul>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   </div>
 
                   {/* <div className="col-2">
@@ -474,24 +557,82 @@ const isMobile = useIsMobile();
                 </div>
               ))
             ) : (
-              <p>Comming soon.</p>
+              <p>Coming soon.</p>
             )}
           </div>
 
-          <div className="col-4 listingbanner">
+          <div className="col-3 listingbanner">
             <div className="grid-item" style={{ paddingBottom: "6px" }}>
-              <img
+              {/* <img
                 src={banner}
                 alt="Banner"
                 style={{ height: "474px", width: "100%" }}
-              />
+              /> */}
+              <Carousel
+                    interval={2500}
+                    autoPlay={true}
+                    fade
+                    animationEffect="Fade"
+                    pause={false}
+                    controls={false}
+                  >
+                    {advertiseCategoryBanner.length > 0 ? (
+                      advertiseCategoryBanner.map((banner) => (
+                        <Carousel.Item key={banner.id}>
+                          <a
+                            href={banner.bannerLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <img
+                              className="d-block w-100 bannerimg"
+                              src={`https://admin.myinteriormart.com${banner.imagePath}`}
+                              alt={`Banner ${banner.location}`}
+                              style={{ height: "474px", width: "100%" }}
+                            />
+                          </a>
+                        </Carousel.Item>
+                      ))
+                    ) : (
+                      <p>Loading...</p>
+                    )}
+                  </Carousel>
             </div>
             <div className="grid-item">
-              <img
+              {/* <img
                 src={banner1}
                 alt="Banner"
                 style={{ height: "474px", width: "100%" }}
-              />
+              /> */}
+              <Carousel
+                    interval={2500}
+                    autoPlay={true}
+                    fade
+                    animationEffect="Fade"
+                    pause={false}
+                    controls={false}
+                  >
+                    {advertiseCategoryBanner.length > 0 ? (
+                      advertiseCategoryBanner.map((banner) => (
+                        <Carousel.Item key={banner.id}>
+                          <a
+                            href={banner.bannerLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <img
+                              className="d-block w-100 bannerimg"
+                              src={`https://admin.myinteriormart.com${banner.imagePath}`}
+                              alt={`Banner ${banner.location}`}
+                              style={{ height: "474px", width: "100%" }}
+                            />
+                          </a>
+                        </Carousel.Item>
+                      ))
+                    ) : (
+                      <p>Loading...</p>
+                    )}
+                  </Carousel>
             </div>
           </div>
         </div>
@@ -500,13 +641,13 @@ const isMobile = useIsMobile();
           {/* for dekstop */}
           {!isMobile && (
             <>
-              <button
+              {/* <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
               >
-                {/* Previous */}
+                Previous
                 <img src={previousarrowimg} style={{ height: "30px" }} />
-              </button>
+              </button> */}
               {Array.from({ length: totalPages }, (_, i) => (
                 <button
                   key={i + 1}
@@ -520,16 +661,28 @@ const isMobile = useIsMobile();
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={listing.length < itemsPerPage} // Disable "Next" if fewer than 10 listings
               >
-                {/* Next */}
-                <img src={nextarrowimage} style={{ height: "30px" }} />
+                Next
+                {/* <img src={nextarrowimage} style={{ height: "30px" }} /> */}
               </button>
             </>
           )}
 
           {/* mobile view more */}
           {isMobile && listing.length === itemsPerPage && (
-            <button onClick={handleViewMore} className="view-more-btn">
-              View More
+            <button
+              onClick={handleViewMore}
+              className="view-more-btn"
+              style={{
+                borderRadius: "32px",
+                backgroundColor: "white",
+                paddingTop: "5px",
+                paddingBottom: "5px",
+                fontSize: "12px",
+                width: "172px",
+                color: "gray",
+              }}
+            >
+              More Search Results
             </button>
           )}
         </div>
@@ -564,4 +717,5 @@ const BusinessHours = ({ businessWorking }) => {
     </p>
   );
 };
+
 export default FifthCategoryListing;

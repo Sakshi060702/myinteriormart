@@ -117,7 +117,7 @@ const Foot = () => {
   }, []);
   return (
     <>
-      <footer className="shadow" style={{ position: "relative" }}>
+      <footer className="shadow footer-link-sticky" style={{ position: "relative" }}>
         <div className="container footerspace" style={{ width: "90%" }}>
           <div className="d-flex justify-content-between flex-wrap footertabs">
             {/* <div className="footer-logo-container">
@@ -517,7 +517,7 @@ const Foot = () => {
                 className="fa fa-user"
                 style={{ color: "orange", marginRight: "2px" }}
               ></i>
-              <p>You</p>
+              <p>Account</p>
             </button>
           </div>
           <div class="col-3 bottom-link-sticky-list">

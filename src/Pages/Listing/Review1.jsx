@@ -27,7 +27,7 @@ function Review1({ listingID }) {
             'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify({
-            companyID: parseInt(listingID)
+            companyID: listingID.companyID
           })
         }
       );
@@ -68,7 +68,7 @@ function Review1({ listingID }) {
           body: JSON.stringify({
             ratings: rating,
             comment: reviewText,
-            companyID: listingID // Use listingID directly
+            companyID: listingID.companyID
           })
         }
       );

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import logoSticky from "../../../FrontEnd/img/logo_sticky.svg";
 import { NavLink } from "react-router-dom";
-import notificationIcon from "../../../FrontEnd/img/icon/notification1.png";
+import notificationIcon from "../../../FrontEnd/img/icon/icon (17).png";
 import usericon from "../../../FrontEnd/img/icon (16).png";
 import Dropdown from "../../Dropdown";
 import Notification from "../../Notification";

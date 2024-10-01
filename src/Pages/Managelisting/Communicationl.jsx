@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
 import Popupalert from "../Popupalert";
 import { validateEmail,validateMobile } from "../Validation";
+import { height } from "@fortawesome/free-solid-svg-icons/faL";
 
 function Communicationl() {
   const [formData, setFormData] = useState({
@@ -195,7 +196,7 @@ function Communicationl() {
     }),
     control: (provided) => ({
       ...provided,
-      height: "50px", // Increase the height of the select box
+      height: "auto", // Increase the height of the select box
       minHeight: "50px", // Ensure minimum height of the select box
       border: "1px solid #ccc",
       boxShadow: "none",
@@ -203,6 +204,15 @@ function Communicationl() {
         border: "1px solid orange", // Border on hover
       },
     }),
+    valueContainer:(provided,state)=>({
+      ...provided,
+      display:'flex',
+      flexWrap:'wrap',
+      height:'auto',
+      overflowY:'auto',
+      maxHeight:'150px',
+      padding:'4px',
+    })
   };
 
 

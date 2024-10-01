@@ -1,16 +1,16 @@
-import React, { useState,useEffect } from "react";
-import { Link, useNavigate,useLocation } from "react-router-dom";
-import Select from 'react-select';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import Select from "react-select";
 import "./Businesslisting.css";
 import nextarrowimg from "../../../FrontEnd/img/Frontarrow.png";
 import previousarrowimg from "../../../FrontEnd/img/Backarrow.png";
 import { useSelector } from "react-redux";
-import withAuthh from "../../../Hoc/withAuthh"
+import withAuthh from "../../../Hoc/withAuthh";
 import Popupalert from "../../Popupalert";
-import { validateEmail,validateMobile } from "../../Validation";
+import { validateEmail, validateMobile } from "../../Validation";
 import useAuthCheck from "../../../Hooks/useAuthCheck";
 
-function Addcommunication(){
+function Addcommunication() {
   const [formData, setFormData] = useState({
     languages: [],
     email: "",
@@ -18,7 +18,7 @@ function Addcommunication(){
     mobile: "",
     telephone: "",
     website: "",
-    tollfree: ""
+    tollfree: "",
   });
 
   const [languageOptions, setLanguageOptions] = useState([]);
@@ -27,44 +27,44 @@ function Addcommunication(){
 
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const[successMessage,setSuccessMessage]=useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const location = useLocation();
 
   const [error, setError] = useState("");
 
   const isAuthenticated = useAuthCheck();
 
-
   useEffect(() => {
     if (location.state && location.state.email) {
       console.log("Setting email from location.state:", location.state.email);
       setFormData((prevFormData) => ({
         ...prevFormData,
-        email: location.state.email
+        email: location.state.email,
       }));
     } else {
       console.log("No email found in location.state");
     }
   }, [location.state]);
 
-const useremail=localStorage.getItem("email");
-console.log(useremail);
+  const useremail = localStorage.getItem("email");
+  console.log(useremail);
 
-const telphone=localStorage.getItem('mobile');
-console.log(telphone);
+  const telphone = localStorage.getItem("mobile");
+  console.log(telphone);
 
   useEffect(() => {
     // Function to fetch communication details
     const fetchCommunicationDetails = async () => {
-      const apiUrl = "https://apidev.myinteriormart.com/api/BinddetailsListing/GetCommunicationDetailslisting";
+      const apiUrl =
+        "https://apidev.myinteriormart.com/api/BinddetailsListing/GetCommunicationDetailslisting";
 
       try {
         const response = await fetch(apiUrl, {
           method: "GET",
           headers: {
-            "Authorization": `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -79,13 +79,15 @@ console.log(telphone);
 
         // Convert language string to array of objects if necessary
         const languages = responseData.language
-          ? responseData.language.split(',').map(lang => ({ value: lang, label: lang }))
+          ? responseData.language
+              .split(",")
+              .map((lang) => ({ value: lang, label: lang }))
           : [];
 
-          // const storedemail=localStorage.getItem("email")||responseData.email || "";
-          // const storedmobile=localStorage.getItem("mobile")||responseData.telephoneSecond || "";
+        // const storedemail=localStorage.getItem("email")||responseData.email || "";
+        // const storedmobile=localStorage.getItem("mobile")||responseData.telephoneSecond || "";
 
-          // console.log('storedemail',storedemail);
+        // console.log('storedemail',storedemail);
 
         setFormData({
           email: useremail,
@@ -96,34 +98,30 @@ console.log(telphone);
           tollfree: responseData.tollFree || "",
           languages,
         });
-
       } catch (error) {
         console.error("API error:", error);
-        
       }
     };
 
-    if(isAuthenticated){
+    if (isAuthenticated) {
       fetchCommunicationDetails();
     }
-    
   }, [token]);
-
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-  
+
     // Ensure only numeric values are set
-    if (name === 'tollfree') {
-      const numericValue = value.replace(/[^0-9]/g, '');
+    if (name === "tollfree") {
+      const numericValue = value.replace(/[^0-9]/g, "");
       setFormData((prevData) => ({
         ...prevData,
         [name]: numericValue,
@@ -135,31 +133,29 @@ console.log(telphone);
       }));
     }
   };
-  
 
   const handleSelectChange = (selectedOptions) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      languages: selectedOptions
+      languages: selectedOptions,
     }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
-  
-    
+
     const updatedFormData = {
       ...formData,
-      email: formData.email || useremail ,
-      registerMobile:formData.registerMobile||telphone,
+      email: formData.email || useremail,
+      registerMobile: formData.registerMobile || telphone,
     };
-  
+
     const emailError = validateEmail(updatedFormData.email);
     const registermobileError = validateMobile(updatedFormData.registerMobile);
     const mobileError = validateMobile(updatedFormData.mobile);
     const telephoneError = validateMobile(updatedFormData.telephone);
-  
+
     if (emailError || registermobileError || mobileError || telephoneError) {
       setError({
         communicationEmail: emailError,
@@ -169,57 +165,58 @@ console.log(telphone);
       });
       return;
     }
-  
-    const apiUrl = "https://apidev.myinteriormart.com/api/Communication/AddOrUpdateCommunication";
-  
+
+    const apiUrl =
+      "https://apidev.myinteriormart.com/api/Communication/AddOrUpdateCommunication";
+
     const submissionData = {
       ...updatedFormData,
-      language: formData.languages.map(option => option.value).join(',') // Convert array to comma-separated string
+      language: formData.languages.map((option) => option.value).join(","), // Convert array to comma-separated string
     };
-  
+
     console.log("Submitting data:", submissionData);
-  
+
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(submissionData)
+        body: JSON.stringify(submissionData),
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         console.error("API response error data:", errorData);
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
+
       const responseData = await response.json();
       console.log("API response:", responseData);
-  
-      const cityName = localStorage.getItem('cityname');
+
+      const cityName = localStorage.getItem("cityname");
       const pathlisting = `/address/${cityName}`;
-  
+
       navigate(pathlisting);
-  
     } catch (error) {
       console.error("API error:", error);
-      setErrorMessage("Failed to save communication details. Please try again later.");
+      setErrorMessage(
+        "Failed to save communication details. Please try again later."
+      );
       setSuccessMessage(""); // Clear any existing success message
       setShowPopup(true);
     }
   };
-  
-  const languageOptionsList  = [
-    { value: 'English', label: 'English' },
-    { value: 'Hindi', label: 'Hindi' },
-    { value: 'Marathi', label: 'Marathi' },
-    { value: 'French', label: 'French' },
-    { value: 'Spanish', label: 'Spanish' },
-    { value: 'Japanese', label: 'Japanese' },
-    { value: 'Portuguese', label: 'Portuguese' }
 
+  const languageOptionsList = [
+    { value: "English", label: "English" },
+    { value: "Hindi", label: "Hindi" },
+    { value: "Marathi", label: "Marathi" },
+    { value: "French", label: "French" },
+    { value: "Spanish", label: "Spanish" },
+    { value: "Japanese", label: "Japanese" },
+    { value: "Portuguese", label: "Portuguese" },
   ];
 
   const handleClosePopup = () => {
@@ -256,7 +253,6 @@ console.log(telphone);
               <form onSubmit={handleSubmit}>
                 <p className="add-lidting-title-from">
                   Add Listing / Add Communication Details
-                  
                 </p>
                 <div className="row">
                   <div className="form-group col-md-4">
@@ -274,11 +270,12 @@ console.log(telphone);
                       required
                       // styles={{marginRight:'2px'}}
                       styles={customStyles}
-                     
                     />
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="email">Email<span className="text-danger">*</span></label>
+                    <label htmlFor="email">
+                      Email<span className="text-danger">*</span>
+                    </label>
                     <input
                       className="form-control form-control-sm box"
                       type="email"
@@ -291,7 +288,9 @@ console.log(telphone);
                       required
                     />
                     {error.communicationEmail && (
-                      <div className="text-danger">{error.communicationEmail}</div>
+                      <div className="text-danger">
+                        {error.communicationEmail}
+                      </div>
                     )}
                   </div>
                   <div className="form-group col-md-4">
@@ -304,17 +303,21 @@ console.log(telphone);
                       name="registerMobile"
                       id="Mobile"
                       placeholder="Enter Registered Mobile Number"
-                      value={formData.registerMobile||telphone||""}
+                      value={formData.registerMobile || telphone || ""}
                       onChange={handleChange}
-                     maxLength={10}
+                      maxLength={10}
                       required
                     />
                     {error.communicationRegisterMobile && (
-                      <div className="text-danger">{error.communicationRegisterMobile}</div>
+                      <div className="text-danger">
+                        {error.communicationRegisterMobile}
+                      </div>
                     )}
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="Mobile2">Mobile<span className="text-danger">*</span> </label>
+                    <label htmlFor="Mobile2">
+                      Mobile<span className="text-danger">*</span>{" "}
+                    </label>
                     <input
                       className="form-control form-control-sm box"
                       type="text"
@@ -327,11 +330,15 @@ console.log(telphone);
                       maxLength={10}
                     />
                     {error.commuincationMobile && (
-                      <div className="text-danger">{error.commuincationMobile}</div>
+                      <div className="text-danger">
+                        {error.commuincationMobile}
+                      </div>
                     )}
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="telephone">Telephone<span className="text-danger">*</span></label>
+                    <label htmlFor="telephone">
+                      Telephone<span className="text-danger">*</span>
+                    </label>
                     <input
                       className="form-control form-control-sm box"
                       type="text"
@@ -343,12 +350,16 @@ console.log(telphone);
                       required
                       maxLength={10}
                     />
-                     {error.communicationTelephone && (
-                      <div className="text-danger">{error.communicationTelephone}</div>
+                    {error.communicationTelephone && (
+                      <div className="text-danger">
+                        {error.communicationTelephone}
+                      </div>
                     )}
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="website">Website<span className="text-danger">*</span></label>
+                    <label htmlFor="website">
+                      Website<span className="text-danger">*</span>
+                    </label>
                     <input
                       className="form-control form-control-sm box"
                       type="name"
@@ -361,7 +372,9 @@ console.log(telphone);
                     />
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="tollfree">Toll Free<span className="text-danger">*</span></label>
+                    <label htmlFor="tollfree">
+                      Toll Free<span className="text-danger">*</span>
+                    </label>
                     <input
                       className="form-control form-control-sm box"
                       type="text"
@@ -376,24 +389,41 @@ console.log(telphone);
                     />
                   </div>
 
-                  <div className="text-left col-12 mt-3" style={{display:'flex'}}>
-                    <button type="submit" className="btn_1 freelistingpagebtn" >
+                  <div
+                    className="text-left col-12 mt-3"
+                    style={{ display: "flex" }}
+                  >
+                    <button type="submit" className="btn_1 freelistingpagebtn">
                       Save & Continue
                     </button>
-                    <div style={{display:"flex",justifyContent:"center",gap:'10px',paddingTop:'10px'}}>                    
-                      <Link to={`/addcompany/${localStorage.getItem('cityname')}`} ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
-                    <Link to={`/address/${localStorage.getItem('cityname')}`} ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        gap: "10px",
+                        paddingTop: "10px",
+                      }}
+                    >
+                      <Link
+                        to={`/addcompany/${localStorage.getItem("cityname")}`}
+                      >
+                        <img
+                          src={previousarrowimg}
+                          style={{ height: "30px" }}
+                        />
+                      </Link>
+                      <Link to={`/address/${localStorage.getItem("cityname")}`}>
+                        <img src={nextarrowimg} style={{ height: "30px" }} />
+                      </Link>
                     </div>
-
                   </div>
                   {showPopup && (
-  <Popupalert 
-    message={successMessage || errorMessage} 
-    type={successMessage ? 'success' : 'error'} 
-    onClose={handleClosePopup}
-  />
-)}
-                 
+                    <Popupalert
+                      message={successMessage || errorMessage}
+                      type={successMessage ? "success" : "error"}
+                      onClose={handleClosePopup}
+                    />
+                  )}
                 </div>
               </form>
             </div>

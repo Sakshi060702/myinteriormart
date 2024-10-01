@@ -479,7 +479,7 @@ footer ul {
 	margin-top: -5px;
 	pointer-events: none;
 	position: absolute;
-	right: 7px;
+	right: 16px;
 	top: 19px;
 	transform-origin: 66% 66%;
 	transform: rotate( 44deg);
@@ -1072,6 +1072,7 @@ option[value=""][disabled] {
 	.banner-block {
 		margin: 0px;
 		padding: 15px 5px;
+		margin-right: -14px !important;
 	}
 	.one-block {
 		padding: 0px 0px!important;

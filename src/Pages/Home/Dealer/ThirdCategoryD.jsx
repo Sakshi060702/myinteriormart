@@ -67,32 +67,32 @@ function ThirdCategoryD() {
                 className={`col-lg-3 col-6 d-flex justify-content-center`}
               >
                 <div className="item">
-                <span
-  className="icon"
-  style={{
-    display: "inline-block",
-    width: "40px",
-    height: "40px",
-    overflow: "hidden",
-    position: "relative",
-    marginRight: "10px",
-  }}
->
-  <div
-    style={{
-      width: "15px",
-      height: "15px",
-      backgroundColor: "orange",
-      borderRadius: "50%",
-      position: "absolute",
-      top: "35%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-    }}
-  ></div>
-</span>
+                  <span
+                    className="icon"
+                    style={{
+                      display: "inline-block",
+                      width: "40px",
+                      height: "40px",
+                      overflow: "hidden",
+                      position: "relative",
+                      marginRight: "10px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "15px",
+                        height: "15px",
+                        backgroundColor: "orange",
+                        borderRadius: "50%",
+                        position: "absolute",
+                        top: "35%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                      }}
+                    ></div>
+                  </span>
                   <Link
-                     to={`/All/${subCategory.name
+                    to={`/All/${subCategory.name
                       .replace(/\s+/g, "-")
                       .toLowerCase()}/${selectedCategory.name
                       .replace(/\s+/g, "-")
@@ -101,26 +101,26 @@ function ThirdCategoryD() {
                     )}?secatEncyt=${encodeURIComponent(
                       encrypt(parseInt(subCategory.secondCategoryID))
                     )}`}
-                  className="categorylink"
+                    className=" Linkstyle categorylink"
                   >
                     {subCategory.name}
                   </Link>
                   {subCategory.fourthCategories &&
                     subCategory.fourthCategories.length > 0 && (
                       <Link
-                      to={`/Dealer/Category/${subCategory.name
-                        .replace(/\s+/g, "-")
-                        .toLowerCase()}/${selectedCategory.name
-                        .replace(/\s+/g, "-")
-                        .toLowerCase()}/in-${localStorage.getItem(
-                        "cityname"
-                      )}?secatEncyt=${encodeURIComponent(
-                        encrypt(parseInt(subCategory.thirdCategoryID))
-                      )}`}
+                        to={`/Dealer/Category/${subCategory.name
+                          .replace(/\s+/g, "-")
+                          .toLowerCase()}/${selectedCategory.name
+                          .replace(/\s+/g, "-")
+                          .toLowerCase()}/in-${localStorage.getItem(
+                          "cityname"
+                        )}?secatEncyt=${encodeURIComponent(
+                          encrypt(parseInt(subCategory.thirdCategoryID))
+                        )}`}
                         title={subCategory.name}
                         style={{ color: "orange" }}
                       >
-                         More ...
+                        More ...
                       </Link>
                     )}
                 </div>

@@ -308,6 +308,7 @@ function Listing() {
                               style={{
                                 fontWeight: "600",
                                 fontFamily: "PoppinsSemiBold",
+                                fontSize:'15px'
                               }}
                             >
                               {" "}
@@ -386,7 +387,7 @@ function Listing() {
                                         paddingBottom: "11px",
                                       }}
                                     >
-                                      {Array(1)
+                                      {Array(5)
                                         .fill()
                                         .map((_, i) => (
                                           <i
@@ -403,6 +404,13 @@ function Listing() {
                                           ></i>
                                         ))}
                                     </div>
+                                    <h4  style={{
+                                        marginRight: "8px",
+                                        fontSize: "12px",
+                                      }}>
+                                    ({listing.ratingCount})
+                                    </h4>
+                                    
                                   </div>
                                 </div>
 

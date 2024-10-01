@@ -735,9 +735,9 @@ function Listingdetails() {
                           }
                           alt="Owner Image"
                         />
-                        <h5>{teamimageDetails[0].prefix}.{teamimageDetails[0].title}</h5>
-                        <h6>{teamimageDetails[0].designation}</h6>
-                        <h6>From : {teamimageDetails[0].state}</h6>
+                        <h5 style={{fontSize:'20px'}}>{teamimageDetails[0].prefix}.{teamimageDetails[0].title}</h5>
+                        <h6 style={{fontSize:'14px'}}>{teamimageDetails[0].designation}</h6>
+                        <h6 style={{fontSize:'14px'}}>From : {teamimageDetails[0].state}</h6>
                       </div>
                     )}
 
@@ -1118,7 +1118,7 @@ function Listingdetails() {
                         >
                           <i
                             className="fa fa-share"
-                            style={{ color: "gray" }}
+                            style={{ color: "gray" , marginRight:'4px'}}
                           ></i>
                           Share
                         </button>
@@ -1170,7 +1170,7 @@ function Listingdetails() {
                           onClick={() => setIsSociallinkOpen(true)}
                           style={{ height: "32px", fontSize: "13px" }}
                         >
-                          <i className="fa fa-share" style={{ color: "gray" }}></i>Share
+                          <i className="fa fa-share" style={{ color: "gray",marginRight:'4px' }}></i>Share
                         </button>
 
                         <button
