@@ -734,6 +734,7 @@ function Listingdetails() {
                               : ""
                           }
                           alt="Owner Image"
+                          style={{borderRadius:'50px'}}
                         />
                         <h5 style={{fontSize:'20px'}}>{teamimageDetails[0].prefix}.{teamimageDetails[0].title}</h5>
                         <h6 style={{fontSize:'14px'}}>{teamimageDetails[0].designation}</h6>
@@ -1294,18 +1295,20 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
   const dropdownRef = useRef(null);
 
   const getWorkingHours = (from, to, formatStartOnly = false) => {
-    const fromTime = new Date(`1970-01-01T${from}Z`).toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    if (formatStartOnly) {
-      return fromTime;
+    const formatTime=(time)=>{
+      const[hour,minute]=time.split(":").map(Number);
+      const isPM=hour>=12;
+      const formattedHour=hour%12||12;
+      const ampm=isPM ?'PM':'AM';
+      return `${formattedHour}:${minute.toString().padStart(2, "0")} ${ampm}`;
+
     }
-    const toTime = new Date(`1970-01-01T${to}Z`).toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    return `${fromTime} - ${toTime}`;
+    const fromTime = formatTime(from);
+  if (formatStartOnly) {
+    return fromTime;
+  }
+  const toTime = formatTime(to);
+  return `${fromTime} - ${toTime}`;
   };
 
   const days = [
@@ -1398,8 +1401,7 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
   return (
     <div>
       <div className="current-status">
-        {/* <p onClick={toggleDropdown} style={{ cursor: "pointer" }}> */}
-        <p style={{ cursor: "pointer", marginBottom: "1px" }}>
+        <p onClick={toggleDropdown} style={{ cursor: "pointer" }}>
           <span style={{ color: isOpen ? "green" : "red" }}>
             {isOpen ? <b>Open</b> : <b>Closed Now</b>}
           </span>
@@ -1416,16 +1418,16 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
             </>
           ) : (
             <>
-              {/* {" "}
-              Opens {nextOpenDay ? `${nextTime} at ${nextOpenDay.day}` : "soon"} */}
+              {" "}
+              Opens {nextOpenDay ? `${nextTime} at ${nextOpenDay.day}` : "soon"}
             </>
           )}
-          {/* <i
+          <i
             className={`fa ${
               isDropdownOpen ? "fa-chevron-up" : "fa-chevron-down"
             }`}
             style={{ marginLeft: "8px" }}
-          ></i> */}
+          ></i>
         </p>
       </div>
 
@@ -1449,6 +1451,7 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
         </div>
       )}
     </div>
+
   );
 };
 

@@ -368,7 +368,8 @@
   @media (max-width: 576px) {
     .strip.map_view {
       padding: 10px;
-      width: 145%;
+      width: 158% !important;
+      margin-left: -8px !important;
     }
   
     .enquiry_list_heading {
@@ -377,6 +378,14 @@
   
     .enquiry_list_txt {
       font-size: 0.8rem;
+    }
+  }
+
+  @media (max-width:767px) {
+    .strip.map_view {
+      padding: 10px;
+      width: 159% !important;
+      margin-left: -9px !important;
     }
   }
 
@@ -1123,7 +1132,7 @@ width: 119%;
 }
 
 .noemployee{
-  margin-left: -99px;
+  margin-left: -28px;
 }
 @media (max-width:767px) {
   .noemployee{
@@ -1217,7 +1226,7 @@ div.scrollmenu .imgScroll:hover {
 }
 
 .categorybanner{
-  margin-bottom: 30px !important;
+  margin-bottom: 9px !important;
 }
 @media (max-width:767px) {
   .categorybanner{
@@ -1279,8 +1288,8 @@ div.scrollmenu .imgScroll:hover {
   margin:10px;
   height: 124px !important;
   width: 127px !important;
-  margin-bottom: 32px;
-  margin-top: 20px;
+  margin-bottom: -8px !important;
+  margin-top: 8px !important;
 }
 @media (max-width:767px) {
   .ListingClient{
@@ -1288,8 +1297,8 @@ div.scrollmenu .imgScroll:hover {
     margin:10px;
     height: 99px !important;
     width: 117px !important;
-    margin-bottom: 32px;
-  margin-top: 20px;
+    /* margin-bottom: 32px;
+  margin-top: 20px; */
   }
 }
 
@@ -1331,5 +1340,14 @@ div.scrollmenu .imgScroll:hover {
     width: 100%;
     box-shadow: 0px 0px 30px 0px rgb(0 0 0 / 10%);
         z-index: 100000;
+  }
+} */
+
+.notificationp{
+  margin-bottom: 11px !important;
+}
+/* @media (max-width:767px) {
+  .notificationp{
+    margin-bottom: 4px !important;
   }
 } */

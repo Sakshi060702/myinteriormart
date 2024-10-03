@@ -152,10 +152,10 @@ function Login() {
                         className="form-control logininput"
                         type="text"
                         name="mobile"
-                        placeholder="Email/Mobile Number"
+                        placeholder="Email/Mobile No"
                         value={userMobile}
                         onChange={handleMobileChange}
-                        style={{ textAlign: "center", paddingRight: "53px" ,height:'50px',width:'194px',fontSize:'16px' }}
+                        style={{ textAlign: "center", paddingRight: "19px" ,height:'50px',width:'194px',fontSize:'16px' }}
                       />
                       {error.userMobile && (
                          <div className="text-danger">{error.userMobile}</div>

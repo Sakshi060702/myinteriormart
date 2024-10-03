@@ -232,15 +232,24 @@ function Addcommunication() {
     }),
     control: (provided) => ({
       ...provided,
-      height: "50px", // Increase the height of the select box
+      height: "auto", // Increase the height of the select box
       minHeight: "50px", // Ensure minimum height of the select box
       border: "1px solid #ccc",
-      marginLeft: "-9px",
+      // marginLeft: "-9px",
       boxShadow: "none",
       "&:hover": {
-        border: "1px solid gray", // Border on hover
+        border: "1px solid orange", // Border on hover
       },
     }),
+    valueContainer:(provided,state)=>({
+      ...provided,
+      display:'flex',
+      flexWrap:'wrap',
+      height:'auto',
+      overflowY:'auto',
+      maxHeight:'150px',
+      padding:'4px',
+    })
   };
 
   return (

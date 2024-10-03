@@ -171,7 +171,7 @@ function Review1({ listingID }) {
                     <div className="row">
                       <div className="col-lg-12">
                         <hr />
-                        <div className="row" style={{ fontSize: "16px" }}>
+                        <div className="row" style={{ fontSize: "16px",maxHeight:'300px',overflowY:'auto' }}>
                           {reviews.length > 0 ? (
                             reviews.map((review, index) => (
                               <div key={index} className="col-lg-12 mb-3">
@@ -182,7 +182,7 @@ function Review1({ listingID }) {
                                         <img
                                           src={`https://apidev.myinteriormart.com${review.imageUrl}`}
                                           alt={review.userName}
-                                          style={{ width: "50px", height: "50px" }}
+                                          style={{ width: "58px", height: "58px",borderRadius:'30px' }}
                                         />
                                       </div>
                                     </div>

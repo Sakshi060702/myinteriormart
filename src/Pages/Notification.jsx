@@ -113,7 +113,7 @@ const Notification = ({ setHasNotifications }) => {
     <div className="notification1 notificationmobilepage" >
       <div>
         <div className="notificationheader">
-          <h5>Notification</h5>
+          <h5>Notifications</h5>
           {/* <a onClick={toggleNotificationMenu}>View All</a>  */}
         </div>
         <div className="notify_body">
@@ -125,9 +125,9 @@ const Notification = ({ setHasNotifications }) => {
                 ) : (
                   notification.map((notification, index) => (
                     <li key={index} className="notification-item">
-                      <div className="notification-list" style={{display:'flex'}}>
+                      <div  style={{backgroundColor:'#f3f2f2',position:'relative',marginBottom:'5px',padding:'9px 72px 23px 15px'}}>
                         
-                        <div className="notification-image">
+                        {/* <div className="notification-image">
                           <div>
                           {notification.profileImage ? (
                             <img
@@ -140,20 +140,24 @@ const Notification = ({ setHasNotifications }) => {
                           )}
                           </div>
                           
-                        </div>
+                        </div> */}
                         <div className="notification-content ">
                           <div className="notificationcontent">
-                          <span className="visit-date" style={{textAlign:'right', margin:'9px 15px 0px 24px'}}>
+                          <span className="visit-date" style={{textAlign:'right', margin:'-1px -110px 0px 24px'}}>
                             {notification.visitDate}
                           </span>
                           </div>
                           <div>
-                          <p className="description">
+                          <p className="description notificationp" style={{marginRight:'196px',marginTop:'-14px'}}>
+                            <span style={{height:'12px',width:'12px',backgroundColor:'orange',borderRadius:'50%',position:'absolute',left:'8px',top:'19px'}}></span>
                             <span className="user-name notificationusername">
-                              <strong style={{fontSize:'13px',paddingLeft:'11px'}}>{notification.userName}</strong>
+                              <strong style={{fontSize:'13px',paddingLeft:'20px',color:'orange'}}>{notification.userName}</strong>
                             </span>
                             
-                            <span className="activity-text" style={{padding:'2px 0px 1px 26px'}}>
+                            
+                          </p>
+                          <p style={{marginBottom:'6px'}}>
+                          <span className="activity-text" style={{float:'left'}} >
                             <i className="fa fa-bookmark" style={{color:'orange' ,fontSize:'16px' , marginRight:'5px'}}></i> 
                               {notification.activityText}
                             </span>

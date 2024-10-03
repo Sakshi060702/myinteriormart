@@ -170,8 +170,11 @@ function Teamimagel() {
     }
   };
 
-  const handleBusinessCategoryChange = (event) => {
-    setSelectedBusinessCategory(event.target.value);
+  // const handleBusinessCategoryChange = (event) => {
+  //   setSelectedBusinessCategory(event.target.value);
+  // };
+  const handleBusinessCategoryChange = (selectedOption) => {
+    setSelectedBusinessCategory(selectedOption ? selectedOption.value : null);
   };
 
   const handleTitleChange = (event) => {
@@ -286,9 +289,9 @@ function Teamimagel() {
     { value: "Manager", label: "Manager" },
   ];
 
-  const maritalStatusOptions = [
-    { value: "Single", label: "Single" },
-    { value: "Married", label: "Married" },
+  const titleoptions = [
+    { value: "Mr", label: "Mr" },
+    { value: "Mrs", label: "Mrs" },
   ];
 
   return (
@@ -327,7 +330,7 @@ function Teamimagel() {
             <label htmlFor="designation">
               Select Designation <span className="text-danger">*</span>
             </label>
-            {/* <Select
+            <Select
     className="wide add_bottom_10 selectdrp"
     value={businessCategoryOptions.find(
       (option) => option.value === selectedBusinessCategory
@@ -353,9 +356,9 @@ function Teamimagel() {
         fontSize: "16px", // Adjust font size for the placeholder
       }),
     }}
-  /> */}
+  />
 
-            <select
+            {/* <select
               className="wide add_bottom_10 selectdrp ownerdrp"
               name="businessCategory"
               onChange={handleBusinessCategoryChange}
@@ -373,7 +376,7 @@ function Teamimagel() {
               <option value="Proprietor">Proprietor</option>
               <option value="Director">Director</option>
               <option value="Manager">Manager</option>
-            </select>
+            </select> */}
           </div>
 
           <div className="form-group teamcode">
