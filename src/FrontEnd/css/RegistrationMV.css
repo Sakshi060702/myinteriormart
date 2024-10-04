@@ -1332,6 +1332,10 @@ div.scrollmenu .imgScroll:hover {
   width: 488px !important;
 }
 
+.ownerimage{
+  margin-right:33px ;
+}
+
 /* @media (max-width:767px) {
   .footer-link-sticky{
     display: block;
@@ -1351,3 +1355,68 @@ div.scrollmenu .imgScroll:hover {
     margin-bottom: 4px !important;
   }
 } */
+
+.packagebox{
+  height: auto;
+  min-height: 300px;
+  background-color: white !important;
+  padding: 0px !important;
+  /* transition: transform 0.3s ease; */
+}
+.packagebox:hover
+.add_listing_card_title{
+  color: black !important;
+  /* transform: scale(1.1); */
+}
+
+.packageimg{
+  height: 134px;
+}
+
+.add_listing_card_descriptionl{
+  font-size: 12px;
+}
+
+.add_listing_card_price{
+  font-size: 15px;
+  color:black;
+  
+}
+.add_listing_card_btn{
+  background-color: #fe900d;
+  font-size: 18px;
+  text-align: center;
+  height: 48px;
+}
+.buybtn{
+  height: 48px;
+  width: 230px;
+}
+
+.descriptionline{
+  margin-bottom: 10px !important;
+}
+
+.paymentgateway{
+  border: 1px solid #f9ba47;
+    width: 500px;
+    height: 50px;
+    margin-top: 82px;
+    margin-left: 143px;
+    background-color: #f9ba47;
+    color: black;
+    font-weight: bold;
+    
+}
+
+.paymentgatewaypopup{
+  width: 178px !important;
+  margin-left: 35px !important;
+}
+
+
+@media (max-width:767px) {
+  .timedrp{
+    margin-bottom: 0px !important;
+  }
+}

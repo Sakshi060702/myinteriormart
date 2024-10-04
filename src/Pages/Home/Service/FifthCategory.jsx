@@ -72,7 +72,7 @@ console.log(decrypt(listingId_enc))
   };
 
   return (
-    <div className="container margin_80_55">
+    <div className="container margin_80_55" style={{height:'100vh'}}>
       <div className="main_title_2">
         <span>
           <em></em>
@@ -129,7 +129,7 @@ console.log(decrypt(listingId_enc))
                       title={fifthCategory.name}
                       style={{ color: "orange" }}
                     >
-                      More ...
+                      more ...
                     </Link>
                   )}
               </div>

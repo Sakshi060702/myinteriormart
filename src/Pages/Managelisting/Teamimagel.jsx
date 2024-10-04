@@ -127,6 +127,20 @@ function Teamimagel() {
     });
   }, []);
 
+  useEffect(() => {
+    if (selectedCountry) {
+      const selectcountry = countries.find(
+        (address) => address.countryID === selectedCountry
+      );
+      if (selectcountry) {
+        setStates(selectcountry.states || []);
+      }
+    }
+  }, [selectedCountry, countries]);
+
+  
+
+
   const handleCountryChange = (e) => {
     const countryID = e.target.value;
     setSelectedCountry(countryID);
@@ -177,9 +191,10 @@ function Teamimagel() {
     setSelectedBusinessCategory(selectedOption ? selectedOption.value : null);
   };
 
-  const handleTitleChange = (event) => {
-    setSelectTitel(event.target.value);
+  const handleTitleChange = (selectedOption) => {
+    setSelectTitel(selectedOption);
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -316,7 +331,7 @@ function Teamimagel() {
               accept="image/*"
               style={{
                 border: "1px solid #ccc",
-                borderRadius:'4px',
+                borderRadius: "4px",
                 height: "50px",
                 width: "100%", // Make the input file take the full width of the form group
               }}
@@ -331,32 +346,32 @@ function Teamimagel() {
               Select Designation <span className="text-danger">*</span>
             </label>
             <Select
-    className="wide add_bottom_10 selectdrp"
-    value={businessCategoryOptions.find(
-      (option) => option.value === selectedBusinessCategory
-    )}
-    onChange={handleBusinessCategoryChange}
-    options={businessCategoryOptions}
-    placeholder="Select Business Category"
-    styles={{
-      option: (provided, state) => ({
-        ...provided,
-        backgroundColor: state.isFocused ? "orange" : "white", // Orange background on hover
-        color: state.isFocused ? "white" : "black", // Text color adjustment
-        cursor: "pointer",
-      }),
-      control: (base) => ({
-        ...base,
-        height: "50px", // Set the height to match your existing design
-        borderColor: "#ccc",
-        "&:hover": { borderColor: "#aaa" }, // Hover effect for the control
-      }),
-      placeholder: (defaultStyles) => ({
-        ...defaultStyles,
-        fontSize: "16px", // Adjust font size for the placeholder
-      }),
-    }}
-  />
+              className="wide add_bottom_10 selectdrp ownerdrp"
+              value={businessCategoryOptions.find(
+                (option) => option.value === selectedBusinessCategory
+              )}
+              onChange={handleBusinessCategoryChange}
+              options={businessCategoryOptions}
+              placeholder="Select Business Category"
+              styles={{
+                option: (provided, state) => ({
+                  ...provided,
+                  backgroundColor: state.isFocused ? "orange" : "white", // Orange background on hover
+                  color: state.isFocused ? "white" : "black", // Text color adjustment
+                  cursor: "pointer",
+                }),
+                control: (base) => ({
+                  ...base,
+                  height: "50px", // Set the height to match your existing design
+                  borderColor: "#ccc",
+                  "&:hover": { borderColor: "#aaa" }, // Hover effect for the control
+                }),
+                placeholder: (defaultStyles) => ({
+                  ...defaultStyles,
+                  fontSize: "16px", // Adjust font size for the placeholder
+                }),
+              }}
+            />
 
             {/* <select
               className="wide add_bottom_10 selectdrp ownerdrp"
@@ -384,23 +399,31 @@ function Teamimagel() {
               Select Title <span className="text-danger">*</span>
             </label>
 
-            <select
+            <Select
               className="wide add_bottom_10 selectdrp ownerdrp"
-              name="businessCategory"
-              onChange={handleTitleChange}
-              required
               value={selectTitle}
-              style={{
-                width: "100%",
-                height: "50px", // Adjust height as needed
+              onChange={handleTitleChange}
+              options={titleoptions}
+              placeholder="Select Title"
+              styles={{
+                option: (provided, state) => ({
+                  ...provided,
+                  backgroundColor: state.isFocused ? "orange" : "white", // Orange background on hover
+                  color: state.isFocused ? "white" : "black", // Text color adjustment
+                  cursor: "pointer",
+                }),
+                control: (base) => ({
+                  ...base,
+                  height: "50px", // Set the height to match your existing design
+                  borderColor: "#ccc",
+                  "&:hover": { borderColor: "#aaa" }, // Hover effect for the control
+                }),
+                placeholder: (defaultStyles) => ({
+                  ...defaultStyles,
+                  fontSize: "16px", // Adjust font size for the placeholder
+                }),
               }}
-            >
-              <option value="" disabled>
-                Select Title
-              </option>
-              <option value="Mr">Mr</option>
-              <option value="Mrs">Mrs</option>
-            </select>
+            />
           </div>
 
           <div className="form-group teamcode">
@@ -447,7 +470,7 @@ function Teamimagel() {
             <label>
               Country <span className="text-danger">*</span>
             </label>
-            <select
+            {/* <select
               className="wide add_bottom_10 country selectdrp ownerdrp"
               value={selectedCountry}
               onChange={handleCountryChange}
@@ -463,8 +486,8 @@ function Teamimagel() {
                   {country.name}
                 </option>
               ))}
-            </select>
-            {/* <Select
+            </select> */}
+            <Select
               className="wide add_bottom_10 country selectdrp"
               value={countryOptions.find(
                 (option) => option.value === selectedCountry
@@ -491,7 +514,7 @@ function Teamimagel() {
                   fontSize: "16px", // Adjust font size for placeholder if needed
                 }),
               }}
-            /> */}
+            />
           </div>
 
           <div className="form-group teamcode">
@@ -499,7 +522,7 @@ function Teamimagel() {
               State <span className="text-danger">*</span>
             </label>
             <br></br>
-            <select
+            {/* <select
               className="wide add_bottom_10 state selectdrp ownerdrp"
               id="state"
               value={selectedState}
@@ -516,10 +539,38 @@ function Teamimagel() {
                   {state.name}
                 </option>
               ))}
-            </select>
+            </select> */}
+            <Select
+              className="wide add_bottom_10 country selectdrp"
+              value={stateOptions.find(
+                (option) => option.value === selectedState
+              )}
+              onChange={handleStaChange}
+              options={stateOptions}
+              placeholder="Select Country"
+              styles={{
+                option: (provided, state) => ({
+                  ...provided,
+                  backgroundColor: state.isFocused ? "orange" : "white", // Orange background on hover
+                  color: state.isFocused ? "white" : "black", // Adjust text color for readability
+                  cursor: "pointer",
+                }),
+                control: (base) => ({
+                  ...base,
+                  width: "150%",
+                  height: "50px", // Adjust the height as per your requirement
+                  borderColor: "#ccc",
+                  "&:hover": { borderColor: "#aaa" }, // Hover effect for the control
+                }),
+                placeholder: (defaultStyles) => ({
+                  ...defaultStyles,
+                  fontSize: "16px", // Adjust font size for placeholder if needed
+                }),
+              }}
+            />
           </div>
 
-          <div>
+          <div className="ownerimage">
             <div>
               {" "}
               <h2 style={{ textAlign: "center", marginLeft: "470px" }}>Team</h2>

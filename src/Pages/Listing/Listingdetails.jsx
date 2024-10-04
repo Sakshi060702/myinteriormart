@@ -736,7 +736,7 @@ function Listingdetails() {
                           alt="Owner Image"
                           style={{borderRadius:'50px'}}
                         />
-                        <h5 style={{fontSize:'20px'}}>{teamimageDetails[0].prefix}.{teamimageDetails[0].title}</h5>
+                        <h5 style={{fontSize:'20px'}}>{teamimageDetails[0].prefix}.<span style={{marginLeft:'6px'}}>{teamimageDetails[0].title}</span></h5>
                         <h6 style={{fontSize:'14px'}}>{teamimageDetails[0].designation}</h6>
                         <h6 style={{fontSize:'14px'}}>From : {teamimageDetails[0].state}</h6>
                       </div>
@@ -1401,7 +1401,7 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
   return (
     <div>
       <div className="current-status">
-        <p onClick={toggleDropdown} style={{ cursor: "pointer" }}>
+        <p className="timedrp" onClick={toggleDropdown} style={{ cursor: "pointer" }}>
           <span style={{ color: isOpen ? "green" : "red" }}>
             {isOpen ? <b>Open</b> : <b>Closed Now</b>}
           </span>
@@ -1419,7 +1419,7 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
           ) : (
             <>
               {" "}
-              Opens {nextOpenDay ? `${nextTime} at ${nextOpenDay.day}` : "soon"}
+              {/* Opens {nextOpenDay ? `${nextTime} at ${nextOpenDay.day}` : "soon"} */}
             </>
           )}
           <i

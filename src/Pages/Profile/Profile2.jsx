@@ -167,7 +167,17 @@ function Profile2({ children }) {
                       style={{ height: "60px" }}
                     />
                     Enquiry
+                  </Link>
+                  <Link to={`/Package/in-${localStorage.getItem('cityname')}`}>
+                    <img
+                      src={enquiryimg}
+                      alt="Enquiry"
+                      style={{ height: "60px" }}
+                    />
+                    Upgrade Listing
                   </Link></>
+                  
+                  
                   )}
                   
                   <Link to={`/complaint/in-${localStorage.getItem('cityname')}`}>
@@ -332,6 +342,14 @@ function Profile2({ children }) {
                         style={{ height: "60px" }}
                       />
                       Enquiry
+                    </Dropdown.Item>
+                    <Dropdown.Item as={Link} to={`/Package/in-${localStorage.getItem('cityname')}`}>
+                      <img
+                        src={enquiryimg}
+                        alt="Enquiry"
+                        style={{ height: "60px" }}
+                      />
+                      Upgrade Package
                     </Dropdown.Item>
                   </>
                 )}

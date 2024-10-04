@@ -354,7 +354,7 @@ function Listing() {
                                   className="fa fa-map-marker"
                                   style={{ paddingRight: "5px" }}
                                 ></i>
-                                {listing.area},{listing.locality}
+                                {listing.area},<span style={{marginLeft:'8px'}}>{listing.locality}</span>
                               </p>
                               <div className="business-info-container listingcolor">
                                 <BusinessHours
@@ -684,7 +684,7 @@ function Listing() {
                 paddingBottom: "5px",
                 fontSize: "12px",
                 width: "172px",
-                color: "gray",
+                color: "orange",
               }}
             >
               More Search Results

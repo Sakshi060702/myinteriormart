@@ -60,7 +60,7 @@ const SubCategoryList = () => {
 
   return (
     <div>
-      <div className="container margin_80_55">
+      <div className="container margin_80_55" style={{height:'100vh'}}>
         <div className="main_title_2">
           <span>
             <em></em>
@@ -148,7 +148,7 @@ const SubCategoryList = () => {
                   title={subCategory.name}
                   style={{ color: "orange" }}
                 >
-                  More ...
+                  more ...
                 </Link>
               )}
             </div>

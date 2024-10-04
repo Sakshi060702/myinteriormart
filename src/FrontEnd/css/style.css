@@ -3757,7 +3757,7 @@ a.box_feat h3 {
   }
 
   .strip.map_view {
-    margin: -2px 10px;
+    margin: 1px 10px;
   }
 
   .strip.map_view .listing-bottom-list ul {

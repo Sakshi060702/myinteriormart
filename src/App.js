@@ -254,6 +254,9 @@ import SixthCategoryListing from "./Pages/Home/Service/SixthCategoryListing";
 
 import Usersuggestion from "./Pages/Home/Component/Usersuggestion";
 
+import Package from "./Pages/Profile/Package";
+import Paymentgateway from "./Pages/Profile/Paymentgateway";
+
 // import Dashboardprofile from "./Pages/Profile/Dashboardprofile";
 // import Editprofileregister from "./Pages/Dashboardregisterprofile/Editprofileregister";
 // import Personalinforegister from "./Pages/Dashboardregisterprofile/Personalinforegister";
@@ -1007,6 +1010,25 @@ function App() {
             </Profile2>
           }
         />
+
+<Route
+          path="/Package/:cityName"
+          element={
+            <Profile2>
+              <Package />
+            </Profile2>
+          }
+        />
+
+<Route
+          path="/Paymentgateway/:cityName"
+          element={
+            <Profile2>
+              <Paymentgateway />
+            </Profile2>
+          }
+        />
+
         <Route
           path="/chat/:cityName"
           element={
