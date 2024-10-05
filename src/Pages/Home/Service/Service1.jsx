@@ -153,10 +153,11 @@ const Services1 = () => {
             <div className="mim-Box">
               <div className="row no-gutters">
                 <div
-                  className="col-md-4 mim-Box-img"
+                  className="col-md-4 mim-Box-img "
                   style={{ paddingRight: "2px" }}
                 >
-                  <Carousel
+                  <div className="carouelheight">
+                    <Carousel
                     interval={5000}
                     autoPlay={true}
                     fade
@@ -169,7 +170,7 @@ const Services1 = () => {
                         <Carousel.Item key={banner.id}>
                           <a href={banner.bannerLink} target="_blank" rel="noopener noreferrer">
                             <img
-                            className="d-block w-100 bannerimg"
+                            className="d-block w-100 bannerimg "
                             src={`https://admin.myinteriormart.com${banner.imagePath}`}
                             alt={`Banner ${banner.location}`}
                           />
@@ -181,6 +182,8 @@ const Services1 = () => {
                       <p>Loading...</p>
                     )}
                   </Carousel>
+                  </div>
+                  
                 </div>
                 <div className="col-md-8">
                   <div className="row no-gutters">
@@ -221,66 +224,67 @@ const Services1 = () => {
         </div>
       </div>
       <div className="row py-1">
-        <div className="carouelheight">
-          <Carousel
-            interval={2500}
-            autoPlay={true}
-            fade
-            animationEffect="Fade"
-            pause={false}
-            controls={false}
-          >
-            {homeMegaBannerImages.length > 0 ? (
-              homeMegaBannerImages.map((banner, index) => (
-                <Carousel.Item key={banner.id}>
-                  <div className="fade-image-container">
-                  <a href={banner.bannerLink} target="_blank" rel="noopener noreferrer">
-                    <img
-                      className="d-block w-100 bannerimg"
-                      src={`https://admin.myinteriormart.com${banner.imagePath}`}
-                      alt={`Banner ${banner.location}`}
-                      style={{ width: "100%", maxWidth: "1200px" }}
-                    />
-                    </a>
-                  </div>
-                </Carousel.Item>
-              ))
-            ) : (
-              <p>Loading...</p>
-            )}
-          </Carousel>
-        </div>
+  <div className="carouelheight ">
+    <Carousel
+      interval={4000}
+      autoPlay={true}
+      fade
+      animationEffect="Fade"
+      pause={false}
+      controls={false}
+    >
+      {homeMegaBannerImages.length > 0 ? (
+        homeMegaBannerImages.map((banner, index) => (
+          <Carousel.Item key={banner.id}>
+            <div className="fade-image-container">
+              <a href={banner.bannerLink} target="_blank" rel="noopener noreferrer">
+                <img
+                  className="d-block w-100 bannerimg fade-effect"
+                  src={`https://admin.myinteriormart.com${banner.imagePath}`}
+                  alt={`Banner ${banner.location}`}
+                  style={{ width: "100%", maxWidth: "1200px" }}
+                />
+              </a>
+            </div>
+          </Carousel.Item>
+        ))
+      ) : (
+        <p>Loading...</p>
+      )}
+    </Carousel>
+  </div>
 
-        <div className="carouelheight carouselshow">
-          <Carousel
-            interval={3000}
-            autoPlay={true}
-            fade
-            animationEffect="Fade"
-            pause={false}
-            controls={false}
-          >
-            {homeMegaBannerImages.length > 0 ? (
-              homeMegaBannerImages.map((banner, index) => (
-                <Carousel.Item key={banner.id}>
-                  <div className="fade-image-container">
-                  <a href={banner.bannerLink} target="_blank" rel="noopener noreferrer">
-                    <img
-                      className="d-block w-100 bannerimg"
-                      src={`https://admin.myinteriormart.com${banner.imagePath}`}
-                      alt={`Banner ${banner.location}`}
-                      style={{ width: "100%", maxWidth: "1200px" }}
-                    />
-                    </a>
-                  </div>
-                </Carousel.Item>
-              ))
-            ) : (
-              <p>Loading...</p>
-            )}
-          </Carousel>
-        </div>
-      </div>
+  <div className="carouelheight carouselshow">
+    <Carousel
+      interval={5000}
+      autoPlay={true}
+      fade
+      animationEffect="Fade"
+      pause={false}
+      controls={false}
+    >
+      {homeMegaBannerImages.length > 0 ? (
+        homeMegaBannerImages.map((banner, index) => (
+          <Carousel.Item key={banner.id}>
+            <div className="fade-image-container">
+              <a href={banner.bannerLink} target="_blank" rel="noopener noreferrer">
+                <img
+                  className="d-block w-100 bannerimg fade-effect"
+                  src={`https://admin.myinteriormart.com${banner.imagePath}`}
+                  alt={`Banner ${banner.location}`}
+                  style={{ width: "100%", maxWidth: "1200px" }}
+                />
+              </a>
+            </div>
+          </Carousel.Item>
+        ))
+      ) : (
+        <p>Loading...</p>
+      )}
+    </Carousel>
+  </div>
+</div>
+
     </div>
   );
 };

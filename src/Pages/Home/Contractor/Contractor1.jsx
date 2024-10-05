@@ -246,7 +246,7 @@ function Contractor1() {
       <div className="row py-1">
         <div className="carouelheight">
           <Carousel
-            interval={2500}
+            interval={4000}
             autoPlay={true}
             fade
             animationEffect="Fade"
@@ -276,7 +276,7 @@ function Contractor1() {
 
         <div className="carouelheight carouselshow">
           <Carousel
-            interval={3000}
+            interval={5000}
             autoPlay={true}
             fade
             animationEffect="Fade"

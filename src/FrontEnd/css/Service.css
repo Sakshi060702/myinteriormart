@@ -233,12 +233,12 @@
 
 
 
-.fade-image-container {
+/* .fade-image-container {
   position: relative;
   width: 100%;
   height: auto;
   overflow: hidden;
-}
+} */
 @media (max-width:767px) {
   .fade-image-container {
     position: relative;
@@ -286,7 +286,7 @@
 }
 
 
-.fade-in-out {
+/* .fade-in-out {
   animation: zoomInOut 3s ease-in-out;
 }
 
@@ -307,7 +307,88 @@
     opacity: 0;
     transform: scale(1);
   }
+} */
+
+/* .fade-effect {
+  animation: fadeInOut 10s ease-in-out infinite; 
+  transition: opacity 2s ease-in-out; 
+} */
+
+/* Keyframes to control the fade-in and fade-out */
+/* @keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+} */
+
+
+.servicecontainer{
+  max-height: 100vh;
+  min-height: 73vh;
+}
+@media (max-width:767px) {
+  .servicecontainer{
+    max-height: 200vh !important;
+    min-height: 50vh !important;
+    margin: 0 !important;
+  }
 }
 
+
+/* Fading effect for both fade-in and fade-out */
+/* Container for the image to apply the animation */
+/* Container for the image to apply the animation */
+/* Container for the image to apply the animation */
+.fade-image-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Animation for fade-in, fade-out, zoom-in, and zoom-out */
+.fade-effect {
+  animation: fadeInOutZoom 10s ease-in-out infinite;
+}
+
+@keyframes fadeInOutZoom {
+  0% {
+    opacity: 0;
+    transform: scale(1); /* Start at normal size */
+  }
+  10% {
+    opacity: 1;
+    transform: scale(1.1); /* Zoom in slightly */
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1); /* Stay zoomed in */
+  }
+  90% {
+    opacity: 1;
+    transform: scale(1); /* Zoom out to normal size */
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1); /* Fade out and reset size */
+  }
+}
+
+/* Apply the same effect on the second carousel */
+.carouselshow .bannerimg {
+  animation: fadeInOutZoom 12s ease-in-out infinite;
+}
+
+.carouelheight .bannerimg {
+  animation: fadeInOutZoom 12s ease-in-out infinite;
+}
 
 

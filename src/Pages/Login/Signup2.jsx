@@ -158,7 +158,7 @@ function Signup2() {
   );
 
   return (
-    <div className="container sign_up_container">
+    <div className="container sign_up_container servicecontainer">
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div id="sign-in-dialog" className="dialog-mfp zoom-anim-dialog">

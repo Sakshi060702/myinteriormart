@@ -8,6 +8,7 @@ import '../../FrontEnd/css/Changepassword.css'
 
 
 
+
 function ForgetpasswordVerifyotp() {
 
     const location=useLocation();
@@ -22,6 +23,7 @@ function ForgetpasswordVerifyotp() {
     const [successMessage,setSuccessMessage]=useState('');
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [confirmpasswordVisible, setConfirmPasswordVisible] = useState(false);
+    const navigate=useNavigate();
 
     const [oldPinVisible, setOldPinVisible] = useState(false);
     const [pinVisible, setPinVisible] = useState(false);
@@ -100,35 +102,52 @@ function ForgetpasswordVerifyotp() {
     setConfirmPasswordVisible(!confirmpasswordVisible);
   };
     
+  const cityName = localStorage.getItem('cityname');
+      const pathhome = `/in-${cityName}`;
 
-    const handleSubmit=async(e)=>{
-        e.preventDefault();
-        setError('');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
 
-        try{
-            const response=await fetch('https://apidev.myinteriormart.com/api/SignIn/VerifyOtpFogotpassword',{
-                method:'POST',
-                headers:{
-                    'Content-Type': 'application/json',
-                    'Authorization':'12345abcde67890fghij12345klmno67890pqr',
-                
-                },
-                body:JSON.stringify({otp:userotp,password:userPassword,confirmpassword:userConfirmPassword})
-            });
-            const data=await response.json();
-            console.log(data);
+   
+    const otpString = userOtp.join('');
+    const passwordString = pin.join('');
+    const confirmPasswordString = confirmPin.join('');
 
-            if(response.ok){
-                console.log("Password updated Successfully");
-                setSuccessMessage('Password updated Successfully');
-
-            }
-        }
-        catch(error){
-            setError('Password Not Updated');
-        }
-        
+    // Ensure all fields are filled
+    if (otpString.length !== 4 || passwordString.length !== 4 || confirmPasswordString.length !== 4) {
+        setError('All fields must be filled');
+        return;
     }
+
+    try {
+        const response = await fetch('https://apidev.myinteriormart.com/api/SignIn/VerifyOtpFogotpassword', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': '12345abcde67890fghij12345klmno67890pqr',
+            },
+            body: JSON.stringify({
+                otp: otpString,
+                password: passwordString,
+                confirmpassword: confirmPasswordString
+            })
+        });
+
+        const data = await response.json();
+        console.log(data);
+
+        if (response.ok) {
+            console.log("Password updated successfully");
+            setSuccessMessage('Password updated successfully');
+            navigate(pathhome);
+        } else {
+            setError(data.message || 'Password not updated');
+        }
+    } catch (error) {
+        setError('An error occurred while updating the password');
+    }
+};
 
     return (
       <div className="container sign_up_container">
@@ -154,9 +173,9 @@ function ForgetpasswordVerifyotp() {
                         />
                       ))}
                     </div>
-                      <p>
+                      {/* <p>
                         <strong>{otp}</strong>
-                      </p>
+                      </p> */}
 
                       <div className="">
                       <div style={{ paddingLeft: "80px" }}>

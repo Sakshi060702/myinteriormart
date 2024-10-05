@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useParams, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import banner from "../../FrontEnd/img/home_section_1.jpg";
 import banner1 from "../../FrontEnd/img/listing-img.jpeg";
 import nextarrowimage from "../../FrontEnd/img/Frontarrow.png";
@@ -11,6 +12,9 @@ import "../../FrontEnd/css/RegistrationMV.css";
 import Searchbar from "../Home/Component/Searchbar";
 import CryptoJS from "crypto-js";
 import { Carousel } from "react-bootstrap";
+import Foot from "../Home/Component/Foot";
+import drparrowimg from "../../FrontEnd/img/icon (20).png"
+
 
 import { useSelector } from "react-redux";
 
@@ -28,6 +32,7 @@ const decrypt = (ciphertext) => {
 function Listing() {
   const { secondCategoryName, subcategoryName } = useParams();
   const [searchParams] = useSearchParams();
+  const navigate=useNavigate()
   const searching = searchParams.get("searchkey");
   // console.log(searching,useParams());
   const [listing, setListing] = useState([]);
@@ -44,6 +49,8 @@ function Listing() {
   console.log(secondCategoryId);
   console.log("secondcategoryid", secondCategoryId);
   console.log(decrypt(listingId_enc));
+
+  
 
   //for mobile pagination
 
@@ -214,6 +221,11 @@ function Listing() {
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
+  const ClaimForgetpassword=`/Forgetpassword/in-${localStorage.getItem('cityname')}`
+
+  const Getclaimhandleclick=()=>{
+navigate(ClaimForgetpassword)
+  }
  
   return (
     <>
@@ -349,7 +361,7 @@ function Listing() {
                                 {listing.listingKeyword}
                               </small>
 
-                              <p className="listingcolor">
+                              <p className="listingcolor" style={{marginBottom:'4px'}}>
                                 <i
                                   className="fa fa-map-marker"
                                   style={{ paddingRight: "5px" }}
@@ -465,7 +477,8 @@ function Listing() {
                               <img
                                 src={`https://apidev.myinteriormart.com${listing.logoImage.imagePath}`}
                                 alt={`${listing.companyName} Logo`}
-                                className="card-img-top listingimage"
+                                className="card-img-top listingimage listimg"
+                                
                                 // style={{ height: "150px" }}
                               />
                             ) : (
@@ -512,7 +525,53 @@ function Listing() {
                                   <div>
                                     <li>
                                       <p className="listinggetclaim">
-                                        <button
+                                        {listing.claimedListing ?(
+                                          token ? (
+                                            <button
+                                          className="btn btn-guotes btn-sm getclaimbtn"
+                                          style={{
+                                            boxShadow:
+                                              "0 4px 8px rgba(0, 0, 0, 0.2)",
+                                            transition:
+                                              "box-shadow 0.3s ease-in-out",
+                                          }}
+                                          onClick={(event) => {
+                                            event.preventDefault();
+                                            event.stopPropagation();
+                                            setIsPopupOpen([
+                                              true,
+                                              listing.listingId,
+                                            ]);
+                                            // Getclaimhandleclick();
+                                          }}
+                                        >
+                                          Get Quotes
+                                        </button>
+                                          ):(
+                                            <button
+                                          className="btn btn-guotes btn-sm getclaimbtn"
+                                          style={{
+                                            boxShadow:
+                                              "0 4px 8px rgba(0, 0, 0, 0.2)",
+                                            transition:
+                                              "box-shadow 0.3s ease-in-out",
+                                          }}
+                                          onClick={(event) => {
+                                            event.preventDefault();
+                                            event.stopPropagation();
+                                            // setIsPopupOpen([
+                                            //   true,
+                                            //   listing.listingId,
+                                            // ]);
+                                            Getclaimhandleclick();
+                                          }}
+                                        >
+                                          Get Claim
+                                        </button>
+                                          )
+                                          
+                                        ):(
+                                          <button
                                           className="btn btn-guotes btn-sm getclaimbtn"
                                           style={{
                                             boxShadow:
@@ -531,9 +590,13 @@ function Listing() {
                                         >
                                           Get Quotes
                                         </button>
+                                        )}
+                                        
                                       </p>
                                     </li>
                                   </div>
+
+                                  
                                 </div>
                               </div>
                             </ul>
@@ -682,12 +745,13 @@ function Listing() {
                 backgroundColor: "white",
                 paddingTop: "5px",
                 paddingBottom: "5px",
-                fontSize: "12px",
-                width: "172px",
+                fontSize: "14px",
+                width: "210px",
                 color: "orange",
+                fontWeight:'bold'
               }}
             >
-              More Search Results
+              More Search Results<img style={{height:'20px',paddingLeft:'5px'}} src={drparrowimg}/>
             </button>
           )}
         </div>
@@ -706,6 +770,9 @@ function Listing() {
           onClose={() => setIsPopupOpen([false, null])}
         />
       )}
+      {/* <div className="sticky-footer">
+        <Foot />
+      </div> */}
     </>
   );
 }

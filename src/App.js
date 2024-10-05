@@ -973,6 +973,13 @@ function App() {
 
         <Route path="/register/:cityName" element={<Register />} />
 
+        <Route path="/Forgetpassword/:cityName" element={<Forgetpassword />} />
+
+        <Route
+          path="/ForgetpasswordVerifyOtp/:cityName"
+          element={<ForgetpasswordVerifyotp />}
+        />
+
         <Route
           path="/receiveotpemail/:cityName"
           element={<Receiveotpemail />}

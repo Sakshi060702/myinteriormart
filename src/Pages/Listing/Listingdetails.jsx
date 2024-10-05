@@ -841,7 +841,7 @@ function Listingdetails() {
                     <div
                       className="thumbnails scrollmenu"
                       style={{
-                        marginTop: "20px",
+                        marginTop: "11px",
                         overflowX: "auto",
                         whiteSpace: "nowrap",
                       }}
@@ -899,7 +899,7 @@ function Listingdetails() {
                           <div
                             className="thumbnails scrollmenu"
                             style={{
-                              marginTop: "20px",
+                              marginTop: "11px",
                               overflowX: "auto",
                               whiteSpace: "nowrap",
                             }}
@@ -964,7 +964,7 @@ function Listingdetails() {
                         <div style={{ display: "flex" }}>
                           <span
                             className="company-category-name listingcolor"
-                            style={{ marginRight: "18px" }}
+                            style={{ marginRight: "18px",fontWeight:'bold' }}
                           >
                             {listingDetails.listingKeyword}
                           </span>
@@ -1007,7 +1007,7 @@ function Listingdetails() {
                             </a>
                           </span>
                         </p>
-                        <div style={{ display: "flex" }}>
+                        <div style={{ display: "flex",justifyContent:'space-between',width:'' }}>
                           <p className="listingdetailslocality">
                             <span>
                               <i
@@ -1106,7 +1106,7 @@ function Listingdetails() {
                           style={{ marginRight: "5px", fontSize: "13px" }}
                         >
                           <i
-                            className={`fa fa-bookmark`}
+                            className={`fa fa-bookmark-o`}
                             style={{ marginRight: "5px" }}
                           ></i>
                           Bookmark
@@ -1151,7 +1151,7 @@ function Listingdetails() {
                           Subscribe
                         </button>
                       </div>
-                      <div className="social-details mobile" style={{marginLeft:'-11px'}}>
+                      <div className="social-details mobile" style={{marginLeft:'-5px'}}>
                         <button
                           className={`btn btn-bookmark ${
                             isBookmarked ? "active" : ""
@@ -1160,7 +1160,7 @@ function Listingdetails() {
                           style={{ marginRight: "5px", fontSize: "13px" }}
                         >
                           <i
-                            className={`fa fa-bookmark`}
+                            className={`fa fa-bookmark-o`}
                             style={{ marginRight: "5px" }}
                           ></i>
                           Bookmark
@@ -1201,11 +1201,11 @@ function Listingdetails() {
                           Subscribe
                         </button>
                       </div>
-                      <div className="social-details mobile" style={{marginTop:'-15px'}}>
+                      <div className="social-details mobile" style={{marginTop:'-13px'}}>
                         <button
                           className="btn btn-guotes btn-sm"
                           onClick={() => setIsPopupOpen(true)}
-                          style={{ marginRight: "10px", font: "bold" }}
+                          style={{ marginRight: "10px", fontWeight: "bold" }}
                         >
                           Get Quotes
                         </button>

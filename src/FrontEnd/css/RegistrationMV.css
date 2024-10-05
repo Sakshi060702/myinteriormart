@@ -1243,14 +1243,14 @@ div.scrollmenu .imgScroll:hover {
   }
 }
 
-.listingdetailslocality{
+/* .listingdetailslocality{
   margin-right: 97px;
 }
 @media (max-width:767px) {
   .listingdetailslocality{
     margin-right: 85px;
   }
-}
+} */
 
 .woringhours{
   margin-bottom: 1px;
@@ -1418,5 +1418,12 @@ div.scrollmenu .imgScroll:hover {
 @media (max-width:767px) {
   .timedrp{
     margin-bottom: 0px !important;
+  }
+}
+
+
+@media (max-width:767px) {
+  .listimg{
+    max-width: 158%;
   }
 }

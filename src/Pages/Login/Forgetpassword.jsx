@@ -49,7 +49,7 @@ function Forgetpassword() {
 
             if(response.ok){
                 console.log("Otp sent Successful");
-                navigate('/ForgetpasswordVerifyOtp', { state: { otp: data.otp } });
+                navigate(`/ForgetpasswordVerifyOtp/in-${localStorage.getItem('cityname')}`, { state: { otp: data.otp } });
             }
             else{
                 setError('Failed to send otp');

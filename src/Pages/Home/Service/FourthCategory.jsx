@@ -88,7 +88,7 @@ console.log(decrypt(listingId_enc))
 
   return (
     <div>
-      <div className="container margin_80_55" style={{height:'100vh'}}>
+      <div className="container margin_80_55 servicecontainer" >
         <div className="main_title_2">
           <span>
             <em></em>

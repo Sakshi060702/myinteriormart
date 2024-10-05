@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
+import Foot from "../Component/Foot";
 
 import { Link } from "react-router-dom";
 import CryptoJS from "crypto-js";
@@ -60,7 +61,7 @@ const SubCategoryList = () => {
 
   return (
     <div>
-      <div className="container margin_80_55" style={{height:'100vh'}}>
+      <div className="container margin_80_55 servicecontainer">
         <div className="main_title_2">
           <span>
             <em></em>
@@ -158,9 +159,13 @@ const SubCategoryList = () => {
     </ul>
   )}
 </div>
-
+      
       </div>
+      {/* <div className="sticky-footer">
+        <Foot />
+      </div> */}
     </div>
+    
   );
 };
 

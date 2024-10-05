@@ -236,7 +236,7 @@ function Login() {
                       <div style={{paddingTop:"5px"}}>
                       <Link
                       className="forgetpassword loginforgetpassword"
-                      to="/Forgetpassword"
+                      to={`/Forgetpassword/in-${localStorage.getItem('cityname')}`}
                       style={{ color: "Orange", textDecoration: "none" }}
                       onMouseOver={(e) => (e.target.style.color = "Black")}
                       onMouseOut={(e) => (e.target.style.color = "Orange")}
