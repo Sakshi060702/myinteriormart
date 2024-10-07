@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import "../FrontEnd/css/dropdown.css";
 import "../FrontEnd/css/Notification.css";
 import useAuthCheck from "../Hooks/useAuthCheck";
-import '../FrontEnd/css/RegistrationMV.css'
+import '../FrontEnd/css/RegistrationMV.css';
+import notificationimg from '../FrontEnd/img/userman1.png';
 
 const Notification = ({ setHasNotifications }) => {
   const token = useSelector((state) => state.auth.token);
@@ -148,8 +149,19 @@ const Notification = ({ setHasNotifications }) => {
                           </span>
                           </div>
                           <div>
-                          <p className="description notificationp" style={{marginRight:'196px',marginTop:'-14px'}}>
-                            <span style={{height:'12px',width:'12px',backgroundColor:'orange',borderRadius:'50%',position:'absolute',left:'8px',top:'19px'}}></span>
+                          <p className="description notificationp" style={{marginRight:'206px',marginTop:'-14px'}}>
+                            {/* <span style={{height:'12px',width:'12px',backgroundColor:'orange',borderRadius:'50%',position:'absolute',left:'8px',top:'19px'}}></span> */}
+                            <div>
+                          {notification.profileImage ? (
+                            <img
+                              src={`https://apidev.myinteriormart.com${notification.profileImage}`}
+                              alt={`${notification.companyName} profile`}
+                              style={{ height: '36px',width: '39px',margin:'0px 0px 0px -26px',position:'absolute'}}
+                            />
+                          ) : (
+                            <img src={notificationimg}  alt="default" style={{height: '36px', width: '39px', objectFit: 'cover'}} />
+                          )}
+                          </div>
                             <span className="user-name notificationusername">
                               <strong style={{fontSize:'13px',paddingLeft:'20px',color:'orange'}}>{notification.userName}</strong>
                             </span>

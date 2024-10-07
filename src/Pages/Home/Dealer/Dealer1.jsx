@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { useEffect } from "react";
 import ListingHomeImage from "../../../FrontEnd/img/banner/Dealers.jpg";
-import { Link } from "react-router-dom";
+import { Link,useNavigate,useLocation } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
 import "../../../FrontEnd/css/Cate.css";
 import CryptoJS from "crypto-js";
@@ -22,6 +22,9 @@ function Dealer1() {
   const [catDealer, setcatDealer] = useState([]);
   const [isMobileMenuVisible, setIsMobileMenuVisible] = useState(false);
   const [dealerBanners, setdealerBanners] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const categoryRefs = useRef({});
 
   useEffect(() => {
     fetchCategories();
@@ -38,6 +41,8 @@ function Dealer1() {
       console.log("Error fetching categories:", error);
     }
   };
+
+  
 
   const displayedCategories = catDealer.slice(16, 33);
   const initialCategories = catDealer.slice(0, 16);
@@ -60,6 +65,20 @@ function Dealer1() {
     };
     fetchBannerImages();
   }, []);
+
+  
+  useEffect(() => {
+    const categoryID = new URLSearchParams(location.search).get("categoryID");
+    if (categoryID && categoryRefs.current[categoryID]) {
+      categoryRefs.current[categoryID].scrollIntoView({ behavior: "smooth" });
+    }
+  }, [location]);
+
+  // Navigate to the category page and store the category ID in URL parameters
+  const handleCategoryClick = (category) => {
+    const categoryID = category.secondCategoryID;
+    navigate(`/Dealer/Category/${category.name.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem("cityname")}?fircatEncyt=${encodeURIComponent(encrypt(categoryID))}&categoryID=${categoryID}`);
+  };
 
   return (
     <>
@@ -96,6 +115,7 @@ function Dealer1() {
                           )}?fircatEncyt=${encodeURIComponent(
                             encrypt(parseInt(cat.secondCategoryID))
                           )}`}
+                          onClick={() => handleCategoryClick(cat)}
                         >
                           <img
                             src={icon}
@@ -115,6 +135,7 @@ function Dealer1() {
               <div className="mim-Box">
                 <div className="row no-gutters">
                   <div className="col-md-4 mim-Box-img">
+                    <div className="carasoualVerticalHeight"> 
                     <Carousel
                       interval={5000}
                       autoPlay={true}
@@ -144,6 +165,7 @@ function Dealer1() {
                         <p>Loading...</p>
                       )}
                     </Carousel>
+                    </div>
                   </div>
                   <div className="col-md-8">
                     <div className="tab-content checkout" id="myTabContent">

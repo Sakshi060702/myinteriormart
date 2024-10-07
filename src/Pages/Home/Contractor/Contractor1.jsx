@@ -149,6 +149,7 @@ function Contractor1() {
                     className="col-md-4 mim-Box-img"
                     style={{ paddingRight: "2px" }}
                   >
+                    <div className="carasoualVerticalHeight">
                     <Carousel
                       interval={5000}
                       autoPlay={true}
@@ -179,6 +180,7 @@ function Contractor1() {
                         <p>Loading...</p>
                       )}
                     </Carousel>
+                    </div>
                   </div>
                   <div className="col-md-8">
                     <div className="row no-gutters">

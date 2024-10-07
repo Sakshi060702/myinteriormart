@@ -257,6 +257,8 @@ import Usersuggestion from "./Pages/Home/Component/Usersuggestion";
 import Package from "./Pages/Profile/Package";
 import Paymentgateway from "./Pages/Profile/Paymentgateway";
 
+import ScrollToTop from "./Pages/ScrollToTop";
+
 // import Dashboardprofile from "./Pages/Profile/Dashboardprofile";
 // import Editprofileregister from "./Pages/Dashboardregisterprofile/Editprofileregister";
 // import Personalinforegister from "./Pages/Dashboardregisterprofile/Personalinforegister";
@@ -354,7 +356,7 @@ function App() {
       <div className="sticky-menu">
         <Menu1 />
       </div>
-
+<ScrollToTop/>
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/:cityName" element={<Home />} />

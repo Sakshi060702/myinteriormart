@@ -1427,3 +1427,36 @@ div.scrollmenu .imgScroll:hover {
     max-width: 158%;
   }
 }
+
+.listingarea{
+  display: flex;
+  justify-content: space-between;
+  padding-right: 34%;
+
+}
+@media (max-width:767px) {
+  .listingarea{
+    display: flex;
+    justify-content: space-between;
+    padding-right: 0%;
+  
+  }
+}
+
+.listingemp{
+  display: flex;
+ 
+}
+@media (max-width:767px) {
+  .listingemp{
+    display: flex;
+    
+  }
+}
+
+
+@media (max-width:767px) {
+  .listingempyear{
+    margin-right: 93px;
+  }
+}

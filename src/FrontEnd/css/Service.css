@@ -258,6 +258,15 @@
     width: 100%;
   }
 }
+
+.carasoualVerticalHeight{
+  width: 100%;;
+}
+@media (max-width:767px) {
+  .carasoualVerticalHeight{
+    width: 100%;;
+  }
+}
 .carouselshow{
   display: block;
 }
@@ -390,5 +399,15 @@
 .carouelheight .bannerimg {
   animation: fadeInOutZoom 12s ease-in-out infinite;
 }
+
+.carasoualVerticalHeight .bannerimg{
+  animation: fadeInOutZoom 12s ease-in-out infinite;
+}
+
+/* .custom-carousel .carousel-item {
+  transition: opacity 2s ease-in-out;
+} */
+
+
 
 

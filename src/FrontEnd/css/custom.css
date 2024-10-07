@@ -1372,7 +1372,7 @@ option[value=""][disabled] {
 		display: block;
 	}
 	.category-list {
-		display: inline-flex;
+		/* display: inline-flex; */
 	}
 	.navbar-brand {
 		width: 50%!important;

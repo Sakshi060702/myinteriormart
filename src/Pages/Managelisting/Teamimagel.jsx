@@ -217,7 +217,7 @@ function Teamimagel() {
       selectedFile.forEach((file) => {
         formData.append("file", file);
       });
-      formData.append("MrndMs", selectTitle);
+      formData.append("MrndMs", selectTitle.value);
       formData.append("designation", selectedBusinessCategory);
       formData.append("firstName", event.target.firstName.value);
       formData.append("lastName", event.target.lastName.value);

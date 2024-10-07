@@ -25,6 +25,9 @@ import "../../FrontEnd/css/RegistrationMV.css";
 import CryptoJS from "crypto-js";
 import Searchbar from "../Home/Component/Searchbar";
 import { prefix } from "@fortawesome/free-solid-svg-icons";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/swiper-bundle.css";
 
 function Listingdetails() {
   // const { listingId } = useParams();
@@ -591,7 +594,7 @@ function Listingdetails() {
       setTeamImageDetails(
         ownerImageData.imagepath.map((img) => ({
           url: img,
-          prefix:ownerImageData.prefix,
+          prefix: ownerImageData.prefix,
           title: `${ownerImageData.ownerName} ${ownerImageData.lastName}`,
           designation: ownerImageData.designation,
           state: stateName,
@@ -643,8 +646,13 @@ function Listingdetails() {
 
   const [selectedImage, setSelectedImage] = useState(0);
 
+  const swiperRef = React.useRef(null);
+
   const handleThumbnailClick = (index) => {
     setSelectedImage(index);
+    if (swiperRef.current) {
+      swiperRef.current.slideTo(index); // Slide to the clicked thumbnail's image
+    }
   };
 
   const showSlides = (n) => {
@@ -734,11 +742,20 @@ function Listingdetails() {
                               : ""
                           }
                           alt="Owner Image"
-                          style={{borderRadius:'50px'}}
+                          style={{ borderRadius: "50px" }}
                         />
-                        <h5 style={{fontSize:'20px'}}>{teamimageDetails[0].prefix}.<span style={{marginLeft:'6px'}}>{teamimageDetails[0].title}</span></h5>
-                        <h6 style={{fontSize:'14px'}}>{teamimageDetails[0].designation}</h6>
-                        <h6 style={{fontSize:'14px'}}>From : {teamimageDetails[0].state}</h6>
+                        <h5 style={{ fontSize: "20px" }}>
+                          {teamimageDetails[0].prefix}.
+                          <span style={{ marginLeft: "6px" }}>
+                            {teamimageDetails[0].title}
+                          </span>
+                        </h5>
+                        <h6 style={{ fontSize: "14px" }}>
+                          {teamimageDetails[0].designation}
+                        </h6>
+                        <h6 style={{ fontSize: "14px" }}>
+                          From : {teamimageDetails[0].state}
+                        </h6>
                       </div>
                     )}
 
@@ -825,55 +842,72 @@ function Listingdetails() {
                       ))}
                     </Slider> */}
                     {/* Main Image Display */}
-                    <div className="main-image">
-                      <img
-                        src={
-                          imageDetails[selectedImage]?.url
-                            ? `https://apidev.myinteriormart.com${imageDetails[selectedImage].url}`
-                            : ""
-                        }
-                        alt="Main Display"
-                        className="main-image-display photogallerymain"
-                      />
-                    </div>
+                    <style>
+                            {`
+                                .swiper-button-prev,
+                                .swiper-button-next ,
+                                .swiper-pagination{
+                                  display: none !important;
+                                }
+                             `}
+                          </style>
+                      {/* <div className="main-image"> */}
+                      <Swiper modules={[Autoplay]}
+                      spaceBetween={10}
+                      slidesPerView={1}
+                      onSlideChange={(swiper)=>
+                        setSelectedImage(swiper.activeIndex)
+                      }
+                      initialSlide={selectedImage}
+                      autoplay={{delay:3000,disableOnInteraction:false}}
+                      onSwiper={(swiper)=>(swiperRef.current=swiper)}
+                      > 
+                      {imageDetails.map((image,index)=>(
+                        <SwiperSlide>
+                          <img src={`https://apidev.myinteriormart.com${image.url}`}
+                          alt={`Slide ${index + 1}`}
+                          className="main-image-display photogallerymain" />
+                        </SwiperSlide>
+                      ))}
+
+                      </Swiper>
+                        
+                      {/* </div> */}
+                    
 
                     {/* Thumbnails Display */}
                     <div
-                      className="thumbnails scrollmenu"
-                      style={{
-                        marginTop: "11px",
-                        overflowX: "auto",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {imageDetails.map((image, index) => (
-                        <div
-                          key={index}
-                          className="thumbnail imgScroll photogallerythumbnail"
-                          onClick={() => handleThumbnailClick(index)} // Handle thumbnail click
-                          style={{
-                            border:
-                              selectedImage === index
-                                ? "2px solid gray"
-                                : "2px solid transparent", // Highlight selected thumbnail
-                          }}
-                        >
-                          <img
-                            src={
-                              image.url
-                                ? `https://apidev.myinteriormart.com${image.url}`
-                                : ""
-                            }
-                            alt="Thumbnail"
+                            className="thumbnails scrollmenu"
                             style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "cover",
-                            }} // Fit image into square box
-                          />
-                        </div>
-                      ))}
-                    </div>
+                              marginTop: "11px",
+                              overflowX: "auto",
+                              whiteSpace: "nowrap",
+                            }}
+                          >
+                            {imageDetails.map((image, index) => (
+                              <div
+                                key={index}
+                                className="thumbnail imgScroll photogallerythumbnail"
+                                onClick={() => handleThumbnailClick(index)}
+                                style={{
+                                  border:
+                                    selectedImage === index
+                                      ? "2px solid gray"
+                                      : "2px solid transparent", // Highlight selected thumbnail
+                                }}
+                              >
+                                <img
+                                  src={`https://apidev.myinteriormart.com${image.url}`}
+                                  alt={`Thumbnail ${index + 1}`}
+                                  style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "cover",
+                                  }}
+                                />
+                              </div>
+                            ))}
+                          </div>
                     {console.log("Banner", imageURL)}
                   </div>
                 </div>
@@ -883,17 +917,45 @@ function Listingdetails() {
                       <div className="pro-large-img img-zoom gallery1">
                         <div className="image-gallery">
                           {/* Main Image Display */}
-                          <div className="main-image">
-                            <img
-                              src={
-                                imageDetails[selectedImage]?.url
-                                  ? `https://apidev.myinteriormart.com${imageDetails[selectedImage].url}`
-                                  : ""
-                              }
-                              alt="Main Display"
-                              className="main-image-display photogallerymain"
-                            />
-                          </div>
+
+                          {/* <div className="main-image"> */}
+                          <style>
+                            {`
+                                .swiper-button-prev,
+                                .swiper-button-next ,
+                                .swiper-pagination{
+                                  display: none !important;
+                                }
+                             `}
+                          </style>
+                          <Swiper
+                            modules={[Pagination, Autoplay]} 
+                            spaceBetween={10}
+                            slidesPerView={1}
+                            onSlideChange={(swiper) =>
+                              setSelectedImage(swiper.activeIndex)
+                            }
+                            initialSlide={selectedImage}
+                            navigation
+                            pagination={{ clickable: true }}
+                            autoplay={{
+                              delay: 3000,
+                              disableOnInteraction: false,
+                            }}
+                            onSwiper={(swiper) => (swiperRef.current = swiper)}
+                          >
+                            {imageDetails.map((image, index) => (
+                              <SwiperSlide key={index}>
+                                <img
+                                  src={`https://apidev.myinteriormart.com${image.url}`}
+                                  alt={`Slide ${index + 1}`}
+                                  className="main-image-display photogallerymain"
+                                />
+                              </SwiperSlide>
+                            ))}
+                          </Swiper>
+
+                          {/* </div> */}
 
                           {/* Thumbnails Display */}
                           <div
@@ -908,7 +970,7 @@ function Listingdetails() {
                               <div
                                 key={index}
                                 className="thumbnail imgScroll photogallerythumbnail"
-                                onClick={() => handleThumbnailClick(index)} // Handle thumbnail click
+                                onClick={() => handleThumbnailClick(index)}
                                 style={{
                                   border:
                                     selectedImage === index
@@ -917,17 +979,13 @@ function Listingdetails() {
                                 }}
                               >
                                 <img
-                                  src={
-                                    image.url
-                                      ? `https://apidev.myinteriormart.com${image.url}`
-                                      : ""
-                                  }
-                                  alt="Thumbnail"
+                                  src={`https://apidev.myinteriormart.com${image.url}`}
+                                  alt={`Thumbnail ${index + 1}`}
                                   style={{
                                     width: "100%",
                                     height: "100%",
                                     objectFit: "cover",
-                                  }} // Fit image into square box
+                                  }}
                                 />
                               </div>
                             ))}
@@ -964,7 +1022,7 @@ function Listingdetails() {
                         <div style={{ display: "flex" }}>
                           <span
                             className="company-category-name listingcolor"
-                            style={{ marginRight: "18px",fontWeight:'bold' }}
+                            style={{ marginRight: "18px", fontWeight: "bold" }}
                           >
                             {listingDetails.listingKeyword}
                           </span>
@@ -1007,7 +1065,9 @@ function Listingdetails() {
                             </a>
                           </span>
                         </p>
-                        <div style={{ display: "flex",justifyContent:'space-between',width:'' }}>
+                        <div
+                          className="listingarea"
+                        >
                           <p className="listingdetailslocality">
                             <span>
                               <i
@@ -1028,8 +1088,8 @@ function Listingdetails() {
                           </p>
                         </div>
                       </div>
-                      <div style={{ display: "flex" }}>
-                        <div className="col-lg-6 mb-1 px-0 year_gst">
+                      <div className="listingemp">
+                        <div className="col-lg-6 mb-1 px-0 year_gst listingempyear">
                           <p className="m-0">
                             <i
                               className="fa fa-calendar"
@@ -1119,7 +1179,7 @@ function Listingdetails() {
                         >
                           <i
                             className="fa fa-share"
-                            style={{ color: "gray" , marginRight:'4px'}}
+                            style={{ color: "gray", marginRight: "4px" }}
                           ></i>
                           Share
                         </button>
@@ -1151,7 +1211,10 @@ function Listingdetails() {
                           Subscribe
                         </button>
                       </div>
-                      <div className="social-details mobile" style={{marginLeft:'-5px'}}>
+                      <div
+                        className="social-details mobile"
+                        style={{ marginLeft: "-5px" }}
+                      >
                         <button
                           className={`btn btn-bookmark ${
                             isBookmarked ? "active" : ""
@@ -1171,7 +1234,11 @@ function Listingdetails() {
                           onClick={() => setIsSociallinkOpen(true)}
                           style={{ height: "32px", fontSize: "13px" }}
                         >
-                          <i className="fa fa-share" style={{ color: "gray",marginRight:'4px' }}></i>Share
+                          <i
+                            className="fa fa-share"
+                            style={{ color: "gray", marginRight: "4px" }}
+                          ></i>
+                          Share
                         </button>
 
                         <button
@@ -1201,7 +1268,10 @@ function Listingdetails() {
                           Subscribe
                         </button>
                       </div>
-                      <div className="social-details mobile" style={{marginTop:'-13px'}}>
+                      <div
+                        className="social-details mobile"
+                        style={{ marginTop: "-13px" }}
+                      >
                         <button
                           className="btn btn-guotes btn-sm"
                           onClick={() => setIsPopupOpen(true)}
@@ -1221,7 +1291,7 @@ function Listingdetails() {
                           className={
                             showFullAboutus ? "full-text" : "limited-text"
                           }
-                          style={{textIndent:'30px', display: "inline" }}
+                          style={{ textIndent: "30px", display: "inline" }}
                         >
                           {showFullAboutus
                             ? listingDetails.description
@@ -1248,7 +1318,7 @@ function Listingdetails() {
                     </div>
                   </div>
 
-                  <Webreviews companyID={listingDetails.listingId}/>
+                  <Webreviews companyID={listingDetails.listingId} />
                   <div className="col-lg-4 col-md-12 company-map padding-all-5 listinggallery listingb">
                     <div
                       className="pro-large-img img-zoom gallery1"
@@ -1295,20 +1365,19 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
   const dropdownRef = useRef(null);
 
   const getWorkingHours = (from, to, formatStartOnly = false) => {
-    const formatTime=(time)=>{
-      const[hour,minute]=time.split(":").map(Number);
-      const isPM=hour>=12;
-      const formattedHour=hour%12||12;
-      const ampm=isPM ?'PM':'AM';
+    const formatTime = (time) => {
+      const [hour, minute] = time.split(":").map(Number);
+      const isPM = hour >= 12;
+      const formattedHour = hour % 12 || 12;
+      const ampm = isPM ? "PM" : "AM";
       return `${formattedHour}:${minute.toString().padStart(2, "0")} ${ampm}`;
-
-    }
+    };
     const fromTime = formatTime(from);
-  if (formatStartOnly) {
-    return fromTime;
-  }
-  const toTime = formatTime(to);
-  return `${fromTime} - ${toTime}`;
+    if (formatStartOnly) {
+      return fromTime;
+    }
+    const toTime = formatTime(to);
+    return `${fromTime} - ${toTime}`;
   };
 
   const days = [
@@ -1401,7 +1470,11 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
   return (
     <div>
       <div className="current-status">
-        <p className="timedrp" onClick={toggleDropdown} style={{ cursor: "pointer" }}>
+        <p
+          className="timedrp"
+          onClick={toggleDropdown}
+          style={{ cursor: "pointer" }}
+        >
           <span style={{ color: isOpen ? "green" : "red" }}>
             {isOpen ? <b>Open</b> : <b>Closed Now</b>}
           </span>
@@ -1451,7 +1524,6 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
         </div>
       )}
     </div>
-
   );
 };
 

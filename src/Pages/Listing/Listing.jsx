@@ -227,6 +227,20 @@ function Listing() {
 navigate(ClaimForgetpassword)
   }
  
+  const handleListingClick = (listingId) => {
+    localStorage.setItem("scrollPosition", window.scrollY); // Save current scroll position
+    // Perform your navigation logic here (e.g., navigate to the details page)
+  };
+
+  useEffect(() => {
+    const savedPosition = localStorage.getItem("scrollPosition");
+    if (savedPosition) {
+      window.scrollTo(0, parseInt(savedPosition, 10));
+      localStorage.removeItem("scrollPosition");
+    }
+  }, []);
+
+  
   return (
     <>
       <div className="container" style={{ marginBottom: "30px" }}>
@@ -297,6 +311,8 @@ navigate(ClaimForgetpassword)
                       )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
                         encrypt(parseInt(secondCategoryId))
                       )}`}
+
+                      onClick={() => handleListingClick(listing.listingId)}
                     >
                       <div className="strip map_view stripmapviewdesign">
                         {/* <h5>Hello world</h5> */}

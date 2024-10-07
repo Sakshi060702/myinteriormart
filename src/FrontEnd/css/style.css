@@ -10675,3 +10675,9 @@ a.btn_3:hover,
 .tab, .tab1, .tab2, .tab3 {
   display: none;
 }
+
+
+/* .swiper-container .swiper-button-prev,
+.swiper-container .swiper-button-next {
+  display: none !important;
+} */
