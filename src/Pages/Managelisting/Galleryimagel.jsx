@@ -71,7 +71,7 @@ function Galleryimagel() {
         if (data instanceof Object) {
           console.log(data);
           console.log();
-          setImageDetails(data.imagepath.map((img)=> ({ url: img, title: data.imagetitle })));
+          setImageDetails(data.imagepath.map((img,index)=> ({ url: img, title: data.imagetitle[index]||"No Title" })));
           setRemainingImages(MAX_IMAGES - data.imagepath.length);
         
         }
@@ -130,7 +130,13 @@ function Galleryimagel() {
         console.log("Post response", result);
 
         if (result instanceof Object) {
-          setImageDetails(result.imageUrls.map((img)=> ({ url: img, title: result.imageTitle })));
+          const imageUrls = Array.isArray(result.imageUrls) ? result.imageUrls : [];
+          const imageTitles = Array.isArray(result.imageTitles) ? result.imageTitles : [];
+
+          setImageDetails(imageUrls.map((img, index) => ({
+          url: img,
+          title: imageTitles[index] || "No Title" // Fallback if title is undefined
+        })));
           setRemainingImages(MAX_IMAGES - result.imageUrls.length);
           // setImageDetails((prevDetails) =>
           //   prevDetails.concat(result.map((image) => ({ url: image.imageUrls, title: image.imageTitle })))

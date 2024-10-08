@@ -50,6 +50,18 @@ function ThirdCategoryD() {
     }
   };
 
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const element = document.getElementById(hash.replace("#", ""));
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    }
+  }, [secondCategoryId]);
+
   return (
     <div className="container margin_80_55 servicecontainer" >
       <div className="main_title_2">

@@ -61,10 +61,10 @@ function Teamimagel() {
           console.log(data);
           console.log(data.imagepath);
           setImageDetails(
-            data.imagepath.map((img) => ({
+            data.imagepath.map((img,index) => ({
               url: img,
-              firstName: data.ownerName,
-              designation: data.designation,
+              firstName: data.ownerName[index]||"No image",
+              designation: data.designation[index]||"No image",
             }))
           );
 
@@ -246,10 +246,10 @@ function Teamimagel() {
 
         if (result instanceof Object) {
           setImageDetails(
-            result.ownerImageDetails.imageUrls.map((img) => ({
+            result.ownerImageDetails.imageUrls.map((img,index) => ({
               url: img,
-              firstName: result.ownerImageDetails.firstName,
-              designation: result.ownerImageDetails.designation,
+              firstName: result.ownerImageDetails.firstName[index]||'no name',
+              designation: result.ownerImageDetails.designation[index]||'no designation',
             }))
           );
 

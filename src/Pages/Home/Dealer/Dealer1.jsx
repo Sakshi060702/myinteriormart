@@ -6,6 +6,7 @@ import "../../../FrontEnd/css/Service.css";
 import "../../../FrontEnd/css/Cate.css";
 import CryptoJS from "crypto-js";
 import { Carousel } from "react-bootstrap";
+import { saveScrollPosition,restoreScrollPosition } from "../../Scrollutilis";
 
 const encryptionKey = "myinterriorMart@SECRETKEY";
 
@@ -28,7 +29,8 @@ function Dealer1() {
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+    handleScroll();
+  }, [location]);
 
   const fetchCategories = async () => {
     try {
@@ -67,18 +69,47 @@ function Dealer1() {
   }, []);
 
   
-  useEffect(() => {
-    const categoryID = new URLSearchParams(location.search).get("categoryID");
-    if (categoryID && categoryRefs.current[categoryID]) {
-      categoryRefs.current[categoryID].scrollIntoView({ behavior: "smooth" });
-    }
-  }, [location]);
+  // useEffect(() => {
+  //   const categoryID = new URLSearchParams(location.search).get("categoryID");
+  //   if (categoryID && categoryRefs.current[categoryID]) {
+  //     categoryRefs.current[categoryID].scrollIntoView({ behavior: "smooth" });
+  //   }
+  // }, [location]);
 
   // Navigate to the category page and store the category ID in URL parameters
-  const handleCategoryClick = (category) => {
-    const categoryID = category.secondCategoryID;
-    navigate(`/Dealer/Category/${category.name.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem("cityname")}?fircatEncyt=${encodeURIComponent(encrypt(categoryID))}&categoryID=${categoryID}`);
+  // const handleCategoryClick = (category) => {
+  //   const categoryID = category.secondCategoryID;
+  //   navigate(`/Dealer/Category/${category.name.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem("cityname")}?fircatEncyt=${encodeURIComponent(encrypt(categoryID))}&categoryID=${categoryID}`);
+  // };
+
+  // useEffect(() => {
+    
+  //   const hash = window.location.hash;
+  //   if (hash) {
+  //     const element = document.getElementById(hash.replace("#", ""));
+  //     if (element) {
+  //       element.scrollIntoView({ behavior: "smooth" });
+  //     }
+  //   }
+  // }, []);
+
+  const handleScroll = () => {
+    const hash = window.location.hash;
+    if (hash) {
+      const element = document.getElementById(hash.replace("#", ""));
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
   };
+
+
+  // useEffect(()=>{
+  //   restoreScrollPosition('Dealerscrollposition');
+  //   return()=>{
+  //     saveScrollPosition('Dealerscrollposition')
+  //   };
+  // },[location.key]);
 
   return (
     <>
@@ -114,8 +145,8 @@ function Dealer1() {
                             "cityname"
                           )}?fircatEncyt=${encodeURIComponent(
                             encrypt(parseInt(cat.secondCategoryID))
-                          )}`}
-                          onClick={() => handleCategoryClick(cat)}
+                          )}`+ `#testingBannerFor_scroll`}
+                          
                         >
                           <img
                             src={icon}
@@ -131,7 +162,7 @@ function Dealer1() {
                 </ul>
               </div>
             </div>
-            <div className="col-lg-10 col-md-12 brand-category-list">
+            <div className="col-lg-10 col-md-12 brand-category-list" id="testingBannerFor_scroll">
               <div className="mim-Box">
                 <div className="row no-gutters">
                   <div className="col-md-4 mim-Box-img">
@@ -191,7 +222,7 @@ function Dealer1() {
                                     "cityname"
                                   )}?fircatEncyt=${encodeURIComponent(
                                     encrypt(parseInt(cat.secondCategoryID))
-                                  )}`}
+                                  )}`+ `#testingBannerFor_scroll`}
                                   title={cat.searchKeywordName}
                                 >
                                   <img

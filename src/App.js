@@ -1,8 +1,9 @@
 import Home from "./Pages/Home/Home";
 import { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, ScrollRestoration } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
+
 
 import Labournaka from "./Pages/Tab/Labournaka";
 
@@ -257,6 +258,10 @@ import Usersuggestion from "./Pages/Home/Component/Usersuggestion";
 import Package from "./Pages/Profile/Package";
 import Paymentgateway from "./Pages/Profile/Paymentgateway";
 
+import ForgetpassClaim from "./Pages/Login/ForgetpassClaim";
+import Claimverifyotp from "./Pages/Login/ClaimVerifyotp";
+import EmailClaimVerifyotp from "./Pages/Login/EmailClaimVerifyotp";
+
 import ScrollToTop from "./Pages/ScrollToTop";
 
 // import Dashboardprofile from "./Pages/Profile/Dashboardprofile";
@@ -356,7 +361,7 @@ function App() {
       <div className="sticky-menu">
         <Menu1 />
       </div>
-<ScrollToTop/>
+{/* <ScrollToTop/> */}
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/:cityName" element={<Home />} />
@@ -720,6 +725,8 @@ function App() {
           element={<ForgetpasswordVerifyotp />}
         />
 
+
+
         <Route path="/profile2" element={<Profile2 />} />
         <Route
           path="/dashboard"
@@ -976,6 +983,13 @@ function App() {
         <Route path="/register/:cityName" element={<Register />} />
 
         <Route path="/Forgetpassword/:cityName" element={<Forgetpassword />} />
+
+        {/* claim listing */}
+<Route path="/ForgetpasswordClaim/:cityName" element={<ForgetpassClaim />} />
+
+<Route path="/Claimverifyotp/:cityName" element={<Claimverifyotp />} />
+
+<Route path="/EmailClaimverifyotp/:cityName" element={<EmailClaimVerifyotp />} />
 
         <Route
           path="/ForgetpasswordVerifyOtp/:cityName"
@@ -1321,6 +1335,7 @@ function App() {
 
         <Route path="/Usersuggestion/:cityName" element={<Usersuggestion />} />
       </Routes>
+      
       <div className="sticky-footer">
         <Foot />
       </div>

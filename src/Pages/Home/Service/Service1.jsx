@@ -9,6 +9,7 @@ import "../../../FrontEnd/css/Cate.css";
 import CryptoJS from "crypto-js";
 import { Carousel } from "react-bootstrap";
 import { height, width } from "@fortawesome/free-solid-svg-icons/faL";
+import { saveScrollPosition,restoreScrollPosition } from "../../Scrollutilis";
 
 const encryptionKey = "myinterriorMart@SECRETKEY";
 
@@ -95,6 +96,13 @@ const Services1 = () => {
       return () => clearTimeout(timer); // Cleanup the timer on unmount
     }
   }, [homeMegaBannerImages]);
+
+  useEffect(()=>{
+    restoreScrollPosition('Servicesscrollposition');
+    return()=>{
+      saveScrollPosition('Servicesscrollposition')
+    };
+  },[]);
 
   return (
     <div className="category-featured">

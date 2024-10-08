@@ -32,6 +32,7 @@ import "swiper/swiper-bundle.css";
 function Listingdetails() {
   // const { listingId } = useParams();
   // console.log("RTEST");
+  
   const [searchParams] = useSearchParams();
   // console.log(searchParams);
 
@@ -647,11 +648,30 @@ function Listingdetails() {
   const [selectedImage, setSelectedImage] = useState(0);
 
   const swiperRef = React.useRef(null);
+  const thumbnailsContainerRef = useRef(null);
 
   const handleThumbnailClick = (index) => {
     setSelectedImage(index);
     if (swiperRef.current) {
       swiperRef.current.slideTo(index); // Slide to the clicked thumbnail's image
+    }
+  };
+
+  const handleSlideChange = (swiper) => {
+    setSelectedImage(swiper.activeIndex);
+    scrollThumbnailsToView(swiper.activeIndex);
+  };
+
+  const scrollThumbnailsToView = (index) => {
+    const thumbnailWidth = 100; // approximate width of a thumbnail (adjust based on your CSS)
+    const container = thumbnailsContainerRef.current;
+    if (container) {
+      const scrollPosition =
+        index * thumbnailWidth - container.clientWidth / 2 + thumbnailWidth / 2;
+      container.scrollTo({
+        left: scrollPosition,
+        behavior: "smooth",
+      });
     }
   };
 
@@ -842,7 +862,9 @@ function Listingdetails() {
                       ))}
                     </Slider> */}
                     {/* Main Image Display */}
-                    <style>
+
+                          {/* <div className="main-image"> */}
+                          <style>
                             {`
                                 .swiper-button-prev,
                                 .swiper-button-next ,
@@ -851,33 +873,35 @@ function Listingdetails() {
                                 }
                              `}
                           </style>
-                      {/* <div className="main-image"> */}
-                      <Swiper modules={[Autoplay]}
-                      spaceBetween={10}
-                      slidesPerView={1}
-                      onSlideChange={(swiper)=>
-                        setSelectedImage(swiper.activeIndex)
-                      }
-                      initialSlide={selectedImage}
-                      autoplay={{delay:3000,disableOnInteraction:false}}
-                      onSwiper={(swiper)=>(swiperRef.current=swiper)}
-                      > 
-                      {imageDetails.map((image,index)=>(
-                        <SwiperSlide>
-                          <img src={`https://apidev.myinteriormart.com${image.url}`}
-                          alt={`Slide ${index + 1}`}
-                          className="main-image-display photogallerymain" />
-                        </SwiperSlide>
-                      ))}
+                          <Swiper
+                            modules={[Pagination, Autoplay]}
+                            spaceBetween={10}
+                            slidesPerView={1}
+                            onSlideChange={handleSlideChange}
+                            initialSlide={selectedImage}
+                            autoplay={{
+                              delay: 4000,
+                              disableOnInteraction: false,
+                            }}
+                            onSwiper={(swiper) => (swiperRef.current = swiper)}
+                          >
+                            {imageDetails.map((image, index) => (
+                              <SwiperSlide key={index}>
+                                <img
+                                  src={`https://apidev.myinteriormart.com${image.url}`}
+                                  alt={`Slide ${index + 1}`}
+                                  className="main-image-display photogallerymain"
+                                />
+                              </SwiperSlide>
+                            ))}
+                          </Swiper>
 
-                      </Swiper>
-                        
-                      {/* </div> */}
-                    
+                          {/* </div> */}
 
-                    {/* Thumbnails Display */}
-                    <div
+                          {/* Thumbnails Display */}
+                          <div
                             className="thumbnails scrollmenu"
+                            ref={thumbnailsContainerRef}
                             style={{
                               marginTop: "11px",
                               overflowX: "auto",
@@ -893,7 +917,8 @@ function Listingdetails() {
                                   border:
                                     selectedImage === index
                                       ? "2px solid gray"
-                                      : "2px solid transparent", // Highlight selected thumbnail
+                                      : "2px solid transparent",
+                                  display: "inline-block",
                                 }}
                               >
                                 <img
@@ -908,6 +933,7 @@ function Listingdetails() {
                               </div>
                             ))}
                           </div>
+
                     {console.log("Banner", imageURL)}
                   </div>
                 </div>
@@ -929,17 +955,13 @@ function Listingdetails() {
                              `}
                           </style>
                           <Swiper
-                            modules={[Pagination, Autoplay]} 
+                            modules={[Pagination, Autoplay]}
                             spaceBetween={10}
                             slidesPerView={1}
-                            onSlideChange={(swiper) =>
-                              setSelectedImage(swiper.activeIndex)
-                            }
+                            onSlideChange={handleSlideChange}
                             initialSlide={selectedImage}
-                            navigation
-                            pagination={{ clickable: true }}
                             autoplay={{
-                              delay: 3000,
+                              delay: 4000,
                               disableOnInteraction: false,
                             }}
                             onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -960,6 +982,7 @@ function Listingdetails() {
                           {/* Thumbnails Display */}
                           <div
                             className="thumbnails scrollmenu"
+                            ref={thumbnailsContainerRef}
                             style={{
                               marginTop: "11px",
                               overflowX: "auto",
@@ -975,7 +998,8 @@ function Listingdetails() {
                                   border:
                                     selectedImage === index
                                       ? "2px solid gray"
-                                      : "2px solid transparent", // Highlight selected thumbnail
+                                      : "2px solid transparent",
+                                  display: "inline-block",
                                 }}
                               >
                                 <img
@@ -1065,9 +1089,7 @@ function Listingdetails() {
                             </a>
                           </span>
                         </p>
-                        <div
-                          className="listingarea"
-                        >
+                        <div className="listingarea">
                           <p className="listingdetailslocality">
                             <span>
                               <i

@@ -221,7 +221,7 @@ function Listing() {
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  const ClaimForgetpassword=`/Forgetpassword/in-${localStorage.getItem('cityname')}`
+  const ClaimForgetpassword=`/ForgetpasswordClaim/in-${localStorage.getItem('cityname')}`
 
   const Getclaimhandleclick=()=>{
 navigate(ClaimForgetpassword)
