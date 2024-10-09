@@ -168,7 +168,7 @@ function Dealer1() {
                   <div className="col-md-4 mim-Box-img">
                     <div className="carasoualVerticalHeight"> 
                     <Carousel
-                      interval={5000}
+                      interval={8000}
                       autoPlay={true}
                       fade
                       animationEffect="Fade"

@@ -33,7 +33,7 @@ function Claimverifyotp() {
         const otpString = userOtp.join('');
 
         try {
-            const response = await fetch('https://apidev.myinteriormart.com/api/SignIn/VerifyOtp', {
+            const response = await fetch('https://apidev.myinteriormart.com/api/SignIn/ClaimVerifyOtp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ function Claimverifyotp() {
             const data = await response.json();
 
             const cityName = localStorage.getItem('cityname');
-            const pathregister = `/register/in-${cityName}`;
+            const pathregister = `/GetClaimRegister/in-${cityName}`;
 
 
             if (response.ok) {

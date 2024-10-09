@@ -155,7 +155,7 @@ console.log('Error in fetching social link',error)
                   </div>
                   <div className="contact_heading">Helpline</div>
                   <div className="contact_text">
-                    <a href="tel:+919876543210">{contactInfo.contactinformation}</a>
+                    <a href={`tel:${contactInfo.contactinformation}`}>{contactInfo.contactinformation}</a>
                   </div>
                 </div>
               </div>
@@ -172,7 +172,7 @@ console.log('Error in fetching social link',error)
                     Advertisement
                   </div>
                   <div className="contact_text">
-                    <a href="tel:+919876543210">{contactInfo.contactinformation}</a>
+                    <a href={`tel:${contactInfo.contactinformation}`}>{contactInfo.contactinformation}</a>
                   </div>
                 </div>
               </div>

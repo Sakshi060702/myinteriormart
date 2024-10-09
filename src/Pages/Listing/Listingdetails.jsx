@@ -593,11 +593,11 @@ function Listingdetails() {
 
       // Update team image details
       setTeamImageDetails(
-        ownerImageData.imagepath.map((img) => ({
+        ownerImageData.imagepath.map((img,index) => ({
           url: img,
           prefix: ownerImageData.prefix,
-          title: `${ownerImageData.ownerName} ${ownerImageData.lastName}`,
-          designation: ownerImageData.designation,
+          title: `${ownerImageData.ownerName[index]||'no name'} ${ownerImageData.lastName}`,
+          designation: ownerImageData.designation[index]||'no name',
           state: stateName,
         }))
       );
@@ -661,6 +661,26 @@ function Listingdetails() {
     setSelectedImage(swiper.activeIndex);
     scrollThumbnailsToView(swiper.activeIndex);
   };
+
+  const handleSlideChangeimage = (swiper) => {
+    const index = swiper.activeIndex;
+    setSelectedImage(index);
+  
+    // Automatically scroll the thumbnails container to center the active thumbnail
+    const thumbnail = thumbnailsContainerRef.current.children[index];
+    const container = thumbnailsContainerRef.current;
+  
+    if (thumbnail && container) {
+      const containerWidth = container.offsetWidth;
+      const thumbnailWidth = thumbnail.offsetWidth;
+      const thumbnailOffset = thumbnail.offsetLeft;
+  
+      // Center the active thumbnail within the container
+      container.scrollLeft = thumbnailOffset - (containerWidth - thumbnailWidth) / 2;
+    }
+  };
+  
+  
 
   const scrollThumbnailsToView = (index) => {
     const thumbnailWidth = 100; // approximate width of a thumbnail (adjust based on your CSS)
@@ -877,7 +897,7 @@ function Listingdetails() {
                             modules={[Pagination, Autoplay]}
                             spaceBetween={10}
                             slidesPerView={1}
-                            onSlideChange={handleSlideChange}
+                            onSlideChange={handleSlideChangeimage}
                             initialSlide={selectedImage}
                             autoplay={{
                               delay: 4000,
@@ -1147,9 +1167,9 @@ function Listingdetails() {
                           className="fa fa-mobile"
                           style={{ marginRight: "8px" }}
                         ></i>
-                        <Link style={{ marginRight: "8px", color: "orange" }}>
+                        <a href={`tel:${listingDetails.mobile}`} style={{ marginRight: "8px", color: "orange" }}>
                           {listingDetails.mobile}
-                        </Link>
+                        </a>
 
                         <i
                           className="fa fa-whatsapp"

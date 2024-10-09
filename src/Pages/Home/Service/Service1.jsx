@@ -166,7 +166,7 @@ const Services1 = () => {
                 >
                   <div className="carasoualVerticalHeight">
                     <Carousel
-                      interval={5000}
+                      interval={8000}
                       autoPlay={true}
                       fade
                       animationEffect="Fade"
@@ -235,7 +235,7 @@ const Services1 = () => {
       <div className="row py-1">
         <div className="carouelheight ">
           <Carousel
-            interval={4000}
+            interval={8000}
             autoPlay={true}
             fade
             animationEffect="Fade"
@@ -269,7 +269,7 @@ const Services1 = () => {
 
         <div className="carouelheight carouselshow">
           <Carousel
-            interval={5000}
+            interval={9000}
             autoPlay={true}
             fade
             animationEffect="Fade"

@@ -228,6 +228,105 @@ function Profile2({ children }) {
                   </Link>
                 </>
               )}
+
+              {/* usertype none */}
+              {userType === "" && (
+                <>
+                  <Link to={`/dashboard/in-${localStorage.getItem('cityname')}`}>
+                    {" "}
+                    <img
+                      src={dashbordimg}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    Dashboard
+                  </Link>
+                  <Link to={`/Myactivity/in-${localStorage.getItem('cityname')}`}>
+                    {" "}
+                    <img
+                      src={myactivityimg}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    My Activity
+                  </Link>
+                  {status=== 1 && (
+                    <><Link to={`/labournakapage/in-${localStorage.getItem('cityname')}`}>
+                    <img
+                      src={managlistingimg}
+                      alt="Manage Listing"
+                      style={{ height: "60px" }}
+                    />
+                    Manage Listing
+                  </Link>
+                  <Link to={`/enquiry/in-${localStorage.getItem('cityname')}`}>
+                    <img
+                      src={enquiryimg}
+                      alt="Enquiry"
+                      style={{ height: "60px" }}
+                    />
+                    Enquiry
+                  </Link>
+                  <Link to={`/Package/in-${localStorage.getItem('cityname')}`}>
+                    <img
+                      src={enquiryimg}
+                      alt="Enquiry"
+                      style={{ height: "60px" }}
+                    />
+                    Upgrade Listing
+                  </Link></>
+                  
+                  
+                  )}
+                  
+                  <Link to={`/complaint/in-${localStorage.getItem('cityname')}`}>
+                    {" "}
+                    <img
+                      src={complaintimg}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    Complaint
+                  </Link>
+                  <Link to={`/suggestion/in-${localStorage.getItem('cityname')}`}>
+                    {" "}
+                    <img
+                      src={suggestionimg}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    Suggestion
+                  </Link>
+                  <Link to={`/chat/in-${localStorage.getItem('cityname')}`}>
+                    {" "}
+                    <img
+                      src={chatimg}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    Chat
+                  </Link>
+                  <Link to={`/ProfileRegister/in-${localStorage.getItem('cityname')}`}>
+                    {" "}
+                    <img
+                      src={registerimg}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    Register
+                  </Link>
+
+                  <Link to={`/changepassword/in-${localStorage.getItem('cityname')}`}>
+                    {" "}
+                    <img
+                      src={changepassimg}
+                      alt="Edit Profile"
+                      style={{ height: "60px" }}
+                    />
+                    Change Pin
+                  </Link>
+                </>
+              )}
             </div>
           </div>
 

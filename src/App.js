@@ -261,6 +261,7 @@ import Paymentgateway from "./Pages/Profile/Paymentgateway";
 import ForgetpassClaim from "./Pages/Login/ForgetpassClaim";
 import Claimverifyotp from "./Pages/Login/ClaimVerifyotp";
 import EmailClaimVerifyotp from "./Pages/Login/EmailClaimVerifyotp";
+import GetclaimRegister from "./Pages/Login/GetclaimRegister";
 
 import ScrollToTop from "./Pages/ScrollToTop";
 
@@ -990,6 +991,8 @@ function App() {
 <Route path="/Claimverifyotp/:cityName" element={<Claimverifyotp />} />
 
 <Route path="/EmailClaimverifyotp/:cityName" element={<EmailClaimVerifyotp />} />
+
+<Route path="/GetClaimRegister/:cityName" element={<GetclaimRegister />} />
 
         <Route
           path="/ForgetpasswordVerifyOtp/:cityName"

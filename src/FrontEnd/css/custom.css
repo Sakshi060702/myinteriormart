@@ -334,7 +334,7 @@ footer ul {
 
 
 .mim-box-list img {
-	margin-right: 6 px;
+	margin-right: 6px;
 	margin-left: -10px;
 	width: 25px;
 }
@@ -1181,7 +1181,7 @@ option[value=""][disabled] {
 	}
 	.listing-details .company-details h5 {
 		width: 100%;
-		margin-bottom: 6px;
+		margin-bottom: 4px;
 	}
 	.listing-details .company-details small {
 		padding: 6px 0px;
@@ -1311,7 +1311,7 @@ option[value=""][disabled] {
 	}
 	.listing-details .company-details h5 {
 		width: 100%;
-		margin-bottom: 6px;
+		margin-bottom: 4px;
 	}
 	.listing-details .company-details small {
 		padding: 6px 0px;
@@ -1468,7 +1468,7 @@ option[value=""][disabled] {
 		color: #fb830d;
 	}
 	.col-3.bottom-link-sticky-list {
-		padding: 0px;
+		/* padding: 0px; */
 	}
 	footer {
 		padding: -6px 0px 47px 0px;

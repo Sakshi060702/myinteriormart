@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams, useParams, Link } from "react-router-dom";
+import { useSearchParams, useParams, Link , useLocation} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import banner from "../../FrontEnd/img/home_section_1.jpg";
 import banner1 from "../../FrontEnd/img/listing-img.jpeg";
@@ -50,7 +50,7 @@ function Listing() {
   console.log("secondcategoryid", secondCategoryId);
   console.log(decrypt(listingId_enc));
 
-  
+  const location=useLocation
 
   //for mobile pagination
 
@@ -240,6 +240,16 @@ navigate(ClaimForgetpassword)
     }
   }, []);
 
+  useEffect(()=>{
+    if(location.hash){
+      const elementId=location.hash.replace('#','');
+      const element=document.getElementById(elementId);
+      if(element){
+        element.scrollIntoView({behavior:'smooth'});
+      }
+    }
+  },[location])
+
   
   return (
     <>
@@ -314,7 +324,12 @@ navigate(ClaimForgetpassword)
 
                       onClick={() => handleListingClick(listing.listingId)}
                     >
-                      <div className="strip map_view stripmapviewdesign">
+                      <div className="strip map_view stripmapviewdesign" style={{
+                            border:
+                              searching == listing.listingKeyword
+                                ? "2px solid gray"
+                                : "None",
+                          }}>
                         {/* <h5>Hello world</h5> */}
                         <h6 className="listingcompanyname">
                           <Link
@@ -346,12 +361,12 @@ navigate(ClaimForgetpassword)
                         </h6>
                         <div
                           className="row no-gutters "
-                          style={{
-                            border:
-                              searching == listing.listingKeyword
-                                ? "2px solid gray"
-                                : "None",
-                          }}
+                          // style={{
+                          //   border:
+                          //     searching == listing.listingKeyword
+                          //       ? "2px solid gray"
+                          //       : "None",
+                          // }}
                         >
                           <div className="col-6 listingdiv">
                             <div className="wrapper listingdetailsdiv">
@@ -532,9 +547,13 @@ navigate(ClaimForgetpassword)
                                       }}
                                     >
                                       <p className="listingcallnow">
-                                        <Link className="loc_open call-now callnowl  listingcallnowinner listingcallnow_btn">
+                                        <a href={`tel:${listing.mobile}`} className="loc_open call-now callnowl  listingcallnowinner listingcallnow_btn"
+                                        onClick={(e)=>{e.preventDefault();e.stopPropagation();
+                                          window.location.href=`tel:${listing.mobile}`;
+                                        }}>
+                                        
                                           Call now
-                                        </Link>
+                                        </a>
                                       </p>
                                     </li>
                                   </div>
@@ -542,49 +561,27 @@ navigate(ClaimForgetpassword)
                                     <li>
                                       <p className="listinggetclaim">
                                         {listing.claimedListing ?(
-                                          token ? (
-                                            <button
-                                          className="btn btn-guotes btn-sm getclaimbtn"
-                                          style={{
-                                            boxShadow:
-                                              "0 4px 8px rgba(0, 0, 0, 0.2)",
-                                            transition:
-                                              "box-shadow 0.3s ease-in-out",
-                                          }}
-                                          onClick={(event) => {
-                                            event.preventDefault();
-                                            event.stopPropagation();
-                                            setIsPopupOpen([
-                                              true,
-                                              listing.listingId,
-                                            ]);
-                                            // Getclaimhandleclick();
-                                          }}
-                                        >
-                                          Get Quotes
-                                        </button>
-                                          ):(
-                                            <button
-                                          className="btn btn-guotes btn-sm getclaimbtn"
-                                          style={{
-                                            boxShadow:
-                                              "0 4px 8px rgba(0, 0, 0, 0.2)",
-                                            transition:
-                                              "box-shadow 0.3s ease-in-out",
-                                          }}
-                                          onClick={(event) => {
-                                            event.preventDefault();
-                                            event.stopPropagation();
-                                            // setIsPopupOpen([
-                                            //   true,
-                                            //   listing.listingId,
-                                            // ]);
-                                            Getclaimhandleclick();
-                                          }}
-                                        >
-                                          Get Claim
-                                        </button>
-                                          )
+                                           <button
+                                           className="btn btn-guotes btn-sm getclaimbtn"
+                                           style={{
+                                             boxShadow:
+                                               "0 4px 8px rgba(0, 0, 0, 0.2)",
+                                             transition:
+                                               "box-shadow 0.3s ease-in-out",
+                                           }}
+                                           onClick={(event) => {
+                                             event.preventDefault();
+                                             event.stopPropagation();
+                                             // setIsPopupOpen([
+                                             //   true,
+                                             //   listing.listingId,
+                                             // ]);
+                                             Getclaimhandleclick();
+                                           }}
+                                         >
+                                           Get Claim
+                                         </button>
+                                           
                                           
                                         ):(
                                           <button

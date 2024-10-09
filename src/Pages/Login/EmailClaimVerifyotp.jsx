@@ -26,7 +26,7 @@ function EmailClaimVerifyotp() {
         setError(''); // Clear previous errors
         const otp = otpValues.join(''); // Combine OTP values into a single string
         try {
-            const response = await fetch('https://apidev.myinteriormart.com/api/SignIn/VerifyOtpEmail', {
+            const response = await fetch('https://apidev.myinteriormart.com/api/SignIn/ClaimVerifyOtpEmail', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ function EmailClaimVerifyotp() {
             // console.log(data); // Log the response data
 
             const cityName = localStorage.getItem('cityname');
-            const pathregister = `/register/${cityName}`;
+            const pathregister = `/GetClaimRegister/${cityName}`;
 
 
             

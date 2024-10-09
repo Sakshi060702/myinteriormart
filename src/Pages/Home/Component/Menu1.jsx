@@ -199,17 +199,29 @@ function Menu1() {
         console.log("listingid", listingId);
 
         if (listingId) {
+          // const response_n = await fetch(
+          //   "https://apidev.myinteriormart.com/api/ClaimedListings/Claimedlisting",
+          //   {
+          //     method: "POST",
+          //     headers: {
+          //       "Content-Type": "application/json",
+          //       Authorization: `Bearer ${token}`,
+          //     },
+          //     body: JSON.stringify({
+          //       CompanyId: listingId,
+          //     }),
+          //   }
+          // );
+
           const response_n = await fetch(
-            "https://apidev.myinteriormart.com/api/ClaimedListings/Claimedlisting",
+            "https://apidev.myinteriormart.com/api/ClaimedListings/ClaimedUpdateListing",
             {
-              method: "POST",
+              method: "GET",
               headers: {
-                "Content-Type": "application/json",
+                // "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
               },
-              body: JSON.stringify({
-                CompanyId: listingId,
-              }),
+              
             }
           );
           const data_n = await response_n.json();
@@ -553,6 +565,111 @@ function Menu1() {
                         </div>
                       </>
                     )}
+
+                    {/* usertype none */}
+                    {userType === "" && (
+                      <>
+                        {/* <div>
+                          {status !== 1 && (
+                            <ul>
+                              <li>
+                                <NavLink
+                                  to={`/selectcategory/in-${localStorage.getItem(
+                                    "cityname"
+                                  )}`}
+                                  className="btn_add listing-btn menu-freelisting"
+                                  style={{
+                                    backgroundColor: "#fe900d",
+                                    fontSize: "14px",
+                                  }}
+                                  onClick={closeMenu}
+                                >
+                                  Free Listing
+                                </NavLink>
+                              </li>
+                            </ul>
+                          )}
+                        </div> */}
+                        <div
+                          className="notification-user"
+                          style={{ display: "flex", alignItems: "center" }}
+                        >
+                          <div
+                            className="dropdown notification menu-freelisting"
+                            ref={notificationRef}
+                            style={{ marginLeft: "20px" }}
+                          >
+                            <button
+                              type="button "
+                              onClick={toggleNotificationMenu}
+                              className="notification-img"
+                            >
+                              <img src={notificationIcon} alt="notification"  />
+                              {hasNotifications && (
+                                <span className="notificationdot"
+                                 
+                                ></span>
+                              )}
+                              {showNotificationMenu && (
+                                <Notification
+                                  setHasNotifications={setHasNotifications}
+                                />
+                              )}
+                            </button>
+                          </div>
+                          <div
+                            id="profileid"
+                            className="dropdown usericon"
+                            ref={dropRef}
+                            style={{
+                              marginLeft: "20px",
+                              alignItems: "center",
+                              position: "relative",
+                            }}
+                          >
+                            <button
+                              className={`usericon-btn profileimgp dropdown-toggle ${
+                                dropdownOpen ? "buttonActive" : ""
+                              }`}
+                              type="button"
+                              onClick={toggleDropdown}
+                              style={{
+                                background: "none",
+                                border: "none",
+                                position: "relative",
+                              }}
+                            > 
+                              <img
+                                className="usericon-img"
+                                src={
+                                  imageURL
+                                    ? `https://apidev.myinteriormart.com${imageURL}`
+                                    : usericon
+                                }
+                                alt="user icon"
+                              />
+
+                              {isAuthenticated && (
+                                <span
+                                  style={{
+                                    position: "absolute",
+                                    top: "33px",
+                                    right: "25px",
+                                    width: "12px",
+                                    height: "12px",
+                                    backgroundColor: "green",
+                                    borderRadius: "50%",
+                                    border: "1px solid green",
+                                  }}
+                                />
+                              )}
+                              {dropdownOpen && <Dropdown />}
+                            </button>
+                          </div>
+                        </div>
+                      </>
+                    )}
+
                   </>
                 )}
               </ul>
