@@ -256,12 +256,15 @@ function Galleryimagel() {
                 Submit
               </button>
           </div>
+          <div className="Gallerycount">
           <div className="text-danger">
             {remaingImages > 0 
               ? `You can upload ${remaingImages} more image`
               : "Maximum 20 images reached"}
           </div>
           <div className="text-danger">Upload Maximum 20 Images</div>
+          </div>
+          
           {showPopup && (
             <Popupalert
               message={successMessage || errorMessage}

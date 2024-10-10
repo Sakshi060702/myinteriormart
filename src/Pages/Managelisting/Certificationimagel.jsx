@@ -261,7 +261,7 @@ function Certificationimagel() {
                 Submit
               </button>
           </div>
-          <div className="text-danger">
+          <div className="text-danger Gallerycount">
             {remaingImages > 0 
               ? `You can upload ${remaingImages} more image`
               : "Maximum 20 images reached"}

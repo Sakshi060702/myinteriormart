@@ -32,7 +32,7 @@ import "swiper/swiper-bundle.css";
 function Listingdetails() {
   // const { listingId } = useParams();
   // console.log("RTEST");
-  
+
   const [searchParams] = useSearchParams();
   // console.log(searchParams);
 
@@ -145,6 +145,8 @@ function Listingdetails() {
   const [selectedLocality, setSelectedLocality] = useState("");
 
   const [status, setStatus] = useState("");
+
+  const [socialLink, setSocialLink] = useState("");
 
   const settings = {
     dots: true,
@@ -593,11 +595,13 @@ function Listingdetails() {
 
       // Update team image details
       setTeamImageDetails(
-        ownerImageData.imagepath.map((img,index) => ({
+        ownerImageData.imagepath.map((img, index) => ({
           url: img,
           prefix: ownerImageData.prefix,
-          title: `${ownerImageData.ownerName[index]||'no name'} ${ownerImageData.lastName}`,
-          designation: ownerImageData.designation[index]||'no name',
+          title: `${ownerImageData.ownerName[index] || "no name"} ${
+            ownerImageData.lastName
+          }`,
+          designation: ownerImageData.designation[index] || "no name",
           state: stateName,
         }))
       );
@@ -645,10 +649,42 @@ function Listingdetails() {
     // }
   }, [listingId]);
 
+  useEffect(() => {
+    const fetchSocialLinks = async () => {
+      try {
+        const response = await fetch(
+          "https://apidev.myinteriormart.com/api/AlldetailsparticularListingbind/GetSocialLinkDetails",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              companyID: parseInt(listingId),
+            }),
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch user profile");
+        }
+        const data = await response.json();
+        console.log(data);
+        setSocialLink(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchSocialLinks();
+    // if (isAuthenticated) {
+    //   fetchGalleryImage();
+    // }
+  }, [listingId]);
+
   const [selectedImage, setSelectedImage] = useState(0);
 
   const swiperRef = React.useRef(null);
   const thumbnailsContainerRef = useRef(null);
+  const activeThumbnailRef = useRef(null);
 
   const handleThumbnailClick = (index) => {
     setSelectedImage(index);
@@ -662,25 +698,37 @@ function Listingdetails() {
     scrollThumbnailsToView(swiper.activeIndex);
   };
 
-  const handleSlideChangeimage = (swiper) => {
-    const index = swiper.activeIndex;
-    setSelectedImage(index);
-  
-    // Automatically scroll the thumbnails container to center the active thumbnail
-    const thumbnail = thumbnailsContainerRef.current.children[index];
-    const container = thumbnailsContainerRef.current;
-  
-    if (thumbnail && container) {
-      const containerWidth = container.offsetWidth;
-      const thumbnailWidth = thumbnail.offsetWidth;
-      const thumbnailOffset = thumbnail.offsetLeft;
-  
-      // Center the active thumbnail within the container
-      container.scrollLeft = thumbnailOffset - (containerWidth - thumbnailWidth) / 2;
+  // const handleSlideChangeimage = (swiper) => {
+  //   const index = swiper.activeIndex;
+  //   setSelectedImage(index);
+
+  //   // Automatically scroll the thumbnails container to center the active thumbnail
+  //   const thumbnail = thumbnailsContainerRef.current.children[index];
+  //   const container = thumbnailsContainerRef.current;
+
+  //   if (thumbnail && container) {
+  //     const containerWidth = container.offsetWidth;
+  //     const thumbnailWidth = thumbnail.offsetWidth;
+  //     const thumbnailOffset = thumbnail.offsetLeft;
+
+  //     // Center the active thumbnail within the container
+  //     container.scrollLeft =
+  //       thumbnailOffset - (containerWidth - thumbnailWidth) / 2;
+  //   }
+  // };
+  const handleSlideChangeImg = (swiper) => {
+    const activeIndex = swiper.activeIndex;
+    setSelectedImage(activeIndex);
+
+    // Scroll the active thumbnail into view on slide change
+    if (thumbnailsContainerRef.current && activeThumbnailRef.current) {
+      activeThumbnailRef.current.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
     }
   };
-  
-  
 
   const scrollThumbnailsToView = (index) => {
     const thumbnailWidth = 100; // approximate width of a thumbnail (adjust based on your CSS)
@@ -883,77 +931,76 @@ function Listingdetails() {
                     </Slider> */}
                     {/* Main Image Display */}
 
-                          {/* <div className="main-image"> */}
-                          <style>
-                            {`
+                    {/* <div className="main-image"> */}
+                    <style>
+                      {`
                                 .swiper-button-prev,
                                 .swiper-button-next ,
                                 .swiper-pagination{
                                   display: none !important;
                                 }
                              `}
-                          </style>
-                          <Swiper
-                            modules={[Pagination, Autoplay]}
-                            spaceBetween={10}
-                            slidesPerView={1}
-                            onSlideChange={handleSlideChangeimage}
-                            initialSlide={selectedImage}
-                            autoplay={{
-                              delay: 4000,
-                              disableOnInteraction: false,
-                            }}
-                            onSwiper={(swiper) => (swiperRef.current = swiper)}
-                          >
-                            {imageDetails.map((image, index) => (
-                              <SwiperSlide key={index}>
-                                <img
-                                  src={`https://apidev.myinteriormart.com${image.url}`}
-                                  alt={`Slide ${index + 1}`}
-                                  className="main-image-display photogallerymain"
-                                />
-                              </SwiperSlide>
-                            ))}
-                          </Swiper>
+                    </style>
+                    <Swiper
+                      modules={[Pagination, Autoplay]}
+                      spaceBetween={10}
+                      slidesPerView={1}
+                      onSlideChange={handleSlideChangeImg}
+                      initialSlide={selectedImage}
+                      autoplay={{
+                        delay: 4000,
+                        disableOnInteraction: false,
+                      }}
+                      onSwiper={(swiper) => (swiperRef.current = swiper)}
+                    >
+                      {imageDetails.map((image, index) => (
+                        <SwiperSlide key={index}>
+                          <img
+                            src={`https://apidev.myinteriormart.com${image.url}`}
+                            alt={`Slide ${index + 1}`}
+                            className="main-image-display photogallerymain"
+                          />
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
 
-                          {/* </div> */}
-
-                          {/* Thumbnails Display */}
-                          <div
-                            className="thumbnails scrollmenu"
-                            ref={thumbnailsContainerRef}
+                    <div
+                      className="thumbnails scrollmenu"
+                      ref={thumbnailsContainerRef}
+                      style={{
+                        marginTop: "11px",
+                        overflowX: "auto",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {imageDetails.map((image, index) => (
+                        <div
+                          key={index}
+                          className="thumbnail imgScroll photogallerythumbnail"
+                          onClick={() => handleThumbnailClick(index)}
+                          style={{
+                            border:
+                              selectedImage === index
+                                ? "2px solid gray"
+                                : "2px solid transparent",
+                            display: "inline-block",
+                          }}
+                          ref={
+                            selectedImage === index ? activeThumbnailRef : null
+                          } // Assign ref to the active thumbnail
+                        >
+                          <img
+                            src={`https://apidev.myinteriormart.com${image.url}`}
+                            alt={`Thumbnail ${index + 1}`}
                             style={{
-                              marginTop: "11px",
-                              overflowX: "auto",
-                              whiteSpace: "nowrap",
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
                             }}
-                          >
-                            {imageDetails.map((image, index) => (
-                              <div
-                                key={index}
-                                className="thumbnail imgScroll photogallerythumbnail"
-                                onClick={() => handleThumbnailClick(index)}
-                                style={{
-                                  border:
-                                    selectedImage === index
-                                      ? "2px solid gray"
-                                      : "2px solid transparent",
-                                  display: "inline-block",
-                                }}
-                              >
-                                <img
-                                  src={`https://apidev.myinteriormart.com${image.url}`}
-                                  alt={`Thumbnail ${index + 1}`}
-                                  style={{
-                                    width: "100%",
-                                    height: "100%",
-                                    objectFit: "cover",
-                                  }}
-                                />
-                              </div>
-                            ))}
-                          </div>
-
+                          />
+                        </div>
+                      ))}
+                    </div>
                     {console.log("Banner", imageURL)}
                   </div>
                 </div>
@@ -1119,7 +1166,7 @@ function Listingdetails() {
                               {listingDetails.area}
                             </span>
                           </p>
-                          <p>
+                          <p className="listingareatabs">
                             <span>
                               <i
                                 className="fa fa-map-signs"
@@ -1167,7 +1214,10 @@ function Listingdetails() {
                           className="fa fa-mobile"
                           style={{ marginRight: "8px" }}
                         ></i>
-                        <a href={`tel:${listingDetails.mobile}`} style={{ marginRight: "8px", color: "orange" }}>
+                        <a
+                          href={`tel:${listingDetails.mobile}`}
+                          style={{ marginRight: "8px", color: "orange" }}
+                        >
                           {listingDetails.mobile}
                         </a>
 
@@ -1208,10 +1258,10 @@ function Listingdetails() {
                           style={{ marginRight: "5px", fontSize: "13px" }}
                         >
                           <i
-                            className={`fa fa-bookmark-o`}
+                            className={`fa fa-bookmark`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          Bookmark
+                          <b style={{ color: "gray" }}>Bookmark</b>
                         </button>
 
                         <button
@@ -1223,7 +1273,7 @@ function Listingdetails() {
                             className="fa fa-share"
                             style={{ color: "gray", marginRight: "4px" }}
                           ></i>
-                          Share
+                          <b style={{ color: "gray" }}>Share</b>
                         </button>
 
                         <button
@@ -1237,7 +1287,7 @@ function Listingdetails() {
                             className={`fa fa-thumbs-up`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          Like
+                          <b style={{ color: "gray" }}>Like</b>
                         </button>
                         <button
                           className={`btn btn-subscribe ${
@@ -1250,7 +1300,7 @@ function Listingdetails() {
                             className={`fa fa-bell`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          Subscribe
+                          <b style={{ color: "gray" }}>Subscribe</b>
                         </button>
                       </div>
                       <div
@@ -1265,10 +1315,10 @@ function Listingdetails() {
                           style={{ marginRight: "5px", fontSize: "13px" }}
                         >
                           <i
-                            className={`fa fa-bookmark-o`}
+                            className={`fa fa-bookmark`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          Bookmark
+                          <b style={{ color: "gray" }}>Bookmark</b>
                         </button>
 
                         <button
@@ -1280,7 +1330,7 @@ function Listingdetails() {
                             className="fa fa-share"
                             style={{ color: "gray", marginRight: "4px" }}
                           ></i>
-                          Share
+                          <b style={{ color: "gray" }}>Share</b>
                         </button>
 
                         <button
@@ -1294,7 +1344,7 @@ function Listingdetails() {
                             className={`fa fa-thumbs-up`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          Like
+                          <b style={{ color: "gray" }}>Like</b>
                         </button>
                         <button
                           className={`btn btn-subscribe ${
@@ -1307,7 +1357,7 @@ function Listingdetails() {
                             className={`fa fa-bell`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          Subscribe
+                          <b style={{ color: "gray" }}>Subscribe</b>
                         </button>
                       </div>
                       <div
@@ -1321,6 +1371,33 @@ function Listingdetails() {
                         >
                           Get Quotes
                         </button>
+                      </div>
+                      <div className="col-lg-12 social-share p-0">
+                        <a href={`https://${socialLink.facebook || "#0"}`}>
+                          <i className="icon-facebook-squared-1"></i>
+                        </a>
+                        <a
+                          href={`https://${
+                            socialLink.whatsappGroupLink || "#0"
+                          }`}
+                        >
+                          <i className="fa fa-whatsapp"></i>
+                        </a>
+                        <a href={`https://${socialLink.linkedin || "#0"}`}>
+                          <i className="icon-linkedin-3"></i>
+                        </a>
+                        <a href={`https://${socialLink.twitter || "#0"}`}>
+                          <i className="icon-twitter-rect"></i>
+                        </a>
+                        <a href={`https://${socialLink.youtube || "#0"}`}>
+                          <i className="icon-youtube-play"></i>
+                        </a>
+                        <a href={`https://${socialLink.instagram || "#0"}`}>
+                          <i className="icon-instagramm"></i>
+                        </a>
+                        <a href={`https://${socialLink.pinterest || "#0"}`}>
+                          <i className="icon-pinterest-squared"></i>
+                        </a>
                       </div>
                     </div>
                   </div>

@@ -502,7 +502,7 @@ navigate(ClaimForgetpassword)
                             </div>
                           </div>
 
-                          <div className="col-2 listingcompanyletter">
+                          <div className="col-2 listingcompanyletter" style={{border:'1px solid gainsboro'}}>
                             {listing.logoImage &&
                             listing.logoImage.imagePath ? (
                               <img

@@ -440,6 +440,8 @@
   @media (max-width: 767px) {
     .social-details {
       justify-content: space-between; 
+      margin-bottom: 19px;
+    margin-top: 2px;
     }
    
     .social-details > button:nth-child(4),
@@ -456,7 +458,7 @@
       margin: 10px auto;
       display: block;
       text-align: center;
-      height: 27px;
+      height: 31px;
     }
   }
 
@@ -1327,13 +1329,35 @@ div.scrollmenu .imgScroll:hover {
 /* Owner page */
 
 .ownerdrp{
-  border: 1px solid #ccc !important;
+  /* border: 1px solid #ccc !important; */
   border: 4px;
   width: 488px !important;
 }
 
+@media (max-width:767px) {
+  .ownerdrp{
+    /* border: 1px solid #ccc !important; */
+    border: 4px;
+    width: 235px !important;
+  }
+}
+
+
+@media (max-width:767px) {
+  .ownercountrydrp{
+    /* border: 1px solid #ccc !important; */
+    border: 4px;
+    width: 158px !important;
+  }
+}
+
 .ownerimage{
   margin-right:33px ;
+}
+@media (max-width:767px) {
+  .ownerimage{
+    margin-right:0px ;
+  }
 }
 
 /* @media (max-width:767px) {
@@ -1458,5 +1482,37 @@ div.scrollmenu .imgScroll:hover {
 @media (max-width:767px) {
   .listingempyear{
     margin-right: 93px;
+  }
+}
+
+
+@media (max-width:767px) {
+  .Gallerycount{
+    text-align: center;
+  }
+}
+
+.workinghoursholiday{
+  display: block;
+}
+@media (max-width:767px) {
+  .workinghoursholiday{
+    display: none;
+  }
+}
+
+.workinghoursholidaymobile{
+  display: none;
+}
+@media (max-width:767px) {
+  .workinghoursholidaymobile{
+    display: block;
+  }
+}
+
+
+@media (max-width:767px) {
+  .listingareatabs{
+    margin-right: 23px;
   }
 }

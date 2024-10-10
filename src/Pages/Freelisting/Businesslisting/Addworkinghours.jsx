@@ -222,12 +222,13 @@ function Addworkinghours()
                         </div>
                       )}
                      
-                      {key === "FridayFrom" && (
+                     <div className="workinghoursholiday">
+                     {key === "FridayFrom" && (
                         <>
                         
                         <div className="col-md-12">
                           <div className="clearfix add_bottom_15">
-                            <div className="checkboxes1 float-left">
+                            <div className="checkboxes float-left">
                               <label className="container_check">
                                 Saturday Holiday
                                 <input
@@ -248,7 +249,7 @@ function Addworkinghours()
                       {key === "SaturdayFrom" && (
                         <div className="col-md-12">
                           <div className="clearfix add_bottom_15">
-                            <div className="checkboxes1 float-left">
+                            <div className="checkboxes float-left">
                               <label className="container_check">
                                 Sunday Holiday
                                 <input
@@ -265,6 +266,56 @@ function Addworkinghours()
                           </div>
                         </div>
                       )}
+
+                     </div>
+
+                     <div className="workinghoursholidaymobile">
+                     {key === "FridayTo" && (
+                        <>
+                        
+                        <div className="col-md-12">
+                          <div className="clearfix add_bottom_15">
+                            <div className="checkboxes float-left">
+                              <label className="container_check">
+                                Saturday Holiday
+                                <input
+                                  className="form-control form-control-sm"
+                                  type="checkbox"
+                                  name="SaturdayHoliday"
+                                  checked={workingHours["SaturdayHoliday"]}
+                                  onChange={handleChange}
+                                  style={{ width: "auto" }}
+                                />
+                                <span className="checkmark"></span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        </>
+                      )}
+                      {key === "SaturdayTo" && (
+                        <div className="col-md-12">
+                          <div className="clearfix add_bottom_15">
+                            <div className="checkboxes float-left">
+                              <label className="container_check">
+                                Sunday Holiday
+                                <input
+                                  className="form-control form-control-sm"
+                                  type="checkbox"
+                                  name="SundayHoliday"
+                                  checked={workingHours["SundayHoliday"]}
+                                  onChange={handleChange}
+                                  style={{ width: "auto" }}
+                                />
+                                <span className="checkmark"></span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                     </div>
+                     
                     </div>
                   ))}
                    <div className="text-left col-12 mt-3" style={{display:'flex'}}>

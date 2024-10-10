@@ -488,7 +488,7 @@ function Teamimagel() {
               ))}
             </select> */}
             <Select
-              className="wide add_bottom_10 country selectdrp"
+              className="wide add_bottom_10 country selectdrp ownercountrydrp"
               value={countryOptions.find(
                 (option) => option.value === selectedCountry
               )}
@@ -541,7 +541,7 @@ function Teamimagel() {
               ))}
             </select> */}
             <Select
-              className="wide add_bottom_10 country selectdrp"
+              className="wide add_bottom_10 country selectdrp ownercountrydrp"
               value={stateOptions.find(
                 (option) => option.value === selectedState
               )}
@@ -669,12 +669,15 @@ function Teamimagel() {
               Submit
             </button>
           </div> */}
+          <div className="Gallerycount">
       <div className="text-danger">
         {remaingImages > 0
           ? `You can upload ${remaingImages} more image`
           : "Maximum 3 images reached"}
       </div>
       <div className="text-danger">Upload Maximum 3 Images</div>
+          </div>
+      
       {showPopup && (
         <Popupalert
           message={successMessage || errorMessage}

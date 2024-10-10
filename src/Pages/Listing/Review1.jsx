@@ -9,6 +9,11 @@ function Review1({ listingID }) {
   const [reviews, setReviews] = useState([]);
   const [companyDetails, setCompanyDetails] = useState(null);
 
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [currentReply, setCurrentReply] = useState("");
+  const [currentRatingId, setCurrentRatingId] = useState(null);
+
+
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.user);
 
@@ -24,7 +29,7 @@ function Review1({ listingID }) {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            
           },
           body: JSON.stringify({
             companyID: listingID.companyID
@@ -85,6 +90,116 @@ function Review1({ listingID }) {
       console.error("Error submitting review:", error);
     }
   };
+
+  const handleEditClick = (ratingId, reply) => {
+    if (currentRatingId === ratingId) {
+      console.log("ratingid",ratingId);
+      console.log("currentid",currentRatingId);
+      
+      setIsEditMode(false);
+      setCurrentRatingId(null);
+      setCurrentReply("");
+
+     
+      
+
+      
+    } else {
+      // Otherwise, open the form for the clicked review
+      console.log("rating",ratingId);
+      console.log("reply",reply);
+      setCurrentRatingId(ratingId);
+      setCurrentReply(reply);
+      setIsEditMode(true);
+    }
+  };
+
+  const handleReplyChange = (event) => {
+    setCurrentReply(event.target.value);
+  };
+
+  const handleReplySubmit = async (event) => {
+    event.preventDefault();
+
+
+    const currentReview = reviews.find(review => review.ratingId === currentRatingId);
+
+    const replyId = currentReview && currentReview.ratingReply ? currentReview.ratingReply.id : 0;
+    // Submit the edited reply to the API
+    const response = await fetch(
+      "https://apidev.myinteriormart.com/api/BindAllReviews/UserReviews",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+         
+          
+        },
+        body: JSON.stringify({
+          operation: "UpdateReviewReply",
+          ratingReply: {
+            id: replyId,
+            ratingId: currentRatingId,
+            reply: currentReply,
+            companyID: listingID.companyID
+          },
+        }),
+      }
+    );
+
+    if (response.ok) {
+      // Update the reviews state with the new reply
+      setReviews((prevReviews) =>
+        prevReviews.map((review) =>
+          review.ratingId === currentRatingId
+            ? {
+                ...review,
+                ratingReply: { ...review.ratingReply, reply: currentReply },
+              }
+            : review
+        )
+      );
+      console.log(currentRatingId);
+      console.log(currentReply);
+    
+      setIsEditMode(true);
+      setCurrentRatingId(null);
+      setCurrentReply("");
+    } else {
+      console.error("Failed to update reply");
+    }
+  };
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      const response = await fetch(
+        "https://apidev.myinteriormart.com/api/AllBookMark/GetUserAllMyReviews",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            operation: "GetReviews",
+            ratingReply: { reply: "" },
+            
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        setReviews(data);
+      } else {
+        console.error("Failed to fetch reviews");
+      }
+    };
+
+    fetchReviews();
+  }, []);
+
 
   return (
     <>
@@ -205,14 +320,63 @@ function Review1({ listingID }) {
                                       <p>{review.comment}</p>
                                     </div>
                                   </div>
-                                  {review.ratingReplyMessage && (
+                                  {/* {review.ratingReplyMessage && (
                                     <div className="owner_reply">
                                       <span>
                                         <strong>Reply from Owner</strong>
                                       </span>
                                       <p className="m-0">{review.ratingReplyMessage}</p>
                                     </div>
-                                  )}
+                                  )} */}
+
+                                  {/* code for reply rating */}
+                                  {/* <div className="owner_reply">
+                          {review.ratingReply && (
+                            <div>
+                              <span>
+                                <strong>Reply</strong>{" "}
+                              </span>
+                              <p className="m-0">{review.ratingReply.reply}</p>
+                            </div>
+                          )}
+                        </div>
+                        <button
+                        className="btn_1 gray mb-3 reply"
+                        onClick={() =>
+                          handleEditClick(
+                            review.ratingId,
+                            review.ratingReply ? review.ratingReply.reply : ""
+                          )
+                        }
+                      >
+                        Edit Reply
+                      </button>
+                      {isEditMode && currentRatingId === review.ratingId && (
+                        <div className="edit-reply-form">
+                          <form onSubmit={handleReplySubmit}>
+                            <div className="form-group col-md-12">
+                              <label htmlFor="reply_text">Edit Reply</label>
+                              <textarea
+                                name="reply_text"
+                                id="reply_text"
+                                className="form-control"
+                                style={{ height: "130px" }}
+                                value={currentReply}
+                                onChange={handleReplyChange}
+                              ></textarea>
+                            </div>
+                            <div className="form-group col-md-12">
+                              <input
+                                type="submit"
+                                value="Submit"
+                                className="btn_1"
+                                id="submit-reply"
+                                style={{backgroundColor:'orange'}}
+                              />
+                            </div>
+                          </form>
+                        </div>
+                      )} */}
                                 </div>
                                 <hr />
                               </div>

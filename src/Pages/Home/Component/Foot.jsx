@@ -108,7 +108,7 @@ const Foot = () => {
           whatsapp: portallink.whatsapp,
           linkedin: portallink.linkedin,
           twitter: portallink.twitter,
-          twitter: portallink.twitter,
+          youtube: portallink.youtube,
         });
       } catch (error) {
         console.log("Error in fetching social link", error);
@@ -306,7 +306,7 @@ const Foot = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <i className="ti-whatsapp"></i>
+                      <i className="fa fa-whatsapp" ></i>
                     </a>
                   </li>
                   <li>
@@ -437,7 +437,7 @@ const Foot = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <i className="ti-whatsapp"></i>
+                      <i className="fa fa-whatsapp" ></i>
                     </a>
                   </li>
                   <li>
