@@ -3,10 +3,21 @@ import contactImage from "../FrontEnd/img/ContactUs.jpeg";
 import locationImage from "../FrontEnd/img/location-pin.png";
 import phoneImage from "../FrontEnd/img/phone.png";
 import megaphoneImage from "../FrontEnd/img/megaphone.png";
+import { useSelector } from "react-redux";
 
 function Contact() {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+
+  const token = useSelector((state) => state.auth.token);
+
+  const[formData,setFormData]=useState({
+    fullName:"",
+    email:"",
+    mobileNumber:"",
+    message:"",
+    enquiryTitle:""
+  })
 
   const [cityName,setCityName]=useState(null);
   const[contactInfo,setContactInfo]=useState('');
@@ -48,6 +59,38 @@ console.log('Error in fetching social link',error)
     fetchContcatinfo();
   },[])
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit=async(e)=>{
+    e.preventDefault();
+    try{
+      const response=await fetch(
+        "https://apidev.myinteriormart.com/api/CreateEnquiry/CreateEnquiry",
+        {
+          method:'POST',
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body:JSON.stringify(formData),
+        }
+      );
+      const data=await response.json();
+      console.log(data);
+
+    }
+    catch(error)
+    {
+      console.error('Error submitting data',error)
+    }
+  }
+
   return (
     <>
       <main style={{ backgroundColor: "white" }}>
@@ -55,7 +98,7 @@ console.log('Error in fetching social link',error)
           <div className="row align-items-center">
             <div className="col-md-7 mb-3">
               <div className="contact_form">
-                <form>
+                <form onSubmit={handleSubmit}>
                   <div className="row">
                     <h3 className="font-weight-bold text-dark mx-3 mb-4">
                       Get In Touch
@@ -66,6 +109,9 @@ console.log('Error in fetching social link',error)
                           type="text"
                           className="form-control"
                           placeholder="Full Name"
+                          value={formData.fullName ||""}
+                          onChange={handleChange}
+                          name="fullName"
                         />
                       </div>
                     </div>
@@ -82,6 +128,9 @@ console.log('Error in fetching social link',error)
                           }}
                           minLength="10"
                           maxLength="10"
+                          value={formData.mobileNumber}
+                          onChange={handleChange}
+                          name="mobileNumber"
                         />
                       </div>
                     </div>
@@ -91,6 +140,9 @@ console.log('Error in fetching social link',error)
                           type="email"
                           className="form-control"
                           placeholder="Email Address"
+                          value={formData.email || ""}
+                          onChange={handleChange}
+                          name="email"
                         />
                       </div>
                     </div>
@@ -100,6 +152,21 @@ console.log('Error in fetching social link',error)
                           className="form-control"
                           rows="4"
                           placeholder="Message"
+                          value={formData.message}
+                          onChange={handleChange}
+                          name="message"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div className="col-md-12">
+                      <div className="form-group">
+                        <textarea
+                          className="form-control"
+                          rows="4"
+                          placeholder="Title"
+                          value={formData.enquiryTitle}
+                          onChange={handleChange}
+                          name="enquiryTitle"
                         ></textarea>
                       </div>
                     </div>

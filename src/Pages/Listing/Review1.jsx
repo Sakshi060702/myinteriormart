@@ -240,9 +240,9 @@ function Review1({ listingID }) {
 
                     {isReviewFormOpen && (
                       <div className="write-review-form">
-                        <h6 style={{marginLeft:'3px'}}>Leave a Review</h6>
+                        <h6 className="reviewheading">Leave a Review</h6>
                         <form onSubmit={handleSubmit}>
-                          <div className="form-group col-md-6">
+                          <div className="form-group col-md-6 reviewstar">
                             <div className="stars">
                               {Array(5)
                                 .fill()

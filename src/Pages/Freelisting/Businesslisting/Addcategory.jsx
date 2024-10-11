@@ -32,7 +32,8 @@ function Addcategory()
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
 
-  const firstcat=localStorage.getItem('businessType')
+  // const firstcat=localStorage.getItem('businessType')
+  const firstcat=sessionStorage.getItem('businessType')
   console.log('businesstype',firstcat);
 
   useEffect(() => {

@@ -44,7 +44,7 @@ function Aboutus() {
                 listed products and services.
               </p>
               <h2 className="about_heading">Founder</h2>
-              <div className="row align-items-center mb-4">
+              <div className="row align-items-center mb-4 aboutus">
                 <div className="col-md-3 mb-3">
                   <div className="founder_img_sec">
                     <img src={founderimg} alt="image" />

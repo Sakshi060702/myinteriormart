@@ -339,7 +339,7 @@ function Profile2({ children }) {
               >
                 Select Options
               </Dropdown.Toggle>
-              <Dropdown.Menu style={{ width: "93%" }}>
+              <Dropdown.Menu style={{ width: "93%",maxHeight:'350px',overflowY:'auto' }}>
                 {userType === "Consumer" &&(
                   <>
                    <Dropdown.Item as={Link} to={`/Myactivity/in-${localStorage.getItem('cityname')}`}>

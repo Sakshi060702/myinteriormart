@@ -48,10 +48,22 @@ function Addcommunication() {
     }
   }, [location.state]);
 
-  const useremail = localStorage.getItem("email");
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null; // Return null if the cookie is not found
+}
+
+
+  // const useremail = localStorage.getItem("email");
+  // const useremail=sessionStorage.getItem("email")
+  const useremail = getCookie('email');
   console.log(useremail);
 
-  const telphone = localStorage.getItem("mobile");
+  // const telphone = localStorage.getItem("mobile");
+  // const telphone = sessionStorage.getItem("mobile");
+  const telphone = getCookie('mobile');
   console.log(telphone);
 
   useEffect(() => {

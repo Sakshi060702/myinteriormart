@@ -174,6 +174,15 @@ function Register() {
                     localStorage.setItem('businessType', businesscategory); 
                 }
 
+                sessionStorage.setItem('email',email);
+                sessionStorage.setItem('mobile',mobile);
+                if (vendorType.toLowerCase() === 'business') {
+                    sessionStorage.setItem('businessType', businesscategory); 
+                }
+
+                document.cookie = `email=${email}; path=/; max-age=3600`;
+                document.cookie = `mobile=${mobile}; path=/; max-age=3600`;
+
                 dispatch(loginSuccess({token:data.token, user:data.user}))
                 dispatch(setUserType(vendorType));
                 setSuccessMessage('User Registered successfully');

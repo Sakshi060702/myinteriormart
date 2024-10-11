@@ -820,7 +820,9 @@ function Listingdetails() {
                 <div className="box_detail_cus">
                   <div className="cust-profile">
                     {/* <img src={profile} alt="profile"></img> */}
-                    {teamimageDetails.length > 0 && (
+
+                    {/* current working code........................ */}
+                    {/* {teamimageDetails.length > 0 && (
                       <div>
                         <img
                           className="upload_images"
@@ -845,7 +847,32 @@ function Listingdetails() {
                           From : {teamimageDetails[0].state}
                         </h6>
                       </div>
-                    )}
+                    )} */}
+
+
+{teamimageDetails.length > 0 && (
+        <Slider {...settings}>
+          {teamimageDetails.map((teamImage, index) => (
+            <div key={index}>
+              <img
+                className="upload_images"
+                src={`https://apidev.myinteriormart.com${teamImage.url}`}
+                alt="Owner Image"
+                style={{ borderRadius: "50px", width: "100px", height: "100px",display: "inline-block", }}
+              />
+              <h5 style={{ fontSize: "20px" }}>
+                {teamImage.prefix}.
+                <span style={{ marginLeft: "6px" }}>{teamImage.title}</span>
+              </h5>
+              <h6 style={{ fontSize: "14px" }}>{teamImage.designation}</h6>
+              <h6 style={{ fontSize: "14px" }}>From: {teamImage.state}</h6>
+            </div>
+            
+          ))}
+           
+        </Slider>
+      )}
+
 
                     {/* {teamimageDetails.map((image, index) => (
                       <div key={index}>
@@ -1200,7 +1227,7 @@ function Listingdetails() {
 
                       <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
                         <p className="mb-0">
-                          <b>Turnover :</b>
+                          <b>Turnover : </b>
                           {listingDetails.turnover}
                         </p>
                       </div>
@@ -1261,7 +1288,7 @@ function Listingdetails() {
                             className={`fa fa-bookmark`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          <b style={{ color: "gray" }}>Bookmark</b>
+                          <b style={{ color: "black" }}>Bookmark</b>
                         </button>
 
                         <button
@@ -1271,9 +1298,9 @@ function Listingdetails() {
                         >
                           <i
                             className="fa fa-share"
-                            style={{ color: "gray", marginRight: "4px" }}
+                            style={{  marginRight: "4px" }}
                           ></i>
-                          <b style={{ color: "gray" }}>Share</b>
+                          <b style={{ color: "black" }}>Share</b>
                         </button>
 
                         <button
@@ -1287,7 +1314,7 @@ function Listingdetails() {
                             className={`fa fa-thumbs-up`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          <b style={{ color: "gray" }}>Like</b>
+                          <b style={{ color: "black" }}>Like</b>
                         </button>
                         <button
                           className={`btn btn-subscribe ${
@@ -1300,7 +1327,7 @@ function Listingdetails() {
                             className={`fa fa-bell`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          <b style={{ color: "gray" }}>Subscribe</b>
+                          <b style={{ color: "black" }}>Subscribe</b>
                         </button>
                       </div>
                       <div
@@ -1316,9 +1343,9 @@ function Listingdetails() {
                         >
                           <i
                             className={`fa fa-bookmark`}
-                            style={{ marginRight: "5px" }}
+                            style={{ marginRight: "5px"}}
                           ></i>
-                          <b style={{ color: "gray" }}>Bookmark</b>
+                          <b style={{ color: "black" }}>Bookmark</b>
                         </button>
 
                         <button
@@ -1328,9 +1355,9 @@ function Listingdetails() {
                         >
                           <i
                             className="fa fa-share"
-                            style={{ color: "gray", marginRight: "4px" }}
+                            style={{  marginRight: "4px" }}
                           ></i>
-                          <b style={{ color: "gray" }}>Share</b>
+                          <b style={{ color: "black" }}>Share</b>
                         </button>
 
                         <button
@@ -1344,7 +1371,7 @@ function Listingdetails() {
                             className={`fa fa-thumbs-up`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          <b style={{ color: "gray" }}>Like</b>
+                          <b style={{ color: "black" }}>Like</b>
                         </button>
                         <button
                           className={`btn btn-subscribe ${
@@ -1357,7 +1384,7 @@ function Listingdetails() {
                             className={`fa fa-bell`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          <b style={{ color: "gray" }}>Subscribe</b>
+                          <b style={{ color: "black" }}>Subscribe</b>
                         </button>
                       </div>
                       <div
@@ -1372,31 +1399,31 @@ function Listingdetails() {
                           Get Quotes
                         </button>
                       </div>
-                      <div className="col-lg-12 social-share p-0">
+                      <div className="col-lg-12 social-share p-0 listingpageSocialLink">
                         <a href={`https://${socialLink.facebook || "#0"}`}>
-                          <i className="icon-facebook-squared-1"></i>
+                          <i className="ti-facebook" style={{marginRight:'3px'}}></i>
                         </a>
                         <a
                           href={`https://${
                             socialLink.whatsappGroupLink || "#0"
                           }`}
                         >
-                          <i className="fa fa-whatsapp"></i>
+                          <i className="fa fa-whatsapp" style={{marginRight:'5px'}}></i>
                         </a>
                         <a href={`https://${socialLink.linkedin || "#0"}`}>
-                          <i className="icon-linkedin-3"></i>
+                          <i className="ti-linkedin" style={{marginRight:'5px'}}></i>
                         </a>
                         <a href={`https://${socialLink.twitter || "#0"}`}>
-                          <i className="icon-twitter-rect"></i>
+                          <i className="ti-twitter-alt" style={{marginRight:'5px'}}></i>
                         </a>
                         <a href={`https://${socialLink.youtube || "#0"}`}>
-                          <i className="icon-youtube-play"></i>
+                          <i className="ti-youtube" style={{marginRight:'5px'}}></i>
                         </a>
                         <a href={`https://${socialLink.instagram || "#0"}`}>
-                          <i className="icon-instagramm"></i>
+                          <i className="ti-instagram" style={{marginRight:'5px'}}></i>
                         </a>
                         <a href={`https://${socialLink.pinterest || "#0"}`}>
-                          <i className="icon-pinterest-squared"></i>
+                          <i className="ti-pinterest" style={{marginRight:'5px'}}></i>
                         </a>
                       </div>
                     </div>

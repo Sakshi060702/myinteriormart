@@ -115,7 +115,7 @@ const handleSearch = (searchTerm, type) => {
                       // console.log("keyword",result.keyword, result.keyword.startsWith(searchTerm)); //for keyword
                       // console.log("companyName",result.companyName, result.companyName.startsWith(searchTerm)); //for keyword
                       
-                      if(result.keyword.startsWith(searchTerm)){
+                      if(result.keyword.toLowerCase().startsWith(searchTerm.toLowerCase())){
                         //if search is keyword
                         return (
                           <div key={index} className="dropdownItemsearchbar">
@@ -124,7 +124,7 @@ const handleSearch = (searchTerm, type) => {
                         )
                       }
                       
-                      if(result.companyName.startsWith(searchTerm)){
+                      if(result.companyName.toLowerCase().startsWith(searchTerm.toLowerCase())){
                         //if search is company
                         return (
                           <div key={index} className="dropdownItemsearchbar">

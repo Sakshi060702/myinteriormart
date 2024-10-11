@@ -440,8 +440,8 @@
   @media (max-width: 767px) {
     .social-details {
       justify-content: space-between; 
-      margin-bottom: 19px;
-    margin-top: 2px;
+      margin-bottom: 21px !important;
+    margin-top: 6px;
     }
    
     .social-details > button:nth-child(4),
@@ -1515,4 +1515,46 @@ div.scrollmenu .imgScroll:hover {
   .listingareatabs{
     margin-right: 23px;
   }
+}
+
+
+@media (max-width:767px) {
+  .listingpageSocialLink{
+    text-align: end;
+  }
+}
+
+.slick-dots{
+  bottom: -7px !important;
+}
+
+.listimgborder{
+  border: 1px solid gainsboro;
+}
+@media (max-width:767px) {
+  .listimgborder{
+    border: 1px solid gainsboro;
+  }
+}
+
+.reviewheading{
+  margin-left: 18px;
+}
+@media (max-width:767px) {
+  .reviewheading{
+    margin-left: 18px;
+  }
+}
+
+.reviewstar{
+  margin-left: 25px;
+}
+@media (max-width:767px) {
+  .reviewstar{
+    margin-left: 3px;
+  }
+}
+
+.aboutus{
+  margin-bottom: 0px !important;
 }

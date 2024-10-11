@@ -502,13 +502,13 @@ navigate(ClaimForgetpassword)
                             </div>
                           </div>
 
-                          <div className="col-2 listingcompanyletter" style={{border:'1px solid gainsboro'}}>
+                          <div className="col-2 listingcompanyletter">
                             {listing.logoImage &&
                             listing.logoImage.imagePath ? (
                               <img
                                 src={`https://apidev.myinteriormart.com${listing.logoImage.imagePath}`}
                                 alt={`${listing.companyName} Logo`}
-                                className="card-img-top listingimage listimg"
+                                className="card-img-top listingimage listimg listimgborder"
                                 
                                 // style={{ height: "150px" }}
                               />

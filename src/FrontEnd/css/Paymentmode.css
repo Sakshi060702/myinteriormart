@@ -72,7 +72,7 @@
       display: flex;
       justify-content: center;
     
-      margin-left: 10px;
+      margin-left: 46px;
       background-color:orange;
       color: white;
       height: 46px;
@@ -85,6 +85,6 @@
   }
   @media (max-width:767px) {
     .paymentimage{
-      margin-left: 125px;
+      margin-left: 153px;
     }
   }
