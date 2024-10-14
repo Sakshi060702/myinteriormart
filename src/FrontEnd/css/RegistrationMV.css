@@ -1184,7 +1184,7 @@ div.scrollmenu .imgScroll {
   display: inline-block !important;
   color: white;
   text-align: center;
-  padding: 14px;
+  /* padding: 14px; */
   text-decoration: none;
 }
 
@@ -1352,7 +1352,8 @@ div.scrollmenu .imgScroll:hover {
 }
 
 .ownerimage{
-  margin-right:33px ;
+  margin-right:95px ;
+  margin-top: 21px;
 }
 @media (max-width:767px) {
   .ownerimage{
@@ -1557,4 +1558,29 @@ div.scrollmenu .imgScroll:hover {
 
 .aboutus{
   margin-bottom: 0px !important;
+}
+
+
+@media (max-width:767px) {
+  .reviewpage{
+    /* padding-right: 5px !important;
+    padding-left: 1px !important; */
+    margin-right: 2px;
+    margin-left: 5px;
+    padding-right: 0px !important;
+  padding-left: 0px !important;  }
+}
+
+@media (max-width:767px) {
+  .userreviewbox{
+    margin-right: 10px;
+    margin-left: -25px;
+  }
+}
+
+
+@media (max-width:767px) {
+  .reviewdescrp{
+    margin-bottom: -4px !important;
+  }
 }

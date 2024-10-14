@@ -17,39 +17,39 @@ function Review1({ listingID }) {
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.user);
 
-  useEffect(() => {
-    fetchListingDetails();
-  }, [listingID]);
+  // useEffect(() => {
+  //   fetchListingDetails();
+  // }, [listingID]);
 
-  const fetchListingDetails = async () => {
-    try {
-      const response = await fetch(
-        `https://apidev.myinteriormart.com/api/BindAllReviews/UserReviews`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
+  // const fetchListingDetails = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       `https://apidev.myinteriormart.com/api/BindAllReviews/UserReviews`,
+  //       {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
             
-          },
-          body: JSON.stringify({
-            companyID: listingID.companyID
-          })
-        }
-      );
-      const data = await response.json();
-      console.log("API Data:", data);
+  //         },
+  //         body: JSON.stringify({
+  //           companyID: listingID.companyID
+  //         })
+  //       }
+  //     );
+  //     const data = await response.json();
+  //     console.log("API Data:", data);
 
-      if (data.length > 0) {
-        setCompanyDetails({ listingID, ratingCount: data.length }); // Set ratingCount
-        setReviews(data);
-      } else {
-        setCompanyDetails({ listingID, ratingCount: 0 }); // Set ratingCount to 0 if no reviews
-        console.error(`No reviews found for company with listingID ${listingID}.`);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  //     if (data.length > 0) {
+  //       setCompanyDetails({ listingID, ratingCount: data.length }); // Set ratingCount
+  //       setReviews(data);
+  //     } else {
+  //       setCompanyDetails({ listingID, ratingCount: 0 }); // Set ratingCount to 0 if no reviews
+  //       console.error(`No reviews found for company with listingID ${listingID}.`);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
 
   const handleRatingChange = (value) => {
     setRating(value);
@@ -79,7 +79,7 @@ function Review1({ listingID }) {
       );
       if (response.ok) {
         // Re-fetch the listing details to get the updated reviews
-        await fetchListingDetails();
+        await fetchReviews();
         setIsReviewFormOpen(false);
         setRating(0);
         setReviewText("");
@@ -170,19 +170,20 @@ function Review1({ listingID }) {
     }
   };
 
-  useEffect(() => {
+ 
     const fetchReviews = async () => {
       const response = await fetch(
-        "https://apidev.myinteriormart.com/api/AllBookMark/GetUserAllMyReviews",
+        "https://apidev.myinteriormart.com/api/BindAllReviews/GetUserAllReviews",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+           
           },
           body: JSON.stringify({
             operation: "GetReviews",
             ratingReply: { reply: "" },
+            companyID: listingID.companyID
             
           }),
         }
@@ -190,6 +191,7 @@ function Review1({ listingID }) {
 
       if (response.ok) {
         const data = await response.json();
+        console.log("reply",data);
         console.log(data);
         setReviews(data);
       } else {
@@ -197,8 +199,10 @@ function Review1({ listingID }) {
       }
     };
 
-    fetchReviews();
-  }, []);
+    useEffect(() => {
+      fetchReviews();
+    }, [listingID]);
+ 
 
 
   return (
@@ -284,18 +288,18 @@ function Review1({ listingID }) {
                 <div>
                   <div className="col-md-12 col-lg-12 review-user">
                     <div className="row">
-                      <div className="col-lg-12">
+                      <div className="col-lg-12 reviewpage">
                         <hr />
                         <div className="row" style={{ fontSize: "16px",maxHeight:'300px',overflowY:'auto' }}>
                           {reviews.length > 0 ? (
                             reviews.map((review, index) => (
                               <div key={index} className="col-lg-12 mb-3">
-                                <div className="review-box">
+                                <div className="review-box userreviewbox">
                                   <div className="d-flex">
                                     <div className="col-lg-2 col-3 text-center">
                                       <div className="review_img_sec">
                                         <img
-                                          src={`https://apidev.myinteriormart.com${review.imageUrl}`}
+                                          src={`https://apidev.myinteriormart.com${review.userImage}`}
                                           alt={review.userName}
                                           style={{ width: "58px", height: "58px",borderRadius:'30px' }}
                                         />
@@ -317,18 +321,23 @@ function Review1({ listingID }) {
                                           <b>{review.date}</b>
                                         </span>
                                       </div>
-                                      <p>{review.comment}</p>
+                                      <p className="reviewdescrp">{review.comment}</p>
                                     </div>
                                   </div>
-                                  {/* {review.ratingReplyMessage && (
-                                    <div className="owner_reply">
-                                      <span>
-                                        <strong>Reply from Owner</strong>
-                                      </span>
-                                      <p className="m-0">{review.ratingReplyMessage}</p>
-                                    </div>
-                                  )} */}
+                                 
 
+<div className="owner_reply">
+                          
+                            <div>
+                              <span>
+                                <strong>Reply From Owner</strong>{" "}
+                              </span>
+                              {review.ratingReply && (
+                              <p className="m-0">{review.ratingReply.reply}</p>
+                            )}
+                            </div>
+                          
+                        </div>
                                   {/* code for reply rating */}
                                   {/* <div className="owner_reply">
                           {review.ratingReply && (

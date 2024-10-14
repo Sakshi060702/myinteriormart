@@ -10,10 +10,11 @@ import logoImage from "../../FrontEnd/img/logo_sticky.svg";
 import { useSelector } from "react-redux";
 import { useParams,useSearchParams } from "react-router-dom";
 import CryptoJS from "crypto-js";
-import { Helmet } from "react-helmet";
+import { HelmetProvider,Helmet } from "react-helmet-async";
 
 import "../../FrontEnd/css/Lisiting.css";
 import Listingdetails from "./Listingdetails";
+import { property } from "lodash";
 
 const Sharelink = ({ isOpen, onClose }) => {
   const [pageLink, setPageLink] = useState("");
@@ -40,20 +41,38 @@ const Sharelink = ({ isOpen, onClose }) => {
   const secondcategory_enc = searchParams.get("secondCategoryId");
   const secondCategoryId = decrypt(decodeURIComponent(secondcategory_enc));
 
-  useEffect(() => {
+  useEffect(()=>{
     setPageLink(window.location.href);
     fetchListingDetails();
-    if(listingDetails && listingDetails.logoImage){
-      const metaImage=document.createElement('meta');
-      metaImage.setAttribute('property','og:image');
-      metaImage.setAttribute("content", `https://apidev.myinteriormart.com${listingDetails.logoImage.imagePath}`);
-      document.head.appendChild(metaImage);
+  })
+  // useEffect(() => {
+   
+  //   // if(listingDetails && listingDetails.logoImage){
+  //   //   const metaImage=document.createElement('meta');
+  //   //   metaImage.setAttribute('property','og:image');
+  //   //   metaImage.setAttribute("content", `https://apidev.myinteriormart.com${listingDetails.logoImage.imagePath}`);
+  //   //   document.head.appendChild(metaImage);
 
-      return()=>{
-        document.head.removeChild(metaImage);
-      }
-    }
-  }, []);
+  //   //   return()=>{
+  //   //     document.head.removeChild(metaImage);
+  //   //   }
+  //   // }
+
+  //   const updateMetaTag=(property,content)=>{
+  //     let element=document.querySelector(`meta[property='${property}']`);
+  //     if(!element){
+  //       element=document.createElement("meta");
+  //       element.setAttribute("property",property);
+  //       document.head.appendChild(element);
+  //     }
+  //     element.setAttribute("content",content);
+  //   };
+  //   if (listingDetails && listingDetails.logoImage?.imagePath) {
+  //     updateMetaTag("og:image", `https://apidev.myinteriormart.com${listingDetails.logoImage.imagePath}`);
+     
+  //   }
+  
+  // }, [listingDetails]);
 
   
 
@@ -107,10 +126,11 @@ const Sharelink = ({ isOpen, onClose }) => {
   
 
 
-  if (!isOpen) return null;
+  if (!isOpen ||!listingDetails) return null;
 
   return (
     <>
+    <HelmetProvider>
       <style>
         {`
           .popup-overlay {
@@ -197,11 +217,11 @@ const Sharelink = ({ isOpen, onClose }) => {
           }
         `}
       </style>
-      {/* <Helmet>
+      <Helmet>
         <meta property="og:title" content={listingDetails.companyName} />
         <meta property="og:image" content={`https://apidev.myinteriormart.com${listingDetails.logoImage.imagePath}`} />
         <meta property="og:url" content={pageLink} />
-      </Helmet> */}
+      </Helmet>
       <div className="popup-overlay" onClick={onClose}>
         <div
           className={`popup-content ${isOpen ? "open" : ""}`}
@@ -304,6 +324,7 @@ const Sharelink = ({ isOpen, onClose }) => {
           </div>
         </div>
       </div>
+      </HelmetProvider>
     </>
   );
 };

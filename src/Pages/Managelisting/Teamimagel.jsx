@@ -573,12 +573,12 @@ function Teamimagel() {
           <div className="ownerimage">
             <div>
               {" "}
-              <h2 style={{ textAlign: "center", marginLeft: "470px" }}>Team</h2>
+              <h2 style={{ textAlign: "center", marginLeft: "204px" }}>Team</h2>
             </div>
 
             <div
               className="row d-flex justify-content-center mt-4"
-              style={{ marginLeft: "29px" }}
+              style={{ marginLeft: "233px" }}
             >
               {imageDetails.length > 0 &&
                 imageDetails.map((image, index) => (
@@ -605,7 +605,7 @@ function Teamimagel() {
                   <div
                     className="col-md-3 col-lg-2 col-6 mb-5"
                     key={`dummy-${index}`}
-                    style={{ left: "216px", marginRight: "33px" }}
+                    style={{ marginRight: "33px" }}
                   >
                     <div className="upload_img_sec" style={{ width: "107px" }}>
                       <img

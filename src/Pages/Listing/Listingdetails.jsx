@@ -533,9 +533,9 @@ function Listingdetails() {
         throw new Error("Failed to fetch states");
       }
       const data = await response.json();
-      // console.log('address array',data);
+      console.log('address array',data);
 
-      // console.log(countryID);
+      console.log(countryID);
       const country_detials = data["country"].filter(
         (count) => count.countryID == countryID
       );
@@ -578,14 +578,14 @@ function Listingdetails() {
         throw new Error("Failed to fetch owner image details");
       }
       const ownerImageData = await ownerImageResponse.json();
-      // console.log('Owner Image Data:', ownerImageData);
+      console.log('Owner Image Data:', ownerImageData);
 
       const fetchedStates = await fetchStates(
         undefined,
         ownerImageData.countryId,
         ownerImageData.stateId
       );
-      // console.log('fechedstates',fetchedStates);
+      console.log('fechedstates',fetchedStates);
 
       const stateName =
         fetchedStates.find((state) => state.stateID === ownerImageData.stateId)
@@ -1231,11 +1231,18 @@ function Listingdetails() {
                           {listingDetails.turnover}
                         </p>
                       </div>
-                      {/* <div classname="col-lg-12 mb-1 px-0 year_gst">
+                      <div classname="col-lg-12 mb-1 px-0 year_gst">
                         <p className="m-0">
-                          <i className="fa fa-language mr-1"></i>
+                          <i className="fa fa-globe" style={{marginRight:'4px'}}></i>
+                          <a href={
+      listingDetails.website.startsWith('http://') || listingDetails.website.startsWith('https://') 
+        ? listingDetails.website 
+        : `https://${listingDetails.website}`
+    } target="_blank" style={{color:'rgb(90 88 76)'}}
+    rel="noopener noreferrer">  {listingDetails.website}</a>
+                         
                         </p>
-                      </div> */}
+                      </div>
                       <div classname="col-lg-12 mb-1 p-0">
                         <i
                           className="fa fa-mobile"
@@ -1248,10 +1255,10 @@ function Listingdetails() {
                           {listingDetails.mobile}
                         </a>
 
-                        <i
+                        {/* <i
                           className="fa fa-whatsapp"
                           style={{ marginRight: "8px" }}
-                        ></i>
+                        ></i> */}
                         <Link style={{ color: "orange" }}>
                           {listingDetails.whatsapp}
                         </Link>
