@@ -57,7 +57,7 @@ function ThirdcategoryC() {
   };
 
   return (
-    <div className="container margin_80_55 servicecontainer" >
+    <div className="container margin_80_55 contractorcontainer" >
       <div className="main_title_2">
         <span>
           <em></em>

@@ -353,6 +353,17 @@
   }
 }
 
+.contractorcontainer{
+  max-height: 409vh;
+  min-height: 73vh;
+}
+@media (max-width:767px) {
+  .contractorcontainer{
+    max-height: 200vh !important;
+    min-height: 50vh !important;
+    margin: 0 !important;
+  }
+}
 
 /* Fading effect for both fade-in and fade-out */
 /* Container for the image to apply the animation */

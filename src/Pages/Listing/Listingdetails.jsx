@@ -3,7 +3,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import Services from "../Services/Webdevelopment/Website/Services";
 import Webreviews from "../Services/Webdevelopment/Website/Webreviews";
 import profile from "../../FrontEnd/img/profile.svg";
-import banner2 from "../../FrontEnd/img/hero_in_restaurants_detail.jpg";
+import banner2 from "../../FrontEnd/img/cameraimg.png";
 import banner3 from "../../FrontEnd/img/Thumbnail-MIM-Photo-Coming-Soon.jpg";
 import { Link } from "react-router-dom";
 import { faL } from "@fortawesome/free-solid-svg-icons/faL";
