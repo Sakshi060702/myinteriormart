@@ -210,8 +210,8 @@ function Register() {
                 <option value="">Select Business Type</option>
                 <option value="44">Dealers</option>
                 <option value="41">Services</option>
-                {/* <option value="45">Manufacturers</option>
-                <option value="47">Rental Services</option>
+                 <option value="45">Manufacturers</option>
+                {/*<option value="47">Rental Services</option>
                 <option value="46">Labours</option> */}
                 <option value="43">Contractors</option>
                 {/* <option value="40">Repairs</option>

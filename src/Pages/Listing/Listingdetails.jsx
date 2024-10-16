@@ -3,7 +3,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import Services from "../Services/Webdevelopment/Website/Services";
 import Webreviews from "../Services/Webdevelopment/Website/Webreviews";
 import profile from "../../FrontEnd/img/profile.svg";
-import banner2 from "../../FrontEnd/img/cameraimg.png";
+import banner2 from "../../FrontEnd/img/camera.png";
 import banner3 from "../../FrontEnd/img/Thumbnail-MIM-Photo-Coming-Soon.jpg";
 import { Link } from "react-router-dom";
 import { faL } from "@fortawesome/free-solid-svg-icons/faL";
@@ -1133,14 +1133,14 @@ function Listingdetails() {
                     <div className="col-lg-8 col-md-12 company-details-list padding-all-5 company-addes">
                       <div className="company-addes">
                         <div className="company-details">
-                          <h5 className="company-name">
+                          <h5 className="company-name" style={{fontSize:'17px'}}>
                             {listingDetails.companyName}
                           </h5>
                         </div>
                         <div style={{ display: "flex" }}>
                           <span
                             className="company-category-name listingcolor"
-                            style={{ marginRight: "18px", fontWeight: "bold" }}
+                            style={{ marginRight: "18px", fontWeight: "bold",fontSize:'14px' }}
                           >
                             {listingDetails.listingKeyword}
                           </span>
@@ -1167,7 +1167,7 @@ function Listingdetails() {
                             className="fa fa-map-marker "
                             style={{ marginRight: "8px" }}
                           ></i>
-                          <span>
+                          <span className="ListingpageFont">
                             {showFullAddress
                               ? fullAddress
                               : `${shortAddress}...`}
@@ -1185,7 +1185,7 @@ function Listingdetails() {
                         </p>
                         <div className="listingarea">
                           <p className="listingdetailslocality">
-                            <span>
+                            <span className="ListingpageFont">
                               <i
                                 className="fa fa-map-o"
                                 style={{ marginRight: "8px" }}
@@ -1194,7 +1194,7 @@ function Listingdetails() {
                             </span>
                           </p>
                           <p className="listingareatabs">
-                            <span>
+                            <span className="ListingpageFont">
                               <i
                                 className="fa fa-map-signs"
                                 style={{ marginRight: "8px" }}
@@ -1206,7 +1206,7 @@ function Listingdetails() {
                       </div>
                       <div className="listingemp">
                         <div className="col-lg-6 mb-1 px-0 year_gst listingempyear">
-                          <p className="m-0">
+                          <p className="m-0 ListingpageFont">
                             <i
                               className="fa fa-calendar"
                               style={{ marginRight: "8px" }}
@@ -1215,7 +1215,7 @@ function Listingdetails() {
                           </p>
                         </div>
                         <div className="col-lg-6 px-0 mb-1 year_gst mt-0">
-                          <p className="mb-0 noemployee">
+                          <p className="mb-0 noemployee ListingpageFont">
                             <i
                               className="fa fa-users"
                               style={{ marginRight: "8px" }}
@@ -1226,13 +1226,13 @@ function Listingdetails() {
                       </div>
 
                       <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
-                        <p className="mb-0">
+                        <p className="mb-0 ListingpageFont">
                           <b>Turnover : </b>
                           {listingDetails.turnover}
                         </p>
                       </div>
                       <div classname="col-lg-12 mb-1 px-0 year_gst">
-                        <p className="m-0">
+                        <p className="m-0 ListingpageFont">
                           <i className="fa fa-globe" style={{marginRight:'4px'}}></i>
                           <a href={
       listingDetails.website.startsWith('http://') || listingDetails.website.startsWith('https://') 
@@ -1251,6 +1251,7 @@ function Listingdetails() {
                         <a
                           href={`tel:${listingDetails.mobile}`}
                           style={{ marginRight: "8px", color: "orange" }}
+                          className="ListingpageFont"
                         >
                           {listingDetails.mobile}
                         </a>
@@ -1264,7 +1265,7 @@ function Listingdetails() {
                         </Link>
                       </div>
                       <div
-                        classname="company-time"
+                        classname="company-time ListingpageFont"
                         style={{ display: "flex", justifyItems: "center" }}
                       >
                         <i
@@ -1407,30 +1408,31 @@ function Listingdetails() {
                         </button>
                       </div>
                       <div className="col-lg-12 social-share p-0 listingpageSocialLink">
-                        <a href={`https://${socialLink.facebook || "#0"}`}>
-                          <i className="ti-facebook" style={{marginRight:'3px'}}></i>
+                        <a href={`https://${socialLink.facebook || "#0"}`} className="vendorSocialLink">
+                          <i className="ti-facebook" style={{marginRight:'3px',color:'orange'}}></i>
                         </a>
                         <a
                           href={`https://${
                             socialLink.whatsappGroupLink || "#0"
                           }`}
+                          className="vendorSocialLink"
                         >
-                          <i className="fa fa-whatsapp" style={{marginRight:'5px'}}></i>
+                          <i className="fa fa-whatsapp" style={{marginRight:'5px',color:'orange'}}></i>
                         </a>
-                        <a href={`https://${socialLink.linkedin || "#0"}`}>
-                          <i className="ti-linkedin" style={{marginRight:'5px'}}></i>
+                        <a href={`https://${socialLink.linkedin || "#0"}`} className="vendorSocialLink">
+                          <i className="ti-linkedin" style={{marginRight:'5px',color:'orange'}}></i>
                         </a>
-                        <a href={`https://${socialLink.twitter || "#0"}`}>
-                          <i className="ti-twitter-alt" style={{marginRight:'5px'}}></i>
+                        <a href={`https://${socialLink.twitter || "#0"}`} className="vendorSocialLink">
+                          <i className="ti-twitter-alt" style={{marginRight:'5px',color:'orange'}}></i>
                         </a>
-                        <a href={`https://${socialLink.youtube || "#0"}`}>
-                          <i className="ti-youtube" style={{marginRight:'5px'}}></i>
+                        <a href={`https://${socialLink.youtube || "#0"}`} className="vendorSocialLink">
+                          <i className="ti-youtube" style={{marginRight:'5px',color:'orange'}}></i>
                         </a>
-                        <a href={`https://${socialLink.instagram || "#0"}`}>
-                          <i className="ti-instagram" style={{marginRight:'5px'}}></i>
+                        <a href={`https://${socialLink.instagram || "#0"}`} className="vendorSocialLink">
+                          <i className="ti-instagram" style={{marginRight:'5px',color:'orange'}}></i>
                         </a>
-                        <a href={`https://${socialLink.pinterest || "#0"}`}>
-                          <i className="ti-pinterest" style={{marginRight:'5px'}}></i>
+                        <a href={`https://${socialLink.pinterest || "#0"}`} className="vendorSocialLink">
+                          <i className="ti-pinterest" style={{marginRight:'5px',color:'orange'}}></i>
                         </a>
                       </div>
                     </div>

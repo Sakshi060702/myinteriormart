@@ -1207,9 +1207,9 @@ div.scrollmenu .imgScroll:hover {
 
 .photogallerythumbnail{
   display: block;
-  width: 35%;
-  height: 84px;
-  margin: 0px 9px;
+  width: 33%;
+  height: 57px;
+  /* margin: 0px 9px; */
   cursor: pointer;
   
 
@@ -1237,7 +1237,7 @@ div.scrollmenu .imgScroll:hover {
 }
 
 .companyrating{
-  margin-left: 286px !important;
+  margin-left: 260px !important;
 }
 @media (max-width:767px) {
   .companyrating{
@@ -1277,13 +1277,53 @@ div.scrollmenu .imgScroll:hover {
 }
 
 .Footsociallinkm{
-  display: none !important;
+  display: block !important;
 }
 @media (max-width:767px) {
   .Footsociallinkm{
     display: block !important 
   }
 }
+
+.FootLinkMobile{
+  display: none !important;
+}
+@media (max-width:767px) {
+  .FootLinkMobile{
+    display: block !important;
+  }  
+}
+
+.Footlinkdekstop{
+  display: block !important;
+}
+@media (max-width:767px) {
+  .Footlinkdekstop{
+    display: none !important;
+  }
+}
+
+.FootSocialLinkIcon{
+  margin-top: -2px !important;
+    margin-left: 41px;
+    margin-right: -16px;
+}
+
+@media (max-width:767px) {
+  .FootSocialLinkIcon{
+    margin-top: -17px !important;
+      margin-left: 45px;
+      margin-right: -22px;
+  }
+}
+
+
+@media (max-width:767px) {
+  .FootHome{
+    margin-left: -26px !important;
+  }
+}
+
 
 .ListingClient{
   padding-top: 10px;
@@ -1518,7 +1558,9 @@ div.scrollmenu .imgScroll:hover {
   }
 }
 
-
+.listingpageSocialLink{
+  text-align: end;
+}
 @media (max-width:767px) {
   .listingpageSocialLink{
     text-align: end;
@@ -1583,4 +1625,23 @@ div.scrollmenu .imgScroll:hover {
   .reviewdescrp{
     margin-bottom: -4px !important;
   }
+}
+
+.vendorSocialLink{
+  font-size: 16px !important;
+}
+
+.reviewTextArea{
+  height: 130px;
+  width: 373% !important;
+}
+@media (max-width:767px) {
+  .reviewTextArea{
+    height: 130px;
+    width: 160% !important;
+  }
+}
+
+.ListingpageFont{
+  font-size: 97%;
 }

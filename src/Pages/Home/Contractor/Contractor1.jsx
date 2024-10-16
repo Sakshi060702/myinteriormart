@@ -246,7 +246,7 @@ function Contractor1() {
       </div>
 
       <div className="row py-1">
-        <div className="carouelheight">
+        <div className="carouelheight" style={{paddingRight:'2px'}}> 
           <Carousel
             interval={8000}
             autoPlay={true}
@@ -276,7 +276,7 @@ function Contractor1() {
           </Carousel>
         </div>
 
-        <div className="carouelheight carouselshow">
+        <div className="carouelheight carouselshow" style={{paddingLeft:'2px'}}>
           <Carousel
             interval={9000}
             autoPlay={true}

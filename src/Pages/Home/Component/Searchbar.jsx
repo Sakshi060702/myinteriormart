@@ -36,13 +36,15 @@ const [itemsPerPage, setItemsPerPage] = useState(100);
 const [totalItems, setTotalItems] = useState(0);
 
 
-const handleSearch = (searchTerm, type) => {
-  setSearchType(type);
-  setSearchTerm(searchTerm); // Trigger the search
-};
+// const handleSearch = (searchTerm, type) => {
+//   setSearchType(type);
+//   setSearchTerm(searchTerm); // Trigger the search
+// };
 
 
-  useEffect(() => {
+
+
+  
     const fetchResults = async () => {
       if (searchTerm) {
         try {
@@ -124,6 +126,7 @@ const handleSearch = (searchTerm, type) => {
       }
     };
 
+    useEffect(() => {
     const debouncedFetch = debounce(fetchResults, 300);
     debouncedFetch();
 
@@ -137,6 +140,11 @@ const handleSearch = (searchTerm, type) => {
       setTimeout(() => setShowDropdown(false), 100);
     }
   };
+    const handleSearch = () => {
+      // setSearchTerm(searchTerm.trim());
+      fetchResults();
+      // console.log("hello");
+    };
 
   return (
     <div id="results">
@@ -154,7 +162,7 @@ const handleSearch = (searchTerm, type) => {
                   onFocus={() => setShowDropdown(true)} // Show dropdown on focus
                   onBlur={handleBlur} // Use custom handleBlur function
                 />
-                <button type="submit" className="searchButton">
+                <button type="submit" className="searchButton" onClick={handleSearch} >
                   <i className="fa fa-search"></i>
                 </button>
               </div>

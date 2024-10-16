@@ -233,7 +233,7 @@ const Services1 = () => {
         </div>
       </div>
       <div className="row py-1">
-        <div className="carouelheight ">
+        <div className="carouelheight " style={{paddingRight:'2px'}}>
           <Carousel
             interval={8000}
             autoPlay={true}
@@ -267,7 +267,7 @@ const Services1 = () => {
           </Carousel>
         </div>
 
-        <div className="carouelheight carouselshow">
+        <div className="carouelheight carouselshow" style={{paddingLeft:'2px'}}>
           <Carousel
             interval={9000}
             autoPlay={true}

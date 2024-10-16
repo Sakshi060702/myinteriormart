@@ -221,13 +221,14 @@ function Review1({ listingID }) {
                   <div className="Count_review writereview">
                     <div className="review-form mb-3">
                       <div className="d-flex justify-content-between  ">
-                        {/* <div className="Count_review">
-                          {companyDetails && (
+                        <div className="Count_review">
+                          {/* {companyDetails && (
                             <span>
                               {companyDetails.ratingCount} Reviews, 100% genuine ratings from My Interior Mart users
                             </span>
-                          )}
-                        </div> */}
+                          )} */}
+                          
+                        </div>
                         <span className="desk_mrg">
                           <a
                             className="btn btn-link"
@@ -265,8 +266,8 @@ function Review1({ listingID }) {
                             <textarea
                               name="review_text"
                               id="review_text"
-                              className="form-control"
-                              style={{ height: "130px" }}
+                              className="form-control reviewTextArea"
+                              
                               value={reviewText}
                               onChange={handleReviewTextChange}
                             ></textarea>

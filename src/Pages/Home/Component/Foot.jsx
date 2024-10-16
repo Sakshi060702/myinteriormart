@@ -180,7 +180,7 @@ const Foot = () => {
               Help
             </p> */}
               <div
-                className="d-flex flex-column"
+                className="d-flex flex-column FootHome"
                 style={{ cursor: "pointer", padding: "0" }}
               >
                 <NavLink
@@ -268,15 +268,11 @@ const Foot = () => {
             <div
               style={{ borderLeft: "2px solid white", height: "20px" }}
             ></div>
-            {/* mobile view social link */}
+            
             <div style={{ marginLeft: "-47px" }}>
               <div className="follow_us Footsociallinkm">
                 <ul
-                  style={{
-                    marginTop: "-13px",
-                    marginLeft: "41px",
-                    marginRight: "-16px",
-                  }}
+                  className="FootSocialLinkIcon"
                 >
                   <li>
                     <a
@@ -345,10 +341,11 @@ const Foot = () => {
                 </ul>
               </div>
             </div>
-            <div>
+            {/* companyname for mobile */}
+            <div className="FootLinkMobile">
               <div
                 className="d-flex flex-column plink"
-                style={{ cursor: "pointer", padding: "0" }}
+                style={{ cursor: "pointer", padding: "0",marginLeft:'69px' }}
               >
                 <a
                   target="_blank"
@@ -405,23 +402,37 @@ const Foot = () => {
                 </li>
               </ul>
             </div> */}
-
-            <div className="col-lg-4 col-12 block-center-footer sociallink Footsociallinkd">
+{/* companyname for dekstop */}
+            <div className="col-lg-4 col-12 block-center-footer sociallink Footsociallinkd Footlinkdekstop">
               <div className="follow_us">
+              <div>
+              <div
+                className="d-flex flex-column plink"
+                style={{ cursor: "pointer", padding: "0",paddingLeft:'135px' }}
+              >
+                <a
+                  target="_blank"
+                  href="https://myinteriormart.com/"
+                  style={{ color: "white", paddingBottom: "17px" }}
+                >
+                  © my Interior Mart Team
+                </a>
+              </div>
+            </div>
                 <ul>
                   <li>
-                    <a
+                    {/* <a
                       href={socialLink.facebook}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       <i className="ti-facebook"></i>
-                    </a>
+                    </a> */}
                     {/* <a href="#0">
                       <i className="ti-facebook"></i>
                     </a> */}
                   </li>
-                  <li>
+                  {/* <li>
                     <a
                       href={socialLink.instagram}
                       target="_blank"
@@ -466,7 +477,7 @@ const Foot = () => {
                     >
                       <i className="ti-youtube"></i>
                     </a>
-                  </li>
+                  </li> */}
 
                   {/* <li>
                     <a href="https://web.whatsapp.com/send?text"  target="_blank" rel="noopener noreferrer">

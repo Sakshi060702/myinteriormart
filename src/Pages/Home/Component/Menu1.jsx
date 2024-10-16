@@ -450,9 +450,9 @@ function Menu1() {
                                     right: "-2px",
                                     width: "12px",
                                     height: "12px",
-                                    backgroundColor: "green",
+                                    backgroundColor: "#1ded1d",
                                     borderRadius: "50%",
-                                    border: "1px solid green",
+                                    border: "1px solid #1ded1d",
                                   }}
                                 />
                               )}
@@ -553,9 +553,9 @@ function Menu1() {
                                     right: "25px",
                                     width: "12px",
                                     height: "12px",
-                                    backgroundColor: "green",
+                                    backgroundColor: "#1ded1d",
                                     borderRadius: "50%",
-                                    border: "1px solid green",
+                                    border: "1px solid #1ded1d",
                                   }}
                                 />
                               )}
@@ -657,9 +657,9 @@ function Menu1() {
                                     right: "25px",
                                     width: "12px",
                                     height: "12px",
-                                    backgroundColor: "green",
+                                    backgroundColor: "#1ded1d",
                                     borderRadius: "50%",
-                                    border: "1px solid green",
+                                    border: "1px solid #1ded1d",
                                   }}
                                 />
                               )}
@@ -756,9 +756,9 @@ function Menu1() {
                             right: "0px",
                             width: "12px",
                             height: "12px",
-                            backgroundColor: "green",
+                            backgroundColor: "#1ded1d",
                             borderRadius: "50%",
-                            border: "1px solid green",
+                            border: "1px solid #1ded1d",
                           }}
                         />
                       )}
@@ -809,9 +809,9 @@ function Menu1() {
                             right: "0px",
                             width: "12px",
                             height: "12px",
-                            backgroundColor: "green",
+                            backgroundColor: "#1ded1d",
                             borderRadius: "50%",
-                            border: "1px solid green",
+                            border: "1px solid #1ded1d",
                           }}
                         />
                       )}
@@ -865,9 +865,9 @@ function Menu1() {
                             right: "0px",
                             width: "12px",
                             height: "12px",
-                            backgroundColor: "green",
+                            backgroundColor: "#1ded1d",
                             borderRadius: "50%",
-                            border: "1px solid green",
+                            border: "1px solid #1ded1d",
                           }}
                         />
                       )}

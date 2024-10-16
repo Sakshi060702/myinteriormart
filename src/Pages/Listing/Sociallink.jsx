@@ -108,7 +108,7 @@ const Sociallink = ({ isOpen, onClose }) => {
               transition: bottom 0.3s ease-in-out;
             }
             .popup-content.open {
-              bottom: 92px;
+              bottom: 82px;
             }
             .close-button {
               top: 15px;

@@ -26,7 +26,7 @@ function Layout({ children }) {
                 <img
                   src={businessimg}
                   alt="Business Listing"
-                  style={{ height: "60px" }}
+                  style={{ height: "45px" }}
                 />{" "}
                 Business Listing
               </Link>
@@ -74,7 +74,7 @@ function Layout({ children }) {
                   <img
                     src={businessimg}
                     alt="Business Listing"
-                    style={{ height: "60px" }}
+                    style={{ height: "45px" }}
                   />
                   Business Listing
                 </Dropdown.Item>
