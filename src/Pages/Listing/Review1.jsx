@@ -8,6 +8,7 @@ function Review1({ listingID }) {
   const [reviewText, setReviewText] = useState("");
   const [reviews, setReviews] = useState([]);
   const [companyDetails, setCompanyDetails] = useState(null);
+  const[reviewCount,setReviewCount]=useState([]);
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [currentReply, setCurrentReply] = useState("");
@@ -77,10 +78,12 @@ function Review1({ listingID }) {
           })
         }
       );
+      const data=await response.json()
       if (response.ok) {
         // Re-fetch the listing details to get the updated reviews
         await fetchReviews();
         setIsReviewFormOpen(false);
+        setReviewCount(data.reviewCount);
         setRating(0);
         setReviewText("");
       } else {
@@ -227,6 +230,7 @@ function Review1({ listingID }) {
                               {companyDetails.ratingCount} Reviews, 100% genuine ratings from My Interior Mart users
                             </span>
                           )} */}
+                          <span>ReviewCount:{reviewCount}</span>
                           
                         </div>
                         <span className="desk_mrg">
@@ -302,7 +306,7 @@ function Review1({ listingID }) {
                                         <img
                                           src={`https://apidev.myinteriormart.com${review.userImage}`}
                                           alt={review.userName}
-                                          style={{ width: "58px", height: "58px",borderRadius:'30px' }}
+                                          style={{ width: "50px", height: "50px",borderRadius:'30px' }}
                                         />
                                       </div>
                                     </div>
@@ -314,7 +318,7 @@ function Review1({ listingID }) {
                                             <i
                                               key={i}
                                               className="icon_star active"
-                                              style={{ color: "orange" }}
+                                              style={{ color: "orange",paddingRight:'4px' }}
                                             />
                                           ))}
                                         <span>

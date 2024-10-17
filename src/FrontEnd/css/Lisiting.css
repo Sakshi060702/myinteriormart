@@ -120,7 +120,7 @@ color: rgb(254, 144, 13);
 }
 
 .btn-bookmark.icon-active i{
-  color: yellow;
+  color: orange;
 }
 
 .btn-like {
@@ -136,7 +136,7 @@ color: rgb(254, 144, 13);
   color: gray; 
 }
 .btn-like.icon-active i{
-  color: green;
+  color: orange;
 }
 
 
@@ -154,7 +154,7 @@ color: rgb(254, 144, 13);
   color: gray; 
 }
 .btn-subscribe.icon-active i{
-  color: red;
+  color: orange;
 }
 
 .btnshare{

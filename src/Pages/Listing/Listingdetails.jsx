@@ -3,8 +3,9 @@ import { useParams, useSearchParams } from "react-router-dom";
 import Services from "../Services/Webdevelopment/Website/Services";
 import Webreviews from "../Services/Webdevelopment/Website/Webreviews";
 import profile from "../../FrontEnd/img/profile.svg";
-import banner2 from "../../FrontEnd/img/camera.png";
+import banner2 from "../../FrontEnd/img/bannerCamera.png";
 import banner3 from "../../FrontEnd/img/Thumbnail-MIM-Photo-Coming-Soon.jpg";
+import gallerydummy from "../../FrontEnd/img/Thumbnail-MIM-Photo-Coming-Soon.jpg"
 import { Link } from "react-router-dom";
 import { faL } from "@fortawesome/free-solid-svg-icons/faL";
 import Popup from "./Popup";
@@ -149,7 +150,7 @@ function Listingdetails() {
   const [socialLink, setSocialLink] = useState("");
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
@@ -158,11 +159,11 @@ function Listingdetails() {
     autoplaySpeed: 3000, // Set autoplay speed in milliseconds
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
-    appendDots: (dots) => (
-      <div style={{ marginBottom: "57px" }}>
-        <ul> {dots} </ul>
-      </div>
-    ),
+    // appendDots: (dots) => (
+    //   <div style={{ marginBottom: "57px" }}>
+    //     <ul> {dots} </ul>
+    //   </div>
+    // ),
   };
 
   // if(){
@@ -173,7 +174,7 @@ function Listingdetails() {
     return (
       <div
         className={className}
-        style={{ ...style, display: "block", right: "10px" }}
+        style={{ ...style, display: "block", right: "10px",zIndex:1 ,background:'gray'}}
         onClick={onClick}
       />
     );
@@ -184,7 +185,7 @@ function Listingdetails() {
     return (
       <div
         className={className}
-        style={{ ...style, display: "block", left: "10px" }}
+        style={{ ...style, display: "block", left: "10px",zIndex:1,background:'gray' }}
         onClick={onClick}
       ></div>
     );
@@ -980,15 +981,23 @@ function Listingdetails() {
                       }}
                       onSwiper={(swiper) => (swiperRef.current = swiper)}
                     >
-                      {imageDetails.map((image, index) => (
-                        <SwiperSlide key={index}>
-                          <img
-                            src={`https://apidev.myinteriormart.com${image.url}`}
-                            alt={`Slide ${index + 1}`}
-                            className="main-image-display photogallerymain"
-                          />
-                        </SwiperSlide>
-                      ))}
+                      {imageDetails.length>0?(imageDetails.map((image, index) => (
+                              <SwiperSlide key={index}>
+                                <img
+                                  src={`https://apidev.myinteriormart.com${image.url}`}
+                                  alt={`Slide ${index + 1}`}
+                                  className="main-image-display photogallerymain"
+                                />
+                              </SwiperSlide>
+                            ))):(
+                              <SwiperSlide>
+                                <img
+                                  src={gallerydummy} 
+                                  alt="Dummy Image"
+                                  className="main-image-display photogallerymain"
+                                />
+                              </SwiperSlide>
+                            )}
                     </Swiper>
 
                     <div
@@ -1039,6 +1048,7 @@ function Listingdetails() {
                           {/* Main Image Display */}
 
                           {/* <div className="main-image"> */}
+                         
                           <style>
                             {`
                                 .swiper-button-prev,
@@ -1060,7 +1070,7 @@ function Listingdetails() {
                             }}
                             onSwiper={(swiper) => (swiperRef.current = swiper)}
                           >
-                            {imageDetails.map((image, index) => (
+                            {imageDetails.length>0?(imageDetails.map((image, index) => (
                               <SwiperSlide key={index}>
                                 <img
                                   src={`https://apidev.myinteriormart.com${image.url}`}
@@ -1068,7 +1078,16 @@ function Listingdetails() {
                                   className="main-image-display photogallerymain"
                                 />
                               </SwiperSlide>
-                            ))}
+                            ))):(
+                              <SwiperSlide>
+                                <img
+                                  src={gallerydummy} 
+                                  alt="Dummy Image"
+                                  className="main-image-display photogallerymain"
+                                />
+                              </SwiperSlide>
+                            )}
+                            
                           </Swiper>
 
                           {/* </div> */}
@@ -1139,12 +1158,12 @@ function Listingdetails() {
                         </div>
                         <div style={{ display: "flex" }}>
                           <span
-                            className="company-category-name listingcolor"
-                            style={{ marginRight: "18px", fontWeight: "bold",fontSize:'14px' }}
+                            className="company-category-name listingcolor ratingsize"
+                            style={{  fontWeight: "bold",fontSize:'14px' }}
                           >
                             {listingDetails.listingKeyword}
                           </span>
-                          <span className="company-rating companyrating">
+                          <span className="company-rating ">
                             {listingDetails.ratingAverage}.0
                             <div className="cat_star">
                               {Array(listingDetails.ratingAverage)
@@ -1227,7 +1246,7 @@ function Listingdetails() {
 
                       <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
                         <p className="mb-0 ListingpageFont">
-                          <b>Turnover : </b>
+                          Turnover : 
                           {listingDetails.turnover}
                         </p>
                       </div>
@@ -1296,7 +1315,7 @@ function Listingdetails() {
                             className={`fa fa-bookmark`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          <b style={{ color: "black" }}>Bookmark</b>
+                          <b style={{ color: isBookmarked ? "orange":"black" }}>Bookmark</b>
                         </button>
 
                         <button
@@ -1308,7 +1327,8 @@ function Listingdetails() {
                             className="fa fa-share"
                             style={{  marginRight: "4px" }}
                           ></i>
-                          <b style={{ color: "black" }}>Share</b>
+                         <b style={{ color: isSociallinkOpen?"orange":"black" }}>Share</b>
+
                         </button>
 
                         <button
@@ -1322,7 +1342,7 @@ function Listingdetails() {
                             className={`fa fa-thumbs-up`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          <b style={{ color: "black" }}>Like</b>
+                          <b style={{ color:isLike?"orange": "black" }}>Like</b>
                         </button>
                         <button
                           className={`btn btn-subscribe ${
@@ -1335,7 +1355,7 @@ function Listingdetails() {
                             className={`fa fa-bell`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          <b style={{ color: "black" }}>Subscribe</b>
+                          <b style={{ color:isSubscribe?"orange": "black" }}>Subscribe</b>
                         </button>
                       </div>
                       <div
@@ -1353,7 +1373,7 @@ function Listingdetails() {
                             className={`fa fa-bookmark`}
                             style={{ marginRight: "5px"}}
                           ></i>
-                          <b style={{ color: "black" }}>Bookmark</b>
+                          <b style={{ color: isBookmarked ? "orange":"black" }}>Bookmark</b>
                         </button>
 
                         <button
@@ -1365,7 +1385,7 @@ function Listingdetails() {
                             className="fa fa-share"
                             style={{  marginRight: "4px" }}
                           ></i>
-                          <b style={{ color: "black" }}>Share</b>
+                          <b style={{ color: isSociallinkOpen?"orange":"black" }}>Share</b>
                         </button>
 
                         <button
@@ -1379,7 +1399,7 @@ function Listingdetails() {
                             className={`fa fa-thumbs-up`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          <b style={{ color: "black" }}>Like</b>
+                          <b style={{ color: isLike ? "orange":"black" }}>Like</b>
                         </button>
                         <button
                           className={`btn btn-subscribe ${
@@ -1392,7 +1412,7 @@ function Listingdetails() {
                             className={`fa fa-bell`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          <b style={{ color: "black" }}>Subscribe</b>
+                          <b style={{ color: isSubscribe ? "orange":"black" }}>Subscribe</b>
                         </button>
                       </div>
                       <div

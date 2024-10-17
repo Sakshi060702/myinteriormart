@@ -16,6 +16,7 @@ function Searchbar() {
 
   const [kewywordQuery, setKewywordQuery] = useState("");
   const [nearByLocation, setNearByLocation] = useState("");
+  const[nearCity,setNearCity]=useState("");
 
 
   const encryptionKey = 'myinterriorMart@SECRETKEY';
@@ -68,8 +69,11 @@ const [totalItems, setTotalItems] = useState(0);
           if (match) {
             const location = searchTerm.split(match[0])[1].trim();
             const query = searchTerm.split(match[0])[0].trim();
+
+            const[locality,city]=location.split(',').map(s=>s.trim());
             
-            setNearByLocation(location);
+            setNearByLocation(locality || " ");
+            setNearCity(city||locality);
             setKewywordQuery(query);
 
             const KeywordResponse = await fetch(
@@ -86,37 +90,44 @@ const [totalItems, setTotalItems] = useState(0);
             console.log("newApiData", newApiData);
           }
           //Free seach api Implementation
+          const lowercaseSearchParameter = searchTerm.toLowerCase();
           let paramName;
-          const lowercaseSerchParameter=searchTerm.toLowerCase();
-          if (lowercaseSerchParameter.includes("gstnumber")) {
+
+          const validMobileNumber=/^\d{10}$/.test(searchTerm)
+          const validGST = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/i.test(searchTerm);
+          //  const validOwnerName= /^[a-zA-Z\s]{3,}$/.test(searchTerm);
+
+    
+          // Define specific keywords for free search based on parameter names
+          if (lowercaseSearchParameter.includes("gstnumber")||validGST) {
             paramName = "gstNumber";
-          } else if (lowercaseSerchParameter.includes("address")) {
-            paramName = "address";
-          } else if (lowercaseSerchParameter.includes("ownername")) {
-            paramName = "ownerName";
-          } else if (lowercaseSerchParameter.includes("mobilenumber")) {
+          }  else if (lowercaseSearchParameter.includes("mobilenumber") || validMobileNumber) {
             paramName = "mobileNumber";
+          } else if (lowercaseSearchParameter.includes("ownername") ) {
+            paramName = "ownerName";
+          } else if (lowercaseSearchParameter.includes("address")) {
+            paramName = "address";
           }
-
-          if(!paramName){
-            console.log("Parameter name not found");
-            return;
+    
+          // Only execute the third API if a matching parameter name is found
+          if (paramName) {
+            console.log("Using search parameter:", paramName);
+            setParameterName(paramName);
+    
+            const freeSearchResponse = await fetch(
+              `https://apidev.myinteriormart.com/api/FreeSearch/FreeSearch?${paramName}=${encodeURIComponent(searchTerm)}`,
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+            const freeresponse = await freeSearchResponse.json();
+            setResults((prevResults) => [...prevResults, ...freeresponse]);
+            console.log("freeSearchData", freeresponse);
           }
-
-          console.log("Using search parameter:", paramName);
-          setParameterName(paramName)
-
-          const freeSearchResponse=await fetch(`https://apidev.myinteriormart.com/api/FreeSearch/FreeSearch?${paramName}=${encodeURIComponent(searchTerm)}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const freeresponse=await freeSearchResponse.json();
-        setResults((prevResults) => [...prevResults, ...freeresponse]);
-        console.log("freeSearchData", freeresponse);
-
+    
         } catch (error) {
           console.error("Error in fetching search results", error);
         }
@@ -182,17 +193,23 @@ const [totalItems, setTotalItems] = useState(0);
                     if(parameterName==="gstNumber" || parameterName==="address" || parameterName==="mobileNumber" ||parameterName==="ownerName")
                       return (
                         <div key={index} className="dropdownItemsearchbar">
-                          <NavLink to={`/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/${result.category.replace(/\s+/g, "-").toLowerCase()}/locality/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}
+                          <NavLink to={`/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/${result.categoryName.replace(/\s+/g, "-").toLowerCase()}/locality/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}
                           >
                            <h6>{companyName || result[parameterName]}</h6>
                           </NavLink>
                         </div>
                       );
+
+                      //Near by Search
                       const locationKeywordsPattern = /(near by|near me|near|at|in)/i;
                     if (
                       locationKeywordsPattern.test(searchTerm) &&
   result.keyword.toLowerCase() === kewywordQuery.toLowerCase() &&
-  result.locality.toLowerCase().includes(nearByLocation.toLowerCase())
+  (
+    result.locality.toLowerCase().includes(nearByLocation.toLowerCase()) || 
+    (!nearByLocation && result.city.toLowerCase() === nearCity.toLowerCase()) ||  // Check city when no specific locality
+    result.city.toLowerCase() === nearCity.toLowerCase() // Check for matching city
+  )
                     ) {
                       return (
                         <div key={index} className="dropdownItemsearchbar">

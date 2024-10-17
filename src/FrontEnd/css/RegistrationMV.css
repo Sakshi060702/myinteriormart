@@ -1236,12 +1236,21 @@ div.scrollmenu .imgScroll:hover {
   }
 }
 
-.companyrating{
+/* .companyrating{
   margin-left: 260px !important;
-}
+} */
 @media (max-width:767px) {
   .companyrating{
     margin-left: 70px !important;
+  }
+}
+
+.ratingsize{
+  width: 370px;
+}
+@media (max-width:767px) {
+  .ratingsize{
+    width: 149px;
   }
 }
 
@@ -1645,3 +1654,5 @@ div.scrollmenu .imgScroll:hover {
 .ListingpageFont{
   font-size: 97%;
 }
+
+
