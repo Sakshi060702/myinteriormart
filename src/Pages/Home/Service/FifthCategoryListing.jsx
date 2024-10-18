@@ -11,6 +11,9 @@ import Searchbar from "../Component/Searchbar";
 import nextarrowimage from "../../../FrontEnd/img/Frontarrow.png";
 import previousarrowimg from "../../../FrontEnd/img/Backarrow.png";
 import { Carousel } from "react-bootstrap";
+import { useNavigate,useLocation } from "react-router-dom";
+import drparrowimg from "../../../FrontEnd/img/icon (20).png"
+
 
 import { useSelector } from "react-redux";
 
@@ -32,6 +35,7 @@ const decrypt = (ciphertext) => {
 function FifthCategoryListing() {
   const { secondCategoryName, subcategoryName } = useParams();
   const [searchParams] = useSearchParams();
+  const navigate=useNavigate()
   const searching = searchParams.get("searchkey");
   // console.log(searching,useParams());
   const [listing, setListing] = useState([]);
@@ -48,6 +52,8 @@ function FifthCategoryListing() {
   console.log(secondCategoryId);
   console.log("secondcategoryid", secondCategoryId);
   console.log(decrypt(listingId_enc));
+
+  const location=useLocation
 
   //for mobile pagination
 
@@ -218,6 +224,36 @@ function FifthCategoryListing() {
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
+  const ClaimForgetpassword=`/ForgetpasswordClaim/in-${localStorage.getItem('cityname')}`
+
+  const Getclaimhandleclick=()=>{
+navigate(ClaimForgetpassword)
+  }
+ 
+  const handleListingClick = (listingId) => {
+    localStorage.setItem("scrollPosition", window.scrollY); // Save current scroll position
+    // Perform your navigation logic here (e.g., navigate to the details page)
+  };
+
+  useEffect(() => {
+    const savedPosition = localStorage.getItem("scrollPosition");
+    if (savedPosition) {
+      window.scrollTo(0, parseInt(savedPosition, 10));
+      localStorage.removeItem("scrollPosition");
+    }
+  }, []);
+
+  useEffect(()=>{
+    if(location.hash){
+      const elementId=location.hash.replace('#','');
+      const element=document.getElementById(elementId);
+      if(element){
+        element.scrollIntoView({behavior:'smooth'});
+      }
+    }
+  },[location])
+
+  
   return (
     <>
       <div className="container" style={{ marginBottom: "30px" }}>
@@ -288,8 +324,15 @@ function FifthCategoryListing() {
                       )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
                         encrypt(parseInt(secondCategoryId))
                       )}`}
+
+                      onClick={() => handleListingClick(listing.listingId)}
                     >
-                      <div className="strip map_view stripmapviewdesign">
+                      <div className="strip map_view stripmapviewdesign" style={{
+                            border:
+                              searching == listing.listingKeyword
+                                ? "2px solid gray"
+                                : "None",
+                          }}>
                         {/* <h5>Hello world</h5> */}
                         <h6 className="listingcompanyname">
                           <Link
@@ -311,6 +354,7 @@ function FifthCategoryListing() {
                               style={{
                                 fontWeight: "600",
                                 fontFamily: "PoppinsSemiBold",
+                                fontSize:'15px'
                               }}
                             >
                               {" "}
@@ -320,12 +364,12 @@ function FifthCategoryListing() {
                         </h6>
                         <div
                           className="row no-gutters "
-                          style={{
-                            border:
-                              searching == listing.listingKeyword
-                                ? "2px solid gray"
-                                : "None",
-                          }}
+                          // style={{
+                          //   border:
+                          //     searching == listing.listingKeyword
+                          //       ? "2px solid gray"
+                          //       : "None",
+                          // }}
                         >
                           <div className="col-6 listingdiv">
                             <div className="wrapper listingdetailsdiv">
@@ -351,12 +395,12 @@ function FifthCategoryListing() {
                                 {listing.listingKeyword}
                               </small>
 
-                              <p className="listingcolor">
+                              <p className="listingcolor" style={{marginBottom:'4px'}}>
                                 <i
                                   className="fa fa-map-marker"
                                   style={{ paddingRight: "5px" }}
                                 ></i>
-                                {listing.area},{listing.locality}
+                                {listing.area},<span style={{marginLeft:'8px'}}>{listing.locality}</span>
                               </p>
                               <div className="business-info-container listingcolor">
                                 <BusinessHours
@@ -389,7 +433,7 @@ function FifthCategoryListing() {
                                         paddingBottom: "11px",
                                       }}
                                     >
-                                      {Array(1)
+                                      {Array(5)
                                         .fill()
                                         .map((_, i) => (
                                           <i
@@ -406,6 +450,13 @@ function FifthCategoryListing() {
                                           ></i>
                                         ))}
                                     </div>
+                                    <h4  style={{
+                                        marginRight: "8px",
+                                        fontSize: "12px",
+                                      }}>
+                                    ({listing.ratingCount})
+                                    </h4>
+                                    
                                   </div>
                                 </div>
 
@@ -460,7 +511,8 @@ function FifthCategoryListing() {
                               <img
                                 src={`https://apidev.myinteriormart.com${listing.logoImage.imagePath}`}
                                 alt={`${listing.companyName} Logo`}
-                                className="card-img-top listingimage"
+                                className="card-img-top listingimage listimg listimgborder"
+                                
                                 // style={{ height: "150px" }}
                               />
                             ) : (
@@ -498,16 +550,44 @@ function FifthCategoryListing() {
                                       }}
                                     >
                                       <p className="listingcallnow">
-                                        <Link className="loc_open call-now callnowl  listingcallnowinner listingcallnow_btn">
+                                        <a href={`tel:${listing.mobile}`} className="loc_open call-now callnowl  listingcallnowinner listingcallnow_btn"
+                                        onClick={(e)=>{e.preventDefault();e.stopPropagation();
+                                          window.location.href=`tel:${listing.mobile}`;
+                                        }}>
+                                        
                                           Call now
-                                        </Link>
+                                        </a>
                                       </p>
                                     </li>
                                   </div>
                                   <div>
                                     <li>
                                       <p className="listinggetclaim">
-                                        <button
+                                        {listing.claimedListing ?(
+                                           <button
+                                           className="btn btn-guotes btn-sm getclaimbtn"
+                                           style={{
+                                             boxShadow:
+                                               "0 4px 8px rgba(0, 0, 0, 0.2)",
+                                             transition:
+                                               "box-shadow 0.3s ease-in-out",
+                                           }}
+                                           onClick={(event) => {
+                                             event.preventDefault();
+                                             event.stopPropagation();
+                                             // setIsPopupOpen([
+                                             //   true,
+                                             //   listing.listingId,
+                                             // ]);
+                                             Getclaimhandleclick();
+                                           }}
+                                         >
+                                           Get Claim
+                                         </button>
+                                           
+                                          
+                                        ):(
+                                          <button
                                           className="btn btn-guotes btn-sm getclaimbtn"
                                           style={{
                                             boxShadow:
@@ -526,9 +606,13 @@ function FifthCategoryListing() {
                                         >
                                           Get Quotes
                                         </button>
+                                        )}
+                                        
                                       </p>
                                     </li>
                                   </div>
+
+                                  
                                 </div>
                               </div>
                             </ul>
@@ -677,12 +761,13 @@ function FifthCategoryListing() {
                 backgroundColor: "white",
                 paddingTop: "5px",
                 paddingBottom: "5px",
-                fontSize: "12px",
-                width: "172px",
-                color: "gray",
+                fontSize: "14px",
+                width: "210px",
+                color: "orange",
+                fontWeight:'bold'
               }}
             >
-              More Search Results
+              More Search Results<img style={{height:'20px',paddingLeft:'5px'}} src={drparrowimg}/>
             </button>
           )}
         </div>
@@ -701,6 +786,9 @@ function FifthCategoryListing() {
           onClose={() => setIsPopupOpen([false, null])}
         />
       )}
+      {/* <div className="sticky-footer">
+        <Foot />
+      </div> */}
     </>
   );
 }
@@ -717,5 +805,4 @@ const BusinessHours = ({ businessWorking }) => {
     </p>
   );
 };
-
 export default FifthCategoryListing;

@@ -213,9 +213,7 @@ const [totalItems, setTotalItems] = useState(0);
                     ) {
                       return (
                         <div key={index} className="dropdownItemsearchbar">
-                          <NavLink
-                            to={`/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/category/locality/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingID)))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}
-                          >
+                           <NavLink to={`/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?searchkey=${encodeURIComponent(result.keyword)}&secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}>
                             <h6>{result.companyName}-{result.locality}</h6>
                           </NavLink>
                         </div>

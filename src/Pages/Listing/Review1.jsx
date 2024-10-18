@@ -8,12 +8,14 @@ function Review1({ listingID }) {
   const [reviewText, setReviewText] = useState("");
   const [reviews, setReviews] = useState([]);
   const [companyDetails, setCompanyDetails] = useState(null);
-  const[reviewCount,setReviewCount]=useState([]);
+  const [reviewCount, setReviewCount] = useState([]);
+
+  const [userReviewCount, setUserReviewCount] = useState(0);
+  const [userRatinvAverage, setUserRatingAverage] = useState(0);
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [currentReply, setCurrentReply] = useState("");
   const [currentRatingId, setCurrentRatingId] = useState(null);
-
 
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.user);
@@ -30,7 +32,7 @@ function Review1({ listingID }) {
   //         method: 'POST',
   //         headers: {
   //           'Content-Type': 'application/json',
-            
+
   //         },
   //         body: JSON.stringify({
   //           companyID: listingID.companyID
@@ -52,6 +54,33 @@ function Review1({ listingID }) {
   //   }
   // };
 
+  const fetchRatingCount = async () => {
+    try {
+      const response = await fetch(
+        `https://apidev.myinteriormart.com/api/BindAllReviews/UserReviews`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            companyID: listingID.companyID,
+          }),
+        }
+      );
+      const data = await response.json();
+      console.log("ratingcount", data);
+      setUserReviewCount(data.reviewCount);
+      setUserRatingAverage(data.averageRating);
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchRatingCount();
+  }, [listingID]);
+
   const handleRatingChange = (value) => {
     setRating(value);
   };
@@ -66,19 +95,19 @@ function Review1({ listingID }) {
       const response = await fetch(
         `https://apidev.myinteriormart.com/api/Ratings/CreateOrUpdateRating`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             ratings: rating,
             comment: reviewText,
-            companyID: listingID.companyID
-          })
+            companyID: listingID.companyID,
+          }),
         }
       );
-      const data=await response.json()
+      const data = await response.json();
       if (response.ok) {
         // Re-fetch the listing details to get the updated reviews
         await fetchReviews();
@@ -96,21 +125,16 @@ function Review1({ listingID }) {
 
   const handleEditClick = (ratingId, reply) => {
     if (currentRatingId === ratingId) {
-      console.log("ratingid",ratingId);
-      console.log("currentid",currentRatingId);
-      
+      console.log("ratingid", ratingId);
+      console.log("currentid", currentRatingId);
+
       setIsEditMode(false);
       setCurrentRatingId(null);
       setCurrentReply("");
-
-     
-      
-
-      
     } else {
       // Otherwise, open the form for the clicked review
-      console.log("rating",ratingId);
-      console.log("reply",reply);
+      console.log("rating", ratingId);
+      console.log("reply", reply);
       setCurrentRatingId(ratingId);
       setCurrentReply(reply);
       setIsEditMode(true);
@@ -121,92 +145,85 @@ function Review1({ listingID }) {
     setCurrentReply(event.target.value);
   };
 
-  const handleReplySubmit = async (event) => {
-    event.preventDefault();
+  // const handleReplySubmit = async (event) => {
+  //   event.preventDefault();
 
+  //   const currentReview = reviews.find(review => review.ratingId === currentRatingId);
 
-    const currentReview = reviews.find(review => review.ratingId === currentRatingId);
+  //   const replyId = currentReview && currentReview.ratingReply ? currentReview.ratingReply.id : 0;
+  //   // Submit the edited reply to the API
+  //   const response = await fetch(
+  //     "https://apidev.myinteriormart.com/api/BindAllReviews/UserReviews",
+  //     {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
 
-    const replyId = currentReview && currentReview.ratingReply ? currentReview.ratingReply.id : 0;
-    // Submit the edited reply to the API
+  //       },
+  //       body: JSON.stringify({
+  //         operation: "UpdateReviewReply",
+  //         ratingReply: {
+  //           id: replyId,
+  //           ratingId: currentRatingId,
+  //           reply: currentReply,
+  //           companyID: listingID.companyID
+  //         },
+  //       }),
+  //     }
+  //   );
+
+  //   if (response.ok) {
+  //     // Update the reviews state with the new reply
+  //     setReviews((prevReviews) =>
+  //       prevReviews.map((review) =>
+  //         review.ratingId === currentRatingId
+  //           ? {
+  //               ...review,
+  //               ratingReply: { ...review.ratingReply, reply: currentReply },
+  //             }
+  //           : review
+  //       )
+  //     );
+  //     console.log(currentRatingId);
+  //     console.log(currentReply);
+
+  //     setIsEditMode(true);
+  //     setCurrentRatingId(null);
+  //     setCurrentReply("");
+  //   } else {
+  //     console.error("Failed to update reply");
+  //   }
+  // };
+
+  const fetchReviews = async () => {
     const response = await fetch(
-      "https://apidev.myinteriormart.com/api/BindAllReviews/UserReviews",
+      "https://apidev.myinteriormart.com/api/BindAllReviews/GetUserAllReviews",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-         
-          
         },
         body: JSON.stringify({
-          operation: "UpdateReviewReply",
-          ratingReply: {
-            id: replyId,
-            ratingId: currentRatingId,
-            reply: currentReply,
-            companyID: listingID.companyID
-          },
+          operation: "GetReviews",
+          ratingReply: { reply: "" },
+          companyID: listingID.companyID,
         }),
       }
     );
 
     if (response.ok) {
-      // Update the reviews state with the new reply
-      setReviews((prevReviews) =>
-        prevReviews.map((review) =>
-          review.ratingId === currentRatingId
-            ? {
-                ...review,
-                ratingReply: { ...review.ratingReply, reply: currentReply },
-              }
-            : review
-        )
-      );
-      console.log(currentRatingId);
-      console.log(currentReply);
-    
-      setIsEditMode(true);
-      setCurrentRatingId(null);
-      setCurrentReply("");
+      const data = await response.json();
+      console.log("reply", data);
+      console.log(data);
+      setReviews(data);
     } else {
-      console.error("Failed to update reply");
+      console.error("Failed to fetch reviews");
     }
   };
 
- 
-    const fetchReviews = async () => {
-      const response = await fetch(
-        "https://apidev.myinteriormart.com/api/BindAllReviews/GetUserAllReviews",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-           
-          },
-          body: JSON.stringify({
-            operation: "GetReviews",
-            ratingReply: { reply: "" },
-            companyID: listingID.companyID
-            
-          }),
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("reply",data);
-        console.log(data);
-        setReviews(data);
-      } else {
-        console.error("Failed to fetch reviews");
-      }
-    };
-
-    useEffect(() => {
-      fetchReviews();
-    }, [listingID]);
- 
-
+  useEffect(() => {
+    fetchReviews();
+  }, [listingID]);
 
   return (
     <>
@@ -220,23 +237,45 @@ function Review1({ listingID }) {
               aria-labelledby="reviews"
             >
               <div className="review-form mb-3">
-                <div className="d-flex justify-content-between align-items-center ">
-                  <div className="Count_review writereview">
+                <div className="">
+                  <div className="Count_review writereview" >
                     <div className="review-form mb-3">
-                      <div className="d-flex justify-content-between  ">
-                        <div className="Count_review">
+                      <div className="d-flex justify-content-center align-items-center ">
+                        <div className="Count_review"  >
                           {/* {companyDetails && (
                             <span>
                               {companyDetails.ratingCount} Reviews, 100% genuine ratings from My Interior Mart users
                             </span>
                           )} */}
-                          <span>ReviewCount:{reviewCount}</span>
+                          <div>
+                          <span className="writereviewFont" style={{paddingRight:'5px'}}>{userRatinvAverage}.0</span>
+                          <span>
+                            {Array(5)
+                              .fill()
+                              .map((_, i) => (
+                                <i
+                                  key={i}
+                                  className="icon_star"
+                                  style={{
+                                    color:
+                                      i < userRatinvAverage ? "orange" : "gray",
+                                    fontSize: "16px",
+                                    paddingRight:'4px'
+                                  }}
+                                ></i>
+                              ))}
+                          </span>
                           
+                          <span className="writereviewFont">{userReviewCount} Ratings</span>
+
+                          </div>
                         </div>
                         <span className="desk_mrg">
                           <a
-                            className="btn btn-link"
-                            onClick={() => setIsReviewFormOpen(!isReviewFormOpen)}
+                            className="btn btn-link writereviewFont"
+                            onClick={() =>
+                              setIsReviewFormOpen(!isReviewFormOpen)
+                            }
                             aria-expanded={isReviewFormOpen ? "true" : "false"}
                             aria-controls="WriteReview"
                             style={{ color: "orange" }}
@@ -258,8 +297,12 @@ function Review1({ listingID }) {
                                 .map((_, i) => (
                                   <i
                                     key={i}
-                                    className={`icon_star ${i < rating ? "active" : ""}`}
-                                    style={{ color: i < rating ? "orange" : "gray" }}
+                                    className={`icon_star ${
+                                      i < rating ? "active" : ""
+                                    }`}
+                                    style={{
+                                      color: i < rating ? "orange" : "gray",
+                                    }}
                                     onClick={() => handleRatingChange(i + 1)}
                                   ></i>
                                 ))}
@@ -270,8 +313,7 @@ function Review1({ listingID }) {
                             <textarea
                               name="review_text"
                               id="review_text"
-                              className="form-control reviewTextArea"
-                              
+                              className="form-control"
                               value={reviewText}
                               onChange={handleReviewTextChange}
                             ></textarea>
@@ -295,7 +337,14 @@ function Review1({ listingID }) {
                     <div className="row">
                       <div className="col-lg-12 reviewpage">
                         <hr />
-                        <div className="row" style={{ fontSize: "16px",maxHeight:'300px',overflowY:'auto' }}>
+                        <div
+                          className="row"
+                          style={{
+                            fontSize: "16px",
+                            maxHeight: "300px",
+                            overflowY: "auto",
+                          }}
+                        >
                           {reviews.length > 0 ? (
                             reviews.map((review, index) => (
                               <div key={index} className="col-lg-12 mb-3">
@@ -306,43 +355,54 @@ function Review1({ listingID }) {
                                         <img
                                           src={`https://apidev.myinteriormart.com${review.userImage}`}
                                           alt={review.userName}
-                                          style={{ width: "50px", height: "50px",borderRadius:'30px' }}
+                                          style={{
+                                            width: "50px",
+                                            height: "50px",
+                                            borderRadius: "30px",
+                                          }}
                                         />
                                       </div>
                                     </div>
                                     <div className="col-lg-10 col-9 pl-lg-0">
+                                      <span>
+                                        <b>{review.userName}</b>
+                                      </span>
                                       <div className="cat-star">
                                         {Array(review.ratings)
                                           .fill()
                                           .map((_, i) => (
                                             <i
                                               key={i}
-                                              className="icon_star active"
-                                              style={{ color: "orange",paddingRight:'4px' }}
+                                              className="icon_star active writereviewFont"
+                                              style={{
+                                                color: "orange",
+                                                paddingRight: "4px",
+                                              }}
                                             />
                                           ))}
                                         <span>
-                                          <b>{review.userName}</b>&nbsp;-&nbsp;&nbsp;
-                                          <b>{review.date}</b>
+                                          {/* <b>{review.userName}</b>&nbsp;-&nbsp;&nbsp; */}
+                                          <b className="reviewrating">{review.timeAgo}</b>
                                         </span>
                                       </div>
-                                      <p className="reviewdescrp">{review.comment}</p>
+                                      <p className="reviewdescrp">
+                                        {review.comment}
+                                      </p>
                                     </div>
                                   </div>
-                                 
 
-<div className="owner_reply">
-                          
-                            <div>
-                              <span>
-                                <strong>Reply From Owner</strong>{" "}
-                              </span>
-                              {review.ratingReply && (
-                              <p className="m-0">{review.ratingReply.reply}</p>
-                            )}
-                            </div>
-                          
-                        </div>
+                                  <div className="owner_reply">
+                                    <div>
+                                      <span>
+                                        <strong>Reply From Owner</strong>{" "}
+                                      </span>
+                                      {review.ratingReply && (
+                                        <p className="m-0">
+                                          {review.ratingReply.reply}
+                                        </p>
+                                      )}
+                                    </div>
+                                  </div>
                                   {/* code for reply rating */}
                                   {/* <div className="owner_reply">
                           {review.ratingReply && (
@@ -403,7 +463,6 @@ function Review1({ listingID }) {
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>

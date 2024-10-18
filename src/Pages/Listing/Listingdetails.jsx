@@ -3,9 +3,9 @@ import { useParams, useSearchParams } from "react-router-dom";
 import Services from "../Services/Webdevelopment/Website/Services";
 import Webreviews from "../Services/Webdevelopment/Website/Webreviews";
 import profile from "../../FrontEnd/img/profile.svg";
-import banner2 from "../../FrontEnd/img/bannerCamera.png";
+import banner2 from "../../FrontEnd/img/bannercomming.png";
 import banner3 from "../../FrontEnd/img/Thumbnail-MIM-Photo-Coming-Soon.jpg";
-import gallerydummy from "../../FrontEnd/img/Thumbnail-MIM-Photo-Coming-Soon.jpg"
+import gallerydummy from "../../FrontEnd/img/Gallery coming soon.png";
 import { Link } from "react-router-dom";
 import { faL } from "@fortawesome/free-solid-svg-icons/faL";
 import Popup from "./Popup";
@@ -147,6 +147,8 @@ function Listingdetails() {
 
   const [status, setStatus] = useState("");
 
+  const [isWebsiteClicked, setIsWebsiteClicked] = useState(false);
+
   const [socialLink, setSocialLink] = useState("");
 
   const settings = {
@@ -174,7 +176,14 @@ function Listingdetails() {
     return (
       <div
         className={className}
-        style={{ ...style, display: "block", right: "10px",zIndex:1 ,background:'gray'}}
+        style={{
+          ...style,
+          display: "block",
+          right: "10px",
+          zIndex: 1,
+          background: "gainsboro",
+          top: "60px",
+        }}
         onClick={onClick}
       />
     );
@@ -185,7 +194,14 @@ function Listingdetails() {
     return (
       <div
         className={className}
-        style={{ ...style, display: "block", left: "10px",zIndex:1,background:'gray' }}
+        style={{
+          ...style,
+          display: "block",
+          left: "10px",
+          zIndex: 1,
+          background: "gainsboro",
+          top: "60px",
+        }}
         onClick={onClick}
       ></div>
     );
@@ -534,7 +550,7 @@ function Listingdetails() {
         throw new Error("Failed to fetch states");
       }
       const data = await response.json();
-      console.log('address array',data);
+      console.log("address array", data);
 
       console.log(countryID);
       const country_detials = data["country"].filter(
@@ -579,14 +595,14 @@ function Listingdetails() {
         throw new Error("Failed to fetch owner image details");
       }
       const ownerImageData = await ownerImageResponse.json();
-      console.log('Owner Image Data:', ownerImageData);
+      console.log("Owner Image Data:", ownerImageData);
 
       const fetchedStates = await fetchStates(
         undefined,
         ownerImageData.countryId,
         ownerImageData.stateId
       );
-      console.log('fechedstates',fetchedStates);
+      console.log("fechedstates", fetchedStates);
 
       const stateName =
         fetchedStates.find((state) => state.stateID === ownerImageData.stateId)
@@ -850,30 +866,37 @@ function Listingdetails() {
                       </div>
                     )} */}
 
-
-{teamimageDetails.length > 0 && (
-        <Slider {...settings}>
-          {teamimageDetails.map((teamImage, index) => (
-            <div key={index}>
-              <img
-                className="upload_images"
-                src={`https://apidev.myinteriormart.com${teamImage.url}`}
-                alt="Owner Image"
-                style={{ borderRadius: "50px", width: "100px", height: "100px",display: "inline-block", }}
-              />
-              <h5 style={{ fontSize: "20px" }}>
-                {teamImage.prefix}.
-                <span style={{ marginLeft: "6px" }}>{teamImage.title}</span>
-              </h5>
-              <h6 style={{ fontSize: "14px" }}>{teamImage.designation}</h6>
-              <h6 style={{ fontSize: "14px" }}>From: {teamImage.state}</h6>
-            </div>
-            
-          ))}
-           
-        </Slider>
-      )}
-
+                    {teamimageDetails.length > 0 && (
+                      <Slider {...settings}>
+                        {teamimageDetails.map((teamImage, index) => (
+                          <div key={index}>
+                            <img
+                              className="upload_images"
+                              src={`https://apidev.myinteriormart.com${teamImage.url}`}
+                              alt="Owner Image"
+                              style={{
+                                borderRadius: "50px",
+                                width: "100px",
+                                height: "100px",
+                                display: "inline-block",
+                              }}
+                            />
+                            <h5 style={{ fontSize: "20px" }}>
+                              {teamImage.prefix}.
+                              <span style={{ marginLeft: "6px" }}>
+                                {teamImage.title}
+                              </span>
+                            </h5>
+                            <h6 style={{ fontSize: "14px" }}>
+                              {teamImage.designation}
+                            </h6>
+                            <h6 style={{ fontSize: "14px" }}>
+                              From: {teamImage.state}
+                            </h6>
+                          </div>
+                        ))}
+                      </Slider>
+                    )}
 
                     {/* {teamimageDetails.map((image, index) => (
                       <div key={index}>
@@ -981,23 +1004,25 @@ function Listingdetails() {
                       }}
                       onSwiper={(swiper) => (swiperRef.current = swiper)}
                     >
-                      {imageDetails.length>0?(imageDetails.map((image, index) => (
-                              <SwiperSlide key={index}>
-                                <img
-                                  src={`https://apidev.myinteriormart.com${image.url}`}
-                                  alt={`Slide ${index + 1}`}
-                                  className="main-image-display photogallerymain"
-                                />
-                              </SwiperSlide>
-                            ))):(
-                              <SwiperSlide>
-                                <img
-                                  src={gallerydummy} 
-                                  alt="Dummy Image"
-                                  className="main-image-display photogallerymain"
-                                />
-                              </SwiperSlide>
-                            )}
+                      {imageDetails.length > 0 ? (
+                        imageDetails.map((image, index) => (
+                          <SwiperSlide key={index}>
+                            <img
+                              src={`https://apidev.myinteriormart.com${image.url}`}
+                              alt={`Slide ${index + 1}`}
+                              className="main-image-display photogallerymain"
+                            />
+                          </SwiperSlide>
+                        ))
+                      ) : (
+                        <SwiperSlide>
+                          <img
+                            src={gallerydummy}
+                            alt="Dummy Image"
+                            className="main-image-display photogallerymain"
+                          />
+                        </SwiperSlide>
+                      )}
                     </Swiper>
 
                     <div
@@ -1048,7 +1073,7 @@ function Listingdetails() {
                           {/* Main Image Display */}
 
                           {/* <div className="main-image"> */}
-                         
+
                           <style>
                             {`
                                 .swiper-button-prev,
@@ -1070,24 +1095,25 @@ function Listingdetails() {
                             }}
                             onSwiper={(swiper) => (swiperRef.current = swiper)}
                           >
-                            {imageDetails.length>0?(imageDetails.map((image, index) => (
-                              <SwiperSlide key={index}>
-                                <img
-                                  src={`https://apidev.myinteriormart.com${image.url}`}
-                                  alt={`Slide ${index + 1}`}
-                                  className="main-image-display photogallerymain"
-                                />
-                              </SwiperSlide>
-                            ))):(
+                            {imageDetails.length > 0 ? (
+                              imageDetails.map((image, index) => (
+                                <SwiperSlide key={index}>
+                                  <img
+                                    src={`https://apidev.myinteriormart.com${image.url}`}
+                                    alt={`Slide ${index + 1}`}
+                                    className="main-image-display photogallerymain"
+                                  />
+                                </SwiperSlide>
+                              ))
+                            ) : (
                               <SwiperSlide>
                                 <img
-                                  src={gallerydummy} 
+                                  src={gallerydummy}
                                   alt="Dummy Image"
                                   className="main-image-display photogallerymain"
                                 />
                               </SwiperSlide>
                             )}
-                            
                           </Swiper>
 
                           {/* </div> */}
@@ -1150,16 +1176,22 @@ function Listingdetails() {
                     </div> */}
 
                     <div className="col-lg-8 col-md-12 company-details-list padding-all-5 company-addes">
-                      <div className="company-addes">
+                      <div
+                        className="company-addes"
+                        style={{ borderBottom: "1px solid #f1f1f1" }}
+                      >
                         <div className="company-details">
-                          <h5 className="company-name" style={{fontSize:'17px'}}>
+                          <h5
+                            className="company-name"
+                            style={{ fontSize: "17px" }}
+                          >
                             {listingDetails.companyName}
                           </h5>
                         </div>
                         <div style={{ display: "flex" }}>
                           <span
                             className="company-category-name listingcolor ratingsize"
-                            style={{  fontWeight: "bold",fontSize:'14px' }}
+                            style={{ fontWeight: "bold", fontSize: "14px" }}
                           >
                             {listingDetails.listingKeyword}
                           </span>
@@ -1223,7 +1255,34 @@ function Listingdetails() {
                           </p>
                         </div>
                       </div>
+                      <div classname="col-lg-12 mb-1 px-0 year_gst">
+                        <p className="m-0 ListingpageFont">
+                          <i
+                            className="fa fa-globe"
+                            style={{ marginRight: "4px" }}
+                          ></i>
+                          <a
+                            href={
+                              listingDetails.website.startsWith("http://") ||
+                              listingDetails.website.startsWith("https://")
+                                ? listingDetails.website
+                                : `https://${listingDetails.website}`
+                            }
+                            target="_blank"
+                            style={{ color: "orange" }}
+                            rel="noopener noreferrer"
+                          >
+                            {" "}
+                            {listingDetails.website}
+                          </a>
+                        </p>
+                      </div>
                       <div className="listingemp">
+                        <div className="col-lg-6 mb-1 px-0 year_gst listingempyear">
+                          <p className="mb-0 ListingpageFont">
+                            GST NO :{listingDetails.gstNumber}
+                          </p>
+                        </div>
                         <div className="col-lg-6 mb-1 px-0 year_gst listingempyear">
                           <p className="m-0 ListingpageFont">
                             <i
@@ -1233,7 +1292,7 @@ function Listingdetails() {
                             Since {listingDetails.yearOfEstablishment}
                           </p>
                         </div>
-                        <div className="col-lg-6 px-0 mb-1 year_gst mt-0">
+                        {/* <div className="col-lg-6 px-0 mb-1 year_gst mt-0">
                           <p className="mb-0 noemployee ListingpageFont">
                             <i
                               className="fa fa-users"
@@ -1241,27 +1300,56 @@ function Listingdetails() {
                             ></i>
                             {listingDetails.numberOfEmployees} Employees
                           </p>
-                        </div>
+                        </div> */}
                       </div>
 
+                      <div className="listingemp">
+                        <div className="col-lg-6 mb-1 px-0 year_gst listingempyear">
+                        <p className="mb-0 noemployee ListingpageFont" style={{marginLeft:'-1px'}}>
+                            <i
+                              className="fa fa-users"
+                              style={{ marginRight: "8px" }}
+                            ></i>
+                            {listingDetails.numberOfEmployees} Employees
+                          </p>
+                        </div>
+                        <div className="col-lg-6 mb-1 px-0 year_gst listingempyear">
+                        <p className="mb-0 ListingpageFont">
+                          Turnover :{listingDetails.turnover}
+                        </p>
+                        </div>
+                        {/* <div className="col-lg-6 px-0 mb-1 year_gst mt-0">
+                          <p className="mb-0 noemployee ListingpageFont">
+                            <i
+                              className="fa fa-users"
+                              style={{ marginRight: "8px" }}
+                            ></i>
+                            {listingDetails.numberOfEmployees} Employees
+                          </p>
+                        </div> */}
+                      </div>
+
+                      {/* <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
+                        <p className="mb-0 ListingpageFont">
+                          Turnover :{listingDetails.turnover}
+                        </p>
+                      </div> */}
+                      {/* gstnumber */}
+                      {/* <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
+                        <p className="mb-0 ListingpageFont">
+                          GST NO :{listingDetails.gstNumber}
+                        </p>
+                      </div> */}
                       <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
                         <p className="mb-0 ListingpageFont">
-                          Turnover : 
-                          {listingDetails.turnover}
+                          <i
+                            className="fa fa-language mr-1"
+                            style={{ marginRight: "4px" }}
+                          ></i>
+                          {listingDetails.languges}
                         </p>
                       </div>
-                      <div classname="col-lg-12 mb-1 px-0 year_gst">
-                        <p className="m-0 ListingpageFont">
-                          <i className="fa fa-globe" style={{marginRight:'4px'}}></i>
-                          <a href={
-      listingDetails.website.startsWith('http://') || listingDetails.website.startsWith('https://') 
-        ? listingDetails.website 
-        : `https://${listingDetails.website}`
-    } target="_blank" style={{color:'rgb(90 88 76)'}}
-    rel="noopener noreferrer">  {listingDetails.website}</a>
-                         
-                        </p>
-                      </div>
+
                       <div classname="col-lg-12 mb-1 p-0">
                         <i
                           className="fa fa-mobile"
@@ -1315,7 +1403,11 @@ function Listingdetails() {
                             className={`fa fa-bookmark`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          <b style={{ color: isBookmarked ? "orange":"black" }}>Bookmark</b>
+                          <b
+                            style={{ color: isBookmarked ? "orange" : "black" }}
+                          >
+                            Bookmark
+                          </b>
                         </button>
 
                         <button
@@ -1325,10 +1417,15 @@ function Listingdetails() {
                         >
                           <i
                             className="fa fa-share"
-                            style={{  marginRight: "4px" }}
+                            style={{ marginRight: "4px" }}
                           ></i>
-                         <b style={{ color: isSociallinkOpen?"orange":"black" }}>Share</b>
-
+                          <b
+                            style={{
+                              color: isSociallinkOpen ? "orange" : "black",
+                            }}
+                          >
+                            Share
+                          </b>
                         </button>
 
                         <button
@@ -1342,7 +1439,9 @@ function Listingdetails() {
                             className={`fa fa-thumbs-up`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          <b style={{ color:isLike?"orange": "black" }}>Like</b>
+                          <b style={{ color: isLike ? "orange" : "black" }}>
+                            Like
+                          </b>
                         </button>
                         <button
                           className={`btn btn-subscribe ${
@@ -1355,7 +1454,11 @@ function Listingdetails() {
                             className={`fa fa-bell`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          <b style={{ color:isSubscribe?"orange": "black" }}>Subscribe</b>
+                          <b
+                            style={{ color: isSubscribe ? "orange" : "black" }}
+                          >
+                            Subscribe
+                          </b>
                         </button>
                       </div>
                       <div
@@ -1371,9 +1474,13 @@ function Listingdetails() {
                         >
                           <i
                             className={`fa fa-bookmark`}
-                            style={{ marginRight: "5px"}}
+                            style={{ marginRight: "5px" }}
                           ></i>
-                          <b style={{ color: isBookmarked ? "orange":"black" }}>Bookmark</b>
+                          <b
+                            style={{ color: isBookmarked ? "orange" : "black" }}
+                          >
+                            Bookmark
+                          </b>
                         </button>
 
                         <button
@@ -1383,9 +1490,15 @@ function Listingdetails() {
                         >
                           <i
                             className="fa fa-share"
-                            style={{  marginRight: "4px" }}
+                            style={{ marginRight: "4px" }}
                           ></i>
-                          <b style={{ color: isSociallinkOpen?"orange":"black" }}>Share</b>
+                          <b
+                            style={{
+                              color: isSociallinkOpen ? "orange" : "black",
+                            }}
+                          >
+                            Share
+                          </b>
                         </button>
 
                         <button
@@ -1399,7 +1512,9 @@ function Listingdetails() {
                             className={`fa fa-thumbs-up`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          <b style={{ color: isLike ? "orange":"black" }}>Like</b>
+                          <b style={{ color: isLike ? "orange" : "black" }}>
+                            Like
+                          </b>
                         </button>
                         <button
                           className={`btn btn-subscribe ${
@@ -1412,7 +1527,11 @@ function Listingdetails() {
                             className={`fa fa-bell`}
                             style={{ marginRight: "5px" }}
                           ></i>
-                          <b style={{ color: isSubscribe ? "orange":"black" }}>Subscribe</b>
+                          <b
+                            style={{ color: isSubscribe ? "orange" : "black" }}
+                          >
+                            Subscribe
+                          </b>
                         </button>
                       </div>
                       <div
@@ -1428,31 +1547,78 @@ function Listingdetails() {
                         </button>
                       </div>
                       <div className="col-lg-12 social-share p-0 listingpageSocialLink">
-                        <a href={`https://${socialLink.facebook || "#0"}`} className="vendorSocialLink">
-                          <i className="ti-facebook" style={{marginRight:'3px',color:'orange'}}></i>
-                        </a>
                         <a
                           href={`https://${
                             socialLink.whatsappGroupLink || "#0"
                           }`}
                           className="vendorSocialLink"
                         >
-                          <i className="fa fa-whatsapp" style={{marginRight:'5px',color:'orange'}}></i>
+                          <i
+                            className="fa fa-whatsapp"
+                            style={{ marginRight: "5px", color: "orange" }}
+                          ></i>
                         </a>
-                        <a href={`https://${socialLink.linkedin || "#0"}`} className="vendorSocialLink">
-                          <i className="ti-linkedin" style={{marginRight:'5px',color:'orange'}}></i>
+                        <a
+                          href={`https://${socialLink.facebook || "#0"}`}
+                          className="vendorSocialLink"
+                        >
+                          <i
+                            className="ti-facebook"
+                            style={{ marginRight: "3px", color: "orange" }}
+                          ></i>
                         </a>
-                        <a href={`https://${socialLink.twitter || "#0"}`} className="vendorSocialLink">
-                          <i className="ti-twitter-alt" style={{marginRight:'5px',color:'orange'}}></i>
+                        <a
+                          href={`https://${socialLink.linkedin || "#0"}`}
+                          className="vendorSocialLink"
+                        >
+                          <i
+                            className="ti-linkedin"
+                            style={{ marginRight: "5px", color: "orange" }}
+                          ></i>
                         </a>
-                        <a href={`https://${socialLink.youtube || "#0"}`} className="vendorSocialLink">
-                          <i className="ti-youtube" style={{marginRight:'5px',color:'orange'}}></i>
+                        <a
+                          href={`https://${socialLink.twitter || "#0"}`}
+                          className="vendorSocialLink"
+                        >
+                          {/* <i className="bi bi-twitter-x" style={{marginRight:'5px',color:'orange'}}></i> */}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="14"
+                            height="14"
+                            fill="currentColor"
+                            color="orange"
+                            class="bi bi-twitter-x"
+                            viewBox="0 0 16 16"
+                          >
+                            <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+                          </svg>
                         </a>
-                        <a href={`https://${socialLink.instagram || "#0"}`} className="vendorSocialLink">
-                          <i className="ti-instagram" style={{marginRight:'5px',color:'orange'}}></i>
+                        <a
+                          href={`https://${socialLink.youtube || "#0"}`}
+                          className="vendorSocialLink"
+                        >
+                          <i
+                            className="ti-youtube"
+                            style={{ marginRight: "5px", color: "orange" }}
+                          ></i>
                         </a>
-                        <a href={`https://${socialLink.pinterest || "#0"}`} className="vendorSocialLink">
-                          <i className="ti-pinterest" style={{marginRight:'5px',color:'orange'}}></i>
+                        <a
+                          href={`https://${socialLink.instagram || "#0"}`}
+                          className="vendorSocialLink"
+                        >
+                          <i
+                            className="ti-instagram"
+                            style={{ marginRight: "5px", color: "orange" }}
+                          ></i>
+                        </a>
+                        <a
+                          href={`https://${socialLink.pinterest || "#0"}`}
+                          className="vendorSocialLink"
+                        >
+                          <i
+                            className="ti-pinterest"
+                            style={{ marginRight: "5px", color: "orange" }}
+                          ></i>
                         </a>
                       </div>
                     </div>

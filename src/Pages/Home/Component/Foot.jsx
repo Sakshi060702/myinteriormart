@@ -8,7 +8,7 @@ import Popup from "../../Listing/Popup";
 import { useSelector } from "react-redux";
 import Sociallink from "../../Listing/Sociallink";
 import { useNavigate } from "react-router-dom";
-import shareimg from '../../../FrontEnd/img/icon (25).png'
+import shareimg from '../../../FrontEnd/img/icon (26).png'
 
 const Foot = () => {
   const scrollToTop = () => {

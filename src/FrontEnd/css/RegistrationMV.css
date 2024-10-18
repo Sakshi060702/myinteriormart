@@ -1505,7 +1505,7 @@ div.scrollmenu .imgScroll:hover {
 .listingarea{
   display: flex;
   justify-content: space-between;
-  padding-right: 34%;
+  padding-right: 29%;
 
 }
 @media (max-width:767px) {
@@ -1531,7 +1531,7 @@ div.scrollmenu .imgScroll:hover {
 
 @media (max-width:767px) {
   .listingempyear{
-    margin-right: 93px;
+    /* margin-right: 93px; */
   }
 }
 
@@ -1642,17 +1642,30 @@ div.scrollmenu .imgScroll:hover {
 
 .reviewTextArea{
   height: 130px;
-  width: 373% !important;
+  width: 186% !important;
 }
 @media (max-width:767px) {
   .reviewTextArea{
     height: 130px;
-    width: 160% !important;
+    width: 100% !important;
   }
 }
 
 .ListingpageFont{
   font-size: 97%;
+}
+
+
+@media (max-width:767px) {
+  .writereviewFont{
+    font-size: 13px !important;
+  }
+}
+
+@media (max-width:767px) {
+  .reviewrating{
+    font-size: 10px !important;
+  }
 }
 
 
