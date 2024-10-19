@@ -248,7 +248,7 @@ function Review1({ listingID }) {
                             </span>
                           )} */}
                           <div>
-                          <span className="writereviewFont" style={{paddingRight:'5px'}}>{userRatinvAverage}.0</span>
+                          <span className="writereviewFont userRatingAverage" style={{paddingRight:'5px'}}>{userRatinvAverage}.0</span>
                           <span>
                             {Array(5)
                               .fill()
@@ -266,7 +266,7 @@ function Review1({ listingID }) {
                               ))}
                           </span>
                           
-                          <span className="writereviewFont">{userReviewCount} Ratings</span>
+                          <span className="writereviewFont userRatingAverage">{userReviewCount} Ratings</span>
 
                           </div>
                         </div>
@@ -302,6 +302,7 @@ function Review1({ listingID }) {
                                     }`}
                                     style={{
                                       color: i < rating ? "orange" : "gray",
+                                      fontSize: "16px",
                                     }}
                                     onClick={() => handleRatingChange(i + 1)}
                                   ></i>
@@ -373,16 +374,17 @@ function Review1({ listingID }) {
                                           .map((_, i) => (
                                             <i
                                               key={i}
-                                              className="icon_star active writereviewFont"
+                                              className="icon_star active writereviewFont replystarfont"
                                               style={{
                                                 color: "orange",
                                                 paddingRight: "4px",
+                                                
                                               }}
                                             />
                                           ))}
                                         <span>
                                           {/* <b>{review.userName}</b>&nbsp;-&nbsp;&nbsp; */}
-                                          <b className="reviewrating">{review.timeAgo}</b>
+                                          <b className="reviewrating" style={{fontSize:'13px'}}>{review.timeAgo}</b>
                                         </span>
                                       </div>
                                       <p className="reviewdescrp">

@@ -1250,7 +1250,7 @@ div.scrollmenu .imgScroll:hover {
 }
 @media (max-width:767px) {
   .ratingsize{
-    width: 149px;
+    width: 179px;
   }
 }
 
@@ -1668,4 +1668,38 @@ div.scrollmenu .imgScroll:hover {
   }
 }
 
+.userRatingAverage{
+  font-size: 18px !important;
+}
+@media (max-width:767px) {
+  .userRatingAverage{
+    font-size: 12px !important;
+  }
+}
 
+.replystarfont{
+  font-size: 13px !important;
+}
+@media (max-width:767px) {
+  .replystarfont{
+    font-size: 11px !important;
+  }
+}
+
+.listinglocality{
+  width: 570px !important;
+}
+@media (max-width:767px) {
+  .listinglocality{
+    width: 382px !important;
+  }
+}
+
+.listinga{
+  width: 522px !important;
+}
+@media (max-width:767px) {
+  .listinga{
+    width: 317px !important;
+  }
+}

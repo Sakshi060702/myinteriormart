@@ -117,6 +117,8 @@ function Listingdetails() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isSociallinkOpen, setIsSociallinkOpen] = useState(false);
 
+  const[isBookmarkPopupOpen,setIsBookmarkPopupOpen]=useState(false);
+
   const [showFullAddress, setShowFullAddress] = useState(false);
 
   const [showFullAboutus, setShowFullAboutus] = useState(false);
@@ -179,10 +181,10 @@ function Listingdetails() {
         style={{
           ...style,
           display: "block",
-          right: "10px",
           zIndex: 1,
           background: "gainsboro",
           top: "60px",
+          right:'29px'
         }}
         onClick={onClick}
       />
@@ -197,10 +199,11 @@ function Listingdetails() {
         style={{
           ...style,
           display: "block",
-          left: "10px",
           zIndex: 1,
           background: "gainsboro",
           top: "60px",
+          left:'29px',
+          
         }}
         onClick={onClick}
       ></div>
@@ -299,6 +302,16 @@ function Listingdetails() {
     }
   };
 
+  const handleBookmarkClick=()=>{
+    if(!token){
+      setIsBookmarkPopupOpen(true);
+      console.log("hello");
+    }
+    else{
+      handleBookmarkToggle();
+    }
+  }
+
   useEffect(() => {
     const fetchBookmarkStatus = async () => {
       if (listingDetails && listingDetails.listingId) {
@@ -363,6 +376,16 @@ function Listingdetails() {
     }
   };
 
+  const handleLikeClick=()=>{
+    if(!token){
+      setIsBookmarkPopupOpen(true);
+      // console.log("hello");
+    }
+    else{
+      handleLikeToggle();
+    }
+  }
+
   useEffect(() => {
     const fetchLikeStatus = async () => {
       if (listingDetails && listingDetails.listingId) {
@@ -426,6 +449,16 @@ function Listingdetails() {
       console.error("Error in updating Subscribe status", error);
     }
   };
+
+  const handleSubscribeClick=()=>{
+    if(!token){
+      setIsBookmarkPopupOpen(true);
+      // console.log("hello");
+    }
+    else{
+      handleSubscribeToggle();
+    }
+  }
 
   useEffect(() => {
     const fetchSubscribeStatus = async () => {
@@ -536,12 +569,12 @@ function Listingdetails() {
 
     try {
       const response = await fetch(
-        "https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster",
+        "https://apidev.myinteriormart.com/api/FetchAddressMaster/FetchAddressDropdownMaster",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(body),
         }
@@ -552,10 +585,12 @@ function Listingdetails() {
       const data = await response.json();
       console.log("address array", data);
 
-      console.log(countryID);
-      const country_detials = data["country"].filter(
+      console.log("stateid",countryID);
+      console.log("countryid",stateID);
+      const country_detials = data["countries"].filter(
         (count) => count.countryID == countryID
       );
+      // console.log('country',country_detials);
 
       if (!country_detials.length) {
         console.error("Country not found");
@@ -565,6 +600,8 @@ function Listingdetails() {
       const states_details = country_detials[0]["states"].filter(
         (count) => count.stateID == stateID
       );
+
+      
 
       // console.log('address array',country_detials[0].name, states_details[0].name);
       // return data.country[0]?.states || [];
@@ -1029,8 +1066,8 @@ function Listingdetails() {
                       className="thumbnails scrollmenu"
                       ref={thumbnailsContainerRef}
                       style={{
-                        marginTop: "11px",
-                        overflowX: "auto",
+                        marginTop: "2px",
+                        overflowX: "hidden",
                         whiteSpace: "nowrap",
                       }}
                     >
@@ -1081,7 +1118,13 @@ function Listingdetails() {
                                 .swiper-pagination{
                                   display: none !important;
                                 }
+                                  .main-image-display{
+                                  width:252px;
+                                  height:52px;
+                                  object-fit: cover;
+                                  }
                              `}
+                             
                           </style>
                           <Swiper
                             modules={[Pagination, Autoplay]}
@@ -1123,8 +1166,8 @@ function Listingdetails() {
                             className="thumbnails scrollmenu"
                             ref={thumbnailsContainerRef}
                             style={{
-                              marginTop: "11px",
-                              overflowX: "auto",
+                              marginTop: "2px",
+                              overflowX: "hidden",
                               whiteSpace: "nowrap",
                             }}
                           >
@@ -1234,8 +1277,8 @@ function Listingdetails() {
                             </a>
                           </span>
                         </p>
-                        <div className="listingarea">
-                          <p className="listingdetailslocality">
+                        <div className="listingarea listinga">
+                          <p className="listingdetailslocality" >
                             <span className="ListingpageFont">
                               <i
                                 className="fa fa-map-o"
@@ -1278,20 +1321,8 @@ function Listingdetails() {
                         </p>
                       </div>
                       <div className="listingemp">
-                        <div className="col-lg-6 mb-1 px-0 year_gst listingempyear">
-                          <p className="mb-0 ListingpageFont">
-                            GST NO :{listingDetails.gstNumber}
-                          </p>
-                        </div>
-                        <div className="col-lg-6 mb-1 px-0 year_gst listingempyear">
-                          <p className="m-0 ListingpageFont">
-                            <i
-                              className="fa fa-calendar"
-                              style={{ marginRight: "8px" }}
-                            ></i>
-                            Since {listingDetails.yearOfEstablishment}
-                          </p>
-                        </div>
+                        
+                        
                         {/* <div className="col-lg-6 px-0 mb-1 year_gst mt-0">
                           <p className="mb-0 noemployee ListingpageFont">
                             <i
@@ -1303,7 +1334,16 @@ function Listingdetails() {
                         </div> */}
                       </div>
 
-                      <div className="listingemp">
+                      <div className="listingemp listinglocality">
+                      <div className="col-lg-6 mb-1 px-0 year_gst listingempyear">
+                          <p className="m-0 ListingpageFont">
+                            <i
+                              className="fa fa-calendar"
+                              style={{ marginRight: "8px" }}
+                            ></i>
+                            Since {listingDetails.yearOfEstablishment}
+                          </p>
+                        </div>
                         <div className="col-lg-6 mb-1 px-0 year_gst listingempyear">
                         <p className="mb-0 noemployee ListingpageFont" style={{marginLeft:'-1px'}}>
                             <i
@@ -1313,11 +1353,7 @@ function Listingdetails() {
                             {listingDetails.numberOfEmployees} Employees
                           </p>
                         </div>
-                        <div className="col-lg-6 mb-1 px-0 year_gst listingempyear">
-                        <p className="mb-0 ListingpageFont">
-                          Turnover :{listingDetails.turnover}
-                        </p>
-                        </div>
+                        
                         {/* <div className="col-lg-6 px-0 mb-1 year_gst mt-0">
                           <p className="mb-0 noemployee ListingpageFont">
                             <i
@@ -1329,17 +1365,23 @@ function Listingdetails() {
                         </div> */}
                       </div>
 
+                      <div className="col-lg-6 mb-1 px-0 year_gst listingempyear">
+                        <p className="mb-0 ListingpageFont">
+                          Turnover :{listingDetails.turnover}
+                        </p>
+                        </div>
+
                       {/* <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
                         <p className="mb-0 ListingpageFont">
                           Turnover :{listingDetails.turnover}
                         </p>
                       </div> */}
                       {/* gstnumber */}
-                      {/* <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
+                      <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
                         <p className="mb-0 ListingpageFont">
                           GST NO :{listingDetails.gstNumber}
                         </p>
-                      </div> */}
+                      </div>
                       <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
                         <p className="mb-0 ListingpageFont">
                           <i
@@ -1396,7 +1438,7 @@ function Listingdetails() {
                           className={`btn btn-bookmark ${
                             isBookmarked ? "active" : ""
                           } ${isBookmarked ? "icon-active" : ""}`}
-                          onClick={handleBookmarkToggle}
+                          onClick={handleBookmarkClick}
                           style={{ marginRight: "5px", fontSize: "13px" }}
                         >
                           <i
@@ -1432,7 +1474,7 @@ function Listingdetails() {
                           className={`btn btn-like ${isLike ? "active" : ""} ${
                             isLike ? "icon-active" : ""
                           }`}
-                          onClick={handleLikeToggle}
+                          onClick={handleLikeClick}
                           style={{ marginRight: "5px", fontSize: "13px" }}
                         >
                           <i
@@ -1447,7 +1489,7 @@ function Listingdetails() {
                           className={`btn btn-subscribe ${
                             isSubscribe ? "active" : ""
                           } ${isSubscribe ? "icon-active" : ""}`}
-                          onClick={handleSubscribeToggle}
+                          onClick={handleSubscribeClick}
                           style={{ marginRight: "5px", fontSize: "13px" }}
                         >
                           <i
@@ -1469,7 +1511,7 @@ function Listingdetails() {
                           className={`btn btn-bookmark ${
                             isBookmarked ? "active" : ""
                           } ${isBookmarked ? "icon-active" : ""}`}
-                          onClick={handleBookmarkToggle}
+                          onClick={handleBookmarkClick}
                           style={{ marginRight: "5px", fontSize: "13px" }}
                         >
                           <i
@@ -1505,7 +1547,7 @@ function Listingdetails() {
                           className={`btn btn-like ${isLike ? "active" : ""} ${
                             isLike ? "icon-active" : ""
                           }`}
-                          onClick={handleLikeToggle}
+                          onClick={handleLikeClick}
                           style={{ marginRight: "5px", fontSize: "13px" }}
                         >
                           <i
@@ -1520,7 +1562,7 @@ function Listingdetails() {
                           className={`btn btn-subscribe ${
                             isSubscribe ? "active" : ""
                           } ${isSubscribe ? "icon-active" : ""}`}
-                          onClick={handleSubscribeToggle}
+                          onClick={handleSubscribeClick}
                           style={{ marginRight: "5px", fontSize: "13px" }}
                         >
                           <i
@@ -1684,6 +1726,10 @@ function Listingdetails() {
           )}
         </div>
       </div>
+
+<Popup isOpen={isBookmarkPopupOpen}
+onClose={()=>setIsBookmarkPopupOpen(false)}/>
+
       {token ? (
         <Getquotespopup
           isOpen={isPopupOpen}

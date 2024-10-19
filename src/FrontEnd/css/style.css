@@ -10026,7 +10026,7 @@ article.blog .post_info ul li:last-child i {
 }
 
 .owner_reply {
-  margin: 20px 0 0 60px;
+  margin: -17px 0 0 60px;
   border-left: 2px solid #dedddd;
   padding: 0 20px;
 }

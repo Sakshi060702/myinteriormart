@@ -202,14 +202,14 @@ const [totalItems, setTotalItems] = useState(0);
 
                       //Near by Search
                       const locationKeywordsPattern = /(near by|near me|near|at|in)/i;
-                    if (
-                      locationKeywordsPattern.test(searchTerm) &&
-  result.keyword.toLowerCase() === kewywordQuery.toLowerCase() &&
-  (
-    result.locality.toLowerCase().includes(nearByLocation.toLowerCase()) || 
-    (!nearByLocation && result.city.toLowerCase() === nearCity.toLowerCase()) ||  // Check city when no specific locality
-    result.city.toLowerCase() === nearCity.toLowerCase() // Check for matching city
-  )
+                      if (
+                        locationKeywordsPattern.test(searchTerm) &&
+                        result.keyword?.toLowerCase() === kewywordQuery?.toLowerCase() &&
+                        (
+                          result.locality?.toLowerCase().includes(nearByLocation?.toLowerCase()) ||
+                          (!nearByLocation && result.city?.toLowerCase() === nearCity?.toLowerCase()) || // Check city when no specific locality
+                          result.city?.toLowerCase() === nearCity?.toLowerCase() // Check for matching city
+                        )
                     ) {
                       return (
                         <div key={index} className="dropdownItemsearchbar">

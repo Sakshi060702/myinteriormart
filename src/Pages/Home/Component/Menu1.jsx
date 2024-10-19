@@ -16,7 +16,7 @@ function Menu1() {
   const [hasNotifications, setHasNotifications] = useState(false);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const[dropOpen,setDrpOpen]=useState(false);
+  const [dropOpen, setDrpOpen] = useState(false);
   const dropdownOpenClass = "";
   const [showMenu, setShowMenu] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
@@ -57,20 +57,16 @@ function Menu1() {
     setDropdownOpen(!dropdownOpen);
   };
 
- 
-
   const handleClickOutside = (event) => {
     const parent_node = event.target.parentElement.parentElement;
     const parent_id = parent_node.id;
-    if(parent_id == "dropdown_logged_in_menu"){
+    if (parent_id == "dropdown_logged_in_menu") {
       return;
-
     }
     if (dropRef.current && !dropRef.current.contains(event.target)) {
       setDropdownOpen(false);
     }
   };
-
 
   const toggleDropdownmobile = () => {
     setDrpOpen(!dropOpen);
@@ -221,7 +217,6 @@ function Menu1() {
                 // "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
               },
-              
             }
           );
           const data_n = await response_n.json();
@@ -290,7 +285,7 @@ function Menu1() {
               </div>
             </div>
             <div className="col-lg-9 col-12 navitems">
-              <div style={{marginRight:'24px'}}>
+              <div style={{ marginRight: "24px" }}>
                 {!isAuthenticated && (
                   <NavLink
                     to={`/signup2/in-${localStorage.getItem("cityname")}`}
@@ -446,8 +441,8 @@ function Menu1() {
                                 <span
                                   style={{
                                     position: "absolute",
-                                    top: "31px",
-                                    right: "-2px",
+                                    top: "34px",
+                                    right: "20px",
                                     width: "12px",
                                     height: "12px",
                                     backgroundColor: "#1ded1d",
@@ -462,7 +457,7 @@ function Menu1() {
                         </div>
                       </>
                     )}
-                   
+
                     {userType === "Business" && (
                       <>
                         <div>
@@ -500,11 +495,9 @@ function Menu1() {
                               onClick={toggleNotificationMenu}
                               className="notification-img"
                             >
-                              <img src={notificationIcon} alt="notification"  />
+                              <img src={notificationIcon} alt="notification" />
                               {hasNotifications && (
-                                <span className="notificationdot"
-                                 
-                                ></span>
+                                <span className="notificationdot"></span>
                               )}
                               {showNotificationMenu && (
                                 <Notification
@@ -534,7 +527,7 @@ function Menu1() {
                                 border: "none",
                                 position: "relative",
                               }}
-                            > 
+                            >
                               <img
                                 className="usericon-img"
                                 src={
@@ -604,11 +597,9 @@ function Menu1() {
                               onClick={toggleNotificationMenu}
                               className="notification-img"
                             >
-                              <img src={notificationIcon} alt="notification"  />
+                              <img src={notificationIcon} alt="notification" />
                               {hasNotifications && (
-                                <span className="notificationdot"
-                                 
-                                ></span>
+                                <span className="notificationdot"></span>
                               )}
                               {showNotificationMenu && (
                                 <Notification
@@ -638,7 +629,7 @@ function Menu1() {
                                 border: "none",
                                 position: "relative",
                               }}
-                            > 
+                            >
                               <img
                                 className="usericon-img"
                                 src={
@@ -669,15 +660,12 @@ function Menu1() {
                         </div>
                       </>
                     )}
-
                   </>
                 )}
               </ul>
 
-
-
               {/* for mobile view */}
-             
+
               {userType === "Business" && (
                 <>
                   <div>
@@ -699,7 +687,6 @@ function Menu1() {
                     <div
                       className="dropdown notification notificationm"
                       ref={notificationRef}
-                      
                     >
                       <button
                         type="button "
@@ -708,9 +695,7 @@ function Menu1() {
                       >
                         <img src={notificationIcon} alt="notification" />
                         {hasNotifications && (
-                          <span
-                            className="notificationdot"
-                          ></span>
+                          <span className="notificationdot"></span>
                         )}
                         {showNotificationMenu && (
                           <Notification
@@ -724,7 +709,6 @@ function Menu1() {
                     id="profileid"
                     className="dropdown usericon listing-btn mobile-freelisting profileimgm"
                     ref={dropRef}
-                  
                   >
                     <button
                       className={`usericon-btn profileimgp dropdown-toggle ${
@@ -768,16 +752,12 @@ function Menu1() {
                 </>
               )}
 
-
-{userType === "Consumer" && (
+              {userType === "Consumer" && (
                 <>
-                  
-                  
                   <div
                     id="profileid"
                     className="dropdown usericon listing-btn mobile-freelisting profileimgm"
                     ref={dropRef}
-                  
                   >
                     <button
                       className={`usericon-btn profileimgp dropdown-toggle ${
@@ -821,19 +801,12 @@ function Menu1() {
                 </>
               )}
 
-
-
-
-
-
-              {userType !== "Business" && userType !=='Consumer'&& (
+              {userType !== "Business" && userType !== "Consumer" && (
                 <>
-                  
                   <div
                     id="profileid"
                     className="dropdown usericon listing-btn mobile-freelisting profileimgm"
                     ref={dropRef}
-                  
                   >
                     <button
                       className={`usericon-btn profileimgp dropdown-toggle ${
