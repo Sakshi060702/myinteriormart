@@ -1199,17 +1199,25 @@ div.scrollmenu .imgScroll:hover {
 }
 @media (max-width:767px) {
   .photogallerymain{
-    width: 300px;
+    width: 354px !important;
     height: 164px;
-    margin-left: 26px;
+    margin-left: 9px;
+  }
+}
+
+@media (max-width:767px) {
+  .photogallerymaindummy{
+    width: 333px !important;
+    height: 164px !important;
+    /* margin-left: 9px; */
   }
 }
 
 .photogallerythumbnail{
   display: block;
-  width: 33%;
+  width: 35%;
   height: 57px;
-  /* margin: 0px 9px; */
+  margin: 0px 0px;
   cursor: pointer;
   
 
@@ -1218,9 +1226,9 @@ div.scrollmenu .imgScroll:hover {
 @media (max-width:767px) {
   .photogallerythumbnail{
     display: block;
-    width: 29%;
+    width: 34%;
     height: 95px;
-    margin: 0px 9px;
+    margin: 0px 0px;
     cursor: pointer;
     
   
@@ -1658,7 +1666,7 @@ div.scrollmenu .imgScroll:hover {
 
 @media (max-width:767px) {
   .writereviewFont{
-    font-size: 13px !important;
+    font-size: 17px !important;
   }
 }
 
@@ -1701,5 +1709,14 @@ div.scrollmenu .imgScroll:hover {
 @media (max-width:767px) {
   .listinga{
     width: 317px !important;
+  }
+}
+
+.rstar{
+  font-size: 16px;
+}
+@media (max-width:767px) {
+  .rstar{
+    font-size: 13px;
   }
 }

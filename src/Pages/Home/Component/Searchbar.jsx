@@ -4,6 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import "../../../FrontEnd/css/Serchbar.css";
 import { useParams } from "react-router-dom";
 import CryptoJS from "crypto-js";
+import { useNavigate } from "react-router-dom";
 
 function Searchbar() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,6 +19,7 @@ function Searchbar() {
   const [nearByLocation, setNearByLocation] = useState("");
   const[nearCity,setNearCity]=useState("");
 
+  const navigate=useNavigate();
 
   const encryptionKey = 'myinterriorMart@SECRETKEY';
 
@@ -151,12 +153,79 @@ const [totalItems, setTotalItems] = useState(0);
       setTimeout(() => setShowDropdown(false), 100);
     }
   };
-    const handleSearch = () => {
-      // setSearchTerm(searchTerm.trim());
-      fetchResults();
-      // console.log("hello");
-    };
+    // const handleSearch = () => {
+    //   // setSearchTerm(searchTerm.trim());
+    //   fetchResults();
+    //   // console.log("hello");
+    // };
 
+    const handleSearchNavigate = async () => {
+      if (results.length > 0) {
+        const result = results[0];
+        const locationKeywordsPattern = /(near by|near me|near|at|in)/i;
+        if(parameterName==="gstNumber" || parameterName==="address" || parameterName==="mobileNumber" ||parameterName==="ownerName"){
+          navigate(
+            `/All/Search/${result.categoryName.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?searchkey=${encodeURIComponent(result.keyword)}&secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`
+          );
+        }
+        
+    else if(locationKeywordsPattern.test(searchTerm) &&
+    result.keyword?.toLowerCase() === kewywordQuery?.toLowerCase() &&
+    (
+      result.locality?.toLowerCase().includes(nearByLocation?.toLowerCase()) ||
+      (!nearByLocation && result.city?.toLowerCase() === nearCity?.toLowerCase()) || // Check city when no specific locality
+      result.city?.toLowerCase() === nearCity?.toLowerCase() // Check for matching city
+    )){
+      navigate(
+        `/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?searchkey=${encodeURIComponent(result.keyword)}&secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`
+      );
+    }
+        // Check if both listingId, companyName, and keyword are null
+       else if (result.listingId == null && result.companyName == null && result.keyword == null) {
+          navigate(
+            `/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`
+          );
+        } 
+        
+        // Check if keyword and companyName are not null
+        else if (result.keyword != null && result.companyName != null) {
+    
+          // If search is keyword
+          if (result.keyword.toLowerCase().startsWith(searchTerm.toLowerCase())) {
+            navigate(
+              `/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?searchkey=${encodeURIComponent(result.keyword)}&secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`
+            );
+          }
+    
+          // If search is companyName
+          else if (result.companyName.toLowerCase().startsWith(searchTerm.toLowerCase())) {
+            navigate(
+              `/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/${result.category.replace(/\s+/g, "-").toLowerCase()}/${result.localityName.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`
+            );
+          } else {
+            console.log("Error in navigate");
+          }
+        } 
+        
+        // Handle case where either companyName or keyword is missing
+        else {
+          if (result.companyName) {
+            navigate(
+              `/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/${result.category.replace(/\s+/g, "-").toLowerCase()}/locality/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`
+            );
+          } else if (result.keyword) {
+            navigate(
+              `/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?searchkey=${encodeURIComponent(result.keyword)}&secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`
+            );
+          } else {
+            console.error('No valid results for navigation');
+          }
+        }
+      } else {
+        console.error('No results available for navigation');
+      }
+    };
+    
   return (
     <div id="results">
       <div className="container">
@@ -173,7 +242,7 @@ const [totalItems, setTotalItems] = useState(0);
                   onFocus={() => setShowDropdown(true)} // Show dropdown on focus
                   onBlur={handleBlur} // Use custom handleBlur function
                 />
-                <button type="submit" className="searchButton" onClick={handleSearch} >
+                <button type="submit" className="searchButton" onClick={handleSearchNavigate} >
                   <i className="fa fa-search"></i>
                 </button>
               </div>

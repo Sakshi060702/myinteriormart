@@ -244,8 +244,8 @@ function Addcommunication() {
     }),
     control: (provided) => ({
       ...provided,
-      height: "auto", // Increase the height of the select box
-      minHeight: "50px", // Ensure minimum height of the select box
+      // height: "53px", // Increase the height of the select box
+       minHeight: "50px", // Ensure minimum height of the select box
       border: "1px solid #ccc",
       // marginLeft: "-9px",
       boxShadow: "none",
@@ -257,10 +257,10 @@ function Addcommunication() {
       ...provided,
       display:'flex',
       flexWrap:'wrap',
-      height:'auto',
+      height:'50px',
       overflowY:'auto',
       maxHeight:'150px',
-      padding:'4px',
+      // padding:'4px',
     })
   };
 

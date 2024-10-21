@@ -255,11 +255,11 @@ function Review1({ listingID }) {
                               .map((_, i) => (
                                 <i
                                   key={i}
-                                  className="icon_star"
+                                  className="icon_star rstar"
                                   style={{
                                     color:
                                       i < userRatinvAverage ? "orange" : "gray",
-                                    fontSize: "16px",
+                                    
                                     paddingRight:'4px'
                                   }}
                                 ></i>
@@ -303,6 +303,7 @@ function Review1({ listingID }) {
                                     style={{
                                       color: i < rating ? "orange" : "gray",
                                       fontSize: "16px",
+                                      marginRight:'5px'
                                     }}
                                     onClick={() => handleRatingChange(i + 1)}
                                   ></i>
@@ -368,7 +369,7 @@ function Review1({ listingID }) {
                                       <span>
                                         <b>{review.userName}</b>
                                       </span>
-                                      <div className="cat-star">
+                                      <div className="cat-star" style={{marginBottom:'9px'}}>
                                         {Array(review.ratings)
                                           .fill()
                                           .map((_, i) => (

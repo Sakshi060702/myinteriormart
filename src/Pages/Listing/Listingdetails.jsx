@@ -117,7 +117,7 @@ function Listingdetails() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isSociallinkOpen, setIsSociallinkOpen] = useState(false);
 
-  const[isBookmarkPopupOpen,setIsBookmarkPopupOpen]=useState(false);
+  const [isBookmarkPopupOpen, setIsBookmarkPopupOpen] = useState(false);
 
   const [showFullAddress, setShowFullAddress] = useState(false);
 
@@ -184,7 +184,7 @@ function Listingdetails() {
           zIndex: 1,
           background: "gainsboro",
           top: "60px",
-          right:'29px'
+          right: "29px",
         }}
         onClick={onClick}
       />
@@ -202,8 +202,7 @@ function Listingdetails() {
           zIndex: 1,
           background: "gainsboro",
           top: "60px",
-          left:'29px',
-          
+          left: "29px",
         }}
         onClick={onClick}
       ></div>
@@ -302,15 +301,14 @@ function Listingdetails() {
     }
   };
 
-  const handleBookmarkClick=()=>{
-    if(!token){
+  const handleBookmarkClick = () => {
+    if (!token) {
       setIsBookmarkPopupOpen(true);
       console.log("hello");
-    }
-    else{
+    } else {
       handleBookmarkToggle();
     }
-  }
+  };
 
   useEffect(() => {
     const fetchBookmarkStatus = async () => {
@@ -376,15 +374,14 @@ function Listingdetails() {
     }
   };
 
-  const handleLikeClick=()=>{
-    if(!token){
+  const handleLikeClick = () => {
+    if (!token) {
       setIsBookmarkPopupOpen(true);
       // console.log("hello");
-    }
-    else{
+    } else {
       handleLikeToggle();
     }
-  }
+  };
 
   useEffect(() => {
     const fetchLikeStatus = async () => {
@@ -450,15 +447,14 @@ function Listingdetails() {
     }
   };
 
-  const handleSubscribeClick=()=>{
-    if(!token){
+  const handleSubscribeClick = () => {
+    if (!token) {
       setIsBookmarkPopupOpen(true);
       // console.log("hello");
-    }
-    else{
+    } else {
       handleSubscribeToggle();
     }
-  }
+  };
 
   useEffect(() => {
     const fetchSubscribeStatus = async () => {
@@ -585,8 +581,8 @@ function Listingdetails() {
       const data = await response.json();
       console.log("address array", data);
 
-      console.log("stateid",countryID);
-      console.log("countryid",stateID);
+      console.log("stateid", countryID);
+      console.log("countryid", stateID);
       const country_detials = data["countries"].filter(
         (count) => count.countryID == countryID
       );
@@ -600,8 +596,6 @@ function Listingdetails() {
       const states_details = country_detials[0]["states"].filter(
         (count) => count.stateID == stateID
       );
-
-      
 
       // console.log('address array',country_detials[0].name, states_details[0].name);
       // return data.country[0]?.states || [];
@@ -1056,7 +1050,7 @@ function Listingdetails() {
                           <img
                             src={gallerydummy}
                             alt="Dummy Image"
-                            className="main-image-display photogallerymain"
+                            className="main-image-display photogallerymaindummy"
                           />
                         </SwiperSlide>
                       )}
@@ -1071,33 +1065,52 @@ function Listingdetails() {
                         whiteSpace: "nowrap",
                       }}
                     >
-                      {imageDetails.map((image, index) => (
-                        <div
-                          key={index}
-                          className="thumbnail imgScroll photogallerythumbnail"
-                          onClick={() => handleThumbnailClick(index)}
-                          style={{
-                            border:
-                              selectedImage === index
-                                ? "2px solid gray"
-                                : "2px solid transparent",
-                            display: "inline-block",
-                          }}
-                          ref={
-                            selectedImage === index ? activeThumbnailRef : null
-                          } // Assign ref to the active thumbnail
-                        >
-                          <img
-                            src={`https://apidev.myinteriormart.com${image.url}`}
-                            alt={`Thumbnail ${index + 1}`}
+                      {imageDetails.length > 0 ? (
+                        imageDetails.map((image, index) => (
+                          <div
+                            key={index}
+                            className="thumbnail imgScroll photogallerythumbnail"
+                            onClick={() => handleThumbnailClick(index)}
                             style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "cover",
+                              border:
+                                selectedImage === index
+                                  ? "2px solid gray"
+                                  : "2px solid transparent",
+                              display: "inline-block",
                             }}
-                          />
+                            ref={
+                              selectedImage === index
+                                ? activeThumbnailRef
+                                : null
+                            } // Assign ref to the active thumbnail
+                          >
+                            <img
+                              src={`https://apidev.myinteriormart.com${image.url}`}
+                              alt={`Thumbnail ${index + 1}`}
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "cover",
+                              }}
+                            />
+                          </div>
+                        ))
+                      ) : (
+                        <div style={{ display: "flex" }}>
+                          <div>
+                            {" "}
+                            <img src={gallerydummy} />
+                          </div>
+                          <div>
+                            {" "}
+                            <img src={gallerydummy} />
+                          </div>
+                          <div>
+                            {" "}
+                            <img src={gallerydummy} />
+                          </div>
                         </div>
-                      ))}
+                      )}
                     </div>
                     {console.log("Banner", imageURL)}
                   </div>
@@ -1124,7 +1137,6 @@ function Listingdetails() {
                                   object-fit: cover;
                                   }
                              `}
-                             
                           </style>
                           <Swiper
                             modules={[Pagination, Autoplay]}
@@ -1171,30 +1183,47 @@ function Listingdetails() {
                               whiteSpace: "nowrap",
                             }}
                           >
-                            {imageDetails.map((image, index) => (
-                              <div
-                                key={index}
-                                className="thumbnail imgScroll photogallerythumbnail"
-                                onClick={() => handleThumbnailClick(index)}
-                                style={{
-                                  border:
-                                    selectedImage === index
-                                      ? "2px solid gray"
-                                      : "2px solid transparent",
-                                  display: "inline-block",
-                                }}
-                              >
-                                <img
-                                  src={`https://apidev.myinteriormart.com${image.url}`}
-                                  alt={`Thumbnail ${index + 1}`}
+                            {imageDetails.length > 0 ? (
+                              imageDetails.map((image, index) => (
+                                <div
+                                  key={index}
+                                  className="thumbnail imgScroll photogallerythumbnail"
+                                  onClick={() => handleThumbnailClick(index)}
                                   style={{
-                                    width: "100%",
-                                    height: "100%",
-                                    objectFit: "cover",
+                                    border:
+                                      selectedImage === index
+                                        ? "2px solid gray"
+                                        : "2px solid transparent",
+                                    display: "inline-block",
                                   }}
-                                />
+                                >
+                                  <img
+                                    src={`https://apidev.myinteriormart.com${image.url}`}
+                                    alt={`Thumbnail ${index + 1}`}
+                                    style={{
+                                      width: "100%",
+                                      height: "100%",
+                                      objectFit: "cover",
+                                    }}
+                                  />
+                                </div>
+                              ))
+                            ) : (
+                              <div style={{ display: "flex" }}>
+                                <div>
+                                  {" "}
+                                  <img src={gallerydummy} />
+                                </div>
+                                <div>
+                                  {" "}
+                                  <img src={gallerydummy} />
+                                </div>
+                                <div>
+                                  {" "}
+                                  <img src={gallerydummy} />
+                                </div>
                               </div>
-                            ))}
+                            )}
                           </div>
                         </div>
                       </div>
@@ -1278,7 +1307,7 @@ function Listingdetails() {
                           </span>
                         </p>
                         <div className="listingarea listinga">
-                          <p className="listingdetailslocality" >
+                          <p className="listingdetailslocality">
                             <span className="ListingpageFont">
                               <i
                                 className="fa fa-map-o"
@@ -1321,8 +1350,6 @@ function Listingdetails() {
                         </p>
                       </div>
                       <div className="listingemp">
-                        
-                        
                         {/* <div className="col-lg-6 px-0 mb-1 year_gst mt-0">
                           <p className="mb-0 noemployee ListingpageFont">
                             <i
@@ -1335,7 +1362,7 @@ function Listingdetails() {
                       </div>
 
                       <div className="listingemp listinglocality">
-                      <div className="col-lg-6 mb-1 px-0 year_gst listingempyear">
+                        <div className="col-lg-6 mb-1 px-0 year_gst listingempyear">
                           <p className="m-0 ListingpageFont">
                             <i
                               className="fa fa-calendar"
@@ -1345,7 +1372,10 @@ function Listingdetails() {
                           </p>
                         </div>
                         <div className="col-lg-6 mb-1 px-0 year_gst listingempyear">
-                        <p className="mb-0 noemployee ListingpageFont" style={{marginLeft:'-1px'}}>
+                          <p
+                            className="mb-0 noemployee ListingpageFont"
+                            style={{ marginLeft: "-1px" }}
+                          >
                             <i
                               className="fa fa-users"
                               style={{ marginRight: "8px" }}
@@ -1353,7 +1383,7 @@ function Listingdetails() {
                             {listingDetails.numberOfEmployees} Employees
                           </p>
                         </div>
-                        
+
                         {/* <div className="col-lg-6 px-0 mb-1 year_gst mt-0">
                           <p className="mb-0 noemployee ListingpageFont">
                             <i
@@ -1369,7 +1399,7 @@ function Listingdetails() {
                         <p className="mb-0 ListingpageFont">
                           Turnover :{listingDetails.turnover}
                         </p>
-                        </div>
+                      </div>
 
                       {/* <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
                         <p className="mb-0 ListingpageFont">
@@ -1413,6 +1443,88 @@ function Listingdetails() {
                           {listingDetails.whatsapp}
                         </Link>
                       </div>
+
+                      <div className="listingemp listinglocality">
+                      {/* <div classname="col-lg-12 mb-1 p-0">
+                        <i
+                          className="fa fa-mobile"
+                          style={{ marginRight: "8px" }}
+                        ></i>
+                        <a
+                          href={`tel:${listingDetails.mobile}`}
+                          style={{ marginRight: "8px", color: "orange" }}
+                          className="ListingpageFont"
+                        >
+                          {listingDetails.mobile}
+                        </a>
+
+                       
+                      </div> */}
+                      <div classname="col-lg-12 mb-1 p-0">
+                        <i
+                          className="fa fa-mobile"
+                          style={{ marginRight: "8px" }}
+                        ></i>
+                        <a
+                          href={`tel:${listingDetails.mobile}`}
+                          style={{ marginRight: "8px", color: "orange" }}
+                          className="ListingpageFont"
+                        >
+                          {listingDetails.telephone}
+                        </a>
+
+                       
+                      </div>
+
+                      {/* <div classname="col-lg-12 mb-1 p-0">
+                        <i
+                          className="fa fa-mobile"
+                          style={{ marginRight: "8px" }}
+                        ></i>
+                        <a
+                          href={`tel:${listingDetails.mobile}`}
+                          style={{ marginRight: "8px", color: "orange" }}
+                          className="ListingpageFont"
+                        >
+                          {listingDetails.tollFree}
+                        </a> */}
+
+                        {/* <i
+                          className="fa fa-whatsapp"
+                          style={{ marginRight: "8px" }}
+                        ></i> */}
+                        {/* <Link style={{ color: "orange" }}>
+                          {listingDetails.whatsapp}
+                        </Link>
+                      </div> */}
+
+                      <div classname="col-lg-12 mb-1 p-0">
+                        <i
+                          className="fa fa-mobile"
+                          style={{ marginRight: "8px" }}
+                        ></i>
+                        <a
+                          href={`tel:${listingDetails.mobile}`}
+                          style={{ marginRight: "8px", color: "orange" }}
+                          className="ListingpageFont"
+                        >
+                          {listingDetails.tollFree}
+                        </a>
+
+                        {/* <i
+                          className="fa fa-whatsapp"
+                          style={{ marginRight: "8px" }}
+                        ></i> */}
+                        <Link style={{ color: "orange" }}>
+                          {listingDetails.whatsapp}
+                        </Link>
+                      </div>
+
+                      
+
+                        
+                      </div>
+
                       <div
                         classname="company-time ListingpageFont"
                         style={{ display: "flex", justifyItems: "center" }}
@@ -1597,7 +1709,7 @@ function Listingdetails() {
                         >
                           <i
                             className="fa fa-whatsapp"
-                            style={{ marginRight: "5px", color: "orange" }}
+                            style={{ marginRight: "3px", color: "orange" }}
                           ></i>
                         </a>
                         <a
@@ -1627,10 +1739,13 @@ function Listingdetails() {
                             xmlns="http://www.w3.org/2000/svg"
                             width="14"
                             height="14"
+                            marginRight="3px"
+                            marginTop="-5px"
                             fill="currentColor"
                             color="orange"
                             class="bi bi-twitter-x"
                             viewBox="0 0 16 16"
+                           
                           >
                             <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
                           </svg>
@@ -1727,8 +1842,10 @@ function Listingdetails() {
         </div>
       </div>
 
-<Popup isOpen={isBookmarkPopupOpen}
-onClose={()=>setIsBookmarkPopupOpen(false)}/>
+      <Popup
+        isOpen={isBookmarkPopupOpen}
+        onClose={() => setIsBookmarkPopupOpen(false)}
+      />
 
       {token ? (
         <Getquotespopup

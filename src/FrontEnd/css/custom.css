@@ -915,6 +915,7 @@ footer ul {
 }
 
 
+
 .company-listing-main {
 	background-color: #fff;
 }
@@ -1812,7 +1813,7 @@ hr {
     margin-bottom: 1rem;
     border: 0;
 	width: 100%;
-    border-top: 1px solid #acacac;
+    border-top: 1px solid rgb(241, 241, 241);
 }
 
 

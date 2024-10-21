@@ -9944,7 +9944,7 @@ article.blog .post_info ul li:last-child i {
 .notification .notification-list {
   position: relative;
   padding: 10px 10px 10px 22px;
-  margin-bottom: 10px;
+  margin-bottom: -4px;
 }
 
 .notification .nitify_dot {
@@ -10026,7 +10026,7 @@ article.blog .post_info ul li:last-child i {
 }
 
 .owner_reply {
-  margin: -17px 0 0 60px;
+  margin: -24px 0 0 60px;
   border-left: 2px solid #dedddd;
   padding: 0 20px;
 }

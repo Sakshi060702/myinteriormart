@@ -47,7 +47,7 @@ const Notification = ({ setHasNotifications }) => {
 
   return (
     <>
-    <div className="notification1 notificationdekstoppage" >
+    <div className="notification1 notificationdekstoppage" style={{marginTop:'16px'}} >
       <div>
         <div className="notificationheader">
           <h5>Notification</h5>
