@@ -326,10 +326,10 @@ function Addcompany() {
                   }),
                   option: (provided, state) => ({
                     ...provided,
-                    backgroundColor: state.isFocused
-                      ? "orange"
-                      : provided.backgroundColor,
-                    color: state.isFocused ? "white" : provided.color,
+                    backgroundColor:state.isSelected ?"orange": state.isFocused
+                    ? "orange"
+                    : provided.backgroundColor,
+                  color:state.isSelected?'white': state.isFocused ? "white" : provided.color,
                     cursor: "pointer",
                   }),
                   menu: (provided) => ({

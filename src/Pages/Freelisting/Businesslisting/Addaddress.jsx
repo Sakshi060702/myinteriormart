@@ -457,8 +457,10 @@ const Address = () => {
                       styles={{
                         option: (provided, state) => ({
                           ...provided,
-                          backgroundColor: state.isFocused ? "orange" : "white", // Background color orange on hover
-                          color: state.isFocused ? "white" : "black", // Adjust text color for contrast
+                          backgroundColor:state.isSelected ?"orange": state.isFocused
+                          ? "orange"
+                          : provided.backgroundColor,
+                        color:state.isSelected?'white': state.isFocused ? "white" : provided.color,
                           cursor: "pointer",
                         }),
                         control: (base) => ({
@@ -485,8 +487,10 @@ const Address = () => {
                       styles={{
                         option: (provided, state) => ({
                           ...provided,
-                          backgroundColor: state.isFocused ? "orange" : "white", // Hover background color change
-                          color: state.isFocused ? "white" : "black", // Text color for contrast
+                          backgroundColor:state.isSelected ?"orange": state.isFocused
+                          ? "orange"
+                          : provided.backgroundColor,
+                        color:state.isSelected?'white': state.isFocused ? "white" : provided.color,
                           cursor: "pointer",
                         }),
                         control: (base) => ({
@@ -513,8 +517,10 @@ const Address = () => {
                       styles={{
                         option: (provided, state) => ({
                           ...provided,
-                          backgroundColor: state.isFocused ? "orange" : "white", // Orange background on hover
-                          color: state.isFocused ? "white" : "black", // Adjust text color for contrast
+                          backgroundColor:state.isSelected ?"orange": state.isFocused
+                            ? "orange"
+                            : provided.backgroundColor,
+                          color:state.isSelected?'white': state.isFocused ? "white" : provided.color,
                           cursor: "pointer",
                         }),
                         control: (base) => ({
@@ -543,8 +549,10 @@ const Address = () => {
                       styles={{
                         option: (provided, state) => ({
                           ...provided,
-                          backgroundColor: state.isFocused ? "orange" : "white", // Orange background on hover
-                          color: state.isFocused ? "white" : "black", // Adjust text color for contrast
+                          backgroundColor:state.isSelected ?"orange": state.isFocused
+                            ? "orange"
+                            : provided.backgroundColor,
+                          color:state.isSelected?'white': state.isFocused ? "white" : provided.color,
                           cursor: "pointer",
                         }),
                         control: (base) => ({
@@ -572,8 +580,10 @@ const Address = () => {
                       styles={{
                         option: (provided, state) => ({
                           ...provided,
-                          backgroundColor: state.isFocused ? "orange" : "white", // Orange background on hover
-                          color: state.isFocused ? "white" : "black", // Adjust text color for contrast
+                          backgroundColor:state.isSelected ?"orange": state.isFocused
+                            ? "orange"
+                            : provided.backgroundColor,
+                          color:state.isSelected?'white': state.isFocused ? "white" : provided.color,
                           cursor: "pointer",
                         }),
                         control: (base) => ({
@@ -601,8 +611,10 @@ const Address = () => {
                       styles={{
                         option: (provided, state) => ({
                           ...provided,
-                          backgroundColor: state.isFocused ? "orange" : "white", // Orange background on hover
-                          color: state.isFocused ? "white" : "black", // Adjust text color for better contrast
+                          backgroundColor:state.isSelected ?"orange": state.isFocused
+                          ? "orange"
+                          : provided.backgroundColor,
+                        color:state.isSelected?'white': state.isFocused ? "white" : provided.color,
                           cursor: "pointer",
                         }),
                         control: (base) => ({

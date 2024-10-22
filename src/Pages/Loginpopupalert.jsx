@@ -44,7 +44,7 @@ const Loginpopupalert = ({ message, type, onClose }) => {
             </h3> */}
                 {/* <h5>Your User Credential Login Successful</h5> */}
                 <div className="loginpopup">
-                  <h5>{message}</h5>
+                  <h5 style={{color:'white'}}>{message}</h5>
                 </div>
               </>
             ) : (
@@ -70,7 +70,7 @@ const Loginpopupalert = ({ message, type, onClose }) => {
             </h3> */}
                 <h5>Invalid login credentials</h5>
                 <div className="loginErrorpopup">
-                  <h5>{message}</h5>
+                  <h5 style={{color:'white'}}>{message}</h5>
                 </div>
               </>
             )}

@@ -837,7 +837,8 @@ function Listingdetails() {
           {listingDetails ? (
             <>
               <div className="col-lg-3 individual-listing-sidebar padding-5 pagebottom">
-                <div className="box_detail_cus">
+                <>{status===1?(
+                  <div className="box_detail_cus">
                   <div className="p-3">
                     <div className="user_logo_sec">
                       {listingDetails.logoImage &&
@@ -865,6 +866,11 @@ function Listingdetails() {
                     </div>
                   </div>
                 </div>
+                ):(
+                  <></>
+                )}</>
+                
+                <>{status===1?(
                 <div className="box_detail_cus">
                   <div className="cust-profile">
                     {/* <img src={profile} alt="profile"></img> */}
@@ -947,6 +953,9 @@ function Listingdetails() {
                     <span className="cust-type">Owner</span> */}
                   </div>
                 </div>
+                 ):(
+                  <></>
+                )}</>
                 <>
                   {status === 1 ? (
                     <Listingkeyword companyID={listingDetails.listingId} />
@@ -1181,6 +1190,7 @@ function Listingdetails() {
                               marginTop: "2px",
                               overflowX: "hidden",
                               whiteSpace: "nowrap",
+                              maxWidth:'100%'
                             }}
                           >
                             {imageDetails.length > 0 ? (
@@ -1397,7 +1407,7 @@ function Listingdetails() {
 
                       <div className="col-lg-6 mb-1 px-0 year_gst listingempyear">
                         <p className="mb-0 ListingpageFont">
-                          Turnover :{listingDetails.turnover}
+                          Turnover : {listingDetails.turnover}
                         </p>
                       </div>
 
@@ -1409,7 +1419,7 @@ function Listingdetails() {
                       {/* gstnumber */}
                       <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
                         <p className="mb-0 ListingpageFont">
-                          GST NO :{listingDetails.gstNumber}
+                          GST NO : {listingDetails.gstNumber}
                         </p>
                       </div>
                       <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
@@ -1444,23 +1454,10 @@ function Listingdetails() {
                         </Link>
                       </div>
 
-                      <div className="listingemp listinglocality">
-                      {/* <div classname="col-lg-12 mb-1 p-0">
-                        <i
-                          className="fa fa-mobile"
-                          style={{ marginRight: "8px" }}
-                        ></i>
-                        <a
-                          href={`tel:${listingDetails.mobile}`}
-                          style={{ marginRight: "8px", color: "orange" }}
-                          className="ListingpageFont"
-                        >
-                          {listingDetails.mobile}
-                        </a>
-
-                       
-                      </div> */}
-                      <div classname="col-lg-12 mb-1 p-0">
+                      <div className="listingemp listingtoll">
+                      
+                      <div classname="col-lg-12 mb-1 listingtelephone" >
+                        
                         <i
                           className="fa fa-mobile"
                           style={{ marginRight: "8px" }}
@@ -1473,30 +1470,10 @@ function Listingdetails() {
                           {listingDetails.telephone}
                         </a>
 
-                       
+                        
                       </div>
 
-                      {/* <div classname="col-lg-12 mb-1 p-0">
-                        <i
-                          className="fa fa-mobile"
-                          style={{ marginRight: "8px" }}
-                        ></i>
-                        <a
-                          href={`tel:${listingDetails.mobile}`}
-                          style={{ marginRight: "8px", color: "orange" }}
-                          className="ListingpageFont"
-                        >
-                          {listingDetails.tollFree}
-                        </a> */}
-
-                        {/* <i
-                          className="fa fa-whatsapp"
-                          style={{ marginRight: "8px" }}
-                        ></i> */}
-                        {/* <Link style={{ color: "orange" }}>
-                          {listingDetails.whatsapp}
-                        </Link>
-                      </div> */}
+                      
 
                       <div classname="col-lg-12 mb-1 p-0">
                         <i
@@ -1511,13 +1488,7 @@ function Listingdetails() {
                           {listingDetails.tollFree}
                         </a>
 
-                        {/* <i
-                          className="fa fa-whatsapp"
-                          style={{ marginRight: "8px" }}
-                        ></i> */}
-                        <Link style={{ color: "orange" }}>
-                          {listingDetails.whatsapp}
-                        </Link>
+                        
                       </div>
 
                       
@@ -1709,7 +1680,7 @@ function Listingdetails() {
                         >
                           <i
                             className="fa fa-whatsapp"
-                            style={{ marginRight: "3px", color: "orange" }}
+                            style={{ marginRight: "-1px", color: "orange" }}
                           ></i>
                         </a>
                         <a
@@ -1718,7 +1689,7 @@ function Listingdetails() {
                         >
                           <i
                             className="ti-facebook"
-                            style={{ marginRight: "3px", color: "orange" }}
+                            style={{ marginRight: "-1px", color: "orange" }}
                           ></i>
                         </a>
                         <a
@@ -1727,7 +1698,7 @@ function Listingdetails() {
                         >
                           <i
                             className="ti-linkedin"
-                            style={{ marginRight: "5px", color: "orange" }}
+                            style={{ marginRight: "3px", color: "orange" }}
                           ></i>
                         </a>
                         <a
@@ -1739,11 +1710,9 @@ function Listingdetails() {
                             xmlns="http://www.w3.org/2000/svg"
                             width="14"
                             height="14"
-                            marginRight="3px"
-                            marginTop="-5px"
                             fill="currentColor"
                             color="orange"
-                            class="bi bi-twitter-x"
+                            className="bi bi-twitter-x svg-margin"
                             viewBox="0 0 16 16"
                            
                           >
@@ -1756,7 +1725,7 @@ function Listingdetails() {
                         >
                           <i
                             className="ti-youtube"
-                            style={{ marginRight: "5px", color: "orange" }}
+                            style={{ marginRight: "3px", color: "orange" }}
                           ></i>
                         </a>
                         <a

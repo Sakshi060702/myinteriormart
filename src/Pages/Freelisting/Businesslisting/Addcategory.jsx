@@ -335,8 +335,10 @@ function Addcategory()
                       styles={{
                         option: (provided, state) => ({
                           ...provided,
-                          backgroundColor: state.isFocused ? "orange" : "white", // Change background to orange on hover
-                          color: state.isFocused ? "white" : "black", // Adjust text color for contrast
+                          backgroundColor:state.isSelected ?"orange": state.isFocused
+                          ? "orange"
+                          : provided.backgroundColor,
+                        color:state.isSelected?'white': state.isFocused ? "white" : provided.color,
                           cursor: "pointer",
                         }),
                         control: (base) => ({

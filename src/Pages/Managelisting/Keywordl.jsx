@@ -106,19 +106,19 @@ function Keywordl() {
 
     // console.log(businessTypes.indexOf(selectedOption.value) > -1); //true
     // console.log(selectedOption.value in businessTypes);
-    if(businessTypes.indexOf(selectedOption.value) > -1){
+    // if(businessTypes.indexOf(selectedOption.value) > -1){
       
 
-      setErrorMessage("Keyword Alredy Exist.");
-      setShowPopup(true);
-      setTimeout(() => setShowPopup(false), 2000);
-    }else{
+    //   setErrorMessage("Keyword Alredy Exist.");
+    //   setShowPopup(true);
+    //   setTimeout(() => setShowPopup(false), 2000);
+    // }else{
       setKeyword(selectedOption.value);
 
       // setErrorMessage("Keyword Added Successfully.");
       // setShowPopup(true);
       // setTimeout(() => setShowPopup(false), 2000);
-    }
+    //}
     // setKeyword(selectedOption.value);
   };
 
@@ -354,6 +354,14 @@ function Keywordl() {
                           width: "250px",
                           height: "50px",
                         }),
+                        option:(provided,state)=>({
+                          ...provided,
+                          backgroundColor:state.isSelected ?"orange": state.isFocused
+                            ? "orange"
+                            : provided.backgroundColor,
+                          color:state.isSelected?'white': state.isFocused ? "white" : provided.color,
+                          cursor: "pointer",
+                        })
                       }}
                       value={allOptions.find(
                         (option) => option.value === formData.businessCategory

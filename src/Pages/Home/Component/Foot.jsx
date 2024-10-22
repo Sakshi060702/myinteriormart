@@ -239,30 +239,30 @@ const Foot = () => {
                 className="d-flex flex-column terms"
                 style={{ cursor: "pointer", padding: "0" }}
               >
-                <a
-                  href=" privacy-policy.html"
+                <NavLink
+                  to={`/Privacypolicy/in-${localStorage.getItem("cityname")}`}
                   style={{ color: "white", paddingBottom: "17px" }}
                 >
                   Privacy
-                </a>
+                </NavLink>
               </div>
             </div>
             <div
               className="privacyline"
               style={{ borderLeft: "2px solid white", height: "20px" }}
             ></div>
-
+ 
             <div>
               <div
                 className="d-flex flex-column"
                 style={{ cursor: "pointer", padding: "0" }}
               >
-                <a
-                  href="termsandconditions.html"
+               <NavLink
+                  to={`/Termconditions/in-${localStorage.getItem("cityname")}`}
                   style={{ color: "white", paddingBottom: "17px" }}
                 >
-                  Terms and conditions
-                </a>
+                 Terms and conditions
+                </NavLink>
               </div>
             </div>
             <div

@@ -36,7 +36,7 @@ border: 1px solid transparent;
 }
 
 .custom-dropdown {
-  width: 400px;
+  width: 360px;
     border: 1px solid #ced4da; 
     background-color: white;
 }
@@ -56,7 +56,7 @@ border: 1px solid transparent;
 
 @media (max-width:480px) {
   .custom-dropdown {
-    width: 300px;
+    width: 273px;
       border: 1px solid #ced4da; 
       background-color: white;
   }

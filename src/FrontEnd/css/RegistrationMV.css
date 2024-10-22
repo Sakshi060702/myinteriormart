@@ -1199,15 +1199,15 @@ div.scrollmenu .imgScroll:hover {
 }
 @media (max-width:767px) {
   .photogallerymain{
-    width: 354px !important;
+    width: 372px !important;
     height: 164px;
-    margin-left: 9px;
+    margin-left: 1px;
   }
 }
 
 @media (max-width:767px) {
   .photogallerymaindummy{
-    width: 333px !important;
+    width: 371px !important;
     height: 164px !important;
     /* margin-left: 9px; */
   }
@@ -1720,3 +1720,31 @@ div.scrollmenu .imgScroll:hover {
     font-size: 13px;
   }
 }
+
+
+
+
+.listingtoll{
+  width: 570px !important;
+}
+@media (max-width:767px) {
+  .listingtoll{
+    width: 382px !important;
+  }
+}
+
+.listingtelephone{
+  width: 200px !important;
+}
+@media (max-width:767px) {
+  .listingtelephone{
+    width: 100px !important;
+  }
+}
+
+.svg-margin {
+  margin-right: 3px;
+  margin-top: -5px; 
+}
+
+

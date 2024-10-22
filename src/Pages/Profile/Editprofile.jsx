@@ -181,6 +181,55 @@ function Editprofile() {
               </div>
             </div>
             <div className="col-md-6">
+            <div className="form-group">
+                <div className="custom-select-form">
+                  <label htmlFor="gender">Title:</label>
+                  <DropdownButton
+                    id="dropdown-basic-button"
+                    className="custom-dropdown"
+                    title={selectGender}
+                    onSelect={handleSelect}
+                    variant="light"
+                  >
+                    <Dropdown.Item
+                      eventKey="Mr"
+                      style={{ transition: "background-color 0.3s" }}
+                      onMouseEnter={(e) =>
+                        (e.target.style.backgroundColor = "orange")
+                      }
+                      onMouseLeave={(e) =>
+                        (e.target.style.backgroundColor = "white")
+                      }
+                    >
+                      Mr
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      eventKey="Mrs"
+                      style={{ transition: "background-color 0.3s" }}
+                      onMouseEnter={(e) =>
+                        (e.target.style.backgroundColor = "orange")
+                      }
+                      onMouseLeave={(e) =>
+                        (e.target.style.backgroundColor = "white")
+                      }
+                    >
+                      Mrs
+                    </Dropdown.Item>
+                    {/* <Dropdown.Item
+                      eventKey="Other"
+                      style={{ transition: "background-color 0.3s" }}
+                      onMouseEnter={(e) =>
+                        (e.target.style.backgroundColor = "orange")
+                      }
+                      onMouseLeave={(e) =>
+                        (e.target.style.backgroundColor = "white")
+                      }
+                    >
+                      Other
+                    </Dropdown.Item> */}
+                  </DropdownButton>
+                </div>
+              </div>
               <div className="form-group">
                 <label>
                   First Name<span className="text-danger">*</span>
@@ -214,55 +263,7 @@ function Editprofile() {
                 )}
               </div>
 
-              <div className="form-group">
-                <div className="custom-select-form">
-                  <label htmlFor="gender">Gender:</label>
-                  <DropdownButton
-                    id="dropdown-basic-button"
-                    className="custom-dropdown"
-                    title={selectGender}
-                    onSelect={handleSelect}
-                    variant="light"
-                  >
-                    <Dropdown.Item
-                      eventKey="Male"
-                      style={{ transition: "background-color 0.3s" }}
-                      onMouseEnter={(e) =>
-                        (e.target.style.backgroundColor = "orange")
-                      }
-                      onMouseLeave={(e) =>
-                        (e.target.style.backgroundColor = "white")
-                      }
-                    >
-                      Male
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      eventKey="Female"
-                      style={{ transition: "background-color 0.3s" }}
-                      onMouseEnter={(e) =>
-                        (e.target.style.backgroundColor = "orange")
-                      }
-                      onMouseLeave={(e) =>
-                        (e.target.style.backgroundColor = "white")
-                      }
-                    >
-                      Female
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      eventKey="Other"
-                      style={{ transition: "background-color 0.3s" }}
-                      onMouseEnter={(e) =>
-                        (e.target.style.backgroundColor = "orange")
-                      }
-                      onMouseLeave={(e) =>
-                        (e.target.style.backgroundColor = "white")
-                      }
-                    >
-                      Other
-                    </Dropdown.Item>
-                  </DropdownButton>
-                </div>
-              </div>
+              
             </div>
             <div className="form-group col-md-6">
               <label>Mobile Number</label>

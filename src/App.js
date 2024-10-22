@@ -263,6 +263,9 @@ import Claimverifyotp from "./Pages/Login/ClaimVerifyotp";
 import EmailClaimVerifyotp from "./Pages/Login/EmailClaimVerifyotp";
 import GetclaimRegister from "./Pages/Login/GetclaimRegister";
 
+import Privacypolicy from "./Pages/Privacypolicy";
+import Termconditions from "./Pages/Termconditions";
+
 import ScrollToTop from "./Pages/ScrollToTop";
 
 // import Dashboardprofile from "./Pages/Profile/Dashboardprofile";
@@ -1337,6 +1340,10 @@ function App() {
         />
 
         <Route path="/Usersuggestion/:cityName" element={<Usersuggestion />} />
+
+        <Route path="/Privacypolicy/:cityName" element={<Privacypolicy />} />
+        <Route path="/Termconditions/:cityName" element={<Termconditions />} />
+
       </Routes>
       
       <div className="sticky-footer">
