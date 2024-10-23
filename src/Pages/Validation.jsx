@@ -95,4 +95,13 @@ export const validateEmail = (email) => {
     return "";
   };
 
+  export const validationReviewlength = (review) => {
+    const trimmedReview = review.trim(); // Trim whitespace
+    if (trimmedReview.length < 30) { // Check length
+      return "The review must be at least 30 characters."; // Return error message
+    }
+    return ""; // Return empty string if validation passes
+  };
+  
+
 

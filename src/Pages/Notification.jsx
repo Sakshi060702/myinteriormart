@@ -70,7 +70,7 @@ const Notification = ({ setHasNotifications }) => {
                             <img
                               src={`https://apidev.myinteriormart.com${notification.profileImage}`}
                               alt={`${notification.companyName} profile`}
-                              style={{ height: '63px',width: '45px',margin:'0px 0px 0px -26px',position:'absolute'}}
+                              style={{ height: '55px',width: '55px',margin:'12px 0px 0px -26px',position:'absolute',borderRadius:'50%'}}
                             />
                           ) : (
                             <img alt="default" style={{height: '48px', width: '48px', objectFit: 'cover'}} />
@@ -86,14 +86,16 @@ const Notification = ({ setHasNotifications }) => {
                           </div>
                           <div>
                           <p className="description">
-                            <span className="user-name">
-                              <strong style={{fontSize:'13px',paddingLeft:'11px'}}>{notification.userName}</strong>
-                            </span>
-                            
-                            <span className="activity-text" style={{padding:'2px 0px 1px 26px'}}>
-                            <i className="fa fa-bookmark" style={{color:'orange' ,fontSize:'16px' , marginRight:'5px'}}></i> 
+                            <span className="activity-text" style={{paddingLeft:'14px',paddingRight:'6px'}}>
+                            {notification.userName}
+                              {/* <strong style={{fontSize:'13px',paddingLeft:'11px'}}>{notification.userName}</strong> */}
+                            </span> 
+                          
+                            <span className="activity-text" >
+                            {/* <i className="fa fa-bookmark" style={{color:'orange' ,fontSize:'16px' , marginRight:'5px'}}></i>  */}
                               {notification.activityText}
                             </span>
+                            <span className="activity-text"> Your Listing {notification.companyName}</span>
                           </p>
                           </div>
                           

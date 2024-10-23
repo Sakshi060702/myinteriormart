@@ -1762,11 +1762,11 @@ iframe#gmap_canvas {
 }
 
 .notification-list {
-    background-color: #fff;
+    background-color: #efefef;
     padding: 15px;
     margin-bottom: 15px;
     border: 1px solid gainsboro;
-	border-radius: 12px;
+	/* border-radius: 12px; */
 }
 
 .notification-list p {

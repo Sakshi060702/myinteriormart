@@ -5,17 +5,23 @@ import "../../FrontEnd/css/Mangelisting.css";
 import { useSelector, useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh";
 import Popupalert from "../Popupalert";
-import { validateImageFile,validateGalleryFile,validateName } from "../Validation";
+import {
+  validateImageFile,
+  validateGalleryFile,
+  validateName,
+} from "../Validation";
 import useAuthCheck from "../../Hooks/useAuthCheck";
-import '../../FrontEnd/css/RegistrationMV.css'
+import "../../FrontEnd/css/RegistrationMV.css";
 
 function Galleryimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageTitle, setImageTitle] = useState("");
   const [imageDetails, setImageDetails] = useState([]);
-  
-  const MAX_IMAGES=20;
-  const[remaingImages,setRemainingImages]=useState(MAX_IMAGES);
+
+  const [listingid, setListingId] = useState([]);
+
+  const MAX_IMAGES = 20;
+  const [remaingImages, setRemainingImages] = useState(MAX_IMAGES);
 
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
@@ -26,20 +32,19 @@ function Galleryimagel() {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  const[error,setError]=useState("");
-
+  const [error, setError] = useState("");
 
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
 
-    const totalUplodedImages=imageDetails.length;
-    const newTotalUplodedImages=totalUplodedImages+(files?files.length:0);
+    const totalUplodedImages = imageDetails.length;
+    const newTotalUplodedImages =
+      totalUplodedImages + (files ? files.length : 0);
 
     if (newTotalUplodedImages > MAX_IMAGES) {
-    
       const validFileCount = MAX_IMAGES - totalUplodedImages;
-      const validFiles=files.slice(0, validFileCount);
-      setSelectedFile(validFiles); 
+      const validFiles = files.slice(0, validFileCount);
+      setSelectedFile(validFiles);
       setRemainingImages(0);
     } else {
       setSelectedFile(files);
@@ -71,36 +76,67 @@ function Galleryimagel() {
         if (data instanceof Object) {
           console.log(data);
           console.log();
-          setImageDetails(data.imagepath.map((img,index)=> ({ url: img, title: data.imagetitle[index]||"No Title" })));
+
+          setListingId(data.listingid);
+
+          setImageDetails(
+            data.imagepath.map((img, index) => ({
+              url: img,
+              title: data.imagetitle[index] || "No Title",
+            }))
+          );
           setRemainingImages(MAX_IMAGES - data.imagepath.length);
-        
         }
       } catch (error) {
         console.error(error);
       }
     };
-    if(isAuthenticated){
+    if (isAuthenticated) {
       fetchGalleryImage();
     }
-
- 
   }, [token]);
+
+  const handleDeleteImage = async (imageUrl) => {
+    const remainingImagePath = imageDetails
+      .filter((img) => img.url !== imageUrl)
+      .map((img) => img.url);
+
+    const deletePayload = {
+      ListingID: listingid,
+      ImagePaths: remainingImagePath,
+    };
+
+    try {
+      const delteResponse = await fetch(
+        "https://apidev.myinteriormart.com/api/DeleteImages/GalleryDeleteImages",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(deletePayload),
+        }
+      );
+      setImageDetails((prevDetails) =>
+        prevDetails.filter((img) => img.url !== imageUrl)
+      );
+      setRemainingImages(MAX_IMAGES - remainingImagePath.length);
+    } catch (error) {
+      console.error("Error deleting image:", error);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-
     setError({});
     const validationError = validateGalleryFile(selectedFile);
-    const validationName=validateName(imageTitle);
+    const validationName = validateName(imageTitle);
 
-    if (validationError||validationName) {
-      setError({ imageFile: validationError,
-        imagetitle:validationName
-       });
+    if (validationError || validationName) {
+      setError({ imageFile: validationError, imagetitle: validationName });
       return;
     }
-
 
     if (selectedFile.length > 0 && imageTitle) {
       const formData = new FormData();
@@ -130,13 +166,19 @@ function Galleryimagel() {
         console.log("Post response", result);
 
         if (result instanceof Object) {
-          const imageUrls = Array.isArray(result.imageUrls) ? result.imageUrls : [];
-          const imageTitles = Array.isArray(result.imageTitles) ? result.imageTitles : [];
+          const imageUrls = Array.isArray(result.imageUrls)
+            ? result.imageUrls
+            : [];
+          const imageTitles = Array.isArray(result.imageTitles)
+            ? result.imageTitles
+            : [];
 
-          setImageDetails(imageUrls.map((img, index) => ({
-          url: img,
-          title: imageTitles[index] || "No Title" // Fallback if title is undefined
-        })));
+          setImageDetails(
+            imageUrls.map((img, index) => ({
+              url: img,
+              title: imageTitles[index] || "No Title", // Fallback if title is undefined
+            }))
+          );
           setRemainingImages(MAX_IMAGES - result.imageUrls.length);
           // setImageDetails((prevDetails) =>
           //   prevDetails.concat(result.map((image) => ({ url: image.imageUrls, title: image.imageTitle })))
@@ -152,7 +194,6 @@ function Galleryimagel() {
         // setTimeout(() => {
         //   setShowPopup(false);
         // }, 2000);
-
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
         setErrorMessage("Failed to Upload Image. Please try again later.");
@@ -188,8 +229,8 @@ function Galleryimagel() {
                   accept="image/*"
                 />
                 {error.imageFile && (
-                      <div className="text-danger">{error.imageFile}</div>
-                    )}
+                  <div className="text-danger">{error.imageFile}</div>
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="name">
@@ -206,10 +247,9 @@ function Galleryimagel() {
                   required
                 />
                 {error.imagetitle && (
-                      <div className="text-danger">{error.imagetitle}</div>
-                    )}
+                  <div className="text-danger">{error.imagetitle}</div>
+                )}
               </div>
-              
             </div>
           </div>
           <hr style={{ marginTop: "32px" }}></hr>
@@ -220,51 +260,70 @@ function Galleryimagel() {
           </div>
           <div className="row justify-content-center mt-4">
             {console.log(imageDetails)}
-            {imageDetails.length === 0 || !imageDetails.some(img => img.url) ? (
-            <div className="col-md-3 col-lg-2 col-6 mb-5">
-              <div className="upload_img_sec">
-                <img
-                  className="upload_images"
-                  src={usericon}
-                  alt="Default User Icon"
-                />
-              </div>
-              
-            </div>
-          ) : (
-            imageDetails.map((image, index) => (
-              <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
+            {imageDetails.length === 0 ||
+            !imageDetails.some((img) => img.url) ? (
+              <div className="col-md-3 col-lg-2 col-6 mb-5">
                 <div className="upload_img_sec">
                   <img
                     className="upload_images"
-                    src={image.url ? `https://apidev.myinteriormart.com${image.url}` : usericon}
-                    alt="Gallery Image"
+                    src={usericon}
+                    alt="Default User Icon"
                   />
                 </div>
-                <div className="img_title text-center">{image.title}</div>
               </div>
-            ))
-          )}
-         
+            ) : (
+              imageDetails.map((image, index) => (
+                <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
+                  <div className="upload_img_sec">
+                    <img
+                      className="upload_images"
+                      src={
+                        image.url
+                          ? `https://apidev.myinteriormart.com${image.url}`
+                          : usericon
+                      }
+                      alt="Gallery Image"
+                    />
+                    <button
+                      className="btn btn-danger position-absolute top-0 right-0"
+                      onClick={() => handleDeleteImage(image.url)}
+                      style={{
+                        position: "absolute",
+                        top: "-14px",
+                        right: "-11px",
+                        backgroundColor: "red",
+                        border: "none",
+                        cursor: "pointer",
+                        height:'33px',
+                        borderRadius:'50%'
+                      }}
+                    >
+                      &times;
+                    </button>
+                  </div>
+                  <div className="img_title text-center">{image.title}</div>
+                </div>
+              ))
+            )}
           </div>
-          <div className='uplodlogo'>
-          <button
-                className="btn_1"
-                style={{ backgroundColor: "#fb830d", marginTop: "10px" }}
-                onClick={handleSubmit}
-              >
-                Submit
-              </button>
+          <div className="uplodlogo">
+            <button
+              className="btn_1"
+              style={{ backgroundColor: "#fb830d", marginTop: "10px" }}
+              onClick={handleSubmit}
+            >
+              Submit
+            </button>
           </div>
           <div className="Gallerycount">
-          <div className="text-danger">
-            {remaingImages > 0 
-              ? `You can upload ${remaingImages} more image`
-              : "Maximum 20 images reached"}
+            <div className="text-danger">
+              {remaingImages > 0
+                ? `You can upload ${remaingImages} more image`
+                : "Maximum 20 images reached"}
+            </div>
+            <div className="text-danger">Upload Maximum 20 Images</div>
           </div>
-          <div className="text-danger">Upload Maximum 20 Images</div>
-          </div>
-          
+
           {showPopup && (
             <Popupalert
               message={successMessage || errorMessage}

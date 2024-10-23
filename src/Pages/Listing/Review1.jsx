@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import profileImage from "../../FrontEnd/img/icon/profile.png";
 import { useSelector } from "react-redux";
+import { validationReviewlength } from "../Validation";
+import { NavLink } from "react-router-dom";
 
 function Review1({ listingID }) {
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
@@ -19,6 +21,8 @@ function Review1({ listingID }) {
 
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.user);
+
+  const [error, setError] = useState("");
 
   // useEffect(() => {
   //   fetchListingDetails();
@@ -91,6 +95,17 @@ function Review1({ listingID }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    
+    setError(""); // Clear previous errors
+    const reviewError = validationReviewlength(reviewText); // Validate review
+    if (reviewError) {
+      setError({ comment: reviewError }); // Set error if validation fails
+      return; // Stop further execution
+    }
+
+
+
     try {
       const response = await fetch(
         `https://apidev.myinteriormart.com/api/Ratings/CreateOrUpdateRating`,
@@ -319,6 +334,7 @@ function Review1({ listingID }) {
                               value={reviewText}
                               onChange={handleReviewTextChange}
                             ></textarea>
+                            {error.comment &&(<div className="text-danger">{error.comment}</div>)}
                           </div>
                           <div className="form-group col-md-12">
                             <input
@@ -367,7 +383,7 @@ function Review1({ listingID }) {
                                     </div>
                                     <div className="col-lg-10 col-9 pl-lg-0">
                                       <span>
-                                        <b>{review.userName}</b>
+                                        <b>{review.gender} {review.userName}</b>
                                       </span>
                                       <div className="cat-star" style={{marginBottom:'9px'}}>
                                         {Array(review.ratings)

@@ -3,9 +3,9 @@ import { useParams, useSearchParams } from "react-router-dom";
 import Services from "../Services/Webdevelopment/Website/Services";
 import Webreviews from "../Services/Webdevelopment/Website/Webreviews";
 import profile from "../../FrontEnd/img/profile.svg";
-import banner2 from "../../FrontEnd/img/bannercomming.png";
+import banner2 from "../../FrontEnd/img/Bimg.png";
 import banner3 from "../../FrontEnd/img/Thumbnail-MIM-Photo-Coming-Soon.jpg";
-import gallerydummy from "../../FrontEnd/img/Gallery coming soon.png";
+import gallerydummy from "../../FrontEnd/img/Gimg.png";
 import { Link } from "react-router-dom";
 import { faL } from "@fortawesome/free-solid-svg-icons/faL";
 import Popup from "./Popup";
@@ -837,46 +837,49 @@ function Listingdetails() {
           {listingDetails ? (
             <>
               <div className="col-lg-3 individual-listing-sidebar padding-5 pagebottom">
-                <>{status===1?(
-                  <div className="box_detail_cus">
-                  <div className="p-3">
-                    <div className="user_logo_sec">
-                      {listingDetails.logoImage &&
-                      listingDetails.logoImage.imagePath ? (
-                        <img
-                          src={`https://apidev.myinteriormart.com${listingDetails.logoImage.imagePath}`}
-                          // src={listingDetails.logoImage.imagePath}
-                          alt={`${listingDetails.companyName} Logo`}
-                          className="card-img-top"
-                          style={{ height: "100px" }}
-                        />
-                      ) : (
-                        <div
-                          className="client_first_letter"
-                          style={{
-                            height: "100px",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          {listingDetails.companyFirstLetter}
+                <>
+                  {status === 1 ? (
+                    <div className="box_detail_cus">
+                      <div className="p-3">
+                        <div className="user_logo_sec">
+                          {listingDetails.logoImage &&
+                          listingDetails.logoImage.imagePath ? (
+                            <img
+                              src={`https://apidev.myinteriormart.com${listingDetails.logoImage.imagePath}`}
+                              // src={listingDetails.logoImage.imagePath}
+                              alt={`${listingDetails.companyName} Logo`}
+                              className="card-img-top"
+                              style={{ height: "100px" }}
+                            />
+                          ) : (
+                            <div
+                              className="client_first_letter"
+                              style={{
+                                height: "100px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              {listingDetails.companyFirstLetter}
+                            </div>
+                          )}
                         </div>
-                      )}
+                      </div>
                     </div>
-                  </div>
-                </div>
-                ):(
-                  <></>
-                )}</>
-                
-                <>{status===1?(
-                <div className="box_detail_cus">
-                  <div className="cust-profile">
-                    {/* <img src={profile} alt="profile"></img> */}
+                  ) : (
+                    <></>
+                  )}
+                </>
 
-                    {/* current working code........................ */}
-                    {/* {teamimageDetails.length > 0 && (
+                <>
+                  {status === 1 ? (
+                    <div className="box_detail_cus">
+                      <div className="cust-profile">
+                        {/* <img src={profile} alt="profile"></img> */}
+
+                        {/* current working code........................ */}
+                        {/* {teamimageDetails.length > 0 && (
                       <div>
                         <img
                           className="upload_images"
@@ -903,39 +906,39 @@ function Listingdetails() {
                       </div>
                     )} */}
 
-                    {teamimageDetails.length > 0 && (
-                      <Slider {...settings}>
-                        {teamimageDetails.map((teamImage, index) => (
-                          <div key={index}>
-                            <img
-                              className="upload_images"
-                              src={`https://apidev.myinteriormart.com${teamImage.url}`}
-                              alt="Owner Image"
-                              style={{
-                                borderRadius: "50px",
-                                width: "100px",
-                                height: "100px",
-                                display: "inline-block",
-                              }}
-                            />
-                            <h5 style={{ fontSize: "20px" }}>
-                              {teamImage.prefix}.
-                              <span style={{ marginLeft: "6px" }}>
-                                {teamImage.title}
-                              </span>
-                            </h5>
-                            <h6 style={{ fontSize: "14px" }}>
-                              {teamImage.designation}
-                            </h6>
-                            <h6 style={{ fontSize: "14px" }}>
-                              From: {teamImage.state}
-                            </h6>
-                          </div>
-                        ))}
-                      </Slider>
-                    )}
+                        {teamimageDetails.length > 0 && (
+                          <Slider {...settings}>
+                            {teamimageDetails.map((teamImage, index) => (
+                              <div key={index}>
+                                <img
+                                  className="upload_images"
+                                  src={`https://apidev.myinteriormart.com${teamImage.url}`}
+                                  alt="Owner Image"
+                                  style={{
+                                    borderRadius: "50px",
+                                    width: "100px",
+                                    height: "100px",
+                                    display: "inline-block",
+                                  }}
+                                />
+                                <h5 style={{ fontSize: "20px" }}>
+                                  {teamImage.prefix}.
+                                  <span style={{ marginLeft: "6px" }}>
+                                    {teamImage.title}
+                                  </span>
+                                </h5>
+                                <h6 style={{ fontSize: "14px" }}>
+                                  {teamImage.designation}
+                                </h6>
+                                <h6 style={{ fontSize: "14px" }}>
+                                  From: {teamImage.state}
+                                </h6>
+                              </div>
+                            ))}
+                          </Slider>
+                        )}
 
-                    {/* {teamimageDetails.map((image, index) => (
+                        {/* {teamimageDetails.map((image, index) => (
                       <div key={index}>
                         <img
                           className="upload_images"
@@ -949,13 +952,14 @@ function Listingdetails() {
 
                       </div>
                     ))} */}
-                    {/* <h6 className="cust_name">Habiba Humaza</h6>
+                        {/* <h6 className="cust_name">Habiba Humaza</h6>
                     <span className="cust-type">Owner</span> */}
-                  </div>
-                </div>
-                 ):(
-                  <></>
-                )}</>
+                      </div>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </>
                 <>
                   {status === 1 ? (
                     <Listingkeyword companyID={listingDetails.listingId} />
@@ -1106,19 +1110,19 @@ function Listingdetails() {
                         ))
                       ) : (
                         <div style={{ display: "flex" }}>
-                          <div>
-                            {" "}
-                            <img src={gallerydummy} />
-                          </div>
-                          <div>
-                            {" "}
-                            <img src={gallerydummy} />
-                          </div>
-                          <div>
-                            {" "}
-                            <img src={gallerydummy} />
-                          </div>
-                        </div>
+                                <div style={{marginRight:'2px'}}>
+                                  {" "}
+                                  <img src={gallerydummy}  style={{border:'1px solid gainsboro'}}/>
+                                </div>
+                                <div style={{marginRight:'2px'}}>
+                                  {" "}
+                                  <img src={gallerydummy} style={{border:'1px solid gainsboro'}}/>
+                                </div>
+                                <div>
+                                  {" "}
+                                  <img src={gallerydummy} style={{border:'1px solid gainsboro'}}/>
+                                </div>
+                              </div>
                       )}
                     </div>
                     {console.log("Banner", imageURL)}
@@ -1190,7 +1194,7 @@ function Listingdetails() {
                               marginTop: "2px",
                               overflowX: "hidden",
                               whiteSpace: "nowrap",
-                              maxWidth:'100%'
+                              maxWidth: "100%",
                             }}
                           >
                             {imageDetails.length > 0 ? (
@@ -1220,17 +1224,17 @@ function Listingdetails() {
                               ))
                             ) : (
                               <div style={{ display: "flex" }}>
-                                <div>
+                                <div style={{marginRight:'2px'}}>
                                   {" "}
-                                  <img src={gallerydummy} />
+                                  <img src={gallerydummy}  style={{border:'1px solid gainsboro'}}/>
+                                </div>
+                                <div style={{marginRight:'2px'}}>
+                                  {" "}
+                                  <img src={gallerydummy} style={{border:'1px solid gainsboro'}}/>
                                 </div>
                                 <div>
                                   {" "}
-                                  <img src={gallerydummy} />
-                                </div>
-                                <div>
-                                  {" "}
-                                  <img src={gallerydummy} />
+                                  <img src={gallerydummy} style={{border:'1px solid gainsboro'}}/>
                                 </div>
                               </div>
                             )}
@@ -1432,7 +1436,7 @@ function Listingdetails() {
                         </p>
                       </div>
 
-                      <div classname="col-lg-12 mb-1 p-0">
+                      {/* <div classname="col-lg-12 mb-1 p-0">
                         <i
                           className="fa fa-mobile"
                           style={{ marginRight: "8px" }}
@@ -1443,57 +1447,77 @@ function Listingdetails() {
                           className="ListingpageFont"
                         >
                           {listingDetails.mobile}
-                        </a>
+                        </a> */}
 
                         {/* <i
                           className="fa fa-whatsapp"
                           style={{ marginRight: "8px" }}
                         ></i> */}
-                        <Link style={{ color: "orange" }}>
+                        {/* <Link style={{ color: "orange" }}>
                           {listingDetails.whatsapp}
                         </Link>
+                      </div> */}
+
+<div className="listingemp listingtoll">
+                        <div classname="col-lg-12 mb-1 listingtelephone">
+                          <i
+                            className="fa fa-mobile"
+                            style={{ marginRight: "8px" }}
+                          ></i>
+                          <a
+                            href={`tel:${listingDetails.mobile}`}
+                            style={{ marginRight: "8px", color: "orange" }}
+                            className="ListingpageFont"
+                          >
+                            {listingDetails.mobile}
+                          </a>
+                        </div>
+
+                        <div classname="col-lg-12 mb-1 p-0">
+                          <i
+                            className="fa fa-mobile"
+                            style={{ marginRight: "8px" }}
+                          ></i>
+                          <a
+                            href={`tel:${listingDetails.registerMobile}`}
+                            style={{ marginRight: "8px", color: "orange" }}
+                            className="ListingpageFont"
+                          >
+                            {listingDetails.registerMobile}
+                          </a>
+                        </div>
                       </div>
+
+
 
                       <div className="listingemp listingtoll">
-                      
-                      <div classname="col-lg-12 mb-1 listingtelephone" >
-                        
-                        <i
-                          className="fa fa-mobile"
-                          style={{ marginRight: "8px" }}
-                        ></i>
-                        <a
-                          href={`tel:${listingDetails.mobile}`}
-                          style={{ marginRight: "8px", color: "orange" }}
-                          className="ListingpageFont"
-                        >
-                          {listingDetails.telephone}
-                        </a>
+                        <div classname="col-lg-12 mb-1 listingtelephone">
+                          <i
+                            className="fa fa-mobile"
+                            style={{ marginRight: "8px" }}
+                          ></i>
+                          <a
+                            href={`tel:${listingDetails.telephone}`}
+                            style={{ marginRight: "8px", color: "orange" }}
+                            className="ListingpageFont"
+                          >
+                            {listingDetails.telephone}
+                          </a>
+                        </div>
 
-                        
-                      </div>
-
-                      
-
-                      <div classname="col-lg-12 mb-1 p-0">
-                        <i
-                          className="fa fa-mobile"
-                          style={{ marginRight: "8px" }}
-                        ></i>
-                        <a
-                          href={`tel:${listingDetails.mobile}`}
-                          style={{ marginRight: "8px", color: "orange" }}
-                          className="ListingpageFont"
-                        >
-                          {listingDetails.tollFree}
-                        </a>
-
-                        
-                      </div>
-
-                      
-
-                        
+                        <div classname="col-lg-12 mb-1 p-0">
+                          <i
+                            className="fa fa-mobile"
+                            style={{ marginRight: "8px" }}
+                          ></i>
+                          <a
+                            href={`tel:${listingDetails.tollFree}`}
+                            style={{ marginRight: "8px", color: "orange" }}
+                            className="ListingpageFont"
+                          >
+                            {listingDetails.tollFree}
+                          </a>
+                        </div>
                       </div>
 
                       <div
@@ -1714,7 +1738,6 @@ function Listingdetails() {
                             color="orange"
                             className="bi bi-twitter-x svg-margin"
                             viewBox="0 0 16 16"
-                           
                           >
                             <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
                           </svg>
