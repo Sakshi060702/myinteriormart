@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import profileImage from "../../FrontEnd/img/icon/profile.png";
 import { useSelector } from "react-redux";
 import { validationReviewlength } from "../Validation";
-import { NavLink } from "react-router-dom";
+import { NavLink ,Link,useNavigate} from "react-router-dom";
 
 function Review1({ listingID }) {
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
@@ -23,6 +23,8 @@ function Review1({ listingID }) {
   const user = useSelector((state) => state.auth.user);
 
   const [error, setError] = useState("");
+
+  const navigate=useNavigate();
 
   // useEffect(() => {
   //   fetchListingDetails();
@@ -240,6 +242,12 @@ function Review1({ listingID }) {
     fetchReviews();
   }, [listingID]);
 
+  const handleReviewClick = () => {
+    const cityName = localStorage.getItem('cityname');
+    navigate(`/AllReviews/in-${cityName}`);
+    console.log("Hello");
+};
+
   return (
     <>
       <div className="company-listing-tab ">
@@ -413,7 +421,9 @@ function Review1({ listingID }) {
                                   <div className="owner_reply">
                                     <div>
                                       <span>
-                                        <strong>Reply From Owner</strong>{" "}
+                                        <strong> <Link to={`/AllReviews/in-${localStorage.getItem('cityname')}`}
+                                        style={{ textDecoration: 'none', color: 'gray' }}
+                                        >Reply From Owner</Link></strong>{" "}
                                       </span>
                                       {review.ratingReply && (
                                         <p className="m-0">

@@ -13,6 +13,9 @@ function Bannerimagel() {
   const [imageTitle, setImageTitle] = useState("");
   const [imageURL, setImageURL] = useState(null);
   const [imageTitleFromAPI, setImageTitleFromAPI] = useState("");
+
+  const [imageDetails, setImageDetails] = useState([]);
+  const[listingid,setListingId]=useState([]);
  
 
   const token=useSelector((state)=>state.auth.token);
@@ -47,8 +50,10 @@ function Bannerimagel() {
           throw new Error("Failed to fetch user profile");
         }
         const data = await response.json();
+        setListingId(data.listingid);
         setImageURL(data.imagepath); // Assuming data contains image URL and title
         setImageTitleFromAPI(data.imagetitle); // Set the image title from API
+        setImageDetails([data]);
         
        
       } catch (error) {
@@ -61,6 +66,49 @@ function Bannerimagel() {
     
   }, [token]);
 
+
+  const handleDeleteImage = async (imageUrl) => {
+    const remainingImagePath = imageDetails
+      .filter((img) => img.imagepath !== imageUrl) // Filter out the image to delete
+      .map((img) => img.imagepath);
+
+    const deletePayload = {
+      ListingID: listingid, // Replace with your actual listing ID
+      ImagePaths: remainingImagePath.length > 0 ? remainingImagePath[0] : "",
+    };
+
+    try {
+      const deleteResponse = await fetch(
+        "https://apidev.myinteriormart.com/api/DeleteImages/BannerDeleteImage",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(deletePayload),
+        }
+      );
+
+      if (!deleteResponse.ok) {
+        throw new Error("Failed to delete the image");
+      }
+
+      // Update image state after deletion
+      setImageDetails((prevDetails) =>
+        prevDetails.filter((img) => img.imagepath !== imageUrl)
+      );
+      setImageURL(null); // Remove the deleted image from display
+      setImageTitleFromAPI(""); // Clear the title
+      // setSuccessMessage("Image deleted successfully.");
+      // setShowPopup(true);
+
+    } catch (error) {
+      console.error("Error deleting image:", error);
+      // setErrorMessage("Failed to delete image. Please try again later.");
+      // setShowPopup(true);
+    }
+  };
+ 
 
 
   const handleSubmit = async (event) => {
@@ -190,6 +238,21 @@ function Bannerimagel() {
                   alt="Banner Image"
                  
                 />
+                <button
+                    className="btn btn-danger position-absolute"
+                    onClick={() => handleDeleteImage(imageURL)}
+                    style={{
+                      top: "-14px",
+                      right: "-11px",
+                      backgroundColor: "red",
+                      border: "none",
+                      cursor: "pointer",
+                      height: "33px",
+                      borderRadius: "50%",
+                    }}
+                  >
+                    &times;
+                  </button>
               </div>
               <div className="img_title text-center">
               {imageTitleFromAPI}

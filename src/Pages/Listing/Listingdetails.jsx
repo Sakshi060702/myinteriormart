@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams,useNavigate } from "react-router-dom";
 import Services from "../Services/Webdevelopment/Website/Services";
 import Webreviews from "../Services/Webdevelopment/Website/Webreviews";
 import profile from "../../FrontEnd/img/profile.svg";
@@ -152,6 +152,8 @@ function Listingdetails() {
   const [isWebsiteClicked, setIsWebsiteClicked] = useState(false);
 
   const [socialLink, setSocialLink] = useState("");
+
+  const navigate=useNavigate()
 
   const settings = {
     dots: false,
@@ -827,6 +829,12 @@ function Listingdetails() {
   const fullAddress = listingDetails.fullAddress;
   const shortAddress = fullAddress.split(",").slice(0, 2).join(", ");
 
+  const ClaimForgetpassword=`/ForgetpasswordClaim/in-${localStorage.getItem('cityname')}`
+
+  const Getclaimhandleclick=()=>{
+navigate(ClaimForgetpassword)
+  }
+
   return (
     <>
       <div className="sticky-searchbar">
@@ -1459,7 +1467,8 @@ function Listingdetails() {
                       </div> */}
 
 <div className="listingemp listingtoll">
-                        <div classname="col-lg-12 mb-1 listingtelephone">
+  {/* registered mobile */}
+                        <div classname="col-lg-12 mb-1 listingtelephone" style={{width:'51%'}}>
                           <i
                             className="fa fa-mobile"
                             style={{ marginRight: "8px" }}
@@ -1472,7 +1481,7 @@ function Listingdetails() {
                             {listingDetails.mobile}
                           </a>
                         </div>
-
+{/* mobile number */}
                         <div classname="col-lg-12 mb-1 p-0">
                           <i
                             className="fa fa-mobile"
@@ -1491,9 +1500,10 @@ function Listingdetails() {
 
 
                       <div className="listingemp listingtoll">
-                        <div classname="col-lg-12 mb-1 listingtelephone">
+{/* telephone number */}
+                        <div classname="col-lg-12 mb-1 listingtelephone" style={{width:'51%'}}>
                           <i
-                            className="fa fa-mobile"
+                            className="fa fa-phone"
                             style={{ marginRight: "8px" }}
                           ></i>
                           <a
@@ -1504,10 +1514,10 @@ function Listingdetails() {
                             {listingDetails.telephone}
                           </a>
                         </div>
-
+{/* tollFree number */}
                         <div classname="col-lg-12 mb-1 p-0">
                           <i
-                            className="fa fa-mobile"
+                            className="fa fa-headphones"
                             style={{ marginRight: "8px" }}
                           ></i>
                           <a
@@ -1534,13 +1544,29 @@ function Listingdetails() {
                         />
                       </div>
                       <div className="social-details desktop">
-                        <button
+                        {listingDetails.claimedListing ?(
+                          <button
+                          className="btn btn-guotes btn-sm"
+                          // onClick={() => setIsPopupOpen(true)}
+                          style={{ marginRight: "10px", font: "bold" }}
+                          onClick={(event) => {
+                            event.preventDefault();
+                            
+                            Getclaimhandleclick();
+                          }}
+                        >
+                          Claim Listing
+                        </button>
+                        ):(
+                          <button
                           className="btn btn-guotes btn-sm"
                           onClick={() => setIsPopupOpen(true)}
                           style={{ marginRight: "10px", font: "bold" }}
                         >
                           Get Quotes
                         </button>
+                        )}
+                        
                         <button
                           className={`btn btn-bookmark ${
                             isBookmarked ? "active" : ""
@@ -1947,6 +1973,8 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  ;
+
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setIsDropdownOpen(false);
@@ -1966,10 +1994,11 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
   return (
     <div>
       <div className="current-status">
-        <p
+        <button
           className="timedrp"
           onClick={toggleDropdown}
           style={{ cursor: "pointer" }}
+          type="button"
         >
           <span style={{ color: isOpen ? "green" : "red" }}>
             {isOpen ? <b>Open</b> : <b>Closed Now</b>}
@@ -1997,7 +2026,7 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
             }`}
             style={{ marginLeft: "8px" }}
           ></i>
-        </p>
+        </button>
       </div>
 
       {isDropdownOpen && (

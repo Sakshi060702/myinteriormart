@@ -34,6 +34,8 @@ function Teamimagel() {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
+  const [listingid, setListingId] = useState([]);
+
   const [error, setError] = useState("");
 
   const token = useSelector((state) => state.auth.token);
@@ -60,6 +62,7 @@ function Teamimagel() {
         if (data instanceof Object) {
           console.log(data);
           console.log(data.imagepath);
+          setListingId(data.listingid);
           setImageDetails(
             data.imagepath.map((img,index) => ({
               url: img,
@@ -194,6 +197,39 @@ function Teamimagel() {
   const handleTitleChange = (selectedOption) => {
     setSelectTitel(selectedOption);
   };
+
+  //To delete image
+  const handleDeleteImage = async (imageUrl) => {
+    const remainingImagePath = imageDetails
+      .filter((img) => img.url !== imageUrl)
+      .map((img) => img.url);
+
+    const deletePayload = {
+      ListingID: listingid,
+      ImagePaths: remainingImagePath,
+    };
+
+    try {
+      const delteResponse = await fetch(
+        "https://apidev.myinteriormart.com/api/DeleteImages/OwnerDeleteImages",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(deletePayload),
+        }
+      );
+      setImageDetails((prevDetails) =>
+        prevDetails.filter((img) => img.url !== imageUrl)
+      );
+      setRemainingImages(MAX_IMAGES - remainingImagePath.length);
+    } catch (error) {
+      console.error("Error deleting image:", error);
+    }
+  };
+
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -593,6 +629,22 @@ function Teamimagel() {
                         }
                         alt="Gallery Image"
                       />
+                      <button
+                      className="btn btn-danger position-absolute top-0 right-0"
+                      onClick={() => handleDeleteImage(image.url)}
+                      style={{
+                        position: "absolute",
+                        top: "-14px",
+                        right: "-11px",
+                        backgroundColor: "red",
+                        border: "none",
+                        cursor: "pointer",
+                        height:'33px',
+                        borderRadius:'50%'
+                      }}
+                    >
+                      &times;
+                    </button>
                     </div>
                     <div className="img_title text-center">
                       {image.firstName} {image.designation}

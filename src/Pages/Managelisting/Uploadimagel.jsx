@@ -16,6 +16,10 @@ function Uploadimagel() {
   const token = useSelector((state) => state.auth.token);
   const dispatch=useDispatch();
 
+  const [imageDetails, setImageDetails] = useState([]);
+  const[listingid,setListingId]=useState([]);
+  const [imageTitleFromAPI, setImageTitleFromAPI] = useState("");
+
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const[successMessage,setSuccessMessage]=useState("");
@@ -27,6 +31,49 @@ function Uploadimagel() {
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
+
+  const handleDeleteImage = async (imageUrl) => {
+    const remainingImagePath = imageDetails
+      .filter((img) => img.imagepath !== imageUrl) // Filter out the image to delete
+      .map((img) => img.imagepath);
+
+    const deletePayload = {
+      ListingID: listingid, // Replace with your actual listing ID
+      ImagePaths: remainingImagePath.length > 0 ? remainingImagePath[0] : "",
+    };
+
+    try {
+      const deleteResponse = await fetch(
+        "https://apidev.myinteriormart.com/api/DeleteImages/LogoDeleteImage",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(deletePayload),
+        }
+      );
+
+      if (!deleteResponse.ok) {
+        throw new Error("Failed to delete the image");
+      }
+
+      // Update image state after deletion
+      setImageDetails((prevDetails) =>
+        prevDetails.filter((img) => img.imagepath !== imageUrl)
+      );
+      setImageURL(null); // Remove the deleted image from display
+      setImageTitleFromAPI(""); // Clear the title
+      // setSuccessMessage("Image deleted successfully.");
+      // setShowPopup(true);
+
+    } catch (error) {
+      console.error("Error deleting image:", error);
+      // setErrorMessage("Failed to delete image. Please try again later.");
+      // setShowPopup(true);
+    }
+  };
+ 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -109,7 +156,8 @@ function Uploadimagel() {
         const data = await response.json();
         setImageURL(data.imagepath); // Assuming data contains image URL and title
         console.log(data);
-        
+        setListingId(data.listingid);
+        setImageDetails([data]);
         
        
       } catch (error) {
@@ -171,6 +219,21 @@ function Uploadimagel() {
                   alt="Logo Image"
 
                 />
+                <button
+                    className="btn btn-danger position-absolute"
+                    onClick={() => handleDeleteImage(imageURL)}
+                    style={{
+                      top: "-14px",
+                      right: "-11px",
+                      backgroundColor: "red",
+                      border: "none",
+                      cursor: "pointer",
+                      height: "33px",
+                      borderRadius: "50%",
+                    }}
+                  >
+                    &times;
+                  </button>
                  
               </div>
               <div className="img_title text-center">

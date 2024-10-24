@@ -560,7 +560,7 @@ navigate(ClaimForgetpassword)
                                   <div>
                                     <li>
                                       <p className="listinggetclaim">
-                                        {listing.claimedListing ?(
+                                        {/* {listing.claimedListing ?(
                                            <button
                                            className="btn btn-guotes btn-sm getclaimbtn"
                                            style={{
@@ -603,7 +603,27 @@ navigate(ClaimForgetpassword)
                                         >
                                           Get Quotes
                                         </button>
-                                        )}
+                                        )} */}
+
+<button
+                                          className="btn btn-guotes btn-sm getclaimbtn"
+                                          style={{
+                                            boxShadow:
+                                              "0 4px 8px rgba(0, 0, 0, 0.2)",
+                                            transition:
+                                              "box-shadow 0.3s ease-in-out",
+                                          }}
+                                          onClick={(event) => {
+                                            event.preventDefault();
+                                            event.stopPropagation();
+                                            setIsPopupOpen([
+                                              true,
+                                              listing.listingId,
+                                            ]);
+                                          }}
+                                        >
+                                          Get Quotes
+                                        </button>
                                         
                                       </p>
                                     </li>

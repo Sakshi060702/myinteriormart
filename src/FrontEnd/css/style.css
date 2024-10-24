@@ -10026,9 +10026,11 @@ article.blog .post_info ul li:last-child i {
 }
 
 .owner_reply {
-  margin: -24px 0 0 60px;
+  /* margin: -24px 0 0 60px; */
   border-left: 2px solid #dedddd;
   padding: 0 20px;
+  margin-left: 58px;
+    /* margin-top: -20px; */
 }
 
 .review_img_sec {
