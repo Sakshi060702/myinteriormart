@@ -9,7 +9,10 @@ const Popupalert = ({ message, type,onClose }) => {
     <div className={`popup3 ${type}`}>
       <div className='popup3-overlay'onClick={onClose}>
         <div className="popup3-content" onClick={(e) => e.stopPropagation()}>
-        <button className="close-button" onClick={onClose}>
+        <button className="close-button" onClick={(e) => {
+            e.stopPropagation();
+            onClose();
+          }}>
             X
           </button>
           <div style={{paddingBottom:'20px', textAlign: 'center'}}>

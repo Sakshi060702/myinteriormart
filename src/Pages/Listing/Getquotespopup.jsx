@@ -190,7 +190,7 @@ const Getquotespopup = ({ isOpen, companyID, onClose }) => {
             </div> */}
               <div className="col-md-12">
                 <div className="form-group">
-                  <label>Keyword</label>
+                  <label>Title</label>
                   <input
                     className="form-control"
                     type="text"

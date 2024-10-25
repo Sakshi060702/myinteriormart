@@ -342,7 +342,7 @@ function Review1({ listingID }) {
                               value={reviewText}
                               onChange={handleReviewTextChange}
                             ></textarea>
-                            {error.comment &&(<div className="text-danger">{error.comment}</div>)}
+                            {error.comment &&(<div className="text-danger" style={{fontSize:'15px'}}>{error.comment}</div>)}
                           </div>
                           <div className="form-group col-md-12">
                             <input

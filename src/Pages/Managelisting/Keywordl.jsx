@@ -34,6 +34,10 @@ function Keywordl() {
 
   const token=useSelector((state)=>state.auth.token);
 
+  const handleClose = () => {
+    setShowPopup(false);
+  };
+
   useEffect(() => {
     const fetchBusinessTypes = async () => {
       const apiUrl =
@@ -453,6 +457,7 @@ function Keywordl() {
             <Popupalert 
             message={successMessage || errorMessage} 
             type={successMessage ? 'success' : 'error'} 
+            onClose={handleClose} // Pass onClose to Popupalert
           />
           )}
             </div>
