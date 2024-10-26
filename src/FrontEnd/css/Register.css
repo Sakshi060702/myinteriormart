@@ -1,7 +1,7 @@
 .icon-wrapper{
     position: absolute;
-    top: 30%;
-    left: 10px; /* Adjust this value to position the icon as per your design */
+    top: 42%;
+    left: 15px; /* Adjust this value to position the icon as per your design */
   transform: translateY(-50%);
   z-index: 1; /* Ensure icon is above input */
   }

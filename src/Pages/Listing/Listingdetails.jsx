@@ -1869,6 +1869,8 @@ navigate(ClaimForgetpassword)
         <Getquotespopup
           isOpen={isPopupOpen}
           onClose={() => setIsPopupOpen(false)}
+          companyID={listingDetails.listingId}
+        
         />
       ) : (
         <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
@@ -1975,18 +1977,19 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
 
   ;
 
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsDropdownOpen(false);
-    }
-  };
+//funtion for handleclickoutside function
+  // const handleClickOutside = (event) => {
+  //   if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+  //     setIsDropdownOpen(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
 
   const { isOpen, currentDay, nextOpenDay, nextOpenTime, nextTime } =
     getCurrentStatus();

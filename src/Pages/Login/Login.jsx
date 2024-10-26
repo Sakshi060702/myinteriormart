@@ -153,6 +153,7 @@ function Login() {
                         type="text"
                         name="mobile"
                         placeholder="Email/Mobile No"
+                        maxLength={10}
                         value={userMobile}
                         onChange={handleMobileChange}
                         style={{ textAlign: "center", paddingRight: "19px" ,height:'50px',width:'194px',fontSize:'16px' }}

@@ -74,9 +74,9 @@ const Notification = ({ setHasNotifications }) => {
                                   src={`https://apidev.myinteriormart.com${notification.profileImage}`}
                                   alt={`${notification.companyName} profile`}
                                   style={{
-                                    height: "45px",
-                                    width: "45px",
-                                    margin: "12px 0px 0px -26px",
+                                    height: "34px",
+                                    width: "34px",
+                                    margin: "3px 0px 0px -19px",
                                     position: "absolute",
                                     borderRadius: "50%",
                                   }}
@@ -94,7 +94,7 @@ const Notification = ({ setHasNotifications }) => {
                             </div>
                           </div>
                           <div className="notification-content">
-                            <div className="notificationcontent">
+                            {/* <div className="notificationcontent">
                               <span
                                 className="visit-date"
                                 style={{
@@ -104,19 +104,19 @@ const Notification = ({ setHasNotifications }) => {
                               >
                                 {notification.visitDate}
                               </span>
-                            </div>
+                            </div> */}
                             <div>
                               <p
                                 className="description"
                                 style={{
-                                  marginRight: "29px",
+                                  marginRight: "0px",
                                   marginTop: "4px",
                                 }}
                               >
                                 <span
                                   className="activity-text"
                                   style={{
-                                    paddingLeft: "14px",
+                                    paddingLeft: "-10px",
                                     paddingRight: "6px",
                                   }}
                                 >
@@ -132,19 +132,55 @@ const Notification = ({ setHasNotifications }) => {
                                   }}
                                 >
                                   {notification.userName}
+
                                   {/* <strong style={{fontSize:'13px',paddingLeft:'11px'}}>{notification.userName}</strong> */}
                                 </span>
+                                {/* <span
+                                className="visit-date"
+                                style={{
+                                  textAlign: "right",
+                                  margin: "2px 1px -4px 2px",
+                                }}
+                              >
+                                {notification.visitDate}
+                              </span> */}
                                 <br></br>
 
                                 {/* {notification.activityText === 'Review' && notification.reviewComment && (
                   <span className="activity-text"> {notification.reviewComment}</span>
                 )} */}
+
+                                {["Bookmarked", "Liked", "Subscribed"].includes(
+                                  notification.activityText
+                                ) && (
+                                  <div>
+                                    <span className="activity-text">
+                                      {notification.activityText}
+                                    </span>
+                                    <span className="activity-text">
+                                      {" "}
+                                      Your Listing {notification.companyName}
+                                    </span>
+                                  </div>
+                                )}
+
+                                {["Review", "Enquiry"].includes(
+                                  notification.activityText
+                                ) && (
+                                  <span className="activity-text" style={{marginLeft:'4px',paddingRight:'75px'}}>
+                                    {" "}
+                                    {notification.activityText === "Review" &&
+                                      notification.reviewComment}
+                                    {notification.activityText === "Enquiry" &&
+                                      notification.enquiryComment}
+                                  </span>
+                                )}
                               </p>
                             </div>
-                            <div>
+                            {/* <div>
                               <div
                                 style={{
-                                  marginLeft: "-55px",
+                                  marginLeft: "-28px",
                                   marginTop: "16px",
                                 }}
                               >
@@ -181,7 +217,7 @@ const Notification = ({ setHasNotifications }) => {
                                   </span>
                                 )}
                               </div>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </li>

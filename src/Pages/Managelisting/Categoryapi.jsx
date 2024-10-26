@@ -303,7 +303,7 @@ function Categoryapi() {
               </p>
 
               <form onSubmit={handleSubmit}>
-                <div className="row">
+                <div className="row" >
                   <div className="form-group col-md-6">
                     <label htmlFor="fcategory">
                       First Category <span className="text-danger">*</span>
@@ -380,9 +380,9 @@ function Categoryapi() {
                   </div>
                 </div>
 
-                <div className="row">
+                <div className="row" >
                   <div className="col-sm-12">
-                    <div className="row">
+                    <div className="row" style={{justifyContent:'normal'}}>
                       {thirdCategories.length > 0 &&
                         thirdCategories.map((category) => (
                           <div

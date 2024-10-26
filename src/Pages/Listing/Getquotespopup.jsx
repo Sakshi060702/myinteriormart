@@ -9,7 +9,7 @@ const Getquotespopup = ({ isOpen, companyID, onClose }) => {
     message: "",
   });
   const token = useSelector((state) => state.auth.token);
-
+  console.log('companyid',companyID)
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -61,6 +61,7 @@ const Getquotespopup = ({ isOpen, companyID, onClose }) => {
     e.preventDefault();
     try {
       console.log(formData);
+      // console.log('companyid',companyID)
       formData['companyID']= companyID;
       const response = await fetch(
         "https://apidev.myinteriormart.com/api/CreateEnquiry/CreateEnquiry",

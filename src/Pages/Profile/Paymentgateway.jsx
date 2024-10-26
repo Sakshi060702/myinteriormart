@@ -20,7 +20,7 @@ function Paymentgateway() {
     <>
       <div className="tab-pane fade show active" style={{ height: "221px" }}>
         <div className="add-review">
-          <h5>Package ID: {packageId}</h5>
+          {/* <h5>Package ID: {packageId}</h5> */}
           <div>
             <button className="paymentgateway" onClick={togglePopup}>
               Payment Gateway

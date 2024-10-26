@@ -263,8 +263,9 @@ const [totalItems, setTotalItems] = useState(0);
                       return (
                         <div key={index} className="dropdownItemsearchbar">
                           <NavLink to={`/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/${result.categoryName.replace(/\s+/g, "-").toLowerCase()}/locality/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}
+                            onClick={() => setShowDropdown(false)} 
                           >
-                           <h6>{companyName || result[parameterName]}</h6>
+                           <h6 className="serchtitle">{companyName || result[parameterName]}</h6>
                           </NavLink>
                         </div>
                       );
@@ -282,8 +283,9 @@ const [totalItems, setTotalItems] = useState(0);
                     ) {
                       return (
                         <div key={index} className="dropdownItemsearchbar">
-                           <NavLink to={`/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?searchkey=${encodeURIComponent(result.keyword)}&secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}>
-                            <h6>{result.companyName}-{result.locality}</h6>
+                           <NavLink to={`/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?searchkey=${encodeURIComponent(result.keyword)}&secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}
+                             onClick={() => setShowDropdown(false)} >
+                            <h6 className="serchtitle">{result.companyName}-{result.locality}</h6>
                           </NavLink>
                         </div>
                       );
@@ -291,7 +293,8 @@ const [totalItems, setTotalItems] = useState(0);
                     else if(result.listingId == null && result.companyName == null && result.keyword==null){
                       return (
                         <div key={index} className="dropdownItemsearchbar">
-                          <NavLink to={`/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}><h6>{result.category}</h6></NavLink>
+                          <NavLink to={`/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}
+                            onClick={() => setShowDropdown(false)} ><h6 className="serchtitle">{result.category}</h6></NavLink>
                         </div>
                       )
                     }
@@ -306,7 +309,8 @@ const [totalItems, setTotalItems] = useState(0);
                         //if search is keyword
                         return (
                           <div key={index} className="dropdownItemsearchbar">
-                            <NavLink to={`/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?searchkey=${encodeURIComponent(result.keyword)}&secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}><h6>{result.keyword}</h6></NavLink>
+                            <NavLink to={`/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?searchkey=${encodeURIComponent(result.keyword)}&secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}
+                              onClick={() => setShowDropdown(false)} ><h6 className="serchtitle">{result.keyword}</h6></NavLink>
                           </div>
                         )
                       }
@@ -316,8 +320,8 @@ const [totalItems, setTotalItems] = useState(0);
                         return (
                           <div key={index} className="dropdownItemsearchbar">
                             <NavLink to={`/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/${result.category.replace(/\s+/g, "-").toLowerCase()}/locality/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}
-                            >
-                              <h6>{result.companyName}</h6>
+                              onClick={() => setShowDropdown(false)} >
+                              <h6 className="serchtitle">{result.companyName}</h6>
                             </NavLink>
                           </div>
                         );
@@ -329,8 +333,8 @@ const [totalItems, setTotalItems] = useState(0);
                       return (
                         <div key={index} className="dropdownItemsearchbar">
                            <NavLink to={`/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/${result.category.replace(/\s+/g, "-").toLowerCase()}/locality/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}
-                            >
-                            <h6>{result.companyName}</h6>
+                              onClick={() => setShowDropdown(false)} >
+                            <h6 className="serchtitle">{result.companyName}</h6>
                           </NavLink>
                         </div>
                       );
