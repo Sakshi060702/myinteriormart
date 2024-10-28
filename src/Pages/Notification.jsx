@@ -105,77 +105,146 @@ const Notification = ({ setHasNotifications }) => {
                                 {notification.visitDate}
                               </span>
                             </div> */}
-                            <div>
-                              <p
-                                className="description"
+                            <div
+                              className="notification-content"
+                              style={{ marginLeft: "40px" }}
+                            >
+                              <div
                                 style={{
-                                  marginRight: "0px",
-                                  marginTop: "4px",
+                                  display: "flex",
+                                  alignItems: "center",
                                 }}
                               >
                                 <span
                                   className="activity-text"
-                                  style={{
-                                    paddingLeft: "-10px",
-                                    paddingRight: "6px",
-                                  }}
+                                  style={{ paddingRight: "6px" }}
                                 >
                                   {notification.gender}
-                                  {/* <strong style={{fontSize:'13px',paddingLeft:'11px'}}>{notification.userName}</strong> */}
                                 </span>
-
                                 <span
                                   className="activity-text"
-                                  style={{
-                                    paddingLeft: "-27px",
-                                    paddingRight: "72px",
-                                  }}
+                                  style={{ paddingLeft: "6px" }}
                                 >
                                   {notification.userName}
-
-                                  {/* <strong style={{fontSize:'13px',paddingLeft:'11px'}}>{notification.userName}</strong> */}
                                 </span>
-                                {/* <span
-                                className="visit-date"
-                                style={{
-                                  textAlign: "right",
-                                  margin: "2px 1px -4px 2px",
-                                }}
-                              >
-                                {notification.visitDate}
-                              </span> */}
-                                <br></br>
+                                <span
+                                  
+                                  style={{ paddingLeft: "6px",fontSize:'10px',color:'gray' }}
+                                >
+                                  {notification.timeAgo}
+                                </span>
+                              </div>
 
-                                {/* {notification.activityText === 'Review' && notification.reviewComment && (
-                  <span className="activity-text"> {notification.reviewComment}</span>
-                )} */}
+                              {/* Activity Details */}
+                              {/* {["Bookmarked", "Liked", "Subscribed"].includes(notification.activityText) && (
+                    <div style={{ marginTop: "4px" }}>
+                      <span className="activity-text">{notification.activityText}</span>
+                      <span className="activity-text"> Your Listing <p style={{float:"inline-start"}}>{notification.companyName}</p></span>
+                    </div>
+                  )} */}
 
-                                {["Bookmarked", "Liked", "Subscribed"].includes(
-                                  notification.activityText
-                                ) && (
-                                  <div>
-                                    <span className="activity-text">
-                                      {notification.activityText}
-                                    </span>
-                                    <span className="activity-text">
-                                      {" "}
-                                      Your Listing {notification.companyName}
-                                    </span>
-                                  </div>
-                                )}
-
-                                {["Review", "Enquiry"].includes(
-                                  notification.activityText
-                                ) && (
-                                  <span className="activity-text" style={{marginLeft:'4px',paddingRight:'75px'}}>
-                                    {" "}
-                                    {notification.activityText === "Review" &&
-                                      notification.reviewComment}
-                                    {notification.activityText === "Enquiry" &&
-                                      notification.enquiryComment}
+                              {notification.activityText === "Bookmarked" && (
+                                <div style={{ marginTop: "4px" }}>
+                                  <span className="activity-text">
+                                    Bookmarked
                                   </span>
-                                )}
-                              </p>
+                                  <span
+                                    className="activity-text"
+                                    style={{
+                                      whiteSpace: "nowrap",
+                                      marginLeft: "5px",
+                                    }}
+                                  >
+                                    Your Listing{" "}
+                                    <span style={{ float: "inline-start" }}>
+                                      {notification.companyName}
+                                    </span>
+                                  </span>
+                                </div>
+                              )}
+
+                              {notification.activityText === "Liked" && (
+                                <div style={{ marginTop: "4px" }}>
+                                  <span
+                                    className="activity-text"
+                                    style={{ float: "inline-start" }}
+                                  >
+                                    Liked
+                                  </span>
+                                  <span
+                                    className="activity-text"
+                                    style={{
+                                      // whiteSpace: "nowrap",
+                                      marginLeft: "-23px",
+                                    }}
+                                  >
+                                    Your Listing{" "}
+                                    <span style={{ float: "inline-start" }}>
+                                      {notification.companyName}
+                                    </span>
+                                  </span>
+                                </div>
+                              )}
+
+                              {notification.activityText === "Subscribed" && (
+                                <div style={{ marginTop: "4px" }}>
+                                  <span className="activity-text">
+                                    Subscribed
+                                  </span>
+                                  <span
+                                    className="activity-text"
+                                    style={{
+                                      whiteSpace: "nowrap",
+                                      marginLeft: "5px",
+                                    }}
+                                  >
+                                    Your Listing{" "}
+                                    <span style={{ float: "inline-start" }}>
+                                      {notification.companyName}
+                                    </span>
+                                  </span>
+                                </div>
+                              )}
+
+                              {/* Review Comment */}
+                              {notification.activityText === "Review" && (
+                                <div
+                                  style={{
+                                    marginTop: "4px",
+                                    textAlign: "start",
+                                    width: "100%",
+                                  }}
+                                >
+                                  <span
+                                    className="activity-text"
+                                    style={{
+                                      display: "inline-block",
+                                      marginLeft: "0px",
+                                      wordWrap: "break-word", // Allows long words to wrap onto the next line
+                                      overflow: "visible",
+                                    }}
+                                  >
+                                    {notification.reviewComment}
+                                  </span>
+                                </div>
+                              )}
+
+                              {/* Enquiry Comment */}
+                              {notification.activityText === "Enquiry" && (
+                                <div
+                                  style={{
+                                    marginTop: "4px",
+                                    float: "inline-start",
+                                  }}
+                                >
+                                  <span
+                                    className="activity-text"
+                                    style={{ marginLeft: "5px" }}
+                                  >
+                                    {notification.enquiryComment}
+                                  </span>
+                                </div>
+                              )}
                             </div>
                             {/* <div>
                               <div
@@ -241,108 +310,236 @@ const Notification = ({ setHasNotifications }) => {
           <div className="notify_body">
             <div>
               <div className="list_general like-listing">
-                <ul>
+              <ul>
                   {notification.length === 0 ? (
                     <li>No notifications available</li>
                   ) : (
                     notification.map((notification, index) => (
                       <li key={index} className="notification-item">
                         <div
-                          style={{
-                            backgroundColor: "#f3f2f2",
-                            position: "relative",
-                            marginBottom: "5px",
-                            padding: "9px 72px 23px 15px",
-                          }}
+                          className="notification-list"
+                          style={{ display: "flex",backgroundColor:'#efefef' }}
                         >
-                          {/* <div className="notification-image">
-                          <div>
-                          {notification.profileImage ? (
-                            <img
-                              src={`https://apidev.myinteriormart.com${notification.profileImage}`}
-                              alt={`${notification.companyName} profile`}
-                              style={{ height: '63px',width: '45px',margin:'0px 0px 0px -26px',position:'absolute'}}
-                            />
-                          ) : (
-                            <img alt="default" style={{height: '48px', width: '48px', objectFit: 'cover'}} />
-                          )}
+                          <div className="notification-image">
+                            <div>
+                              {notification.profileImage ? (
+                                <img
+                                  src={`https://apidev.myinteriormart.com${notification.profileImage}`}
+                                  alt={`${notification.companyName} profile`}
+                                  style={{
+                                    height: "34px",
+                                    width: "34px",
+                                    margin: "3px 0px 0px -19px",
+                                    position: "absolute",
+                                    borderRadius: "50%",
+                                  }}
+                                />
+                              ) : (
+                                <img
+                                  alt="default"
+                                  style={{
+                                    height: "48px",
+                                    width: "48px",
+                                    objectFit: "cover",
+                                  }}
+                                />
+                              )}
+                            </div>
                           </div>
-                          
-                        </div> */}
-                          <div className="notification-content ">
-                            <div className="notificationcontent">
+                          <div className="notification-content">
+                            {/* <div className="notificationcontent">
                               <span
                                 className="visit-date"
                                 style={{
                                   textAlign: "right",
-                                  margin: "-1px -110px 0px 24px",
+                                  margin: "2px 1px -4px 2px",
                                 }}
                               >
                                 {notification.visitDate}
                               </span>
-                            </div>
-                            <div>
-                              <p
-                                className="description notificationp"
+                            </div> */}
+                            <div
+                              className="notification-content"
+                              style={{ marginLeft: "40px" }}
+                            >
+                              <div
                                 style={{
-                                  marginRight: "206px",
-                                  marginTop: "-14px",
+                                  display: "flex",
+                                  alignItems: "center",
                                 }}
                               >
-                                {/* <span style={{height:'12px',width:'12px',backgroundColor:'orange',borderRadius:'50%',position:'absolute',left:'8px',top:'19px'}}></span> */}
-                                <div>
-                                  {notification.profileImage ? (
-                                    <img
-                                      src={`https://apidev.myinteriormart.com${notification.profileImage}`}
-                                      alt={`${notification.companyName} profile`}
-                                      style={{
-                                        height: "36px",
-                                        width: "39px",
-                                        margin: "0px 0px 0px -26px",
-                                        position: "absolute",
-                                      }}
-                                    />
-                                  ) : (
-                                    <img
-                                      src={notificationimg}
-                                      alt="default"
-                                      style={{
-                                        height: "36px",
-                                        width: "39px",
-                                        objectFit: "cover",
-                                      }}
-                                    />
-                                  )}
-                                </div>
-                                <span className="user-name notificationusername">
-                                  <strong
-                                    style={{
-                                      fontSize: "13px",
-                                      paddingLeft: "20px",
-                                      color: "orange",
-                                    }}
-                                  >
-                                    {notification.userName}
-                                  </strong>
-                                </span>
-                              </p>
-                              <p style={{ marginBottom: "6px" }}>
                                 <span
                                   className="activity-text"
-                                  style={{ float: "left" }}
+                                  style={{ paddingRight: "6px" }}
                                 >
-                                  <i
-                                    className="fa fa-bookmark"
-                                    style={{
-                                      color: "orange",
-                                      fontSize: "16px",
-                                      marginRight: "5px",
-                                    }}
-                                  ></i>
-                                  {notification.activityText}
+                                  {notification.gender}
                                 </span>
-                              </p>
+                                <span
+                                  className="activity-text"
+                                  style={{ paddingLeft: "6px" }}
+                                >
+                                  {notification.userName}
+                                </span>
+                                <span
+                                  
+                                  style={{ paddingLeft: "6px",fontSize:'10px',color:'gray' }}
+                                >
+                                  {notification.timeAgo}
+                                </span>
+                              </div>
+
+                              {/* Activity Details */}
+                              {/* {["Bookmarked", "Liked", "Subscribed"].includes(notification.activityText) && (
+                    <div style={{ marginTop: "4px" }}>
+                      <span className="activity-text">{notification.activityText}</span>
+                      <span className="activity-text"> Your Listing <p style={{float:"inline-start"}}>{notification.companyName}</p></span>
+                    </div>
+                  )} */}
+
+                              {notification.activityText === "Bookmarked" && (
+                                <div style={{ marginTop: "4px" }}>
+                                  <span className="activity-text" style={{marginLeft:'-27px'}}>
+                                    Bookmarked
+                                  </span>
+                                  <span
+                                    className="activity-text"
+                                    style={{
+                                      whiteSpace: "nowrap",
+                                      marginLeft: "5px",
+                                    }}
+                                  >
+                                    Your Listing{" "}
+                                    <span style={{ float: "inline-start" }}>
+                                      {notification.companyName}
+                                    </span>
+                                  </span>
+                                </div>
+                              )}
+
+                              {notification.activityText === "Liked" && (
+                                <div style={{ marginTop: "4px" }}>
+                                  <span
+                                    className="activity-text"
+                                    style={{ float: "inline-start" }}
+                                  >
+                                    Liked 
+                                  </span>
+                                  <span
+                                    className="activity-text"
+                                    style={{
+                                      // whiteSpace: "nowrap",
+                                      marginLeft: "5px",
+                                    }}
+                                  >
+                                    Your Listing{" "}
+                                    <span style={{ float: "inline-start" }}>
+                                      {notification.companyName}
+                                    </span>
+                                  </span>
+                                </div>
+                              )}
+
+                              {notification.activityText === "Subscribed" && (
+                                <div style={{ marginTop: "4px" }}>
+                                  <span className="activity-text" style={{marginLeft:'-33px'}}>
+                                    Subscribed
+                                  </span>
+                                  <span
+                                    className="activity-text"
+                                    style={{
+                                      whiteSpace: "nowrap",
+                                      marginLeft: "5px",
+                                    }}
+                                  >
+                                    Your Listing{" "}
+                                    <span style={{ float: "inline-start" }}>
+                                      {notification.companyName}
+                                    </span>
+                                  </span>
+                                </div>
+                              )}
+
+                              {/* Review Comment */}
+                              {notification.activityText === "Review" && (
+                                <div
+                                  style={{
+                                    marginTop: "4px",
+                                    textAlign: "start",
+                                    width: "100%",
+                                  }}
+                                >
+                                  <span
+                                    className="activity-text"
+                                    style={{
+                                      display: "inline-block",
+                                      marginLeft: "0px",
+                                      wordWrap: "break-word", // Allows long words to wrap onto the next line
+                                      overflow: "visible",
+                                    }}
+                                  >
+                                    {notification.reviewComment}
+                                  </span>
+                                </div>
+                              )}
+
+                              {/* Enquiry Comment */}
+                              {notification.activityText === "Enquiry" && (
+                                <div
+                                  style={{
+                                    marginTop: "4px",
+                                    float: "inline-start",
+                                  }}
+                                >
+                                  <span
+                                    className="activity-text"
+                                    style={{ marginLeft: "5px" }}
+                                  >
+                                    {notification.enquiryComment}
+                                  </span>
+                                </div>
+                              )}
                             </div>
+                            {/* <div>
+                              <div
+                                style={{
+                                  marginLeft: "-28px",
+                                  marginTop: "16px",
+                                }}
+                              >
+                                {["Bookmarked", "Liked", "Subscribed"].includes(
+                                  notification.activityText
+                                ) && (
+                                  <>
+                                    <span className="activity-text">
+                                      {notification.activityText}
+                                    </span>
+                                    <span className="activity-text">
+                                      {" "}
+                                      Your Listing {notification.companyName}
+                                    </span>
+                                  </>
+                                )}
+                              </div>
+
+                              <div
+                                style={{
+                                  marginLeft: "-55px",
+                                  marginTop: "16px",
+                                }}
+                              >
+                                {["Review", "Enquiry"].includes(
+                                  notification.activityText
+                                ) && (
+                                  <span className="activity-text">
+                                    {" "}
+                                    {notification.activityText === "Review" &&
+                                      notification.reviewComment}
+                                    {notification.activityText === "Enquiry" &&
+                                      notification.enquiryComment}
+                                  </span>
+                                )}
+                              </div>
+                            </div> */}
                           </div>
                         </div>
                       </li>

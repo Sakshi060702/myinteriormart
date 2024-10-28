@@ -3,6 +3,7 @@ import profileImage from "../../FrontEnd/img/icon/profile.png";
 import { useSelector } from "react-redux";
 import { validationReviewlength } from "../Validation";
 import { NavLink ,Link,useNavigate} from "react-router-dom";
+import Popup from "./Popup";
 
 function Review1({ listingID }) {
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
@@ -23,6 +24,7 @@ function Review1({ listingID }) {
   const user = useSelector((state) => state.auth.user);
 
   const [error, setError] = useState("");
+  const[isPopupOpen,setIsPopupOpen]=useState(false);
 
   const navigate=useNavigate();
 
@@ -248,6 +250,16 @@ function Review1({ listingID }) {
     console.log("Hello");
 };
 
+const handleWriteClick=()=>{
+  if(token)
+    {
+    setIsReviewFormOpen(!isReviewFormOpen)
+  }
+  else{
+setIsPopupOpen(true);
+  }
+}
+
   return (
     <>
       <div className="company-listing-tab ">
@@ -296,8 +308,7 @@ function Review1({ listingID }) {
                         <span className="desk_mrg">
                           <a
                             className="btn btn-link writereviewFont"
-                            onClick={() =>
-                              setIsReviewFormOpen(!isReviewFormOpen)
+                            onClick={handleWriteClick
                             }
                             aria-expanded={isReviewFormOpen ? "true" : "false"}
                             aria-controls="WriteReview"
@@ -497,6 +508,10 @@ function Review1({ listingID }) {
           </div>
         </div>
       </div>
+      <Popup
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+      />
     </>
   );
 }

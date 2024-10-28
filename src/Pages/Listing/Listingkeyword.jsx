@@ -75,8 +75,10 @@ function Listingkeyword({ companyID }) {
         <h6>Keyword</h6>
         <ul className="listing-specialisat-list listingspecialisation">
           {paymentKeywords.map((keyword, index) => (
-            <li key={index}>
-              <i className="icon-check-1"></i> {keyword}
+            <li key={index} style={{display:'flex'}}>
+              <i className="icon-check-1"></i> 
+              <p style={{marginBottom:'0px'}}>{keyword}</p>
+              
             </li>
           ))}
         </ul>

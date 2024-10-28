@@ -187,7 +187,7 @@ function Addspecialisation()
                   </button>
                 </div>
               </div>
-              <div className="row">
+              <div className="row" style={{justifyContent:'normal'}}>
                 {Object.keys(specialisations).map(
                   (key, index) =>
                     !["selectAll", "listingID", "ownerGuid", "ipAddress"].includes(key)  && (

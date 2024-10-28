@@ -57,34 +57,45 @@ function Package() {
   }, [token]);
 
   useEffect(() => {
-    
     const fetchPackageStatuses = async () => {
-      const statuses = {};
+      try {
+        const response = await fetch(
+          "https://apidev.myinteriormart.com/api/UpdatePackageStatus/UpdatePackageStatus",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await response.json();
 
-      for (const pkg of listingPackage) {
-        try {
-          const response = await fetch(
-            `https://apidev.myinteriormart.com/api/UpdatePackageStatus/UpdatePackageStatus?listingId=19&packageId=${pkg.id}`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          const data = await response.json();
-          statuses[pkg.id] = data.packageStatus; // Store the packageStatus directly
-        } catch (error) {
-          console.error(`Error fetching status for package ${pkg.id}:`, error);
-        }
+        // Create an object with packageID as the key and packageStatus as the value
+        const statusMap = data.reduce((acc, curr) => {
+          acc[curr.packageID] = 
+          {
+            packageStatus:curr.packageStatus,
+            statusMessage:curr.statusMessage
+          }
+
+          return acc;
+        }, {});
+
+        setPackageStatus(statusMap);
+      } catch (error) {
+        console.error("Error fetching package statuses:", error);
       }
-      setPackageStatus(statuses);
     };
 
-    if (listingPackage.length > 0) {
-      fetchPackageStatuses();
-    }
-  }, [listingPackage]);
+    fetchPackageStatuses();
+  }, []);
+
+  // Helper function to get button color based on package status
+  const getStatusColor = (status) => {
+    if (status === "1") return "green";
+    if (status === "0") return "red";
+    return "orange";
+  };
 
   // Handle click to redirect without updating the package status
   const handleClick = (pkgId) => {
@@ -166,10 +177,11 @@ function Package() {
                     </div>
 
                     <div className="add_listing_card_btn">
+                      
                       <button className="buybtn" style={{
-                        backgroundColor:packageStatus[pkg.id]==="1"?"green":packageStatus[pkg.id]==='0'?'red':"orange"
+                        backgroundColor: getStatusColor(packageStatus[pkg.id]?.packageStatus)
                       }} onClick={() => handleClick(pkg.id)}>
-                        BUY
+                        {packageStatus[pkg.id]?.statusMessage || "BUY"}
                       </button>
                     </div>
                   </div>

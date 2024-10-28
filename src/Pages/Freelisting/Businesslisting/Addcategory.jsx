@@ -396,7 +396,7 @@ function Addcategory()
   
                   <div className="row">
                     <div className="col-sm-12">
-                      <div className="row">
+                      <div className="row" style={{justifyContent:'normal'}}>
                     {thirdCategories.length > 0 &&
                       thirdCategories.map((category) => (
                         <div className="col-md-4" key={category.thirdCategoryId}>

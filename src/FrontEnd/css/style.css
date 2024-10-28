@@ -10518,8 +10518,9 @@ a.btn_3:hover,
   .notify_body {
     height: 1000px;
     padding: 0;
-    overflow: hidden;
+    /* overflow: hidden; */
     margin-top: 0px;
+    overflow-y: auto;
   }
 
   .this_count {

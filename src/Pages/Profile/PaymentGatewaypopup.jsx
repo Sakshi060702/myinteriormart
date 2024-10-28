@@ -108,7 +108,7 @@ const PaymetGatewaypopup = ({ isOpen, onClose, message,packageId  }) => {
   return (
     <>
       {isOpen && (
-        <div className="popup2-overlay" onClick={onClose}>
+        <div className="popup2-overlay packagepayment" onClick={onClose}>
           <div className="popup2-content" onClick={(e) => e.stopPropagation()}>
             <div>
               <img
@@ -125,7 +125,7 @@ const PaymetGatewaypopup = ({ isOpen, onClose, message,packageId  }) => {
               <h6 style={{ textAlign: "center" }}>{message}</h6>
             </div>
 
-            <div style={{ display: "flex" }}>
+            <div className="paymentbtn">
               <div className="popupbutton-container paymentgatewaypopup">
               <button
   onClick={() => handleContinue(packageId)}  // Pass the packageId correctly

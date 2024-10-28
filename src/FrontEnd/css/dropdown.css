@@ -85,11 +85,13 @@
     top: 94px;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh; /* Ensures minimum height of the mobile viewport */
+    max-height: calc(100vh - 94px); /* Sets max height to fit within the viewport */
     z-index: 10000;
     border-radius: 0;
     padding: 20px;
-    overflow-y: scroll;
+    overflow-y: auto; /* Enables scrolling for overflow */
+    box-sizing: border-box; /* Ensures padding doesn’t affect the width */
   }
   .notificationheader{
     font-size: 18px;
