@@ -26,6 +26,7 @@ function Contractor1() {
   const [isMobileMenuVisible, setIsMobileMenuVisible] = useState(false);
   const [contractorBanners, setcontractorBanners] = useState([]);
   const [homeMegaBannerImages, setHomeMegaBannerImage] = useState([]);
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     fetchCategories();
@@ -48,6 +49,7 @@ function Contractor1() {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuVisible(!isMobileMenuVisible);
+    setIsActive((prev) => !prev);
   };
 
   useEffect(() => {
@@ -92,7 +94,7 @@ function Contractor1() {
             <div className="col-lg-2 col-md-12 category-list">
               <div className="navbar-brand contractor">
                 <button
-                  className="btn btn-link navbar-brand-btn"
+                   className={`btn btn-link navbar-brand-btn ${isActive ? 'button-active' : ''}`}
                   type="button"
                   onClick={toggleMobileMenu}
                 >

@@ -7,10 +7,11 @@ function Package() {
   const [listingPackage, setListingPackage] = useState([]);
   const [packageId, setPackageId] = useState(null); // Package ID for the clicked package
   const [listingId, setListingId] = useState(null); // Listing ID from GetManageListingFromStatus API
-  const[status,setStatus]=useState([]);
+  const [status, setStatus] = useState([]);
   const navigate = useNavigate();
-  const[packageStatus,setPackageStatus]=useState([]);
-  
+  const [packageStatus, setPackageStatus] = useState([]);
+  const [statusMessage, setStausMessage] = useState([]);
+
   const { token } = useSelector((state) => state.auth);
 
   // Fetch listing packages
@@ -28,7 +29,9 @@ function Package() {
       .then((data) => {
         setListingPackage(data.listingPackages); // Set listing packages
       })
-      .catch((error) => console.error("Error fetching listing packages:", error));
+      .catch((error) =>
+        console.error("Error fetching listing packages:", error)
+      );
   }, []);
 
   // Fetch listing status and ID
@@ -72,11 +75,17 @@ function Package() {
 
         // Create an object with packageID as the key and packageStatus as the value
         const statusMap = data.reduce((acc, curr) => {
-          acc[curr.packageID] = 
-          {
-            packageStatus:curr.packageStatus,
-            statusMessage:curr.statusMessage
+          if (!acc[curr.listingID]) {
+            acc[curr.listingID] = {};
+            console.log("packlistingid", curr.listingID);
           }
+          console.log("packid", curr.packageID);
+          acc[curr.listingID][curr.packageID] = {
+            packageStatus: curr.packageStatus,
+            statusMessage: curr.statusMessage,
+          };
+          console.log("packagestatus", packageStatus);
+          console.log("packagemessage", statusMessage);
 
           return acc;
         }, {});
@@ -164,9 +173,13 @@ function Package() {
                         {pkg.packageTitle}
                       </div>
                       <div className="add_listing_card_description">
-                        {pkg.packageDescription.split("\r\n").map((line, index) => (
-                          <p className="descriptionline" key={index}>{line}</p>
-                        ))}
+                        {pkg.packageDescription
+                          .split("\r\n")
+                          .map((line, index) => (
+                            <p className="descriptionline" key={index}>
+                              {line}
+                            </p>
+                          ))}
                       </div>
                       <div
                         className="add_listing_card_price"
@@ -177,11 +190,22 @@ function Package() {
                     </div>
 
                     <div className="add_listing_card_btn">
-                      
-                      <button className="buybtn" style={{
-                        backgroundColor: getStatusColor(packageStatus[pkg.id]?.packageStatus)
-                      }} onClick={() => handleClick(pkg.id)}>
-                        {packageStatus[pkg.id]?.statusMessage || "BUY"}
+                      <button
+                        className="buybtn"
+                        style={{
+                          backgroundColor: getStatusColor(
+                            packageStatus[listingId]?.[pkg.id]?.packageStatus
+                          ),
+                          color: "white",
+                        }}
+                        onClick={() => handleClick(pkg.id)}
+                        disabled={
+                          packageStatus[listingId]?.[pkg.id]?.packageStatus ===
+                          "1"
+                        }
+                      >
+                        {packageStatus[listingId]?.[pkg.id]?.statusMessage ||
+                          "BUY"}
                       </button>
                     </div>
                   </div>

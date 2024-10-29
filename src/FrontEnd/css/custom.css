@@ -486,6 +486,13 @@ footer ul {
 	transition: all 0.15s ease-in-out;
 	width: 16px;
 }
+.show-brand .navbar-brand-btn.button-active:after {
+    transform: rotate(135deg) !important; /* Rotate to down arrow */
+}
+
+/* show-brand .navbar-brand-btn.buttonActive:after{
+	transform: rotate(225deg) !important;
+} */
 
 .navbar-brand-offer>.navbar-collapse .nav-link {
 	padding: 10px 20px;

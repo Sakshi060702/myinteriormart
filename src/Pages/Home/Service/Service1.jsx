@@ -29,6 +29,9 @@ const Services1 = () => {
   const [homeMegaBannerImages, setHomeMegaBannerImage] = useState([]);
 
   const [showSecondBanner, setShowSecondBanner] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+  
 
   useEffect(() => {
     fetchCategories();
@@ -49,9 +52,14 @@ const Services1 = () => {
   const displayedCategories = categories.slice(16, 33);
   const initialCategories = categories.slice(0, 16);
 
+  // const toggleMobileMenu = () => {
+  //   setIsMobileMenuVisible(!isMobileMenuVisible);
+  // };
+
   const toggleMobileMenu = () => {
+    setIsActive((prev) => !prev); // Toggle active state
     setIsMobileMenuVisible(!isMobileMenuVisible);
-  };
+};
 
   useEffect(() => {
     const fetchBannerImages = async () => {
@@ -111,7 +119,7 @@ const Services1 = () => {
           <div className="col-lg-2 col-md-12 category-list">
             <div className="navbar-brand">
               <button
-                className="btn btn-link navbar-brand-btn"
+                className={`btn btn-link navbar-brand-btn ${isActive ? 'button-active' : ''}`}
                 type="button"
                 onClick={toggleMobileMenu}
               >

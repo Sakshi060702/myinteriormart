@@ -41,10 +41,10 @@ const Sharelink = ({ isOpen, onClose }) => {
   const secondcategory_enc = searchParams.get("secondCategoryId");
   const secondCategoryId = decrypt(decodeURIComponent(secondcategory_enc));
 
-  useEffect(()=>{
-    setPageLink(window.location.href);
-    fetchListingDetails();
-  })
+  // useEffect(()=>{
+  //   setPageLink(window.location.href);
+  //   fetchListingDetails();
+  // },[listingId])
   // useEffect(() => {
    
   //   // if(listingDetails && listingDetails.logoImage){
@@ -89,8 +89,11 @@ const Sharelink = ({ isOpen, onClose }) => {
 
 
   useEffect(() => {
-    fetchListingDetails();
-  }, [listingId]);
+    if (isOpen && listingId) {
+      setPageLink(window.location.href);
+      fetchListingDetails();
+    }
+  }, [isOpen, listingId]);
   
   const token = useSelector((state) => state.auth.token);
 
@@ -114,7 +117,7 @@ const Sharelink = ({ isOpen, onClose }) => {
       const company = data.find(
         (listing) => listing.listingId.toString() === listingId
       );
-      
+      console.log('data',data)
       setListingDetails(company);
 
      
@@ -219,7 +222,11 @@ const Sharelink = ({ isOpen, onClose }) => {
       </style>
       <Helmet>
         <meta property="og:title" content={listingDetails.companyName} />
-        <meta property="og:image" content={`https://apidev.myinteriormart.com${listingDetails.logoImage.imagePath}`} />
+        {/* <meta property="og:image" content={`https://apidev.myinteriormart.com${listingDetails.logoImage.imagePath}`} /> */}
+        <meta 
+    property="og:image" 
+    content={listingDetails?.logoImage?.imagePath ? `https://apidev.myinteriormart.com${listingDetails.logoImage.imagePath}` : {logoImage}} 
+  />
         <meta property="og:url" content={pageLink} />
       </Helmet>
       <div className="popup-overlay" onClick={onClose}>

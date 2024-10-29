@@ -26,6 +26,7 @@ function Dealer1() {
   const navigate = useNavigate();
   const location = useLocation();
   const categoryRefs = useRef({});
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     fetchCategories();
@@ -51,6 +52,7 @@ function Dealer1() {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuVisible(!isMobileMenuVisible);
+    setIsActive((prev) => !prev);
   };
 
   useEffect(() => {
@@ -119,7 +121,7 @@ function Dealer1() {
             <div className="col-lg-2 col-md-12 category-list">
               <div className="navbar-brand">
                 <button
-                  className="btn btn-link navbar-brand-btn"
+                  className={`btn btn-link navbar-brand-btn ${isActive ? 'button-active' : ''}`}
                   type="button"
                   onClick={toggleMobileMenu}
                 >
