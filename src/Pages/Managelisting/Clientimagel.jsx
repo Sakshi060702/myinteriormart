@@ -177,7 +177,7 @@ function Clientimagel() {
         
 
         const cityName = localStorage.getItem('cityname');
-        const pathlisting = `/Sociallinkl/${cityName}`;
+        const pathlisting = `/Sociallinkl`;
         navigate(pathlisting);
 
       //   setSuccessMessage("Image Uploded Successfully");

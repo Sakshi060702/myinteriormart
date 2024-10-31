@@ -324,7 +324,7 @@ const Addressl = () => {
 
       .then((responseData) => {
         const cityName = localStorage.getItem("cityname");
-        const pathlisting = `/Categoryapi/${cityName}`;
+        const pathlisting = `/Categoryapi`;
         navigate(pathlisting);
         // console.log("API response:", responseData);
         // console.log("Address token:", token);
@@ -419,7 +419,7 @@ const Addressl = () => {
                 <span>
                   <Link
                     className="back_btn mx-3"
-                    to={`/labournakapage/${localStorage.getItem("cityname")}`}
+                    to={`/labournakapage`}
                   >
                     Back
                   </Link>

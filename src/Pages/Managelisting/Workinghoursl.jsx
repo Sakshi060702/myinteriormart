@@ -124,7 +124,7 @@ useEffect(()=>{
 
       const result = await response.json();
       const cityName = localStorage.getItem('cityname');
-      const pathlisting = `/paymentmodel/${cityName}`;
+      const pathlisting = `/paymentmodel`;
       navigate(pathlisting);
 
     //   console.log(result);
@@ -159,7 +159,7 @@ useEffect(()=>{
               <p className="add-lidting-title-from">
                 Add Listing / Add Working Hours
                 <span>
-                <Link className="back_btn mx-3" to={`/labournakapage/${localStorage.getItem('cityname')}`}>
+                <Link className="back_btn mx-3" to={`/labournakapage`}>
                     Back
                   </Link>
                 </span>

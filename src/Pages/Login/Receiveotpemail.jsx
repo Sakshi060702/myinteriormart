@@ -39,7 +39,7 @@ function Receiveotpemail() {
             // console.log(data); // Log the response data
 
             const cityName = localStorage.getItem('cityname');
-            const pathregister = `/register/${cityName}`;
+            const pathregister = `/register`;
 
 
             

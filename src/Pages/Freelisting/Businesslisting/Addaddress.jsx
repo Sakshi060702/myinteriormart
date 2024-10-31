@@ -340,7 +340,7 @@ const Address = () => {
         // console.log("Address token:", token);
         
         const cityName = localStorage.getItem('cityname');
-        const pathlisting = `/addcategory/${cityName}`;
+        const pathlisting = `/addcategory`;
 
         navigate(pathlisting);
         // setSuccessMessage("Address Details Saved Successfully");
@@ -661,10 +661,10 @@ const Address = () => {
                       paddingTop: "10px",
                     }}
                   >
-                    <Link to={`/addCommunication/${localStorage.getItem('cityname')}`}>
+                    <Link to={`/addCommunication`}>
                       <img src={previousarrowimg} style={{ height: "30px" }} />
                     </Link>
-                    <Link to={`/addcategory/${localStorage.getItem('cityname')}`}>
+                    <Link to={`/addcategory`}>
                       <img src={nextarrowimg} style={{ height: "30px" }} />
                     </Link>
                   </div>

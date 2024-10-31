@@ -203,7 +203,7 @@ const Foot = () => {
                 style={{ cursor: "pointer", padding: "0" }}
               >
                 <NavLink
-                  to={`/about/in-${localStorage.getItem("cityname")}`}
+                  to={`/about`}
                   style={{ color: "white", paddingBottom: "17px" }}
                 >
                   About Us
@@ -224,7 +224,7 @@ const Foot = () => {
                 style={{ cursor: "pointer", padding: "0" }}
               >
                 <NavLink
-                  to={`/contact/in-${localStorage.getItem("cityname")}`}
+                  to={`/contact`}
                   style={{ color: "white", paddingBottom: "17px" }}
                 >
                   Contact
@@ -240,7 +240,7 @@ const Foot = () => {
                 style={{ cursor: "pointer", padding: "0" }}
               >
                 <NavLink
-                  to={`/Privacypolicy/in-${localStorage.getItem("cityname")}`}
+                  to={`/Privacypolicy`}
                   style={{ color: "white", paddingBottom: "17px" }}
                 >
                   Privacy
@@ -258,7 +258,7 @@ const Foot = () => {
                 style={{ cursor: "pointer", padding: "0" }}
               >
                <NavLink
-                  to={`/Termconditions/in-${localStorage.getItem("cityname")}`}
+                  to={`/Termconditions`}
                   style={{ color: "white", paddingBottom: "17px" }}
                 >
                  Terms and conditions

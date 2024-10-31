@@ -261,7 +261,7 @@ function Addcategory()
       // console.log("Category Token",token);
 
       const cityName = localStorage.getItem('cityname');
-        const pathlisting = `/addspecialisation/${cityName}`;
+        const pathlisting = `/addspecialisation`;
 
         navigate(pathlisting);
 
@@ -543,8 +543,8 @@ function Addcategory()
                     </button>
                   
                   <div style={{display:"flex",justifyContent:"center",gap:'10px',paddingTop:'10px'}}>                    
-                        <Link to={`/address/${localStorage.getItem('cityname')}`} ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
-                      <Link to={`/addspecialisation/${localStorage.getItem('cityname')}`} ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
+                        <Link to={`/address`} ><img src={previousarrowimg} style={{height:'30px'}}/></Link>
+                      <Link to={`/addspecialisation`} ><img src={nextarrowimg} style={{height:'30px'}}/></Link>
                       </div>
                       </div>
                       {showPopup && (

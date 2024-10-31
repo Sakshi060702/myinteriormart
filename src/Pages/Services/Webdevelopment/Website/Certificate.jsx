@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import '../../../../FrontEnd/css/Gallerypopup.css';
 
 const Certificate = (companyID) => {
   const [imageURLs, setImageURLs] = useState([]);
@@ -9,6 +10,19 @@ const Certificate = (companyID) => {
   //  console.log('companyid',companyID.listingID)
   const company_idFetch = { companyID: companyID.listingID.companyID };
   //  console.log('company_idFetch',company_idFetch)
+
+  const[modalOpen,setModalOpen]=useState(false);
+  const[selectedImage,setSelectedImage]=useState(null);
+
+  const openModel=(image)=>{
+    setSelectedImage(image);
+    setModalOpen(true);
+  }
+
+  const closeModel=()=>{
+    setSelectedImage(null);
+    setModalOpen(false);
+  }
 
   useEffect(() => {
     const fetchGalleryImages = async () => {
@@ -55,6 +69,7 @@ const Certificate = (companyID) => {
                 className="upload_images ListingClient uploadimages"
                 src={`https://apidev.myinteriormart.com${image.url}`}
                 alt={`Certificate ${index + 1}`}
+                onClick={()=>openModel(image.url)}
                
               />
             ))
@@ -63,6 +78,23 @@ const Certificate = (companyID) => {
           )}
         </div>
       </div>
+      {/* model for image popup */}
+      {modalOpen &&(
+         <div className="modal-overlay">
+         
+         <div className="modal-content" onClick={(e)=>e.stopPropagation()}>
+         <button className="modal-close" onClick={closeModel}>
+        &times;
+      </button>
+           <img  src={`https://apidev.myinteriormart.com${selectedImage}`}
+               alt="Full View"
+               className="modal-image"/>
+              
+         </div>
+        
+       </div>
+      )}
+     
     </div>
   );
 };

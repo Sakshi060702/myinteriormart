@@ -51,7 +51,7 @@ function Dashboard() {
           <h5>Dashboard</h5>
           <div className="row">
             <div className="col-md-4 col-6 mb-3">
-              <Link to={`/AllBookmark/in-${localStorage.getItem('cityname')}`}>
+              <Link to={`/AllBookmark`}>
                 <div className="add_listing_card d-flex align-items-center justify-content-start">
                   <div className="add_listing_card_title">Bookmarks</div>
                   <div className="this_count">{counts.bookmarksCount}</div>
@@ -60,7 +60,7 @@ function Dashboard() {
             </div>
 
             <div className="col-md-4 col-6 mb-3">
-              <Link to={`/AllLike/in-${localStorage.getItem('cityname')}`}>
+              <Link to={`/AllLike`}>
                 <div className="add_listing_card d-flex align-items-center justify-content-start">
                   <div className="add_listing_card_title">Likes</div>
                   <div className="this_count">{counts.likesCount}</div>
@@ -69,7 +69,7 @@ function Dashboard() {
             </div>
 
             <div className="col-md-4 col-6 mb-3">
-              <Link to={`/AllReviews/in-${localStorage.getItem('cityname')}`}>
+              <Link to={`/AllReviews`}>
                 <div className="add_listing_card d-flex align-items-center justify-content-start">
                   <div className="add_listing_card_title">Reviews</div>
                   <div className="this_count">{counts.reviewsCount}</div>
@@ -78,7 +78,7 @@ function Dashboard() {
             </div>
 
             <div className="col-md-4 col-6 mb-3">
-              <Link to={`/AllSubscribe/in-${localStorage.getItem('cityname')}`}>
+              <Link to={`/AllSubscribe`}>
                 <div className="add_listing_card d-flex align-items-center justify-content-start">
                   <div className="add_listing_card_title">Subscribe</div>
                   <div className="this_count">{counts.subscribersCount}</div>

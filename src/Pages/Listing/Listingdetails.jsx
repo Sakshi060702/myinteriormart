@@ -803,6 +803,20 @@ function Listingdetails() {
     }
   };
 
+
+  const[modalOpen,setModalOpen]=useState(false);
+  // const[selectedImage,setSelectedImage]=useState(null);
+
+  const openModel=(image)=>{
+    setSelectedImage(image);
+    setModalOpen(true);
+  }
+
+  const closeModel=()=>{
+    setSelectedImage(null);
+    setModalOpen(false);
+  }
+
   const plusSlides = (n) => {
     showSlides(slideIndex + n);
   };
@@ -1063,6 +1077,7 @@ navigate(ClaimForgetpassword)
                               src={`https://apidev.myinteriormart.com${image.url}`}
                               alt={`Slide ${index + 1}`}
                               className="main-image-display photogallerymain"
+                              onClick={() => openModel(image.url)}
                             />
                           </SwiperSlide>
                         ))
@@ -1072,10 +1087,27 @@ navigate(ClaimForgetpassword)
                             src={gallerydummy}
                             alt="Dummy Image"
                             className="main-image-display photogallerymaindummy"
+                            style={{border:'1px solid gainsboro'}}
                           />
                         </SwiperSlide>
                       )}
                     </Swiper>
+
+                     {/* Modal for image popup */}
+      {modalOpen && (
+        <div className="Gmodal-overlay" >
+          <div className="Gmodal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="Gmodal-close" onClick={closeModel}>
+              &times;
+            </button>
+            <img
+              src={`https://apidev.myinteriormart.com${selectedImage}`}
+              alt="Full View"
+              className="Gmodal-image"
+            />
+          </div>
+        </div>
+      )}
 
                     <div
                       className="thumbnails scrollmenu"
@@ -1178,6 +1210,7 @@ navigate(ClaimForgetpassword)
                                     src={`https://apidev.myinteriormart.com${image.url}`}
                                     alt={`Slide ${index + 1}`}
                                     className="main-image-display photogallerymain"
+                                    onClick={() => openModel(image.url)}
                                   />
                                 </SwiperSlide>
                               ))
@@ -1187,10 +1220,27 @@ navigate(ClaimForgetpassword)
                                   src={gallerydummy}
                                   alt="Dummy Image"
                                   className="main-image-display photogallerymain"
+                                  style={{border:'1px solid gainsboro'}}
                                 />
                               </SwiperSlide>
                             )}
                           </Swiper>
+
+                           {/* Modal for image popup */}
+      {modalOpen && (
+        <div className="Gmodal-overlay" >
+          <div className="Gmodal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="Gmodal-close" onClick={closeModel}>
+              &times;
+            </button>
+            <img
+              src={`https://apidev.myinteriormart.com${selectedImage}`}
+              alt="Full View"
+              className="Gmodal-image"
+            />
+          </div>
+        </div>
+      )}
 
                           {/* </div> */}
 

@@ -15,7 +15,7 @@ const Dropdown = () => {
   };
 
   const cityName = localStorage.getItem("cityname");
-  const pathhome = `/${cityName}`;
+  const pathhome = `/`;
 
   const handleLogoutClick = () => {
     dispatch(logout());
@@ -31,7 +31,7 @@ const Dropdown = () => {
         <li style={{ marginRight: "60px", marginTop: "10px" }}>
           <Link
             className="droplink"
-            to={`/Myactivity/in-${localStorage.getItem("cityname")}`}
+            to={`/Myactivity`}
             style={{ color: "black" }}
           >
             <i className="fa fa-user" style={{ color: "orange" }}></i> Dashboard

@@ -140,7 +140,7 @@ function Addworkinghours()
           // console.log("Working hours token",token);
          
           const cityName = localStorage.getItem('cityname');
-        const pathlisting = `/addpayment/${cityName}`;
+        const pathlisting = `/addpayment`;
 
         navigate(pathlisting);
 
@@ -323,13 +323,13 @@ function Addworkinghours()
                       Save & Continue
                     </button>
                     <div style={{display:"flex",justifyContent:"center",gap:'10px',paddingTop:'10px'}}>                    
-                      <Link to={`/addspecialisation/${localStorage.getItem('cityname')}`}>
+                      <Link to={`/addspecialisation`}>
                         <img
                           src={previousarrowimg}
                           style={{ height: "30px" }}
                         />
                       </Link>
-                      <Link to={`/addpayment/${localStorage.getItem('cityname')}`}>
+                      <Link to={`/addpayment`}>
                         <img src={nextarrowimg} style={{ height: "30px" }} />
                       </Link>
                     </div>

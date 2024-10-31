@@ -126,7 +126,7 @@ function Specialisationl() {
 
       const data = await response.json();
       const cityName = localStorage.getItem('cityname');
-      const pathlisting = `/workinghoursl/${cityName}`;
+      const pathlisting = `/workinghoursl`;
       navigate(pathlisting);
     //   console.log("Response:", data);
     //   console.log("Specialisation token",token);
@@ -161,7 +161,7 @@ function Specialisationl() {
             <p className="add-lidting-title-from">
               Add Listing / Add Specialisation Details
               <span>
-              <Link className="back_btn mx-3" to={`/labournakapage/${localStorage.getItem('cityname')}`}>
+              <Link className="back_btn mx-3" to={`/labournakapage`}>
                   Back
                 </Link>
               </span>

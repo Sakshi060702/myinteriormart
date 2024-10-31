@@ -169,7 +169,7 @@ function Register() {
       const data = await response.json();
 
       const cityName = localStorage.getItem("cityname");
-      const pathhome = `/in-${cityName}`;
+      const pathhome = `/`;
 
       if (response.ok) {
         // console.log('User Registered successfully', data);

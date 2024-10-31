@@ -99,7 +99,7 @@ function Paymentmodel() {
 
       const data = await response.json();
       const cityName = localStorage.getItem('cityname');
-      const pathlisting = `/Imagesl/${cityName}`;
+      const pathlisting = `/Imagesl`;
       navigate(pathlisting);
 
     //   console.log("Response:", data);
@@ -136,7 +136,7 @@ function Paymentmodel() {
               <p className="add-lidting-title-from">
                 Add Listing / Add Payment Mode
                 <span>
-                <Link className="back_btn mx-3" to={`/labournakapage/${localStorage.getItem('cityname')}`}>
+                <Link className="back_btn mx-3" to={`/labournakapage`}>
                     Back
                   </Link>
                 </span>

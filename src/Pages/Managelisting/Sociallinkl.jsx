@@ -98,7 +98,7 @@ function Sociallinkl() {
       const responseData = await response.json();
 
       const cityName = localStorage.getItem('cityname');
-      const pathlisting = `/Keywordl/${cityName}`;
+      const pathlisting = `/Keywordl`;
       navigate(pathlisting);
 
 
@@ -136,7 +136,7 @@ function Sociallinkl() {
               <p className="add-lidting-title-from">
                 Add Listing / Social Links
                 <span>
-                <Link className="back_btn mx-3" to={`/labournakapage/${localStorage.getItem('cityname')}`}>
+                <Link className="back_btn mx-3" to={`/labournakapage`}>
                     Back
                   </Link>
                 </span>

@@ -208,7 +208,7 @@ function Addcommunication() {
       console.log("API response:", responseData);
 
       const cityName = localStorage.getItem("cityname");
-      const pathlisting = `/address/${cityName}`;
+      const pathlisting = `/address`;
 
       navigate(pathlisting);
     } catch (error) {
@@ -426,14 +426,14 @@ function Addcommunication() {
                       }}
                     >
                       <Link
-                        to={`/addcompany/${localStorage.getItem("cityname")}`}
+                        to={`/addcompany`}
                       >
                         <img
                           src={previousarrowimg}
                           style={{ height: "30px" }}
                         />
                       </Link>
-                      <Link to={`/address/${localStorage.getItem("cityname")}`}>
+                      <Link to={`/address`}>
                         <img src={nextarrowimg} style={{ height: "30px" }} />
                       </Link>
                     </div>

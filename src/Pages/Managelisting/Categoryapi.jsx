@@ -243,7 +243,7 @@ function Categoryapi() {
       }
       const data = await response.json();
       const cityName = localStorage.getItem("cityname");
-      const pathlisting = `/specialisationl/${cityName}`;
+      const pathlisting = `/specialisationl`;
       navigate(pathlisting);
       //   console.log("Data saved successfully:", data);
       //   console.log("Category Token",token);
@@ -295,7 +295,7 @@ function Categoryapi() {
                 <span>
                   <Link
                     className="back_btn mx-3"
-                    to={`/labournakapage/${localStorage.getItem("cityname")}`}
+                    to={`/labournakapage`}
                   >
                     Back
                   </Link>

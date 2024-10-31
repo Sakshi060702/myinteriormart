@@ -210,7 +210,7 @@ function Addcompany() {
       // console.log("Token", token);
 
       const cityName = localStorage.getItem('cityname');
-      const pathlisting = `/addCommunication/${cityName}`;
+      const pathlisting = `/addCommunication`;
 
       // alert("Company details saved successfully!");
       navigate(pathlisting);
@@ -462,7 +462,7 @@ function Addcompany() {
                 Save & Continue
               </button>
 
-              <Link to={`/addCommunication/${localStorage.getItem('cityname')}`} className="pull-center">
+              <Link to={`/addCommunication`} className="pull-center">
                 <img src={nextarrowimg} style={{ height: "30px" }} />
               </Link>
             </div>

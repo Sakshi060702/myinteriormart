@@ -195,7 +195,7 @@ function Addcompanyl() {
       // console.log("Token", token);
 
       const cityName = localStorage.getItem("cityname");
-      const pathlisting = `/communicationl/${cityName}`;
+      const pathlisting = `/communicationl`;
 
       navigate(pathlisting);
 
@@ -271,7 +271,7 @@ function Addcompanyl() {
                   <span>
                     <Link
                       className="back_btn mx-3"
-                      to={`/labournakapage/${localStorage.getItem("cityname")}`}
+                      to={`/labournakapage`}
                     >
                       Back
                     </Link>

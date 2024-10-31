@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import '../../../../FrontEnd/css/Gallerypopup.css';
 
 
 import accessImage from '../../../../FrontEnd/img/access_bg.jpg';
@@ -18,6 +19,19 @@ const Clientreview = (companyID) => {
 //  console.log('companyid',companyID.listingID)
  const company_idFetch = {companyID: companyID.listingID.companyID};
 //  console.log('company_idFetch',company_idFetch)
+
+const[modalOpen,setModalOpen]=useState(false);
+const[selectedImage,setSelectedImage]=useState(null);
+
+const openModel=(image)=>{
+  setSelectedImage(image);
+  setModalOpen(true);
+}
+
+const closeModel=()=>{
+  setSelectedImage(null);
+  setModalOpen(false);
+}
 
 
   useEffect(() => {
@@ -71,6 +85,7 @@ const Clientreview = (companyID) => {
                 src={`https://apidev.myinteriormart.com${image.url}`}
                 alt={`Certificate ${index + 1}`}
                 style={{ paddingTop: '10px', margin: '10px',height:'100px',width:'100px' }} 
+                onClick={()=>openModel(image.url)}
               />
             ))
           ) : (
@@ -78,6 +93,22 @@ const Clientreview = (companyID) => {
           )}
         </div>
       </div>
+
+      {modalOpen &&(
+         <div className="CLmodal-overlay">
+         
+         <div className="CLmodal-content" onClick={(e)=>e.stopPropagation()}>
+         <button className="CLmodal-close" onClick={closeModel}>
+        &times;
+      </button>
+           <img  src={`https://apidev.myinteriormart.com${selectedImage}`}
+               alt="Full View"
+               className="CLmodal-image"/>
+              
+         </div>
+        
+       </div>
+      )}
       
     </div>
   );

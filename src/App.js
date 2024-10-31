@@ -975,8 +975,8 @@ function App() {
 
         {/*New Routes for custom url*/}
 
-        <Route path="/about/:cityName" element={<Aboutus />} />
-        <Route path="/contact/:cityName" element={<Contact></Contact>}></Route>
+        {/* <Route path="/about/:cityName" element={<Aboutus />} /> */}
+        {/* <Route path="/contact/:cityName" element={<Contact></Contact>}></Route> */}
 
         <Route path="/login/:cityName" element={<Login />} />
 
@@ -1042,6 +1042,15 @@ function App() {
 
 <Route
           path="/Package/:cityName"
+          element={
+            <Profile2>
+              <Package />
+            </Profile2>
+          }
+        />
+
+<Route
+          path="/Package"
           element={
             <Profile2>
               <Package />
@@ -1139,6 +1148,8 @@ function App() {
 
         <Route exact path="/services1" element={<Services1 />} />
         <Route path="/:categoryName/:cityName" element={<SubCategoryList />} />
+
+        
 
         <Route
           path="/:subcategoryName/:secondCategoryName/:cityName"
@@ -1341,8 +1352,8 @@ function App() {
 
         <Route path="/Usersuggestion/:cityName" element={<Usersuggestion />} />
 
-        <Route path="/Privacypolicy/:cityName" element={<Privacypolicy />} />
-        <Route path="/Termconditions/:cityName" element={<Termconditions />} />
+        <Route path="/Privacypolicy" element={<Privacypolicy />} />
+        <Route path="/Termconditions" element={<Termconditions />} />
 
       </Routes>
       

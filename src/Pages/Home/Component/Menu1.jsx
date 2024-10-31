@@ -288,7 +288,7 @@ function Menu1() {
               <div style={{ marginRight: "24px" }}>
                 {!isAuthenticated && (
                   <NavLink
-                    to={`/signup2/in-${localStorage.getItem("cityname")}`}
+                    to={`/signup2`}
                     className="listing-btn buttonlogin freelistingbtn mobile-freelisting mobilefreelistingbtn freelistingmargin"
 
                     // onClick={closeMenu}
@@ -329,7 +329,7 @@ function Menu1() {
                     </li>
                     <li>
                       <NavLink
-                        to={`/signup2/in-${localStorage.getItem("cityname")}`}
+                        to={`/signup2`}
                         className="btn_add listing-btn buttonlogin menu-freelisting freelistingmargin"
                         style={{
                           backgroundColor: "#fe900d",
@@ -344,7 +344,7 @@ function Menu1() {
 
                     <li>
                       <NavLink
-                        to={`/signup2/in-${localStorage.getItem("cityname")}`}
+                        to={`/signup2`}
                         className="listing-btn buttonlogin suggestionbtn"
                         style={{
                           fontSize: "14px",
@@ -357,7 +357,7 @@ function Menu1() {
                     </li>
                     <li>
                       <NavLink
-                        to={`/login/in-${localStorage.getItem("cityname")}`}
+                        to={`/login`}
                         className=" listing-btn buttonlogin suggestionbtn "
                         style={{ fontSize: "14px" }}
                         // onClick={closeMenu}
@@ -465,9 +465,7 @@ function Menu1() {
                             <ul>
                               <li>
                                 <NavLink
-                                  to={`/selectcategory/in-${localStorage.getItem(
-                                    "cityname"
-                                  )}`}
+                                  to={`/selectcategory`}
                                   className="btn_add listing-btn menu-freelisting"
                                   style={{
                                     backgroundColor: "#fe900d",
@@ -671,9 +669,7 @@ function Menu1() {
                   <div>
                     {status !== 1 && (
                       <NavLink
-                        to={`/selectcategory/in-${localStorage.getItem(
-                          "cityname"
-                        )}`}
+                        to={`/selectcategory`}
                         className=" listing-btn mobile-freelisting freelistingbtn mobilefreelistingbtn freelistingmargin"
                       >
                         Free Listing

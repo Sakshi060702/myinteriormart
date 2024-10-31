@@ -103,9 +103,9 @@ function Signup2() {
       const data = await response.json();
 
       const cityName = localStorage.getItem('cityname');
-      const path = `/receiveotp2/in-${cityName}`;
+      const path = `/receiveotp2`;
 
-      const pathemail= `/receiveotpemail/in-${cityName}`;
+      const pathemail= `/receiveotpemail`;
 
       if (response.ok) {
         if (mobile) {

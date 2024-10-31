@@ -53,7 +53,7 @@ function Home(){
           const defualtCity="mumbai";
           localStorage.setItem("cityname",defualtCity);
         
-          navigate(`/${localStorage.getItem("cityname")}`)
+          navigate(`/`)
         },
         [navigate]
        );
