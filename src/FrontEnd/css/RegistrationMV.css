@@ -1782,4 +1782,29 @@ div.scrollmenu .imgScroll:hover {
   margin-top: -5px; 
 }
 
+.suggestionMobilebtn{
+  display: none;
+}
+@media (max-width:767px) {
+  .suggestionMobilebtn{
+    display: block ;
+  }
+}
 
+.listingnumberD{
+  display: block !important;
+}
+@media (max-width:767px) {
+  .listingnumberD{
+    display: none !important;
+  }
+}
+
+.listingnumberM{
+  display: none !important;
+}
+@media (max-width:767px) {
+  .listingnumberM{
+    display: block !important;
+  }
+}

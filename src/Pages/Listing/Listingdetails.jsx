@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams, useSearchParams,useNavigate } from "react-router-dom";
+import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import Services from "../Services/Webdevelopment/Website/Services";
 import Webreviews from "../Services/Webdevelopment/Website/Webreviews";
 import profile from "../../FrontEnd/img/profile.svg";
@@ -29,6 +29,7 @@ import { prefix } from "@fortawesome/free-solid-svg-icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/swiper-bundle.css";
+import { Helmet } from "react-helmet";
 
 function Listingdetails() {
   // const { listingId } = useParams();
@@ -153,7 +154,7 @@ function Listingdetails() {
 
   const [socialLink, setSocialLink] = useState("");
 
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   const settings = {
     dots: false,
@@ -272,6 +273,38 @@ function Listingdetails() {
       console.error("Error in fetching listing Details", error);
     }
   };
+
+  //view source
+  // useEffect(() => {
+  //   if (listingDetails) {
+  //     document.title = `${listingDetails.companyName} | Justdial Clone`;
+
+  //     // Set meta description
+  //     let metaDescription = document.querySelector("meta[name='description']");
+  //     if (metaDescription) {
+  //       metaDescription.setAttribute("content", listingDetails.aboutUs || "");
+  //     } else {
+  //       // Create meta tag if it doesn't exist
+  //       metaDescription = document.createElement("meta");
+  //       metaDescription.setAttribute("name", "description");
+  //       metaDescription.setAttribute("content", listingDetails.aboutUs || "");
+  //       document.head.appendChild(metaDescription);
+  //     }
+  //   }
+  // }, [listingDetails]);
+
+  // useEffect(() => {
+  //   if (listingDetails) {
+  //     document.title = `${listingDetails.companyName} | Justdial Clone`;
+  
+  //     // Update meta tag with name="Title" if needed
+  //     let metaTitle = document.querySelector("meta[name='Title']");
+  //     if (metaTitle) {
+  //       metaTitle.setAttribute("content", `${listingDetails.companyName} | Justdial Clone`);
+  //     }
+  //   }
+  // }, [listingDetails]);
+  
 
   //for bookmark
 
@@ -803,19 +836,18 @@ function Listingdetails() {
     }
   };
 
-
-  const[modalOpen,setModalOpen]=useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   // const[selectedImage,setSelectedImage]=useState(null);
 
-  const openModel=(image)=>{
+  const openModel = (image) => {
     setSelectedImage(image);
     setModalOpen(true);
-  }
+  };
 
-  const closeModel=()=>{
+  const closeModel = () => {
     setSelectedImage(null);
     setModalOpen(false);
-  }
+  };
 
   const plusSlides = (n) => {
     showSlides(slideIndex + n);
@@ -843,14 +875,20 @@ function Listingdetails() {
   const fullAddress = listingDetails.fullAddress;
   const shortAddress = fullAddress.split(",").slice(0, 2).join(", ");
 
-  const ClaimForgetpassword=`/ForgetpasswordClaim/in-${localStorage.getItem('cityname')}`
+  const ClaimForgetpassword = `/ForgetpasswordClaim/in-${localStorage.getItem(
+    "cityname"
+  )}`;
 
-  const Getclaimhandleclick=()=>{
-navigate(ClaimForgetpassword)
-  }
+  const Getclaimhandleclick = () => {
+    navigate(ClaimForgetpassword);
+  };
 
   return (
     <>
+    <Helmet>
+    <title>{`${listingDetails.companyName} | Myinteriormart`}</title>
+    <meta name="title" content={`${listingDetails.companyName} | Myinteriormart`} />
+    </Helmet>
       <div className="sticky-searchbar">
         <Searchbar />
       </div>
@@ -1087,27 +1125,30 @@ navigate(ClaimForgetpassword)
                             src={gallerydummy}
                             alt="Dummy Image"
                             className="main-image-display photogallerymaindummy"
-                            style={{border:'1px solid gainsboro'}}
+                            style={{ border: "1px solid gainsboro" }}
                           />
                         </SwiperSlide>
                       )}
                     </Swiper>
 
-                     {/* Modal for image popup */}
-      {modalOpen && (
-        <div className="Gmodal-overlay" >
-          <div className="Gmodal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="Gmodal-close" onClick={closeModel}>
-              &times;
-            </button>
-            <img
-              src={`https://apidev.myinteriormart.com${selectedImage}`}
-              alt="Full View"
-              className="Gmodal-image"
-            />
-          </div>
-        </div>
-      )}
+                    {/* Modal for image popup */}
+                    {modalOpen && (
+                      <div className="Gmodal-overlay">
+                        <div
+                          className="Gmodal-content"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <button className="Gmodal-close" onClick={closeModel}>
+                            &times;
+                          </button>
+                          <img
+                            src={`https://apidev.myinteriormart.com${selectedImage}`}
+                            alt="Full View"
+                            className="Gmodal-image"
+                          />
+                        </div>
+                      </div>
+                    )}
 
                     <div
                       className="thumbnails scrollmenu"
@@ -1150,19 +1191,28 @@ navigate(ClaimForgetpassword)
                         ))
                       ) : (
                         <div style={{ display: "flex" }}>
-                                <div style={{marginRight:'2px'}}>
-                                  {" "}
-                                  <img src={gallerydummy}  style={{border:'1px solid gainsboro'}}/>
-                                </div>
-                                <div style={{marginRight:'2px'}}>
-                                  {" "}
-                                  <img src={gallerydummy} style={{border:'1px solid gainsboro'}}/>
-                                </div>
-                                <div>
-                                  {" "}
-                                  <img src={gallerydummy} style={{border:'1px solid gainsboro'}}/>
-                                </div>
-                              </div>
+                          <div style={{ marginRight: "2px" }}>
+                            {" "}
+                            <img
+                              src={gallerydummy}
+                              style={{ border: "1px solid gainsboro" }}
+                            />
+                          </div>
+                          <div style={{ marginRight: "2px" }}>
+                            {" "}
+                            <img
+                              src={gallerydummy}
+                              style={{ border: "1px solid gainsboro" }}
+                            />
+                          </div>
+                          <div>
+                            {" "}
+                            <img
+                              src={gallerydummy}
+                              style={{ border: "1px solid gainsboro" }}
+                            />
+                          </div>
+                        </div>
                       )}
                     </div>
                     {console.log("Banner", imageURL)}
@@ -1220,27 +1270,33 @@ navigate(ClaimForgetpassword)
                                   src={gallerydummy}
                                   alt="Dummy Image"
                                   className="main-image-display photogallerymain"
-                                  style={{border:'1px solid gainsboro'}}
+                                  style={{ border: "1px solid gainsboro" }}
                                 />
                               </SwiperSlide>
                             )}
                           </Swiper>
 
-                           {/* Modal for image popup */}
-      {modalOpen && (
-        <div className="Gmodal-overlay" >
-          <div className="Gmodal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="Gmodal-close" onClick={closeModel}>
-              &times;
-            </button>
-            <img
-              src={`https://apidev.myinteriormart.com${selectedImage}`}
-              alt="Full View"
-              className="Gmodal-image"
-            />
-          </div>
-        </div>
-      )}
+                          {/* Modal for image popup */}
+                          {modalOpen && (
+                            <div className="Gmodal-overlay">
+                              <div
+                                className="Gmodal-content"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <button
+                                  className="Gmodal-close"
+                                  onClick={closeModel}
+                                >
+                                  &times;
+                                </button>
+                                <img
+                                  src={`https://apidev.myinteriormart.com${selectedImage}`}
+                                  alt="Full View"
+                                  className="Gmodal-image"
+                                />
+                              </div>
+                            </div>
+                          )}
 
                           {/* </div> */}
 
@@ -1282,17 +1338,26 @@ navigate(ClaimForgetpassword)
                               ))
                             ) : (
                               <div style={{ display: "flex" }}>
-                                <div style={{marginRight:'2px'}}>
+                                <div style={{ marginRight: "2px" }}>
                                   {" "}
-                                  <img src={gallerydummy}  style={{border:'1px solid gainsboro'}}/>
+                                  <img
+                                    src={gallerydummy}
+                                    style={{ border: "1px solid gainsboro" }}
+                                  />
                                 </div>
-                                <div style={{marginRight:'2px'}}>
+                                <div style={{ marginRight: "2px" }}>
                                   {" "}
-                                  <img src={gallerydummy} style={{border:'1px solid gainsboro'}}/>
+                                  <img
+                                    src={gallerydummy}
+                                    style={{ border: "1px solid gainsboro" }}
+                                  />
                                 </div>
                                 <div>
                                   {" "}
-                                  <img src={gallerydummy} style={{border:'1px solid gainsboro'}}/>
+                                  <img
+                                    src={gallerydummy}
+                                    style={{ border: "1px solid gainsboro" }}
+                                  />
                                 </div>
                               </div>
                             )}
@@ -1507,65 +1572,137 @@ navigate(ClaimForgetpassword)
                           {listingDetails.mobile}
                         </a> */}
 
-                        {/* <i
+                      {/* <i
                           className="fa fa-whatsapp"
                           style={{ marginRight: "8px" }}
                         ></i> */}
-                        {/* <Link style={{ color: "orange" }}>
+                      {/* <Link style={{ color: "orange" }}>
                           {listingDetails.whatsapp}
                         </Link>
                       </div> */}
 
-<div className="listingemp listingtoll">
-  {/* registered mobile */}
-                        <div classname="col-lg-12 mb-1 listingtelephone" style={{width:'51%'}}>
-                          <i
-                            className="fa fa-mobile"
-                            style={{ marginRight: "8px" }}
-                          ></i>
-                          <a
-                            href={`tel:${listingDetails.mobile}`}
-                            style={{ marginRight: "8px", color: "orange" }}
-                            className="ListingpageFont"
+                      {/* dekstop view */}
+                      <div className="listingnumberD">
+                        <div className="listingemp listingtoll">
+                          {/* registered mobile */}
+                          <div
+                            classname="col-lg-12 mb-1 listingtelephone"
+                            style={{ width: "19%" }}
                           >
-                            {listingDetails.mobile}
-                          </a>
-                        </div>
-{/* mobile number */}
-                        <div classname="col-lg-12 mb-1 p-0">
-                          <i
-                            className="fa fa-mobile"
-                            style={{ marginRight: "8px" }}
-                          ></i>
-                          <a
-                            href={`tel:${listingDetails.registerMobile}`}
-                            style={{ marginRight: "8px", color: "orange" }}
-                            className="ListingpageFont"
+                            <i
+                              className="fa fa-mobile"
+                              style={{ marginRight: "8px" }}
+                            ></i>
+                            <a
+                              href={`tel:${listingDetails.mobile}`}
+                              style={{ marginRight: "8px", color: "orange" }}
+                              className="ListingpageFont"
+                            >
+                              {listingDetails.mobile}
+                            </a>
+                          </div>
+                          {/* mobile number */}
+                          <div classname="col-lg-12 mb-1 p-0">
+                            <i
+                              className="fa fa-mobile"
+                              style={{ marginRight: "8px" }}
+                            ></i>
+                            <a
+                              href={`tel:${listingDetails.registerMobile}`}
+                              style={{ marginRight: "8px", color: "orange" }}
+                              className="ListingpageFont"
+                            >
+                              {listingDetails.registerMobile}
+                            </a>
+                          </div>
+                          {/* telephone */}
+                          <div
+                            classname="col-lg-12 mb-1 listingtelephone"
+                            style={{ width: "20%" }}
                           >
-                            {listingDetails.registerMobile}
-                          </a>
+                            <i
+                              className="fa fa-phone"
+                              style={{ marginRight: "8px" }}
+                            ></i>
+                            <a
+                              href={`tel:${listingDetails.telephone}`}
+                              style={{ marginRight: "8px", color: "orange" }}
+                              className="ListingpageFont"
+                            >
+                              {listingDetails.telephone}
+                            </a>
+                          </div>
+
+                          {/* tollfree */}
+                          <div classname="col-lg-12 mb-1 p-0">
+                            <i
+                              className="fa fa-headphones"
+                              style={{ marginRight: "8px" }}
+                            ></i>
+                            <a
+                              href={`tel:${listingDetails.tollFree}`}
+                              style={{ marginRight: "8px", color: "orange" }}
+                              className="ListingpageFont"
+                            >
+                              {listingDetails.tollFree}
+                            </a>
+                          </div>
                         </div>
                       </div>
-
-
-
-                      <div className="listingemp listingtoll">
-{/* telephone number */}
-                        <div classname="col-lg-12 mb-1 listingtelephone" style={{width:'51%'}}>
-                          <i
-                            className="fa fa-phone"
-                            style={{ marginRight: "8px" }}
-                          ></i>
-                          <a
-                            href={`tel:${listingDetails.telephone}`}
-                            style={{ marginRight: "8px", color: "orange" }}
-                            className="ListingpageFont"
+                      {/* mobile view */}
+                      <div className="listingnumberM">
+                        <div className="listingemp listingtoll">
+                          {/* registered mobile */}
+                          <div
+                            classname="col-lg-12 mb-1 listingtelephone"
+                            style={{ width: "29%" }}
                           >
-                            {listingDetails.telephone}
-                          </a>
-                        </div>
-{/* tollFree number */}
-                        <div classname="col-lg-12 mb-1 p-0">
+                            <i
+                              className="fa fa-mobile"
+                              style={{ marginRight: "8px" }}
+                            ></i>
+                            <a
+                              href={`tel:${listingDetails.mobile}`}
+                              style={{ marginRight: "8px", color: "orange" }}
+                              className="ListingpageFont"
+                            >
+                              {listingDetails.mobile}
+                            </a>
+                          </div>
+                          {/* mobile number */}
+                          <div classname="col-lg-12 mb-1 p-0">
+                            <i
+                              className="fa fa-mobile"
+                              style={{ marginRight: "8px" }}
+                            ></i>
+                            <a
+                              href={`tel:${listingDetails.registerMobile}`}
+                              style={{ marginRight: "8px", color: "orange" }}
+                              className="ListingpageFont"
+                            >
+                              {listingDetails.registerMobile}
+                            </a>
+                          </div>
+                          {/* telephone */}
+                          <div
+                            classname="col-lg-12 mb-1 listingtelephone"
+                            style={{ width: "29%" }}
+                          >
+                            <i
+                              className="fa fa-phone"
+                              style={{ marginRight: "8px" }}
+                            ></i>
+                            <a
+                              href={`tel:${listingDetails.telephone}`}
+                              style={{ marginRight: "8px", color: "orange" }}
+                              className="ListingpageFont"
+                            >
+                              {listingDetails.telephone}
+                            </a>
+                          </div>
+
+                          {/* tollfree */}
+                          {/* <div classname="col-lg-12 mb-1 p-0">
                           <i
                             className="fa fa-headphones"
                             style={{ marginRight: "8px" }}
@@ -1577,8 +1714,60 @@ navigate(ClaimForgetpassword)
                           >
                             {listingDetails.tollFree}
                           </a>
+                        </div> */}
                         </div>
                       </div>
+                      <div className="listingnumberM">
+                        <div className="listingemp listingtoll">
+                          <div
+                            classname="col-lg-12 mb-1 p-0"
+                            style={{ marginLeft: "-2px" }}
+                          >
+                            <i
+                              className="fa fa-headphones"
+                              style={{ marginRight: "8px" }}
+                            ></i>
+                            <a
+                              href={`tel:${listingDetails.tollFree}`}
+                              style={{ marginRight: "8px", color: "orange" }}
+                              className="ListingpageFont"
+                            >
+                              {listingDetails.tollFree}
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* <div className="listingemp listingtoll"> */}
+                      {/* telephone number */}
+                      {/* <div classname="col-lg-12 mb-1 listingtelephone" style={{width:'51%'}}>
+                          <i
+                            className="fa fa-phone"
+                            style={{ marginRight: "8px" }}
+                          ></i>
+                          <a
+                            href={`tel:${listingDetails.telephone}`}
+                            style={{ marginRight: "8px", color: "orange" }}
+                            className="ListingpageFont"
+                          >
+                            {listingDetails.telephone}
+                          </a>
+                        </div> */}
+                      {/* tollFree number */}
+                      {/* <div classname="col-lg-12 mb-1 p-0">
+                          <i
+                            className="fa fa-headphones"
+                            style={{ marginRight: "8px" }}
+                          ></i>
+                          <a
+                            href={`tel:${listingDetails.tollFree}`}
+                            style={{ marginRight: "8px", color: "orange" }}
+                            className="ListingpageFont"
+                          >
+                            {listingDetails.tollFree}
+                          </a>
+                        </div> */}
+                      {/* </div> */}
 
                       <div
                         classname="company-time ListingpageFont"
@@ -1594,29 +1783,29 @@ navigate(ClaimForgetpassword)
                         />
                       </div>
                       <div className="social-details desktop">
-                        {listingDetails.claimedListing ?(
+                        {listingDetails.claimedListing ? (
                           <button
-                          className="btn btn-guotes btn-sm"
-                          // onClick={() => setIsPopupOpen(true)}
-                          style={{ marginRight: "10px", font: "bold" }}
-                          onClick={(event) => {
-                            event.preventDefault();
-                            
-                            Getclaimhandleclick();
-                          }}
-                        >
-                          Claim Listing
-                        </button>
-                        ):(
+                            className="btn btn-guotes btn-sm"
+                            // onClick={() => setIsPopupOpen(true)}
+                            style={{ marginRight: "10px", font: "bold" }}
+                            onClick={(event) => {
+                              event.preventDefault();
+
+                              Getclaimhandleclick();
+                            }}
+                          >
+                            Claim Listing
+                          </button>
+                        ) : (
                           <button
-                          className="btn btn-guotes btn-sm"
-                          onClick={() => setIsPopupOpen(true)}
-                          style={{ marginRight: "10px", font: "bold" }}
-                        >
-                          Get Quotes
-                        </button>
+                            className="btn btn-guotes btn-sm"
+                            onClick={() => setIsPopupOpen(true)}
+                            style={{ marginRight: "10px", font: "bold" }}
+                          >
+                            Get Quotes
+                          </button>
                         )}
-                        
+
                         <button
                           className={`btn btn-bookmark ${
                             isBookmarked ? "active" : ""
@@ -1848,41 +2037,46 @@ navigate(ClaimForgetpassword)
                       </div>
                     </div>
                   </div>
-
-                  <div className="banner-block one-block my-5 listingaboutus">
-                    <div className="row px-3">
-                      <div className="col-12">
-                        <h3>About us</h3>
-                        <p
-                          className={
-                            showFullAboutus ? "full-text" : "limited-text"
-                          }
-                          style={{ textIndent: "30px", display: "inline" }}
-                        >
-                          {showFullAboutus
-                            ? listingDetails.description
-                            : `${listingDetails.description.slice(0, 300)}...`}
-                        </p>
-
-                        {/* The More/Less button */}
-                        {listingDetails.description.length > 300 && (
-                          <button
-                            onClick={toggleAboutus}
-                            style={{
-                              color: "orange",
-                              border: "none",
-                              background: "none",
-                              paddingLeft: "5px",
-                              cursor: "pointer",
-                              display: "inline",
-                            }}
+                  {/* <>{status===1?():()}</> */}
+                  {listingDetails.description && (
+                    <div className="banner-block one-block my-5 listingaboutus">
+                      <div className="row px-3">
+                        <div className="col-12">
+                          <h3>About us</h3>
+                          <p
+                            className={
+                              showFullAboutus ? "full-text" : "limited-text"
+                            }
+                            style={{ textIndent: "30px", display: "inline" }}
                           >
-                            {showFullAboutus ? "Less" : "More"}
-                          </button>
-                        )}
+                            {showFullAboutus
+                              ? listingDetails.description
+                              : `${listingDetails.description.slice(
+                                  0,
+                                  300
+                                )}...`}
+                          </p>
+
+                          {/* The More/Less button */}
+                          {listingDetails.description.length > 300 && (
+                            <button
+                              onClick={toggleAboutus}
+                              style={{
+                                color: "orange",
+                                border: "none",
+                                background: "none",
+                                paddingLeft: "5px",
+                                cursor: "pointer",
+                                display: "inline",
+                              }}
+                            >
+                              {showFullAboutus ? "Less" : "More"}
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
 
                   <Webreviews companyID={listingDetails.listingId} />
                   <div className="col-lg-4 col-md-12 company-map padding-all-5 listinggallery listingb">
@@ -1920,7 +2114,6 @@ navigate(ClaimForgetpassword)
           isOpen={isPopupOpen}
           onClose={() => setIsPopupOpen(false)}
           companyID={listingDetails.listingId}
-        
         />
       ) : (
         <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
@@ -2025,9 +2218,7 @@ const BusinessHours = ({ workingtime, businessWorking }) => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  ;
-
-//funtion for handleclickoutside function
+  //funtion for handleclickoutside function
   // const handleClickOutside = (event) => {
   //   if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
   //     setIsDropdownOpen(false);

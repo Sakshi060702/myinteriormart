@@ -280,7 +280,7 @@ function Teamimagel() {
         const result = await response.json();
         console.log("Upload result:", result);
 
-        if (result instanceof Object) {
+        if (result instanceof Object && result.ownerImageDetails) {
           setImageDetails(
             result.ownerImageDetails.imageUrls.map((img,index) => ({
               url: img,

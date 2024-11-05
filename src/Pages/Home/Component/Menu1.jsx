@@ -314,9 +314,7 @@ function Menu1() {
                   <>
                     <li style={{ marginLeft: "13px" }}>
                       <NavLink
-                        to={`/Usersuggestion/in-${localStorage.getItem(
-                          "cityname"
-                        )}`}
+                        to={`/signup2`}
                         className=" listing-btn buttonlogin suggestionstyle"
                         style={{
                           fontSize: "14px",
@@ -372,8 +370,8 @@ function Menu1() {
                       <>
                         <div>
                           <ul>
-                            <li>
-                              {/* <NavLink
+                            {/* <li> */}
+                            {/* <NavLink
                                 to="/addcompany"
                                 className="btn_add listing-btn"
                                 style={{
@@ -384,6 +382,21 @@ function Menu1() {
                               >
                                 Free Listing
                               </NavLink> */}
+                            {/* </li> */}
+                            <li style={{ marginRight: "-50px" }}>
+                              <NavLink
+                                to={`/Usersuggestion/in-${localStorage.getItem(
+                                  "cityname"
+                                )}`}
+                                className=" listing-btn buttonlogin suggestionstyle"
+                                style={{
+                                  fontSize: "14px",
+                                  marginRight: "12px",
+                                }}
+                                // onClick={closeMenu}
+                              >
+                                Suggestion
+                              </NavLink>
                             </li>
                           </ul>
                         </div>
@@ -462,7 +475,8 @@ function Menu1() {
                       <>
                         <div>
                           {status !== 1 && (
-                            <ul>
+                            <ul >
+                              
                               <li>
                                 <NavLink
                                   to={`/selectcategory`}
@@ -479,6 +493,24 @@ function Menu1() {
                             </ul>
                           )}
                         </div>
+
+
+<div style={{ marginRight: "-37px" }}>
+                                <NavLink
+                                  to={`/Usersuggestion/in-${localStorage.getItem(
+                                    "cityname"
+                                  )}`}
+                                  className=" listing-btn  suggestionstyle"
+                                  style={{
+                                    fontSize: "14px",
+                                    marginRight: "12px",
+                                  }}
+                                  // onClick={closeMenu}
+                                >
+                                  Suggestion
+                                </NavLink>
+                              </div>
+
                         <div
                           className="notification-user"
                           style={{ display: "flex", alignItems: "center" }}
@@ -676,6 +708,23 @@ function Menu1() {
                       </NavLink>
                     )}
                   </div>
+
+                  {/* <div style={{ marginRight: "-37px" }}>
+                                <NavLink
+                                  to={`/Usersuggestion/in-${localStorage.getItem(
+                                    "cityname"
+                                  )}`}
+                                  className=" listing-btn  suggestionstyle suggestionMobilebtn"
+                                  style={{
+                                    fontSize: "14px",
+                                    marginRight: "12px",
+                                  }}
+                                  // onClick={closeMenu}
+                                >
+                                  Suggestion
+                                </NavLink>
+                              </div> */}
+                  
                   <div
                     className="notification-user listing-btn mobile-freelisting"
                     style={{ display: "flex", alignItems: "center" }}

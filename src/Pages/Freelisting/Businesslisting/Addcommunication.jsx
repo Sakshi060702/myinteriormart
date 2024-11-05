@@ -56,14 +56,14 @@ function Addcommunication() {
 }
 
 
-  // const useremail = localStorage.getItem("email");
+   const useremail = localStorage.getItem("email");
   // const useremail=sessionStorage.getItem("email")
-  const useremail = getCookie('email');
+  // const useremail = getCookie('email');
   console.log(useremail);
 
-  // const telphone = localStorage.getItem("mobile");
+   const telphone = localStorage.getItem("mobile");
   // const telphone = sessionStorage.getItem("mobile");
-  const telphone = getCookie('mobile');
+  // const telphone = getCookie('mobile');
   console.log(telphone);
 
   useEffect(() => {
@@ -103,8 +103,9 @@ function Addcommunication() {
 
         setFormData({
           email: useremail,
-          registerMobile: telphone,
-          mobile: responseData.mobile || "",
+          registerMobile: responseData.telephoneSecond||"",
+          // mobile: responseData.mobile || "",
+          mobile: telphone,
           telephone: responseData.telephone || "",
           website: responseData.website || "",
           tollfree: responseData.tollFree || "",
@@ -160,7 +161,7 @@ function Addcommunication() {
     const updatedFormData = {
       ...formData,
       email: formData.email || useremail,
-      registerMobile: formData.registerMobile || telphone,
+      mobile: formData.mobile || telphone,
     };
 
     const emailError = validateEmail(updatedFormData.email);
@@ -324,7 +325,7 @@ function Addcommunication() {
                       name="registerMobile"
                       id="Mobile"
                       placeholder="Enter Registered Mobile Number"
-                      value={formData.registerMobile || telphone || ""}
+                      value={formData.registerMobile }
                       onChange={handleChange}
                       maxLength={10}
                       required
@@ -345,7 +346,7 @@ function Addcommunication() {
                       name="mobile"
                       id="Mobile2"
                       placeholder="Enter your Mobile Number"
-                      value={formData.mobile}
+                      value={formData.mobile || telphone || ""}
                       onChange={handleChange}
                       required
                       maxLength={10}

@@ -167,13 +167,13 @@ function Addcompany() {
 
     const companynameError = validateName(formData.companyName);
     // const gstnumberError = validateGstNumber(formData.gstNumber);
-    const descriptionErrror=validateDescriptionLength(formData.description);
+    // const descriptionErrror=validateDescriptionLength(formData.description);
 
-    if (companynameError||descriptionErrror) {
+    if (companynameError) {
       setError({
         companyName: companynameError,
         // gstNumber: gstnumberError,
-        description:descriptionErrror
+        // description:descriptionErrror
       });
       return;
     }
@@ -438,7 +438,7 @@ function Addcompany() {
               />
             </div>
             <div className="form-group col-12">
-              <label htmlFor="description">About Us <span className="text-danger">*</span></label>
+              <label htmlFor="description">About Us </label>
               <textarea
                 className="form-control form-control-sm"
                 id="description"
@@ -447,11 +447,11 @@ function Addcompany() {
                 value={formData.description}
                 onChange={handleChange}
                 // onKeyUp={validateDescriptionLength(formData.description)}
-                required
+                // required
               ></textarea>
-              {error.description && (
+              {/* {error.description && (
                       <div className="text-danger">{error.description}</div>
-                    )}
+                    )} */}
             </div>
             <div className="text-left col-12 mt-3">
               <button

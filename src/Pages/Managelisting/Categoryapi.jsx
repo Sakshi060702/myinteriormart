@@ -318,6 +318,7 @@ function Categoryapi() {
                       onChange={handleCategoryChange}
                       options={categoryOptions}
                       placeholder="Select First Category"
+                      isDisabled={true}
                       styles={{
                         option: (provided, state) => ({
                           ...provided,

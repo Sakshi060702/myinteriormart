@@ -31,7 +31,9 @@ const Paymentpopup = ({ isOpen, onClose,message }) => {
               <img src={successimg} className="paymentimage" style={{height:'80px',width:'80px',marginBottom:'12px'}}></img>
             <h3 className="success-message" style={{ textAlign: 'center',color:'orange' }}>SUCCESS</h3>
             <h6 style={{ textAlign: 'center' }}>{message}</h6>
-           
+           <h6>Congratulation! Your Business Listing has Under review. After
+
+review your listing has been live within 48 hour's - My Interior Mart Team.</h6>
             </div>
            
            
