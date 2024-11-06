@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import CryptoJS from "crypto-js";
 
 const encryptionKey = "myinterriorMart@SECRETKEY";
+
 
 const encrypt = (text) => {
   return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
@@ -29,6 +31,16 @@ function ThirdcategoryC() {
   console.log(secondCategoryId);
   console.log("listingid", secondCategoryId);
   console.log(decrypt(listingId_enc));
+  const location=useLocation();
+
+  useEffect(()=>{
+    if(location.hash){
+      const element=document.getElementById(location.hash.replace("#",""));
+      if(element){
+        element.scrollIntoView({behavior:'smooth'})
+      }
+    }
+  },[location.hash]);
 
   useEffect(() => {
     fetchThirdCategories();
@@ -57,7 +69,7 @@ function ThirdcategoryC() {
   };
 
   return (
-    <div className="container margin_80_55 contractorcontainer" >
+    <div id="popular-categories" className="container margin_80_55 contractorcontainer" >
       <div className="main_title_2">
         <span>
           <em></em>

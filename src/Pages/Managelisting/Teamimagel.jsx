@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import usericon from "../../FrontEnd/img/userman1.png";
 import withAuthh from "../../Hoc/withAuthh";
@@ -42,6 +43,8 @@ function Teamimagel() {
   const dispatch = useDispatch();
 
   const isAuthenticated = useAuthCheck();
+
+  const navigate=useNavigate();
 
   useEffect(() => {
     const fetchTeamImage = async () => {
@@ -344,6 +347,10 @@ function Teamimagel() {
     { value: "Mr", label: "Mr" },
     { value: "Mrs", label: "Mrs" },
   ];
+
+  const handleExitClick=()=>{
+    navigate('/labournakapage')
+  }
 
   return (
     <>
@@ -700,6 +707,14 @@ function Teamimagel() {
               style={{ backgroundColor: "#fb830d", marginTop: "10px" }}
             >
               Submit
+            </button>
+            <button
+              type="submit"
+              className="btn_1"
+              style={{ backgroundColor: "#fb830d", marginTop: "10px" }}
+              onClick={handleExitClick}
+            >
+              Exit
             </button>
           </div>
         </form>

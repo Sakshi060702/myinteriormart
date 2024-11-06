@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import usericon from "../../FrontEnd/img/Banner 690 x 120.png";
 import { useSelector,useDispatch } from "react-redux";
 import withAuthh from "../../Hoc/withAuthh"
@@ -26,6 +26,8 @@ function Bannerimagel() {
   const[successMessage,setSuccessMessage]=useState("");
   const[error,setError]=useState("");
   const isAuthenticated = useAuthCheck();
+
+  const navigate=useNavigate();
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -179,7 +181,9 @@ function Bannerimagel() {
     setShowPopup(false);
   };
 
-
+  const handleExitClick=()=>{
+    navigate('/labournakapage')
+  }
   return (
     <>
       <div className="row imageSection" id="logo_section">
@@ -262,11 +266,18 @@ function Bannerimagel() {
           <div className='uplodlogo'>
           <button
               className="btn_1"
-              style={{ backgroundColor: "#fb830d", marginTop: "10px" }}
+              style={{ backgroundColor: "#fb830d", marginTop: "10px",marginRight:'10px' }}
               onClick={handleSubmit}
             >
               Submit
             </button>
+            <button
+                  className="btn_1"
+                  style={{ backgroundColor: "#fb830d", marginTop: "10px" }}
+                  onClick={handleExitClick}
+                >
+                  Exit
+                </button>
           </div>
           {showPopup && (
             <Popupalert 

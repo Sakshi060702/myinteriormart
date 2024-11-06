@@ -70,7 +70,7 @@ function Listingkeyword({ companyID }) {
 
   return (
     <>
-    
+    {paymentKeywords.length>0 &&(
       <div className="listing-specialisat box_detail_cus keywordbox" >
         <h6>Keyword</h6>
         <ul className="listing-specialisat-list listingspecialisation">
@@ -83,6 +83,8 @@ function Listingkeyword({ companyID }) {
           ))}
         </ul>
       </div>
+    )}
+      
    
   </>
   );

@@ -204,6 +204,11 @@ function Clientimagel() {
   const handleClosePopup = () => {
     setShowPopup(false);
   };
+
+  const handleExitClick=()=>{
+    navigate('/labournakapage')
+  }
+
   return (
     <>
       <div className="row imageSection" id="logo_section">
@@ -304,11 +309,18 @@ function Clientimagel() {
           <div className='uplodlogo'>
           <button
               className="btn_1"
-              style={{ backgroundColor: "#fb830d", marginTop: "10px" }}
+              style={{ backgroundColor: "#fb830d", marginTop: "10px",marginRight:'10px' }}
               onClick={handleSubmit}
             >
               Submit
             </button>
+            <button
+                  className="btn_1"
+                  style={{ backgroundColor: "#fb830d", marginTop: "10px" }}
+                  onClick={handleExitClick}
+                >
+                  Exit
+                </button>
           </div>
           <div className="text-danger Gallerycount">
             {remaingImages > 0 

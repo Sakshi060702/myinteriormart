@@ -7,9 +7,10 @@ const Certificate = (companyID) => {
   const [imageURLs, setImageURLs] = useState([]);
   const [error, setError] = useState("");
   const { listingId } = useParams();
-  //  console.log('companyid',companyID.listingID)
+    console.log('companyid',companyID.listingID)
   const company_idFetch = { companyID: companyID.listingID.companyID };
-  //  console.log('company_idFetch',company_idFetch)
+    console.log('company_idFetch',company_idFetch,companyID.listingID.companyID)
+    console.log('company',companyID);
 
   const[modalOpen,setModalOpen]=useState(false);
   const[selectedImage,setSelectedImage]=useState(null);

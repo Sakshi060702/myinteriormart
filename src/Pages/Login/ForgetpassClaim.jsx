@@ -13,8 +13,16 @@ function ForgetpassClaim() {
     const[userMobile,setuserMobile]=useState('');
     const[error,setError]=useState({});
     const navigate=useNavigate();
+
+    console.log('mobile',mobile)
     
-    
+    //format mobile number with astriks
+    const formatMobile=(number)=>{
+      if(number.length===10){
+        return `${number.slice(0, 4)}****${number.slice(-2)}`
+      }
+      return number;
+    }
     
 
     const handleMobileChange=(e)=>{
@@ -91,6 +99,7 @@ function ForgetpassClaim() {
             <div id="sign-in-dialog" className="dialog-mfp zoom-anim-dialog">
               <div className="step first">
                 <h2 className="text-center pt-3">Forgot Password</h2>
+                <h6 style={{textAlign:'center'}}>{formatMobile(mobile)}</h6>
                 <div className="tab-content checkout">
                   <div>
                     <form onSubmit={handleSubmit}>

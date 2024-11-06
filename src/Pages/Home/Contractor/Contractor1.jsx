@@ -9,6 +9,7 @@ import { Carousel } from "react-bootstrap";
 import fslide from "../../../FrontEnd/img/banner/Dream Land Home1.jpg";
 import seslide from "../../../FrontEnd/img/access_bg.jpg";
 import tslide from "../../../FrontEnd/img/banner/Interior1.jpg";
+import { useLocation } from "react-router-dom";
 
 const encryptionKey = "myinterriorMart@SECRETKEY";
 
@@ -27,10 +28,16 @@ function Contractor1() {
   const [contractorBanners, setcontractorBanners] = useState([]);
   const [homeMegaBannerImages, setHomeMegaBannerImage] = useState([]);
   const [isActive, setIsActive] = useState(false);
+  const location=useLocation();
+
+  
+
 
   useEffect(() => {
     fetchCategories();
   }, []);
+
+ 
 
   const fetchCategories = async () => {
     try {
@@ -86,9 +93,19 @@ function Contractor1() {
     fetchHorizontalBanners();
   }, []);
 
+  useEffect(() => {
+    // Scroll to contractor section if URL hash is "#contractor"
+    if (location.hash === "#contractor") {
+      const contractorSection = document.getElementById("contractor-section");
+      if (contractorSection) {
+        contractorSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
+
   return (
     <>
-      <div className="category-featured">
+      <div className="category-featured" id="contractor-section">
         <div className="show-brand">
           <div className="row">
             <div className="col-lg-2 col-md-12 category-list">
@@ -201,7 +218,7 @@ function Contractor1() {
                                 "cityname"
                               )}?fircatEncyt=${encodeURIComponent(
                                 encrypt(parseInt(category.secondCategoryID))
-                              )}`}
+                              )}#popular-categories`}
                               title={category.searchKeywordName}
                             >
                               <img

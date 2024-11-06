@@ -296,7 +296,7 @@ function Listingdetails() {
   // useEffect(() => {
   //   if (listingDetails) {
   //     document.title = `${listingDetails.companyName} | Justdial Clone`;
-  
+
   //     // Update meta tag with name="Title" if needed
   //     let metaTitle = document.querySelector("meta[name='Title']");
   //     if (metaTitle) {
@@ -304,7 +304,6 @@ function Listingdetails() {
   //     }
   //   }
   // }, [listingDetails]);
-  
 
   //for bookmark
 
@@ -880,15 +879,20 @@ function Listingdetails() {
   )}`;
 
   const Getclaimhandleclick = () => {
-    navigate(ClaimForgetpassword);
+    navigate(ClaimForgetpassword,{
+      state:{mobile:listingDetails.registerMobile},
+    });
   };
 
   return (
     <>
-    <Helmet>
-    <title>{`${listingDetails.companyName} | Myinteriormart`}</title>
-    <meta name="title" content={`${listingDetails.companyName} | Myinteriormart`} />
-    </Helmet>
+      <Helmet>
+        <title>{`${listingDetails.companyName} | Myinteriormart`}</title>
+        <meta
+          name="title"
+          content={`${listingDetails.companyName} | Myinteriormart`}
+        />
+      </Helmet>
       <div className="sticky-searchbar">
         <Searchbar />
       </div>
@@ -898,7 +902,7 @@ function Listingdetails() {
             <>
               <div className="col-lg-3 individual-listing-sidebar padding-5 pagebottom">
                 <>
-                  {status === 1 ? (
+                  {status === 1 && listingDetails.logoImage ? (
                     <div className="box_detail_cus">
                       <div className="p-3">
                         <div className="user_logo_sec">
@@ -912,7 +916,8 @@ function Listingdetails() {
                               style={{ height: "100px" }}
                             />
                           ) : (
-                            <div
+                            <div>
+                              {/* <div
                               className="client_first_letter"
                               style={{
                                 height: "100px",
@@ -922,6 +927,7 @@ function Listingdetails() {
                               }}
                             >
                               {listingDetails.companyFirstLetter}
+                            </div> */}
                             </div>
                           )}
                         </div>
@@ -933,7 +939,7 @@ function Listingdetails() {
                 </>
 
                 <>
-                  {status === 1 ? (
+                  {status === 1 && teamimageDetails.length > 0 ? (
                     <div className="box_detail_cus">
                       <div className="cust-profile">
                         {/* <img src={profile} alt="profile"></img> */}
@@ -1594,11 +1600,11 @@ function Listingdetails() {
                               style={{ marginRight: "8px" }}
                             ></i>
                             <a
-                              href={`tel:${listingDetails.mobile}`}
+                              href={`tel:${listingDetails.registerMobile}`}
                               style={{ marginRight: "8px", color: "orange" }}
                               className="ListingpageFont"
                             >
-                              {listingDetails.mobile}
+                              {listingDetails.registerMobile}
                             </a>
                           </div>
                           {/* mobile number */}
@@ -1608,11 +1614,11 @@ function Listingdetails() {
                               style={{ marginRight: "8px" }}
                             ></i>
                             <a
-                              href={`tel:${listingDetails.registerMobile}`}
+                              href={`tel:${listingDetails.mobile}`}
                               style={{ marginRight: "8px", color: "orange" }}
                               className="ListingpageFont"
                             >
-                              {listingDetails.registerMobile}
+                              {listingDetails.mobile}
                             </a>
                           </div>
                           {/* telephone */}
@@ -1662,11 +1668,11 @@ function Listingdetails() {
                               style={{ marginRight: "8px" }}
                             ></i>
                             <a
-                              href={`tel:${listingDetails.mobile}`}
+                              href={`tel:${listingDetails.registerMobile}`}
                               style={{ marginRight: "8px", color: "orange" }}
                               className="ListingpageFont"
                             >
-                              {listingDetails.mobile}
+                              {listingDetails.registerMobile}
                             </a>
                           </div>
                           {/* mobile number */}
@@ -1676,11 +1682,11 @@ function Listingdetails() {
                               style={{ marginRight: "8px" }}
                             ></i>
                             <a
-                              href={`tel:${listingDetails.registerMobile}`}
+                              href={`tel:${listingDetails.mobile}`}
                               style={{ marginRight: "8px", color: "orange" }}
                               className="ListingpageFont"
                             >
-                              {listingDetails.registerMobile}
+                              {listingDetails.mobile}
                             </a>
                           </div>
                           {/* telephone */}
@@ -1952,88 +1958,119 @@ function Listingdetails() {
                         className="social-details mobile"
                         style={{ marginTop: "-13px" }}
                       >
-                        <button
+                        {listingDetails.claimedListing ?(<button
+                            className="btn btn-guotes btn-sm"
+                            // onClick={() => setIsPopupOpen(true)}
+                            style={{ marginRight: "10px", font: "bold" }}
+                            onClick={(event) => {
+                              event.preventDefault();
+
+                              Getclaimhandleclick();
+                            }}
+                          >
+                            Claim Listing
+                          </button>):(<button
                           className="btn btn-guotes btn-sm"
                           onClick={() => setIsPopupOpen(true)}
                           style={{ marginRight: "10px", fontWeight: "bold" }}
                         >
                           Get Quotes
-                        </button>
+                        </button>)}
+                        
                       </div>
                       <div className="col-lg-12 social-share p-0 listingpageSocialLink">
-                        <a
-                          href={`https://${
-                            socialLink.whatsappGroupLink || "#0"
-                          }`}
-                          className="vendorSocialLink"
-                        >
-                          <i
-                            className="fa fa-whatsapp"
-                            style={{ marginRight: "-1px", color: "orange" }}
-                          ></i>
-                        </a>
-                        <a
-                          href={`https://${socialLink.facebook || "#0"}`}
-                          className="vendorSocialLink"
-                        >
-                          <i
-                            className="ti-facebook"
-                            style={{ marginRight: "-1px", color: "orange" }}
-                          ></i>
-                        </a>
-                        <a
-                          href={`https://${socialLink.linkedin || "#0"}`}
-                          className="vendorSocialLink"
-                        >
-                          <i
-                            className="ti-linkedin"
-                            style={{ marginRight: "3px", color: "orange" }}
-                          ></i>
-                        </a>
-                        <a
-                          href={`https://${socialLink.twitter || "#0"}`}
-                          className="vendorSocialLink"
-                        >
-                          {/* <i className="bi bi-twitter-x" style={{marginRight:'5px',color:'orange'}}></i> */}
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="14"
-                            height="14"
-                            fill="currentColor"
-                            color="orange"
-                            className="bi bi-twitter-x svg-margin"
-                            viewBox="0 0 16 16"
+                        {socialLink.whatsappGroupLink && (
+                          <a
+                            href={`https://${
+                              socialLink.whatsappGroupLink || "#0"
+                            }`}
+                            className="vendorSocialLink"
                           >
-                            <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
-                          </svg>
-                        </a>
-                        <a
-                          href={`https://${socialLink.youtube || "#0"}`}
-                          className="vendorSocialLink"
-                        >
-                          <i
-                            className="ti-youtube"
-                            style={{ marginRight: "3px", color: "orange" }}
-                          ></i>
-                        </a>
-                        <a
-                          href={`https://${socialLink.instagram || "#0"}`}
-                          className="vendorSocialLink"
-                        >
-                          <i
-                            className="ti-instagram"
-                            style={{ marginRight: "5px", color: "orange" }}
-                          ></i>
-                        </a>
-                        <a
-                          href={`https://${socialLink.pinterest || "#0"}`}
-                          className="vendorSocialLink"
-                        >
-                          <i
-                            className="ti-pinterest"
-                            style={{ marginRight: "5px", color: "orange" }}
-                          ></i>
-                        </a>
+                            <i
+                              className="fa fa-whatsapp"
+                              style={{ marginRight: "-1px", color: "orange" }}
+                            ></i>
+                          </a>
+                        )}
+                        {socialLink.facebook && (
+                          <a
+                            href={`https://${socialLink.facebook || "#0"}`}
+                            className="vendorSocialLink"
+                          >
+                            <i
+                              className="ti-facebook"
+                              style={{ marginRight: "-1px", color: "orange" }}
+                            ></i>
+                          </a>
+                        )}
+
+                        {socialLink.linkedin && (
+                          <a
+                            href={`https://${socialLink.linkedin || "#0"}`}
+                            className="vendorSocialLink"
+                          >
+                            <i
+                              className="ti-linkedin"
+                              style={{ marginRight: "3px", color: "orange" }}
+                            ></i>
+                          </a>
+                        )}
+
+                        {socialLink.twitter && (
+                          <a
+                            href={`https://${socialLink.twitter || "#0"}`}
+                            className="vendorSocialLink"
+                          >
+                            {/* <i className="bi bi-twitter-x" style={{marginRight:'5px',color:'orange'}}></i> */}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="14"
+                              height="14"
+                              fill="currentColor"
+                              color="orange"
+                              className="bi bi-twitter-x svg-margin"
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+                            </svg>
+                          </a>
+                        )}
+
+                        {socialLink.youtube && (
+                          <a
+                            href={`https://${socialLink.youtube || "#0"}`}
+                            className="vendorSocialLink"
+                          >
+                            <i
+                              className="ti-youtube"
+                              style={{ marginRight: "3px", color: "orange" }}
+                            ></i>
+                          </a>
+                        )}
+
+                        {socialLink.instagram && (
+                          <a
+                            href={`https://${socialLink.instagram || "#0"}`}
+                            className="vendorSocialLink"
+                          >
+                            <i
+                              className="ti-instagram"
+                              style={{ marginRight: "5px", color: "orange" }}
+                            ></i>
+                          </a>
+                        )}
+
+                        {socialLink.pinterest && (
+                          <a
+                            href={`https://${socialLink.pinterest || "#0"}`}
+                            className="vendorSocialLink"
+                          >
+                            <i
+                              className="ti-pinterest"
+                              style={{ marginRight: "5px", color: "orange" }}
+                            ></i>
+                          </a>
+                        )}
                       </div>
                     </div>
                   </div>

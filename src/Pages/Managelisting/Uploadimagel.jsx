@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import usericon from "../../FrontEnd/img/dummyowner.jpg";
 import "../../FrontEnd/css/Mangelisting.css";
 import { useSelector,useDispatch } from "react-redux";
@@ -27,6 +27,7 @@ function Uploadimagel() {
   const isAuthenticated = useAuthCheck();
   const[error,setError]=useState("");
 
+  const navigate=useNavigate();
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -175,6 +176,9 @@ function Uploadimagel() {
     setShowPopup(false);
   };
 
+  const handleExitClick=()=>{
+    navigate('/labournakapage')
+  }
 
   return (
     <>
@@ -244,10 +248,17 @@ function Uploadimagel() {
           <div className='uplodlogo'>
           <button
                   className="btn_1"
-                  style={{ backgroundColor: "#fb830d", marginTop: "10px" }}
+                  style={{ backgroundColor: "#fb830d", marginTop: "10px",marginRight:'10px' }}
                   onClick={handleSubmit}
                 >
                   Submit
+                </button>
+                <button
+                  className="btn_1"
+                  style={{ backgroundColor: "#fb830d", marginTop: "10px" }}
+                  onClick={handleExitClick}
+                >
+                  Exit
                 </button>
           </div>
          

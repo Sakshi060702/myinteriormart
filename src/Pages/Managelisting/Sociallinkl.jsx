@@ -144,7 +144,7 @@ function Sociallinkl() {
               <form onSubmit={handleSubmit}>
               <div className="row">
                 <div className="form-group col-md-6">
-                  <label for="name">Facebook <span className="text-danger">*</span></label>
+                  <label for="name">Facebook </label>
                   <input
                       className="form-control form-control-sm box"
                       type="text"
@@ -153,11 +153,11 @@ function Sociallinkl() {
                       placeholder="Enter Facebook Link"
                       value={formData.facebook}
                       onChange={handleChange}
-                      required
+                      // required
                     />
                 </div>
                 <div className="form-group col-md-6">
-                  <label for="name">Whatsapp <span className="text-danger">*</span></label>
+                  <label for="name">Whatsapp </label>
                   <input
                       className="form-control form-control-sm box"
                       type="text"
@@ -166,11 +166,11 @@ function Sociallinkl() {
                       placeholder="Enter Whatsapp Link"
                       value={formData.whatsappGroupLink}
                       onChange={handleChange}
-                      required
+                      // required
                     />
                 </div>
                 <div className="form-group col-md-6">
-                  <label for="name">LinkdenIn<span className="text-danger">*</span></label>
+                  <label for="name">LinkdenIn</label>
                   <input
                       className="form-control form-control-sm box"
                       type="text"
@@ -179,11 +179,11 @@ function Sociallinkl() {
                       placeholder="Enter LinkedIn Link"
                       value={formData.linkedin}
                       onChange={handleChange}
-                      required
+                      // required
                     />
                 </div>
                 <div className="form-group col-md-6">
-                  <label for="name">Twitter<span className="text-danger">*</span></label>
+                  <label for="name">Twitter</label>
                   <input
                       className="form-control form-control-sm box"
                       type="text"
@@ -192,11 +192,11 @@ function Sociallinkl() {
                       placeholder="Enter Twitter Link"
                       value={formData.twitter}
                       onChange={handleChange}
-                      required
+                      // required
                     />
                 </div>
                 <div className="form-group col-md-6">
-                  <label for="name">Youtube<span className="text-danger">*</span></label>
+                  <label for="name">Youtube</label>
                   <input
                       className="form-control form-control-sm box"
                       type="text"
@@ -205,11 +205,11 @@ function Sociallinkl() {
                       placeholder="Enter YouTube Link"
                       value={formData.youtube}
                       onChange={handleChange}
-                      required
+                      // required
                     />
                 </div>
                 <div className="form-group col-md-6">
-                  <label for="name">Instagram<span className="text-danger">*</span></label>
+                  <label for="name">Instagram</label>
                   <input
                       className="form-control form-control-sm box"
                       type="text"
@@ -218,11 +218,11 @@ function Sociallinkl() {
                       placeholder="Enter Instagram Link"
                       value={formData.instagram}
                       onChange={handleChange}
-                      required
+                      // required
                     />
                 </div>
                 <div className="form-group col-md-6">
-                  <label for="name">Pinterest<span className="text-danger">*</span></label>
+                  <label for="name">Pinterest</label>
                   <input
                       className="form-control form-control-sm box"
                       type="text"
@@ -231,7 +231,7 @@ function Sociallinkl() {
                       placeholder="Enter Pinterest Link"
                       value={formData.pinterest}
                       onChange={handleChange}
-                      required
+                      // required
                     />
                 </div>
 

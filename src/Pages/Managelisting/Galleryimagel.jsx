@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import usericon from "../../FrontEnd/img/dummyowner.jpg";
 import "../../FrontEnd/css/Mangelisting.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -31,6 +31,8 @@ function Galleryimagel() {
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+
+  const navigate=useNavigate();
 
   const [error, setError] = useState("");
 
@@ -211,6 +213,10 @@ function Galleryimagel() {
     setShowPopup(false);
   };
 
+  const handleExitClick=()=>{
+    navigate('/labournakapage')
+  }
+
   return (
     <>
       <div className="row imageSection" id="logo_section">
@@ -309,11 +315,18 @@ function Galleryimagel() {
           <div className="uplodlogo">
             <button
               className="btn_1"
-              style={{ backgroundColor: "#fb830d", marginTop: "10px" }}
+              style={{ backgroundColor: "#fb830d", marginTop: "10px",marginRight:'10px' }}
               onClick={handleSubmit}
             >
               Submit
             </button>
+            <button
+                  className="btn_1"
+                  style={{ backgroundColor: "#fb830d", marginTop: "10px" }}
+                  onClick={handleExitClick}
+                >
+                  Exit
+                </button>
           </div>
           <div className="Gallerycount">
             <div className="text-danger">

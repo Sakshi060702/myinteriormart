@@ -36,11 +36,11 @@ function Imagesl() {
               <h4>Upload Images</h4>
               <p className="add-lidting-title-from">
                 Add Listing / Upload Images
-                <span>
+                {/* <span>
                 <Link className="back_btn mx-3" to={`/labournakapage`}>
                     Back
                   </Link>
-                </span>
+                </span> */}
               </p>
               <div className="row">
               <div className="col-lg-12">
