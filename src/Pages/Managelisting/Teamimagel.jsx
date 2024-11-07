@@ -699,14 +699,14 @@ function Teamimagel() {
 
           <div
             className="text-left col-12 mt-3"
-            style={{ paddingLeft: "471px" }}
+            style={{ paddingLeft: "430px" }}
           >
             <button
               type="submit"
               className="btn_1"
-              style={{ backgroundColor: "#fb830d", marginTop: "10px" }}
+              style={{ backgroundColor: "#fb830d", marginTop: "10px",marginRight:'10px' }}
             >
-              Submit
+              Save & Continue
             </button>
             <button
               type="submit"

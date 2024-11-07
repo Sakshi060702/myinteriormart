@@ -33,7 +33,8 @@ const Paymentpopup = ({ isOpen, onClose,message }) => {
             <h6 style={{ textAlign: 'center' }}>{message}</h6>
            <h6>Congratulation! Your Business Listing has Under review. After
 
-review your listing has been live within 48 hour's - My Interior Mart Team.</h6>
+review your listing has been live within 48 hour's </h6>
+<h6 style={{textAlign:'right'}}>- My Interior Mart Team.</h6>
             </div>
            
            

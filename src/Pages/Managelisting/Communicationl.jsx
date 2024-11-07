@@ -279,6 +279,23 @@ function Communicationl() {
                     )}
                   </div>
                   <div className="form-group col-md-4">
+                    <label htmlFor="Mobile2">Mobile<span className="text-danger">*</span> </label>
+                    <input
+                      className="form-control form-control-sm box"
+                      type="number"
+                      name="mobile"
+                      id="Mobile2"
+                      placeholder="Enter your Mobile Number"
+                      value={formData.mobile}
+                      onChange={handleChange}
+                      required
+                    
+                    />
+                    {error.commuincationMobile && (
+                      <div className="text-danger">{error.commuincationMobile}</div>
+                    )}
+                  </div>
+                  <div className="form-group col-md-4">
                     <label htmlFor="Mobile">
                       Registered Mobile <span className="text-danger">*</span>
                     </label>
@@ -297,23 +314,7 @@ function Communicationl() {
                       <div className="text-danger">{error.communicationRegisterMobile}</div>
                     )}
                   </div>
-                  <div className="form-group col-md-4">
-                    <label htmlFor="Mobile2">Mobile<span className="text-danger">*</span> </label>
-                    <input
-                      className="form-control form-control-sm box"
-                      type="number"
-                      name="mobile"
-                      id="Mobile2"
-                      placeholder="Enter your Mobile Number"
-                      value={formData.mobile}
-                      onChange={handleChange}
-                      required
-                    
-                    />
-                    {error.commuincationMobile && (
-                      <div className="text-danger">{error.commuincationMobile}</div>
-                    )}
-                  </div>
+                  
                   <div className="form-group col-md-4">
                     <label htmlFor="telephone">Telephone<span className="text-danger">*</span></label>
                     <input

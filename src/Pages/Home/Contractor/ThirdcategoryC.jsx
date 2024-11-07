@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { useParams } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
 import { Link } from "react-router-dom";
@@ -32,6 +32,7 @@ function ThirdcategoryC() {
   console.log("listingid", secondCategoryId);
   console.log(decrypt(listingId_enc));
   const location=useLocation();
+  const scrollPosition = useRef(0);
 
   useEffect(()=>{
     if(location.hash){
@@ -44,7 +45,14 @@ function ThirdcategoryC() {
 
   useEffect(() => {
     fetchThirdCategories();
+    if (!location.state?.fromDealerPage) {
+      sessionStorage.removeItem("scrollPosition");
+    }
   }, [secondCategoryId]);
+  useEffect(() => {
+   
+    window.scrollTo(0, scrollPosition.current);
+  }, [location]);
 
   const fetchThirdCategories = async () => {
     try {
@@ -66,6 +74,11 @@ function ThirdcategoryC() {
     } catch (error) {
       console.error("Error fetching subcategories:", error);
     }
+  };
+
+  const handleScroll = () => {
+  
+    scrollPosition.current = window.scrollY;
   };
 
   return (
@@ -121,6 +134,7 @@ function ThirdcategoryC() {
                     )}`}
                     title={subCategory.name}
                     className="Linkstyle categorylink"
+                    onClick={() => sessionStorage.removeItem("scrollPosition")}
                   >
                     {subCategory.name}
                   </Link>

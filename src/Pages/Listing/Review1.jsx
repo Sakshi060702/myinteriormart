@@ -26,8 +26,14 @@ function Review1({ listingID }) {
   const [error, setError] = useState("");
   const[isPopupOpen,setIsPopupOpen]=useState(false);
 
+  const[reviewVisible,setReviewVisible]=useState(2)
+
   const navigate=useNavigate();
 
+
+  const showMoreReviews=()=>{
+    setReviewVisible((prevVisible)=>prevVisible+2);
+  }
   // useEffect(() => {
   //   fetchListingDetails();
   // }, [listingID]);
@@ -400,7 +406,7 @@ setIsPopupOpen(true);
                                         />
                                       </div>
                                     </div>
-                                    <div className="col-lg-10 col-9 pl-lg-0">
+                                    <div className="col-lg-10 col-9 pl-lg-0 reviewmaindiv">
                                       <span>
                                         <b>{review.gender} {review.userName}</b>
                                       </span>
@@ -499,6 +505,11 @@ setIsPopupOpen(true);
                             <p>No reviews available.</p>
                           )}
                         </div>
+                        {/* {reviewVisible<reviews.length && (
+                           <button onClick={showMoreReviews} className="btn btn-primary mt-3">
+                           Show More
+                         </button>
+                        )} */}
                       </div>
                     </div>
                   </div>

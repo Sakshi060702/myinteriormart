@@ -72,11 +72,12 @@
       display: flex;
       justify-content: center;
     
-      margin-left: 46px;
+      margin-left: 24px;
       background-color:orange;
       color: white;
       height: 46px;
       width: 297px;
+      margin-top: 2px;
     }
   }
 

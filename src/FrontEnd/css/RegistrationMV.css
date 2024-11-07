@@ -1,5 +1,5 @@
 .uplodlogo{
-  padding-left: 377px;
+  padding-left: 336px;
 }
 .uplodcertificate{
   width: 300px;
@@ -1806,5 +1806,13 @@ div.scrollmenu .imgScroll:hover {
 @media (max-width:767px) {
   .listingnumberM{
     display: block !important;
+  }
+}
+
+
+
+@media (max-width:767px) {
+  .reviewmaindiv{
+    padding-right: 15px !important;
   }
 }

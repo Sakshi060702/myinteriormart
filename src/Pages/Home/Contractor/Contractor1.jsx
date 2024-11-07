@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { useEffect } from "react";
 import ContractorImage from "../../../FrontEnd/img/banner/Contractor.jpg";
-import { Link } from "react-router-dom";
+import { Link,useLocation,useNavigate } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
 import "../../../FrontEnd/css/Cate.css";
 import CryptoJS from "crypto-js";
@@ -9,7 +9,7 @@ import { Carousel } from "react-bootstrap";
 import fslide from "../../../FrontEnd/img/banner/Dream Land Home1.jpg";
 import seslide from "../../../FrontEnd/img/access_bg.jpg";
 import tslide from "../../../FrontEnd/img/banner/Interior1.jpg";
-import { useLocation } from "react-router-dom";
+
 
 const encryptionKey = "myinterriorMart@SECRETKEY";
 
@@ -29,12 +29,17 @@ function Contractor1() {
   const [homeMegaBannerImages, setHomeMegaBannerImage] = useState([]);
   const [isActive, setIsActive] = useState(false);
   const location=useLocation();
-
+  const categoryRefs = useRef({});
+  const navigate=useNavigate();
   
 
 
   useEffect(() => {
     fetchCategories();
+    const savedScrollPosition = sessionStorage.getItem("scrollPosition");
+    if (savedScrollPosition && location.state?.fromThirdCategory) {
+      window.scrollTo(0, parseFloat(savedScrollPosition));
+    }
   }, []);
 
  
@@ -103,6 +108,25 @@ function Contractor1() {
     }
   }, [location]);
 
+
+  const handleCategoryClick = (categoryId, category) => {
+    console.log('categoryname',category.name);
+     // Save current scroll position before navigation
+     sessionStorage.setItem("scrollPosition", window.scrollY);
+   
+     // Construct the dynamic URL using category details
+     const dynamicUrl = `/Contractor/${category.name
+                            .replace(/\s+/g, "-")
+                            .toLowerCase()}/in-${localStorage.getItem(
+                            "cityname"
+                          )}?fircatEncyt=${encodeURIComponent(
+                            encrypt(parseInt(category.secondCategoryID))
+                          )}`;
+   
+     // Navigate to the constructed URL
+     navigate(dynamicUrl, { state: { fromDealerPage: true } });
+   };
+
   return (
     <>
       <div className="category-featured" id="contractor-section">
@@ -132,6 +156,7 @@ function Contractor1() {
                       <li
                         className="mim-box-list"
                         key={category.secondCategoryID}
+                        ref={(el) => (categoryRefs.current[category.secondCategoryID] = el)}
                       >
                         <Link
                           to={`/Contractor/${category.name
@@ -141,6 +166,7 @@ function Contractor1() {
                           )}?fircatEncyt=${encodeURIComponent(
                             encrypt(parseInt(category.secondCategoryID))
                           )}`}
+                          onClick={() => handleCategoryClick(category.secondCategoryID)}
                           title={category.searchKeywordName}
                           style={{ color: "black" }}
                         >

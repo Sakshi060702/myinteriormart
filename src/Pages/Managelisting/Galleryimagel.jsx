@@ -318,7 +318,7 @@ function Galleryimagel() {
               style={{ backgroundColor: "#fb830d", marginTop: "10px",marginRight:'10px' }}
               onClick={handleSubmit}
             >
-              Submit
+              Save & Continue
             </button>
             <button
                   className="btn_1"

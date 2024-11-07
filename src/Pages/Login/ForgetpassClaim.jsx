@@ -10,11 +10,13 @@ function ForgetpassClaim() {
 
     const location=useLocation();
     const {mobile}=location.state ||{mobile :''};
+    const{email}=location.state||{email:''}
     const[userMobile,setuserMobile]=useState('');
     const[error,setError]=useState({});
     const navigate=useNavigate();
 
     console.log('mobile',mobile)
+    console.log('email',email);
     
     //format mobile number with astriks
     const formatMobile=(number)=>{
@@ -22,6 +24,15 @@ function ForgetpassClaim() {
         return `${number.slice(0, 4)}****${number.slice(-2)}`
       }
       return number;
+    }
+
+    //format email
+    const formatEmail=(email)=>{
+      const [localPart, domain] = email.split('@');
+      if(localPart.length>2){
+        return `${localPart.slice(0,2)}${'*'.repeat(localPart.length-2)}@${domain}`;
+      }
+      return email;
     }
     
 
@@ -100,6 +111,7 @@ function ForgetpassClaim() {
               <div className="step first">
                 <h2 className="text-center pt-3">Forgot Password</h2>
                 <h6 style={{textAlign:'center'}}>{formatMobile(mobile)}</h6>
+                <h6 style={{textAlign:'center'}}>{formatEmail(email)}</h6>
                 <div className="tab-content checkout">
                   <div>
                     <form onSubmit={handleSubmit}>

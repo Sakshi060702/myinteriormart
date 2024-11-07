@@ -316,27 +316,6 @@ function Addcommunication() {
                     )}
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="Mobile">
-                      Registered Mobile <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      className="form-control form-control-sm box"
-                      type="text"
-                      name="registerMobile"
-                      id="Mobile"
-                      placeholder="Enter Registered Mobile Number"
-                      value={formData.registerMobile }
-                      onChange={handleChange}
-                      maxLength={10}
-                      required
-                    />
-                    {error.communicationRegisterMobile && (
-                      <div className="text-danger">
-                        {error.communicationRegisterMobile}
-                      </div>
-                    )}
-                  </div>
-                  <div className="form-group col-md-4">
                     <label htmlFor="Mobile2">
                       Mobile<span className="text-danger">*</span>{" "}
                     </label>
@@ -357,6 +336,28 @@ function Addcommunication() {
                       </div>
                     )}
                   </div>
+                  <div className="form-group col-md-4">
+                    <label htmlFor="Mobile">
+                      Registered Mobile <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      className="form-control form-control-sm box"
+                      type="text"
+                      name="registerMobile"
+                      id="Mobile"
+                      placeholder="Enter Registered Mobile Number"
+                      value={formData.registerMobile }
+                      onChange={handleChange}
+                      maxLength={10}
+                      required
+                    />
+                    {error.communicationRegisterMobile && (
+                      <div className="text-danger">
+                        {error.communicationRegisterMobile}
+                      </div>
+                    )}
+                  </div>
+                 
                   <div className="form-group col-md-4">
                     <label htmlFor="telephone">
                       Telephone<span className="text-danger">*</span>

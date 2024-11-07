@@ -9,6 +9,8 @@ function Receiveotp2() {
     const { otp, mobile } = location.state || { otp: '', mobile: '' };
     const [userOtp, setUserOtp] = useState(['', '', '', '']);
     const [error, setError] = useState('');
+    const[reSendMessage,setResendMessage]=useState('');
+    const[loading,setLoading]=useState(false);
     const navigate = useNavigate();
 
     const handleOtpChange = (e, index) => {
@@ -26,6 +28,39 @@ function Receiveotp2() {
             }
         }
     };
+
+    const handleResendOtp=async()=>{
+        setLoading(true);
+        setResendMessage('');
+
+        const payload={
+            countryCode: '+91',  
+            mobile: mobile,     
+           
+        }
+
+        try{
+            const response =await fetch('https://apidev.myinteriormart.com/api/SignIn/SendOtp',
+                {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+                    },
+                    body: JSON.stringify(payload),
+                }
+            );
+            if(response.ok){
+                setResendMessage('OTP has been resend successfully')
+            }
+            else{
+                setResendMessage('Failed to resend otp')
+            }
+        }
+        catch(error){
+setResendMessage('Error occured whilte sending otp')
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -114,7 +149,10 @@ function Receiveotp2() {
                                         <div className="form-group mr-2 align-self-stretch">
                                             <button type="submit" className="btn_1 full-width mb-4 input" style={{ height: '50px' }}>Submit</button>
                                         </div>
+                                      
                                     </form>
+                                    <button onClick={handleResendOtp} > Resend OTP</button>
+                                    {reSendMessage && <p>{reSendMessage}</p>}
                                 </div>
                             </div>
                         </div>

@@ -26,12 +26,20 @@ function Dealer1() {
   const navigate = useNavigate();
   const location = useLocation();
   const categoryRefs = useRef({});
+  const lastClickedCategory=useRef(null);
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     fetchCategories();
-    handleScroll();
+    // handleScroll();
+    const savedScrollPosition = sessionStorage.getItem("scrollPosition");
+    if (savedScrollPosition && location.state?.fromThirdCategory) {
+      window.scrollTo(0, parseFloat(savedScrollPosition));
+    }
   }, [location]);
+
+
+ 
 
   const fetchCategories = async () => {
     try {
@@ -113,6 +121,38 @@ function Dealer1() {
   //   };
   // },[location.key]);
 
+  const handleCategoryClick = (categoryId, cat) => {
+   console.log('categoryname',cat.name);
+    // Save current scroll position before navigation
+    sessionStorage.setItem("scrollPosition", window.scrollY);
+  
+    // Construct the dynamic URL using category details
+    const dynamicUrl = `/Dealer/Category/${cat.name
+      .replace(/\s+/g, "-")
+      .toLowerCase()}/in-${localStorage.getItem("cityname")}?fircatEncyt=${encodeURIComponent(
+      encrypt(parseInt(cat.secondCategoryID))
+    )}`;
+  
+    // Navigate to the constructed URL
+    navigate(dynamicUrl, { state: { fromDealerPage: true } });
+  };
+  
+
+  // useEffect(() => {
+  //   if (lastClickedCategory.current) {
+  //     const element = categoryRefs.current[lastClickedCategory.current];
+  //     if (element) {
+  //       element.scrollIntoView({ behavior: "smooth" });
+  //     }
+  //   } else {
+  //     const savedScrollPosition = sessionStorage.getItem("scrollPosition");
+  //     if (savedScrollPosition) {
+  //       window.scrollTo(0, parseFloat(savedScrollPosition));
+  //     }
+  //   }
+  // }, [location]);
+
+
   return (
     <>
       <div className="category-featured">
@@ -139,7 +179,7 @@ function Dealer1() {
                     const icon = `/FileManager/CategoryIcons/Second/${cat.imageURL}.png`;
 
                     return (
-                      <li className="mim-box-list" key={cat.secondCategoryID}>
+                      <li className="mim-box-list" key={cat.secondCategoryID}  ref={(el) => (categoryRefs.current[cat.secondCategoryID] = el)}>
                         <Link
                           to={`/Dealer/Category/${cat.name
                             .replace(/\s+/g, "-")
@@ -147,7 +187,9 @@ function Dealer1() {
                             "cityname"
                           )}?fircatEncyt=${encodeURIComponent(
                             encrypt(parseInt(cat.secondCategoryID))
-                          )}`+ `#testingBannerFor_scroll`}
+                          )}`}
+
+                          onClick={() => handleCategoryClick(cat.secondCategoryID)}
                           
                         >
                           <img
@@ -215,7 +257,7 @@ function Dealer1() {
                               <div
                                 className="col-md-3 col-sm-3 col-3 mim-Box-item servicecategorybox"
                                 
-                                key={cat.secondCategoryID}
+                                key={cat.secondCategoryID} ref={(el) => (categoryRefs.current[cat.secondCategoryID] = el)}
                               >
                                 <Link
                                   to={`/Dealer/Category/${cat.name
@@ -224,7 +266,8 @@ function Dealer1() {
                                     "cityname"
                                   )}?fircatEncyt=${encodeURIComponent(
                                     encrypt(parseInt(cat.secondCategoryID))
-                                  )}`+ `#testingBannerFor_scroll`}
+                                  )}`}
+                                  onClick={() => handleCategoryClick(cat.secondCategoryID)}
                                   title={cat.searchKeywordName}
                                 >
                                   <img

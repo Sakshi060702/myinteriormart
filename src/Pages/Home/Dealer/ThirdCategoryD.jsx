@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useRef} from "react";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link,useLocation } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
 import { useSearchParams } from "react-router-dom";
 import CryptoJS from "crypto-js";
@@ -25,9 +25,21 @@ function ThirdCategoryD() {
 
   const listingId_enc = searchParams.get("fircatEncyt");
   const secondCategoryId = decrypt(decodeURIComponent(listingId_enc));
+
+  const scrollPosition = useRef(0);
+  const location = useLocation();
+
   useEffect(() => {
     fetchThirdCategories();
+    if (!location.state?.fromDealerPage) {
+      sessionStorage.removeItem("scrollPosition");
+    }
   }, [secondCategoryId]);
+
+  useEffect(() => {
+   
+    window.scrollTo(0, scrollPosition.current);
+  }, [location]);
 
   const fetchThirdCategories = async () => {
     try {
@@ -62,8 +74,13 @@ function ThirdCategoryD() {
     }
   }, [secondCategoryId]);
 
+  const handleScroll = () => {
+  
+    scrollPosition.current = window.scrollY;
+  };
+
   return (
-    <div className="container margin_80_55 servicecontainer" >
+    <div className="container margin_80_55 servicecontainer" onScroll={handleScroll}>
       <div className="main_title_2">
         <span>
           <em></em>
@@ -114,6 +131,7 @@ function ThirdCategoryD() {
                       encrypt(parseInt(subCategory.secondCategoryID))
                     )}`}
                     className=" Linkstyle categorylink"
+                    onClick={() => sessionStorage.removeItem("scrollPosition")}
                   >
                     {subCategory.name}
                   </Link>

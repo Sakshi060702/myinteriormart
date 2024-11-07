@@ -880,7 +880,9 @@ function Listingdetails() {
 
   const Getclaimhandleclick = () => {
     navigate(ClaimForgetpassword,{
-      state:{mobile:listingDetails.registerMobile},
+      state:{mobile:listingDetails.registerMobile,
+        email:listingDetails.email
+      },
     });
   };
 
@@ -1491,6 +1493,7 @@ function Listingdetails() {
                             {listingDetails.website}
                           </a>
                         </p>
+                        <p style={{display:'none'}}>{listingDetails.email}</p>
                       </div>
                       <div className="listingemp">
                         {/* <div className="col-lg-6 px-0 mb-1 year_gst mt-0">
