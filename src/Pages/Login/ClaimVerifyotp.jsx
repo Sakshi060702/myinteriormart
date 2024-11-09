@@ -10,6 +10,8 @@ function Claimverifyotp() {
     const [userOtp, setUserOtp] = useState(['', '', '', '']);
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const[reSendMessage,setResendMessage]=useState('');
+    const[loading,setLoading]=useState(false);
 
     const handleOtpChange = (e, index) => {
         const { value } = e.target;
@@ -26,6 +28,39 @@ function Claimverifyotp() {
             }
         }
     };
+
+    const handleResendOtp=async()=>{
+        setLoading(true);
+        setResendMessage('');
+
+        const payload={
+            
+            MobileorEmail: mobile,     
+           
+        }
+
+        try{
+            const response =await fetch('https://apidev.myinteriormart.com/api/SignIn/ClaimForgotPassword',
+                {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+                    },
+                    body: JSON.stringify(payload),
+                }
+            );
+            if(response.ok){
+                setResendMessage('OTP has been resend successfully')
+            }
+            else{
+                setResendMessage('Failed to resend otp')
+            }
+        }
+        catch(error){
+setResendMessage('Error occured whilte sending otp')
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -115,6 +150,8 @@ function Claimverifyotp() {
                                             <button type="submit" className="btn_1 full-width mb-4 input" style={{ height: '50px' }}>Submit</button>
                                         </div>
                                     </form>
+                                    <button onClick={handleResendOtp} > Resend OTP</button>
+                                    {reSendMessage && <p>{reSendMessage}</p>}
                                 </div>
                             </div>
                         </div>

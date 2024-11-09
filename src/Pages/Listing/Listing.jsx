@@ -227,28 +227,65 @@ function Listing() {
 navigate(ClaimForgetpassword)
   }
  
-  const handleListingClick = (listingId) => {
-    localStorage.setItem("scrollPosition", window.scrollY); // Save current scroll position
-    // Perform your navigation logic here (e.g., navigate to the details page)
-  };
+  // const handleListingClick = (listingId) => {
+  //   localStorage.setItem("scrollPosition", window.scrollY); // Save current scroll position
+  //   // Perform your navigation logic here (e.g., navigate to the details page)
+  // };
+
+  // useEffect(() => {
+  //   const savedPosition = localStorage.getItem("scrollPosition");
+  //   if (savedPosition) {
+  //     window.scrollTo(0, parseInt(savedPosition, 10));
+  //     localStorage.removeItem("scrollPosition");
+  //   }
+  // }, []);
 
   useEffect(() => {
-    const savedPosition = localStorage.getItem("scrollPosition");
-    if (savedPosition) {
-      window.scrollTo(0, parseInt(savedPosition, 10));
-      localStorage.removeItem("scrollPosition");
-    }
-  }, []);
-
-  useEffect(()=>{
-    if(location.hash){
-      const elementId=location.hash.replace('#','');
-      const element=document.getElementById(elementId);
-      if(element){
-        element.scrollIntoView({behavior:'smooth'});
+    if (location.state?.fromListingPage) {
+      const savedScrollPosition = sessionStorage.getItem("scrollPosition");
+      const savedPage = sessionStorage.getItem("currentPage");
+  
+      if (savedScrollPosition && savedPage) {
+        window.scrollTo(0, parseInt(savedScrollPosition, 10));
+        setCurrentPage(parseInt(savedPage, 10)); // Set the currentPage from session storage
       }
+  
+      sessionStorage.removeItem("scrollPosition");
+      sessionStorage.removeItem("currentPage");
+    } else {
+      sessionStorage.removeItem("scrollPosition");
+      sessionStorage.removeItem("currentPage");
     }
-  },[location])
+  }, [location]);
+
+  const handleListingClick = (listing) => {
+    sessionStorage.setItem("scrollPosition", window.scrollY);
+    sessionStorage.setItem("currentPage", currentPage); // Save the currentPage in session storage
+  
+    navigate(
+      `/company/${listing.companyName.replace(/\s+/g, "-").toLowerCase()}/${
+        secondCategoryName
+      }/in-${listing.locality.replace(/\s+/g, "-").toLowerCase()}/${localStorage.getItem(
+        "cityname"
+      )}?listingEncyt=${encodeURIComponent(
+        encrypt(listing.listingId)
+      )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
+        encrypt(parseInt(secondCategoryId))
+      )}`,
+      { state: { fromListingPage: true } }
+    );
+  };
+  
+
+  // useEffect(()=>{
+  //   if(location.hash){
+  //     const elementId=location.hash.replace('#','');
+  //     const element=document.getElementById(elementId);
+  //     if(element){
+  //       element.scrollIntoView({behavior:'smooth'});
+  //     }
+  //   }
+  // },[location])
 
   
   return (

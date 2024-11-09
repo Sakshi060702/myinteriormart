@@ -36,6 +36,7 @@ function Teamimagel() {
   const [successMessage, setSuccessMessage] = useState("");
 
   const [listingid, setListingId] = useState([]);
+  console.log('listingid',listingid);
 
   const [error, setError] = useState("");
 
@@ -203,34 +204,50 @@ function Teamimagel() {
 
   //To delete image
   const handleDeleteImage = async (imageUrl) => {
+    if (!listingid) {
+      console.error("Listing ID is not defined.");
+      return;
+    }
+  
+    // Filter out the image that needs to be deleted
     const remainingImagePath = imageDetails
       .filter((img) => img.url !== imageUrl)
       .map((img) => img.url);
-
+  
     const deletePayload = {
       ListingID: listingid,
       ImagePaths: remainingImagePath,
     };
-
+  
     try {
-      const delteResponse = await fetch(
+      const deleteResponse = await fetch(
         "https://apidev.myinteriormart.com/api/DeleteImages/OwnerDeleteImages",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+           
           },
           body: JSON.stringify(deletePayload),
         }
       );
+  
+      if (!deleteResponse.ok) {
+        throw new Error("Failed to delete image");
+      }
+  
+      // Update the state with the remaining images if the deletion was successful
       setImageDetails((prevDetails) =>
         prevDetails.filter((img) => img.url !== imageUrl)
       );
       setRemainingImages(MAX_IMAGES - remainingImagePath.length);
+  
+      console.log("Image deleted successfully:", imageUrl);
     } catch (error) {
       console.error("Error deleting image:", error);
     }
   };
+  
 
 
 

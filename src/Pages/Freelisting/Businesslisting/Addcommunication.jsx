@@ -169,10 +169,10 @@ function Addcommunication() {
     const mobileError = validateMobile(updatedFormData.mobile);
     const telephoneError = validateMobile(updatedFormData.telephone);
 
-    if (emailError || registermobileError || mobileError || telephoneError) {
+    if (emailError  || mobileError || telephoneError) {
       setError({
         communicationEmail: emailError,
-        communicationRegisterMobile: registermobileError,
+        // communicationRegisterMobile: registermobileError,
         communicationMobile: registermobileError,
         communicationTelephone: telephoneError,
       });
@@ -338,7 +338,7 @@ function Addcommunication() {
                   </div>
                   <div className="form-group col-md-4">
                     <label htmlFor="Mobile">
-                      Registered Mobile <span className="text-danger">*</span>
+                      Alternate Mobile No 
                     </label>
                     <input
                       className="form-control form-control-sm box"
@@ -351,11 +351,11 @@ function Addcommunication() {
                       maxLength={10}
                       required
                     />
-                    {error.communicationRegisterMobile && (
+                    {/* {error.communicationRegisterMobile && (
                       <div className="text-danger">
                         {error.communicationRegisterMobile}
                       </div>
-                    )}
+                    )} */}
                   </div>
                  
                   <div className="form-group col-md-4">

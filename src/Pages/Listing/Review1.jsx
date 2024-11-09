@@ -406,7 +406,7 @@ setIsPopupOpen(true);
                                         />
                                       </div>
                                     </div>
-                                    <div className="col-lg-10 col-9 pl-lg-0 reviewmaindiv">
+                                    <div className="col-lg-10 col-9 pl-lg-0 "style={{paddingRight:'0px'}}>
                                       <span>
                                         <b>{review.gender} {review.userName}</b>
                                       </span>

@@ -28,6 +28,7 @@ function Dealer1() {
   const categoryRefs = useRef({});
   const lastClickedCategory=useRef(null);
   const [isActive, setIsActive] = useState(false);
+  
 
   useEffect(() => {
     fetchCategories();
@@ -121,8 +122,9 @@ function Dealer1() {
   //   };
   // },[location.key]);
 
-  const handleCategoryClick = (categoryId, cat) => {
-   console.log('categoryname',cat.name);
+  const handleCategoryClick = ( cat) => {
+    
+   console.log('categoryname',cat);
     // Save current scroll position before navigation
     sessionStorage.setItem("scrollPosition", window.scrollY);
   

@@ -81,7 +81,7 @@ function Communicationl() {
 
         setFormData({
           email: storedemail,
-          registerMobile: storedmobile,
+          registerMobile: responseData.telephoneSecond || "",
           mobile: responseData.mobile || "",
           telephone: responseData.telephone || "",
           website: responseData.website || "",
@@ -124,10 +124,10 @@ function Communicationl() {
     const mobileError=validateMobile(formData.mobile);
     const telephoneError=validateMobile(formData.telephone);
 
-    if(emailError||registermobileError||mobileError||telephoneError){
+    if(emailError||mobileError||telephoneError){
       setError({
         communicationEmail:emailError,
-        communicationRegisterMobile:registermobileError,
+        // communicationRegisterMobile:registermobileError,
         commuincationMobile:registermobileError,
         communicationTelephone:telephoneError,
       });
@@ -297,7 +297,7 @@ function Communicationl() {
                   </div>
                   <div className="form-group col-md-4">
                     <label htmlFor="Mobile">
-                      Registered Mobile <span className="text-danger">*</span>
+                    Alternate Mobile No 
                     </label>
                     <input
                       className="form-control form-control-sm box"
@@ -310,9 +310,9 @@ function Communicationl() {
                       required
                      
                     />
-                    {error.communicationRegisterMobile && (
+                    {/* {error.communicationRegisterMobile && (
                       <div className="text-danger">{error.communicationRegisterMobile}</div>
-                    )}
+                    )} */}
                   </div>
                   
                   <div className="form-group col-md-4">

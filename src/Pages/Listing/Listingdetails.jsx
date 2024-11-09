@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams, useSearchParams, useNavigate } from "react-router-dom";
+import { useParams, useSearchParams, useNavigate,useLocation } from "react-router-dom";
 import Services from "../Services/Webdevelopment/Website/Services";
 import Webreviews from "../Services/Webdevelopment/Website/Webreviews";
 import profile from "../../FrontEnd/img/profile.svg";
@@ -36,6 +36,7 @@ function Listingdetails() {
   // console.log("RTEST");
 
   const [searchParams] = useSearchParams();
+  const location=useLocation();
   // console.log(searchParams);
 
   const { listingPage, secondCategoryName } = useParams();
@@ -304,6 +305,16 @@ function Listingdetails() {
   //     }
   //   }
   // }, [listingDetails]);
+
+  useEffect(() => {
+    if (location.hash) {
+      const elementId = location.hash.replace('#', '');
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
 
   //for bookmark
 
@@ -681,7 +692,7 @@ function Listingdetails() {
           url: img,
           prefix: ownerImageData.prefix,
           title: `${ownerImageData.ownerName[index] || "no name"} ${
-            ownerImageData.lastName
+            ownerImageData.lastName[index]
           }`,
           designation: ownerImageData.designation[index] || "no name",
           state: stateName,
@@ -880,11 +891,14 @@ function Listingdetails() {
 
   const Getclaimhandleclick = () => {
     navigate(ClaimForgetpassword,{
-      state:{mobile:listingDetails.registerMobile,
+      state:{mobile:listingDetails.mobile,
         email:listingDetails.email
       },
     });
   };
+
+
+
 
   return (
     <>
@@ -1104,6 +1118,7 @@ function Listingdetails() {
                                 }
                              `}
                     </style>
+                    <div></div>
                     <Swiper
                       modules={[Pagination, Autoplay]}
                       spaceBetween={10}
@@ -1171,7 +1186,7 @@ function Listingdetails() {
                         imageDetails.map((image, index) => (
                           <div
                             key={index}
-                            className="thumbnail imgScroll photogallerythumbnail"
+                            className="thumbnail imgScroll photogallerythumbnail "
                             onClick={() => handleThumbnailClick(index)}
                             style={{
                               border:
@@ -1377,7 +1392,7 @@ function Listingdetails() {
                     {/* <div className="listinggallery">
                 <div className="listing-gallery">
                   <div className="gallery">
-                   
+
                     <img
                       className="upload_imagesbanner "
                       src={
@@ -1979,7 +1994,7 @@ function Listingdetails() {
                         >
                           Get Quotes
                         </button>)}
-                        
+
                       </div>
                       <div className="col-lg-12 social-share p-0 listingpageSocialLink">
                         {socialLink.whatsappGroupLink && (

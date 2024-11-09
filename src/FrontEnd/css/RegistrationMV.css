@@ -1176,7 +1176,7 @@ width: 119%;
 
 div.scrollmenu {
   /* background-color: #333; */
-  overflow: auto;
+  overflow-x: auto;
   white-space: nowrap;
 }
 
@@ -1813,6 +1813,8 @@ div.scrollmenu .imgScroll:hover {
 
 @media (max-width:767px) {
   .reviewmaindiv{
-    padding-right: 15px !important;
+    padding-right: 0px !important;
   }
 }
+
+
