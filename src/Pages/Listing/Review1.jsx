@@ -390,7 +390,7 @@ setIsPopupOpen(true);
                         >
                           {reviews.length > 0 ? (
                             reviews.map((review, index) => (
-                              <div key={index} className="col-lg-12 mb-3">
+                              <div key={index} className="col-lg-12 mb-3 ">
                                 <div className="review-box userreviewbox">
                                   <div className="d-flex">
                                     <div className="col-lg-2 col-3 text-center">

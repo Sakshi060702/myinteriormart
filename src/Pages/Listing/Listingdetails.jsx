@@ -784,6 +784,7 @@ function Listingdetails() {
     if (swiperRef.current) {
       swiperRef.current.slideTo(index); // Slide to the clicked thumbnail's image
     }
+    
   };
 
   const handleSlideChange = (swiper) => {
@@ -813,7 +814,10 @@ function Listingdetails() {
     const activeIndex = swiper.activeIndex;
     setSelectedImage(activeIndex);
 
+    // scrollThumbnailsToView(activeIndex);
+
     // Scroll the active thumbnail into view on slide change
+    
     if (thumbnailsContainerRef.current && activeThumbnailRef.current) {
       activeThumbnailRef.current.scrollIntoView({
         behavior: "smooth",
@@ -1109,6 +1113,8 @@ function Listingdetails() {
                     {/* Main Image Display */}
 
                     {/* <div className="main-image"> */}
+                    
+                    {/* Mobile view Gallery */}
                     <style>
                       {`
                                 .swiper-button-prev,
@@ -1679,7 +1685,7 @@ function Listingdetails() {
                           {/* registered mobile */}
                           <div
                             classname="col-lg-12 mb-1 listingtelephone"
-                            style={{ width: "29%" }}
+                            style={{ width: "27%" }}
                           >
                             <i
                               className="fa fa-mobile"
@@ -1710,7 +1716,7 @@ function Listingdetails() {
                           {/* telephone */}
                           <div
                             classname="col-lg-12 mb-1 listingtelephone"
-                            style={{ width: "29%" }}
+                            style={{ width: "-1%" }}
                           >
                             <i
                               className="fa fa-phone"

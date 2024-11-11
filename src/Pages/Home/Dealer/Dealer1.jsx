@@ -127,13 +127,14 @@ function Dealer1() {
    console.log('categoryname',cat);
     // Save current scroll position before navigation
     sessionStorage.setItem("scrollPosition", window.scrollY);
-  
+    // alert('cat',cat);
     // Construct the dynamic URL using category details
     const dynamicUrl = `/Dealer/Category/${cat.name
       .replace(/\s+/g, "-")
       .toLowerCase()}/in-${localStorage.getItem("cityname")}?fircatEncyt=${encodeURIComponent(
       encrypt(parseInt(cat.secondCategoryID))
     )}`;
+   
   
     // Navigate to the constructed URL
     navigate(dynamicUrl, { state: { fromDealerPage: true } });

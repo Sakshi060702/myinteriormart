@@ -26,7 +26,7 @@ export const validateEmail = (email) => {
   
   // Validation for Name
   export const validateName = (name) => {
-    const nameRegex = /^[A-Za-z\s]+$/;
+    const nameRegex = /^[A-Za-z0-9\s]+$/;
     if (!name) return "Name is required.";
     if (!nameRegex.test(name)) return "Name must contain only characters.";
     return null;
@@ -97,7 +97,7 @@ export const validateEmail = (email) => {
 
   export const validationReviewlength = (review) => {
     const trimmedReview = review.trim(); // Trim whitespace
-    if (trimmedReview.length < 30) { // Check length
+    if (trimmedReview.length < 10) { // Check length
       return "The review must be at least 30 characters."; // Return error message
     }
     return ""; // Return empty string if validation passes

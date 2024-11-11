@@ -357,7 +357,7 @@ function Communicationl() {
                       value={formData.tollfree}
                       onChange={handleChange}
                       required
-                      maxLength={18}
+                      maxLength={12}
                     />
                   </div>
 

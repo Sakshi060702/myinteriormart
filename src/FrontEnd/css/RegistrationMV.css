@@ -1818,3 +1818,8 @@ div.scrollmenu .imgScroll:hover {
 }
 
 
+@media (max-width:767px) {
+  .reviewcols{
+    padding-right: 0px !important;
+  }
+}

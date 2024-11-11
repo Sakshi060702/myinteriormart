@@ -207,7 +207,29 @@ const Notification = ({ setHasNotifications }) => {
                               )}
 
                               {/* Review Comment */}
+
                               {notification.activityText === "Review" && (
+                                <div style={{ marginTop: "4px" }}>
+                                  <span className="activity-text" style={{marginLeft:'-31px'}}>
+                                    Review
+                                  </span>
+                                  <span
+                                    className="activity-text"
+                                    style={{
+                                      whiteSpace: "nowrap",
+                                      marginLeft: "5px",
+                                    }}
+                                  >
+                                    Your Listing{" "}
+                                    <span style={{ float: "inline-start" }}>
+                                      {notification.companyName}
+                                    </span>
+                                  </span>
+                                </div>
+                              )}
+
+
+                              {/* {notification.activityText === "Review" && (
                                 <div
                                   style={{
                                     marginTop: "4px",
@@ -227,7 +249,7 @@ const Notification = ({ setHasNotifications }) => {
                                     {notification.reviewComment}
                                   </span>
                                 </div>
-                              )}
+                              )} */}
 
                               {/* Enquiry Comment */}
                               {notification.activityText === "Enquiry" && (
@@ -459,8 +481,28 @@ const Notification = ({ setHasNotifications }) => {
                                 </div>
                               )}
 
+{notification.activityText === "Review" && (
+                                <div style={{ marginTop: "4px" }}>
+                                  <span className="activity-text" style={{marginLeft:'-13px'}}>
+                                  Review
+                                  </span>
+                                  <span
+                                    className="activity-text"
+                                    style={{
+                                      whiteSpace: "nowrap",
+                                      marginLeft: "5px",
+                                    }}
+                                  >
+                                    Your Listing{" "}
+                                    <span style={{ float: "inline-end" }}>
+                                      {notification.companyName}
+                                    </span>
+                                  </span>
+                                </div>
+                              )}
+
                               {/* Review Comment */}
-                              {notification.activityText === "Review" && (
+                              {/* {notification.activityText === "Review" && (
                                 <div
                                   style={{
                                     marginTop: "4px",
@@ -480,7 +522,7 @@ const Notification = ({ setHasNotifications }) => {
                                     {notification.reviewComment}
                                   </span>
                                 </div>
-                              )}
+                              )} */}
 
                               {/* Enquiry Comment */}
                               {notification.activityText === "Enquiry" && (

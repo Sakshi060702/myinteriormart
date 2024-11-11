@@ -408,7 +408,7 @@ function Addcommunication() {
                       onChange={handleInputChange}
                       pattern="[0-9]*"
                       required
-                      maxLength={18}
+                      maxLength={12}
                     />
                   </div>
 
