@@ -234,8 +234,8 @@ function Contractor1() {
                         return (
                           <div
                             className="col-md-3 col-sm-3 col-3 mim-Box-item servicecategorybox"
-                            
-                            key={category.secondCategoryID}
+                            key={category.secondCategoryID} ref={(el) => (categoryRefs.current[category.secondCategoryID] = el)}
+                            // key={category.secondCategoryID}
                           >
                             <Link
                               to={`/Contractor/${category.name
@@ -244,8 +244,9 @@ function Contractor1() {
                                 "cityname"
                               )}?fircatEncyt=${encodeURIComponent(
                                 encrypt(parseInt(category.secondCategoryID))
-                              )}#popular-categories`}
+                              )}`}
                               title={category.searchKeywordName}
+                              onClick={() => handleCategoryClick(category.secondCategoryID)}
                             >
                               <img
                                 src={icon}

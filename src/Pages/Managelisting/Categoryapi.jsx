@@ -77,6 +77,7 @@ function Categoryapi() {
 
         if (data && data.category) {
           setSelectedFirstCategory(data.category.firstCategoryID);
+          
           setSelectedSecondCategory(data.category.secondCategoryID);
           setSelectedThirdCategory(
             data.category.thirdCategoryID.split(",").map(Number)

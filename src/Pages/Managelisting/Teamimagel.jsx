@@ -203,17 +203,67 @@ function Teamimagel() {
   };
 
   //To delete image
-  const handleDeleteImage = async (imageUrl) => {
-    if (!listingid) {
-      console.error("Listing ID is not defined.");
-      return;
-    }
+  // const handleDeleteImage = async (imageUrl) => {
+  //   if (!listingid) {
+  //     console.error("Listing ID is not defined.");
+  //     return;
+  //   }
   
-    // Filter out the image that needs to be deleted
+  //   // Filter out the image that needs to be deleted
+  //   const remainingImagePath = imageDetails
+  //     .filter((img) => img.url !== imageUrl)
+  //     .map((img) => img.url);
+  
+  //   const deletePayload = {
+  //     ListingID: listingid,
+  //     ImagePaths: remainingImagePath,
+  //   };
+  
+  //   try {
+  //     const deleteResponse = await fetch(
+  //       "https://apidev.myinteriormart.com/api/DeleteImages/OwnerDeleteImages",
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+           
+  //         },
+  //         body: JSON.stringify(deletePayload),
+  //       }
+  //     );
+  
+  //     if (!deleteResponse.ok) {
+  //       throw new Error("Failed to delete image");
+  //     }
+  
+  //     // Update the state with the remaining images if the deletion was successful
+  //     setImageDetails((prevDetails) =>
+  //       prevDetails.filter((img) => img.url !== imageUrl)
+  //     );
+  //     setRemainingImages(MAX_IMAGES - remainingImagePath.length);
+  
+  //     console.log("Image deleted successfully:", imageUrl);
+  //   } catch (error) {
+  //     console.error("Error deleting image:", error);
+  //   }
+  // };
+  
+
+  const handleDeleteImage = async (e, imageUrl) => {
+    e.preventDefault();
+  
+    // Filter out the image to be deleted
     const remainingImagePath = imageDetails
       .filter((img) => img.url !== imageUrl)
       .map((img) => img.url);
   
+    // Update state immediately to reflect UI changes
+    setImageDetails((prevDetails) =>
+      prevDetails.filter((img) => img.url !== imageUrl)
+    );
+    setRemainingImages(MAX_IMAGES - remainingImagePath.length);
+  
+    // Prepare the payload. If no images are left, set ImagePaths to an empty array.
     const deletePayload = {
       ListingID: listingid,
       ImagePaths: remainingImagePath,
@@ -226,7 +276,6 @@ function Teamimagel() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-           
           },
           body: JSON.stringify(deletePayload),
         }
@@ -236,17 +285,12 @@ function Teamimagel() {
         throw new Error("Failed to delete image");
       }
   
-      // Update the state with the remaining images if the deletion was successful
-      setImageDetails((prevDetails) =>
-        prevDetails.filter((img) => img.url !== imageUrl)
-      );
-      setRemainingImages(MAX_IMAGES - remainingImagePath.length);
-  
-      console.log("Image deleted successfully:", imageUrl);
+      console.log("Image deleted successfully");
     } catch (error) {
       console.error("Error deleting image:", error);
     }
   };
+  
   
 
 
@@ -655,7 +699,7 @@ function Teamimagel() {
                       />
                       <button
                       className="btn btn-danger position-absolute top-0 right-0"
-                      onClick={() => handleDeleteImage(image.url)}
+                      onClick={(e) => handleDeleteImage(e,image.url)}
                       style={{
                         position: "absolute",
                         top: "-14px",

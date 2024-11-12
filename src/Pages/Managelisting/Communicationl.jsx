@@ -282,13 +282,14 @@ function Communicationl() {
                     <label htmlFor="Mobile2">Mobile<span className="text-danger">*</span> </label>
                     <input
                       className="form-control form-control-sm box"
-                      type="number"
+                      type="text"
                       name="mobile"
                       id="Mobile2"
                       placeholder="Enter your Mobile Number"
                       value={formData.mobile}
                       onChange={handleChange}
                       required
+                      maxLength={10}
                     
                     />
                     {error.commuincationMobile && (
@@ -301,7 +302,7 @@ function Communicationl() {
                     </label>
                     <input
                       className="form-control form-control-sm box"
-                      type="number"
+                      type="text"
                       name="registerMobile"
                       id="Mobile"
                       placeholder="Enter Registered Mobile Number"
@@ -319,13 +320,14 @@ function Communicationl() {
                     <label htmlFor="telephone">Telephone<span className="text-danger">*</span></label>
                     <input
                       className="form-control form-control-sm box"
-                      type="number"
+                      type="text"
                       name="telephone"
                       id="telephone"
                       placeholder="Enter telephone number"
                       value={formData.telephone}
                       onChange={handleChange}
                       required
+                      maxLength={10}
                       
                     />
                     {error.communicationTelephone && (
@@ -343,14 +345,14 @@ function Communicationl() {
                       value={formData.website}
                       onChange={handleChange}
                       required
-                      maxLength={10}
+                      
                     />
                   </div>
                   <div className="form-group col-md-4">
                     <label htmlFor="tollfree">Toll Free<span className="text-danger">*</span></label>
                     <input
                       className="form-control form-control-sm box"
-                      type="number"
+                      type="text"
                       name="tollfree"
                       id="tollfree"
                       placeholder="Enter Tollfree No"

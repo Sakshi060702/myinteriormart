@@ -1823,3 +1823,17 @@ div.scrollmenu .imgScroll:hover {
     padding-right: 0px !important;
   }
 }
+
+/* .thumbnails {
+  display: flex;
+  overflow-x: auto; 
+  overflow-y: hidden; 
+  white-space: nowrap;
+}
+
+.thumbnail {
+  flex-shrink: 0;
+  width: 100px; 
+  height: auto;
+} */
+

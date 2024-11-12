@@ -814,7 +814,7 @@ function Listingdetails() {
     const activeIndex = swiper.activeIndex;
     setSelectedImage(activeIndex);
 
-    // scrollThumbnailsToView(activeIndex);
+    //  scrollThumbnailsToView(activeIndex);
 
     // Scroll the active thumbnail into view on slide change
     
