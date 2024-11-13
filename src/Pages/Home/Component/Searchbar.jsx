@@ -252,6 +252,7 @@ const [totalItems, setTotalItems] = useState(0);
                     console.log(typeof result.listingId);
                     console.log("locality", result.listingID);
                     const companyName = result.companyName || "";
+                    
                     // const categoryName = result.category || "";
                     // const listingURL = result.listingURL || "";
                     // const locality = result.locality || "";

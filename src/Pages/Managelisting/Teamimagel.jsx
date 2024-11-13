@@ -12,6 +12,7 @@ import {
 } from "../Validation";
 import "../../FrontEnd/css/RegistrationMV.css";
 import Select from "react-select";
+import { useRef } from "react";
 
 function Teamimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -21,6 +22,7 @@ function Teamimagel() {
   const [selectedState, setSelectedState] = useState("");
   const [selectedBusinessCategory, setSelectedBusinessCategory] = useState("");
   const [selectTitle, setSelectTitel] = useState("");
+  const fileRef=useRef(null);
 
   const [imageURL, setImageURL] = useState(null);
   const [imageTitleFromAPI, setImageTitleFromAPI] = useState("");
@@ -354,6 +356,8 @@ function Teamimagel() {
           );
 
           setRemainingImages(MAX_IMAGES - result.imageUrls.length);
+
+          resetForm();
         }
         // setImageURL(result.imageUrl);// Ensure this is the correct property
         // setSuccessMessage("Team Image Uploded Successfully");
@@ -363,6 +367,17 @@ function Teamimagel() {
         // setTimeout(() => {
         //   setShowPopup(false);
         // }, 2000);
+
+
+        // Reset form fields
+        // setSelectedFile([]); // Clear file input
+        // setSelectTitel(""); // Reset title selection
+        // setSelectedBusinessCategory(""); // Reset designation
+        // setSelectedCountry(""); // Reset country selection
+        // setSelectedState(""); // Reset state selection
+        // event.target.firstName.value = ""; // Clear first name input
+        // event.target.lastName.value = ""; // Clear last name input
+        
       } catch (error) {
         // console.error("Error uploading image:", error);
         // setErrorMessage("Failed to Upload Image. Please try again later.");
@@ -375,6 +390,23 @@ function Teamimagel() {
       setShowPopup(true);
     }
   };
+
+  const resetForm = () => {
+    setSelectedFile(null);
+    setSelectedBusinessCategory("");
+    setSelectTitel("");
+    setSelectedCountry("");
+    setSelectedState("");
+    // setFirstName('');
+    // setLastName('');
+    // setError({});
+    // setImageDetails([]);
+
+    if (fileRef.current) {
+      fileRef.current.value = null;
+    }
+  };
+
   const handleClosePopup = () => {
     setShowPopup(false);
   };
@@ -433,6 +465,7 @@ function Teamimagel() {
               onChange={handleFileChange}
               multiple
               accept="image/*"
+              ref={fileRef}
               style={{
                 border: "1px solid #ccc",
                 borderRadius: "4px",

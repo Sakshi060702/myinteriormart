@@ -6,6 +6,8 @@ import withAuthh from "../../Hoc/withAuthh"
 import Popupalert from "../Popupalert";
 import { validateImageFile,validateName,validateGalleryFile } from "../Validation";
 import '../../FrontEnd/css/RegistrationMV.css'
+import { useRef } from "react";
+import imageCompression from "browser-image-compression";
 
 
 function Clientimagel() {
@@ -33,7 +35,9 @@ function Clientimagel() {
   const token=useSelector((state)=>state.auth.token);
   const dispatch = useDispatch();
 
-  const handleFileChange = (event) => {
+  const fileRef=useRef(null);
+
+  const handleFileChange =async (event) => {
     const files = Array.from(event.target.files);
 
     const totalUplodedImages=imageDetails.length;
@@ -49,6 +53,33 @@ function Clientimagel() {
       setSelectedFile(files);
       setRemainingImages(MAX_IMAGES - newTotalUplodedImages);
     }
+
+    //compress images
+    const compressedFile=await Promise.all(
+      files.map(async(file)=>{
+        try{
+          const option={
+            maxSizeMB: 0.1,
+            maxWidthOrHeight: 800,
+            useWebWorker: true,
+          };
+          console.log(`Original Size:${(file.size/1024/1024).toFixed(2)}MB`);
+          const compressedFile=await imageCompression(file,option);
+          console.log(`Compressed Size: ${(compressedFile.size/1024).toFixed(2)}KB`);
+
+          const newCompressedFile=new File([compressedFile],file.name,{
+            type:compressedFile.type,
+          });
+          console.log("newcompressedFile",newCompressedFile);
+          return newCompressedFile;
+
+        }
+        catch{
+          console.error("Error in compressing file", error);
+        }
+      })
+    );
+    setSelectedFile(compressedFile);
   };
 
   const handleTitleChange = (event) => {
@@ -189,6 +220,12 @@ function Clientimagel() {
       //   navigate("/Sociallinkl");
       // }, 2000);
         // You can handle the result here if needed, e.g., show a success message
+
+        setSelectedFile(null);
+     setImageTitle("");
+     if(fileRef.current){
+      fileRef.current.value="";
+     }
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
         setErrorMessage("Failed to Upload Image. Please try again later.");
@@ -226,6 +263,7 @@ function Clientimagel() {
                   className="file-input"
                   multiple
                   accept="image/*"
+                  ref={fileRef}
                 />
                    {error.imageFile && (
                       <div className="text-danger">{error.imageFile}</div>

@@ -1,12 +1,18 @@
-import React, { useState,useEffect } from "react";
-import { Link ,useNavigate} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import usericon from "../../FrontEnd/img/certificate.jpg";
-import { useSelector,useDispatch } from "react-redux";
-import withAuthh from "../../Hoc/withAuthh"
+import { useSelector, useDispatch } from "react-redux";
+import withAuthh from "../../Hoc/withAuthh";
 import Popupalert from "../Popupalert";
-import { validateImageFile,validateGalleryFile,validateName } from "../Validation";
+import {
+  validateImageFile,
+  validateGalleryFile,
+  validateName,
+} from "../Validation";
 import useAuthCheck from "../../Hooks/useAuthCheck";
-import '../../FrontEnd/css/RegistrationMV.css'
+import "../../FrontEnd/css/RegistrationMV.css";
+import { useRef } from "react";
+import imageCompression from "browser-image-compression";
 
 function Certificationimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -14,43 +20,73 @@ function Certificationimagel() {
   const [imageURL, setImageURL] = useState(null);
   const [imageTitleFromAPI, setImageTitleFromAPI] = useState("");
   const [imageDetails, setImageDetails] = useState([]);
- 
+
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const[successMessage,setSuccessMessage]=useState("");
-  const[error,setError]=useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [error, setError] = useState("");
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const [listingid, setListingId] = useState([]);
 
   const isAuthenticated = useAuthCheck();
 
-  const MAX_IMAGES=20;
-  const[remaingImages,setRemainingImages]=useState(MAX_IMAGES);
+  const MAX_IMAGES = 20;
+  const [remaingImages, setRemainingImages] = useState(MAX_IMAGES);
 
-
-  const token=useSelector((state)=>state.auth.token);
+  const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
 
-  const handleFileChange = (event) => {
+  const fileRef = useRef(null);
+
+  const handleFileChange = async (event) => {
     const files = Array.from(event.target.files);
 
-    const totalUplodedImages=imageDetails.length;
-    const newTotalUplodedImages=totalUplodedImages+(files?files.length:0);
+    const totalUplodedImages = imageDetails.length;
+    const newTotalUplodedImages =
+      totalUplodedImages + (files ? files.length : 0);
 
     if (newTotalUplodedImages > MAX_IMAGES) {
-    
       const validFileCount = MAX_IMAGES - totalUplodedImages;
-      const validFiles=files.slice(0, validFileCount);
-      setSelectedFile(validFiles); 
+      const validFiles = files.slice(0, validFileCount);
+      setSelectedFile(validFiles);
       setRemainingImages(0);
     } else {
       setSelectedFile(files);
       setRemainingImages(MAX_IMAGES - newTotalUplodedImages);
     }
-  };
 
+    //compress images
+    const compressedFile = await Promise.all(
+      files.map(async (file) => {
+        try {
+          const option = {
+            maxSizeMB: 0.1,
+            maxWidthOrHeight: 800,
+            useWebWorker: true,
+          };
+          console.log(
+            `Original Size:${(file.size / 1024 / 1024).toFixed(2)}MB`
+          );
+          const compressedFile = await imageCompression(file, option);
+          console.log(
+            `Compressed Size : ${(compressedFile.size / 1024).toFixed(2)}KB`
+          );
+
+          const newcompressedFile = new File([compressedFile], file.name, {
+            type: compressedFile.type,
+          });
+          console.log("newcompressedFile", newcompressedFile);
+
+          return newcompressedFile;
+        } catch {
+          console.error("Error in compressing file", error);
+        }
+      })
+    );
+    setSelectedFile(compressedFile);
+  };
 
   const handleTitleChange = (event) => {
     setImageTitle(event.target.value);
@@ -77,19 +113,21 @@ function Certificationimagel() {
           console.log(data);
           console.log();
           setListingId(data.listingid);
-          setImageDetails(data.imagepath.map((img,index)=> ({ url: img, title: data.imagetitle[index]||"No Title" })));
+          setImageDetails(
+            data.imagepath.map((img, index) => ({
+              url: img,
+              title: data.imagetitle[index] || "No Title",
+            }))
+          );
           setRemainingImages(MAX_IMAGES - data.imagepath.length);
-        
         }
       } catch (error) {
         console.error(error);
       }
     };
-    if(isAuthenticated){
+    if (isAuthenticated) {
       fetchGalleryImage();
     }
-
- 
   }, [token]);
 
   //To delete image
@@ -123,23 +161,17 @@ function Certificationimagel() {
     }
   };
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-
     setError({});
     const validationError = validateGalleryFile(selectedFile);
-    const validationName=validateName(imageTitle);
+    const validationName = validateName(imageTitle);
 
-
-    if (validationError||validationName) {
-      setError({ imageFile: validationError,
-        imagetitle:validationName
-       });
+    if (validationError || validationName) {
+      setError({ imageFile: validationError, imagetitle: validationName });
       return;
     }
-
 
     if (selectedFile && imageTitle) {
       const formData = new FormData();
@@ -167,7 +199,6 @@ function Certificationimagel() {
         const result = await response.json();
         console.log(result.imageUrl); // Log the result for debugging purposes
         console.log("Certification Image token", token);
-       
 
         // Update state with new image URL
         // setImageURL(result.imageUrl);
@@ -175,30 +206,45 @@ function Certificationimagel() {
         // setSelectedFile(null);
 
         if (result instanceof Object) {
-          const imageUrls = Array.isArray(result.imageUrls) ? result.imageUrls : [];
-          const imageTitles = Array.isArray(result.imageTitles) ? result.imageTitles : [];
+          const imageUrls = Array.isArray(result.imageUrls)
+            ? result.imageUrls
+            : [];
+          const imageTitles = Array.isArray(result.imageTitles)
+            ? result.imageTitles
+            : [];
 
-          
-          setImageDetails(result.imageUrls.map((img,index)=> ({ url: img, title: imageTitles[index] || "No Title" })));
+          setImageDetails(
+            result.imageUrls.map((img, index) => ({
+              url: img,
+              title: imageTitles[index] || "No Title",
+            }))
+          );
           setRemainingImages(MAX_IMAGES - result.imageUrls.length);
           // setImageDetails((prevDetails) =>
           //   prevDetails.concat(result.map((image) => ({ url: image.imageUrls, title: image.imageTitle })))
           // );
           // console.log("Updated imageDetails", result.map((image) => ({ url: image.imageUrls, title: image.imageTitle })));
         }
-    //     setSuccessMessage("Certification Image Uploded Successfully");
-    //   setErrorMessage("");
-    //   setShowPopup(true);
+        //     setSuccessMessage("Certification Image Uploded Successfully");
+        //   setErrorMessage("");
+        //   setShowPopup(true);
 
-    //   setTimeout(() => {
-    //   setShowPopup(false);
-     
-    // }, 2000);
+        //   setTimeout(() => {
+        //   setShowPopup(false);
+
+        // }, 2000);
+
+        // Reset form fields after successful upload
+        setSelectedFile(null);
+        setImageTitle("");
+        if (fileRef.current) {
+          fileRef.current.value = "";
+        }
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
         setErrorMessage("Failed to Upload Image. Please try again later.");
-    setSuccessMessage(""); // Clear any existing success message
-    setShowPopup(true);
+        setSuccessMessage(""); // Clear any existing success message
+        setShowPopup(true);
       }
     } else {
       setErrorMessage("Please select File and Title.");
@@ -211,9 +257,9 @@ function Certificationimagel() {
     setShowPopup(false);
   };
 
-  const handleExitClick=()=>{
-    navigate('/labournakapage')
-  }
+  const handleExitClick = () => {
+    navigate("/labournakapage");
+  };
 
   return (
     <>
@@ -223,7 +269,8 @@ function Certificationimagel() {
             <div className="col-md-6">
               <div className="form-group">
                 <label htmlFor="name">
-                  Select Certification Image <span className="text-danger">*</span>
+                  Select Certification Image{" "}
+                  <span className="text-danger">*</span>
                 </label>
                 <input
                   type="file"
@@ -231,10 +278,11 @@ function Certificationimagel() {
                   className="file-input"
                   multiple
                   accept="image/*"
+                  ref={fileRef}
                 />
                 {error.imageFile && (
-                      <div className="text-danger">{error.imageFile}</div>
-                    )}
+                  <div className="text-danger">{error.imageFile}</div>
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="name">
@@ -250,12 +298,9 @@ function Certificationimagel() {
                   onChange={handleTitleChange}
                 />
                 {error.imagetitle && (
-                      <div className="text-danger">{error.imagetitle}</div>
-                    )}
-                
-
+                  <div className="text-danger">{error.imagetitle}</div>
+                )}
               </div>
-              
             </div>
           </div>
           <hr style={{ marginTop: "32px" }}></hr>
@@ -266,27 +311,31 @@ function Certificationimagel() {
           </div>
           <div className="row justify-content-center mt-4">
             {console.log(imageDetails)}
-            {imageDetails.length === 0 || !imageDetails.some(img => img.url) ? (
-            <div className="col-md-3 col-lg-2 col-6 mb-5">
-              <div className="upload_img_sec">
-                <img
-                  className="upload_images"
-                  src={usericon}
-                  alt="Default User Icon"
-                />
-              </div>
-              
-            </div>
-          ) : (
-            imageDetails.map((image, index) => (
-              <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
+            {imageDetails.length === 0 ||
+            !imageDetails.some((img) => img.url) ? (
+              <div className="col-md-3 col-lg-2 col-6 mb-5">
                 <div className="upload_img_sec">
                   <img
                     className="upload_images"
-                    src={image.url ? `https://apidev.myinteriormart.com${image.url}` : usericon}
-                    alt="Gallery Image"
+                    src={usericon}
+                    alt="Default User Icon"
                   />
-                  <button
+                </div>
+              </div>
+            ) : (
+              imageDetails.map((image, index) => (
+                <div className="col-md-3 col-lg-2 col-6 mb-5" key={index}>
+                  <div className="upload_img_sec">
+                    <img
+                      className="upload_images"
+                      src={
+                        image.url
+                          ? `https://apidev.myinteriormart.com${image.url}`
+                          : usericon
+                      }
+                      alt="Gallery Image"
+                    />
+                    <button
                       className="btn btn-danger position-absolute top-0 right-0"
                       onClick={() => handleDeleteImage(image.url)}
                       style={{
@@ -296,46 +345,49 @@ function Certificationimagel() {
                         backgroundColor: "red",
                         border: "none",
                         cursor: "pointer",
-                        height:'33px',
-                        borderRadius:'50%'
+                        height: "33px",
+                        borderRadius: "50%",
                       }}
                     >
                       &times;
                     </button>
+                  </div>
+                  <div className="img_title text-center">{image.title}</div>
                 </div>
-                <div className="img_title text-center">{image.title}</div>
-              </div>
-            ))
-          )}
-         
+              ))
+            )}
           </div>
-          <div className='uplodlogo'>
-          <button
-                className="btn_1"
-                style={{ backgroundColor: "#fb830d", marginTop: "10px",marginRight:'10px' }}
-                onClick={handleSubmit}
-              >
-                Save & Continue
-              </button>
-              <button
-                  className="btn_1"
-                  style={{ backgroundColor: "#fb830d", marginTop: "10px" }}
-                  onClick={handleExitClick}
-                >
-                  Exit
-                </button>
+          <div className="uplodlogo">
+            <button
+              className="btn_1"
+              style={{
+                backgroundColor: "#fb830d",
+                marginTop: "10px",
+                marginRight: "10px",
+              }}
+              onClick={handleSubmit}
+            >
+              Save & Continue
+            </button>
+            <button
+              className="btn_1"
+              style={{ backgroundColor: "#fb830d", marginTop: "10px" }}
+              onClick={handleExitClick}
+            >
+              Exit
+            </button>
           </div>
           <div className="text-danger Gallerycount">
-            {remaingImages > 0 
+            {remaingImages > 0
               ? `You can upload ${remaingImages} more image`
               : "Maximum 20 images reached"}
           </div>
           {showPopup && (
-            <Popupalert 
-            message={successMessage || errorMessage} 
-            type={successMessage ? 'success' : 'error'} 
-            onClose={handleClosePopup}
-          />
+            <Popupalert
+              message={successMessage || errorMessage}
+              type={successMessage ? "success" : "error"}
+              onClose={handleClosePopup}
+            />
           )}
         </div>
       </div>

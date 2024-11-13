@@ -12,6 +12,8 @@ import {
 } from "../Validation";
 import useAuthCheck from "../../Hooks/useAuthCheck";
 import "../../FrontEnd/css/RegistrationMV.css";
+import { useRef } from "react";
+import imageCompression from "browser-image-compression";
 
 function Galleryimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -36,7 +38,9 @@ function Galleryimagel() {
 
   const [error, setError] = useState("");
 
-  const handleFileChange = (event) => {
+  const fileRef=useRef(null);
+
+  const handleFileChange =async (event) => {
     const files = Array.from(event.target.files);
 
     const totalUplodedImages = imageDetails.length;
@@ -52,6 +56,36 @@ function Galleryimagel() {
       setSelectedFile(files);
       setRemainingImages(MAX_IMAGES - newTotalUplodedImages);
     }
+
+    //compress image file
+    const compressedFiles=await Promise.all(
+      files.map(async(file)=>{
+        try{
+          const option={
+            maxSizeMB: 0.1,
+            maxWidthOrHeight: 800,
+            useWebWorker: true,
+          };
+          console.log(`Original size: ${(file.size / 1024 / 1024).toFixed(2)} MB`);
+          const compressedFile=await imageCompression(file,option);
+        // console.log(`Compressed size: ${(compressedFile.size / 1024 / 1024).toFixed(2)} MB`);
+        console.log(`Compressed size: ${(compressedFile.size / 1024).toFixed(2)} KB`);
+
+        const newCompressedFile=new File(
+          [compressedFile],
+          file.name,
+          {type:compressedFile.type}
+        );
+        console.log('newcompressedFile',newCompressedFile);
+          
+          return newCompressedFile;
+        }catch{
+console.error('Error in compressing file',error);
+return file;
+        }
+      })
+    );
+    setSelectedFile(compressedFiles);
   };
 
   const handleTitleChange = (event) => {
@@ -196,6 +230,14 @@ function Galleryimagel() {
         // setTimeout(() => {
         //   setShowPopup(false);
         // }, 2000);
+
+        setSelectedFile(null);
+        setImageTitle("");
+        if(fileRef.current){
+         fileRef.current.value="";
+        }
+
+
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
         setErrorMessage("Failed to Upload Image. Please try again later.");
@@ -233,6 +275,7 @@ function Galleryimagel() {
                   className="file-input"
                   multiple
                   accept="image/*"
+                  ref={fileRef}
                 />
                 {error.imageFile && (
                   <div className="text-danger">{error.imageFile}</div>

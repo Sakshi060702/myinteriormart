@@ -690,7 +690,7 @@ function Listingdetails() {
       setTeamImageDetails(
         ownerImageData.imagepath.map((img, index) => ({
           url: img,
-          prefix: ownerImageData.prefix,
+          prefix: ownerImageData.prefix[index],
           title: `${ownerImageData.ownerName[index] || "no name"} ${
             ownerImageData.lastName[index]
           }`,

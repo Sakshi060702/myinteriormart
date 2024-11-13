@@ -105,7 +105,7 @@ function Layout({ children }) {
               </Dropdown.Menu>
             </Dropdown>
           </div>
-          <div className="col-lg-9 px_remove" id="create_listing">
+          <div className="col-lg-9 px_remove" id="create_listing" style={{paddingBottom:'13px'}}>
             <div
               className="tab-content profile-sidebar-content"
               id="v-pills-tabContent"

@@ -7,6 +7,8 @@ import Popupalert from "../Popupalert";
 import { validateImageFile ,validateName} from "../Validation";
 import useAuthCheck from "../../Hooks/useAuthCheck";
 import '../../FrontEnd/css/RegistrationMV.css'
+import { useRef } from "react";
+
 
 function Bannerimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -26,6 +28,7 @@ function Bannerimagel() {
   const[successMessage,setSuccessMessage]=useState("");
   const[error,setError]=useState("");
   const isAuthenticated = useAuthCheck();
+  const fileRef=useRef(null);
 
   const navigate=useNavigate();
 
@@ -164,6 +167,15 @@ function Bannerimagel() {
      
     // }, 2000);
         // You can handle the result here if needed, e.g., show a success message
+
+
+        setSelectedFile(null);
+        setImageTitle("");
+        if(fileRef.current){
+         fileRef.current.value="";
+        }
+
+
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
         setErrorMessage("Failed to Upload Image. Please try again later.");
@@ -199,6 +211,7 @@ function Bannerimagel() {
                     type="file"
                     onChange={handleFileChange}
                      className="file-input"
+                     ref={fileRef}
                   />
                   {error.imageFile && (
                       <div className="text-danger">{error.imageFile}</div>
