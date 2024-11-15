@@ -60,6 +60,11 @@ function Certificationimagel() {
     //compress images
     const compressedFile = await Promise.all(
       files.map(async (file) => {
+        const fileSizeInKB=file.size/1024;
+        if(fileSizeInKB<=100){
+          console.log(`File size of image less than 100kb:${fileSizeInKB.toFixed(2)}KB`)
+          return file;
+        }
         try {
           const option = {
             maxSizeMB: 0.1,

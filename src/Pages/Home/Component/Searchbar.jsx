@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { debounce } from "lodash";
-import { Link, NavLink } from "react-router-dom";
-import "../../../FrontEnd/css/Serchbar.css";
-import { useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import CryptoJS from "crypto-js";
+import "../../../FrontEnd/css/Serchbar.css";
 import { useNavigate } from "react-router-dom";
 
 function Searchbar() {
@@ -11,221 +10,150 @@ function Searchbar() {
   const [results, setResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
-  const [searchType, setSearchType] = useState('');
-  const { secondCategoryName,subcategoryName,secondCategoryId} = useParams();
-  const[parameterName,setParameterName]=useState("");
-
-  const [kewywordQuery, setKewywordQuery] = useState("");
-  const [nearByLocation, setNearByLocation] = useState("");
-  const[nearCity,setNearCity]=useState("");
-
+  const [data, setData] = useState([]); // State to store fetched data
+  const [filteredResults, setFilteredResults] = useState([]);
+  const encryptionKey = "myinterriorMart@SECRETKEY";
   const navigate=useNavigate();
 
-  const encryptionKey = 'myinterriorMart@SECRETKEY';
-
-const encrypt = (text) => {
-  
-  return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
-};
-
-
-const decrypt = (ciphertext) => {
-  const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
-  return bytes.toString(CryptoJS.enc.Utf8);
-};
-
-const [currentPage, setCurrentPage] = useState(1);
-const [itemsPerPage, setItemsPerPage] = useState(100);
-const [totalItems, setTotalItems] = useState(0);
-
-
-// const handleSearch = (searchTerm, type) => {
-//   setSearchType(type);
-//   setSearchTerm(searchTerm); // Trigger the search
-// };
-
-
-
+ 
 
   
-    const fetchResults = async () => {
-      if (searchTerm) {
-        try {
-          const response = await fetch(
-            `https://apidev.myinteriormart.com/api/SearchListings/search?searchText=${searchTerm}`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          const data = await response.json();
-          // console.log(data); // Log the data to inspect its structure
-          setResults(data);
-          setShowDropdown(true);
+  
+  const decrypt = (ciphertext) => {
+    const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
+    return bytes.toString(CryptoJS.enc.Utf8);
+  };
+  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(100);
 
-          //New api to search based on keyword and near by 
-          const searchPattern = /(near by|near me|near|at|in)/i;
-          const match = searchTerm.match(searchPattern);
-          if (match) {
-            const location = searchTerm.split(match[0])[1].trim();
-            const query = searchTerm.split(match[0])[0].trim();
+  const encrypt = (text) => {
+    return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
+  };
 
-            const[locality,city]=location.split(',').map(s=>s.trim());
-            
-            setNearByLocation(locality || " ");
-            setNearCity(city||locality);
-            setKewywordQuery(query);
-
-            const KeywordResponse = await fetch(
-              `https://apidev.myinteriormart.com/api/KeywordFromCompanySearch/SearchCompany?searchQuery=${query} near by ${location}`,
-              {
-                method: "GET",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-            const newApiData = await KeywordResponse.json();
-            setResults(prevResults => [...prevResults, ...newApiData]);
-            console.log("newApiData", newApiData);
+  const fetchResults = async () => {
+    if (searchTerm) {
+      try {
+        const response = await fetch(
+          `https://apidev.myinteriormart.com/api/SearchListings/search?searchText=${searchTerm}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
-          //Free seach api Implementation
-          const lowercaseSearchParameter = searchTerm.toLowerCase();
-          let paramName;
-
-          const validMobileNumber=/^\d{10}$/.test(searchTerm)
-          const validGST = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/i.test(searchTerm);
-          //  const validOwnerName= /^[a-zA-Z\s]{3,}$/.test(searchTerm);
-
-    
-          // Define specific keywords for free search based on parameter names
-          if (lowercaseSearchParameter.includes("gstnumber")||validGST) {
-            paramName = "gstNumber";
-          }  else if (lowercaseSearchParameter.includes("mobilenumber") || validMobileNumber) {
-            paramName = "mobileNumber";
-          } else if (lowercaseSearchParameter.includes("ownername") ) {
-            paramName = "ownerName";
-          } else if (lowercaseSearchParameter.includes("address")) {
-            paramName = "address";
-          }
-    
-          // Only execute the third API if a matching parameter name is found
-          if (paramName) {
-            console.log("Using search parameter:", paramName);
-            setParameterName(paramName);
-    
-            const freeSearchResponse = await fetch(
-              `https://apidev.myinteriormart.com/api/FreeSearch/FreeSearch?${paramName}=${encodeURIComponent(searchTerm)}`,
-              {
-                method: "GET",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-            const freeresponse = await freeSearchResponse.json();
-            setResults((prevResults) => [...prevResults, ...freeresponse]);
-            console.log("freeSearchData", freeresponse);
-          }
-    
-        } catch (error) {
-          console.error("Error in fetching search results", error);
-        }
-      } else {
-        setResults([]);
-        setShowDropdown(false);
+        );
+        const data = await response.json();
+        setResults(data);
+        setShowDropdown(true);
+      } catch (error) {
+        console.error("Error in fetching search results", error);
       }
-    };
+    } else {
+      setResults([]);
+      setShowDropdown(false);
+    }
+  };
 
-    useEffect(() => {
+  useEffect(() => {
     const debouncedFetch = debounce(fetchResults, 300);
     debouncedFetch();
-
     return () => {
       debouncedFetch.cancel();
     };
   }, [searchTerm]);
 
+  useEffect(() => {
+    setFilteredResults(results);
+  }, [results]);
+
+  const handleSearch = (event) => {
+    const term = event.target.value;
+    setSearchTerm(term);
+    
+    // Filter results by checking if the search term is included in any of the fields
+    const filtered = results
+      .filter((item) => {
+        // If only category is available and others are null, show the category
+        if (item.category && !item.companyName && !item.keyword && !item.localityName && !item.mobileNumber && !item.gstNumber) {
+          return item.category.toLowerCase().includes(term.toLowerCase());
+        }
+        // If other fields are available, apply existing conditions
+        return (
+          (item.companyName && item.companyName.toLowerCase().includes(term)) ||
+          (item.keyword && item.keyword.toLowerCase().includes(term)) ||
+          (item.category && item.category.toLowerCase().includes(term)) ||
+          (item.localityName && item.localityName.toLowerCase().includes(term)) ||
+          (item.mobileNumber && item.mobileNumber.toLowerCase().includes(term)) || // this gst and mobile if we remove then not affect on serch
+          (item.gstNumber && item.gstNumber.toLowerCase().includes(term))
+        );
+      })
+      .map((item) => {
+        // Adjust display text based on the filtered item
+        let displayText = item.category && !item.companyName && !item.keyword && !item.localityName
+          ? item.category
+          : (item.keyword && item.keyword.toLowerCase().includes(term.toLowerCase()) 
+            ? item.keyword 
+            : item.companyName||''); // Default to category if no keyword and company name
+            
+        return {
+          displayText,
+        };
+      });
+  
+    setFilteredResults(filtered);
+  };
+
+  const handleSearchNavigate = () => {
+    // Find the matching result from filteredResults based on the searchTerm
+    const matchResult = filteredResults.find(
+      (result) =>
+        (result.companyName && result.companyName.toLowerCase() === searchTerm.toLowerCase()) ||
+        (result.keyword && result.keyword.toLowerCase() === searchTerm.toLowerCase()) ||
+        (result.category && result.category.toLowerCase() === searchTerm.toLowerCase())
+    );
+  
+    if (matchResult) {
+      let redirectionUrl = "";
+  
+      // Check which field is matched and construct the URL accordingly
+      if (matchResult.companyName) {
+        redirectionUrl = `/company/${matchResult.companyName
+          .replace(/\s+/g, "-")
+          .toLowerCase()}/${matchResult.category.replace(/\s+/g, "-").toLowerCase()}/locality/in-${localStorage.getItem(
+          "cityname"
+        )}?listingEncyt=${encodeURIComponent(encrypt(parseInt(matchResult.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
+          encrypt(parseInt(matchResult.categoryId))
+        )}`;
+      } else if (matchResult.keyword) {
+        redirectionUrl = `/All/Search/${matchResult.category
+          .replace(/\s+/g, "-")
+          .toLowerCase()}/in-${localStorage.getItem("cityname")}?searchkey=${encodeURIComponent(
+          matchResult.keyword
+        )}&secatEncyt=${encodeURIComponent(encrypt(parseInt(matchResult.categoryId)))}`;
+      } else if (matchResult.category) {
+        redirectionUrl = `/All/Search/${matchResult.category
+          .replace(/\s+/g, "-")
+          .toLowerCase()}/in-${localStorage.getItem("cityname")}?secatEncyt=${encodeURIComponent(
+          encrypt(parseInt(matchResult.categoryId))
+        )}`;
+      }
+  
+      // Navigate to the constructed URL
+      if (redirectionUrl) {
+        navigate(redirectionUrl);
+      }
+    }
+  };
+  
+  
+  
   const handleBlur = (e) => {
     if (dropdownRef.current && !dropdownRef.current.contains(e.relatedTarget)) {
       setTimeout(() => setShowDropdown(false), 100);
     }
   };
-    // const handleSearch = () => {
-    //   // setSearchTerm(searchTerm.trim());
-    //   fetchResults();
-    //   // console.log("hello");
-    // };
 
-    const handleSearchNavigate = async () => {
-      if (results.length > 0) {
-        const result = results[0];
-        const locationKeywordsPattern = /(near by|near me|near|at|in)/i;
-        if(parameterName==="gstNumber" || parameterName==="address" || parameterName==="mobileNumber" ||parameterName==="ownerName"){
-          navigate(
-            `/All/Search/${result.categoryName.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?searchkey=${encodeURIComponent(result.keyword)}&secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`
-          );
-        }
-        
-    else if(locationKeywordsPattern.test(searchTerm) &&
-    result.keyword?.toLowerCase() === kewywordQuery?.toLowerCase() &&
-    (
-      result.locality?.toLowerCase().includes(nearByLocation?.toLowerCase()) ||
-      (!nearByLocation && result.city?.toLowerCase() === nearCity?.toLowerCase()) || // Check city when no specific locality
-      result.city?.toLowerCase() === nearCity?.toLowerCase() // Check for matching city
-    )){
-      navigate(
-        `/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?searchkey=${encodeURIComponent(result.keyword)}&secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`
-      );
-    }
-        // Check if both listingId, companyName, and keyword are null
-       else if (result.listingId == null && result.companyName == null && result.keyword == null) {
-          navigate(
-            `/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`
-          );
-        } 
-        
-        // Check if keyword and companyName are not null
-        else if (result.keyword != null && result.companyName != null) {
-    
-          // If search is keyword
-          if (result.keyword.toLowerCase().startsWith(searchTerm.toLowerCase())) {
-            navigate(
-              `/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?searchkey=${encodeURIComponent(result.keyword)}&secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`
-            );
-          }
-    
-          // If search is companyName
-          else if (result.companyName.toLowerCase().startsWith(searchTerm.toLowerCase())) {
-            navigate(
-              `/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/${result.category.replace(/\s+/g, "-").toLowerCase()}/${result.localityName.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`
-            );
-          } else {
-            console.log("Error in navigate");
-          }
-        } 
-        
-        // Handle case where either companyName or keyword is missing
-        else {
-          if (result.companyName) {
-            navigate(
-              `/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/${result.category.replace(/\s+/g, "-").toLowerCase()}/locality/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`
-            );
-          } else if (result.keyword) {
-            navigate(
-              `/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?searchkey=${encodeURIComponent(result.keyword)}&secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`
-            );
-          } else {
-            console.error('No valid results for navigation');
-          }
-        }
-      } else {
-        console.error('No results available for navigation');
-      }
-    };
-    
   return (
     <div id="results">
       <div className="container">
@@ -238,113 +166,62 @@ const [totalItems, setTotalItems] = useState(0);
                   className="searchTerm"
                   placeholder="Search"
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onFocus={() => setShowDropdown(true)} // Show dropdown on focus
-                  onBlur={handleBlur} // Use custom handleBlur function
+                  onChange={handleSearch}
+                  onFocus={() => setShowDropdown(true)}
+                  onBlur={handleBlur}
                 />
-                <button type="submit" className="searchButton" onClick={handleSearchNavigate} >
+                <button type="submit" className="searchButton" onClick={handleSearchNavigate}>
                   <i className="fa fa-search"></i>
                 </button>
               </div>
-              {showDropdown && results.length > 0 && (
-                <div className="dropdownsearchbar" ref={dropdownRef}>
-                  {results.map((result, index) => {
-                    console.log(typeof result.listingId);
-                    console.log("locality", result.listingID);
-                    const companyName = result.companyName || "";
-                    
-                    // const categoryName = result.category || "";
-                    // const listingURL = result.listingURL || "";
-                    // const locality = result.locality || "";
-                    // const categoryId = result.categoryId || "";
-                    // const keyword=result.keyword|| "";
 
-                    // //Free serch output
-                    if(parameterName==="gstNumber" || parameterName==="address" || parameterName==="mobileNumber" ||parameterName==="ownerName")
-                      return (
-                        <div key={index} className="dropdownItemsearchbar">
-                          <NavLink to={`/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/${result.categoryName.replace(/\s+/g, "-").toLowerCase()}/locality/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}
-                            onClick={() => setShowDropdown(false)} 
-                          >
-                           <h6 className="serchtitle">{companyName || result[parameterName]}</h6>
-                          </NavLink>
-                        </div>
-                      );
+              {showDropdown && filteredResults.length > 0 && (
+  <div className="dropdownsearchbar" ref={dropdownRef}>
+   
+   {filteredResults.map((result, index) => {
+  // Determine the display text
+  const displayText = result.companyName
+    ? result.companyName
+    : result.keyword
+    ? result.keyword
+    : result.category;
 
-                      //Near by Search
-                      const locationKeywordsPattern = /(near by|near me|near|at|in)/i;
-                      if (
-                        locationKeywordsPattern.test(searchTerm) &&
-                        result.keyword?.toLowerCase() === kewywordQuery?.toLowerCase() &&
-                        (
-                          result.locality?.toLowerCase().includes(nearByLocation?.toLowerCase()) ||
-                          (!nearByLocation && result.city?.toLowerCase() === nearCity?.toLowerCase()) || // Check city when no specific locality
-                          result.city?.toLowerCase() === nearCity?.toLowerCase() // Check for matching city
-                        )
-                    ) {
-                      return (
-                        <div key={index} className="dropdownItemsearchbar">
-                           <NavLink to={`/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?searchkey=${encodeURIComponent(result.keyword)}&secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}
-                             onClick={() => setShowDropdown(false)} >
-                            <h6 className="serchtitle">{result.companyName}-{result.locality}</h6>
-                          </NavLink>
-                        </div>
-                      );
-                    }
-                    else if(result.listingId == null && result.companyName == null && result.keyword==null){
-                      return (
-                        <div key={index} className="dropdownItemsearchbar">
-                          <NavLink to={`/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}
-                            onClick={() => setShowDropdown(false)} ><h6 className="serchtitle">{result.category}</h6></NavLink>
-                        </div>
-                      )
-                    }
-                    else if(result.keyword != null && result.companyName != null){
-                
-                      // console.log(result.keyword);
-                      // console.log(typeof result.keyword);
-                      // console.log("keyword",result.keyword, result.keyword.startsWith(searchTerm)); //for keyword
-                      // console.log("companyName",result.companyName, result.companyName.startsWith(searchTerm)); //for keyword
-                      
-                      if(result.keyword.toLowerCase().startsWith(searchTerm.toLowerCase())){
-                        //if search is keyword
-                        return (
-                          <div key={index} className="dropdownItemsearchbar">
-                            <NavLink to={`/All/Search/${result.category.replace(/\s+/g, "-").toLowerCase()}/in-${localStorage.getItem('cityname')}?searchkey=${encodeURIComponent(result.keyword)}&secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}
-                              onClick={() => setShowDropdown(false)} ><h6 className="serchtitle">{result.keyword}</h6></NavLink>
-                          </div>
-                        )
-                      }
-                      
-                      if(result.companyName.toLowerCase().startsWith(searchTerm.toLowerCase())){
-                        //if search is company
-                        return (
-                          <div key={index} className="dropdownItemsearchbar">
-                            <NavLink to={`/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/${result.category.replace(/\s+/g, "-").toLowerCase()}/locality/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}
-                              onClick={() => setShowDropdown(false)} >
-                              <h6 className="serchtitle">{result.companyName}</h6>
-                            </NavLink>
-                          </div>
-                        );
-                      }
-                      
-                      
-                    }
-                    else  {
-                      return (
-                        <div key={index} className="dropdownItemsearchbar">
-                           <NavLink to={`/company/${result.companyName.replace(/\s+/g, "-").toLowerCase()}/${result.category.replace(/\s+/g, "-").toLowerCase()}/locality/in-${localStorage.getItem('cityname')}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`}
-                              onClick={() => setShowDropdown(false)} >
-                            <h6 className="serchtitle">{result.companyName}</h6>
-                          </NavLink>
-                        </div>
-                      );
-                    }
-      
-                    }
-                  )}
-                </div>
-              )}
+  // Construct the redirection URL based on available fields
+  let redirectionUrl = "";
+
+  if (result.companyName) {
+    redirectionUrl = `/company/${result.companyName
+      .replace(/\s+/g, "-")
+      .toLowerCase()}/${result.category.replace(/\s+/g, "-").toLowerCase()}/locality/in-${localStorage.getItem(
+      "cityname"
+    )}?listingEncyt=${encodeURIComponent(encrypt(parseInt(result.listingId)))}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
+      encrypt(parseInt(result.categoryId))
+    )}`;
+  } else if (result.keyword) {
+    redirectionUrl = `/All/Search/${result.category
+      .replace(/\s+/g, "-")
+      .toLowerCase()}/in-${localStorage.getItem("cityname")}?searchkey=${encodeURIComponent(result.keyword)}&secatEncyt=${encodeURIComponent(
+      encrypt(parseInt(result.categoryId))
+    )}`;
+  } else if (result.category) {
+    redirectionUrl = `/All/Search/${result.category
+      .replace(/\s+/g, "-")
+      .toLowerCase()}/in-${localStorage.getItem("cityname")}?secatEncyt=${encodeURIComponent(encrypt(parseInt(result.categoryId)))}`;
+  }
+
+  return (
+    <div key={index} className="dropdownItemsearchbar">
+      <NavLink to={redirectionUrl}>
+        <h6 className="serchtitle">{displayText}</h6>
+      </NavLink>
+    </div>
+  );
+})}
+
+    
+  </div>
+)}
+
             </div>
           </div>
         </div>

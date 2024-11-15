@@ -13,6 +13,7 @@ import {
 import "../../FrontEnd/css/RegistrationMV.css";
 import Select from "react-select";
 import { useRef } from "react";
+import imageCompression from "browser-image-compression";
 
 function Teamimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -175,7 +176,7 @@ function Teamimagel() {
     );
   };
 
-  const handleFileChange = (event) => {
+  const handleFileChange = async(event) => {
     const files = Array.from(event.target.files);
 
     const totalUplodedImages = imageDetails.length;
@@ -191,6 +192,41 @@ function Teamimagel() {
       setSelectedFile(files);
       setRemainingImages(MAX_IMAGES - newTotalUplodedImages);
     }
+
+    //compress image file
+
+    const compressedFiles=await Promise.all(
+      files.map(async(file)=>{
+        const fileSizeInKB=file.size/1024;
+        if(fileSizeInKB<=100){
+          console.log(`File size of image less than 100kb:${fileSizeInKB.toFixed(2)}KB`)
+          return file;
+        }
+        try{
+          const option={
+            maxSizeMB: 0.1,
+            maxWidthOrHeight: 800,
+            useWebWorker: true,
+          };
+          console.log(`Original Size:${(file.size/1024/1024).toFixed(2)}MB`);
+          const compressedFile=await imageCompression(file,option);
+          console.log(`Compressed size:${(compressedFile.size/1024).toFixed(2)}KB`);
+
+          const newcompressedFile=new File(
+            [compressedFile],
+            file.name,
+            {type:compressedFile.type}
+          );
+          console.log('newcompressedFile',newcompressedFile);
+          return newcompressedFile;
+        }
+        catch(error){
+console.error('Error in compresssing file',error);
+return file;
+        }
+      })
+    );
+    setSelectedFile(compressedFiles);
   };
 
   // const handleBusinessCategoryChange = (event) => {

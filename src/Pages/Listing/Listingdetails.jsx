@@ -814,17 +814,18 @@ function Listingdetails() {
     const activeIndex = swiper.activeIndex;
     setSelectedImage(activeIndex);
 
-    //  scrollThumbnailsToView(activeIndex);
+      scrollThumbnailsToView(activeIndex);
+      swiperRef.current.slideTo(activeIndex); 
 
     // Scroll the active thumbnail into view on slide change
     
-    if (thumbnailsContainerRef.current && activeThumbnailRef.current) {
-      activeThumbnailRef.current.scrollIntoView({
-        behavior: "smooth",
-        inline: "center",
-        block: "nearest",
-      });
-    }
+    // if (thumbnailsContainerRef.current && activeThumbnailRef.current) {
+    //   activeThumbnailRef.current.scrollIntoView({
+    //     behavior: "smooth",
+    //     inline: "center",
+    //     block: "nearest",
+    //   });
+    // }
   };
 
   const scrollThumbnailsToView = (index) => {
@@ -1201,11 +1202,11 @@ function Listingdetails() {
                                   : "2px solid transparent",
                               display: "inline-block",
                             }}
-                            ref={
-                              selectedImage === index
-                                ? activeThumbnailRef
-                                : null
-                            } // Assign ref to the active thumbnail
+                            // ref={
+                            //   selectedImage === index
+                            //     ? activeThumbnailRef
+                            //     : null
+                            // } // Assign ref to the active thumbnail
                           >
                             <img
                               src={`https://apidev.myinteriormart.com${image.url}`}

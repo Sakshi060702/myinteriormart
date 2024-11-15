@@ -60,6 +60,11 @@ function Galleryimagel() {
     //compress image file
     const compressedFiles=await Promise.all(
       files.map(async(file)=>{
+        const fileSizeInKB=file.size/1024;
+        if(fileSizeInKB<=100){
+          console.log(`File size of image less than 100kb:${fileSizeInKB.toFixed(2)}KB`)
+          return file;
+        }
         try{
           const option={
             maxSizeMB: 0.1,
@@ -110,7 +115,7 @@ return file;
         console.log("Get response", data);
         console.log(data instanceof Object);
         if (data instanceof Object) {
-          console.log(data);
+          console.log('imagedata',data);
           console.log();
 
           setListingId(data.listingid);
@@ -123,6 +128,23 @@ return file;
           );
           setRemainingImages(MAX_IMAGES - data.imagepath.length);
         }
+
+        //view image size in kb
+        // data.imagepath.forEach(async(img)=>{
+        //   try{
+        //     const imageresponse = await fetch(img);
+        //     const blob = await imageresponse.blob();
+        //     const sizeInKB = blob.size / 1024;
+        //     const sizeInMB = sizeInKB / 1024;
+        //     const size = sizeInMB >= 1 
+        //       ? `${sizeInMB.toFixed(2)} MB` 
+        //       : `${sizeInKB.toFixed(2)} KB`;
+        //     console.log(`Image URL: ${img} Size: ${size}`);
+        //   }
+        //   catch{
+        //     console.error(`Failed to fetch image size for ${img}:`, error);
+        //   }
+        // })
       } catch (error) {
         console.error(error);
       }

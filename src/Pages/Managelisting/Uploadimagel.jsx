@@ -9,6 +9,7 @@ import { validateImageFile } from "../Validation";
 import useAuthCheck from "../../Hooks/useAuthCheck";
 import '../../FrontEnd/css/RegistrationMV.css'
 import { useRef } from "react";
+import imageCompression from "browser-image-compression";
 
 function Uploadimagel() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -32,8 +33,39 @@ function Uploadimagel() {
 
   const navigate=useNavigate();
 
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+  const handleFileChange = async(event) => {
+    // setSelectedFile(event.target.files[0]);
+    const file=event.target.files[0];
+    const fileSizeInKB=file.size/1024;
+    if (fileSizeInKB <= 100) {
+      console.log(`File size of image is less than or equal to 100 KB: ${fileSizeInKB.toFixed(2)} KB. Skipping compression.`);
+      setSelectedFile(file);
+      return; 
+    }
+
+    //compress image file
+    const option={
+      maxSizeMB: 0.1,
+      maxWidthOrHeight: 800,
+      useWebWorker: true,
+    };
+    try{
+      const compressedFile = await imageCompression(file, option);
+      console.log("Original file size:", file.size / 1024, "KB");
+      console.log("Compressed file size:", compressedFile.size / 1024, "KB");
+
+      const newcompressedFile=new File(
+        [compressedFile],
+        file.name,
+        {type:compressedFile.type}
+      );
+      console.log('newcompressedfile',newcompressedFile);
+      setSelectedFile(newcompressedFile);
+    }
+    catch(error){
+      console.error("Image compression error:", error);
+      setErrorMessage("Image compression failed. Please try a different image.");
+    }
   };
 
   const handleDeleteImage = async (imageUrl) => {
@@ -169,7 +201,17 @@ function Uploadimagel() {
         setListingId(data.listingid);
         setImageDetails([data]);
         
-       
+       // View image size in KB for a single image
+      // if (data.imagepath) {
+      //   try {
+      //     const imageresponse = await fetch(data.imagepath);
+      //     const blob = await imageresponse.blob();
+      //     const sizeInKB = (blob.size / 1024).toFixed(2);
+      //     console.log(`Image URL: ${data.imagepath} Size: ${sizeInKB} KB`);
+      //   } catch (error) {
+      //     console.error(`Failed to fetch image size for ${data.imagepath}:`, error);
+      //   }
+      // }
       } catch (error) {
         console.error(error);
       }
