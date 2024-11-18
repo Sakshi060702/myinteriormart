@@ -50,6 +50,10 @@ function Listing() {
   console.log("secondcategoryid", secondCategoryId);
   console.log(decrypt(listingId_enc));
 
+  
+
+  const { categoryid, categoryname, keyword } = useParams(); 
+
   const location=useLocation
 
   //for mobile pagination
@@ -72,9 +76,9 @@ function Listing() {
 
   const isMobile = useIsMobile();
 
-  useEffect(() => {
-    fetchListings();
-  }, [secondCategoryId, currentPage, secondCategoryName, subcategoryName]);
+  // useEffect(() => {
+  //   fetchListings();
+  // }, [secondCategoryId, currentPage, secondCategoryName, subcategoryName]);
 
   const token = useSelector((state) => state.auth.token);
   console.log("token", token);
@@ -124,6 +128,40 @@ function Listing() {
     }
   };
 
+  useEffect(() => {
+    if (searching) {
+      const fetchCategoryListings = async () => {
+        try {
+          const response = await fetch(
+            `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListingByKeyword?subCategoryid=${secondCategoryId}&cityName=Mumbai&Keywords=${searching}`
+          );
+          if (!response.ok) {
+            throw new Error('Failed to fetch data');
+          }
+          const data = await response.json();
+          // console.log('Filtered listings data', data);
+      
+          // Prepend the fetched listings on top of the current listings
+          setListing((prevListings) => {
+            // Ensure only unique listings are shown in case of duplicate listings
+            const newListings = data.filter((newListing) =>
+              prevListings.every(
+                (existingListing) => existingListing.listingId !== newListing.listingId
+              )
+            );
+            return [...newListings, ...prevListings];
+          });
+        } catch (error) {
+          console.error('Error fetching listings:', error);
+        }
+      };
+      
+      fetchCategoryListings();
+    } else {
+      fetchListings();
+    }
+  }, [secondCategoryId, searching, currentPage, token, fomattedcity]);
+  
 
   // Horizontal banner
   useEffect(() => {

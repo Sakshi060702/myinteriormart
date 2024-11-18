@@ -88,9 +88,9 @@ function Searchbar() {
           (item.category && item.category.toLowerCase().includes(term)) ||
           (item.localityName &&
             item.localityName.toLowerCase().includes(term)) ||
-          (item.mobileNumber &&
-            item.mobileNumber.toLowerCase().includes(term)) || // this gst and mobile if we remove then not affect on serch
-          (item.gstNumber && item.gstNumber.toLowerCase().includes(term))
+          (item.mobilenumber &&
+            item.mobilenumber.toLowerCase().includes(term)) || // this gst and mobile if we remove then not affect on serch
+          (item.gstnumber && item.gstnumber.toLowerCase().includes(term))
         );
       })
       .map((item) => {
@@ -103,7 +103,9 @@ function Searchbar() {
             ? item.category
             : item.keyword &&
               item.keyword.toLowerCase().includes(term.toLowerCase())
-            ? item.keyword
+            ? item.keyword :
+            item.mobilenumber && item.mobilenumber.toLowerCase().includes(term.toLowerCase()) // Check if mobilenumber matches the term
+            ? item.mobilenumber 
             : item.companyName || ""; // Default to category if no keyword and company name
 
         return {
@@ -193,27 +195,27 @@ function Searchbar() {
     }
   };
 
-  const fetchKeywordData = async (keyword) => {
-    const cityName = localStorage.getItem("cityname") || "mumbai"; // Default city name
+  // const fetchKeywordData = async (keyword) => {
+  //   const cityName = localStorage.getItem("cityname") || "mumbai"; // Default city name
   
-    try {
-      const response = await fetch(
-        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListingByKeyword?cityName=${cityName}&Keywords=${keyword}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+  //   try {
+  //     const response = await fetch(
+  //       `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListingByKeyword?cityName=${cityName}&Keywords=${keyword}`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
   
-      const data = await response.json();
-      return data; // Return API response
-    } catch (error) {
-      console.error("Error fetching keyword data:", error);
-      return null;
-    }
-  };
+  //     const data = await response.json();
+  //     return data; // Return API response
+  //   } catch (error) {
+  //     console.error("Error fetching keyword data:", error);
+  //     return null;
+  //   }
+  // };
   
 
   return (
@@ -255,8 +257,8 @@ function Searchbar() {
                           result.keyword
                             .toLowerCase()
                             .includes(searchTerm.toLowerCase())
-                        ? result.keyword
-                        : result.companyName || "";
+                        ? `${result.keyword}${result.category ? ` - ${result.category}` : ""}`
+                        : result.companyName ?`${result.companyName}${result.localityName ? ` - ${result.localityName}` : ""}`:"";
 
                     console.log(displayText); // Log the display text
 
