@@ -29,7 +29,7 @@ const decrypt = (ciphertext) => {
   return bytes.toString(CryptoJS.enc.Utf8);
 };
 
-function Listing() {
+function SearchListing() {
   const { secondCategoryName, subcategoryName } = useParams();
   const [searchParams] = useSearchParams();
   const navigate=useNavigate()
@@ -402,7 +402,7 @@ navigate(ClaimForgetpassword)
                       <div className="strip map_view stripmapviewdesign" style={{
                             border:
                               searching == listing.listingKeyword
-                                ? "2px solid white"
+                                ? "2px solid gray"
                                 : "None",
                           }}>
                         {/* <h5>Hello world</h5> */}
@@ -897,4 +897,4 @@ const BusinessHours = ({ businessWorking }) => {
     </p>
   );
 };
-export default Listing;
+export default SearchListing;
