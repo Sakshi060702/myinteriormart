@@ -147,7 +147,8 @@ function Searchbar() {
           (result.gstnumber &&
             result.gstnumber.toLowerCase() === searchTerm.toLowerCase()) ||
             (Separatekeyword.toLowerCase().includes(result.keyword.toLowerCase()) || 
-     Separatelocality.toLowerCase().includes(result.localityName?.toLowerCase()))
+     Separatelocality.toLowerCase().includes(result.localityName?.toLowerCase()) || 
+     Separatelocality.toLowerCase().includes(result.companyName?.toLowerCase()))
             
     );
     if (matchResult) {
@@ -196,6 +197,22 @@ function Searchbar() {
             encrypt(parseInt(matchResult.categoryId))
           )}`;
       }
+      else if(matchResult.companyName &&
+        searchTerm.toLowerCase() === matchResult.companyName.toLowerCase()){
+          const companyName = matchResult.companyName || "unknown";
+          const categoryName = matchResult.category || "general";
+          redirectionUrl = `/company/${companyName
+            .replace(/\s+/g, "-")
+            .toLowerCase()}/${categoryName
+            .replace(/\s+/g, "-")
+            .toLowerCase()}/locality/in-${localStorage.getItem(
+            "cityname"
+          )}?listingEncyt=${encodeURIComponent(
+            encrypt(parseInt(matchResult.listingId))
+          )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
+            encrypt(parseInt(matchResult.categoryId))
+          )}`;
+      }
       else if(matchResult.gstnumber &&
         searchTerm.toLowerCase() === matchResult.gstnumber.toLowerCase()){
           const companyName = matchResult.companyName || "unknown";
@@ -214,16 +231,13 @@ function Searchbar() {
       }
       else if(  matchResult.keyword &&matchResult.localityName
         ){
-        redirectionUrl = `/All/Search/${matchResult.category
-          .replace(/\s+/g, "-")
-          .toLowerCase()}/in-${localStorage.getItem(
+        redirectionUrl = `/All/Listing/in-${localStorage.getItem(
           "cityname"
         )}?searchkey=${encodeURIComponent(
           matchResult.keyword
-        )}&secatEncyt=${encodeURIComponent(
-          encrypt(parseInt(matchResult.categoryId))
         )}`;
       }
+     
        else {
         const companyName = matchResult.companyName || "unknown";
         const categoryName = matchResult.category || "general";

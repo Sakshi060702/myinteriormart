@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useParams, Link , useLocation} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import banner from "../../FrontEnd/img/home_section_1.jpg";
-import banner1 from "../../FrontEnd/img/listing-img.jpeg";
-import nextarrowimage from "../../FrontEnd/img/Frontarrow.png";
-import previousarrowimg from "../../FrontEnd/img/Backarrow.png";
-import Popup from "./Popup";
-import Getquotespopup from "./Getquotespopup";
-import "../../FrontEnd/css/Lisiting.css";
-import "../../FrontEnd/css/RegistrationMV.css";
-import Searchbar from "../Home/Component/Searchbar";
+import banner from "../../../FrontEnd/img/home_section_1.jpg";
+import banner1 from "../../../FrontEnd/img/listing-img.jpeg";
+import nextarrowimage from "../../../FrontEnd/img/Frontarrow.png";
+import previousarrowimg from "../../../FrontEnd/img/Backarrow.png";
+import Popup from "../../Listing/Popup";
+import Getquotespopup from "../../Listing/Getquotespopup";
+import "../../../FrontEnd/css/Lisiting.css";
+import "../../../FrontEnd/css/RegistrationMV.css";
+import Searchbar from "./Searchbar";
 import CryptoJS from "crypto-js";
 import { Carousel } from "react-bootstrap";
-import Foot from "../Home/Component/Foot";
-import drparrowimg from "../../FrontEnd/img/icon (20).png"
+
+import drparrowimg from "../../../FrontEnd/img/icon (20).png"
 
 
 import { useSelector } from "react-redux";
@@ -45,10 +45,10 @@ function SearchListing() {
   const[advertiseCategoryBanner,setAdvertiseCategoryBanner]=useState([]);
 
   const listingId_enc = searchParams.get("secatEncyt");
-  const secondCategoryId = decrypt(decodeURIComponent(listingId_enc));
-  console.log(secondCategoryId);
-  console.log("secondcategoryid", secondCategoryId);
-  console.log(decrypt(listingId_enc));
+  // const secondCategoryId = decrypt(decodeURIComponent(listingId_enc));
+  // console.log(secondCategoryId);
+  // console.log("secondcategoryid", secondCategoryId);
+  // console.log(decrypt(listingId_enc));
 
   
 
@@ -81,59 +81,19 @@ function SearchListing() {
   // }, [secondCategoryId, currentPage, secondCategoryName, subcategoryName]);
 
   const token = useSelector((state) => state.auth.token);
-  console.log("token", token);
+  // console.log("token", token);
 
   // console.log(encrypt(listing.listingId));
 
   const fomattedcity = localStorage.getItem("cityname");
 
-  const fetchListings = async () => {
-    try {
-      const response = await fetch(
-        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing?pageNumber=${currentPage}&pageSize=${itemsPerPage}&subCategoryid=${secondCategoryId}&cityName=${fomattedcity}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      // console.log("Fetched Data", data);
-
-      // Filter listings if needed based on subCategoryId
-      const filterdListing = data.filter((listing) => {
-        return listing.subCategory.some(
-          (subcat) => subcat.id.toString() === secondCategoryId
-        );
-      });
-
-      setListing(filterdListing);
-      // console.log(filteredListing)
-      // console.log(itemsPerPage);
-
-      if (filterdListing.length < itemsPerPage) {
-        setTotalItems((currentPage - 1) * itemsPerPage + filterdListing.length);
-      } else {
-        setTotalItems(currentPage * itemsPerPage + 1);
-      }
-    } catch (error) {
-      console.error("Error fetching listings", error);
-    }
-  };
-
+ 
   useEffect(() => {
     if (searching) {
       const fetchCategoryListings = async () => {
         try {
           const response = await fetch(
-            `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListingByKeyword?subCategoryid=${secondCategoryId}&cityName=Mumbai&Keywords=${searching}`
+            `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListingByKeywordLocation?cityName=Mumbai&Keywords=${searching}`
           );
           if (!response.ok) {
             throw new Error('Failed to fetch data');
@@ -158,9 +118,9 @@ function SearchListing() {
       
       fetchCategoryListings();
     } else {
-      fetchListings();
+      
     }
-  }, [secondCategoryId, searching, currentPage, token, fomattedcity]);
+  }, [ searching,  token, fomattedcity]);
   
 
   // Horizontal banner
@@ -202,7 +162,7 @@ function SearchListing() {
   const fetchListingsmobile = async (isAppending = false) => {
     try {
       const response = await fetch(
-        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing?pageNumber=${currentPage}&pageSize=${itemsPerPage}&subCategoryid=${secondCategoryId}&cityName=${fomattedcity}`,
+        `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListing?pageNumber=${currentPage}&pageSize=${itemsPerPage}&subCategoryid=${listing.subCategory[0]?.id}&cityName=${fomattedcity}`,
         {
           method: "GET",
           headers: {
@@ -222,7 +182,7 @@ function SearchListing() {
       // Filter listings if needed based on subCategoryId
       const filterdListing = data.filter((listing) => {
         return listing.subCategory.some(
-          (subcat) => subcat.id.toString() === secondCategoryId
+          (subcat) => subcat.id.toString() === listing.subCategory[0]?.id
         );
       });
 
@@ -246,6 +206,7 @@ function SearchListing() {
     setCurrentPage(pageNumber);
   };
 
+
   const handleViewMore = () => {
     setCurrentPage((prevPage) => prevPage + 1);
     fetchListingsmobile(true); // Fetch and append new listings
@@ -258,6 +219,9 @@ function SearchListing() {
   }, [currentPage, isMobile]);
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
+ 
+
+  
 
   const ClaimForgetpassword=`/ForgetpasswordClaim/in-${localStorage.getItem('cityname')}`
 
@@ -296,23 +260,7 @@ navigate(ClaimForgetpassword)
     }
   }, [location]);
 
-  const handleListingClick = (listing) => {
-    sessionStorage.setItem("scrollPosition", window.scrollY);
-    sessionStorage.setItem("currentPage", currentPage); // Save the currentPage in session storage
-  
-    navigate(
-      `/company/${listing.companyName.replace(/\s+/g, "-").toLowerCase()}/${
-        secondCategoryName
-      }/in-${listing.locality.replace(/\s+/g, "-").toLowerCase()}/${localStorage.getItem(
-        "cityname"
-      )}?listingEncyt=${encodeURIComponent(
-        encrypt(listing.listingId)
-      )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
-        encrypt(parseInt(secondCategoryId))
-      )}`,
-      { state: { fromListingPage: true } }
-    );
-  };
+ 
   
 
   // useEffect(()=>{
@@ -384,43 +332,26 @@ navigate(ClaimForgetpassword)
               listing.map((listing) => (
                 <div key={listing.listingId} className="row mb-10">
                   <div className="col-12">
-                    <Link
-                      to={`/company/${listing.companyName
+                    <Link to={`/company/${listing.companyName
                         .replace(/\s+/g, "-")
-                        .toLowerCase()}/${secondCategoryName}/in-${listing.locality
+                        .toLowerCase()}/${listing.subCategory[0]?.name.replace(/\s+/g, "-").toLowerCase()}/in-${listing.locality
                         .replace(/\s+/g, "-")
                         .toLowerCase()}/${localStorage.getItem(
                         "cityname"
                       )}?listingEncyt=${encodeURIComponent(
                         encrypt(listing.listingId)
                       )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
-                        encrypt(parseInt(secondCategoryId))
-                      )}`}
-
-                      onClick={() => handleListingClick(listing.listingId)}
-                    >
+                        encrypt(parseInt(listing.subCategory[0]?.id))
+                      )}`}>
                       <div className="strip map_view stripmapviewdesign" style={{
                             border:
                               searching == listing.listingKeyword
-                                ? "2px solid gray"
+                                ? "2px solid white"
                                 : "None",
                           }}>
                         {/* <h5>Hello world</h5> */}
                         <h6 className="listingcompanyname">
-                          <Link
-                            className="listingcompany"
-                            to={`/company/${listing.companyName
-                              .replace(/\s+/g, "-")
-                              .toLowerCase()}/${secondCategoryName}/in-${listing.locality
-                              .replace(/\s+/g, "-")
-                              .toLowerCase()}/${localStorage.getItem(
-                              "cityname"
-                            )}?listingEncyt=${encodeURIComponent(
-                              encrypt(listing.listingId)
-                            )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
-                              encrypt(parseInt(secondCategoryId))
-                            )}`}
-                          >
+                          
                             {" "}
                             <h5
                               style={{
@@ -432,7 +363,7 @@ navigate(ClaimForgetpassword)
                               {" "}
                               {listing.companyName}
                             </h5>
-                          </Link>
+                         
                         </h6>
                         <div
                           className="row no-gutters "
@@ -711,7 +642,7 @@ navigate(ClaimForgetpassword)
                           </div>
                         </div>
                       </div>
-                    </Link>
+                      </Link>
                   </div>
 
                   {/* <div className="col-2">
@@ -813,56 +744,7 @@ navigate(ClaimForgetpassword)
           </div>
         </div>
 
-        <div className="pagination">
-          {/* for dekstop */}
-          {!isMobile && (
-            <>
-              {/* <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-              >
-                Previous
-                <img src={previousarrowimg} style={{ height: "30px" }} />
-              </button> */}
-              {Array.from({ length: totalPages }, (_, i) => (
-                <button
-                  key={i + 1}
-                  onClick={() => handlePageChange(i + 1)}
-                  className={currentPage === i + 1 ? "active" : ""}
-                >
-                  {i + 1}
-                </button>
-              ))}
-              <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={listing.length < itemsPerPage} // Disable "Next" if fewer than 10 listings
-              >
-                Next
-                {/* <img src={nextarrowimage} style={{ height: "30px" }} /> */}
-              </button>
-            </>
-          )}
-
-          {/* mobile view more */}
-          {isMobile && listing.length === itemsPerPage && (
-            <button
-              onClick={handleViewMore}
-              className="view-more-btn"
-              style={{
-                borderRadius: "32px",
-                backgroundColor: "white",
-                paddingTop: "5px",
-                paddingBottom: "5px",
-                fontSize: "14px",
-                width: "210px",
-                color: "orange",
-                fontWeight:'bold'
-              }}
-            >
-              More Search Results<img style={{height:'20px',paddingLeft:'5px'}} src={drparrowimg}/>
-            </button>
-          )}
-        </div>
+       
       </div>
 
       {token ? (

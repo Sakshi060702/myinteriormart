@@ -266,6 +266,8 @@ import GetclaimRegister from "./Pages/Login/GetclaimRegister";
 import Privacypolicy from "./Pages/Privacypolicy";
 import Termconditions from "./Pages/Termconditions";
 
+import SearchListing from "./Pages/Home/Component/SerchListing";
+
 import ScrollToTop from "./Pages/ScrollToTop";
 
 // import Dashboardprofile from "./Pages/Profile/Dashboardprofile";
@@ -1239,6 +1241,8 @@ function App() {
           path="/company/:company/:secondCategoryName/:companyname/:cityName"
           element={<Listingdetails />}
         />
+
+        <Route path="/All/:keyword/:cityName" element={<SearchListing/>}/>
 
         <Route path="/AllBookmark/:cityName" element={<AllBookmark />} />
         <Route path="/AllLike/:cityName" element={<AllLike />} />
