@@ -93,7 +93,7 @@ function SearchListing() {
       const fetchCategoryListings = async () => {
         try {
           const response = await fetch(
-            `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListingByKeywordLocation?cityName=Mumbai&Keywords=${searching}`
+            `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListingByKeywordLocation?cityName=Mumbai&Keywords=${searching}&pageNumber=${currentPage}&pageSize=${itemsPerPage}`
           );
           if (!response.ok) {
             throw new Error('Failed to fetch data');
@@ -744,6 +744,56 @@ navigate(ClaimForgetpassword)
           </div>
         </div>
 
+        <div className="pagination">
+          {/* for dekstop */}
+          {!isMobile && (
+            <>
+              {/* <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                Previous
+                <img src={previousarrowimg} style={{ height: "30px" }} />
+              </button> */}
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i + 1}
+                  onClick={() => handlePageChange(i + 1)}
+                  className={currentPage === i + 1 ? "active" : ""}
+                >
+                  {i + 1}
+                </button>
+              ))}
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={listing.length < itemsPerPage} // Disable "Next" if fewer than 10 listings
+              >
+                Next
+                {/* <img src={nextarrowimage} style={{ height: "30px" }} /> */}
+              </button>
+            </>
+          )}
+
+          {/* mobile view more */}
+          {isMobile && listing.length === itemsPerPage && (
+            <button
+              onClick={handleViewMore}
+              className="view-more-btn"
+              style={{
+                borderRadius: "32px",
+                backgroundColor: "white",
+                paddingTop: "5px",
+                paddingBottom: "5px",
+                fontSize: "14px",
+                width: "210px",
+                color: "orange",
+                fontWeight:'bold'
+              }}
+            >
+              More Search Results<img style={{height:'20px',paddingLeft:'5px'}} src={drparrowimg}/>
+            </button>
+          )}
+        </div>
        
       </div>
 

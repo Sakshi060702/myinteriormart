@@ -134,23 +134,25 @@ function Searchbar() {
   console.log('locality',Separatelocality);
 
 
-    const matchResult = filteredResults.find(
-      (result) =>
-        (result.companyName &&
-          result.companyName.toLowerCase() === searchTerm.toLowerCase()) ||
-        (result.keyword &&
-          result.keyword.toLowerCase() === searchTerm.toLowerCase()) ||
-        (result.category &&
-          result.category.toLowerCase() === searchTerm.toLowerCase()) ||
-        (result.mobilenumber &&
-          result.mobilenumber.toLowerCase() === searchTerm.toLowerCase())||
-          (result.gstnumber &&
-            result.gstnumber.toLowerCase() === searchTerm.toLowerCase()) ||
-            (Separatekeyword.toLowerCase().includes(result.keyword.toLowerCase()) || 
-     Separatelocality.toLowerCase().includes(result.localityName?.toLowerCase()) || 
-     Separatelocality.toLowerCase().includes(result.companyName?.toLowerCase()))
-            
-    );
+  const matchResult = filteredResults.find(
+    (result) =>
+      (result.companyName &&
+        result.companyName.toLowerCase() === searchTerm.toLowerCase()) ||
+      (result.keyword &&
+        result.keyword.toLowerCase() === searchTerm.toLowerCase()) ||
+      (result.category &&
+        result.category.toLowerCase() === searchTerm.toLowerCase()) ||
+      (result.ownername &&
+        result.ownername.toLowerCase() === searchTerm.toLowerCase()) ||
+      (result.mobilenumber &&
+        result.mobilenumber.toLowerCase() === searchTerm.toLowerCase()) ||
+      (result.gstnumber &&
+        result.gstnumber.toLowerCase() === searchTerm.toLowerCase()) ||
+      (Separatekeyword.toLowerCase().includes(result.keyword?.toLowerCase() || "") ||
+        Separatelocality.toLowerCase().includes(result.localityName?.toLowerCase() || "") ||
+        Separatelocality.toLowerCase().includes(result.companyName?.toLowerCase() || ""))
+  );
+  
     if (matchResult) {
       let redirectionUrl = "";
       if (
@@ -159,30 +161,24 @@ function Searchbar() {
         !matchResult.keyword
       ) {
         redirectionUrl = `/All/Search/${matchResult.category
-          .replace(/\s+/g, "-")
-          .toLowerCase()}/in-${localStorage.getItem(
-          "cityname"
-        )}?searchkey=${encodeURIComponent(
-          matchResult.keyword
-        )}&secatEncyt=${encodeURIComponent(
-          encrypt(parseInt(matchResult.categoryId))
-        )}`;
+                        .replace(/\s+/g, "-")
+                        .toLowerCase()}/in-${localStorage.getItem(
+                        "cityname"
+                      )}?secatEncyt=${encodeURIComponent(
+                        encrypt(parseInt(matchResult.categoryId))
+                      )}`;
       } else if (
         matchResult.keyword &&
         searchTerm.toLowerCase() === matchResult.keyword.toLowerCase()
       ) {
-        redirectionUrl = `/All/Search/${matchResult.category
-          .replace(/\s+/g, "-")
-          .toLowerCase()}/in-${localStorage.getItem(
+        redirectionUrl = `/All/Listing/in-${localStorage.getItem(
           "cityname"
         )}?searchkey=${encodeURIComponent(
           matchResult.keyword
-        )}&secatEncyt=${encodeURIComponent(
-          encrypt(parseInt(matchResult.categoryId))
         )}`;
       }
-      else if(matchResult.mobilenumber &&
-        searchTerm.toLowerCase() === matchResult.mobilenumber.toLowerCase()){
+      else if(matchResult.ownername &&
+        searchTerm.toLowerCase() === matchResult.ownername.toLowerCase()){
           const companyName = matchResult.companyName || "unknown";
           const categoryName = matchResult.category || "general";
           redirectionUrl = `/company/${companyName
@@ -196,6 +192,16 @@ function Searchbar() {
           )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
             encrypt(parseInt(matchResult.categoryId))
           )}`;
+      }
+      else if(matchResult.mobilenumber &&
+        searchTerm.toLowerCase() === matchResult.mobilenumber.toLowerCase()){
+          const companyName = matchResult.companyName || "unknown";
+          const categoryName = matchResult.category || "general";
+          redirectionUrl = `/All/Listing/in-${localStorage.getItem(
+          "cityname"
+        )}?searchkey=${encodeURIComponent(
+          matchResult.mobilenumber
+        )}`;
       }
       else if(matchResult.companyName &&
         searchTerm.toLowerCase() === matchResult.companyName.toLowerCase()){
@@ -217,17 +223,11 @@ function Searchbar() {
         searchTerm.toLowerCase() === matchResult.gstnumber.toLowerCase()){
           const companyName = matchResult.companyName || "unknown";
           const categoryName = matchResult.category || "general";
-          redirectionUrl = `/company/${companyName
-            .replace(/\s+/g, "-")
-            .toLowerCase()}/${categoryName
-            .replace(/\s+/g, "-")
-            .toLowerCase()}/locality/in-${localStorage.getItem(
-            "cityname"
-          )}?listingEncyt=${encodeURIComponent(
-            encrypt(parseInt(matchResult.listingId))
-          )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
-            encrypt(parseInt(matchResult.categoryId))
-          )}`;
+          redirectionUrl = `/All/Listing/in-${localStorage.getItem(
+          "cityname"
+        )}?searchkey=${encodeURIComponent(
+          matchResult.gstnumber
+        )}`;
       }
       else if(  matchResult.keyword &&matchResult.localityName
         ){
@@ -363,7 +363,7 @@ function Searchbar() {
                           <>
                             <span>{result.companyName}</span>
                             <br></br>
-                            {result.localityName && <span className="serchbarTitle">{`  ${result.localityName}`}</span>}
+                            {result.localityName && <span className="serchbarTitle">{`  ${result.localityName}`} - {result.keyword}</span>}
                           </>
                         ) : (
                           ""
