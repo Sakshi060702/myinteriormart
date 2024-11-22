@@ -12,6 +12,7 @@ import "../../../FrontEnd/css/RegistrationMV.css";
 import Searchbar from "./Searchbar";
 import CryptoJS from "crypto-js";
 import { Carousel } from "react-bootstrap";
+import verifiedImage from '../../../FrontEnd/img/verified1.jpg'
 
 import drparrowimg from "../../../FrontEnd/img/icon (20).png"
 
@@ -630,6 +631,9 @@ navigate(ClaimForgetpassword)
                                         >
                                           Get Quotes
                                         </button>
+                                        <p className="pakagediv">{listing.packageID >0 && (
+                                          <img src={verifiedImage} style={{width:'70px',height:'59px',marginLeft:'166px',marginTop:'-52px'}}/>
+                                        )}</p>
                                         
                                       </p>
                                     </li>

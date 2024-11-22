@@ -110,14 +110,23 @@ function Labournakapage() {
           </div>
 
           <div className="col-12 mt-3">
-            <div className="link-group seolinkgroup" >
+            {/* <div className="link-group seolinkgroup" > */}
+            <div className="link-group " >
               <Link to={`/Keywordl`} className="link-box">
                 <div className="link-large">
                   <img src={seoimg} className="managelistingimg" />
                   SEO Keywords
                 </div>
               </Link>
+              <Link to={`/Workingarea`} className="link-box">
+                <div className="link-large">
+                  <img src={seoimg} className="managelistingimg" />
+                  Working Area
+                </div>
+              </Link>
+              
             </div>
+            
           </div>
         </div>
       </div>

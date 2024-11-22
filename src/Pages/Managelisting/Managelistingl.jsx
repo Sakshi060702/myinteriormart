@@ -59,6 +59,7 @@ function Managelistingl(){
                 <div className="col-12 mt-3">
                     <div className="link-group">
                       <div className="link-box"><Link to="/Keywordl" className="link-large"><img src={seoimg} className="managelistingimg"/>SEO Keywords</Link></div>
+                      
                     </div>
                 </div>
             </div>

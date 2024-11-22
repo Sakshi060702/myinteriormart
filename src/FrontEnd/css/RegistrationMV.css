@@ -1837,3 +1837,28 @@ div.scrollmenu .imgScroll:hover {
   height: auto;
 } */
 
+
+/* package logo */
+.pakagediv{
+  margin-bottom: -15px !important; 
+}
+
+.packageLogo{
+  width: 70px;
+  height: 59px;
+  margin-left: 166px;
+  margin-top: -52px;
+}
+@media (max-width:767px) {
+  .packageLogo{
+    width: 39px;
+    height: 38px;
+    margin-left: 220px;
+    margin-top: -52px;
+    margin-right: -79px;
+  }
+}
+
+.businesstypeHover:hover{
+  background-color: orange;
+}

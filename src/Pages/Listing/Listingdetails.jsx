@@ -1686,7 +1686,7 @@ function Listingdetails() {
                           {/* registered mobile */}
                           <div
                             classname="col-lg-12 mb-1 listingtelephone"
-                            style={{ width: "27%" }}
+                            style={{ width: "32%" }}
                           >
                             <i
                               className="fa fa-mobile"

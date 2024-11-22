@@ -14,6 +14,7 @@ import CryptoJS from "crypto-js";
 import { Carousel } from "react-bootstrap";
 import Foot from "../Home/Component/Foot";
 import drparrowimg from "../../FrontEnd/img/icon (20).png"
+import verifiedImage from '../../FrontEnd/img/Golden_Membership-removebg-preview.png'
 
 
 import { useSelector } from "react-redux";
@@ -445,6 +446,7 @@ navigate(ClaimForgetpassword)
                         >
                           <div className="col-6 listingdiv">
                             <div className="wrapper listingdetailsdiv">
+                              
                               {/* <h3 style={{ color: "black" }}>
                               <Link
                                 to={`/company/${listing.companyName
@@ -466,7 +468,7 @@ navigate(ClaimForgetpassword)
                               <small className="listingcolor">
                                 {listing.listingKeyword}
                               </small>
-
+                              
                               <p className="listingcolor" style={{marginBottom:'4px'}}>
                                 <i
                                   className="fa fa-map-marker"
@@ -630,8 +632,10 @@ navigate(ClaimForgetpassword)
                                           Call now
                                         </a>
                                       </p>
+                                     
                                     </li>
                                   </div>
+                                 
                                   <div>
                                     <li>
                                       <p className="listinggetclaim">
@@ -699,11 +703,17 @@ navigate(ClaimForgetpassword)
                                         >
                                           Get Quotes
                                         </button>
+                                        <p className="pakagediv">{listing.packageID >0 && (
+                                          <img src={verifiedImage} className="packageLogo"/>
+                                        )}</p>
                                         
                                       </p>
                                     </li>
                                   </div>
 
+{/* <div>{listing.packageID >0 && (
+  <img src={verifiedImage}/>
+)}</div> */}
                                   
                                 </div>
                               </div>

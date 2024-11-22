@@ -268,6 +268,8 @@ import Termconditions from "./Pages/Termconditions";
 
 import SearchListing from "./Pages/Home/Component/SerchListing";
 
+import Workingarea from "./Pages/Profile/Workingarea";
+
 import ScrollToTop from "./Pages/ScrollToTop";
 
 // import Dashboardprofile from "./Pages/Profile/Dashboardprofile";
@@ -959,6 +961,9 @@ function App() {
         <Route path="/Galleryimage" element={<Galleryimagel />} />
 
         <Route path="/Categoryapi" element={<Categoryapi />} />
+
+        <Route path="/Workingarea" element={<Workingarea />} />
+
 
         <Route
           path="/labournakapage"
