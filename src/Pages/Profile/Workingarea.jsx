@@ -11,7 +11,7 @@ import PincodePopup from "../Freelisting/Businesslisting/Pincodepopup";
 import Areapopup from "../Freelisting/Businesslisting/Areapopup";
 import Select from "react-select";
 
-const Workingarea = () => {
+const Workingarea = ({ onPinChange }) => {
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
@@ -25,7 +25,6 @@ const Workingarea = () => {
   const [selectedAssembly, setSelectedAssembly] = useState("");
   const [selectedPincode, setSelectedPincode] = useState([]);
   const [selectedLocality, setSelectedLocality] = useState("");
-  
 
   const [localAddress, setLocalAddress] = useState("");
 
@@ -95,41 +94,41 @@ const Workingarea = () => {
     country.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  useEffect(() => {
-    const fetchUserAddress = async () => {
-      try {
-        const response = await fetch(
-          "https://apidev.myinteriormart.com/api/BinddetailsListing/GetAddressDetailslisting",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
+  // useEffect(() => {
+  //   const fetchUserAddress = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         "https://apidev.myinteriormart.com/api/BinddetailsListing/GetAddressDetailslisting",
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         }
+  //       );
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
+  //       const data = await response.json();
 
-        setSelectedCountry(data.countryID);
-        setSelectedState(data.stateID);
-        setSelectedCity(data.cityID);
-        setSelectedAssembly(data.assemblyID);
-        setSelectedPincode(data.pincodeID);
-        setSelectedLocality(data.localityID);
-        setLocalAddress(data.localAddress);
+  //       setSelectedCountry(data.countryID);
+  //       setSelectedState(data.stateID);
+  //       setSelectedCity(data.cityID);
+  //       setSelectedAssembly(data.assemblyID);
+  //       setSelectedPincode(data.pincodeID);
+  //       setSelectedLocality(data.localityID);
+  //       setLocalAddress(data.localAddress);
 
-        console.log("locality", data.assemblyID);
-        console.log("pincode", data.pincodeID);
+  //       console.log("locality", data.assemblyID);
+  //       console.log("pincode", data.pincodeID);
 
-        console.log("User Address Fetched", data);
-      } catch (error) {
-        console.error("Error fetching user categories:", error);
-      }
-    };
-    fetchUserAddress();
-  }, [token]);
+  //       console.log("User Address Fetched", data);
+  //     } catch (error) {
+  //       console.error("Error fetching user categories:", error);
+  //     }
+  //   };
+  //   fetchUserAddress();
+  // }, [token]);
 
   useEffect(() => {
     if (selectedCountry) {
@@ -399,35 +398,63 @@ const Workingarea = () => {
     label: pincode.number,
   }));
 
-//   const handlePincodeCheckboxChange = (e) => {
-//     const value = e.target.value;
-//     if (e.target.checked) {
-//       setSelectedPincode((prev) => [...prev, value]); // Add value to the array
-//     } else {
-//       setSelectedPincode((prev) => prev.filter((pincode) => pincode !== value)); // Remove value from the array
-//     }
-//   };
+  //   const handlePincodeCheckboxChange = (e) => {
+  //     const value = e.target.value;
+  //     if (e.target.checked) {
+  //       setSelectedPincode((prev) => [...prev, value]); // Add value to the array
+  //     } else {
+  //       setSelectedPincode((prev) => prev.filter((pincode) => pincode !== value)); // Remove value from the array
+  //     }
+  //   };
 
+  //   const handlePChange = (e) => {
+  //     const value = e.target.value;
+  //     setSelectedPincode((prev) =>
+  //       prev.includes(value)
+  //         ? prev.filter((pincode) => pincode !== value) // Remove if already selected
+  //         : [...prev, value] // Add if not selected
+  //     );
+  //   };
 
-//   const handlePChange = (e) => {
-//     const value = e.target.value;
-//     setSelectedPincode((prev) =>
-//       prev.includes(value)
-//         ? prev.filter((pincode) => pincode !== value) // Remove if already selected
-//         : [...prev, value] // Add if not selected
-//     );
-//   };
+  // const handlePincodeCheckboxChange = (e) => {
+  //   // Handle checkbox change logic
+  //   // You can maintain a list of selected pincodes if needed
+  //   console.log(`Pincode selected: ${e.target.value}`);
+  // };
 
-const handlePChange = (e, pincode) => {
+  const handleCheckboxChange = (pincode) => {
+    const isSelected = selectedPincode.includes(pincode);
+
+    // Toggle the selection
+    const updatedSelection = isSelected
+      ? selectedPincode.filter((pin) => pin !== pincode) // Remove if already selected
+      : [...selectedPincode, pincode]; // Add if not selected
+
+    setSelectedPincode(updatedSelection);
+
+    // Trigger parent function to pass selected values
+    if (onPinChange) {
+      onPinChange(updatedSelection);
+    }
+  };
+
+  const handleRemovePincode=(pincodeValue)=>{
+    const updateSelection=selectedPincode.filter(pin=>pin!==pincodeValue);
+    setSelectedPincode(updateSelection);
+
+    if(onPinChange){
+      onPinChange(updateSelection);
+    }
+  }
+
+  const handlePChange = (e, pincode) => {
     if (e.target.checked) {
       setSelectedPincode([...selectedPincode, pincode]);
     } else {
-      setSelectedPincode(selectedPincode.filter(item => item !== pincode));
+      setSelectedPincode(selectedPincode.filter((item) => item !== pincode));
     }
   };
-  
 
-  
   const handleArChange = (selectedOption) => {
     setSelectedLocality(selectedOption ? selectedOption.value : "");
   };
@@ -447,10 +474,7 @@ const handlePChange = (e, pincode) => {
               <p className="add-lidting-title-from">
                 Add Listing / Add Address Details
                 <span>
-                  <Link
-                    className="back_btn mx-3"
-                    to={`/labournakapage`}
-                  >
+                  <Link className="back_btn mx-3" to={`/labournakapage`}>
                     Back
                   </Link>
                 </span>
@@ -470,17 +494,25 @@ const handlePChange = (e, pincode) => {
       /> */}
                     <Select
                       className="wide add_bottom_10 country selectdrp"
-                      
+                      value={countryOptions.find(
+                        (option) => option.value === selectedCountry
+                      )}
                       onChange={handleCounChange}
                       options={countryOptions}
                       placeholder="Select Country"
                       styles={{
                         option: (provided, state) => ({
                           ...provided,
-                          backgroundColor:state.isSelected ?"orange": state.isFocused
+                          backgroundColor: state.isSelected
+                            ? "orange"
+                            : state.isFocused
                             ? "orange"
                             : provided.backgroundColor,
-                          color:state.isSelected?'white': state.isFocused ? "white" : provided.color,
+                          color: state.isSelected
+                            ? "white"
+                            : state.isFocused
+                            ? "white"
+                            : provided.color,
                           cursor: "pointer",
                         }),
                         control: (base) => ({
@@ -499,17 +531,25 @@ const handlePChange = (e, pincode) => {
                     </label>
                     <Select
                       className="wide add_bottom_10 state selectdrp"
-                      
+                      value={stateOptions.find(
+                        (option) => option.value === selectedState
+                      )}
                       onChange={handleStaChange}
                       options={stateOptions}
                       placeholder="Select State"
                       styles={{
                         option: (provided, state) => ({
                           ...provided,
-                          backgroundColor:state.isSelected ?"orange": state.isFocused
-                          ? "orange"
-                          : provided.backgroundColor,
-                        color:state.isSelected?'white': state.isFocused ? "white" : provided.color,
+                          backgroundColor: state.isSelected
+                            ? "orange"
+                            : state.isFocused
+                            ? "orange"
+                            : provided.backgroundColor,
+                          color: state.isSelected
+                            ? "white"
+                            : state.isFocused
+                            ? "white"
+                            : provided.color,
                           cursor: "pointer",
                         }),
                         control: (base) => ({
@@ -528,17 +568,25 @@ const handlePChange = (e, pincode) => {
                     </label>
                     <Select
                       className="wide add_bottom_10 city selectdrp"
-                      
+                      value={cityOptions.find(
+                        (option) => option.value === selectedCity
+                      )}
                       onChange={handleCiChange}
                       options={cityOptions}
                       placeholder="Select City"
                       styles={{
                         option: (provided, state) => ({
                           ...provided,
-                          backgroundColor:state.isSelected ?"orange": state.isFocused
-                          ? "orange"
-                          : provided.backgroundColor,
-                        color:state.isSelected?'white': state.isFocused ? "white" : provided.color,
+                          backgroundColor: state.isSelected
+                            ? "orange"
+                            : state.isFocused
+                            ? "orange"
+                            : provided.backgroundColor,
+                          color: state.isSelected
+                            ? "white"
+                            : state.isFocused
+                            ? "white"
+                            : provided.color,
                           cursor: "pointer",
                         }),
                         control: (base) => ({
@@ -559,17 +607,25 @@ const handlePChange = (e, pincode) => {
                     </label>
                     <Select
                       className="wide add_bottom_10 locality selectdrp"
-                      
+                      value={assemblyOptions.find(
+                        (option) => option.value === selectedAssembly
+                      )}
                       onChange={handleLocalChange}
                       options={assemblyOptions}
                       placeholder="Select Locality"
                       styles={{
                         option: (provided, state) => ({
                           ...provided,
-                          backgroundColor:state.isSelected ?"orange": state.isFocused
+                          backgroundColor: state.isSelected
+                            ? "orange"
+                            : state.isFocused
                             ? "orange"
                             : provided.backgroundColor,
-                          color:state.isSelected?'white': state.isFocused ? "white" : provided.color,
+                          color: state.isSelected
+                            ? "white"
+                            : state.isFocused
+                            ? "white"
+                            : provided.color,
                           cursor: "pointer",
                         }),
                         control: (base) => ({
@@ -581,26 +637,66 @@ const handlePChange = (e, pincode) => {
                         }),
                       }}
                     />
-                   
                   </div>
                   <div className="form-group col-md-4">
                     <label>
                       Pincode<span className="text-danger">*</span>
                     </label>
 
-                    <div>
+                    <div className="pincode-checkbox-container">
+                      {pincodeOptions && pincodeOptions.length > 0 ? (
+                        pincodeOptions.map((pincode) => (
+                          <label key={pincode.value} className="checkbox-label">
+                            <input
+                              type="checkbox"
+                              value={pincode.value}
+                              checked={selectedPincode.includes(pincode.value)}
+                              onChange={() =>
+                                handleCheckboxChange(pincode.value)
+                              }
+                            />
+                            {pincode.label}
+                          </label>
+                        ))
+                      ) : (
+                        <p>No Pincode Options Available</p>
+                      )}
+                    </div>
+                    <h3>Selected Pincode</h3>
+                    {selectedPincode.length > 0 ? (
+                     <ul>
+                     {selectedPincode.map((pincodeValue) => {
+                       // Find the label for each selected pincode value
+                       const pincodeLabel = pincodeOptions.find(pincode => pincode.value === pincodeValue)?.label;
+             
+                       return (
+                         <li key={pincodeValue}>
+                           {pincodeLabel ? pincodeLabel : pincodeValue} {/* Show the label for the pincode */}
+                           <button type="button" onClick={()=>handleRemovePincode(pincodeValue)}>x</button>
+                         </li>
+                       );
+                     })}
+                   </ul>
+                    ) : (
+                      <p>No pincode selected</p>
+                    )}
+
+                    {/* {selectedLocality && (
+        <div>
+          
           {pincodes.map(pincode => (
-            <div key={pincode.id}>
+            <label key={pincode.id}>
               <input
                 type="checkbox"
-                id={pincode.id}
-                onChange={(e) => handlePChange(e, pincode.code)}
+                value={pincode.id}
+                onChange={handlePincodeCheckboxChange}
               />
-              <label>{pincode.value}</label>
-            </div>
+              {pincode.number}
+            </label>
           ))}
         </div>
-                    
+      )} */}
+
                     {/* <Select
                       className="wide add_bottom_10 pincode selectdrp"
                       
@@ -625,10 +721,7 @@ const handlePChange = (e, pincode) => {
                         }),
                       }}
                     /> */}
-                   
                   </div>
-                 
-                 
                 </div>
                 <div
                   className="text-left col-12 mt-3"
@@ -697,4 +790,3 @@ const handlePChange = (e, pincode) => {
 };
 
 export default withAuthh(Workingarea);
-
