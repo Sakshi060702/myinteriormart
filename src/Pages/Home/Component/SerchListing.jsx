@@ -12,7 +12,7 @@ import "../../../FrontEnd/css/RegistrationMV.css";
 import Searchbar from "./Searchbar";
 import CryptoJS from "crypto-js";
 import { Carousel } from "react-bootstrap";
-import verifiedImage from '../../../FrontEnd/img/verified1.jpg'
+import verifiedImage from '../../../FrontEnd/img/Golden_Membership-removebg-preview.png'
 
 import drparrowimg from "../../../FrontEnd/img/icon (20).png"
 

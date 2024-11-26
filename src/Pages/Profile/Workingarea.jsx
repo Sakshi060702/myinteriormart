@@ -26,6 +26,8 @@ const Workingarea = ({ onPinChange }) => {
   const [selectedPincode, setSelectedPincode] = useState([]);
   const [selectedLocality, setSelectedLocality] = useState("");
 
+  const [pincodeMap, setPincodeMap] = useState({});
+
   const [localAddress, setLocalAddress] = useState("");
 
   const navigate = useNavigate();
@@ -72,7 +74,7 @@ const Workingarea = ({ onPinChange }) => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const data = await response.json();
-      console.log(`Data fetched for ${type}:`, data);
+      // console.log(`Data fetched for ${type}:`, data);
       return data;
     } catch (error) {
       console.error(`Error fetching ${type}:`, error);
@@ -382,6 +384,16 @@ const Workingarea = ({ onPinChange }) => {
 
   const handleLocalChange = (selectedOption) => {
     setSelectedAssembly(selectedOption ? selectedOption.value : "");
+
+    if (selectedOption && pincodeOptions.length > 0) {
+      const newPincodeMap = {};
+      pincodeOptions.forEach((pincode) => {
+        newPincodeMap[pincode.value] = pincode.label;
+      });
+
+      // Merge the new locality pincodes with existing pincodes
+      setPincodeMap((prevMap) => ({ ...prevMap, ...newPincodeMap }));
+    }
   };
 
   const assemblyOptions = assemblies.map((assembly) => ({
@@ -422,30 +434,36 @@ const Workingarea = ({ onPinChange }) => {
   //   console.log(`Pincode selected: ${e.target.value}`);
   // };
 
-  const handleCheckboxChange = (pincode) => {
-    const isSelected = selectedPincode.includes(pincode);
+  const handleCheckboxChange = (pincodeValue) => {
+    const isSelected = selectedPincode.includes(pincodeValue);
 
-    // Toggle the selection
-    const updatedSelection = isSelected
-      ? selectedPincode.filter((pin) => pin !== pincode) // Remove if already selected
-      : [...selectedPincode, pincode]; // Add if not selected
+    if (selectedAssembly && pincodeOptions.length > 0) {
+      const newPincodeMap = {};
+      pincodeOptions.forEach((pincode) => {
+        newPincodeMap[pincode.value] = pincode.label;
+      });
+      setPincodeMap((prevMap) => ({ ...prevMap, ...newPincodeMap })); // Merge with previous
+    }
 
-    setSelectedPincode(updatedSelection);
-
-    // Trigger parent function to pass selected values
-    if (onPinChange) {
-      onPinChange(updatedSelection);
+    if (isSelected) {
+      setSelectedPincode((prevSelected) =>
+        prevSelected.filter((value) => value !== pincodeValue)
+      );
+    } else {
+      setSelectedPincode((prevSelected) => [...prevSelected, pincodeValue]);
     }
   };
 
-  const handleRemovePincode=(pincodeValue)=>{
-    const updateSelection=selectedPincode.filter(pin=>pin!==pincodeValue);
+  const handleRemovePincode = (pincodeValue) => {
+    const updateSelection = selectedPincode.filter(
+      (pin) => pin !== pincodeValue
+    );
     setSelectedPincode(updateSelection);
 
-    if(onPinChange){
+    if (onPinChange) {
       onPinChange(updateSelection);
     }
-  }
+  };
 
   const handlePChange = (e, pincode) => {
     if (e.target.checked) {
@@ -515,12 +533,13 @@ const Workingarea = ({ onPinChange }) => {
                             : provided.color,
                           cursor: "pointer",
                         }),
-                        control: (base) => ({
+                        control: (base,state) => ({
                           ...base,
                           height: "50px",
                           minHeight: "50px",
                           borderColor: "#ccc",
-                          "&:hover": { borderColor: "#aaa" },
+                          "&:hover": { borderColor: "orange" },
+                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
                         }),
                       }}
                     />
@@ -552,12 +571,13 @@ const Workingarea = ({ onPinChange }) => {
                             : provided.color,
                           cursor: "pointer",
                         }),
-                        control: (base) => ({
+                        control: (base,state) => ({
                           ...base,
                           height: "50px",
                           minHeight: "50px",
                           borderColor: "#ccc",
-                          "&:hover": { borderColor: "#aaa" }, // Hover effect for the control
+                          "&:hover": { borderColor: "orange" },
+                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
                         }),
                       }}
                     />
@@ -589,12 +609,13 @@ const Workingarea = ({ onPinChange }) => {
                             : provided.color,
                           cursor: "pointer",
                         }),
-                        control: (base) => ({
+                        control: (base,state) => ({
                           ...base,
                           height: "50px",
                           minHeight: "50px",
                           borderColor: "#ccc",
-                          "&:hover": { borderColor: "#aaa" }, // Control hover effect
+                          "&:hover": { borderColor: "orange" },
+                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
                         }),
                       }}
                     />
@@ -628,12 +649,13 @@ const Workingarea = ({ onPinChange }) => {
                             : provided.color,
                           cursor: "pointer",
                         }),
-                        control: (base) => ({
+                        control: (base,state) => ({
                           ...base,
                           height: "50px",
                           minHeight: "50px",
                           borderColor: "#ccc",
-                          "&:hover": { borderColor: "#aaa" }, // Control hover effect
+                          "&:hover": { borderColor: "orange" },
+                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
                         }),
                       }}
                     />
@@ -643,12 +665,23 @@ const Workingarea = ({ onPinChange }) => {
                       Pincode<span className="text-danger">*</span>
                     </label>
 
-                    <div className="pincode-checkbox-container">
+                    <div
+                      className="pincode-checkbox-container"
+                      style={{
+                        border: "1px solid #ccc",
+                        borderRadius: "4px",
+                        padding: "5px 11px 3px 11px",
+                      }}
+                    >
                       {pincodeOptions && pincodeOptions.length > 0 ? (
                         pincodeOptions.map((pincode) => (
-                          <label key={pincode.value} className="checkbox-label">
+                          <label
+                            key={pincode.value}
+                            className="checkbox-label WorkingareaLabel"
+                          >
                             <input
                               type="checkbox"
+                              className="Workingarea-checkbox"
                               value={pincode.value}
                               checked={selectedPincode.includes(pincode.value)}
                               onChange={() =>
@@ -662,24 +695,34 @@ const Workingarea = ({ onPinChange }) => {
                         <p>No Pincode Options Available</p>
                       )}
                     </div>
-                    <h3>Selected Pincode</h3>
-                    {selectedPincode.length > 0 ? (
-                     <ul>
-                     {selectedPincode.map((pincodeValue) => {
-                       // Find the label for each selected pincode value
-                       const pincodeLabel = pincodeOptions.find(pincode => pincode.value === pincodeValue)?.label;
-             
-                       return (
-                         <li key={pincodeValue}>
-                           {pincodeLabel ? pincodeLabel : pincodeValue} {/* Show the label for the pincode */}
-                           <button type="button" onClick={()=>handleRemovePincode(pincodeValue)}>x</button>
-                         </li>
-                       );
-                     })}
-                   </ul>
+                    {/* <h3>Selected Pincode</h3> */}
+                    {/* {selectedPincode.length > 0 ? (
+                      <ul>
+                        {selectedPincode.map((pincodeValue) => {
+                         
+                          const pincodeLabel = pincodeOptions.find(
+                            (pincode) => pincode.value === pincodeValue
+                          )?.label;
+
+                          return (
+                            <li key={pincodeValue}>
+                              {pincodeLabel ? pincodeLabel : pincodeValue}{" "}
+                            
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleRemovePincode(pincodeValue)
+                                }
+                              >
+                                x
+                              </button>
+                            </li>
+                          );
+                        })}
+                      </ul>
                     ) : (
                       <p>No pincode selected</p>
-                    )}
+                    )} */}
 
                     {/* {selectedLocality && (
         <div>
@@ -722,6 +765,35 @@ const Workingarea = ({ onPinChange }) => {
                       }}
                     /> */}
                   </div>
+                </div>
+                <div className="row">
+                  <h6 className="WorkingareaH6">Selected Pincodes</h6>
+                </div>
+                <div className="row">
+                  {selectedPincode.length > 0 ? (
+                    <ul className="WorkingareaUl">
+                      {selectedPincode.map((pincodeValue) => {
+                        // Get the label from pincodeMap
+                        const pincodeLabel = pincodeMap[pincodeValue];
+
+                        return (
+                          <li key={pincodeValue} className="WorkingAreaPincode">
+                            {pincodeLabel ? pincodeLabel : pincodeValue}{" "}
+                            {/* Show label if found, otherwise fallback to value */}
+                            <button
+                              className="WorkingAreaRemovetbtn"
+                              type="button"
+                              onClick={() => handleRemovePincode(pincodeValue)}
+                            >
+                              x
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  ) : (
+                    <p></p>
+                  )}
                 </div>
                 <div
                   className="text-left col-12 mt-3"
