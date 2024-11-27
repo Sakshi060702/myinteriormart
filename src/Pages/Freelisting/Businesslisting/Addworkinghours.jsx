@@ -214,7 +214,7 @@ function Addworkinghours()
                           <label>
                             {key}<span className="text-danger">*</span>
                             <input
-                              className="form-control form-control-sm input-width workinghoursw"
+                              className="form-control form-control-sm input-width workinghoursw companyD"
                             
                               type={
                                 key.includes("Holiday") ? "checkbox" : "time"

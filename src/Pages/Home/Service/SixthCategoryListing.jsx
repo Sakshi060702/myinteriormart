@@ -13,6 +13,7 @@ import previousarrowimg from "../../../FrontEnd/img/Backarrow.png";
 import { Carousel } from "react-bootstrap";
 import { useNavigate,useLocation } from "react-router-dom";
 import drparrowimg from "../../../FrontEnd/img/icon (20).png"
+import verifiedImage from '../../../FrontEnd/img/Golden_Membership-removebg-preview.png'
 
 import { useSelector } from "react-redux";
 
@@ -52,6 +53,10 @@ function SixthCategoryListing() {
   console.log("secondcategoryid", secondCategoryId);
   console.log(decrypt(listingId_enc));
 
+  
+
+  const { categoryid, categoryname, keyword } = useParams(); 
+
   const location=useLocation
 
   //for mobile pagination
@@ -74,9 +79,9 @@ function SixthCategoryListing() {
 
   const isMobile = useIsMobile();
 
-  useEffect(() => {
-    fetchListings();
-  }, [secondCategoryId, currentPage, secondCategoryName, subcategoryName]);
+  // useEffect(() => {
+  //   fetchListings();
+  // }, [secondCategoryId, currentPage, secondCategoryName, subcategoryName]);
 
   const token = useSelector((state) => state.auth.token);
   console.log("token", token);
@@ -126,6 +131,40 @@ function SixthCategoryListing() {
     }
   };
 
+  useEffect(() => {
+    if (searching) {
+      const fetchCategoryListings = async () => {
+        try {
+          const response = await fetch(
+            `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListingByKeyword?subCategoryid=${secondCategoryId}&cityName=Mumbai&Keywords=${searching}`
+          );
+          if (!response.ok) {
+            throw new Error('Failed to fetch data');
+          }
+          const data = await response.json();
+          // console.log('Filtered listings data', data);
+      
+          // Prepend the fetched listings on top of the current listings
+          setListing((prevListings) => {
+            // Ensure only unique listings are shown in case of duplicate listings
+            const newListings = data.filter((newListing) =>
+              prevListings.every(
+                (existingListing) => existingListing.listingId !== newListing.listingId
+              )
+            );
+            return [...newListings, ...prevListings];
+          });
+        } catch (error) {
+          console.error('Error fetching listings:', error);
+        }
+      };
+      
+      fetchCategoryListings();
+    } else {
+      fetchListings();
+    }
+  }, [secondCategoryId, searching, currentPage, token, fomattedcity]);
+  
 
   // Horizontal banner
   useEffect(() => {
@@ -229,28 +268,65 @@ function SixthCategoryListing() {
 navigate(ClaimForgetpassword)
   }
  
-  const handleListingClick = (listingId) => {
-    localStorage.setItem("scrollPosition", window.scrollY); // Save current scroll position
-    // Perform your navigation logic here (e.g., navigate to the details page)
-  };
+  // const handleListingClick = (listingId) => {
+  //   localStorage.setItem("scrollPosition", window.scrollY); // Save current scroll position
+  //   // Perform your navigation logic here (e.g., navigate to the details page)
+  // };
+
+  // useEffect(() => {
+  //   const savedPosition = localStorage.getItem("scrollPosition");
+  //   if (savedPosition) {
+  //     window.scrollTo(0, parseInt(savedPosition, 10));
+  //     localStorage.removeItem("scrollPosition");
+  //   }
+  // }, []);
 
   useEffect(() => {
-    const savedPosition = localStorage.getItem("scrollPosition");
-    if (savedPosition) {
-      window.scrollTo(0, parseInt(savedPosition, 10));
-      localStorage.removeItem("scrollPosition");
-    }
-  }, []);
-
-  useEffect(()=>{
-    if(location.hash){
-      const elementId=location.hash.replace('#','');
-      const element=document.getElementById(elementId);
-      if(element){
-        element.scrollIntoView({behavior:'smooth'});
+    if (location.state?.fromListingPage) {
+      const savedScrollPosition = sessionStorage.getItem("scrollPosition");
+      const savedPage = sessionStorage.getItem("currentPage");
+  
+      if (savedScrollPosition && savedPage) {
+        window.scrollTo(0, parseInt(savedScrollPosition, 10));
+        setCurrentPage(parseInt(savedPage, 10)); // Set the currentPage from session storage
       }
+  
+      sessionStorage.removeItem("scrollPosition");
+      sessionStorage.removeItem("currentPage");
+    } else {
+      sessionStorage.removeItem("scrollPosition");
+      sessionStorage.removeItem("currentPage");
     }
-  },[location])
+  }, [location]);
+
+  const handleListingClick = (listing) => {
+    sessionStorage.setItem("scrollPosition", window.scrollY);
+    sessionStorage.setItem("currentPage", currentPage); // Save the currentPage in session storage
+  
+    navigate(
+      `/company/${listing.companyName.replace(/\s+/g, "-").toLowerCase()}/${
+        secondCategoryName
+      }/in-${listing.locality.replace(/\s+/g, "-").toLowerCase()}/${localStorage.getItem(
+        "cityname"
+      )}?listingEncyt=${encodeURIComponent(
+        encrypt(listing.listingId)
+      )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
+        encrypt(parseInt(secondCategoryId))
+      )}`,
+      { state: { fromListingPage: true } }
+    );
+  };
+  
+
+  // useEffect(()=>{
+  //   if(location.hash){
+  //     const elementId=location.hash.replace('#','');
+  //     const element=document.getElementById(elementId);
+  //     if(element){
+  //       element.scrollIntoView({behavior:'smooth'});
+  //     }
+  //   }
+  // },[location])
 
   
   return (
@@ -329,7 +405,7 @@ navigate(ClaimForgetpassword)
                       <div className="strip map_view stripmapviewdesign" style={{
                             border:
                               searching == listing.listingKeyword
-                                ? "2px solid gray"
+                                ? "2px solid white"
                                 : "None",
                           }}>
                         {/* <h5>Hello world</h5> */}
@@ -372,6 +448,7 @@ navigate(ClaimForgetpassword)
                         >
                           <div className="col-6 listingdiv">
                             <div className="wrapper listingdetailsdiv">
+                              
                               {/* <h3 style={{ color: "black" }}>
                               <Link
                                 to={`/company/${listing.companyName
@@ -393,7 +470,7 @@ navigate(ClaimForgetpassword)
                               <small className="listingcolor">
                                 {listing.listingKeyword}
                               </small>
-
+                              
                               <p className="listingcolor" style={{marginBottom:'4px'}}>
                                 <i
                                   className="fa fa-map-marker"
@@ -530,7 +607,7 @@ navigate(ClaimForgetpassword)
                               <div>
                                 <div>
                                   <li className="listingyear listingyearmim">
-                                    <h5 className="yearbusiness">
+                                    <h5 className="yearbusiness" style={{paddingTop:'3px'}}>
                                       <p style={{ color: "gray" }}>
                                         {" "}
                                         Since {listing.businessYear} Year
@@ -557,12 +634,14 @@ navigate(ClaimForgetpassword)
                                           Call now
                                         </a>
                                       </p>
+                                     
                                     </li>
                                   </div>
+                                 
                                   <div>
                                     <li>
                                       <p className="listinggetclaim">
-                                        {listing.claimedListing ?(
+                                        {/* {listing.claimedListing ?(
                                            <button
                                            className="btn btn-guotes btn-sm getclaimbtn"
                                            style={{
@@ -605,12 +684,38 @@ navigate(ClaimForgetpassword)
                                         >
                                           Get Quotes
                                         </button>
-                                        )}
+                                        )} */}
+
+<button
+                                          className="btn btn-guotes btn-sm getclaimbtn"
+                                          style={{
+                                            boxShadow:
+                                              "0 4px 8px rgba(0, 0, 0, 0.2)",
+                                            transition:
+                                              "box-shadow 0.3s ease-in-out",
+                                          }}
+                                          onClick={(event) => {
+                                            event.preventDefault();
+                                            event.stopPropagation();
+                                            setIsPopupOpen([
+                                              true,
+                                              listing.listingId,
+                                            ]);
+                                          }}
+                                        >
+                                          Get Quotes
+                                        </button>
+                                        <p className="pakagediv">{listing.packageID >0 && (
+                                          <img src={verifiedImage} className="packageLogo"/>
+                                        )}</p>
                                         
                                       </p>
                                     </li>
                                   </div>
 
+{/* <div>{listing.packageID >0 && (
+  <img src={verifiedImage}/>
+)}</div> */}
                                   
                                 </div>
                               </div>

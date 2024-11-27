@@ -44,8 +44,13 @@ const Workingarea = ({ onPinChange }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [pincodeSearchQuery, setPincodeSearchQuery] = useState("");
 
+  const [listingId, setListingId] = useState(null); 
+  const [status, setStatus] = useState([]);
+
   const apiUrl =
     "https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster";
+
+    const workiareaUrl='https://apidev.myinteriormart.com/api/WorkingArea/SavePincodes';
 
   const fetchData = async (type, parentID = null) => {
     let body = {
@@ -299,22 +304,49 @@ const Workingarea = ({ onPinChange }) => {
     setSelectedLocality(localityID);
   };
 
+  const fetchStatus = async () => {
+    try {
+      const response = await fetch(
+        "https://apidev.myinteriormart.com/api/ManageListingFromStatus/GetManageListingFromStatus",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      setStatus(data.status);
+      setListingId(data.listingId); // Set the listing ID from the API
+      console.log(data.listingId);
+    } catch (error) {
+      console.error("Error fetching status:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchStatus();
+  }, [token]);
+
+
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const submissionData = {
+     ListingID:listingId,
       CountryID: parseInt(selectedCountry),
       StateID: parseInt(selectedState),
       CityID: parseInt(selectedCity),
       AssemblyID: parseInt(selectedAssembly),
-      PincodeID: parseInt(selectedPincode),
-      LocalityID: parseInt(selectedLocality),
-      LocalAddress: localAddress,
+      SelectedPincodesContainer: selectedPincode.map((pincode) => parseInt(pincode, 10))
+     
     };
-
+    console.log("Selected Pincodes:", selectedPincode);
     console.log("Submitting data:", submissionData);
 
-    fetch(apiUrl, {
+    fetch(workiareaUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -326,8 +358,8 @@ const Workingarea = ({ onPinChange }) => {
 
       .then((responseData) => {
         const cityName = localStorage.getItem("cityname");
-        const pathlisting = `/Categoryapi`;
-        navigate(pathlisting);
+        // const pathlisting = `/Categoryapi`;
+        // navigate(pathlisting);
         // console.log("API response:", responseData);
         // console.log("Address token:", token);
         // setSuccessMessage("Address Details Saved Successfully");

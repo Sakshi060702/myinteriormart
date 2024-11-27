@@ -201,7 +201,7 @@ useEffect(()=>{
                           <label>
                             {key}<span className="text-danger">*</span>
                             <input
-                              className="form-control form-control-sm input-width"
+                              className="form-control form-control-sm input-width companyD"
                               type={
                                 key.includes("Holiday") ? "checkbox" : "time"
                               }

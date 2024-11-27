@@ -255,9 +255,9 @@ function Bannerimagel() {
                 
               </div>
               <div className="form-group">
-              <label for="name">Banner Title Title<span className="text-danger">*</span></label>
+              <label for="name">Banner Title <span className="text-danger">*</span></label>
               <input
-                    className="form-control form-control-sm file-input2"
+                    className="form-control form-control-sm file-input2 companyD"
                     type="name"
                     name="website"
                     id="website"

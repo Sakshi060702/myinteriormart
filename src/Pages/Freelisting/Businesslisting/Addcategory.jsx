@@ -371,12 +371,13 @@ function Addcategory()
                           color: state.isFocused ? "white" : "black", // Adjust text color for contrast
                           cursor: "pointer",
                         }),
-                        control: (base) => ({
+                        control: (base,state) => ({
                           ...base,
                           height: "50px", // Increase the height of the select box
                           minHeight: "50px",
                           borderColor: "#ccc",
-                          "&:hover": { borderColor: "#aaa" },
+                          "&:hover": { borderColor: "orange" },
+                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
                         }),
                       }}
                     />

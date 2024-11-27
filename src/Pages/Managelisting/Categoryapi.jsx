@@ -358,12 +358,13 @@ function Categoryapi() {
                           color: state.isFocused ? "white" : "black", // Adjust text color for contrast
                           cursor: "pointer",
                         }),
-                        control: (base) => ({
+                        control: (base,state) => ({
                           ...base,
                           height: "50px", // Increase the height of the select box
                           minHeight: "50px",
                           borderColor: "#ccc",
-                          "&:hover": { borderColor: "#aaa" },
+                          "&:hover": { borderColor: "orange" },
+                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
                         }),
                       }}
                     />
@@ -373,7 +374,7 @@ function Categoryapi() {
                   <div className="col-md-12 add_bottom_15">
                     <button
                       type="button"
-                      className="btn btn-primary"
+                      className="btn btn-primary "
                       style={{ backgroundColor: "#fb830d" }}
                       onClick={handleSelectAll}
                     >

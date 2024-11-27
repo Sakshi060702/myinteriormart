@@ -98,7 +98,7 @@ function Suggestion() {
               <div className="form-group col-12">
                 <label>Title<span className="text-danger">*</span></label>
                 <input
-                  className="form-control"
+                  className="form-control companyD"
                   type="text"
                   name="title"
                   value={title}
@@ -111,7 +111,7 @@ function Suggestion() {
               <div className="form-group col-12">
                 <label>Description<span className="text-danger">*</span></label>
                 <textarea
-                  className="form-control"
+                  className="form-control companyD"
                   id="address"
                   name="suggestion"
                   style={{ height: "100px" }}

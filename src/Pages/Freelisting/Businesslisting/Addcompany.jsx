@@ -250,15 +250,18 @@ function Addcompany() {
           color: state.isFocused ? "white" : "black", // Text color change on hover
           padding: 10,
         }),
-        control: (provided) => ({
+        control: (provided,state) => ({
           ...provided,
           height: "50px", // Increase the height of the select box
           minHeight: "50px", // Ensure minimum height of the select box
-          border: "1px solid #ccc",
-          boxShadow: "none",
-          "&:hover": {
-            border: "1px solid gray", // Border on hover
-          },
+          // border: "1px solid #ccc",
+          // boxShadow: "none",
+          // "&:hover": {
+          //   border: "1px solid gray", // Border on hover
+          // },
+          borderColor: "#ccc",
+                          "&:hover": { borderColor: "orange" },
+                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
         }),
       };
 
@@ -287,7 +290,7 @@ function Addcompany() {
                 Company Name <span className="text-danger">*</span>
               </label>
               <input
-                className="form-control form-control-sm box"
+                className="form-control form-control-sm box companyD"
                 type="text"
                 name="companyName"
                 placeholder="Enter your company name"
@@ -316,12 +319,15 @@ function Addcompany() {
                   </div>
                 )}
                 styles={{
-                  control: (provided) => ({
+                  control: (provided,state) => ({
                     ...provided,
-                    border: "1px solid #ccc",
+                    // border: "1px solid #ccc",
                     borderRadius: "4px",
                     height: "50px", // Increase the height of the select box
                           minHeight: "50px",
+                          borderColor: "#ccc",
+                          "&:hover": { borderColor: "orange" },
+                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
                    
                   }),
                   option: (provided, state) => ({
@@ -383,7 +389,7 @@ function Addcompany() {
               </label>
               <input
                 type="date"
-                className="form-control form-control-sm box"
+                className="form-control form-control-sm box companyD"
                 name="yearOfEstablishment"
                 value={formData.yearOfEstablishment}
                 onChange={handleChange}
@@ -395,7 +401,7 @@ function Addcompany() {
                 Number of Employees <span className="text-danger">*</span>
               </label>
               <input
-                className="form-control form-control-sm box"
+                className="form-control form-control-sm box companyD"
                 type="number"
                 name="numberOfEmployees"
                 placeholder="Enter number of employees"
@@ -429,7 +435,7 @@ function Addcompany() {
             <div className="form-group col-md-4">
               <label>GST Number</label>
               <input
-                className="form-control form-control-sm box"
+                className="form-control form-control-sm box companyD"
                 type="text"
                 name="gstNumber"
                 placeholder="Enter GST number"
@@ -440,7 +446,7 @@ function Addcompany() {
             <div className="form-group col-12">
               <label htmlFor="description">About Us </label>
               <textarea
-                className="form-control form-control-sm"
+                className="form-control form-control-sm companyD"
                 id="description"
                 name="description"
                 style={{ height: "100px" }}

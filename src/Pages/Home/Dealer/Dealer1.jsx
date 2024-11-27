@@ -126,12 +126,16 @@ function Dealer1() {
     
    console.log('categoryname',cat);
     // Save current scroll position before navigation
+
+    const sanitizedCategoryName = cat.name
+    .replace(/&/g, "and")
+    .replace(/\s+/g, "-")
+    .toLowerCase();
+
     sessionStorage.setItem("scrollPosition", window.scrollY);
     // alert('cat',cat);
     // Construct the dynamic URL using category details
-    const dynamicUrl = `/Dealer/Category/${cat.name
-      .replace(/\s+/g, "-")
-      .toLowerCase()}/in-${localStorage.getItem("cityname")}?fircatEncyt=${encodeURIComponent(
+    const dynamicUrl = `/Dealer/Category/${encodeURIComponent(sanitizedCategoryName)}/in-${localStorage.getItem("cityname")}?fircatEncyt=${encodeURIComponent(
       encrypt(parseInt(cat.secondCategoryID))
     )}`;
    
@@ -184,9 +188,9 @@ function Dealer1() {
                     return (
                       <li className="mim-box-list" key={cat.secondCategoryID}  ref={(el) => (categoryRefs.current[cat.secondCategoryID] = el)}>
                         <Link
-                          to={`/Dealer/Category/${cat.name
+                          to={`/Dealer/Category/${encodeURIComponent(cat.name
                             .replace(/\s+/g, "-")
-                            .toLowerCase()}/in-${localStorage.getItem(
+                            .toLowerCase())}/in-${localStorage.getItem(
                             "cityname"
                           )}?fircatEncyt=${encodeURIComponent(
                             encrypt(parseInt(cat.secondCategoryID))
@@ -263,9 +267,9 @@ function Dealer1() {
                                 key={cat.secondCategoryID} ref={(el) => (categoryRefs.current[cat.secondCategoryID] = el)}
                               >
                                 <Link
-                                  to={`/Dealer/Category/${cat.name
+                                  to={`/Dealer/Category/${encodeURIComponent(cat.name.replace(/&/g, "and")
                                     .replace(/\s+/g, "-")
-                                    .toLowerCase()}/in-${localStorage.getItem(
+                                    .toLowerCase())}/in-${localStorage.getItem(
                                     "cityname"
                                   )}?fircatEncyt=${encodeURIComponent(
                                     encrypt(parseInt(cat.secondCategoryID))

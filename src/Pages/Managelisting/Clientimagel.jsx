@@ -265,7 +265,7 @@ function Clientimagel() {
                 <input
                   type="file"
                   onChange={handleFileChange}
-                  className="file-input"
+                  className="file-input "
                   multiple
                   accept="image/*"
                   ref={fileRef}
@@ -281,7 +281,7 @@ function Clientimagel() {
               <div className="form-group">
               <label for="name">Company Name<span className="text-danger">*</span></label>
               <input
-                     className="form-control form-control-sm file-input2"
+                     className="form-control form-control-sm file-input2 companyD"
                     type="name"
                     name="website"
                     id="website"

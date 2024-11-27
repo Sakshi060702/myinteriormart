@@ -113,7 +113,7 @@ function Complaint() {
               <div className="form-group col-12">
                 <label>Title<span className="text-danger">*</span></label>
                 <input
-                  className="form-control"
+                  className="form-control companyD"
                   type="text"
                   name="qualification"
                   value={Title}
@@ -126,7 +126,7 @@ function Complaint() {
               <div className="form-group col-12">
                 <label>Complaint Description<span className="text-danger">*</span></label>
                 <textarea
-                  className="form-control"
+                  className="form-control companyD"
                   id="address"
                   name="address"
                   value={Description}
@@ -143,7 +143,7 @@ function Complaint() {
                 <input
                   type="file"
                   onChange={handleFileChange}
-                  className="form-control file-upload"
+                  className="form-control file-upload companyD"
                   style={{marginLeft:'5px'}}
                    required
                   

@@ -663,7 +663,7 @@ const Addressl = () => {
                     <label htmlFor="localAddress">Local Address</label>
                     <textarea
                       type="text"
-                      className="form-control localAddress-textarea"
+                      className="form-control localAddress-textarea companyD"
                       id="localAddress"
                       placeholder="Enter local address"
                       value={localAddress}

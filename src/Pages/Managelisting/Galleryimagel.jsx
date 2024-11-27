@@ -308,7 +308,7 @@ return file;
                   Gallery Image Title <span className="text-danger">*</span>
                 </label>
                 <input
-                  className="form-control form-control-sm file-input2"
+                  className="form-control form-control-sm file-input2 companyD"
                   type="text"
                   name="title"
                   id="title"

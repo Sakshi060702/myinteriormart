@@ -533,11 +533,12 @@ return file;
                   color: state.isFocused ? "white" : "black", // Text color adjustment
                   cursor: "pointer",
                 }),
-                control: (base) => ({
+                control: (base,state) => ({
                   ...base,
                   height: "50px", // Set the height to match your existing design
                   borderColor: "#ccc",
-                  "&:hover": { borderColor: "#aaa" }, // Hover effect for the control
+                          "&:hover": { borderColor: "orange" },
+                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
                 }),
                 placeholder: (defaultStyles) => ({
                   ...defaultStyles,
@@ -585,11 +586,12 @@ return file;
                   color: state.isFocused ? "white" : "black", // Text color adjustment
                   cursor: "pointer",
                 }),
-                control: (base) => ({
+                control: (base,state) => ({
                   ...base,
                   height: "50px", // Set the height to match your existing design
                   borderColor: "#ccc",
-                  "&:hover": { borderColor: "#aaa" }, // Hover effect for the control
+                  "&:hover": { borderColor: "orange" },
+                  boxShadow:state.isFocused?'0 0 0 1px orange':'none'
                 }),
                 placeholder: (defaultStyles) => ({
                   ...defaultStyles,
@@ -607,7 +609,7 @@ return file;
               type="text"
               name="firstName"
               placeholder="First Name"
-              className="form-control form-control-sm"
+              className="form-control form-control-sm companyD"
               required
               style={{
                 width: "100%",
@@ -624,7 +626,7 @@ return file;
               Last Name <span className="text-danger">*</span>
             </label>
             <input
-              className="form-control form-control-sm"
+              className="form-control form-control-sm companyD"
               type="text"
               name="lastName"
               required
@@ -675,12 +677,13 @@ return file;
                   color: state.isFocused ? "white" : "black", // Adjust text color for readability
                   cursor: "pointer",
                 }),
-                control: (base) => ({
+                control: (base,state) => ({
                   ...base,
                   width: "150%",
                   height: "50px", // Adjust the height as per your requirement
                   borderColor: "#ccc",
-                  "&:hover": { borderColor: "#aaa" }, // Hover effect for the control
+                  "&:hover": { borderColor: "orange" },
+                  boxShadow:state.isFocused?'0 0 0 1px orange':'none'
                 }),
                 placeholder: (defaultStyles) => ({
                   ...defaultStyles,
@@ -728,12 +731,13 @@ return file;
                   color: state.isFocused ? "white" : "black", // Adjust text color for readability
                   cursor: "pointer",
                 }),
-                control: (base) => ({
+                control: (base,state) => ({
                   ...base,
                   width: "150%",
                   height: "50px", // Adjust the height as per your requirement
                   borderColor: "#ccc",
-                  "&:hover": { borderColor: "#aaa" }, // Hover effect for the control
+                  "&:hover": { borderColor: "orange" },
+                  boxShadow:state.isFocused?'0 0 0 1px orange':'none'
                 }),
                 placeholder: (defaultStyles) => ({
                   ...defaultStyles,

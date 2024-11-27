@@ -95,7 +95,7 @@ function ProfileRegister() {
               <div className="form-group col-6">
                 <label>Mobile Number<span className="text-danger">*</span></label>
                 <input
-                  className="form-control"
+                  className="form-control companyD"
                   type="text"
                   name="number"
                   value={mobileNumber}
@@ -120,7 +120,7 @@ function ProfileRegister() {
                   </a>
                 </label>
                 <input
-                  className="form-control"
+                  className="form-control companyD"
                   type="text"
                   name="number"
                   value={email}

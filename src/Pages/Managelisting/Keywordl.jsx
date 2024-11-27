@@ -351,12 +351,15 @@ function Keywordl() {
                         </div>
                       )}
                       styles={{
-                        control: (provided) => ({
+                        control: (provided,state) => ({
                           ...provided,
-                          border: "1px solid #ccc",
+                          // border: "1px solid #ccc",
                           borderRadius: "4px",
                           width: "250px",
                           height: "50px",
+                          borderColor: "#ccc",
+                          "&:hover": { borderColor: "orange" },
+                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
                         }),
                         option:(provided,state)=>({
                           ...provided,

@@ -463,11 +463,14 @@ const Address = () => {
                         color:state.isSelected?'white': state.isFocused ? "white" : provided.color,
                           cursor: "pointer",
                         }),
-                        control: (base) => ({
+                        control: (base,state) => ({
                           ...base,
                           width:'76%',
                           height: "50px",
                           minHeight: "50px",
+                          borderColor: "#ccc",
+                          "&:hover": { borderColor: "orange" },
+                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
                           // borderColor: "#ccc",
                           // "&:hover": { borderColor: "#aaa" },
                         }),
@@ -493,13 +496,14 @@ const Address = () => {
                         color:state.isSelected?'white': state.isFocused ? "white" : provided.color,
                           cursor: "pointer",
                         }),
-                        control: (base) => ({
+                        control: (base,state) => ({
                           ...base,
                           width:'76%',
                           height: "50px",
                           minHeight: "50px",
                           borderColor: "#ccc",
-                          "&:hover": { borderColor: "#aaa" }, // Hover effect for the control
+                          "&:hover": { borderColor: "orange" },
+                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
                         }),
                       }}
                     />
@@ -523,13 +527,14 @@ const Address = () => {
                           color:state.isSelected?'white': state.isFocused ? "white" : provided.color,
                           cursor: "pointer",
                         }),
-                        control: (base) => ({
+                        control: (base,state) => ({
                           ...base,
                           width:'76%',
                           height: "50px",
                           minHeight: "50px",
                           borderColor: "#ccc",
-                          "&:hover": { borderColor: "#aaa" }, // Control hover effect
+                          "&:hover": { borderColor: "orange" },
+                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
                         }),
                       }}
                     />
@@ -555,13 +560,14 @@ const Address = () => {
                           color:state.isSelected?'white': state.isFocused ? "white" : provided.color,
                           cursor: "pointer",
                         }),
-                        control: (base) => ({
+                        control: (base,state) => ({
                           ...base,
                           width:'76%',
                           height: "50px",
                           minHeight: "50px",
                           borderColor: "#ccc",
-                          "&:hover": { borderColor: "#aaa" }, // Control hover effect
+                          "&:hover": { borderColor: "orange" },
+                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
                         }),
                       }}
                     />
@@ -586,13 +592,14 @@ const Address = () => {
                           color:state.isSelected?'white': state.isFocused ? "white" : provided.color,
                           cursor: "pointer",
                         }),
-                        control: (base) => ({
+                        control: (base,state) => ({
                           ...base,
                           width:'76%',
                           height: "50px",
                           minHeight: "50px",
                           borderColor: "#ccc",
-                          "&:hover": { borderColor: "#aaa" }, // Hover effect for the control
+                          "&:hover": { borderColor: "orange" },
+                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
                         }),
                       }}
                     />
@@ -617,13 +624,14 @@ const Address = () => {
                         color:state.isSelected?'white': state.isFocused ? "white" : provided.color,
                           cursor: "pointer",
                         }),
-                        control: (base) => ({
+                        control: (base,state) => ({
                           ...base,
                           width:'76%',
                           height: "50px",
                           minHeight: "50px",
                           borderColor: "#ccc",
-                          "&:hover": { borderColor: "#aaa" }, // Control hover effect
+                          "&:hover": { borderColor: "orange" },
+                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
                         }),
                       }}
                     />
@@ -633,7 +641,7 @@ const Address = () => {
                     <label htmlFor="localAddress">Local Address</label>
                     <textarea
                       type="text"
-                      className="form-control localAddress-textarea"
+                      className="form-control localAddress-textarea companyD"
                       id="localAddress"
                       placeholder="Enter local address"
                       value={localAddress}

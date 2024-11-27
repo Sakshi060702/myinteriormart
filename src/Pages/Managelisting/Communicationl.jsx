@@ -264,7 +264,7 @@ function Communicationl() {
                   <div className="form-group col-md-4">
                     <label htmlFor="email">Email<span className="text-danger">*</span></label>
                     <input
-                      className="form-control form-control-sm box"
+                      className="form-control form-control-sm box companyD"
                       type="email"
                       name="email"
                       id="email"
@@ -281,7 +281,7 @@ function Communicationl() {
                   <div className="form-group col-md-4">
                     <label htmlFor="Mobile2">Mobile<span className="text-danger">*</span> </label>
                     <input
-                      className="form-control form-control-sm box"
+                      className="form-control form-control-sm box companyD"
                       type="text"
                       name="mobile"
                       id="Mobile2"
@@ -296,12 +296,12 @@ function Communicationl() {
                       <div className="text-danger">{error.commuincationMobile}</div>
                     )}
                   </div>
-                  <div className="form-group col-md-4">
+                  <div className="form-group col-md-4 ">
                     <label htmlFor="Mobile">
                     Alternate Mobile No 
                     </label>
                     <input
-                      className="form-control form-control-sm box"
+                      className="form-control form-control-sm box companyD"
                       type="text"
                       name="registerMobile"
                       id="Mobile"
@@ -319,7 +319,7 @@ function Communicationl() {
                   <div className="form-group col-md-4">
                     <label htmlFor="telephone">Telephone<span className="text-danger">*</span></label>
                     <input
-                      className="form-control form-control-sm box"
+                      className="form-control form-control-sm box companyD"
                       type="text"
                       name="telephone"
                       id="telephone"
@@ -337,7 +337,7 @@ function Communicationl() {
                   <div className="form-group col-md-4">
                     <label htmlFor="website">Website<span className="text-danger">*</span></label>
                     <input
-                      className="form-control form-control-sm box"
+                      className="form-control form-control-sm box companyD"
                       type="text"
                       name="website"
                       id="website"
@@ -351,7 +351,7 @@ function Communicationl() {
                   <div className="form-group col-md-4">
                     <label htmlFor="tollfree">Toll Free<span className="text-danger">*</span></label>
                     <input
-                      className="form-control form-control-sm box"
+                      className="form-control form-control-sm box companyD"
                       type="text"
                       name="tollfree"
                       id="tollfree"

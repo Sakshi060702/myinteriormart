@@ -294,7 +294,7 @@ function Certificationimagel() {
                   Certification Title<span className="text-danger">*</span>
                 </label>
                 <input
-                  className="form-control form-control-sm file-input2"
+                  className="form-control form-control-sm file-input2 companyD"
                   type="name"
                   name="website"
                   id="website"

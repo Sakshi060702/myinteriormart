@@ -299,7 +299,7 @@ function Addcommunication() {
                       Email<span className="text-danger">*</span>
                     </label>
                     <input
-                      className="form-control form-control-sm box"
+                      className="form-control form-control-sm box companyD"
                       type="email"
                       name="email"
                       id="email"
@@ -320,7 +320,7 @@ function Addcommunication() {
                       Mobile<span className="text-danger">*</span>{" "}
                     </label>
                     <input
-                      className="form-control form-control-sm box"
+                      className="form-control form-control-sm box companyD"
                       type="text"
                       name="mobile"
                       id="Mobile2"
@@ -341,7 +341,7 @@ function Addcommunication() {
                       Alternate Mobile No 
                     </label>
                     <input
-                      className="form-control form-control-sm box"
+                      className="form-control form-control-sm box companyD"
                       type="text"
                       name="registerMobile"
                       id="Mobile"
@@ -363,7 +363,7 @@ function Addcommunication() {
                       Telephone<span className="text-danger">*</span>
                     </label>
                     <input
-                      className="form-control form-control-sm box"
+                      className="form-control form-control-sm box companyD"
                       type="text"
                       name="telephone"
                       id="telephone"
@@ -384,7 +384,7 @@ function Addcommunication() {
                       Website<span className="text-danger">*</span>
                     </label>
                     <input
-                      className="form-control form-control-sm box"
+                      className="form-control form-control-sm box companyD"
                       type="name"
                       name="website"
                       id="website"
@@ -399,7 +399,7 @@ function Addcommunication() {
                       Toll Free<span className="text-danger">*</span>
                     </label>
                     <input
-                      className="form-control form-control-sm box"
+                      className="form-control form-control-sm box companyD"
                       type="text"
                       name="tollfree"
                       id="tollfree"
