@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
 import { useSearchParams } from "react-router-dom";
 import CryptoJS from "crypto-js";
-
+import { Helmet } from "react-helmet";
 const encryptionKey = 'myinterriorMart@SECRETKEY';
 
 const encrypt = (text) => {
@@ -65,6 +65,10 @@ function FifthCategoryD() {
   };
 
   return (
+    <>
+    <Helmet>
+      <title>{fourthCategoryName?`${fourthCategoryName}|Myinteriormart`:'Myinteriormart'}</title>
+    </Helmet>
     <div className="container margin_80_55 servicecontainer" >
       <div className="main_title_2">
         <span>
@@ -118,9 +122,9 @@ function FifthCategoryD() {
                 {fifthCategory.sixthCategories &&
                   fifthCategory.sixthCategories.length > 0 && (
                     <Link
-                    to={`/Dealer/Category/${fifthCategory.name
+                    to={`/${fifthCategory.name
                       .replace(/\s+/g, "-")
-                      .toLowerCase()}/${fourthCategoryName}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}?fcatEncyt=${encodeURIComponent(encrypt(parseInt(fifthCategory.fifthCategoryID)))}`}
+                      .toLowerCase()}/${fourthCategoryName}/${subcategoryName}/${secondCategoryName}/Dealer/in-${localStorage.getItem('cityname')}?fcatEncyt=${encodeURIComponent(encrypt(parseInt(fifthCategory.fifthCategoryID)))}`}
                       title={fifthCategory.name}
                       style={{ color: "orange" }}
                     >
@@ -133,6 +137,7 @@ function FifthCategoryD() {
         </ul>
       </div>
     </div>
+    </>
   );
 }
 export default FifthCategoryD;

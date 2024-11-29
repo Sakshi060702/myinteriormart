@@ -1154,20 +1154,20 @@ function App() {
         <Route path="/Categoryapi/:cityName" element={<Categoryapi />} />
 
         <Route exact path="/services1" element={<Services1 />} />
-        <Route path="/:categoryName/:cityName" element={<SubCategoryList />} />
+        <Route path="/:categoryName/Services/:cityName" element={<SubCategoryList />} />
 
         
 
         <Route
-          path="/:subcategoryName/:secondCategoryName/:cityName"
+          path="/:subcategoryName/:secondCategoryName/Services/:cityName"
           element={<FourthCategory />}
         />
         <Route
-          path="/:fourthCategoryName/:subcategoryName/:secondCategoryName/:cityName"
+          path="/:fourthCategoryName/:subcategoryName/:secondCategoryName/Services/:cityName"
           element={<FifthCategory />}
         />
         <Route
-          path="/:fifthCategoryName/:fourthCategoryName/:subcategoryName/:secondCategoryName/:cityName"
+          path="/:fifthCategoryName/:fourthCategoryName/:subcategoryName/:secondCategoryName/Services/:cityName"
           element={<SixthCategory />}
         />
 
@@ -1186,37 +1186,37 @@ function App() {
 
         <Route exact path="/contractor1" element={<Contractor1 />} />
         <Route
-          path="/Contractor/:categoryName/:cityName"
+          path="/:categoryName/Contractor/:cityName"
           element={<ThirdcategoryC />}
         />
         <Route
-          path="/Contractor/:subcategoryName/:secondCategoryName/:cityName"
+          path="/:subcategoryName/:secondCategoryName/Contractor/:cityName"
           element={<FourthCategoryC />}
         />
         <Route
-          path="/Contractor/:fourthCategoryName/:subcategoryName/:secondCategoryName/:cityName"
+          path="/:fourthCategoryName/:subcategoryName/:secondCategoryName/Contractor/:cityName"
           element={<FifthCategoryC />}
         />
         <Route
-          path="/Contractor/:fifthCategoryName/:fourthCategoryName/:subcategoryName/:secondCategoryName/:cityName"
+          path="/:fifthCategoryName/:fourthCategoryName/:subcategoryName/:secondCategoryName/Contractor/:cityName"
           element={<SixthCategoryC />}
         />
 
         <Route exact path="/Dealer" element={<Dealer1 />} />
         <Route
-          path="/Dealer/Category/:categoryName/:cityName"
+          path="/:categoryName/Dealer/:cityName"
           element={<ThirdCategoryD />}
         />
         <Route
-          path="/Dealer/Category/:subcategoryName/:secondCategoryName/:cityName"
+          path="/:subcategoryName/:secondCategoryName/Dealer/:cityName"
           element={<FourthCategoryD />}
         />
         <Route
-          path="/Dealer/Category/:fourthCategoryName/:subcategoryName/:secondCategoryName/:cityName"
+          path="/:fourthCategoryName/:subcategoryName/:secondCategoryName/Dealer/:cityName"
           element={<FifthCategoryD />}
         />
         <Route
-          path="/Dealer/Category/:fifthCategoryName/:fourthCategoryName/:subcategoryName/:secondCategoryName/:cityName"
+          path="/:fifthCategoryName/:fourthCategoryName/:subcategoryName/:secondCategoryName/Dealer/:cityName"
           element={<SixthCategoryD />}
         />
 

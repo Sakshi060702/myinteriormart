@@ -4,7 +4,7 @@ import { Link,useLocation } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
 import { useSearchParams } from "react-router-dom";
 import CryptoJS from "crypto-js";
-
+import { Helmet } from "react-helmet";
 const encryptionKey = "myinterriorMart@SECRETKEY";
 
 const encrypt = (text) => {
@@ -80,6 +80,12 @@ function ThirdCategoryD() {
   };
 
   return (
+    <>
+    <Helmet>
+    <title>
+    {selectedCategory ? `${selectedCategory.name} | Myinteriormart` : "Loading... | Myinteriormart"}
+  </title>
+    </Helmet>
     <div className="container margin_80_55 servicecontainer" onScroll={handleScroll}>
       <div className="main_title_2">
         <span>
@@ -138,11 +144,11 @@ function ThirdCategoryD() {
                   {subCategory.fourthCategories &&
                     subCategory.fourthCategories.length > 0 && (
                       <Link
-                        to={`/Dealer/Category/${subCategory.name
+                        to={`/${subCategory.name
                           .replace(/\s+/g, "-")
                           .toLowerCase()}/${selectedCategory.name
                           .replace(/\s+/g, "-")
-                          .toLowerCase()}/in-${localStorage.getItem(
+                          .toLowerCase()}/Dealer/in-${localStorage.getItem(
                           "cityname"
                         )}?secatEncyt=${encodeURIComponent(
                           encrypt(parseInt(subCategory.thirdCategoryID))
@@ -160,6 +166,7 @@ function ThirdCategoryD() {
         )}
       </div>
     </div>
+    </>
   );
 }
 export default ThirdCategoryD;

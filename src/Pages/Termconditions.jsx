@@ -1,10 +1,14 @@
 import React from "react";
 import logoImage from '../FrontEnd/img/logo_sticky.svg'
 import userimg from '../FrontEnd/img/user.svg'
+import { Helmet } from "react-helmet";
 
 function Termconditions(){
 return(
     <>
+    <Helmet>
+    <title> Termconditions | Myinteriormart</title>
+    </Helmet>
     {/* <!--  page Start --> */}
       <div id="page">
 

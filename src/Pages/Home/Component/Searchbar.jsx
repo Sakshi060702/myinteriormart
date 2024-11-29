@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { debounce } from "lodash";
+import { debounce, result } from "lodash";
 import { NavLink } from "react-router-dom";
 import CryptoJS from "crypto-js";
 import "../../../FrontEnd/css/Serchbar.css";
@@ -22,6 +22,17 @@ function Searchbar() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(100);
+
+  const allResultRef=useRef([]);
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  useEffect(() => {
+    if (result) {
+      allResultRef.current = result;
+      setIsInitialized(true); // Mark as initialized once the data is set
+      // console.log("allResultRef initialized:", allResultRef.current);
+    }
+  }, [result]);
 
   const encrypt = (text) => {
     return CryptoJS.AES.encrypt(JSON.stringify(text), encryptionKey).toString();
@@ -67,8 +78,14 @@ function Searchbar() {
     const term = event.target.value;
     setSearchTerm(term);
 
+    
+  if (!isInitialized || !Array.isArray(allResultRef.current)) {
+    // Stop processing if not initialized or not an array
+    return;
+  }
+
     // Filter results by checking if the search term is included in any of the fields
-    const filtered = results
+    const filtered = allResultRef.current
       .filter((item) => {
         // If only category is available and others are null, show the category
         if (
@@ -124,14 +141,14 @@ function Searchbar() {
 
   const handleSearchNavigate = () => {
     const cleanedSearchTerm = searchTerm.replace(/near by/gi, "").trim();
-    console.log('cleanedSearchTerm',cleanedSearchTerm)
+    // console.log('cleanedSearchTerm',cleanedSearchTerm)
 
     const words = cleanedSearchTerm.split(' ');
 
     const Separatelocality = words.pop();  
   const Separatekeyword = words.join(' ');
-  console.log('keyword',Separatekeyword);
-  console.log('locality',Separatelocality);
+  // console.log('keyword',Separatekeyword);
+  // console.log('locality',Separatelocality);
 
 
   const matchResult = filteredResults.find(
@@ -363,7 +380,7 @@ function Searchbar() {
                           <>
                             <span>{result.companyName}</span>
                             <br></br>
-                            {result.localityName && <span className="serchbarTitle">{`  ${result.localityName}`} - {result.keyword}</span>}
+                            {result.localityName && <span className="serchbarTitle">{`  ${result.areaName}`} - {result.localityName}</span>}
                           </>
                         ) : (
                           ""

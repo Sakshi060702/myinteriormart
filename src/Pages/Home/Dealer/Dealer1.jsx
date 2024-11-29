@@ -188,9 +188,9 @@ function Dealer1() {
                     return (
                       <li className="mim-box-list" key={cat.secondCategoryID}  ref={(el) => (categoryRefs.current[cat.secondCategoryID] = el)}>
                         <Link
-                          to={`/Dealer/Category/${encodeURIComponent(cat.name
+                          to={`/${encodeURIComponent(cat.name
                             .replace(/\s+/g, "-")
-                            .toLowerCase())}/in-${localStorage.getItem(
+                            .toLowerCase())}/Dealer/in-${localStorage.getItem(
                             "cityname"
                           )}?fircatEncyt=${encodeURIComponent(
                             encrypt(parseInt(cat.secondCategoryID))
@@ -267,9 +267,9 @@ function Dealer1() {
                                 key={cat.secondCategoryID} ref={(el) => (categoryRefs.current[cat.secondCategoryID] = el)}
                               >
                                 <Link
-                                  to={`/Dealer/Category/${encodeURIComponent(cat.name.replace(/&/g, "and")
+                                  to={`/${encodeURIComponent(cat.name.replace(/&/g, "and")
                                     .replace(/\s+/g, "-")
-                                    .toLowerCase())}/in-${localStorage.getItem(
+                                    .toLowerCase())}/Dealer/in-${localStorage.getItem(
                                     "cityname"
                                   )}?fircatEncyt=${encodeURIComponent(
                                     encrypt(parseInt(cat.secondCategoryID))

@@ -4,6 +4,7 @@ import locationImage from "../FrontEnd/img/location-pin.png";
 import phoneImage from "../FrontEnd/img/phone.png";
 import megaphoneImage from "../FrontEnd/img/megaphone.png";
 import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet";
 
 function Contact() {
   const [latitude, setLatitude] = useState(null);
@@ -93,6 +94,9 @@ console.log('Error in fetching social link',error)
 
   return (
     <>
+    <Helmet>
+    <title>Contact Us | Myinteriormart</title>
+    </Helmet>
       <main style={{ backgroundColor: "white" }}>
         <div className="container py-4">
           <div className="row align-items-center">

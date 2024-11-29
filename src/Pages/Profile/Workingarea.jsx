@@ -44,13 +44,16 @@ const Workingarea = ({ onPinChange }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [pincodeSearchQuery, setPincodeSearchQuery] = useState("");
 
-  const [listingId, setListingId] = useState(null); 
+  const [listingId, setListingId] = useState(null);
   const [status, setStatus] = useState([]);
+
+  const [showPincodeSection, setShowPincodeSection] = useState(true);
 
   const apiUrl =
     "https://apidev.myinteriormart.com/api/Address/GetAddressDropdownMaster";
 
-    const workiareaUrl='https://apidev.myinteriormart.com/api/WorkingArea/SavePincodes';
+  const workiareaUrl =
+    "https://apidev.myinteriormart.com/api/WorkingArea/SavePincodes";
 
   const fetchData = async (type, parentID = null) => {
     let body = {
@@ -101,41 +104,37 @@ const Workingarea = ({ onPinChange }) => {
     country.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // useEffect(() => {
-  //   const fetchUserAddress = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         "https://apidev.myinteriormart.com/api/BinddetailsListing/GetAddressDetailslisting",
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         }
-  //       );
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! Status: ${response.status}`);
-  //       }
-  //       const data = await response.json();
+  useEffect(() => {
+    const fetchUserAddress = async () => {
+      try {
+        const response = await fetch(
+          "https://apidev.myinteriormart.com/api/BinddetailsListing/GetWorkingAreaDetailslisting",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
 
-  //       setSelectedCountry(data.countryID);
-  //       setSelectedState(data.stateID);
-  //       setSelectedCity(data.cityID);
-  //       setSelectedAssembly(data.assemblyID);
-  //       setSelectedPincode(data.pincodeID);
-  //       setSelectedLocality(data.localityID);
-  //       setLocalAddress(data.localAddress);
+        setSelectedCountry(data.countryID);
+        setSelectedState(data.stateID);
+        setSelectedCity(data.cityID);
+        setSelectedAssembly(data.assemblyID);
+        setSelectedPincode(data.selectedPincodesContainer || []);
 
-  //       console.log("locality", data.assemblyID);
-  //       console.log("pincode", data.pincodeID);
-
-  //       console.log("User Address Fetched", data);
-  //     } catch (error) {
-  //       console.error("Error fetching user categories:", error);
-  //     }
-  //   };
-  //   fetchUserAddress();
-  // }, [token]);
+        setShowPincodeSection(false);
+        console.log("User Address Fetched", data);
+      } catch (error) {
+        console.error("Error fetching user categories:", error);
+      }
+    };
+    fetchUserAddress();
+  }, [token]);
 
   useEffect(() => {
     if (selectedCountry) {
@@ -328,20 +327,18 @@ const Workingarea = ({ onPinChange }) => {
     fetchStatus();
   }, [token]);
 
-
-
-
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const submissionData = {
-     ListingID:listingId,
+      ListingID: listingId,
       CountryID: parseInt(selectedCountry),
       StateID: parseInt(selectedState),
       CityID: parseInt(selectedCity),
       AssemblyID: parseInt(selectedAssembly),
-      SelectedPincodesContainer: selectedPincode.map((pincode) => parseInt(pincode, 10))
-     
+      SelectedPincodesContainer: selectedPincode.map((pincode) =>
+        parseInt(pincode, 10)
+      ),
     };
     console.log("Selected Pincodes:", selectedPincode);
     console.log("Submitting data:", submissionData);
@@ -362,14 +359,13 @@ const Workingarea = ({ onPinChange }) => {
         // navigate(pathlisting);
         // console.log("API response:", responseData);
         // console.log("Address token:", token);
-        // setSuccessMessage("Address Details Saved Successfully");
-        // setErrorMessage("");
-        // setShowPopup(true);
+        setSuccessMessage("Working Area Details Saved Successfully");
+        setErrorMessage("");
+        setShowPopup(true);
 
-        // setTimeout(() => {
-        //   setShowPopup(false);
-        //   navigate("/Categoryapi");
-        // }, 2000);
+        setTimeout(() => {
+          setShowPopup(false);
+        }, 3000);
       })
       .catch((error) => {
         console.error("API error:", error);
@@ -442,6 +438,21 @@ const Workingarea = ({ onPinChange }) => {
     label: pincode.number,
   }));
 
+  useEffect(() => {
+    if (assemblies.length > 0) {
+      // Step 1: Collect all pincodes from all assemblies
+      const allPincodes = assemblies.reduce((acc, assembly) => {
+        // Include pincodes from all assemblies in a map
+        assembly.pincodes.forEach((pincode) => {
+          acc[pincode.pincodeID] = pincode.number; // Map pincodeID to label/number
+        });
+        return acc;
+      }, {});
+
+      // Step 2: Update the global pincode map
+      setPincodeMap(allPincodes);
+    }
+  }, [assemblies]);
   //   const handlePincodeCheckboxChange = (e) => {
   //     const value = e.target.value;
   //     if (e.target.checked) {
@@ -565,13 +576,15 @@ const Workingarea = ({ onPinChange }) => {
                             : provided.color,
                           cursor: "pointer",
                         }),
-                        control: (base,state) => ({
+                        control: (base, state) => ({
                           ...base,
                           height: "50px",
                           minHeight: "50px",
                           borderColor: "#ccc",
                           "&:hover": { borderColor: "orange" },
-                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
+                          boxShadow: state.isFocused
+                            ? "0 0 0 1px orange"
+                            : "none",
                         }),
                       }}
                     />
@@ -603,13 +616,15 @@ const Workingarea = ({ onPinChange }) => {
                             : provided.color,
                           cursor: "pointer",
                         }),
-                        control: (base,state) => ({
+                        control: (base, state) => ({
                           ...base,
                           height: "50px",
                           minHeight: "50px",
                           borderColor: "#ccc",
                           "&:hover": { borderColor: "orange" },
-                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
+                          boxShadow: state.isFocused
+                            ? "0 0 0 1px orange"
+                            : "none",
                         }),
                       }}
                     />
@@ -641,13 +656,15 @@ const Workingarea = ({ onPinChange }) => {
                             : provided.color,
                           cursor: "pointer",
                         }),
-                        control: (base,state) => ({
+                        control: (base, state) => ({
                           ...base,
                           height: "50px",
                           minHeight: "50px",
                           borderColor: "#ccc",
                           "&:hover": { borderColor: "orange" },
-                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
+                          boxShadow: state.isFocused
+                            ? "0 0 0 1px orange"
+                            : "none",
                         }),
                       }}
                     />
@@ -681,52 +698,60 @@ const Workingarea = ({ onPinChange }) => {
                             : provided.color,
                           cursor: "pointer",
                         }),
-                        control: (base,state) => ({
+                        control: (base, state) => ({
                           ...base,
                           height: "50px",
                           minHeight: "50px",
                           borderColor: "#ccc",
                           "&:hover": { borderColor: "orange" },
-                          boxShadow:state.isFocused?'0 0 0 1px orange':'none'
+                          boxShadow: state.isFocused
+                            ? "0 0 0 1px orange"
+                            : "none",
                         }),
                       }}
                     />
                   </div>
                   <div className="form-group col-md-4">
-                    <label>
-                      Pincode<span className="text-danger">*</span>
-                    </label>
+                    {showPincodeSection && (
+                      <>
+                        <label>
+                          Pincode<span className="text-danger">*</span>
+                        </label>
+                        <div
+                          className="pincode-checkbox-container"
+                          style={{
+                            border: "1px solid #ccc",
+                            borderRadius: "4px",
+                            padding: "5px 11px 3px 11px",
+                          }}
+                        >
+                          {pincodeOptions && pincodeOptions.length > 0 ? (
+                            pincodeOptions.map((pincode) => (
+                              <label
+                                key={pincode.value}
+                                className="checkbox-label WorkingareaLabel"
+                              >
+                                <input
+                                  type="checkbox"
+                                  className="Workingarea-checkbox"
+                                  value={pincode.value}
+                                  checked={selectedPincode.includes(
+                                    pincode.value
+                                  )}
+                                  onChange={() =>
+                                    handleCheckboxChange(pincode.value)
+                                  }
+                                />
+                                {pincode.label}
+                              </label>
+                            ))
+                          ) : (
+                            <p>No Pincode Options Available</p>
+                          )}
+                        </div>
+                      </>
+                    )}
 
-                    <div
-                      className="pincode-checkbox-container"
-                      style={{
-                        border: "1px solid #ccc",
-                        borderRadius: "4px",
-                        padding: "5px 11px 3px 11px",
-                      }}
-                    >
-                      {pincodeOptions && pincodeOptions.length > 0 ? (
-                        pincodeOptions.map((pincode) => (
-                          <label
-                            key={pincode.value}
-                            className="checkbox-label WorkingareaLabel"
-                          >
-                            <input
-                              type="checkbox"
-                              className="Workingarea-checkbox"
-                              value={pincode.value}
-                              checked={selectedPincode.includes(pincode.value)}
-                              onChange={() =>
-                                handleCheckboxChange(pincode.value)
-                              }
-                            />
-                            {pincode.label}
-                          </label>
-                        ))
-                      ) : (
-                        <p>No Pincode Options Available</p>
-                      )}
-                    </div>
                     {/* <h3>Selected Pincode</h3> */}
                     {/* {selectedPincode.length > 0 ? (
                       <ul>
@@ -804,18 +829,16 @@ const Workingarea = ({ onPinChange }) => {
                 <div className="row">
                   {selectedPincode.length > 0 ? (
                     <ul className="WorkingareaUl">
-                      {selectedPincode.map((pincodeValue) => {
+                      {selectedPincode.map((pincodeID) => {
                         // Get the label from pincodeMap
-                        const pincodeLabel = pincodeMap[pincodeValue];
-
+                        const pincodeLabel = pincodeMap[pincodeID] || pincodeID; // Fallback to pincodeID if no label found
                         return (
-                          <li key={pincodeValue} className="WorkingAreaPincode">
-                            {pincodeLabel ? pincodeLabel : pincodeValue}{" "}
-                            {/* Show label if found, otherwise fallback to value */}
+                          <li key={pincodeID} className="WorkingAreaPincode">
+                            {pincodeLabel}
                             <button
                               className="WorkingAreaRemovetbtn"
                               type="button"
-                              onClick={() => handleRemovePincode(pincodeValue)}
+                              onClick={() => handleRemovePincode(pincodeID)}
                             >
                               x
                             </button>
@@ -843,12 +866,6 @@ const Workingarea = ({ onPinChange }) => {
                     }}
                   >
                     {" "}
-                    <Link to="/communicationl">
-                      <img src={previousarrowimg} style={{ height: "30px" }} />
-                    </Link>
-                    <Link to="/Categoryapi">
-                      <img src={nextarrowimg} style={{ height: "30px" }} />
-                    </Link>
                   </div>
                 </div>
 

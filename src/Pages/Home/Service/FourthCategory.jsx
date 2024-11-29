@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
 import { useSearchParams } from "react-router-dom";
 import CryptoJS from "crypto-js";
-
+import { Helmet } from "react-helmet";
 const encryptionKey = 'myinterriorMart@SECRETKEY';
 
 const encrypt = (text) => {
@@ -87,6 +87,12 @@ console.log(decrypt(listingId_enc))
   };
 
   return (
+    <>
+    <Helmet>
+    <title>
+    {subcategoryName ? `${subcategoryName} | Myinteriormart` : "Loading... | Myinteriormart"}
+  </title>
+    </Helmet>
     <div>
       <div className="container margin_80_55 servicecontainer" >
         <div className="main_title_2">
@@ -148,7 +154,7 @@ console.log(decrypt(listingId_enc))
                       <Link
                         to={`/${fourthCategory.name
                           .replace(/\s+/g, "-")
-                          .toLowerCase()}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}?thcatEncyt=${encodeURIComponent(encrypt(parseInt(fourthCategory.fourthCategoryID)))}`}
+                          .toLowerCase()}/${subcategoryName}/${secondCategoryName}/Services/in-${localStorage.getItem('cityname')}?thcatEncyt=${encodeURIComponent(encrypt(parseInt(fourthCategory.fourthCategoryID)))}`}
                         title={fourthCategory.name}
                         style={{ color: "orange" }}
                       >
@@ -162,6 +168,7 @@ console.log(decrypt(listingId_enc))
         </div>
       </div>
     </div>
+    </>
   );
 };
 

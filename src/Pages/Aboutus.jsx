@@ -2,6 +2,7 @@ import React,{useState,useEffect} from "react";
 import { useParams } from "react-router-dom";
 
 import founderimg from "../FrontEnd/img/founder.jpg";
+import { Helmet } from "react-helmet";
 
 function Aboutus() {
   //  const { cityName } = useParams();
@@ -21,6 +22,9 @@ function Aboutus() {
   }, []);
   return (
     <>
+    <Helmet>
+    <title>About Us | Myinteriormart</title>
+    </Helmet>
     {/* <h6>{cityName}</h6> */}
       <div class="container mt-4 mb-4">
         <div class="row">

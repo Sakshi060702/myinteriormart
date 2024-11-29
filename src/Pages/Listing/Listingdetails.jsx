@@ -909,9 +909,13 @@ function Listingdetails() {
     <>
       <Helmet>
         <title>{`${listingDetails.companyName} | Myinteriormart`}</title>
-        <meta
+        {/* <meta
           name="title"
           content={`${listingDetails.companyName} | Myinteriormart`}
+        /> */}
+        <meta
+          name="description"
+          content={`${listingDetails.description} | Myinteriormart`}
         />
       </Helmet>
       <div className="sticky-searchbar">

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
 import { useSearchParams } from "react-router-dom";
-
+import { Helmet } from "react-helmet";
 import CryptoJS from "crypto-js";
 
 const encryptionKey = 'myinterriorMart@SECRETKEY';
@@ -67,6 +67,10 @@ console.log(decrypt(listingId_enc))
   };
 
   return (
+    <>
+    <Helmet>
+      <title>{subcategoryName?`${subcategoryName}|Myinteriormart`:'Myinteriormart'}</title>
+    </Helmet>
     <div className="container margin_80_55 servicecontainer">
       <div className="main_title_2">
         <span>
@@ -120,9 +124,9 @@ console.log(decrypt(listingId_enc))
                 {fourthCategory.fifthCategories &&
                   fourthCategory.fifthCategories.length > 0 && (
                     <Link
-                    to={`/Contractor/${fourthCategory.name
+                    to={`/${fourthCategory.name
                       .replace(/\s+/g, "-")
-                      .toLowerCase()}/${subcategoryName}/${secondCategoryName}/in-${localStorage.getItem('cityname')}?thcatEncyt=${encodeURIComponent(encrypt(parseInt(fourthCategory.fourthCategoryID)))}`}
+                      .toLowerCase()}/${subcategoryName}/${secondCategoryName}/Contractor/in-${localStorage.getItem('cityname')}?thcatEncyt=${encodeURIComponent(encrypt(parseInt(fourthCategory.fourthCategoryID)))}`}
                   title={fourthCategory.name}
                       style={{ color: "ornage" }}
                     >
@@ -135,6 +139,7 @@ console.log(decrypt(listingId_enc))
         </ul>
       </div>
     </div>
+    </>
   );
 }
 export default FourthCategoryC;

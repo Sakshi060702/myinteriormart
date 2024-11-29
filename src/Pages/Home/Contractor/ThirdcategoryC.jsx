@@ -6,6 +6,7 @@ import { useSearchParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 import CryptoJS from "crypto-js";
+import { Helmet } from "react-helmet";
 
 const encryptionKey = "myinterriorMart@SECRETKEY";
 
@@ -82,6 +83,12 @@ function ThirdcategoryC() {
   };
 
   return (
+    <>
+    <Helmet>
+    <title>
+    {selectedCategory ? `${selectedCategory.name} | Myinteriormart` : "Loading... | Myinteriormart"}
+  </title>
+    </Helmet>
     <div id="popular-categories" className="container margin_80_55 contractorcontainer" >
       <div className="main_title_2">
         <span>
@@ -141,11 +148,11 @@ function ThirdcategoryC() {
                   {subCategory.fourthCategories &&
                     subCategory.fourthCategories.length > 0 && (
                       <Link
-                        to={`/Contractor/${subCategory.name
+                        to={`/${subCategory.name
                           .replace(/\s+/g, "-")
                           .toLowerCase()}/${selectedCategory.name
                           .replace(/\s+/g, "-")
-                          .toLowerCase()}/in-${localStorage.getItem(
+                          .toLowerCase()}/Contractor/in-${localStorage.getItem(
                           "cityname"
                         )}?secatEncyt=${encodeURIComponent(
                           encrypt(parseInt(subCategory.thirdCategoryID))
@@ -163,6 +170,7 @@ function ThirdcategoryC() {
         )}
       </div>
     </div>
+    </>
   );
 }
 

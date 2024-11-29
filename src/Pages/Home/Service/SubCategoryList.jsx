@@ -6,6 +6,7 @@ import Foot from "../Component/Foot";
 
 import { Link } from "react-router-dom";
 import CryptoJS from "crypto-js";
+import { Helmet } from "react-helmet";
 
 const encryptionKey = "myinterriorMart@SECRETKEY";
 
@@ -29,6 +30,7 @@ const SubCategoryList = () => {
   console.log(secondCategoryId);
   console.log("listingid", secondCategoryId);
   console.log(decrypt(listingId_enc));
+  console.log('selectedcategory',selectedCategory);
 
   console.log('hello');
   useEffect(() => {
@@ -60,6 +62,12 @@ const SubCategoryList = () => {
   };
 
   return (
+    <>
+    <Helmet>
+    <title>
+    {selectedCategory ? `${selectedCategory.name} | Myinteriormart` : "Loading... | Myinteriormart"}
+  </title>
+    </Helmet>
     <div>
       <div className="container margin_80_55 servicecontainer">
         <div className="main_title_2">
@@ -143,7 +151,7 @@ const SubCategoryList = () => {
                     .replace(/\s+/g, "-")
                     .toLowerCase()}/${selectedCategory.name
                     .replace(/\s+/g, "-")
-                    .toLowerCase()}/in-${localStorage.getItem("cityname")}?secatEncyt=${encodeURIComponent(
+                    .toLowerCase()}/Services/in-${localStorage.getItem("cityname")}?secatEncyt=${encodeURIComponent(
                     encrypt(parseInt(subCategory.thirdCategoryID))
                   )}`}
                   title={subCategory.name}
@@ -165,7 +173,7 @@ const SubCategoryList = () => {
         <Foot />
       </div> */}
     </div>
-    
+    </>
   );
 };
 

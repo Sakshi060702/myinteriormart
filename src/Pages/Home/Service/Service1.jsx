@@ -11,6 +11,7 @@ import { Carousel } from "react-bootstrap";
 import { height, width } from "@fortawesome/free-solid-svg-icons/faL";
 import { saveScrollPosition,restoreScrollPosition } from "../../Scrollutilis";
 
+
 const encryptionKey = "myinterriorMart@SECRETKEY";
 
 const encrypt = (text) => {
@@ -140,7 +141,7 @@ const Services1 = () => {
                       <Link
                         to={`/${category.name
                           .replace(/\s+/g, "-")
-                          .toLowerCase()}/in-${localStorage.getItem(
+                          .toLowerCase()}/Services/in-${localStorage.getItem(
                           "cityname"
                         )}?fircatEncyt=${encodeURIComponent(
                           encrypt(parseInt(category.secondCategoryID))
@@ -215,7 +216,7 @@ const Services1 = () => {
                           <Link
                             to={`/${category.name
                               .replace(/\s+/g, "-")
-                              .toLowerCase()}/in-${localStorage.getItem(
+                              .toLowerCase()}/Services/in-${localStorage.getItem(
                               "cityname"
                             )}?fircatEncyt=${encodeURIComponent(
                               encrypt(parseInt(category.secondCategoryID))

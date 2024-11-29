@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "../../../FrontEnd/css/Service.css";
 import { useSearchParams } from "react-router-dom";
 import CryptoJS from "crypto-js";
+import { Helmet } from "react-helmet";
 
 const encryptionKey = 'myinterriorMart@SECRETKEY';
 
@@ -75,6 +76,10 @@ function SixthCategory() {
   };
 
   return (
+    <>
+    <Helmet>
+      <title>{fifthCategoryName?`${fifthCategoryName}| Myinteriormart`:"Loading... | Myinteriormart"}</title>
+    </Helmet>
     <div>
       <div className="container margin_80_55 servicecontainer" >
         <div className="main_title_2">
@@ -132,6 +137,7 @@ function SixthCategory() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

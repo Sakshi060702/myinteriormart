@@ -159,9 +159,9 @@ function Contractor1() {
                         ref={(el) => (categoryRefs.current[category.secondCategoryID] = el)}
                       >
                         <Link
-                          to={`/Contractor/${category.name
+                          to={`/${category.name
                             .replace(/\s+/g, "-")
-                            .toLowerCase()}/in-${localStorage.getItem(
+                            .toLowerCase()}/Contractor/in-${localStorage.getItem(
                             "cityname"
                           )}?fircatEncyt=${encodeURIComponent(
                             encrypt(parseInt(category.secondCategoryID))
@@ -238,9 +238,9 @@ function Contractor1() {
                             // key={category.secondCategoryID}
                           >
                             <Link
-                              to={`/Contractor/${category.name
+                              to={`/${category.name
                                 .replace(/\s+/g, "-")
-                                .toLowerCase()}/in-${localStorage.getItem(
+                                .toLowerCase()}/Contractor/in-${localStorage.getItem(
                                 "cityname"
                               )}?fircatEncyt=${encodeURIComponent(
                                 encrypt(parseInt(category.secondCategoryID))
