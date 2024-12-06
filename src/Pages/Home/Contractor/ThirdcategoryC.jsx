@@ -84,11 +84,11 @@ function ThirdcategoryC() {
 
   return (
     <>
-    <Helmet>
+    {/* <Helmet>
     <title>
     {selectedCategory ? `${selectedCategory.name} | Myinteriormart` : "Loading... | Myinteriormart"}
   </title>
-    </Helmet>
+    </Helmet> */}
     <div id="popular-categories" className="container margin_80_55 contractorcontainer" >
       <div className="main_title_2">
         <span>
