@@ -94,24 +94,32 @@ function SearchListing() {
       const fetchCategoryListings = async () => {
         try {
           const response = await fetch(
-            `https://apidev.myinteriormart.com/api/Listings/GetCategoriesListingByKeywordLocation?cityName=Mumbai&Keywords=${searching}&pageNumber=${currentPage}&pageSize=${itemsPerPage}`
+            `https://apidev.myinteriormart.com/api/SearchListings/search?searchText=${searching}`
           );
           if (!response.ok) {
             throw new Error('Failed to fetch data');
           }
           const data = await response.json();
-          // console.log('Filtered listings data', data);
+          console.log(' listings data', data);
+          console.log('serching',searching);
+          const matchingKeyword = data.keywords?.find(
+            (keyItem) => keyItem.keyword.trim().toLowerCase() === searching.trim().toLowerCase()
+          );
+
+          console.log('matchingKeyword',matchingKeyword)
+  
+          // Filter listings with a valid listingId
+          const filteredListings = matchingKeyword?.listings.filter(
+            (listing) => listing.listingId
+          ) || [];
+  
+          console.log('Filtered Listings:', filteredListings);
+  
+          
+          //console.log('SerchListing',SerchListing);
       
           // Prepend the fetched listings on top of the current listings
-          setListing((prevListings) => {
-            // Ensure only unique listings are shown in case of duplicate listings
-            const newListings = data.filter((newListing) =>
-              prevListings.every(
-                (existingListing) => existingListing.listingId !== newListing.listingId
-              )
-            );
-            return [...newListings, ...prevListings];
-          });
+          setListing(filteredListings);
         } catch (error) {
           console.error('Error fetching listings:', error);
         }
@@ -330,23 +338,23 @@ navigate(ClaimForgetpassword)
         <div style={{ display: "flex" }}>
           <div className="listing-list col-9 ">
             {listing.length > 0 ? (
-              listing.map((listing) => (
-                <div key={listing.listingId} className="row mb-10">
+              listing.map((item,index) => (
+                <div key={`${item.listingId}-${index}`} className="row mb-10">
                   <div className="col-12">
-                    <Link to={`/company/${listing.companyName
+                    <Link to={`/company/${item.companyName
                         .replace(/\s+/g, "-")
-                        .toLowerCase()}/${listing.subCategory[0]?.name.replace(/\s+/g, "-").toLowerCase()}/in-${listing.locality
+                        .toLowerCase()}/${item.category.replace(/\s+/g, "-").toLowerCase()}/in-${item.localityName
                         .replace(/\s+/g, "-")
                         .toLowerCase()}/${localStorage.getItem(
                         "cityname"
                       )}?listingEncyt=${encodeURIComponent(
-                        encrypt(listing.listingId)
+                        encrypt(item.listingId)
                       )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
-                        encrypt(parseInt(listing.subCategory[0]?.id))
+                        encrypt(parseInt(item.categoryid))
                       )}`}>
                       <div className="strip map_view stripmapviewdesign" style={{
                             border:
-                              searching == listing.listingKeyword
+                              searching == item.companyName
                                 ? "2px solid white"
                                 : "None",
                           }}>
@@ -362,7 +370,7 @@ navigate(ClaimForgetpassword)
                               }}
                             >
                               {" "}
-                              {listing.companyName}
+                              {item.companyName}
                             </h5>
                          
                         </h6>
@@ -395,255 +403,26 @@ navigate(ClaimForgetpassword)
                                 {listing.companyName}
                               </Link>
                             </h3> */}
-                              <small className="listingcolor">
+
+
+                              {/* <small className="listingcolor">
                                 {listing.listingKeyword}
-                              </small>
+                              </small> */}
 
                               <p className="listingcolor" style={{marginBottom:'4px'}}>
                                 <i
                                   className="fa fa-map-marker"
                                   style={{ paddingRight: "5px" }}
                                 ></i>
-                                {listing.area},<span style={{marginLeft:'8px'}}>{listing.locality}</span>
+                                {item.areaName},<span style={{marginLeft:'8px'}}>{item.localityName}</span>
                               </p>
-                              <div className="business-info-container listingcolor">
-                                <BusinessHours
-                                  businessWorking={listing.businessWorking}
-                                />
-
-                                {/* Rating below business hours for mobile */}
-                                {/* Rating below business hours for mobile */}
-                                <div className="rating-container mobile">
-                                  <div
-                                    className="listingrating"
-                                    style={{
-                                      display: "flex",
-                                      alignItems: "center",
-                                    }}
-                                  >
-                                    <h4
-                                      className="reating-number reactingnumberfont"
-                                      style={{
-                                        marginRight: "8px",
-                                        fontSize: "12px",
-                                      }}
-                                    >
-                                      {listing.ratingAverage}.0
-                                    </h4>
-                                    <div
-                                      className="cat_star listingstar"
-                                      style={{
-                                        display: "flex",
-                                        paddingBottom: "11px",
-                                      }}
-                                    >
-                                      {Array(5)
-                                        .fill()
-                                        .map((_, i) => (
-                                          <i
-                                            key={i}
-                                            className="icon_star"
-                                            style={{
-                                              color:
-                                                i < listing.ratingAverage
-                                                  ? "orange"
-                                                  : "",
-                                              fontSize: "12px",
-                                              marginRight: "2px",
-                                            }}
-                                          ></i>
-                                        ))}
-                                    </div>
-                                    <h4  style={{
-                                        marginRight: "8px",
-                                        fontSize: "12px",
-                                      }}>
-                                    ({listing.ratingCount})
-                                    </h4>
-                                    
-                                  </div>
-                                </div>
-
-                                <div
-                                  className="rating-container desktop st"
-                                  style={{ marginLeft: "8px" }}
-                                >
-                                  <ul
-                                    className="listingrating"
-                                    style={{
-                                      marginTop: "-40px",
-                                      marginLeft: "-38px",
-                                      marginBottom: "-13px",
-                                    }}
-                                  >
-                                    <ul className="reating-list">
-                                      <li>
-                                        <h4 className="reating-number reactingnumberfont">
-                                          {listing.ratingAverage}.0
-                                        </h4>
-                                      </li>
-                                      <li className="reating-star">
-                                        <div className="cat_star">
-                                          {Array(5)
-                                            .fill()
-                                            .map((_, i) => (
-                                              <i
-                                                key={i}
-                                                className="icon_star"
-                                                style={{
-                                                  color:
-                                                    i < listing.ratingAverage
-                                                      ? "orange"
-                                                      : "",
-                                                  fontSize: "16px",
-                                                }}
-                                              ></i>
-                                            ))}
-                                        </div>
-                                      </li>
-                                      <li>{listing.ratingCount} Rating</li>
-                                    </ul>
-                                  </ul>
-                                </div>
-                              </div>
+                             
                             </div>
                           </div>
 
-                          <div className="col-2 listingcompanyletter">
-                            {listing.logoImage &&
-                            listing.logoImage.imagePath ? (
-                              <img
-                                src={`https://apidev.myinteriormart.com${listing.logoImage.imagePath}`}
-                                alt={`${listing.companyName} Logo`}
-                                className="card-img-top listingimage listimg listimgborder"
-                                
-                                // style={{ height: "150px" }}
-                              />
-                            ) : (
-                              <div
-                                className="client_first_letter listingimage"
-                                style={{ height: "141px", width: "141px" }}
-                              >
-                                {listing.companyFirstLetter}
-                              </div>
-                            )}
-                          </div>
+                          
 
-                          <div className="col-lg-12 listing-bottom listingbottom">
-                            <ul className="listing-bottom-list">
-                              {/* Rating in listing bottom for desktop */}
-                              <div>
-                                <div>
-                                  <li className="listingyear listingyearmim">
-                                    <h5 className="yearbusiness" style={{paddingTop:'3px'}}>
-                                      <p style={{ color: "gray" }}>
-                                        {" "}
-                                        Since {listing.businessYear} Year
-                                      </p>
-                                    </h5>
-                                  </li>
-                                </div>
-
-                                <div style={{ display: "flex" }}>
-                                  <div>
-                                    <li
-                                      style={{
-                                        marginLeft: "-1px",
-                                        marginRight: "4px",
-                                        marginTop: "-6px",
-                                      }}
-                                    >
-                                      <p className="listingcallnow">
-                                        <a href={`tel:${listing.mobile}`} className="loc_open call-now callnowl  listingcallnowinner listingcallnow_btn"
-                                        onClick={(e)=>{e.preventDefault();e.stopPropagation();
-                                          window.location.href=`tel:${listing.mobile}`;
-                                        }}>
-                                        
-                                          Call now
-                                        </a>
-                                      </p>
-                                    </li>
-                                  </div>
-                                  <div>
-                                    <li>
-                                      <p className="listinggetclaim">
-                                        {/* {listing.claimedListing ?(
-                                           <button
-                                           className="btn btn-guotes btn-sm getclaimbtn"
-                                           style={{
-                                             boxShadow:
-                                               "0 4px 8px rgba(0, 0, 0, 0.2)",
-                                             transition:
-                                               "box-shadow 0.3s ease-in-out",
-                                           }}
-                                           onClick={(event) => {
-                                             event.preventDefault();
-                                             event.stopPropagation();
-                                             // setIsPopupOpen([
-                                             //   true,
-                                             //   listing.listingId,
-                                             // ]);
-                                             Getclaimhandleclick();
-                                           }}
-                                         >
-                                           Get Claim
-                                         </button>
-                                           
-                                          
-                                        ):(
-                                          <button
-                                          className="btn btn-guotes btn-sm getclaimbtn"
-                                          style={{
-                                            boxShadow:
-                                              "0 4px 8px rgba(0, 0, 0, 0.2)",
-                                            transition:
-                                              "box-shadow 0.3s ease-in-out",
-                                          }}
-                                          onClick={(event) => {
-                                            event.preventDefault();
-                                            event.stopPropagation();
-                                            setIsPopupOpen([
-                                              true,
-                                              listing.listingId,
-                                            ]);
-                                          }}
-                                        >
-                                          Get Quotes
-                                        </button>
-                                        )} */}
-
-<button
-                                          className="btn btn-guotes btn-sm getclaimbtn"
-                                          style={{
-                                            boxShadow:
-                                              "0 4px 8px rgba(0, 0, 0, 0.2)",
-                                            transition:
-                                              "box-shadow 0.3s ease-in-out",
-                                          }}
-                                          onClick={(event) => {
-                                            event.preventDefault();
-                                            event.stopPropagation();
-                                            setIsPopupOpen([
-                                              true,
-                                              listing.listingId,
-                                            ]);
-                                          }}
-                                        >
-                                          Get Quotes
-                                        </button>
-                                        <p className="pakagediv">{listing.packageID >0 && (
-                                          <img src={verifiedImage} style={{width:'70px',height:'59px',marginLeft:'166px',marginTop:'-52px'}}/>
-                                        )}</p>
-                                        
-                                      </p>
-                                    </li>
-                                  </div>
-
-                                  
-                                </div>
-                              </div>
-                            </ul>
-                          </div>
+                        
                         </div>
                       </div>
                       </Link>

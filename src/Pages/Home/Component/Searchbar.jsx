@@ -94,34 +94,38 @@ function Searchbar() {
   useEffect(() => {
     console.log("Hi this is special", filteredResults);
 
-    const cate=results.matchedCategory ?[results.matchedCategory.category]:[];
-    const key=results.keywords||[];
-    const comp=results.companyNameMatches||[];
-    const spe=results.specializationMatches||[];
+    const cate = results.matchedCategory
+      ? [results.matchedCategory.category]
+      : [];
+    const key = results.keywords || [];
+    const comp = results.companyNameMatches || [];
+    const spe = results.specializationMatches || [];
 
     console.log("cate", cate);
     console.log("key", key);
     console.log("comp", comp);
     console.log("spe", spe);
 
-    const uniqueResults=Array.from(new Set([ ...phoneData,
-      ...combinedResults,
-      ...specilisationResult,
-      
+    const uniqueResults = Array.from(
+      new Set([
+        ...phoneData,
+        ...combinedResults,
+        ...specilisationResult,
 
-      ...cate,
-      ...key.map((keyitem)=>keyitem.keyword),
-      ...comp.map((compitem)=>compitem.companyName),
-      ...spe.map((spitem)=>spitem.specialization)]));
-    
-      setFilteredResults(uniqueResults);
-      console.log('uniqueResults',uniqueResults);
+        ...cate,
+        ...key.map((keyitem) => keyitem.keyword),
+        ...comp.map((compitem) => compitem.companyName),
+        ...spe.map((spitem) => spitem.specialization),
+      ])
+    );
+
+    setFilteredResults(uniqueResults);
+    console.log("uniqueResults", uniqueResults);
 
     // setFilteredResults([
     //   ...phoneData,
     //   ...combinedResults,
     //   ...specilisationResult,
-      
 
     //   ...cate,
     //   ...key.map((keyitem)=>keyitem.keyword),
@@ -129,7 +133,7 @@ function Searchbar() {
     //   ...spe.map((spitem)=>spitem.specialization)
 
     // ]);
-    console.log('fResult',filteredResults)
+    console.log("fResult", filteredResults);
     // console.log("result", results);
     console.log("specilisation", results.specializationMatches);
     console.log("keywords", results.keywords);
@@ -145,7 +149,7 @@ function Searchbar() {
 
   useEffect(() => {
     if (searchTerm.trim().length > 0 && filteredResults.length > 0) {
-      console.log('sResult',filteredResults);
+      console.log("sResult", filteredResults);
       setShowDropdown(true);
     } else {
       setShowDropdown(false);
@@ -460,113 +464,162 @@ function Searchbar() {
     setShowDropdown(true);
   };
 
-  const handleRedirect = (result) => {
-    console.log('serResult', result);
+  const handleRedireNavigate = (result, selectedKeyword) => {
+    const allResult = results;
+    console.log("All results:", allResult);
 
-    if (
-      result.matchedCategory &&
-      result.matchedCategory?.category &&
-      result.matchedCategory.category.toLowerCase() ===
-        searchTerm.toLowerCase()
-    ) {
-      console.log("matchedCategory:", result.matchedCategory);
-      console.log("category:", result.matchedCategory.category);
+    console.log('selectedkwyword',selectedKeyword.props.children);
 
-      return  `/All/Search/${result.matchedCategory.category
-        .replace(/\s+/g, "-")
-        .toLowerCase()}/in-${localStorage.getItem(
-        "cityname"
-      )}?secatEncyt=${encodeURIComponent(
-        encrypt(parseInt(result.matchedCategory.categoryId))
-      )}`;
-    }
+    //category
+    const matchedCategory = allResult.matchedCategory || {};
+    console.log("Navigating", matchedCategory);
 
-    else if (result.keywords && result.keywords.length > 0) {
-      const matchedKeyword = result.keywords.find(keyword =>
-          keyword.keyword.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      console.log('hii')
-     
-      
-      if (matchedKeyword) {
-        
-          // Redirect to the All/Search page for the keyword match
-          console.log('Keyword match:', matchedKeyword.keyword);
-          // console.log('listing',matchedKeyword.listings[0])
-          // matchedKeyword.listings.forEach(listing=>{
-          //   console.log('Listing:', listing);
-          // })
-          return `/All/Listing/in-${localStorage.getItem(
-          "cityname"
-        )}?searchkey=${encodeURIComponent(matchedKeyword.keyword)}`;
-      }
-  } else if (
-    result.companyNameMatches &&
-    result.companyNameMatches.length > 0
-) {
-    // Redirect to company URL if companyNameMatches exists and is clicked
-    const matchedCompany = result.companyNameMatches.find(company =>
-        company.companyName.toLowerCase().includes(searchTerm.toLowerCase())
+    //keyword
+    const keywords = allResult.keywords || [];
+    console.log("matchKeyword", keywords);
+
+    //companyname
+    const companyname=allResult.companyNameMatches||[];
+    console.log('companyname',companyname);
+
+    
+
+    const matchKeyword = keywords.find(
+      (keyItem) => keyItem.keyword === selectedKeyword.props.children
     );
-console.log('matchedCompany',matchedCompany);
-    if (matchedCompany) {
-        console.log("Company match:", matchedCompany.companyName);
-        console.log("category match:", matchedCompany.category);
-        console.log("listingId match:", matchedCompany.listingId);
+    console.log("matchKey", matchKeyword);
 
-        return `/company/${matchedCompany.companyName
-            .replace(/\s+/g, "-")
-            .toLowerCase()}/${matchedCompany.category
-            .replace(/\s+/g, "-")
-            .toLowerCase()}/locality/in-${localStorage.getItem(
-            "cityname"
-        )}?listingEncyt=${encodeURIComponent(
-            encrypt(parseInt(matchedCompany.listingId))
-        )}`;
-    }
-}
-  else if (
-        result.mobilenumber &&
-        searchTerm.toLowerCase() === result.mobilenumber.toLowerCase()
-    ) {
-        console.log('mobileCompany', result.companyName);
-
-        const companyName = result.companyName || "unknown";
-        const categoryName = result.category || "general";
-
-        return `/company/${companyName
-            .replace(/\s+/g, "-")
-            .toLowerCase()}/${categoryName
-            .replace(/\s+/g, "-")
-            .toLowerCase()}/locality/in-${localStorage.getItem(
-            "cityname"
-        )}?listingEncyt=${encodeURIComponent(
-            encrypt(parseInt(result.listingId))
-        )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
-            encrypt(parseInt(result.categoryId))
-        )}`;
+    if (matchKeyword) {
+      const keyName = matchKeyword.keyword;
+      console.log("keyname", keyName);
+      if (keyName) {
+        const targetUrl = `/All/Listing/in-${localStorage.getItem(
+          "cityname"
+        )}?searchkey=${encodeURIComponent(keyName)}`;
+        console.log("nav", targetUrl);
+        navigate(targetUrl);
+      }
+    } else if (matchedCategory) {
+      const catName = matchedCategory.category; // Get category name
+      const catId = matchedCategory.categoryId; // Get category ID
+      if (catName && catId) {
+        const targetUrl = `/All/Search/${catName
+          .replace(/\s+/g, "-")
+          .toLowerCase()}/in-${localStorage.getItem(
+          "cityname"
+        )}?secatEncyt=${encodeURIComponent(encrypt(parseInt(catId)))}`;
+        console.log("nav", targetUrl);
+        navigate(targetUrl);
+      }
     } else {
-        const companyName = result.companyName || "unknown";
-       // console.log('comp', companyName);
-
-        const categoryName = result.category || "general";
-        console.log('categoryName', categoryName);
-
-        return `/company/${companyName
-            .replace(/\s+/g, "-")
-            .toLowerCase()}/${categoryName
-            .replace(/\s+/g, "-")
-            .toLowerCase()}/locality/in-${localStorage.getItem(
-            "cityname"
-        )}?listingEncyt=${encodeURIComponent(
-            encrypt(parseInt(result.listingId))
-        )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
-            encrypt(parseInt(result.categoryId))
-        )}`;
+      console.error("Url not found");
     }
-};
+  };
 
-  
+  //   const handleRedirect = (result) => {
+  //     console.log('serResult', result);
+
+  //     if (
+  //       result.matchedCategory &&
+  //       result.matchedCategory?.category &&
+  //       result.matchedCategory.category.toLowerCase() ===
+  //         searchTerm.toLowerCase()
+  //     ) {
+  //       console.log("matchedCategory:", result.matchedCategory);
+  //       console.log("category:", result.matchedCategory.category);
+
+  //       return  `/All/Search/${result.matchedCategory.category
+  //         .replace(/\s+/g, "-")
+  //         .toLowerCase()}/in-${localStorage.getItem(
+  //         "cityname"
+  //       )}?secatEncyt=${encodeURIComponent(
+  //         encrypt(parseInt(result.matchedCategory.categoryId))
+  //       )}`;
+  //     }
+
+  //     else if (result.keywords && result.keywords.length > 0) {
+  //       const matchedKeyword = result.keywords.find(keyword =>
+  //           keyword.keyword.toLowerCase().includes(searchTerm.toLowerCase())
+  //       );
+  //       console.log('hii')
+
+  //       if (matchedKeyword) {
+
+  //           // Redirect to the All/Search page for the keyword match
+  //           console.log('Keyword match:', matchedKeyword.keyword);
+  //           // console.log('listing',matchedKeyword.listings[0])
+  //           // matchedKeyword.listings.forEach(listing=>{
+  //           //   console.log('Listing:', listing);
+  //           // })
+  //           return `/All/Listing/in-${localStorage.getItem(
+  //           "cityname"
+  //         )}?searchkey=${encodeURIComponent(matchedKeyword.keyword)}`;
+  //       }
+  //   } else if (
+  //     result.companyNameMatches &&
+  //     result.companyNameMatches.length > 0
+  // ) {
+  //     // Redirect to company URL if companyNameMatches exists and is clicked
+  //     const matchedCompany = result.companyNameMatches.find(company =>
+  //         company.companyName.toLowerCase().includes(searchTerm.toLowerCase())
+  //     );
+  // console.log('matchedCompany',matchedCompany);
+  //     if (matchedCompany) {
+  //         console.log("Company match:", matchedCompany.companyName);
+  //         console.log("category match:", matchedCompany.category);
+  //         console.log("listingId match:", matchedCompany.listingId);
+
+  //         return `/company/${matchedCompany.companyName
+  //             .replace(/\s+/g, "-")
+  //             .toLowerCase()}/${matchedCompany.category
+  //             .replace(/\s+/g, "-")
+  //             .toLowerCase()}/locality/in-${localStorage.getItem(
+  //             "cityname"
+  //         )}?listingEncyt=${encodeURIComponent(
+  //             encrypt(parseInt(matchedCompany.listingId))
+  //         )}`;
+  //     }
+  // }
+  //   else if (
+  //         result.mobilenumber &&
+  //         searchTerm.toLowerCase() === result.mobilenumber.toLowerCase()
+  //     ) {
+  //         console.log('mobileCompany', result.companyName);
+
+  //         const companyName = result.companyName || "unknown";
+  //         const categoryName = result.category || "general";
+
+  //         return `/company/${companyName
+  //             .replace(/\s+/g, "-")
+  //             .toLowerCase()}/${categoryName
+  //             .replace(/\s+/g, "-")
+  //             .toLowerCase()}/locality/in-${localStorage.getItem(
+  //             "cityname"
+  //         )}?listingEncyt=${encodeURIComponent(
+  //             encrypt(parseInt(result.listingId))
+  //         )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
+  //             encrypt(parseInt(result.categoryId))
+  //         )}`;
+  //     } else {
+  //         const companyName = result.companyName || "unknown";
+  //        // console.log('comp', companyName);
+
+  //         const categoryName = result.category || "general";
+  //         console.log('categoryName', categoryName);
+
+  //         return `/company/${companyName
+  //             .replace(/\s+/g, "-")
+  //             .toLowerCase()}/${categoryName
+  //             .replace(/\s+/g, "-")
+  //             .toLowerCase()}/locality/in-${localStorage.getItem(
+  //             "cityname"
+  //         )}?listingEncyt=${encodeURIComponent(
+  //             encrypt(parseInt(result.listingId))
+  //         )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
+  //             encrypt(parseInt(result.categoryId))
+  //         )}`;
+  //     }
+  // };
 
   // const fetchKeywordData = async (keyword) => {
   //   const cityName = localStorage.getItem("cityname") || "mumbai"; // Default city name
@@ -606,7 +659,6 @@ console.log('matchedCompany',matchedCompany);
                   onFocus={handleFocus}
                   onBlur={handleBlur}
                   onKeyDown={(e) => handleKeyPress(e)}
-                 
                 />
                 <button
                   type="submit"
@@ -628,6 +680,13 @@ console.log('matchedCompany',matchedCompany);
 
                   <div className="dropdownsearchbar" ref={dropdownRef}>
                     {filteredResults.map((result, index) => {
+                      console.log("InnerFilter", filteredResults);
+                      const isCategory = result.category && result.categoryId;
+                      const isKeywordListing =
+                        result.listingId && result.companyName;
+                      console.log("isCategory", isCategory);
+                      console.log("isKeywordListing", isKeywordListing);
+                      console.log("innerResult", result);
                       const keywordMatch = searchTerm
                         .toLowerCase()
                         .includes(result.keyword?.toLowerCase());
@@ -645,51 +704,15 @@ console.log('matchedCompany',matchedCompany);
                         localityMatch
                       );
                       const isKeyword = typeof result === "string"; // Check if it's a keyword (string)
+                      console.log("DISPLAYresult", result);
                       const displayText = isKeyword ? (
                         <span>{result}</span> // Display keyword directly
                       ) : (
                         <>
-                          {result.matchedCategory &&
-                          result.matchedCategory.category &&
-                          !result.companyName &&
-                          !result.keyword &&
-                          !result.localityName ? (
-                            <span>{result.matchedCategory.category}</span>
-                          ) : result.keywords &&
-                            result.keywords.length > 0 &&
-                            result.keywords.some((keywordItem) =>
-                              keywordItem.keyword
-                                .toLowerCase()
-                                .includes(searchTerm.toLowerCase())
-                            ) ? (
-                            <>
-                              {(() => {
-                                const matchedKeywords = [];
-                                for (
-                                  let i = 0;
-                                  i < result.keywords.length;
-                                  i++
-                                ) {
-                                  const keywordItem = result.keywords[i];
-                                  if (
-                                    keywordItem.keyword
-                                      .toLowerCase()
-                                      .includes(searchTerm.toLowerCase())
-                                  ) {
-                                    matchedKeywords.push(
-                                      <div key={i}>
-                                        <span>{keywordItem.keyword}</span>
-                                      </div>
-                                    );
-                                  }
-                                }
-                                return matchedKeywords;
-                              })()}
-                            </>
-                          ) : result.mobilenumber &&
-                            result.mobilenumber
-                              .toLowerCase()
-                              .includes(searchTerm.toLowerCase()) ? (
+                          {result.mobilenumber &&
+                          result.mobilenumber
+                            .toLowerCase()
+                            .includes(searchTerm.toLowerCase()) ? (
                             <>
                               <span>{result.companyName}</span>
                               <br />
@@ -723,24 +746,6 @@ console.log('matchedCompany',matchedCompany);
                             <>
                               <span>{result.companyName}</span>
                               <span>{localityMatch}</span>
-                            </>
-                          ) : result.companyNameMatches &&
-                            result.companyNameMatches.companyName ? (
-                            <>
-                              <span>
-                                {result.companyNameMatches.companyName}
-                              </span>
-                              <br />
-                              {result.localityName && (
-                                <span className="serchbarTitle">{`${result.localityName} - ${result.keyword}`}</span>
-                              )}
-                            </>
-                          ) : result.specializationMatches &&
-                            result.specializationMatches.specialization ? (
-                            <>
-                              <span>
-                                {result.specializationMatches.specialization}
-                              </span>
                             </>
                           ) : (
                             ""
@@ -830,12 +835,17 @@ console.log('matchedCompany',matchedCompany);
                       // }
                       // console.log("Final Redirect URL:", redirectionUrl);
                       //const redirectionUrl = handleRedirect(result);
+
                       return (
-                        <div key={index} className="dropdownItemsearchbar">
-                          
-                          <NavLink to={handleRedirect(result)} >
+                        <div
+                          key={index}
+                          className="dropdownItemsearchbar"
+                          onClick={() => handleRedireNavigate(result,displayText)}
+                        >
+                          <h6 className="serchtitle">{displayText}</h6>
+                          {/* <NavLink to={handleRedirect(result)} >
   <h6 className="serchtitle">{displayText}</h6>
-</NavLink>
+</NavLink> */}
                         </div>
                       );
                     })}
@@ -851,5 +861,3 @@ console.log('matchedCompany',matchedCompany);
 }
 
 export default Searchbar;
-
-
