@@ -18,6 +18,7 @@ function Searchbar() {
   const [combinedResults, setCombinedResults] = useState([]);
   const [phoneData, setPhoneData] = useState([]);
   const [specilisationResult, setSpecialisationResult] = useState([]);
+  const [ownerNameResult, setOwnerNameResult] = useState([]);
 
   const decrypt = (ciphertext) => {
     const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
@@ -34,6 +35,7 @@ function Searchbar() {
   const fetchResults = async () => {
     setPhoneData([]);
     setSpecialisationResult([]);
+    setOwnerNameResult([]);
     setResults([]);
     if (searchTerm) {
       try {
@@ -49,6 +51,10 @@ function Searchbar() {
         const data = await response.json();
         setResults(data);
         console.log("jabardast", data.hasOwnProperty("specializationMatches"));
+        console.log(
+          "OwnernameProperty",
+          data.hasOwnProperty("ownernameMatches")
+        );
         if (data.hasOwnProperty("specializationMatches")) {
           if (data.specializationMatches) {
             const filteredSpecialisation =
@@ -71,6 +77,35 @@ function Searchbar() {
             setPhoneData(data);
           }
         }
+        //console.log('owner');
+
+        if (data.hasOwnProperty("ownernameMatches")) {
+          if (data.ownernameMatches) {
+            const filteredOwnername = data.ownernameMatches
+              .map((match) => {
+                // Extract owner names and prefixes
+                const ownerNames = match.ownername.split(","); 
+                const prefixes = match.listings[0]?.ownerPrefix.split(",") || []; 
+                const companyname=match.listings[0]?.companyName ||[];
+        
+                // Combine each name with its prefix
+                const combinedNames = ownerNames.map((owner, index) => {
+                  const prefix = prefixes[index] || ""; 
+                  return `${prefix.trim()} ${owner.trim()} `.trim(); // Combine prefix and name
+                })
+                .join(',');
+        
+                return `${combinedNames}(${companyname})`; // Return combined names
+              });
+              console.log('owner',filteredOwnername)
+        
+            // Update state with combined names
+            setOwnerNameResult(filteredOwnername);
+          }
+        }
+        
+        
+        
 
         console.log("data this", data);
         setShowDropdown(true);
@@ -100,22 +135,26 @@ function Searchbar() {
     const key = results.keywords || [];
     const comp = results.companyNameMatches || [];
     const spe = results.specializationMatches || [];
+    const own = results.ownernameMatches || [];
 
     console.log("cate", cate);
     console.log("key", key);
     console.log("comp", comp);
     console.log("spe", spe);
+    console.log("own", own);
 
     const uniqueResults = Array.from(
       new Set([
         ...phoneData,
         ...combinedResults,
         ...specilisationResult,
+        ...ownerNameResult,
 
         ...cate,
         ...key.map((keyitem) => keyitem.keyword),
         ...comp.map((compitem) => compitem.companyName),
         ...spe.map((spitem) => spitem.specialization),
+        // ...own.map((ownItem) => ownItem.ownername),
       ])
     );
 
@@ -250,6 +289,24 @@ function Searchbar() {
     console.log("finalFilteredCompanyname", finalFilteredCompanyname);
 
     console.log("filteredCompanyname", filteredCompanyname);
+
+    //ownername
+    // const filteredOwnername = results.ownernameMatches
+    // ? results.ownernameMatches
+    //     .filter(
+    //       (keywordItem) =>
+    //         keywordItem.ownername &&
+    //         keywordItem.ownername.toLowerCase().includes(term.toLowerCase())
+    //     )
+    //     .map((keywordItem) => keywordItem.ownername)
+    // : [];
+
+    // console.log('ownernameMatches',results.ownernameMatches)
+    // console.log("Filtered filteredSpecilisation:", filteredOwnername);
+    // console.log("type of filteredSpecilisation", typeof filteredOwnername);
+
+    // const finalFilteredOwnername = Array.from(filteredOwnername);
+    // console.log('finalFilteredSpecilisation',finalFilteredOwnername);
 
     //specialisation
     // const filteredSpecialisation = results.specializationMatches
@@ -468,7 +525,7 @@ function Searchbar() {
     const allResult = results;
     console.log("All results:", allResult);
 
-    console.log('selectedkwyword',selectedKeyword.props.children);
+    console.log("selectedkwyword", selectedKeyword.props.children);
 
     //category
     const matchedCategory = allResult.matchedCategory || {};
@@ -478,19 +535,100 @@ function Searchbar() {
     const keywords = allResult.keywords || [];
     console.log("matchKeyword", keywords);
 
-    //companyname
-    const companyname=allResult.companyNameMatches||[];
-    console.log('companyname',companyname);
-
-    
-
     const matchKeyword = keywords.find(
       (keyItem) => keyItem.keyword === selectedKeyword.props.children
     );
     console.log("matchKey", matchKeyword);
 
+    //companyname
+    const companyname = allResult.companyNameMatches || [];
+    console.log("companyname", companyname);
+
+    const matchCompanyName = companyname.find(
+      (item) =>
+        item.companyName.trim().toLowerCase() ===
+        selectedKeyword.props.children.trim().toLowerCase()
+    );
+
+    //  const companyNames=companyname.map((item)=>item.companyName);
+    //  console.log('Extracted company Name',companyNames);
+
+    // const firstCompanyName=companyNames.length>0?companyNames[0]:null;
+    // console.log('First company Name',firstCompanyName);
+
+    // const matchCompanyName=firstCompanyName===selectedKeyword.props.children
+    // console.log('matchCompanyName',matchCompanyName);
+
+    console.log("matchCompanyName", matchCompanyName);
+
+    //specilization
+    const specilisation = allResult.specializationMatches || [];
+    console.log("specilisation", specilisation);
+
+    const matchSpecilisation = specilisation.find(
+      (speItem) => speItem.specialization === selectedKeyword.props.children
+    );
+    console.log("matchSpecilisation", matchSpecilisation);
+
+   //mobile number
+    // const mobileNo=allResult.map((MobileNoItem)=>MobileNoItem.mobilenumber);
+    // console.log('mobileNo',mobileNo);
+
+    // const Mno=mobileNo[0];
+    // console.log('MNO',Mno);
+
+    // console.log('typed no',selectedKeyword.props.children);
+    // const matchMobileNo=Mno===selectedKeyword.props.ch
+
+
+    
+
     if (matchKeyword) {
       const keyName = matchKeyword.keyword;
+      console.log("hii");
+      console.log("keyname", keyName);
+      if (keyName) {
+        const targetUrl = `/All/Listing/in-${localStorage.getItem(
+          "cityname"
+        )}?searchkey=${encodeURIComponent(keyName)}`;
+        console.log("nav", targetUrl);
+        navigate(targetUrl);
+      }
+    } else if (matchCompanyName) {
+      const CompName = matchCompanyName.companyName;
+      const CompId = matchCompanyName.listingId;
+      const CompCat = matchCompanyName.category;
+      const CompLocality = matchCompanyName.localityName;
+      const CompcategoryId = matchCompanyName.categoryId;
+
+      console.log("compName", CompName);
+      console.log("CompId", CompId);
+      console.log("CompCat", CompCat);
+      console.log("CompLocality", CompLocality);
+      console.log("CompcategoryId", CompcategoryId);
+
+      const targeturl = `/company/${CompName.replace(
+        /\s+/g,
+        "-"
+      ).toLowerCase()}/${CompCat.replace(
+        /\s+/g,
+        "-"
+      ).toLowerCase()}/${CompLocality.replace(
+        /\s+/g,
+        "-"
+      ).toLowerCase()}/in-${localStorage.getItem(
+        "cityname"
+      )}?listingEncyt=${encodeURIComponent(
+        encrypt(parseInt(CompId))
+      )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
+        encrypt(parseInt(CompcategoryId))
+      )}`;
+
+      console.log("targeturl", targeturl);
+      navigate(targeturl);
+    } else if (matchSpecilisation) {
+      const keyName = matchSpecilisation.specialization;
+      console.log("hii");
       console.log("keyname", keyName);
       if (keyName) {
         const targetUrl = `/All/Listing/in-${localStorage.getItem(
@@ -500,6 +638,7 @@ function Searchbar() {
         navigate(targetUrl);
       }
     } else if (matchedCategory) {
+      // console.log('hello')
       const catName = matchedCategory.category; // Get category name
       const catId = matchedCategory.categoryId; // Get category ID
       if (catName && catId) {
@@ -840,7 +979,9 @@ function Searchbar() {
                         <div
                           key={index}
                           className="dropdownItemsearchbar"
-                          onClick={() => handleRedireNavigate(result,displayText)}
+                          onClick={() =>
+                            handleRedireNavigate(result, displayText)
+                          }
                         >
                           <h6 className="serchtitle">{displayText}</h6>
                           {/* <NavLink to={handleRedirect(result)} >

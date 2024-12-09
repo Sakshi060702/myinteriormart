@@ -102,6 +102,8 @@ function SearchListing() {
           const data = await response.json();
           console.log(' listings data', data);
           console.log('serching',searching);
+
+          //keyword
           const matchingKeyword = data.keywords?.find(
             (keyItem) => keyItem.keyword.trim().toLowerCase() === searching.trim().toLowerCase()
           );
@@ -114,6 +116,12 @@ function SearchListing() {
           ) || [];
   
           console.log('Filtered Listings:', filteredListings);
+
+          //specilisation
+          const matchingSpecilisation=data.specializationMatches?.find(
+            (speItem)=>speItem.specialization.trim().toLowerCase()===searching.trim().toLowerCase())
+
+            console.log('matchingSp',matchingSpecilisation);
   
           
           //console.log('SerchListing',SerchListing);
