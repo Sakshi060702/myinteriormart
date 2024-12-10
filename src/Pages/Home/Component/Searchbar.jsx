@@ -535,10 +535,16 @@ function Searchbar() {
     const keywords = allResult.keywords || [];
     console.log("matchKeyword", keywords);
 
+    const FullKeyword=String(selectedKeyword.props.children);
+    const BaseKeyword=FullKeyword.split('in')[0].trim();
+    console.log('BaseKeyword',BaseKeyword);
+
     const matchKeyword = keywords.find(
-      (keyItem) => keyItem.keyword === selectedKeyword.props.children
+      (keyItem) => keyItem.keyword === BaseKeyword
     );
     console.log("matchKey", matchKeyword);
+    // console.log('SelectedKEY',selectedKeyword.props.children);
+    
 
     //companyname
     const companyname = allResult.companyNameMatches || [];
@@ -565,20 +571,55 @@ function Searchbar() {
     const specilisation = allResult.specializationMatches || [];
     console.log("specilisation", specilisation);
 
+    const FullSpecilisation=String(selectedKeyword.props.children);
+    console.log('FullSpecilisation',FullSpecilisation);
+
+    const Basespecilisation=FullSpecilisation.split('in')[0].trim();
+    console.log('Basespecilisation',Basespecilisation)
+
+    const Basesp=Basespecilisation.replace(/^\S+\s+/, "").trim();
+    console.log('Basesp',Basesp);
+
     const matchSpecilisation = specilisation.find(
-      (speItem) => speItem.specialization === selectedKeyword.props.children
+      (speItem) => speItem.specialization ===selectedKeyword.props.children
     );
     console.log("matchSpecilisation", matchSpecilisation);
 
    //mobile number
-    // const mobileNo=allResult.map((MobileNoItem)=>MobileNoItem.mobilenumber);
-    // console.log('mobileNo',mobileNo);
+    //  const mobileNo=allResult.map((MobileNoItem)=>MobileNoItem.mobilenumber);
+    //  console.log('mobileNo',mobileNo);
 
     // const Mno=mobileNo[0];
     // console.log('MNO',Mno);
 
     // console.log('typed no',selectedKeyword.props.children);
     // const matchMobileNo=Mno===selectedKeyword.props.ch
+
+    //ownername
+    const ownerName=allResult.ownernameMatches||[];
+    console.log('ownerName',ownerName);
+
+    const SelectedOwner=String(selectedKeyword.props.children)
+    console.log('Selected Owner name',SelectedOwner);
+
+    const prossedOwnername=SelectedOwner.replace(/\(.*\)/, "").trim();
+    console.log('prossedOwnername',prossedOwnername);
+
+    const Pownername=prossedOwnername.replace(/Mr\s+/g, "").trim();
+    console.log('Pownername',Pownername);
+
+    const matchOwnername = ownerName.find(
+      (ownItem) => ownItem.ownername ===Pownername
+    );
+    console.log('matchOwnername',matchOwnername);
+
+    //mobile Number
+    // const SelectedMobile=selectedKeyword.props.children.props.children.props.children
+    // console.log('SelectedMobile',SelectedMobile);
+    // console.log('Api mobile Number',allResult[0].mobilenumber)
+    // const matchMobile=SelectedMobile===allResult[0].mobilenumber
+    // console.log('matchMobile',matchMobile);
+
 
 
     
@@ -630,14 +671,55 @@ function Searchbar() {
       const keyName = matchSpecilisation.specialization;
       console.log("hii");
       console.log("keyname", keyName);
+      console.log('base',Basesp)
       if (keyName) {
         const targetUrl = `/All/Listing/in-${localStorage.getItem(
           "cityname"
-        )}?searchkey=${encodeURIComponent(keyName)}`;
+        )}?searchkey=${encodeURIComponent(Basesp)}`;
         console.log("nav", targetUrl);
         navigate(targetUrl);
       }
-    } else if (matchedCategory) {
+    } 
+    else if(matchOwnername){
+      const OwnerListing=matchOwnername.listings?.[0]
+      console.log('OwnerListing',OwnerListing);
+      if(OwnerListing){
+        const CompName = OwnerListing.companyName;
+        const CompId = OwnerListing.listingId;
+        const CompCat = OwnerListing.category;
+        const CompLocality = OwnerListing.localityName;
+        const CompcategoryId = OwnerListing.categoryId;
+  
+        console.log("compName", CompName);
+        console.log("CompId", CompId);
+        console.log("CompCat", CompCat);
+        console.log("CompLocality", CompLocality);
+        console.log("CompcategoryId", CompcategoryId);
+  
+        const targeturl = `/company/${CompName.replace(
+          /\s+/g,
+          "-"
+        ).toLowerCase()}/${CompCat.replace(
+          /\s+/g,
+          "-"
+        ).toLowerCase()}/${CompLocality.replace(
+          /\s+/g,
+          "-"
+        ).toLowerCase()}/in-${localStorage.getItem(
+          "cityname"
+        )}?listingEncyt=${encodeURIComponent(
+          encrypt(parseInt(CompId))
+        )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
+          encrypt(parseInt(CompcategoryId))
+        )}`;
+  
+        console.log("targeturl", targeturl);
+        navigate(targeturl);
+  
+      }
+      
+    }
+    else if (matchedCategory) {
       // console.log('hello')
       const catName = matchedCategory.category; // Get category name
       const catId = matchedCategory.categoryId; // Get category ID
@@ -853,8 +935,8 @@ function Searchbar() {
                             .toLowerCase()
                             .includes(searchTerm.toLowerCase()) ? (
                             <>
-                              <span>{result.companyName}</span>
-                              <br />
+                              {/* <span>{result.companyName}</span>
+                              <br /> */}
                               <span className="serchbarTitle">
                                 {result.mobilenumber}
                               </span>
