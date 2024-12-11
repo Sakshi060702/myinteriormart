@@ -20,6 +20,9 @@ function Searchbar() {
   const [specilisationResult, setSpecialisationResult] = useState([]);
   const [ownerNameResult, setOwnerNameResult] = useState([]);
 
+  const[selectedIndex,setSelectedIndex]=useState(-1);
+  const inputRef=useRef(null);
+
   const decrypt = (ciphertext) => {
     const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
     return bytes.toString(CryptoJS.enc.Utf8);
@@ -199,6 +202,7 @@ function Searchbar() {
     const term = event.target.value;
     setSearchTerm(term);
     console.log("res", results);
+    setSelectedIndex(-1);
 
     // if (!term) {
     //   setFilteredResults([]);
@@ -510,20 +514,153 @@ function Searchbar() {
     }
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleSearchNavigate();
+  // const handleKeyPress = (e) => {
+  //   if (e.key === "Enter") {
+  //     e.preventDefault();
+  //     handleSearchNavigate();
+  //   }
+  // };
+
+  const handleKeyPress=(e)=>{
+    if(e.key==='ArrowDown'){
+      setSelectedIndex((prevIndex) =>
+        prevIndex < filteredResults.length - 1 ? prevIndex + 1 : 0
+      );
     }
-  };
+    else if(e.key==='ArrowUp'){
+      setSelectedIndex((prevIndex) =>
+        prevIndex > 0 ? prevIndex - 1 : filteredResults.length - 1
+      );
+    }
+    else if(e.key==='Enter'){
+      if (selectedIndex >= 0) {
+        const selectedItem = filteredResults[selectedIndex];
+         handleEnter(selectedItem, selectedItem.companyName || selectedItem);
+        setSearchTerm(selectedItem.companyName || selectedItem);
+        setShowDropdown(false);
+      }
+    }
+  }
 
   const handleFocus = () => {
     setShowDropdown(true);
   };
 
+  useEffect(() => {
+    if (selectedIndex >= 0 && filteredResults[selectedIndex]) {
+      // Update the input field to show the highlighted item
+      setSearchTerm(filteredResults[selectedIndex].companyName || filteredResults[selectedIndex]);
+    }
+  }, [selectedIndex]);
+
+
+  const handleEnter=(result,selectedName)=>{
+    const allResult = results;
+    console.log("All results Enter:", allResult);
+    //console.log("Type of allResult Enter:", Array.isArray(allResult)); 
+
+    const EnterKey= searchTerm.toLowerCase();
+    console.log("EnterKey", EnterKey);
+
+    //For Keyword Enter Funtionality
+    const keywordsE = allResult.keywords || [];
+    console.log("matchKeywordE", keywordsE);
+    console.log("Type of allResult Enter:", Array.isArray(keywordsE)); 
+
+    // const FullKeywordE=String(EnterKey);
+    // const BaseKeywordE=FullKeywordE.split('in')[0].trim();
+    // console.log('BaseKeyword',BaseKeywordE);
+
+    const matchKeywordE = keywordsE.find(
+      (keyItem) => keyItem.keyword.toLowerCase() === EnterKey
+    );
+    console.log("matchKeyE", matchKeywordE);
+
+    //For Category Enter Funtionaltiy
+    const matchedCategoryE = allResult.matchedCategory || {};
+    console.log("Navigating", matchedCategoryE);
+
+    //For Companyname Enter Funionality
+    const companynameE = allResult.companyNameMatches || [];
+    console.log("companyname", companynameE);
+
+    const matchCompanyNameE = companynameE.find(
+      (item) =>
+        item.companyName.trim().toLowerCase() ===
+        EnterKey
+    
+    );
+    console.log("matchCompanyName", matchCompanyNameE);
+
+
+    if(matchKeywordE){
+      const keyName = matchKeywordE.keyword;
+      console.log("hii");
+      console.log("keyname", keyName);
+      if (keyName) {
+        const targetUrl = `/All/Listing/in-${localStorage.getItem(
+          "cityname"
+        )}?searchkey=${encodeURIComponent(keyName)}`;
+        console.log("nav", targetUrl);
+        navigate(targetUrl);
+      }
+    }
+    else if (matchCompanyNameE) {
+      const CompName = matchCompanyNameE.companyName;
+      const CompId = matchCompanyNameE.listingId;
+      const CompCat = matchCompanyNameE.category;
+      const CompLocality = matchCompanyNameE.localityName;
+      const CompcategoryId = matchCompanyNameE.categoryId;
+
+      console.log("compName", CompName);
+      console.log("CompId", CompId);
+      console.log("CompCat", CompCat);
+      console.log("CompLocality", CompLocality);
+      console.log("CompcategoryId", CompcategoryId);
+
+      const targeturl = `/company/${CompName.replace(
+        /\s+/g,
+        "-"
+      ).toLowerCase()}/${CompCat.replace(
+        /\s+/g,
+        "-"
+      ).toLowerCase()}/${CompLocality.replace(
+        /\s+/g,
+        "-"
+      ).toLowerCase()}/in-${localStorage.getItem(
+        "cityname"
+      )}?listingEncyt=${encodeURIComponent(
+        encrypt(parseInt(CompId))
+      )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
+        encrypt(parseInt(CompcategoryId))
+      )}`;
+
+      console.log("targeturl", targeturl);
+      navigate(targeturl);
+    }
+    else if (matchedCategoryE) {
+      // console.log('hello')
+      const catName = matchedCategoryE.category; // Get category name
+      const catId = matchedCategoryE.categoryId; // Get category ID
+      if (catName && catId) {
+        const targetUrl = `/All/Search/${catName
+          .replace(/\s+/g, "-")
+          .toLowerCase()}/in-${localStorage.getItem(
+          "cityname"
+        )}?secatEncyt=${encodeURIComponent(encrypt(parseInt(catId)))}`;
+        console.log("nav", targetUrl);
+        navigate(targetUrl);
+      }
+    }
+    else{
+      console.error('Url not found')
+    }
+  }
+
   const handleRedireNavigate = (result, selectedKeyword) => {
     const allResult = results;
     console.log("All results:", allResult);
+    console.log("Type of allResult:", Array.isArray(allResult)); 
 
     console.log("selectedkwyword", selectedKeyword.props.children);
 
@@ -592,7 +729,7 @@ function Searchbar() {
     // const Mno=mobileNo[0];
     // console.log('MNO',Mno);
 
-    // console.log('typed no',selectedKeyword.props.children);
+    console.log('typed no',selectedKeyword.props.children);
     // const matchMobileNo=Mno===selectedKeyword.props.ch
 
     //ownername
@@ -613,12 +750,89 @@ function Searchbar() {
     );
     console.log('matchOwnername',matchOwnername);
 
-    //mobile Number
-    // const SelectedMobile=selectedKeyword.props.children.props.children.props.children
-    // console.log('SelectedMobile',SelectedMobile);
-    // console.log('Api mobile Number',allResult[0].mobilenumber)
-    // const matchMobile=SelectedMobile===allResult[0].mobilenumber
-    // console.log('matchMobile',matchMobile);
+  
+//mobile number
+
+    const childrenObject = selectedKeyword.props.children;
+    console.log('childrenObject',childrenObject);
+
+    const childrenArray=React.Children.toArray(childrenObject);
+    console.log('childrenArray',childrenArray);
+
+    const childAtIndex2 = childrenArray[0]; 
+    console.log('Child at Index 2:', childAtIndex2);
+    
+    let ExtractedMobileNo=null;
+    
+    if (
+      typeof childAtIndex2 === "object" && // Ensure it's an object
+      childAtIndex2.props && // Ensure it has props
+      Array.isArray(childAtIndex2.props.children) && // Ensure children is an array
+      typeof childAtIndex2.props.children[2] === "object" && // Ensure the third element exists and is an object
+      childAtIndex2.props.children[2].props && // Ensure it has props
+      typeof childAtIndex2.props.children[2].props.children === "string" // Ensure props.children is a string
+  ) {
+       ExtractedMobileNo = childAtIndex2.props.children[2].props.children.trim(); // Extract and trim the mobile number
+      console.log("Extracted Mobile Number:", ExtractedMobileNo);
+      console.log("Type of ExtractedMobileNo:", typeof ExtractedMobileNo);
+  } else {
+      console.log("Mobile number not found or invalid structure.");
+  }
+
+  
+  const ApiMobileNo = allResult?.[0]?.mobilenumber || '';
+
+   console.log('Api mobile Number',ApiMobileNo);
+   const matchMobilenumber=ApiMobileNo===ExtractedMobileNo;
+   console.log('matchMobilenumber',matchMobilenumber);
+
+//   allResult.forEach((item, index) => {
+//     console.log(`Item ${index}:`, item);
+//     console.log(`Comparing: ${item.mobilenumber} === ${ExtractedMobileNo}`);
+// });
+  // console.log('ApiMobileNo',ApiMobileNo);
+  
+
+  // console.log('mobileElement',mobileElement);
+
+  // const SelectedMobile = mobileElement ? mobileElement.props.children.trim() : null;
+  // console.log("SelectedMobile", SelectedMobile);
+
+
+  //Gst number
+  const childrenObjectGst = selectedKeyword.props.children;
+    console.log('childrenObject',childrenObjectGst);
+
+    const childrenArraygst=React.Children.toArray(childrenObject);
+    console.log('childrenArraygst',childrenArraygst);
+
+    const childAtIndex2gst = childrenArray[0]; 
+    console.log('Child at Index 2:', childAtIndex2gst);
+    
+    let ExtractedGstNo=null;
+    
+    if (
+      typeof childAtIndex2gst === "object" && // Ensure it's an object
+      childAtIndex2gst.props && // Ensure it has props
+      Array.isArray(childAtIndex2gst.props.children) && // Ensure children is an array
+      typeof childAtIndex2gst.props.children[2] === "object" && // Ensure the third element exists and is an object
+      childAtIndex2gst.props.children[2].props && // Ensure it has props
+      typeof childAtIndex2gst.props.children[2].props.children === "string" // Ensure props.children is a string
+  ) {
+       ExtractedGstNo = childAtIndex2gst.props.children[2].props.children.trim(); // Extract and trim the mobile number
+      console.log("Extracted Gst Number:", ExtractedGstNo);
+      console.log("Type of Extracted gst:", typeof ExtractedGstNo);
+  } else {
+      console.log("Mobile number not found or invalid structure.");
+  }
+
+  
+  const ApiGstNo = allResult?.[0]?.gstnumber || '';
+
+   console.log('Api gst Number',ApiGstNo);
+   const matchGstnumber=ApiGstNo===ExtractedGstNo;
+   console.log('matchGstnumber',matchGstnumber);
+
 
 
 
@@ -717,6 +931,86 @@ function Searchbar() {
         navigate(targeturl);
   
       }
+      
+    }
+    else if(matchMobilenumber){
+
+      const mobile=Array.isArray(allResult)&& allResult.length>0?allResult[0]:null;
+      if(mobile){
+        const CompName = mobile.companyName;
+      const CompId = mobile.listingId;
+      const CompCat = mobile.category;
+      const CompLocality = mobile.localityName;
+      const CompcategoryId = mobile.categoryId;
+
+      console.log("compName", CompName);
+      console.log("CompId", CompId);
+      console.log("CompCat", CompCat);
+      console.log("CompLocality", CompLocality);
+      console.log("CompcategoryId", CompcategoryId);
+
+      const targeturl = `/company/${CompName.replace(
+        /\s+/g,
+        "-"
+      ).toLowerCase()}/${CompCat.replace(
+        /\s+/g,
+        "-"
+      ).toLowerCase()}/${CompLocality.replace(
+        /\s+/g,
+        "-"
+      ).toLowerCase()}/in-${localStorage.getItem(
+        "cityname"
+      )}?listingEncyt=${encodeURIComponent(
+        encrypt(parseInt(CompId))
+      )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
+        encrypt(parseInt(CompcategoryId))
+      )}`;
+
+      console.log("targeturl", targeturl);
+      navigate(targeturl);
+
+      }
+
+      
+    }
+    else if(matchGstnumber){
+
+      const gstnumber=Array.isArray(allResult)&& allResult.length>0?allResult[0]:null;
+      if(gstnumber){
+        const CompName = gstnumber.companyName;
+      const CompId = gstnumber.listingId;
+      const CompCat = gstnumber.category;
+      const CompLocality = gstnumber.localityName;
+      const CompcategoryId = gstnumber.categoryId;
+
+      console.log("compName", CompName);
+      console.log("CompId", CompId);
+      console.log("CompCat", CompCat);
+      console.log("CompLocality", CompLocality);
+      console.log("CompcategoryId", CompcategoryId);
+
+      const targeturl = `/company/${CompName.replace(
+        /\s+/g,
+        "-"
+      ).toLowerCase()}/${CompCat.replace(
+        /\s+/g,
+        "-"
+      ).toLowerCase()}/${CompLocality.replace(
+        /\s+/g,
+        "-"
+      ).toLowerCase()}/in-${localStorage.getItem(
+        "cityname"
+      )}?listingEncyt=${encodeURIComponent(
+        encrypt(parseInt(CompId))
+      )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
+        encrypt(parseInt(CompcategoryId))
+      )}`;
+
+      console.log("targeturl", targeturl);
+      navigate(targeturl);
+
+      }
+
       
     }
     else if (matchedCategory) {
@@ -884,7 +1178,7 @@ function Searchbar() {
                 <button
                   type="submit"
                   className="searchButton"
-                  onClick={handleSearchNavigate}
+                  onClick={handleEnter}
                 >
                   <i className="fa fa-search"></i>
                 </button>
@@ -935,8 +1229,8 @@ function Searchbar() {
                             .toLowerCase()
                             .includes(searchTerm.toLowerCase()) ? (
                             <>
-                              {/* <span>{result.companyName}</span>
-                              <br /> */}
+                               <span>{result.companyName}</span>
+                              <br /> 
                               <span className="serchbarTitle">
                                 {result.mobilenumber}
                               </span>
