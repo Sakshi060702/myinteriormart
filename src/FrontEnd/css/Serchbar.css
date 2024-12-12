@@ -50,3 +50,9 @@
     font-size: 13px;
     color: gray;
 }
+
+.highlighted {
+    background-color: orange;
+    color: white;
+  }
+  

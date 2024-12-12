@@ -19,9 +19,11 @@ function Searchbar() {
   const [phoneData, setPhoneData] = useState([]);
   const [specilisationResult, setSpecialisationResult] = useState([]);
   const [ownerNameResult, setOwnerNameResult] = useState([]);
+  const[ksResult,setKSResult]=useState([]);
 
   const[selectedIndex,setSelectedIndex]=useState(-1);
   const inputRef=useRef(null);
+  const[highlightItem,setHightlightItem]=useState(null);
 
   const decrypt = (ciphertext) => {
     const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
@@ -39,6 +41,7 @@ function Searchbar() {
     setPhoneData([]);
     setSpecialisationResult([]);
     setOwnerNameResult([]);
+    setKSResult([]);
     setResults([]);
     if (searchTerm) {
       try {
@@ -86,16 +89,21 @@ function Searchbar() {
           if (data.ownernameMatches) {
             const filteredOwnername = data.ownernameMatches
               .map((match) => {
+
+                const inputName=searchTerm.toLowerCase();
                 // Extract owner names and prefixes
                 const ownerNames = match.ownername.split(","); 
                 const prefixes = match.listings[0]?.ownerPrefix.split(",") || []; 
+                const lastName=match.listings[0]?.ownerLastname.split(",")||[];
                 const companyname=match.listings[0]?.companyName ||[];
         
                 // Combine each name with its prefix
                 const combinedNames = ownerNames.map((owner, index) => {
                   const prefix = prefixes[index] || ""; 
-                  return `${prefix.trim()} ${owner.trim()} `.trim(); // Combine prefix and name
+                  const lastN=lastName[index]||'';
+                  return `${prefix.trim()} ${owner.trim()} ${lastN.trim()} `.trim(); // Combine prefix and name
                 })
+                .filter((fullName)=>fullName.toLowerCase().includes(inputName))
                 .join(',');
         
                 return `${combinedNames}(${companyname})`; // Return combined names
@@ -106,7 +114,27 @@ function Searchbar() {
             setOwnerNameResult(filteredOwnername);
           }
         }
-        
+
+        //keyword and specilisation with location
+
+        if (data.hasOwnProperty("allspecializationandKeyword")) {
+          if (data.allspecializationandKeyword) {
+            const filteredKS =
+              data.allspecializationandKeyword &&
+              data.allspecializationandKeyword.length > 0
+                ? data.allspecializationandKeyword
+                    .map((match) => match.allspecialiazationkeyword) // Extract specializations
+                    .filter(
+                      (allspecialiazationkeyword) =>
+                        allspecialiazationkeyword &&
+                      allspecialiazationkeyword
+                          .toLowerCase()
+                          .includes(searchTerm.toLowerCase()) // Match term
+                    )
+                : [];
+            setKSResult([...filteredKS]);
+          }
+        }
         
         
 
@@ -139,12 +167,14 @@ function Searchbar() {
     const comp = results.companyNameMatches || [];
     const spe = results.specializationMatches || [];
     const own = results.ownernameMatches || [];
+    const ksp=results.allspecializationandKeyword||[];
 
     console.log("cate", cate);
     console.log("key", key);
     console.log("comp", comp);
     console.log("spe", spe);
     console.log("own", own);
+    console.log('ksp',ksp)
 
     const uniqueResults = Array.from(
       new Set([
@@ -152,6 +182,7 @@ function Searchbar() {
         ...combinedResults,
         ...specilisationResult,
         ...ownerNameResult,
+        ...ksResult,
 
         ...cate,
         ...key.map((keyitem) => keyitem.keyword),
@@ -190,7 +221,7 @@ function Searchbar() {
   }, [results]);
 
   useEffect(() => {
-    if (searchTerm.trim().length > 0 && filteredResults.length > 0) {
+    if (typeof searchTerm === "string" && searchTerm.trim().length > 0 && filteredResults.length > 0) {
       console.log("sResult", filteredResults);
       setShowDropdown(true);
     } else {
@@ -533,10 +564,19 @@ function Searchbar() {
       );
     }
     else if(e.key==='Enter'){
-      if (selectedIndex >= 0) {
+      if (selectedIndex >= 0 && filteredResults[selectedIndex]) {
         const selectedItem = filteredResults[selectedIndex];
-         handleEnter(selectedItem, selectedItem.companyName || selectedItem);
-        setSearchTerm(selectedItem.companyName || selectedItem);
+        handleEnter(selectedItem);
+        // Update the input box correctly
+        if (typeof selectedItem === 'string') {
+          setSearchTerm(selectedItem);
+        } else if (selectedItem.companyName) {
+          setSearchTerm(selectedItem.companyName);
+        } else if (selectedItem.mobilenumber) {
+          setSearchTerm(selectedItem.mobilenumber);
+        } else {
+          setSearchTerm('');
+        }
         setShowDropdown(false);
       }
     }
@@ -549,18 +589,32 @@ function Searchbar() {
   useEffect(() => {
     if (selectedIndex >= 0 && filteredResults[selectedIndex]) {
       // Update the input field to show the highlighted item
-      setSearchTerm(filteredResults[selectedIndex].companyName || filteredResults[selectedIndex]);
+      setHightlightItem(filteredResults[selectedIndex]);
     }
   }, [selectedIndex]);
 
 
-  const handleEnter=(result,selectedName)=>{
+  const handleEnter=(result)=>{
     const allResult = results;
     console.log("All results Enter:", allResult);
     //console.log("Type of allResult Enter:", Array.isArray(allResult)); 
+    console.log('HighlitedItem',highlightItem.companyName);
 
-    const EnterKey= searchTerm.toLowerCase();
-    console.log("EnterKey", EnterKey);
+    // const EnterKey= highlightItem.toLowerCase();
+    // console.log("EnterKey", EnterKey);
+
+    let EnterKey='';
+    if(typeof highlightItem==='string'){
+      EnterKey= highlightItem.toLowerCase();
+      console.log('1stEnterkey',EnterKey)
+    }
+    else if(highlightItem && highlightItem.companyName){
+      EnterKey = highlightItem.companyName.toLowerCase();
+      console.log('2stEnterkey',EnterKey)
+    }
+    else{
+      console.error('Unhandled hightlight type',highlightItem);
+    }
 
     //For Keyword Enter Funtionality
     const keywordsE = allResult.keywords || [];
@@ -745,8 +799,11 @@ function Searchbar() {
     const Pownername=prossedOwnername.replace(/Mr\s+/g, "").trim();
     console.log('Pownername',Pownername);
 
+    const firstName=Pownername.split(' ')[0];
+    console.log('firstname',firstName);
+
     const matchOwnername = ownerName.find(
-      (ownItem) => ownItem.ownername ===Pownername
+      (ownItem) => ownItem.ownername.split(',').some((name)=>name.trim()===firstName) 
     );
     console.log('matchOwnername',matchOwnername);
 
@@ -834,6 +891,37 @@ function Searchbar() {
    console.log('matchGstnumber',matchGstnumber);
 
 
+   //keyword and location
+
+    const keywordspe = allResult.allspecializationandKeyword || [];
+    console.log("matchKeyword", keywordspe);
+
+    const FullKeywordSp=String(selectedKeyword.props.children);
+    const BaseKeywordSp=FullKeywordSp.split('in')[0].trim();
+    console.log('BaseKeywordSp',BaseKeywordSp);
+
+    const matchKeywordSp = keywordspe.find(
+      (keyItem) => keyItem.allspecialiazationkeyword ===selectedKeyword.props.children 
+    );
+    console.log("matchKeySp", matchKeywordSp);
+
+    //specilisation,keyword,location
+    const specilisationkeyloc = allResult.allspecializationandKeyword || [];
+    console.log("specilisation", specilisationkeyloc);
+
+    const FullSpecilisationlocation=String(selectedKeyword.props.children);
+    console.log('FullSpecilisation',FullSpecilisationlocation);
+
+    const Basespecilisationlocation=FullSpecilisationlocation.split('in')[0].trim();
+    console.log('Basespecilisationlocation',Basespecilisationlocation)
+
+    const Basesplocation=Basespecilisationlocation.replace(/^\S+\s+/, "").trim();
+    console.log('Basesplocation',Basesplocation);
+
+    const matchSpecilisationlocation = specilisationkeyloc.find(
+      (speItem) => speItem.allspecialiazationkeyword ===selectedKeyword.props.children
+    );
+    console.log("matchSpecilisation", matchSpecilisation);
 
 
     
@@ -1013,6 +1101,19 @@ function Searchbar() {
 
       
     }
+    else if (matchKeywordSp) {
+      const keyName = matchKeywordSp.allspecialiazationkeyword;
+      console.log("hii");
+      console.log("keyname", keyName);
+      console.log('base',BaseKeywordSp)
+      if (keyName) {
+        const targetUrl = `/All/Listing/in-${localStorage.getItem(
+          "cityname"
+        )}?searchkey=${encodeURIComponent(BaseKeywordSp)}`;
+        console.log("nav", targetUrl);
+        navigate(targetUrl);
+      }
+    } 
     else if (matchedCategory) {
       // console.log('hello')
       const catName = matchedCategory.category; // Get category name
@@ -1202,13 +1303,13 @@ function Searchbar() {
                       console.log("isCategory", isCategory);
                       console.log("isKeywordListing", isKeywordListing);
                       console.log("innerResult", result);
-                      const keywordMatch = searchTerm
+                      const keywordMatch = String(searchTerm)
                         .toLowerCase()
                         .includes(result.keyword?.toLowerCase());
-                      const localityMatch = searchTerm
+                      const localityMatch =String(searchTerm)
                         .toLowerCase()
                         .includes(result.localityName?.toLowerCase());
-                      const cityNameMatch = searchTerm
+                      const cityNameMatch = String(searchTerm)
                         .toLowerCase()
                         .includes(result.cityName?.toLowerCase());
 
@@ -1227,7 +1328,7 @@ function Searchbar() {
                           {result.mobilenumber &&
                           result.mobilenumber
                             .toLowerCase()
-                            .includes(searchTerm.toLowerCase()) ? (
+                            .includes(String(searchTerm).toLowerCase()) ? (
                             <>
                                <span>{result.companyName}</span>
                               <br /> 
@@ -1238,7 +1339,7 @@ function Searchbar() {
                           ) : result.gstnumber &&
                             result.gstnumber
                               .toLowerCase()
-                              .includes(searchTerm.toLowerCase()) ? (
+                              .includes(String(searchTerm).toLowerCase()) ? (
                             <>
                               <span>{result.companyName}</span>
                               <br />
@@ -1249,7 +1350,7 @@ function Searchbar() {
                           ) : result.ownername &&
                             result.ownername
                               .toLowerCase()
-                              .includes(searchTerm.toLowerCase()) ? (
+                              .includes(String(searchTerm).toLowerCase()) ? (
                             <>
                               <span>{result.companyName}</span>
                               <br />
@@ -1354,7 +1455,7 @@ function Searchbar() {
                       return (
                         <div
                           key={index}
-                          className="dropdownItemsearchbar"
+                          className={`dropdownItemsearchbar ${index===selectedIndex?'highlighted':''}`}
                           onClick={() =>
                             handleRedireNavigate(result, displayText)
                           }
