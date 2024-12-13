@@ -24,6 +24,7 @@ function Searchbar() {
   const[selectedIndex,setSelectedIndex]=useState(-1);
   const inputRef=useRef(null);
   const[highlightItem,setHightlightItem]=useState(null);
+  const[tempInputValue,setTempInputValue]=useState('');
 
   const decrypt = (ciphertext) => {
     const bytes = CryptoJS.AES.decrypt(ciphertext, encryptionKey);
@@ -569,13 +570,13 @@ function Searchbar() {
         handleEnter(selectedItem);
         // Update the input box correctly
         if (typeof selectedItem === 'string') {
-          setSearchTerm(selectedItem);
+          setHightlightItem(selectedItem);
         } else if (selectedItem.companyName) {
-          setSearchTerm(selectedItem.companyName);
+          setHightlightItem(selectedItem.companyName);
         } else if (selectedItem.mobilenumber) {
-          setSearchTerm(selectedItem.mobilenumber);
+          setHightlightItem(selectedItem.mobilenumber);
         } else {
-          setSearchTerm('');
+          setHightlightItem('');
         }
         setShowDropdown(false);
       }
@@ -622,8 +623,10 @@ function Searchbar() {
     console.log("Type of allResult Enter:", Array.isArray(keywordsE)); 
 
     // const FullKeywordE=String(EnterKey);
-    // const BaseKeywordE=FullKeywordE.split('in')[0].trim();
-    // console.log('BaseKeyword',BaseKeywordE);
+    
+
+    const BaseKeywordE=EnterKey.split(/\s+in\s+/)[0].trim() ||'';
+    console.log('BaseKeyword',BaseKeywordE);
 
     const matchKeywordE = keywordsE.find(
       (keyItem) => keyItem.keyword.toLowerCase() === EnterKey
@@ -646,6 +649,25 @@ function Searchbar() {
     );
     console.log("matchCompanyName", matchCompanyNameE);
 
+    //For Specilisation Enter Funtionality
+    const specilisationE = allResult.specializationMatches || [];
+    console.log("specilisationE", specilisationE);
+    console.log("Type of allResult Enter:", Array.isArray(specilisationE)); 
+
+    // const FullKeywordE=String(EnterKey);
+  
+    const BaseSpecilisationE=EnterKey.split(/\s+in\s+/)[0].trim() ||'';
+    console.log('BaseSpecilisationE',BaseSpecilisationE);
+
+    const BasespE=BaseSpecilisationE.replace(/^\S+\s+/, "").trim();
+    console.log('BasespE',BasespE);
+
+    const matchSpecilisationE = specilisationE.find(
+      (spItem) => spItem.specialization.toLowerCase() === EnterKey
+    );
+    console.log("matchSpecilisationE", matchSpecilisationE);
+
+
 
     if(matchKeywordE){
       const keyName = matchKeywordE.keyword;
@@ -654,7 +676,19 @@ function Searchbar() {
       if (keyName) {
         const targetUrl = `/All/Listing/in-${localStorage.getItem(
           "cityname"
-        )}?searchkey=${encodeURIComponent(keyName)}`;
+        )}?searchkey=${encodeURIComponent(BaseKeywordE)}`;
+        console.log("nav", targetUrl);
+        navigate(targetUrl);
+      }
+    }
+    else if(matchSpecilisationE){
+      const keyName = matchSpecilisationE.specialization;
+       console.log("hii");
+       console.log("keyname", keyName);
+      if (keyName) {
+        const targetUrl = `/All/Listing/in-${localStorage.getItem(
+          "cityname"
+        )}?searchkey=${encodeURIComponent(BasespE)}`;
         console.log("nav", targetUrl);
         navigate(targetUrl);
       }
@@ -727,7 +761,7 @@ function Searchbar() {
     console.log("matchKeyword", keywords);
 
     const FullKeyword=String(selectedKeyword.props.children);
-    const BaseKeyword=FullKeyword.split('in')[0].trim();
+    const BaseKeyword=FullKeyword.split(/\s+in\s+/)[0].trim() ||'';
     console.log('BaseKeyword',BaseKeyword);
 
     const matchKeyword = keywords.find(
@@ -765,7 +799,7 @@ function Searchbar() {
     const FullSpecilisation=String(selectedKeyword.props.children);
     console.log('FullSpecilisation',FullSpecilisation);
 
-    const Basespecilisation=FullSpecilisation.split('in')[0].trim();
+    const Basespecilisation=FullSpecilisation.split(/\s+in\s+/)[0].trim();
     console.log('Basespecilisation',Basespecilisation)
 
     const Basesp=Basespecilisation.replace(/^\S+\s+/, "").trim();
@@ -836,11 +870,18 @@ function Searchbar() {
       console.log("Mobile number not found or invalid structure.");
   }
 
-  
-  const ApiMobileNo = allResult?.[0]?.mobilenumber || '';
+const resultsArray = Array.isArray(allResult) ? allResult : [];
+console.log("Validated resultsArray:", resultsArray);
 
-   console.log('Api mobile Number',ApiMobileNo);
-   const matchMobilenumber=ApiMobileNo===ExtractedMobileNo;
+  
+  let matchMobilenumber = false;
+  resultsArray.forEach((item) => {
+    const ApiMobileNo = item?.mobilenumber || '';
+    console.log('Api mobile Number:', ApiMobileNo);
+    if (ApiMobileNo === ExtractedMobileNo) {
+      matchMobilenumber = true;
+    }
+  });
    console.log('matchMobilenumber',matchMobilenumber);
 
 //   allResult.forEach((item, index) => {
@@ -897,8 +938,13 @@ function Searchbar() {
     console.log("matchKeyword", keywordspe);
 
     const FullKeywordSp=String(selectedKeyword.props.children);
+
     const BaseKeywordSp=FullKeywordSp.split('in')[0].trim();
     console.log('BaseKeywordSp',BaseKeywordSp);
+
+    const words = BaseKeywordSp.split(' ');
+    const refindKeywordsp = words.slice(-2).join(' ').trim();
+    console.log('refindKeywordsp:', refindKeywordsp);
 
     const matchKeywordSp = keywordspe.find(
       (keyItem) => keyItem.allspecialiazationkeyword ===selectedKeyword.props.children 
@@ -906,22 +952,24 @@ function Searchbar() {
     console.log("matchKeySp", matchKeywordSp);
 
     //specilisation,keyword,location
-    const specilisationkeyloc = allResult.allspecializationandKeyword || [];
-    console.log("specilisation", specilisationkeyloc);
 
-    const FullSpecilisationlocation=String(selectedKeyword.props.children);
-    console.log('FullSpecilisation',FullSpecilisationlocation);
+    // const specilisationkeyloc = allResult.allspecializationandKeyword || [];
+    // console.log("specilisationkeyloc", specilisationkeyloc);
 
-    const Basespecilisationlocation=FullSpecilisationlocation.split('in')[0].trim();
-    console.log('Basespecilisationlocation',Basespecilisationlocation)
+    // console.log('Selected SKL',selectedKeyword.props.children)
+    // const FullSpecilisationlocation=String(selectedKeyword.props.children);
+    // console.log('FullSpecilisationlocation',FullSpecilisationlocation);
 
-    const Basesplocation=Basespecilisationlocation.replace(/^\S+\s+/, "").trim();
-    console.log('Basesplocation',Basesplocation);
+    // const Basespecilisationlocation = FullSpecilisationlocation.split('in')[0].trim();
+    // console.log('Basespecilisationlocation',Basespecilisationlocation)
 
-    const matchSpecilisationlocation = specilisationkeyloc.find(
-      (speItem) => speItem.allspecialiazationkeyword ===selectedKeyword.props.children
-    );
-    console.log("matchSpecilisation", matchSpecilisation);
+    // const Basesplocation=Basespecilisationlocation.replace(/^\S+\s+/, "").trim();
+    // console.log('Basesplocation',Basesplocation);
+
+    // const matchSpecilisationlocation = specilisationkeyloc.find(
+    //   (speItem) => speItem.allspecialiazationkeyword ===String(selectedKeyword.props.children)
+    // );
+    // console.log("matchSpecilisation", matchSpecilisationlocation);
 
 
     
@@ -1105,11 +1153,11 @@ function Searchbar() {
       const keyName = matchKeywordSp.allspecialiazationkeyword;
       console.log("hii");
       console.log("keyname", keyName);
-      console.log('base',BaseKeywordSp)
+      console.log('refindKeywordsp',refindKeywordsp)
       if (keyName) {
         const targetUrl = `/All/Listing/in-${localStorage.getItem(
           "cityname"
-        )}?searchkey=${encodeURIComponent(BaseKeywordSp)}`;
+        )}?searchkey=${encodeURIComponent(refindKeywordsp)}`;
         console.log("nav", targetUrl);
         navigate(targetUrl);
       }
@@ -1270,7 +1318,7 @@ function Searchbar() {
                   type="text"
                   className="searchTerm"
                   placeholder="Search"
-                  value={searchTerm}
+                  value={highlightItem||searchTerm}
                   onChange={handleSearch}
                   onFocus={handleFocus}
                   onBlur={handleBlur}
@@ -1347,18 +1395,7 @@ function Searchbar() {
                                 {result.gstnumber}
                               </span>
                             </>
-                          ) : result.ownername &&
-                            result.ownername
-                              .toLowerCase()
-                              .includes(String(searchTerm).toLowerCase()) ? (
-                            <>
-                              <span>{result.companyName}</span>
-                              <br />
-                              <span className="serchbarTitle">
-                                {result.ownername}
-                              </span>
-                            </>
-                          ) : keywordMatch || localityMatch || cityNameMatch ? (
+                          )  : keywordMatch || localityMatch || cityNameMatch ? (
                             <>
                               <span>{result.companyName}</span>
                               <span>{localityMatch}</span>
