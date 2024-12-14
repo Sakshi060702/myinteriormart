@@ -1505,12 +1505,13 @@ function Listingdetails() {
                             style={{ marginRight: "4px" }}
                           ></i>
                           <a
-                            href={
-                              listingDetails.website.startsWith("http://") ||
-                              listingDetails.website.startsWith("https://")
-                                ? listingDetails.website
-                                : `https://${listingDetails.website}`
-                            }
+                            // href={
+                            //   listingDetails.website.startsWith("http://") ||
+                            //   listingDetails.website.startsWith("https://")
+                            //     ? listingDetails.website
+                            //     : `https://${listingDetails.website}`
+                            // }
+                             href={listingDetails.website}
                             target="_blank"
                             style={{ color: "orange" }}
                             rel="noopener noreferrer"

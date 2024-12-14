@@ -164,17 +164,17 @@ function Addcommunication() {
       mobile: formData.mobile || telphone,
     };
 
-    const emailError = validateEmail(updatedFormData.email);
+    // const emailError = validateEmail(updatedFormData.email);
     const registermobileError = validateMobile(updatedFormData.registerMobile);
     const mobileError = validateMobile(updatedFormData.mobile);
-    const telephoneError = validateMobile(updatedFormData.telephone);
+    // const telephoneError = validateMobile(updatedFormData.telephone);
 
-    if (emailError  || mobileError || telephoneError) {
+    if ( mobileError ) {
       setError({
-        communicationEmail: emailError,
+        // communicationEmail: emailError,
         // communicationRegisterMobile: registermobileError,
         communicationMobile: registermobileError,
-        communicationTelephone: telephoneError,
+        // communicationTelephone: telephoneError,
       });
       return;
     }
@@ -296,7 +296,7 @@ function Addcommunication() {
                   </div>
                   <div className="form-group col-md-4">
                     <label htmlFor="email">
-                      Email<span className="text-danger">*</span>
+                      Email
                     </label>
                     <input
                       className="form-control form-control-sm box companyD"
@@ -307,13 +307,13 @@ function Addcommunication() {
                       value={formData.email || useremail || ""}
                       // value={useremail != "" ? useremail : formData.email}
                       onChange={handleChange}
-                      required
+                      // required
                     />
-                    {error.communicationEmail && (
+                    {/* {error.communicationEmail && (
                       <div className="text-danger">
                         {error.communicationEmail}
                       </div>
-                    )}
+                    )} */}
                   </div>
                   <div className="form-group col-md-4">
                     <label htmlFor="Mobile2">
@@ -349,7 +349,7 @@ function Addcommunication() {
                       value={formData.registerMobile }
                       onChange={handleChange}
                       maxLength={10}
-                      required
+                      // required
                     />
                     {/* {error.communicationRegisterMobile && (
                       <div className="text-danger">
@@ -360,7 +360,7 @@ function Addcommunication() {
                  
                   <div className="form-group col-md-4">
                     <label htmlFor="telephone">
-                      Telephone<span className="text-danger">*</span>
+                      Telephone
                     </label>
                     <input
                       className="form-control form-control-sm box companyD"
@@ -370,18 +370,18 @@ function Addcommunication() {
                       placeholder="Enter telephone number"
                       value={formData.telephone}
                       onChange={handleChange}
-                      required
+                      // required
                       maxLength={10}
                     />
-                    {error.communicationTelephone && (
+                    {/* {error.communicationTelephone && (
                       <div className="text-danger">
                         {error.communicationTelephone}
                       </div>
-                    )}
+                    )} */}
                   </div>
                   <div className="form-group col-md-4">
                     <label htmlFor="website">
-                      Website<span className="text-danger">*</span>
+                      Website
                     </label>
                     <input
                       className="form-control form-control-sm box companyD"
@@ -391,12 +391,12 @@ function Addcommunication() {
                       placeholder="Enter your Website"
                       value={formData.website}
                       onChange={handleChange}
-                      required
+                      // required
                     />
                   </div>
                   <div className="form-group col-md-4">
                     <label htmlFor="tollfree">
-                      Toll Free<span className="text-danger">*</span>
+                      Toll Free
                     </label>
                     <input
                       className="form-control form-control-sm box companyD"
@@ -407,7 +407,7 @@ function Addcommunication() {
                       value={formData.tollfree}
                       onChange={handleInputChange}
                       pattern="[0-9]*"
-                      required
+                      // required
                       maxLength={12}
                     />
                   </div>

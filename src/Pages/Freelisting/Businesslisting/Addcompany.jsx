@@ -20,7 +20,7 @@ function Addcompany() {
     businessCategory: "",
     natureOfBusiness: "",
     yearOfEstablishment: "",
-    numberOfEmployees: "",
+    numberOfEmployees: null,
     turnover: "",
     gstNumber: "",
     description: "",
@@ -398,7 +398,7 @@ function Addcompany() {
             </div>
             <div className="form-group col-md-4">
               <label>
-                Number of Employees <span className="text-danger">*</span>
+                Number of Employees 
               </label>
               <input
                 className="form-control form-control-sm box companyD"
@@ -407,12 +407,12 @@ function Addcompany() {
                 placeholder="Enter number of employees"
                 value={formData.numberOfEmployees}
                 onChange={handleChange}
-                required
+                // required
               />
             </div>
             <div className="form-group col-md-4">
               <label className="control-label" htmlFor="turnover">
-                Turnover <span className="text-danger">*</span>
+                Turnover 
               </label>
               <Select
                       styles={customStyles}

@@ -22,9 +22,9 @@ function Aboutus() {
   }, []);
   return (
     <>
-    <Helmet>
+    {/* <Helmet>
     <title>About Us | Myinteriormart</title>
-    </Helmet>
+    </Helmet> */}
     {/* <h6>{cityName}</h6> */}
       <div class="container mt-4 mb-4">
         <div class="row">
