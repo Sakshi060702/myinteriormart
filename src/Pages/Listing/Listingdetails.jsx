@@ -1496,9 +1496,10 @@ function Listingdetails() {
                               {listingDetails.locality}
                             </span>
                           </p>
+                          <p style={{display:'none'}}>{listingDetails.email}</p>
                         </div>
                       </div>
-                      <div classname="col-lg-12 mb-1 px-0 year_gst">
+                      {/* <div classname="col-lg-12 mb-1 px-0 year_gst">
                         <p className="m-0 ListingpageFont">
                           <i
                             className="fa fa-globe"
@@ -1521,7 +1522,35 @@ function Listingdetails() {
                           </a>
                         </p>
                         <p style={{display:'none'}}>{listingDetails.email}</p>
+                      </div> */}
+
+{listingDetails.website && 
+  <div classname="col-lg-12 mb-1 px-0 year_gst">
+                        <p className="m-0 ListingpageFont">
+                          <i
+                            className="fa fa-globe"
+                            style={{ marginRight: "4px" }}
+                          ></i>
+                          <a
+                            // href={
+                            //   listingDetails.website.startsWith("http://") ||
+                            //   listingDetails.website.startsWith("https://")
+                            //     ? listingDetails.website
+                            //     : `https://${listingDetails.website}`
+                            // }
+                             href={listingDetails.website}
+                            target="_blank"
+                            style={{ color: "orange" }}
+                            rel="noopener noreferrer"
+                          >
+                            {" "}
+                            {listingDetails.website}
+                          </a>
+                        </p>
+                      
                       </div>
+}
+
                       <div className="listingemp">
                         {/* <div className="col-lg-6 px-0 mb-1 year_gst mt-0">
                           <p className="mb-0 noemployee ListingpageFont">
@@ -1544,18 +1573,21 @@ function Listingdetails() {
                             Since {listingDetails.yearOfEstablishment}
                           </p>
                         </div>
+                        {listingDetails.numberOfEmployees &&
                         <div className="col-lg-6 mb-1 px-0 year_gst listingempyear">
-                          <p
-                            className="mb-0 noemployee ListingpageFont"
-                            style={{ marginLeft: "-1px" }}
-                          >
-                            <i
-                              className="fa fa-users"
-                              style={{ marginRight: "8px" }}
-                            ></i>
-                            {listingDetails.numberOfEmployees} Employees
-                          </p>
-                        </div>
+                        <p
+                          className="mb-0 noemployee ListingpageFont"
+                          style={{ marginLeft: "-1px" }}
+                        >
+                          <i
+                            className="fa fa-users"
+                            style={{ marginRight: "8px" }}
+                          ></i>
+                          {listingDetails.numberOfEmployees} Employees
+                        </p>
+                      </div>
+                         }
+                        
 
                         {/* <div className="col-lg-6 px-0 mb-1 year_gst mt-0">
                           <p className="mb-0 noemployee ListingpageFont">
@@ -1567,12 +1599,14 @@ function Listingdetails() {
                           </p>
                         </div> */}
                       </div>
-
-                      <div className="col-lg-6 mb-1 px-0 year_gst listingempyear">
+{Listingdetails.turnover && 
+  <div className="col-lg-6 mb-1 px-0 year_gst listingempyear">
                         <p className="mb-0 ListingpageFont">
                           Turnover : {listingDetails.turnover}
                         </p>
                       </div>
+}
+                      
 
                       {/* <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
                         <p className="mb-0 ListingpageFont">
@@ -1580,11 +1614,13 @@ function Listingdetails() {
                         </p>
                       </div> */}
                       {/* gstnumber */}
-                      <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
-                        <p className="mb-0 ListingpageFont">
-                          GST NO : {listingDetails.gstNumber}
-                        </p>
-                      </div>
+                      {listingDetails.gstNumber && 
+                       <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
+                       <p className="mb-0 ListingpageFont">
+                         GST NO : {listingDetails.gstNumber}
+                       </p>
+                     </div>}
+                     
                       <div className="col-lg-12 px-0 mb-1 year_gst mt-0">
                         <p className="mb-0 ListingpageFont">
                           <i
@@ -1620,23 +1656,7 @@ function Listingdetails() {
                       {/* dekstop view */}
                       <div className="listingnumberD">
                         <div className="listingemp listingtoll">
-                          {/* registered mobile */}
-                          <div
-                            classname="col-lg-12 mb-1 listingtelephone"
-                            style={{ width: "19%" }}
-                          >
-                            <i
-                              className="fa fa-mobile"
-                              style={{ marginRight: "8px" }}
-                            ></i>
-                            <a
-                              href={`tel:${listingDetails.registerMobile}`}
-                              style={{ marginRight: "8px", color: "orange" }}
-                              className="ListingpageFont"
-                            >
-                              {listingDetails.registerMobile}
-                            </a>
-                          </div>
+                         
                           {/* mobile number */}
                           <div classname="col-lg-12 mb-1 p-0">
                             <i
@@ -1651,43 +1671,87 @@ function Listingdetails() {
                               {listingDetails.mobile}
                             </a>
                           </div>
+
+                           {/* registered mobile */}
+                           {listingDetails.registerMobile && 
+                           <div
+                           classname="col-lg-12 mb-1 listingtelephone"
+                           style={{ width: "19%" }}
+                         >
+                           <i
+                             className="fa fa-mobile"
+                             style={{ marginRight: "8px" }}
+                           ></i>
+                           <a
+                             href={`tel:${listingDetails.registerMobile}`}
+                             style={{ marginRight: "8px", color: "orange" }}
+                             className="ListingpageFont"
+                           >
+                             {listingDetails.registerMobile}
+                           </a>
+                         </div>
+                           }
+                           
+
+
                           {/* telephone */}
+                          {listingDetails.telephone && 
                           <div
-                            classname="col-lg-12 mb-1 listingtelephone"
-                            style={{ width: "20%" }}
+                          classname="col-lg-12 mb-1 listingtelephone"
+                          style={{ width: "20%" }}
+                        >
+                          <i
+                            className="fa fa-phone"
+                            style={{ marginRight: "8px" }}
+                          ></i>
+                          <a
+                            href={`tel:${listingDetails.telephone}`}
+                            style={{ marginRight: "8px", color: "orange" }}
+                            className="ListingpageFont"
                           >
-                            <i
-                              className="fa fa-phone"
-                              style={{ marginRight: "8px" }}
-                            ></i>
-                            <a
-                              href={`tel:${listingDetails.telephone}`}
-                              style={{ marginRight: "8px", color: "orange" }}
-                              className="ListingpageFont"
-                            >
-                              {listingDetails.telephone}
-                            </a>
-                          </div>
+                            {listingDetails.telephone}
+                          </a>
+                        </div>
+                          }
+                          
 
                           {/* tollfree */}
+                          {listingDetails.tollFree && 
                           <div classname="col-lg-12 mb-1 p-0">
-                            <i
-                              className="fa fa-headphones"
-                              style={{ marginRight: "8px" }}
-                            ></i>
-                            <a
-                              href={`tel:${listingDetails.tollFree}`}
-                              style={{ marginRight: "8px", color: "orange" }}
-                              className="ListingpageFont"
-                            >
-                              {listingDetails.tollFree}
-                            </a>
-                          </div>
+                          <i
+                            className="fa fa-headphones"
+                            style={{ marginRight: "8px" }}
+                          ></i>
+                          <a
+                            href={`tel:${listingDetails.tollFree}`}
+                            style={{ marginRight: "8px", color: "orange" }}
+                            className="ListingpageFont"
+                          >
+                            {listingDetails.tollFree}
+                          </a>
+                        </div>}
+                          
                         </div>
                       </div>
                       {/* mobile view */}
                       <div className="listingnumberM">
                         <div className="listingemp listingtoll">
+                          
+                          {/* mobile number */}
+                          <div classname="col-lg-12 mb-1 p-0">
+                            <i
+                              className="fa fa-mobile"
+                              style={{ marginRight: "8px" }}
+                            ></i>
+                            <a
+                              href={`tel:${listingDetails.mobile}`}
+                              style={{ marginRight: "8px", color: "orange" }}
+                              className="ListingpageFont"
+                            >
+                              {listingDetails.mobile}
+                            </a>
+                          </div>
+
                           {/* registered mobile */}
                           <div
                             classname="col-lg-12 mb-1 listingtelephone"
@@ -1703,20 +1767,6 @@ function Listingdetails() {
                               className="ListingpageFont"
                             >
                               {listingDetails.registerMobile}
-                            </a>
-                          </div>
-                          {/* mobile number */}
-                          <div classname="col-lg-12 mb-1 p-0">
-                            <i
-                              className="fa fa-mobile"
-                              style={{ marginRight: "8px" }}
-                            ></i>
-                            <a
-                              href={`tel:${listingDetails.mobile}`}
-                              style={{ marginRight: "8px", color: "orange" }}
-                              className="ListingpageFont"
-                            >
-                              {listingDetails.mobile}
                             </a>
                           </div>
                           {/* telephone */}

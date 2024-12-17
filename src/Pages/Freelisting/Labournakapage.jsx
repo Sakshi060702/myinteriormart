@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import companyimg from "../../FrontEnd/img/banner/offfice.png";
 import communicationimg from "../../FrontEnd/img/banner/communication.png";
@@ -10,13 +10,83 @@ import paymentmodeimg from "../../FrontEnd/img/banner/payment.png";
 import uploadimg from "../../FrontEnd/img/share.png";
 import sociallinkimg from "../../FrontEnd/img/banner/links.png";
 import seoimg from "../../FrontEnd/img/banner/SEO.png";
+import useAuthCheck from "../../Hooks/useAuthCheck";
+import { useSelector,useDispatch } from "react-redux";
 
 import "../../FrontEnd/css/Mangelisting.css";
 
 
 
+
 function Labournakapage() {
   // const {listingId} = useParams();
+  const[status,setStatus]=useState("");
+  const[listingID,setListingID]=useState(null);
+  const[showWorkingArea,setShowWorkingarea]=useState(false);
+  const [packageListingIds, setPackageListingIds] = useState([]);
+
+  const isAuthenticated = useAuthCheck();
+  const { token } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const userType = useSelector((state) => state.auth.userType);
+
+  useEffect(()=>{
+    const fetchData=async()=>{
+      try{
+        const response = await fetch(
+          "https://apidev.myinteriormart.com/api/ManageListingFromStatus/GetManageListingFromStatus",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = await response.json();
+        console.log('workingarea',data);
+        setStatus(data.status);
+
+        const fetchlistingId = data.listingId;
+        console.log("listingidWorking", fetchlistingId);
+        setListingID(fetchlistingId);
+
+
+
+        const response2 = await fetch(
+          "https://apidev.myinteriormart.com/api/UpdatePackageStatus/UpdatePackageStatus",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data2 = await response2.json();
+        console.log("Second API response:", data2);
+
+        const packageids=data2.map((item)=>item.listingID);
+        setPackageListingIds(packageids);
+
+        if(packageids.includes(fetchlistingId)){
+          setShowWorkingarea(true);
+        }
+        else{
+          setShowWorkingarea(false);
+        }
+
+
+
+      }
+      catch(error){
+      console.log('Error in fetching listingid',error);
+      }
+    };
+    fetchData();
+  },[token])
+
+
+
+  
   return (
     <>
       <div className="tab" style={{ display: "block" }}>
@@ -118,12 +188,15 @@ function Labournakapage() {
                   SEO Keywords
                 </div>
               </Link>
-              <Link to={`/Workingarea`} className="link-box">
-                <div className="link-large">
-                  <img src={seoimg} className="managelistingimg" />
-                  Working Area
-                </div>
-              </Link>
+              {showWorkingArea && 
+               <Link to={`/Workingarea`} className="link-box">
+               <div className="link-large">
+                 <img src={seoimg} className="managelistingimg" />
+                 Working Area
+               </div>
+             </Link>
+              }
+             
               
             </div>
             

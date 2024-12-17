@@ -187,14 +187,44 @@ function Searchbar() {
 
         ...cate,
         ...key.map((keyitem) => keyitem.keyword),
-        ...comp.map((compitem) => compitem.companyName),
+        // ...comp.map((compitem) => compitem.companyName),
         ...spe.map((spitem) => spitem.specialization),
         // ...own.map((ownItem) => ownItem.ownername),
       ])
     );
 
-    setFilteredResults(uniqueResults);
     console.log("uniqueResults", uniqueResults);
+    const limitResults=uniqueResults.slice(0,8);
+    console.log('limitResults',limitResults);
+
+    const companyResults=Array.from(
+      new Set(
+        comp.map((compitem) => compitem.companyName)
+      )
+    )
+    console.log('companyResults',companyResults);
+    
+
+    // const LimitCompanyResult=companyResults.slice(0,2);
+   
+    let finalFilteredResults;
+
+if (companyResults.length === 0) {
+  // If companyResults is empty, show the first 10 results from uniqueResults
+  finalFilteredResults = uniqueResults.slice(0, 10);
+  console.log('finalFilteredResults (no companies)', finalFilteredResults);
+} else {
+  // If companyResults is not empty, combine first 8 uniqueResults with first 2 company names
+  const LimitCompanyResult = companyResults.slice(0, 2);
+  console.log('LimitCompanyResult', LimitCompanyResult);
+
+  finalFilteredResults = Array.from(new Set([...limitResults, ...LimitCompanyResult]));
+  console.log('finalFilteredResults (with companies)', finalFilteredResults);
+}
+    
+    setFilteredResults(finalFilteredResults);
+    // setFilteredResults(uniqueResults);
+    
 
     // setFilteredResults([
     //   ...phoneData,
@@ -568,12 +598,28 @@ function Searchbar() {
       if (selectedIndex >= 0 && filteredResults[selectedIndex]) {
         const selectedItem = filteredResults[selectedIndex];
         handleEnter(selectedItem);
+console.log('Selected Item',selectedItem);
+
         // Update the input box correctly
         if (typeof selectedItem === 'string') {
-          setHightlightItem(selectedItem);
+          console.log('Original String:', selectedItem);
+          const cleanedItem = selectedItem.split(' Mr')[0]?.trim(); // Extract company name before 'Mr'
+          console.log('Cleaned String:', cleanedItem);
+          setHightlightItem(cleanedItem);
         } else if (selectedItem.companyName && selectedItem.mobilenumber) {
           setHightlightItem(selectedItem.companyName);
-        } else if (selectedItem.mobilenumber) {
+        } else if(selectedItem.ownernameMatches){
+          console.log('Brave');
+          const ownerListing=selectedItem.ownernameMatches[0]?.listings||[];
+          if(ownerListing.length>0 && ownerListing[0].companyName){
+            setHightlightItem(ownerListing[0].companyName);
+          }
+          else{
+            setHightlightItem('')
+          }
+
+        }
+        else if (selectedItem.mobilenumber) {
           setHightlightItem(selectedItem.mobilenumber);
         } else {
           setHightlightItem('');
@@ -592,8 +638,11 @@ function Searchbar() {
       // Update the input field to show the highlighted item
       // setHightlightItem(filteredResults[selectedIndex]);
       const selectItem=filteredResults[selectedIndex];
-      if(typeof selectItem==='string'){
-        setHightlightItem(selectItem);
+      if (typeof selectItem === 'string') {
+        console.log('Original String:', selectItem);
+        const cleanedItem = selectItem.split(' Mr')[0]?.trim(); // Extract company name before 'Mr'
+        console.log('Cleaned String:', cleanedItem);
+        setHightlightItem(cleanedItem);
       }
       else if(selectItem.companyName){
         setHightlightItem(selectItem.companyName)
@@ -660,6 +709,37 @@ function Searchbar() {
     
     );
     console.log("matchCompanyName", matchCompanyNameE);
+    
+    //For ownname Enter Funtionality
+    const ownerNameE=allResult.ownernameMatches||[];
+    console.log('ownernameE',ownerNameE);
+    const fetchMatchedCompanyName = (EnterKey) => {
+      // Loop through each owner in ownernameMatches
+      for (const owner of ownerNameE) {
+        if (owner.listings && Array.isArray(owner.listings)) {
+          // Loop through each listing to match companyName dynamically with EnterKey
+          const matchCompany = owner.listings.find(
+            (listing) =>
+              listing.companyName.trim().toLowerCase() === EnterKey.trim().toLowerCase()
+          );
+    
+          if (matchCompany) {
+            console.log("Matched Company:", matchCompany.companyName);
+            return {
+              ownername: owner.ownername,
+              listings: owner.listings, // Return the full owner object with listings
+            };
+          }
+        }
+      }
+      return null; // Return null if no match is found
+    };
+    // Example Usage: Pass the dynamic value of EnterKey
+    
+    const matchedOwnerCompanyName = fetchMatchedCompanyName(EnterKey);
+    console.log('Final Matched Company:', matchedOwnerCompanyName);
+
+    
 
     //For Mobile No Enter Funtionality
     const compMobArray=Array.isArray(allResult)?allResult:[];
@@ -797,6 +877,44 @@ function Searchbar() {
       navigate(targeturl);
 
     }
+
+    else if(matchedOwnerCompanyName){
+      matchedOwnerCompanyName.listings.forEach((ownerDetails)=>{
+        const CompName = ownerDetails.companyName;
+        const CompId = ownerDetails.listingId;
+        const CompCat = ownerDetails.category;
+        const CompLocality = ownerDetails.localityName;
+        const CompcategoryId = ownerDetails.categoryId;
+  
+        console.log("compName", CompName);
+        console.log("CompId", CompId);
+        console.log("CompCat", CompCat);
+        console.log("CompLocality", CompLocality);
+        console.log("CompcategoryId", CompcategoryId);
+  
+        const targeturl = `/company/${CompName.replace(
+          /\s+/g,
+          "-"
+        ).toLowerCase()}/${CompCat.replace(
+          /\s+/g,
+          "-"
+        ).toLowerCase()}/${CompLocality.replace(
+          /\s+/g,
+          "-"
+        ).toLowerCase()}/in-${localStorage.getItem(
+          "cityname"
+        )}?listingEncyt=${encodeURIComponent(
+          encrypt(parseInt(CompId))
+        )}&page=${currentPage}&itemperpage=${itemsPerPage}&secondCategoryId=${encodeURIComponent(
+          encrypt(parseInt(CompcategoryId))
+        )}`;
+  
+        console.log("targeturl", targeturl);
+        navigate(targeturl);
+  
+      })
+      
+    }
     else if(matchKeywordSpE){
       const keyName = matchKeywordSpE.allspecialiazationkeyword;
       // console.log("hii");
@@ -925,29 +1043,29 @@ function Searchbar() {
     console.log("childrenOwnerArray", childrenOwnerArray);
 
        //Helper funtion
-   const extractOwnerName = (childrenOwnerArray) => {
-    // Target the specific index or property where the owner name is expected
-    if (childrenOwnerArray[1] && childrenOwnerArray[1].props && childrenOwnerArray[1].props.children) {
-      const children = childrenOwnerArray[1].props.children;
-  
-      if (Array.isArray(children)) {
-        for (const nestedChild of children) {
-          if (
-            nestedChild.props &&
-            nestedChild.props.className === "second-line" && // Check for specific className
-            typeof nestedChild.props.children === "string"
-          ) {
-            return nestedChild.props.children.trim();
+       const extractCompanyName = (childrenOwnerArray) => {
+        // Target the specific index or property where the owner name is expected
+        if (childrenOwnerArray[1] && childrenOwnerArray[1].props && childrenOwnerArray[1].props.children) {
+          const children = childrenOwnerArray[1].props.children;
+      
+          if (Array.isArray(children)) {
+            for (const nestedChild of children) {
+              if (
+                nestedChild.props &&
+                nestedChild.props.className === "second-line" && // Check for specific className
+                typeof nestedChild.props.children === "string"
+              ) {
+                return nestedChild.props.children.trim();
+              }
+            }
           }
         }
-      }
-    }
+      
+        return null; // Return null if no match is found
+      };
+      
   
-    return null; // Return null if no match is found
-  };
-
-  
-  const extractedName = extractOwnerName(childrenOwnerArray);
+  const extractedName = extractCompanyName(childrenOwnerArray);
   console.log("Extracted Name:", extractedName);
 
   const prossedOwnername=extractedName 
@@ -979,10 +1097,29 @@ function Searchbar() {
     // const firstName=match?match[2]:'';
     // console.log('Extracted owner name',firstName);
 
+    // const matchOwnername = ownerName.find(
+    //   (ownItem) => ownItem.ownername.split(',').some((name)=>name.trim()===extractCompanyName) 
+    // );
+
+    // const matchOwnername = ownerName.find((ownItem) => {
+    //   const companyNames = ownItem.listings.map((listing) => listing.companyName.trim().toLowerCase());
+    //   console.log('companyNamesOwner:', companyNames); // Check if this array is correct
+    
+    //   console.log('Extracted Name:', String(extractCompanyName).trim().toLowerCase()); // Log extracted name for debugging
+    
+    //   return companyNames.some((name) => name === String(extractCompanyName).trim().toLowerCase());
+    //   console.log('CompName',companyNames.some((name) => name))
+    // });
+    
+    // console.log('matchOwnername', matchOwnername); // Check the final result
+    
+
+    
     const matchOwnername = ownerName.find(
       (ownItem) => ownItem.ownername.split(',').some((name)=>name.trim()===firstOwnerName) 
     );
     console.log('matchOwnername',matchOwnername);
+
 
   
 //mobile number
@@ -1174,14 +1311,12 @@ console.log("Validated resultsArray:", resultsArray);
       }
     } 
     else if(matchOwnername){
-      const OwnerListing=matchOwnername.listings?.[0]
-      console.log('OwnerListing',OwnerListing);
-      if(OwnerListing){
-        const CompName = OwnerListing.companyName;
-        const CompId = OwnerListing.listingId;
-        const CompCat = OwnerListing.category;
-        const CompLocality = OwnerListing.localityName;
-        const CompcategoryId = OwnerListing.categoryId;
+      matchOwnername.listings.forEach((OwnerCompany)=>{
+        const CompName = OwnerCompany.companyName;
+        const CompId = OwnerCompany.listingId;
+        const CompCat = OwnerCompany.category;
+        const CompLocality = OwnerCompany.localityName;
+        const CompcategoryId = OwnerCompany.categoryId;
   
         console.log("compName", CompName);
         console.log("CompId", CompId);
@@ -1209,7 +1344,9 @@ console.log("Validated resultsArray:", resultsArray);
         console.log("targeturl", targeturl);
         navigate(targeturl);
   
-      }
+      
+      })
+      
       
     }
     else if(matchMobilenumber && selectedItem){

@@ -20,7 +20,7 @@ function Addcompanyl() {
     businessCategory: "",
     natureOfBusiness: "",
     yearOfEstablishment: "",
-    numberOfEmployees: "",
+    numberOfEmployees: null,
     turnover: "",
     gstNumber: "",
     description: "",
@@ -131,7 +131,7 @@ function Addcompanyl() {
           businessCategory: companyDetails.businessCategory || "",
           natureOfBusiness: companyDetails.natureOfBusiness || "",
           yearOfEstablishment: formattedDate,
-          numberOfEmployees: companyDetails.numberOfEmployees || "",
+          numberOfEmployees: companyDetails.numberOfEmployees || null,
           turnover: companyDetails.turnover || "",
           gstNumber: companyDetails.gstNumber || "",
           description: companyDetails.description || "",
@@ -158,13 +158,13 @@ function Addcompanyl() {
 
     const companynameError = validateName(formData.companyName);
     // const gstnumberError = validateGstNumber(formData.gstNumber);
-    const descriptionErrror = validateDescriptionLength(formData.description);
+    // const descriptionErrror = validateDescriptionLength(formData.description);
 
-    if (companynameError || descriptionErrror) {
+    if (companynameError ) {
       setError({
         companyName: companynameError,
         // gstNumber: gstnumberError,
-        description: descriptionErrror,
+        // description: descriptionErrror,
       });
       return;
     }
@@ -383,7 +383,7 @@ function Addcompanyl() {
                   </div>
                   <div className="form-group col-md-4">
                     <label>
-                      Number of Employees <span className="text-danger">*</span>
+                      Number of Employees 
                     </label>
                     <input
                       className="form-control form-control-sm box companyD"
@@ -392,12 +392,12 @@ function Addcompanyl() {
                       placeholder="Enter number of employees"
                       value={formData.numberOfEmployees}
                       onChange={handleChange}
-                      required
+                      // required
                     />
                   </div>
                   <div className="form-group col-md-4">
                     <label className="control-label" htmlFor="turnover">
-                      Turnover <span className="text-danger">*</span>
+                      Turnover 
                     </label>
                     <Select
                       styles={customStyles}
@@ -441,11 +441,11 @@ function Addcompanyl() {
                       style={{ height: "100px" }}
                       value={formData.description}
                       onChange={handleChange}
-                      required
+                      // required
                     ></textarea>
-                    {error.description && (
+                    {/* {error.description && (
                       <div className="text-danger">{error.description}</div>
-                    )}
+                    )} */}
                   </div>
                   <div className="text-left col-12 mt-3">
                     <button type="submit" className="btn_1">

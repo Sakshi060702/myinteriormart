@@ -89,6 +89,7 @@ function Package() {
 
           return acc;
         }, {});
+        console.log('statusMap',statusMap);
 
         setPackageStatus(statusMap);
       } catch (error) {

@@ -124,12 +124,12 @@ function Communicationl() {
     const mobileError=validateMobile(formData.mobile);
     const telephoneError=validateMobile(formData.telephone);
 
-    if(emailError||mobileError||telephoneError){
+    if(mobileError){
       setError({
-        communicationEmail:emailError,
+        // communicationEmail:emailError,
         // communicationRegisterMobile:registermobileError,
         commuincationMobile:registermobileError,
-        communicationTelephone:telephoneError,
+        // communicationTelephone:telephoneError,
       });
       return;
     }
@@ -262,7 +262,7 @@ function Communicationl() {
                     />
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="email">Email<span className="text-danger">*</span></label>
+                    <label htmlFor="email">Email</label>
                     <input
                       className="form-control form-control-sm box companyD"
                       type="email"
@@ -272,11 +272,11 @@ function Communicationl() {
                       value={formData.email}
                       onChange={handleChange}
                       // onChange={(e) => setEmail(e.target.value)}
-                      required
+                      // required
                     />
-                    {error.communicationEmail && (
+                    {/* {error.communicationEmail && (
                       <div className="text-danger">{error.communicationEmail}</div>
-                    )}
+                    )} */}
                   </div>
                   <div className="form-group col-md-4">
                     <label htmlFor="Mobile2">Mobile<span className="text-danger">*</span> </label>
@@ -308,7 +308,7 @@ function Communicationl() {
                       placeholder="Enter Registered Mobile Number"
                       value={formData.registerMobile}
                       onChange={handleChange}
-                      required
+                      // required
                      
                     />
                     {/* {error.communicationRegisterMobile && (
@@ -317,7 +317,7 @@ function Communicationl() {
                   </div>
                   
                   <div className="form-group col-md-4">
-                    <label htmlFor="telephone">Telephone<span className="text-danger">*</span></label>
+                    <label htmlFor="telephone">Telephone</label>
                     <input
                       className="form-control form-control-sm box companyD"
                       type="text"
@@ -326,16 +326,16 @@ function Communicationl() {
                       placeholder="Enter telephone number"
                       value={formData.telephone}
                       onChange={handleChange}
-                      required
+                      // required
                       maxLength={10}
                       
                     />
-                    {error.communicationTelephone && (
+                    {/* {error.communicationTelephone && (
                       <div className="text-danger">{error.communicationTelephone}</div>
-                    )}
+                    )} */}
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="website">Website<span className="text-danger">*</span></label>
+                    <label htmlFor="website">Website</label>
                     <input
                       className="form-control form-control-sm box companyD"
                       type="text"
@@ -344,12 +344,12 @@ function Communicationl() {
                       placeholder="Enter your Website"
                       value={formData.website}
                       onChange={handleChange}
-                      required
+                      // required
                       
                     />
                   </div>
                   <div className="form-group col-md-4">
-                    <label htmlFor="tollfree">Toll Free<span className="text-danger">*</span></label>
+                    <label htmlFor="tollfree">Toll Free</label>
                     <input
                       className="form-control form-control-sm box companyD"
                       type="text"
@@ -358,7 +358,7 @@ function Communicationl() {
                       placeholder="Enter Tollfree No"
                       value={formData.tollfree}
                       onChange={handleChange}
-                      required
+                      // required
                       maxLength={12}
                     />
                   </div>
