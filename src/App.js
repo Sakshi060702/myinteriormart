@@ -272,6 +272,8 @@ import Workingarea from "./Pages/Profile/Workingarea";
 
 import ScrollToTop from "./Pages/ScrollToTop";
 
+import UserDeleteAccount from "./Pages/Profile/UserDeleteAccount";
+
 // import Dashboardprofile from "./Pages/Profile/Dashboardprofile";
 // import Editprofileregister from "./Pages/Dashboardregisterprofile/Editprofileregister";
 // import Personalinforegister from "./Pages/Dashboardregisterprofile/Personalinforegister";
@@ -856,6 +858,18 @@ function App() {
             </Profile2>
           }
         />
+
+        <Route
+          path="/userdeleteaccount"
+          element={
+            <Profile2>
+              <UserDeleteAccount />
+            </Profile2>
+          }
+        />
+
+
+
 
         {/* <Route path="/Dashboardprofile" element={<Dashboardprofile/>}/>
 <Route path="/editprofile1" element={<Dashboardprofile><Editprofileregister /></Dashboardprofile>} />

@@ -226,6 +226,15 @@ function Profile2({ children }) {
                     />
                     Change Pin
                   </Link>
+                  <Link to={`/userdeleteaccount`}>
+                    {" "}
+                    <img
+                      src={changepassimg}
+                      alt="Delete User Account"
+                      style={{ height: "60px" }}
+                    />
+                    Delete User Account
+                  </Link>
                 </>
               )}
 
@@ -325,6 +334,17 @@ function Profile2({ children }) {
                     />
                     Change Pin
                   </Link>
+                  <Link to={`/userdeleteaccount`}>
+                    {" "}
+                    <img
+                      src={changepassimg}
+                      alt="Delete User Account"
+                      style={{ height: "60px" }}
+                    />
+                    Delete User Account
+                  </Link>
+
+                 
                 </>
               )}
             </div>
@@ -499,6 +519,15 @@ function Profile2({ children }) {
                     style={{ height: "60px" }}
                   />
                   Change Pin
+                </Dropdown.Item>
+
+                <Dropdown.Item as={Link} to={`/userdeleteaccount')}`}>
+                  <img
+                    src={changepassimg}
+                    alt="Change Password"
+                    style={{ height: "60px" }}
+                  />
+                  Delete User Account
                 </Dropdown.Item>
                   </>
                 )}

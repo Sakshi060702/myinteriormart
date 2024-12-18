@@ -1943,3 +1943,118 @@ div.scrollmenu .imgScroll:hover {
     outline: 0;
     box-shadow: 0 0 0 0.5px orange !important;
 }
+
+
+
+.UserdeleteAccBtn{
+  border: 1px solid #f9ba47;
+    width: 263px;
+    height: 50px;
+    margin-top: 16px;
+    margin-left: 259px;
+    background-color: orange;
+    color: white;
+    font-weight: bold;
+    
+}
+
+@media (max-width:767px) {
+  .UserdeleteAccBtn{
+    border: 1px solid #f9ba47;
+      width: 282px;
+      height: 50px;
+      margin-top: 82px;
+      margin-left: 11px;
+      background-color: #f9ba47;
+      color: black;
+      font-weight: bold;
+      
+  }
+}
+
+.UDAimg{
+  width: 93px;
+  margin-left: 341px;
+}
+
+.UDAhead{
+  margin-top: 22px;
+}
+
+.UDAheading{
+  text-align: center;
+}
+
+.UDApopup1tbtn{
+ display: flex;
+}
+@media (max-width:767px) {
+  .UDApopup1tbtn{
+    margin-left: 64px;
+  }
+}
+
+
+.UDApopupbutton1-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 17px;
+  margin-left: 54px;
+  background-color:red;
+  color: white;
+  height: 50px;
+  width: 347px;
+}
+
+@media (max-width:767px) {
+  .UDApopupbutton1-container {
+    display: flex;
+    justify-content: center;
+  
+    margin-left: 24px;
+    background-color:red;
+    color: white;
+    height: 46px;
+    width: 297px;
+    margin-top: 2px;
+  }
+}
+
+.UDApopupbutton2-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 17px;
+  margin-left: 54px;
+  background-color:gray;
+  color: black;
+  height: 50px;
+  width: 347px;
+}
+
+@media (max-width:767px) {
+  .UDApopupbutton2-container {
+    display: flex;
+    justify-content: center;
+  
+    margin-left: 24px;
+    background-color:orange;
+    color: white;
+    height: 46px;
+    width: 297px;
+    margin-top: 2px;
+  }
+}
+
+.udpbtn1{
+  color: white;
+  font-size: 18px;
+  background-color: red;
+  width: 178px;
+}
+
+.udpbtn2{
+  color: black;
+  font-size: 18px;
+  background-color: gray;
+  width: 178px;
+}

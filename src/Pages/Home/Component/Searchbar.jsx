@@ -685,7 +685,7 @@ console.log('Selected Item',selectedItem);
 
     // const FullKeywordE=String(EnterKey);
     
-
+   console.log('Enterkey',EnterKey)
     const BaseKeywordE=EnterKey.split(/\s+in\s+/)[0].trim() ||'';
     console.log('BaseKeyword',BaseKeywordE);
 
@@ -791,7 +791,10 @@ console.log('Selected Item',selectedItem);
       console.log("hii");
       console.log("keyname", keyName);
       if (keyName) {
-        const targetUrl = `/All/Listing/in-${localStorage.getItem(
+        const targetUrl = `/All/${keyName.replace(
+          /\s+/g,
+          "-"
+        ).toLowerCase()}/in-${localStorage.getItem(
           "cityname"
         )}?searchkey=${encodeURIComponent(BaseKeywordE)}`;
         console.log("nav", targetUrl);
@@ -803,7 +806,10 @@ console.log('Selected Item',selectedItem);
        console.log("hii");
        console.log("keyname", keyName);
       if (keyName) {
-        const targetUrl = `/All/Listing/in-${localStorage.getItem(
+        const targetUrl = `/All/${keyName.replace(
+          /\s+/g,
+          "-"
+        ).toLowerCase()}/in-${localStorage.getItem(
           "cityname"
         )}?searchkey=${encodeURIComponent(BasespE)}`;
         console.log("nav", targetUrl);
@@ -920,7 +926,10 @@ console.log('Selected Item',selectedItem);
       // console.log("hii");
       console.log("keyname", keyName);
      if (keyName) {
-       const targetUrl = `/All/Listing/in-${localStorage.getItem(
+       const targetUrl = `/All/${keyName.replace(
+        /\s+/g,
+        "-"
+      ).toLowerCase()}/in-${localStorage.getItem(
          "cityname"
        )}?searchkey=${encodeURIComponent(refindKeywordspE)}`;
        console.log("nav", targetUrl);
@@ -969,6 +978,7 @@ console.log('Selected Item',selectedItem);
     console.log("matchKeyword", keywords);
 
     const FullKeyword= clickedText;
+    console.log('FullKeyword',FullKeyword);
     const BaseKeyword=FullKeyword.split(/\s+in\s+/)[0].trim() ||'';
     console.log('BaseKeyword',BaseKeyword);
 
@@ -1259,7 +1269,10 @@ console.log("Validated resultsArray:", resultsArray);
       console.log("hii");
       console.log("keyname", keyName);
       if (keyName) {
-        const targetUrl = `/All/Listing/in-${localStorage.getItem(
+        const targetUrl = `/All/${FullKeyword.replace(
+          /\s+/g,
+          "-"
+        ).toLowerCase()}/in-${localStorage.getItem(
           "cityname"
         )}?searchkey=${encodeURIComponent(keyName)}`;
         console.log("nav", targetUrl);
@@ -1303,7 +1316,10 @@ console.log("Validated resultsArray:", resultsArray);
       console.log("keyname", keyName);
       console.log('base',Basesp)
       if (keyName) {
-        const targetUrl = `/All/Listing/in-${localStorage.getItem(
+        const targetUrl = `/All/${keyName.replace(
+          /\s+/g,
+          "-"
+        ).toLowerCase()}/in-${localStorage.getItem(
           "cityname"
         )}?searchkey=${encodeURIComponent(Basesp)}`;
         console.log("nav", targetUrl);
@@ -1435,7 +1451,10 @@ console.log("Validated resultsArray:", resultsArray);
       console.log("keyname", keyName);
       console.log('refindKeywordsp',refindKeywordsp)
       if (keyName) {
-        const targetUrl = `/All/Listing/in-${localStorage.getItem(
+        const targetUrl = `/All/${keyName.replace(
+          /\s+/g,
+          "-"
+        ).toLowerCase()}/in-${localStorage.getItem(
           "cityname"
         )}?searchkey=${encodeURIComponent(refindKeywordsp)}`;
         console.log("nav", targetUrl);
