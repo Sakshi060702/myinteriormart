@@ -1753,24 +1753,28 @@ function Listingdetails() {
                           </div>
 
                           {/* registered mobile */}
-                          <div
-                            classname="col-lg-12 mb-1 listingtelephone"
-                            style={{ width: "32%" }}
-                          >
-                            <i
-                              className="fa fa-mobile"
-                              style={{ marginRight: "8px" }}
-                            ></i>
-                            <a
-                              href={`tel:${listingDetails.registerMobile}`}
-                              style={{ marginRight: "8px", color: "orange" }}
-                              className="ListingpageFont"
-                            >
-                              {listingDetails.registerMobile}
-                            </a>
-                          </div>
+                          {listingDetails.registerMobile &&
+                             <div
+                             classname="col-lg-12 mb-1 listingtelephone"
+                             style={{ width: "32%" }}
+                           >
+                             <i
+                               className="fa fa-mobile"
+                               style={{ marginRight: "8px" }}
+                             ></i>
+                             <a
+                               href={`tel:${listingDetails.registerMobile}`}
+                               style={{ marginRight: "8px", color: "orange" }}
+                               className="ListingpageFont"
+                             >
+                               {listingDetails.registerMobile}
+                             </a>
+                           </div>
+                          }
+                       
                           {/* telephone */}
-                          <div
+                          {listingDetails.telephone &&
+                            <div
                             classname="col-lg-12 mb-1 listingtelephone"
                             style={{ width: "-1%" }}
                           >
@@ -1785,7 +1789,8 @@ function Listingdetails() {
                             >
                               {listingDetails.telephone}
                             </a>
-                          </div>
+                          </div> }
+                        
 
                           {/* tollfree */}
                           {/* <div classname="col-lg-12 mb-1 p-0">
@@ -1805,22 +1810,24 @@ function Listingdetails() {
                       </div>
                       <div className="listingnumberM">
                         <div className="listingemp listingtoll">
+                          {listingDetails.tollFree && 
                           <div
-                            classname="col-lg-12 mb-1 p-0"
-                            style={{ marginLeft: "-2px" }}
+                          classname="col-lg-12 mb-1 p-0"
+                          style={{ marginLeft: "-2px" }}
+                        >
+                          <i
+                            className="fa fa-headphones"
+                            style={{ marginRight: "8px" }}
+                          ></i>
+                          <a
+                            href={`tel:${listingDetails.tollFree}`}
+                            style={{ marginRight: "8px", color: "orange" }}
+                            className="ListingpageFont"
                           >
-                            <i
-                              className="fa fa-headphones"
-                              style={{ marginRight: "8px" }}
-                            ></i>
-                            <a
-                              href={`tel:${listingDetails.tollFree}`}
-                              style={{ marginRight: "8px", color: "orange" }}
-                              className="ListingpageFont"
-                            >
-                              {listingDetails.tollFree}
-                            </a>
-                          </div>
+                            {listingDetails.tollFree}
+                          </a>
+                        </div>}
+                          
                         </div>
                       </div>
 
@@ -2209,6 +2216,7 @@ function Listingdetails() {
                             : banner2
                         }
                         alt="Banner Image"
+                        style={{height:'70%'}}
                       />
                     </div>
                   </div>

@@ -15,7 +15,7 @@ function UserDeleteAccount() {
 
   return (
     <>
-      <div className="tab-pane fade show active" style={{ height: "221px" }}>
+      <div className="tab-pane fade show active UDAmainDiv" >
         <div className="add-review">
           <div>
             <img className="UDAimg" src={profileImg}></img>

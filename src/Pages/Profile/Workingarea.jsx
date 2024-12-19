@@ -359,8 +359,16 @@ const Workingarea = ({ onPinChange }) => {
         // navigate(pathlisting);
         // console.log("API response:", responseData);
         // console.log("Address token:", token);
-        setSuccessMessage("Working Area Details Saved Successfully");
-        setErrorMessage("");
+        if(responseData.success){
+          setSuccessMessage("Working Area Details Saved Successfully");
+          setErrorMessage("");
+        }
+        else{
+          setErrorMessage(responseData.message);
+          setSuccessMessage("");
+          // setSelectedPincode([]);
+        }
+       
         setShowPopup(true);
 
         setTimeout(() => {
